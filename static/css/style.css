@@ -1,0 +1,236 @@
+/* @override http://dev.quinode.fr:8000/static/css/style.css */
+
+body {
+	font-family: "Droid Sans", Lucida, Verdana, sans-serif;
+}
+
+
+
+header{
+	background-color: #e2e2e2;
+	height: 100px;
+
+}
+
+div#main{
+	border: 1px dashed #b9b9b9;
+	border-top-style: none;
+	border-bottom-style: none;
+}
+
+#content{
+	padding-bottom: 20px;
+	padding-top: 20px;
+	min-height: 400px;
+}
+
+/* @group hCard */
+
+div.vcard {
+	width: 300px;
+	padding: 30px;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ebd8a0));
+	background: -moz-linear-gradient(top,  #fff,  #ebd8a0);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff', endColorstr='#ebd8a0');
+	border-radius: 16px;
+	-moz-border-radius: 16px;
+	-webkit-border-radius: 16px;
+	box-shadow: 1px 2px 5px #333;
+	-moz-box-shadow: 1px 2px 5px #333;
+	-webkit-box-shadow: 1px 2px 5px #333;
+	margin-top: 20px;
+}
+
+div.vcard abbr {
+	font-size: 12px;
+	color: #4f4f4f;
+	margin-left: 3px;
+	margin-right: 3px;
+}
+
+.vcard .fn.n {
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+.vcard a {
+	display: inline-block;
+	text-decoration: none;
+	color: #141ea2;
+}
+
+.vcard .tel, 
+.vcard .adr, 
+.vcard .email {
+	margin-top: 10px;
+}
+
+
+#mod_profil_link{
+	margin-top: 20px;
+	font-weight: bold;
+	font-size: 14px;
+	margin-bottom: 0;
+	padding-bottom: 0;
+	text-align: right;
+}
+
+.client #id_adresse{
+	width: 250px;
+	font-size: 14px;
+	height: 80px;
+}
+
+/* @end */
+
+/* @group footer */
+
+
+footer {
+	background: #444 url(../img/ombre.png) repeat-x;
+	padding-top: 30px;
+}
+
+footer ul {
+	margin: 0 30px;
+}
+
+footer ul ul {
+	margin: 0;
+}
+
+footer li {
+	float: left;
+}
+
+footer li li {
+	width: 100px;
+	clear: both;
+	margin: 5px;
+	border: 1px solid #333;
+	background: #555;
+	padding: 5px 10px;
+	border-right: 0;
+	border-bottom: 0;
+}
+
+footer a {
+	color: #eee;
+	text-decoration: none;
+}
+
+
+
+/* @end */
+
+/* @group form */
+
+form.form {
+	width: 90%;
+	border-radius: 16px;
+	-moz-border-radius: 16px;
+	-webkit-border-radius: 16px;
+	padding: 20px;
+	border: 3px solid #c5c5c5;
+}
+
+form.form label {
+	width: 200px;
+	vertical-align: middle;
+}
+
+form.form input {
+	width: 300px;
+	padding: 4px;
+	font-size: 16px;
+	vertical-align: middle;
+}
+
+form.form select {
+	font-size: 16px;
+}
+
+form.form textarea {
+	font-size: 14px;
+	line-height: 1.2em;
+}
+
+.form {
+	background: #eee;
+	border-bottom: 1px solid #ccc;
+	float: left;
+}
+
+.form li ul,
+.form li li {
+	display: inline;
+}
+
+.form li label {
+	width: 30%;
+	float: left;
+}
+
+.form li li label {
+	width: auto;
+	float: none;
+	cursor: pointer;
+}
+
+/* @end */
+
+/* @group login */
+
+#search ul {
+	padding-left: 0;
+}
+
+div.login_warning {
+	background: url(/site_media/img/cross.png) no-repeat 10px 25px;
+	font-weight: bold;
+	font-size: 15px;
+	padding: 20px 20px 0 60px;
+	color: #920000;
+	line-height: 18px;
+}
+
+div.login_warning ul {
+	list-style-type: none;
+	margin-top: 20px;
+}
+
+div.login_warning li {
+	vertical-align: middle;
+	font-weight: bold;
+	display: block;
+	width: 450px;
+	margin-bottom: 10px;
+	height: 30px;
+}
+
+div.login_warning li img {
+	position: relative;
+	float: left;
+	top: -5px;
+	margin-right: 10px;
+}
+
+fieldset.client label {
+	width: 200px;
+	display: inline-block;
+	vertical-align: middle;
+	text-align: right;
+	padding-right: 10px;
+}
+
+
+.client input[type=text],
+.client input[type=password] {
+	height: 25px;
+	vertical-align: middle;
+	font-size: 14px;
+	width: 250px;
+	padding: 4px;
+}
+
+/* @end */

@@ -1,0 +1,21 @@
+# File types #
+##############
+*.pyc
+*.tmproj
+#*.json
+@@*
+
+# Directories #
+###############
+#logs/
+
+# Specific files #
+##################
+#/settings.py
+
+# OS generated files #
+######################
+.DS_Store
+Icon?
+Thumbs.db
+

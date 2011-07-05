@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block meta_title %}Profil de {{profile.nom}}{% endblock %}
+{% block title %}Profil de {{profile.nom}}{% endblock %}
+
+{% block main %}
+
+<div id="hcard_{{profile.id}}" class="vcard">
+    <div class="fn n">
+        {% if profile.url %}<a href="{{profile.url}}" class="url">{% endif %}
+                    
+            {% if profile.user.last_name %}<span class="family-name">{{profile.user.last_name}}</span>{% endif%}
+
+        {% if profile.url %}</a>{% endif %}
+    </div>
+
+    <input type="date" title="Date" value="2009-01-15">
+
+    {% if profile.org %}
+    <div class="org">{{profile.org}}</div>
+    {% endif %}
+  
+    <div class="adr">
+        {% if profile.adresse %}<div class="street-address">{{profile.adresse}}</div>{% endif %}
+        {% if profile.code_postal %}<span class="postal-code">{{profile.code_postal}}</span>&nbsp;{% endif %}
+        {% if profile.ville %}<span class="locality">{{profile.ville}}</span>&nbsp;{% endif %}
+        {% if profile.pays %}<span class="country-name">{{profile.pays}}</span>&nbsp;{% endif %}
+    </div>
+
+
+    {% if profile.user.email %}<a class="email" href="mailto:{{profile.user.email}}">{{ profile.user.email }}</a><br/>{% endif %}
+    {% if profile.telephone_fixe %}<div class="tel"><span class="value">{{profile.telephone_fixe}}</span> [<abbr class="type" title="home">fixe</abbr>]</div>{% endif %}
+    {% if profile.telephone_portable %}<div class="tel"><span class="value">{{profile.telephone_portable}}</span> [<abbr class="type" title="home">portable</abbr>]</div>{% endif %}
+
+    {% if profile.user.username == request.user.username %}
+        <div id="mod_profil_link"><a href="/profil/edit/">Modifier votre profil</a></div> 
+    {% endif %}
+
+</div>
+
+
+{% endblock %}
