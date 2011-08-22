@@ -8,7 +8,7 @@ def literal_lang_select(list):
     Ou 'list' est une liste de rdflib.term.literal 
     '''
     result = None
-    pref_lang = 'fr' #TODO settings
+    pref_lang = 'fr' #TODO livesettings
     fallback = 'en'
     for lit in list:
         if(lit.language == pref_lang):

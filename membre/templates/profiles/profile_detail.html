@@ -1,25 +1,13 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block meta_title %}Profil de {{profile.nom}}{% endblock %}
-{% block title %}Profil de {{profile.nom}}{% endblock %}
+{% block meta_title %}Profil de {{profile}}{% endblock %}
+{% block title %}Profil de {{profile}}{% endblock %}
 
-{% block main %}
+{% block content %}
 
 <div id="hcard_{{profile.id}}" class="vcard">
-    <div class="fn n">
-        {% if profile.url %}<a href="{{profile.url}}" class="url">{% endif %}
-                    
-            {% if profile.user.last_name %}<span class="family-name">{{profile.user.last_name}}</span>{% endif%}
 
-        {% if profile.url %}</a>{% endif %}
-    </div>
-
-    <input type="date" title="Date" value="2009-01-15">
-
-    {% if profile.org %}
-    <div class="org">{{profile.org}}</div>
-    {% endif %}
   
     <div class="adr">
         {% if profile.adresse %}<div class="street-address">{{profile.adresse}}</div>{% endif %}
@@ -33,11 +21,21 @@
     {% if profile.telephone_fixe %}<div class="tel"><span class="value">{{profile.telephone_fixe}}</span> [<abbr class="type" title="home">fixe</abbr>]</div>{% endif %}
     {% if profile.telephone_portable %}<div class="tel"><span class="value">{{profile.telephone_portable}}</span> [<abbr class="type" title="home">portable</abbr>]</div>{% endif %}
 
+
     {% if profile.user.username == request.user.username %}
         <div id="mod_profil_link"><a href="/profil/edit/">Modifier votre profil</a></div> 
     {% endif %}
 
+
 </div>
 
+<div class="engagements">
+{% if profile.liste_engagements %}<ul>
+    {% for engagement in profile.engagements %}
+    <li>{{engagement}}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+</div>
 
 {% endblock %}

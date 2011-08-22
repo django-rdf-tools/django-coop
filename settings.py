@@ -123,6 +123,7 @@ INSTALLED_APPS = (
     'initiative',
     'local',
     'd2rq',
+    'skosxl',
 )
 
 AUTH_PROFILE_MODULE = 'local.membre'

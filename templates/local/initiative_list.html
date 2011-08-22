@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Liste des Initiatives{% endblock %}
+{% block title %}Liste des Initiatives{% endblock %}
+
+
+{% block content %}
+    <ul>
+        {% for initiative in liste_initiatives %}
+            <li><a href="{{initiative.get_absolute_url}}">{{ initiative.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,155 @@
+[
+    {
+        "pk": 1,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "foaf",
+            "uri": "http://xmlns.com/foaf/0.1/",
+            "label": "Friend of a Friend (FOAF) vocabulary"
+        }
+    },
+    {
+        "pk": 7,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "owl",
+            "uri": "http://www.w3.org/2002/07/owl#",
+            "label": "The OWL 2 Schema vocabulary (OWL 2)"
+        }
+    },
+    {
+        "pk": 8,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "test",
+            "uri": "http://quinode.fr/tmp/org#",
+            "label": "Ontologie des organisations"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "dct",
+            "uri": "http://purl.org/dc/terms/",
+            "label": "http://purl.org/dc/terms/"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "skos",
+            "uri": "http://www.w3.org/2004/02/skos/core#",
+            "label": "SKOS Vocabulary"
+        }
+    },
+    {
+        "pk": 6,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "vcard",
+            "uri": "http://www.w3.org/2006/vcard/ns#",
+            "label": "An Ontology for vCards"
+        }
+    },
+    {
+        "pk": 9,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "opmv",
+            "uri": "http://purl.org/net/opmv/ns#",
+            "label": "Open Provenance Model Vocabulary Core namespace"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "org",
+            "uri": "http://www.w3.org/ns/org#",
+            "label": "Core organization ontology"
+        }
+    },
+    {
+        "pk": 10,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "xsd",
+            "uri": "http://www.w3.org/2001/XMLSchema#",
+            "label": "http://www.w3.org/2001/XMLSchema#"
+        }
+    },
+    {
+        "pk": 11,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "rdfs",
+            "uri": "http://www.w3.org/2000/01/rdf-schema#",
+            "label": "The RDF Schema vocabulary (RDFS)"
+        }
+    },
+    {
+        "pk": 12,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "owlTime",
+            "uri": "http://www.w3.org/2006/time",
+            "label": "\n      An OWL Ontology of Time (OWL-Time).\n    "
+        }
+    },
+    {
+        "pk": 13,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "rdf",
+            "uri": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+            "label": "The RDF Vocabulary (RDF)"
+        }
+    },
+    {
+        "pk": 14,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "cs",
+            "uri": "http://purl.org/vocab/changeset/schema#",
+            "label": "Changeset"
+        }
+    },
+    {
+        "pk": 15,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "geo",
+            "uri": "http://www.w3.org/2003/01/geo/wgs84_pos#",
+            "label": "http://www.w3.org/2003/01/geo/wgs84_pos#"
+        }
+    },
+    {
+        "pk": 16,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "sioc",
+            "uri": "http://rdfs.org/sioc/ns#",
+            "label": "SIOC Core Ontology Namespace"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "gr",
+            "uri": "http://purl.org/goodrelations/v1#",
+            "label": "The GoodRelations Ontology for Semantic Web-based E-Commerce"
+        }
+    },
+    {
+        "pk": 17,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "skosxl",
+            "uri": "http://www.w3.org/2008/05/skos-xl",
+            "label": "SKOS XL Vocabulary"
+        }
+    }
+]

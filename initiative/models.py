@@ -18,13 +18,14 @@ class BaseEngagement(models.Model):
     role = models.ForeignKey('local.Role')
     created = exfields.CreationDateTimeField(_(u'Création rôle'))
     modified = exfields.ModificationDateTimeField(_(u'Modification rôle'))
-    membre_uri = models.CharField(_(u'Profil FOAF'),blank=True, max_length=250, editable=False)
-    uuid = exfields.UUIDField()
+    #membre_uri = models.CharField(_(u'Profil FOAF'),blank=True, max_length=250, editable=False)
+    uuid = exfields.UUIDField() #nécessaire pour URI de l'engagement
     class Meta:
         abstract = True
+        
     '''
     def save(self):
-        ramener URI du membre
+        ramener URI du membre / mais D2R peut bien linker le champ de membre ?
     '''    
 
 class BaseInitiative(models.Model):
@@ -42,11 +43,13 @@ class BaseInitiative(models.Model):
         abstract = True
     def __unicode__(self):
         return unicode(self.title)
+        
     #@models.permalink
-    #def get_absolute_url(self):
-    #   return ()
+    def get_absolute_url(self):
+        return ('/is/'+self.slug+'.html')
+    
     def local_uri(self):
-        return ('http://dev.credis.org:8000/initiative/'+self.slug)
+        return ('http://dev.credis.org:8000/is/'+self.slug+'/')
 
 
 
