@@ -2,7 +2,7 @@
 ##############
 *.pyc
 *.tmproj
-#*.json
+*.db
 @@*
 
 # Directories #
@@ -11,7 +11,7 @@
 
 # Specific files #
 ##################
-#/settings.py
+/local_settings.py
 
 # OS generated files #
 ######################
