@@ -1,0 +1,92 @@
+[
+    {
+        "pk": 1,
+        "model": "skosxl.concept",
+        "fields": {
+            "definition": "",
+            "author": "",
+            "modified": "2011-08-11 14:34:46",
+            "changenote": "",
+            "created": "2011-08-11 14:34:46"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-08-11 14:21:35",
+            "modified": "2011-08-11 14:21:35",
+            "literal": "solidaire",
+            "slug": "solidaire"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-08-11 14:33:56",
+            "modified": "2011-08-11 14:33:56",
+            "literal": "Economie Solidaire",
+            "slug": "economie-solidaire"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@es",
+            "author": "",
+            "created": "2011-08-11 14:34:32",
+            "modified": "2011-08-11 14:34:32",
+            "literal": "Economia Solidaria",
+            "slug": "economia-solidaria"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "skosxl.vocabulary",
+        "fields": {
+            "name": "Rameau",
+            "info_url": "http://eculture2.cs.vu.nl:48080/vocreptags/autocompleteplus.jsp"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "skosxl.vocabulary",
+        "fields": {
+            "name": "AGROVOC",
+            "info_url": "http://aims.fao.org/standards/agrovoc/functionalities/hierarchy"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "skosxl.label",
+        "fields": {
+            "term": 1,
+            "concept": 1,
+            "type": 1
+        }
+    },
+    {
+        "pk": 2,
+        "model": "skosxl.label",
+        "fields": {
+            "term": 2,
+            "concept": 1,
+            "type": 0
+        }
+    },
+    {
+        "pk": 3,
+        "model": "skosxl.label",
+        "fields": {
+            "term": 3,
+            "concept": 1,
+            "type": 0
+        }
+    }
+]
