@@ -1,0 +1,6 @@
+{% extends "tree_content/default.html" %}
+{% load i18n %}
+    
+    {% block tree_content_extracommand%}
+    <li><a href="{{content.get_absolute_url}}?mode=edit">{% trans "Edit on site"%}</a></li>
+    {% endblock %}

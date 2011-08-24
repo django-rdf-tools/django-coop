@@ -1,0 +1,25 @@
+{% load i18n %}
+<script type="text/javascript">
+var admin_hideMessage = function ()  {
+    $('#admin-status').hide();
+    $(".error-field").removeClass("error-field");
+};
+
+var admin_printMessage = function (message, css_class) {
+    $('#admin-status').removeClass().html(message).addClass(css_class).show();
+    setTimeout(admin_hideMessage, 3000);
+};
+</script>
+{% if user.is_authenticated %}
+	<div id="admin-bar">
+		<a href="{% url navigation_tree %}">{% trans "Navigation" %}</a>
+		{% if editable %}
+			{% if edit_mode %}
+			<a href="{{object.get_absolute_url}}?mode=view">{% trans "View" %}</a>
+			{% else %}
+			<a href="{{object.get_absolute_url}}?mode=edit">{% trans "Edit" %}</a>
+			{% endif %}
+		{% endif %}
+		<span id="admin-status"></span>
+	</div>
+{% endif %}

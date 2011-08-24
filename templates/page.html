@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block meta_title %}{{object.title}}{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/pages.css" />
+{% if edit_mode %}
+    {% include "djaloha/_header.html" %}
+    {% include "djaloha/_csrf_ajax_jquery.html" %}
+{% endif %}
+{% endblock %}
+
+{% block document %}
+<h1 id="title" class="djaloha-editable">{{object.title}}</h1>
+
+<div id="content" class="djaloha-editable">
+    {{object.content|safe}}
+</div>
+{% endblock %}

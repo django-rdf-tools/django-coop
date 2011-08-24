@@ -3,6 +3,8 @@
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+import os.path
+PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -36,18 +38,18 @@ LOGIN_REDIRECT_URL = '/'
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = '/Users/dom/django/base/userfiles/'
+MEDIA_ROOT = os.path.abspath(PROJECT_PATH+'/media/')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = 'http://localhost:8000/media/'
+MEDIA_URL = '/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = '/Users/dom/django/base/static_collected/'
+STATIC_ROOT = os.path.abspath(PROJECT_PATH+'/static_collected/')
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -60,10 +62,12 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    '/Users/dom/django/base/static/',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    os.path.abspath(PROJECT_PATH+'/static/'),
+    os.path.abspath(PROJECT_PATH+'/djaloha/static/'),
+    os.path.abspath(PROJECT_PATH+'/coop_tree/static/'),
 )
 
 # List of finder classes that know how to find static files in
@@ -92,13 +96,22 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'base.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
-    '/Users/dom/django/base/templates/',
+    os.path.abspath(PROJECT_PATH+'/templates/'),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.contrib.messages.context_processors.messages",
 )
 
 CACHES = {
@@ -107,8 +120,8 @@ CACHES = {
     }
 }
 
-
 INSTALLED_APPS = (
+    # Contribs
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -117,12 +130,20 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
+
+    #3rd parties
+    'south',
     'django_extensions',
     'extended_choices',
+
+    #apps
     'membre',
     'initiative',
     'local',
     'd2rq',
+    'djaloha',
+    'coop_tree',
+    'coop_page',
 )
 
 AUTH_PROFILE_MODULE = 'local.membre'
@@ -151,3 +172,8 @@ LOGGING = {
         },
     }
 }
+
+try:
+    from settings_local import *
+except ImportError:
+    print 'No settings local'

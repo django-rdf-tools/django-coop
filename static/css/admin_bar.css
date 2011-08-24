@@ -1,0 +1,41 @@
+/* */
+.success {
+	color: #8f4;
+}
+
+.error {
+	color: #f00;
+}
+
+.warning {
+	color: #f80;
+}
+
+#admin-bar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 20px;
+	text-align: left;
+	background: black;
+	color: white;
+	width: 100%;
+}
+
+#admin-bar a, #admin-bar span {
+    font-family: monospace;
+    font-size: medium;
+    font-weight: bolder;
+	padding-left: 8px;
+	padding-right: 8px;
+    text-decoration: none;
+}
+
+#admin-bar a {
+	color: #fff;
+}
+
+#admin-bar a:hover {
+	background: #ccc;
+	color: black;
+}
