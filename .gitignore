@@ -4,6 +4,7 @@
 *.tmproj
 *.komodoproject
 #*.json
+*.db
 @@*
 
 # Directories #
@@ -17,7 +18,7 @@ coop_env
 /base.db
 /activate_env.bat
 /deactivate_env.bat
-
+/local_settings.py
 
 # OS generated files #
 ######################

@@ -28,7 +28,6 @@ class MembreAdmin(admin.ModelAdmin):
     inlines = [
             EngagementInline,
         ]
-    
  
 admin.site.register(Membre, MembreAdmin)
 

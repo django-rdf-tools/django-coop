@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block meta_title %}{{object.title}}{% endblock %}
+{% block title %}{{object.title}}{% endblock %}
+
+{% block content %}
+
+    
+    <p>{{object.description}}</p>
+    
+    <h4>Individus</h4>
+    <ul>
+        {% for engagement in engagements %}
+            <li><a href="{{engagement.membre.get_absolute_url}}">{{ engagement.membre }}</a>, {{engagement.role}}</li>
+        {% endfor %}
+    </ul>
+    
+    <h4>Structures membres</h4>
+    
+    
+    
+{% endblock %}

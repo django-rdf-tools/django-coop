@@ -9,11 +9,11 @@ from membre.models import BaseMembre
 # Personnaliser vos modèle ici en ajoutant les champs nécessaires
 # exemple : personnalisation CREDIS
 
-class Membre(BaseMembre):
-    adherent = models.BooleanField(default=False)
-
 class Engagement(BaseEngagement):
     pass
+
+class Membre(BaseMembre):
+    adherent = models.BooleanField(default=False)
 
 class Role(BaseRole):
     pass

@@ -1,3 +1,8 @@
-django==1.3
-south==0.7.3
+Django==1.3
+-e git://github.com/twidi/django-extended-choices.git#egg=extended_choices
 django-extensions==0.6
+-e hg+https://bitbucket.org/ubernostrum/django-profiles#egg=profiles
+rdfextras==0.1
+rdflib==3.1.0
+simplejson==2.1.6
+south==0.7.3

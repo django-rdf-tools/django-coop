@@ -16,6 +16,9 @@ urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 
+    url(r'^is/', include('initiative.urls')),
+
+
     (r'^membre/', include('membre.urls')),
 
     url(r'^tree/$', 'coop_tree.views.view_tree', name='navigation_tree'),
