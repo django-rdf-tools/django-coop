@@ -77,8 +77,10 @@ class Schema(models.Model):
             self.label = self.uri           
         super(Schema, self).save(*args, **kwargs)
 
+
+
 class MappedModel(models.Model):
-    modelname = models.CharField(_(u'Modéle mappé'),choices=selected_models)
+    modelname = models.CharField(_(u'Modéle mappé'))
 
 class MappedField(models.Model):
     model = models.ForeignKey(MappedModel)
