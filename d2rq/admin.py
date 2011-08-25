@@ -21,13 +21,15 @@ def ontology_get_list(uri,prefix):
     import surf,rdflib
     liste = []
     try:
-        store = surf.Store(reader='rdflib',writer='rdflib',rdflib_store='IOMemory')
+        store = surf.Store(**{"reader": "librdf", "writer" : "librdf"})
+        #store = surf.Store(reader='rdflib',writer='rdflib',rdflib_store='IOMemory')
         session = surf.Session(store)
         store.load_triples(source=uri)
         #ontology = session.get_class(surf.ns.OWL.Ontology)
         #o = ontology("http://www.w3.org/ns/org#")
         #unicode(o.rdfs_label.first)
         classes = session.get_class(surf.ns.RDFS.Class)
+        print classes
         proprietes = session.get_class(surf.ns.RDF.Property)
         subclasses = session.get_class(surf.ns.RDFS.subClassOf)
         for c in classes.all():
@@ -40,8 +42,8 @@ def ontology_get_list(uri,prefix):
                 liste.append(option)        
         session.close()
         store.close()        
-    except:
-        pass
+    except Exception,e:
+        print e
     return tuple(liste)
 
 

@@ -2,6 +2,8 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+import surf, rdflib
+from surf.query import *
 
 def literal_lang_select(list):
     '''
@@ -16,33 +18,42 @@ def literal_lang_select(list):
             break
         elif(lit.language == fallback):
             result = unicode(lit)
-        elif(not result and not lit.language):
+        elif(not result):
             result = unicode(lit)
     return(result)        
-            
+
 
 def get_schema_label(uri):
-    import surf
-    store = surf.Store(reader='rdflib',writer='rdflib',rdflib_store='IOMemory')
+
+    #store = surf.Store(reader='rdflib',writer='rdflib',rdflib_store='IOMemory')
+    store = surf.Store(**{"reader": "librdf", "writer" : "librdf", })
     session = surf.Session(store)
     store.load_triples(source=uri)
     #store.enable_logging(True)
+    ownuri = rdflib.term.URIRef(uri)
     ontology = session.get_class(surf.ns.OWL.Ontology)
-    #vocab = session.get_class(surf.ns.RDF.Description)
-    if(ontology.all().first()): metablock = ontology #une ontologie OWL
-    #elif(vocab.all().first()):  metablock = vocab #un vocabulaire RDF ... comment faire ?
-    else:label = unicode(uri)   # Schéma non reconnu on prend l'URI comme titre
-    if(metablock): #pourrait partir ailleurs
-        titles = ['rdfs_comment','rdfs_label','dc_title','dcterms_title'] 
-        # du moins évident vers le plus évident, pas terrible
-        # faudrait évaluer chaque cas et décider ensuite plutot que d'ecraser
-        for o in metablock.all():
+    if(ontology.all().first()): #contient un node Ontology
+        titles = ['rdfs_label','dc_title','dcterms_title']
+        for o in ontology.all():
             for title in titles:
-                print title,':',o.__getattr__(title)
                 lookup = literal_lang_select(o.__getattr__(title))
                 if(lookup != None):label=lookup
             if(not label):
-                label = unicode(o.subject)
+                label = unicode(uri)
+    else: #ce n'est pas une ontologie OWL, idem mais autre méthode , orientée query
+    # cette méthode pourrait fonctionner pour les ontologies aussi, sauf quand
+    #(pb 303 ou autre) l'URI sujet est differente de l'URI stockée...
+    
+        ns_titles = [surf.ns.RDFS["label"],surf.ns.DC["title"],surf.ns.DCTERMS["title"]]
+        for title in ns_titles:
+            query = select("?o").where((ownuri,title,"?o"))
+            found_title = list(store.reader._to_table(store.reader._execute(query)))
+
+            if(len(found_title)==1):
+                label = literal_lang_select([found_title[0]['o']])
+        if(not label): #on n'a rien trouvé avec la méthode vocab
+            label = unicode(uri)
+    #import pdb; pdb.set_trace()                
     store.clear()
     store.close()
     session.close()
@@ -67,9 +78,10 @@ class Schema(models.Model):
         super(Schema, self).save(*args, **kwargs)
 
 class MappedModel(models.Model):
-    modelname = models.TextField(_(u'Modéle mappé'))
+    modelname = models.CharField(_(u'Modéle mappé'),choices=selected_models)
 
 class MappedField(models.Model):
     model = models.ForeignKey(MappedModel)
     fieldname = models.TextField(_(u'Champ mappé'))
     class_prop = models.TextField(_(u'Classe ou propriété RDF'),blank=True)
+    
