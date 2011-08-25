@@ -2,15 +2,22 @@
 ##############
 *.pyc
 *.tmproj
+*.komodoproject
+#*.json
 *.db
 @@*
 
 # Directories #
 ###############
 #logs/
+coop_env
 
 # Specific files #
 ##################
+#/settings.py
+/base.db
+/activate_env.bat
+/deactivate_env.bat
 /local_settings.py
 
 # OS generated files #

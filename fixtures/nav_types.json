@@ -1,0 +1,18 @@
+[
+    {
+        "pk": 1,
+        "model": "coop_tree.navigabletype",
+        "fields": {
+            "search_field": "title",
+            "content_type": 21
+        }
+    },
+    {
+        "pk": 2,
+        "model": "coop_tree.navigabletype",
+        "fields": {
+            "search_field": "url",
+            "content_type": 18
+        }
+    }
+]

@@ -1,0 +1,73 @@
+/* */
+
+.actions a{
+	border: solid thin #ccc;
+	text-decoration: none;
+	background: #ddd;
+	font-size: 0.7em;
+	padding: 1px 1px 1px 1px;
+}
+
+#nodes {
+	width: 600px;
+	margin-top: 5px;
+	font-size: small;
+}
+
+li.nav-node {
+	border: solid 2px #222;
+	margin-top: 5px;
+	padding: 4px 4px 4px 4px;
+	list-style: none;
+	z-index: 1;
+	background: #f7f7f7;
+}
+
+.ui-autocomplete .ui-menu-item {
+	font-size: 9px;
+}
+
+.add_object_section {
+	border: thin #ccc solid;
+	padding: 5px 0 8px 5px;
+	margin-right: 5px;
+}
+
+aside {
+	float: right;
+	width: 50%;
+	border: solid 2px #eee;
+	min-height: 100px;
+	padding: 10px 10px;
+	font-size: small;
+}
+
+aside ul {
+	margin-left: 0;
+	padding-left: 0;
+}
+
+aside li {
+	display: inline;
+	list-style: none;
+	margin-right: 20px;
+}
+
+aside li a{
+	color: black;
+	font-weight: bold;
+	padding: 2px 2px 2px 2px;
+}
+
+aside li a:hover{
+	background-color: #ddd;
+}
+
+.button-bar {
+	font-size: 10px;
+	margin-bottom: 10px;
+}
+
+.content-links {
+	margin-top: 10px;
+}

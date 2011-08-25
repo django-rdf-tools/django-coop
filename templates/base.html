@@ -25,16 +25,21 @@
     
 
 
-    <script type="text/javascript" charset="utf-8" src="{{ STATIC_ROOT }}js/jquery-1.5.2.min.js"></script>        
+    <script type="text/javascript" charset="utf-8" src="{{ STATIC_ROOT }}js/jquery-1.5.2.min.js"></script>
+    <script type="text/javascript" src="{{STATIC_ROOT}}superfish-1.4.8/js/superfish.js" charset="utf-8"></script>
 
     <!-- CSS: implied media="all" -->
     <link rel="stylesheet" href="{{ STATIC_ROOT }}css/html5.css?v=2">
     
     <link rel="stylesheet" href="{{ STATIC_ROOT }}css/reset.css" type="text/css" />
     <link rel="stylesheet" href="{{ STATIC_ROOT }}css/960.css" type="text/css" />
-    <link rel="stylesheet" href="{{ STATIC_ROOT }}css/style.css" type="text/css" />    
+    <link rel="stylesheet" href="{{ STATIC_ROOT }}css/style.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_ROOT }}css/admin_bar.css" type="text/css" />
+
     <link href='http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold' rel='stylesheet' type='text/css'>
     
+    <link href='http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{{STATIC_ROOT}}superfish-1.4.8/css/superfish.css" media="screen">
     
     <!-- Uncomment if you are specifically targeting less enabled mobile browsers
     <link rel="stylesheet" media="handheld" href="css/handheld.css?v=2">  -->
@@ -53,14 +58,22 @@
     
 </header>
 
+
 <div id="main" role="main" class="container_12 clearfix">
+  {% block navigation %}
+  <nav>
+      <ul class="sf-menu">{{nodes_li|safe}}</ul>
+  </nav>
+  {% endblock %}
 
     <div id="content" class="grid_9 grid">
+      {% block document %}
         <h1>{% block title %}{% endblock %}</h1>
         
         {% block content %}
                 
         {% endblock %}
+      {% endblock %}
     </div>
 
     <div id="grid-right" class="grid_3 grid">
@@ -78,10 +91,12 @@
 
 </div>
 
+{% include "_admin_bar.html" %}
+{% comment %}
 <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if necessary -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
 <script>window.jQuery || document.write("<script src='{{ STATIC_ROOT }}js/libs/jquery-1.5.2.min.js'>\x3C/script>")</script>
-
+{% endcomment %}
 
 <script type="text/javascript">
 $(function(){
