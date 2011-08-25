@@ -80,7 +80,7 @@ class Schema(models.Model):
 
 
 class MappedModel(models.Model):
-    modelname = models.CharField(_(u'Modéle mappé'))
+    modelname = models.CharField(_(u'Modéle mappé'),max_length=200)
 
 class MappedField(models.Model):
     model = models.ForeignKey(MappedModel)

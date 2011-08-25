@@ -144,7 +144,6 @@ INSTALLED_APPS = (
     'djaloha',
     'coop_tree',
     'coop_page',
-
     'skosxl',
 )
 
