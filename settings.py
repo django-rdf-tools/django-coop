@@ -68,6 +68,7 @@ STATICFILES_DIRS = (
     os.path.abspath(PROJECT_PATH+'/static/'),
     os.path.abspath(PROJECT_PATH+'/djaloha/static/'),
     os.path.abspath(PROJECT_PATH+'/coop_tree/static/'),
+    os.path.abspath(PROJECT_PATH+'/uriresolve/static/'),
 )
 
 # List of finder classes that know how to find static files in
@@ -100,6 +101,7 @@ ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     os.path.abspath(PROJECT_PATH+'/templates/'),
+    '/uriresolve/templates/'
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -109,6 +111,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
+    'django.core.context_processors.request',
     "django.core.context_processors.media",
     "django.core.context_processors.static",
     "django.contrib.messages.context_processors.messages",
@@ -145,6 +148,7 @@ INSTALLED_APPS = (
     'coop_tree',
     'coop_page',
     'skosxl',
+#    'uriresolve',
 )
 
 AUTH_PROFILE_MODULE = 'local.membre'

@@ -1,6 +1,47 @@
 [
     {
         "pk": 1,
+        "model": "local.engagement",
+        "fields": {
+            "uuid": "ffdeb33d-cf1e-11e0-b1ca-001b63b6e445",
+            "created": "2011-08-25 15:34:46",
+            "modified": "2011-08-25 15:34:46",
+            "membre": 2,
+            "role": 2,
+            "initiative": 1
+        }
+    },
+    {
+        "pk": 2,
+        "model": "local.engagement",
+        "fields": {
+            "uuid": "1d33dd68-cf1f-11e0-b895-001b63b6e445",
+            "created": "2011-08-25 15:35:36",
+            "modified": "2011-08-25 15:35:36",
+            "membre": 1,
+            "role": 1,
+            "initiative": 1
+        }
+    },
+    {
+        "pk": 2,
+        "model": "local.membre",
+        "fields": {
+            "ville": "Clermont-Ferrand",
+            "adherent": false,
+            "code_postal": "",
+            "prenom": "Emmanuelle",
+            "nom": "POIX",
+            "telephone_portable": "",
+            "telephone_fixe": "",
+            "adresse": "",
+            "sameas": [],
+            "user": 4,
+            "email": "emma.poix@credis.org"
+        }
+    },
+    {
+        "pk": 1,
         "model": "local.membre",
         "fields": {
             "ville": "Trezioux",
@@ -11,7 +52,6 @@
             "telephone_portable": "06 15 13 22 27",
             "telephone_fixe": "04 27 86 84 37",
             "adresse": "Le Bourg",
-            "uri": "",
             "sameas": [],
             "user": 1,
             "email": "dguardiola@quinode.fr"
@@ -26,6 +66,14 @@
         }
     },
     {
+        "pk": 2,
+        "model": "local.role",
+        "fields": {
+            "slug": "salariee",
+            "label": "Salari\u00e9e"
+        }
+    },
+    {
         "pk": 1,
         "model": "local.initiative",
         "fields": {
@@ -36,7 +84,7 @@
             "uri": "",
             "slug": "credis",
             "created": "2011-06-04 00:34:38",
-            "modified": "2011-06-04 00:34:39",
+            "modified": "2011-08-25 15:35:36",
             "secteur_fse": 8,
             "email": "contact@credis.org",
             "rss": "http://www.credis.org/fr/actualites.rss"
