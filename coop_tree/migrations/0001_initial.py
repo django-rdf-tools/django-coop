@@ -27,7 +27,7 @@ class Migration(SchemaMigration):
         db.create_table('coop_tree_navnode', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('label', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(default='', to=orm['coop_tree.NavNode'], null=True, blank=True)),
+            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(default=0, to=orm['coop_tree.NavNode'], null=True, blank=True)),
             ('ordering', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
             ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
             ('object_id', self.gf('django.db.models.fields.PositiveIntegerField')()),

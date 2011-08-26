@@ -4,7 +4,10 @@
         "model": "coop_tree.navigabletype",
         "fields": {
             "search_field": "title",
-            "content_type": 21
+            "content_type": [
+                "coop_page",
+                "page"
+            ]
         }
     },
     {
@@ -12,7 +15,10 @@
         "model": "coop_tree.navigabletype",
         "fields": {
             "search_field": "url",
-            "content_type": 18
+            "content_type": [
+                "coop_tree",
+                "url"
+            ]
         }
     }
 ]
