@@ -34,7 +34,7 @@ class NavNode(models.Model):
     """
     label = models.CharField(max_length=200)
     
-    parent = models.ForeignKey("NavNode", blank=True, null=True, default="")
+    parent = models.ForeignKey("NavNode", blank=True, null=True, default=0)
     ordering = models.PositiveIntegerField(default=0)
     
     #generic relation
@@ -64,4 +64,4 @@ class NavNode(models.Model):
         #This prints the whole tree recursively
         t = get_template('_node_li.html')
         return t.render(Context({'node': self}))
-        
+    
