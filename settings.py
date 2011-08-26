@@ -138,6 +138,7 @@ INSTALLED_APPS = (
     'south',
     'django_extensions',
     'extended_choices',
+    'smart_selects',
 
     #apps
     'membre',

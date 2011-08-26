@@ -3,8 +3,6 @@ from django.contrib import admin
 from d2rq.models import Schema,MappedModel,MappedField
 from django import forms
 
-
-
 class SchemaAdmin(admin.ModelAdmin):
     list_display = ('prefix','label','link_in_admin',)
     list_display_links =('prefix','label')
