@@ -138,7 +138,10 @@ INSTALLED_APPS = (
     'south',
     'django_extensions',
     'extended_choices',
+    
+    #3rd parties d2rq
     'smart_selects',
+    'livesettings',
 
     #apps
     'membre',
@@ -151,6 +154,11 @@ INSTALLED_APPS = (
     'skosxl',
 #    'uriresolve',
 )
+
+LIVESETTINGS_OPTIONS = \
+{   1: {   'DB': True,
+           'SETTINGS': {   u'd2rq': {   u'MAPPED_APPS': u'["local", "skosxl"]'}}}}
+
 
 AUTH_PROFILE_MODULE = 'local.membre'
 

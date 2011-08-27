@@ -7,3 +7,6 @@ rdflib==3.1.0
 simplejson==2.1.6
 south==0.7.3
 -e git+git://github.com/digi604/django-smart-selects.git#egg=smart_selects
+django-keyedcache
+-e hg+http://bitbucket.org/bkroeze/django-livesettings/#egg=django-livesettings
+

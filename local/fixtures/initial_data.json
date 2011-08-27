@@ -35,7 +35,6 @@
             "telephone_portable": "",
             "telephone_fixe": "",
             "adresse": "",
-            "sameas": [],
             "user": 4,
             "email": "emma.poix@credis.org"
         }
@@ -52,7 +51,6 @@
             "telephone_portable": "06 15 13 22 27",
             "telephone_fixe": "04 27 86 84 37",
             "adresse": "Le Bourg",
-            "sameas": [],
             "user": 1,
             "email": "dguardiola@quinode.fr"
         }

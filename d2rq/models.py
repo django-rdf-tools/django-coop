@@ -2,7 +2,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
-
+import config
 import surf, rdflib
 from surf.query import *
 
@@ -89,10 +89,12 @@ class SchemaProperty(models.Model):
     prop_label = models.CharField(_(u'Libellé de propriété RDF'),max_length=250)
     prop_name = models.CharField(_(u'Propriété RDF'),max_length=250)
 
-banned = ('auth','django','contenttypes','south','sessions','admin','d2rq','coop_tree','uriresolve')
+
+from livesettings import config_value
+
 done = []
 AVAILABLE_MODELS = []
-all_models = ContentType.objects.exclude(app_label__in=banned).order_by('app_label')
+all_models = ContentType.objects.filter(app_label__in=config_value('d2rq','MAPPED_APPS')).order_by('app_label')
 for a in all_models:
     if(a.app_label not in done):
         AVAILABLE_MODELS.append((
@@ -100,8 +102,11 @@ for a in all_models:
             ))
     done.append(a.app_label)        
 
+
+
 class MappedModel(models.Model):
     model_name = models.CharField(_(u'Modéle mappé'),max_length=200,choices=AVAILABLE_MODELS,null=True)
+    #model_name = models.ForeignKey(ContentType,to_field='model',verbose_name=_(u'Modéle mappé'))
     rdf_class = models.ForeignKey(SchemaClass,verbose_name=_(u'Classe RDF'),null=True) 
 
 class MappedField(models.Model):
