@@ -11,6 +11,7 @@
 ###############
 #logs/
 coop_env
+static_collected
 
 # Specific files #
 ##################
