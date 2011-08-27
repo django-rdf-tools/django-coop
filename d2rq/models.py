@@ -2,9 +2,11 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
-import config
+import config #unused but needed by livesettings !
 import surf, rdflib
-from surf.query import *
+from surf.query import select
+from urllib2 import Request, urlopen, URLError, HTTPError
+
 
 def literal_lang_select(list):
     '''
@@ -55,15 +57,17 @@ def get_schema_label(uri):
     store.clear()
     store.close()
     session.close()
-    print label
     return(label)
+
+
+
 
 def update_class_and_properties(schema):
     pass
 
 class Schema(models.Model):
     prefix = models.CharField(_(u'Préfixe du schéma'),max_length=10)
-    uri = models.CharField(_(u'URI du schéma'),max_length=200) #A URIField that does not cut "#" at the end would be cool
+    uri = models.CharField(_(u'URI du schéma'),max_length=200) #TODO URIField that does not cut "#" at the end would be cool
     label = models.CharField(_(u'Intitulé'),max_length=200,blank=True,editable=False)
     def __unicode__(self):
         return unicode(self.label)
@@ -71,7 +75,32 @@ class Schema(models.Model):
         return '<a target="_blank" href="%s">%s</a>' % (self.uri, self.uri)
     link_in_admin.allow_tags = True
         
+    def download_schema(self):
+        headers = { "Accept": "text/turtle,text/n3,text/rdf+n3,application/rdf+xml,text/rdf,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5",
+                    "Accept-Language": "en-us,en;q=0.5",
+                    "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
+                    "User-Agent": "django-d2rq"
+                    }
+        req = Request(self.uri,None,headers)
+        try:
+            handle = urlopen(req)
+        except URLError, e:
+            print 'La connexion avec le serveur a échoué.'
+            print 'Raison: ', e.reason
+        except HTTPError, e:
+            print 'Erreur du serveur.'
+            print 'Code : ', e.code
+        format = handle.info().gettype()
+        formats = { 'application/rdf+xml':'rdf','text/turtle' : 'ttl',
+                    'text/n3' :'n3','text/rdf+n3':'n3','text/rdf':'rdf',
+                    'text/xml':'rdf','application/xml':'rdf'}
+        filename = 'd2rq/vocab/'+self.prefix+'.'+formats[format]
+        local_file = open(filename, "w")
+        local_file.write(handle.read())
+        local_file.close()    
+
     def save(self, *args, **kwargs):
+        self.download_schema()
         try:
             self.label = get_schema_label(self.uri)
         except:
@@ -101,7 +130,6 @@ for a in all_models:
             a.app_label , tuple((x.model,x.name) for x in all_models.filter(app_label=a.app_label))
             ))
     done.append(a.app_label)        
-
 
 
 class MappedModel(models.Model):
