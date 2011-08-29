@@ -138,6 +138,7 @@ INSTALLED_APPS = (
     'south',
     'django_extensions',
     'extended_choices',
+#    'djutils',
     
     #3rd parties d2rq
     'smart_selects',

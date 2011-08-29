@@ -1,21 +1,33 @@
 # -*- coding:utf-8 -*-
 from django.contrib import admin
-from d2rq.models import Schema,MappedModel,MappedField
+from d2rq.models import Schema,SchemaClass,SchemaProperty,MappedModel,MappedField
 from django import forms
+
+
+
+class ClassInline(admin.TabularInline):
+    model = SchemaClass
+    extra=0
+
+class PropertyInline(admin.TabularInline):
+    model = SchemaProperty
+    extra=0
 
 class SchemaAdmin(admin.ModelAdmin):
     list_display = ('prefix','label','link_in_admin',)
     list_display_links =('prefix','label')
     ordering = ('prefix',)
+    inlines = [
+            ClassInline,PropertyInline
+        ]
 admin.site.register(Schema,SchemaAdmin)
-
 admin.site.register(MappedModel)
 
 
 class OntologySelectWidget(forms.Select):
     pass
 
-def ontology_get_list(uri,prefix):
+def ontology_get_list(uri,prefix):  
     import surf,rdflib
     liste = []
     try:
@@ -29,7 +41,7 @@ def ontology_get_list(uri,prefix):
         classes = session.get_class(surf.ns.RDFS.Class)
         print classes
         proprietes = session.get_class(surf.ns.RDF.Property)
-        subclasses = session.get_class(surf.ns.RDFS.subClassOf)
+        #subclasses = session.get_class(surf.ns.RDFS.subClassOf)
         for c in classes.all():
             if(isinstance(c.subject,rdflib.term.URIRef)):
                 option = (c.subject.replace(uri,prefix+':'),u'[C] '+unicode(c.rdfs_label.first))
