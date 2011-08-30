@@ -128,21 +128,15 @@ def move_navnode(request):
     return response
 
 def get_object_label(content_type, object):
-    label = ''
-    try:
-        nt = NavigableType.objects.get(content_type=content_type)
-        label = getattr(object, nt.label_field)
-    except:
-        pass
-    if not label:
-        try:
-            #If the object has get_label use it
-            label = object.get_label()
-        except Exception, msg:
-            #else use cast it to unicode
-            label = unicode(object)
-    return label
-
+    nt = NavigableType.objects.get(content_type=content_type)
+    
+    if nt.label_rule == NavigableType.LABEL_USE_SEARCH_FIELD:
+        return getattr(object, nt.search_field)
+    elif nt.label_rule == NavigableType.LABEL_USE_GET_LABEL:
+        return object.get_label()
+    else:
+        return unicode(object)
+    
 def add_navnode(request):
     """Add a new node"""
     response = {}

@@ -14,17 +14,34 @@ class Url(models.Model):
     def get_absolute_url(self):
         return self.url
     
+    def get_label(self):
+        if self.url.find('http://')==0:
+            return self.url[7:]
+        return self.url
+    
     def __unicode__(self):
         return self.url
 
 class NavigableType(models.Model):
+    
+    LABEL_USE_UNICODE = 0
+    LABEL_USE_SEARCH_FIELD = 1
+    LABEL_USE_GET_LABEL = 2
+    
+    LABEL_RULE_CHOICES = (
+        (LABEL_USE_UNICODE, _(u'Use object unicode')),
+        (LABEL_USE_SEARCH_FIELD, _(u'Use search field')),
+        (LABEL_USE_GET_LABEL, _(u'Use get_label')),
+    )
+    
     """Define which ContentTypes can be inserted in the tree as content"""
     content_type = models.ForeignKey(ContentType, unique=True)
     search_field = models.CharField(max_length=200)
-    label_field = models.CharField(max_length=200, default="", blank=True)
+    label_rule = models.IntegerField(verbose_name=_(u'How to generate the label'),
+        choices=LABEL_RULE_CHOICES, default=LABEL_USE_SEARCH_FIELD)
     
     def __unicode__(self):
-        return unicode(self.content_type)
+        return self.content_type.app_label+'.'+self.content_type.model
 
     
 class NavNode(models.Model):
