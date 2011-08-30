@@ -12,6 +12,7 @@ from django.core.exceptions import ValidationError, PermissionDenied
 from djaloha.views import process_object_edition
 from django.template.loader import select_template
 from django.db.models.aggregates import Max
+from django.contrib.admin.views.decorators import staff_member_required
 
 class NavTree:
         
@@ -50,8 +51,7 @@ def view_navnode(request):
 
     #get the admin url
     app, mod = node.content_type.app_label, node.content_type.model
-    kwargs = {id: node.id}
-    admin_url = reverse("admin:{0}_{1}_change".format(app, mod), args=(node.id,))
+    admin_url = reverse("admin:{0}_{1}_change".format(app, mod), args=(node.object_id,))
     
     #load and render template for the object
     #try to load the corresponding template and if not found use the default one
@@ -240,15 +240,12 @@ def edit_node(request, id):
     if node.content_object:
         return HttpResponseRedirect(node.content_object.get_absolute_url())
     raise Http404
-    
+
+@staff_member_required
 def get_object_suggest_list(request):
-    ####TODO: USE DECORATORS
     if not request.is_ajax:
         return Http404
     
-    if not request.user.is_staff:
-        return HttpResponseForbidden
-    ###################
     object_type = request.GET.get("object_type")
     if not object_type:
         return Http404

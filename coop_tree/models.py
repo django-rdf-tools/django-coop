@@ -65,3 +65,8 @@ class NavNode(models.Model):
         t = get_template('_node_li.html')
         return t.render(Context({'node': self}))
     
+class NavTree(models.Model):
+    last_update = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        verbose_name_plural = verbose_name = _(u'Navigation tree')
