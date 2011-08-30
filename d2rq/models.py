@@ -6,7 +6,7 @@ from django.contrib.contenttypes.models import ContentType
 import config # not unused, needed by livesettings !
 import surf, rdflib
 from surf import ns
-from surf.query import select
+from surf.query import select,a
 from urllib2 import Request, urlopen, URLError, HTTPError
 #from djutils.decorators import async
 import settings
@@ -96,33 +96,25 @@ def get_schema_label(uri,prefix,format):
                     if(lookup != None):label=lookup
             if not label:
                 label = unicode(uri)
-    else: # là c'est la vraie methode, ci-dessus c'est pour les OWL dont l'URL ≠ de l'URI sujet
+    else: # là c'est la vraie methode, 
+    #au-dessus c'est juste pour les OWL dont l'URL ≠ de l'URI sujet
+    #donc pas forcément obligatoire à garder non plus
         try:
             print "Le schema est un vocabulaire RDFS"
             vocab_type = 'rdfs'
             label = get_label(rdflib.term.URIRef(uri),store)
         except:
-            raise   
-        # ns_titles = [ns.RDFS["comment"],ns.RDFS["label"],ns.DC["title"],ns.DCTERMS["title"]]
-        #         for title in ns_titles:
-        #             query = select("?o").where((ownuri,title,"?o"))
-        #             found_title = list(store.reader._to_table(store.reader._execute(query)))
-        #             if(len(found_title)>0):
-        #                 label = literal_lang_select([found_title[x]['o'] for x in range(len(found_title))])
-        #         if(not label): #on n'a rien trouvé avec la méthode rfds non plus
-        #             label = unicode(uri)
-    cp = {'classes':[],'proprietes':[]}
-    if(vocab_type=='owl'):#TODO FILTER : on veut que ses propres classes !
-        #vocab_classes = session.get_class(ns.OWL.Class).all()
-        vocab_classes = list(store.reader._to_table(store.reader._execute(
-                            select("?s").where(("?s",ns.RDF.type,ns.OWL.Class)))))
-        vocab_proprietes = list(store.reader._to_table(store.reader._execute(
-                            select("?s").where(("?s",ns.RDF.type,ns.OWL.ObjectProperty)))))        
-    elif(vocab_type=='rdfs'):
-        vocab_classes = list(store.reader._to_table(store.reader._execute(
-                            select("?s").where(("?s",ns.RDF.type,ns.RDFS.Class)))))
-        vocab_proprietes = list(store.reader._to_table(store.reader._execute(
-                            select("?s").where(("?s",ns.RDF.type,ns.RDF.Property)))))
+            raise
+    
+    lookup_args = { 'owl':  (ns.OWL.Class,ns.OWL.ObjectProperty),
+                    'rdfs': (ns.RDFS.Class,ns.RDF.Property)}
+    vocab_classes = list(store.reader._to_table(store.reader._execute(
+                        select("?s").where(("?s", a, lookup_args[vocab_type][0])).filter('(regex(str(?s),"'+uri+'","i"))')# vocab own classes only
+                        )))
+    vocab_proprietes = list(store.reader._to_table(store.reader._execute(
+                        select("?s").where(("?s", a, lookup_args[vocab_type][1])).filter('(regex(str(?s),"'+uri+'","i"))')
+                        )))   
+    cp = {'classes':[],'proprietes':[]}                        
     for items in ((vocab_classes,'classes'),(vocab_proprietes,'proprietes')):
         for triple in items[0]:
             if(isinstance(triple['s'],rdflib.term.URIRef) and bool(re.compile(uri).match(unicode(triple['s'])))): #ugly patch waiting for query to work
@@ -174,7 +166,6 @@ class Schema(models.Model):
             for sp in cp['proprietes']:
                 sp = SchemaProperty(schema=self,prop_name=sp[0],prop_label=sp[1])
                 sp.save()
-        
 
 
 class SchemaClass(models.Model):
@@ -205,13 +196,13 @@ from livesettings import config_value
 done = []
 AVAILABLE_MODELS = []
 all_models = ContentType.objects.filter(app_label__in=config_value('d2rq','MAPPED_APPS')).order_by('app_label')
-for a in all_models:
-    if(a.app_label not in done):
+for m in all_models:
+    if(m.app_label not in done):
         AVAILABLE_MODELS.append((
-            a.app_label , 
-            tuple((x.model,x.name) for x in all_models.filter(app_label=a.app_label))
+            m.app_label , 
+            tuple((x.model,x.name) for x in all_models.filter(app_label=m.app_label))
             ))
-    done.append(a.app_label)        
+    done.append(m.app_label)        
 
 
 AVAILABLE_CLASSES = []
