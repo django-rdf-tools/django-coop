@@ -127,14 +127,28 @@ def move_navnode(request):
     
     return response
 
+def get_object_label(content_type, object):
+    label = ''
+    try:
+        nt = NavigableType.objects.get(content_type=content_type)
+        label = getattr(object, nt.label_field)
+    except:
+        pass
+    if not label:
+        try:
+            #If the object has get_label use it
+            label = object.get_label()
+        except Exception, msg:
+            #else use cast it to unicode
+            label = unicode(object)
+    return label
+
 def add_navnode(request):
     """Add a new node"""
     response = {}
     
     #get the type of object
     object_type = request.POST['object_type']
-    prefix = 'type-'
-    object_type = object_type[len(prefix):]
     app_label, model_name = object_type.split('.')
     ct = ContentType.objects.get(app_label=app_label, model=model_name)
     model_class = ct.model_class()
@@ -147,11 +161,8 @@ def add_navnode(request):
     except model_class.DoesNotExist:
         raise ValidationError(_(u"{0} {1} not found").format(model_class._meta.verbose_name, object_id))
     
-    #If the object has get_label use it, else use cast it to unicode
-    try:
-        label = object.get_label()
-    except Exception, msg:
-        label = unicode(object)
+    #Try to use the label_field of the type if defined
+    label = get_object_label(ct, object)
     
     #Create the node
     node = NavNode(label=label)
@@ -161,6 +172,7 @@ def add_navnode(request):
         node.parent = NavNode.objects.get(id=parent_id)
         sibling_nodes = NavNode.objects.filter(parent=node.parent)
     else:
+        node.parent = None
         sibling_nodes = NavNode.objects.filter(parent__isnull=True)
     max_ordering = sibling_nodes.aggregate(max_ordering=Max('ordering'))['max_ordering'] or 0
     node.ordering = max_ordering + 1
@@ -251,7 +263,10 @@ def get_object_suggest_list(request):
     #the requested content type 
     suggestions = []
     
+    #TODO : Get Navigable apps ---------------------------------------
     apps = ('coop_page.page', 'coop_tree.url')
+    #-----------------------------------------------------------------
+    
     for app_label, model_name in [app.split('.') for app in apps]:
         ct = ContentType.objects.get(app_label=app_label, model=model_name)
         
@@ -260,8 +275,13 @@ def get_object_suggest_list(request):
         lookup = {search_field+'__icontains': term}
         
         #Get suggestions as a list of {label: object.get_label() or unicode if no get_label, 'value':<object.id>}
-        suggestions += [{'label': x.get_label() if hasattr(x, 'get_label') else unicode(x), 'value': x.id, 'category': model_name}
-            for x in ct.model_class().objects.filter(**lookup)]
+        for object in ct.model_class().objects.filter(**lookup):
+            suggestions.append({
+                'label': get_object_label(ct, object),
+                'value': object.id,
+                'category': ct.model_class()._meta.verbose_name.capitalize(),
+                'type': ct.app_label+u'.'+ct.model,
+            })
     
     return HttpResponse(json.dumps(suggestions), mimetype='application/json')    
     

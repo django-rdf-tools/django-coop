@@ -21,6 +21,7 @@ class NavigableType(models.Model):
     """Define which ContentTypes can be inserted in the tree as content"""
     content_type = models.ForeignKey(ContentType, unique=True)
     search_field = models.CharField(max_length=200)
+    label_field = models.CharField(max_length=200, default="", blank=True)
     
     def __unicode__(self):
         return unicode(self.content_type)
