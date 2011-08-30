@@ -83,19 +83,19 @@ class NavNode(models.Model):
         #Display the node and his children as nested ul and li html tags.
         #Render from a template who is in charge of rendering children
         #This prints the whole tree recursively
-        t = get_template('_node_li.html')
+        t = get_template('coop_tree/_node_li.html')
         return t.render(Context({'node': self}))
         
     def as_breadcrumb(self):
-        t = get_template('_node_breadcrumb.html')
+        t = get_template('coop_tree/_node_breadcrumb.html')
         return t.render(Context({'node': self}))
 
     def children_as_li(self):
-        t = get_template('_node_children_li.html')
+        t = get_template('coop_tree/_node_children_li.html')
         return t.render(Context({'node': self}))
         
     def siblings_as_li(self):
-        t = get_template('_node_sibling_li.html')
+        t = get_template('coop_tree/_node_sibling_li.html')
         return t.render(Context({'node': self}))
         
 

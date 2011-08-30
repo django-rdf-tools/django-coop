@@ -4,76 +4,9 @@
 	border: solid thin #af7;
 }
 
-#nodes {
-	width: 600px;
-	margin-top: 5px;
-}
-
 .djaloha-editable{
 	/*border: dashed #ccc thin;
 	padding: 2px 2px 2px 2px;*/
 	min-height: 20px;
 }
 
-.error-field {
-	background: red;
-}
-
-.ui-autocomplete .ui-menu-item {
-	font-size: 9px;
-}
-
-.sf-menu {
-    float: left;
-    width: 100%;
-    background: #eee;
-    margin-top: 5px;
-    margin-bottom: 5px;
-	height: 20px;
-	line-height: 0em;
-	font-size: 12px;
-}
-
-.sf-menu a{
-	padding: .75em 1em;
-	border-left: 0px solid #fff;
-	border-right: 1px solid #fff;
-	text-decoration:none;
-}
-
-.sf-menu li:hover ul, .sf-menu li.sfHover ul {
-	top: 1.5em;
-}
-
-.sf-menu li:hover, .sf-menu li.sfHover,
-.sf-menu a:focus, .sf-menu a:hover, .sf-menu a:active {
-    outline: 0;
-}
-
-.sf-menu li, .sf-menu li li, .sf-menu li li li{
-    width:120px;
-}
-
-.sf-menu li li{
-	background:  #e0e0e0;
-}
-
-.sf-menu li li li{
-	background:  #d0d0d0;
-}
-
-.sf-menu li li li{
-	left: 0px;
-}
-
-.sf-menu li:hover{
-	background: #79f;
-}
-
-.sf-menu li li:hover{
-	background: #57f;
-}
-
-.sf-menu li li li:hover{
-	background: #35f;
-}

@@ -12,7 +12,7 @@ var admin_printMessage = function (message, css_class) {
 </script>
 {% if user.is_authenticated %}
 	<div id="admin-bar">
-		<a href="{% url navigation_tree %}">{% trans "Navigation" %}</a>
+		<a href="{% url admin:index %}">{% trans "Admin" %}</a>
 		{% if editable %}
 			{% if edit_mode %}
 			<a href="{{object.get_absolute_url}}?mode=view">{% trans "View" %}</a>

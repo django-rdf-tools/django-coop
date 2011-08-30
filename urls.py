@@ -22,10 +22,7 @@ urlpatterns = patterns('',
 
     (r'^membre/', include('membre.urls')),
 
-    url(r'^tree/$', 'coop_tree.views.view_tree', name='navigation_tree'),
-    url(r'^tree/object-suggest-list/$', 'coop_tree.views.get_object_suggest_list', name='object_suggest_list'),
-    url(r'^node/(?P<id>.+)$', 'coop_tree.views.edit_node', name='edit_node'),
-    
+    url(r'^tree/$', 'coop_tree.views.process_nav_edition', name='navigation_tree'),
 )
 
 if settings.DEBUG or ('test' in sys.argv):

@@ -184,12 +184,17 @@
     });
     
     $("#object_label").catcomplete({
-        source: function(req, add){
-          $.getJSON("{% url object_suggest_list %}", req, function(data) {
+        source: function(request, add){
+          post_msg('get_suggest_list', {term: request.term}, function(data) {
+          //$.getJSON("", req, function(data) {
             var existing_objects = [];
-            $.each(data, function(i, val){
-              existing_objects.push(val);
-            });
+            if (data.status === "success") {
+              $.each(data.suggestions, function(i, val){
+                existing_objects.push(val);
+              });
+            } else {
+              admin_printMessage(data.message, data.status);  
+            }
             add(existing_objects);
           });
         },

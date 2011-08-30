@@ -12,35 +12,7 @@ from django.core.exceptions import ValidationError, PermissionDenied
 from djaloha.views import process_object_edition
 from django.template.loader import select_template
 from django.db.models.aggregates import Max
-from django.contrib.admin.views.decorators import staff_member_required
-
-class NavTree:
-        
-    def __init__(self, root_nodes):
-        self._nodes = {}
-        for node in root_nodes:
-            setattr(self, 'node_{0}'.format(node.id), node.label)
-            self._nodes[node.id] = node
-        self._changed_nodes = []
-    
-    def __setattr__(self, name, value):
-        if hasattr(self, '_changed_nodes') and name.find('node_')==0:
-            id = int(name[len('node_'):])
-            node = self._nodes[id]
-            node.label = value
-            self._changed_nodes.append(node)
-        self.__dict__[name] = value
-    
-    def full_clean(self):
-        for node in self._changed_nodes:
-            node.full_clean()
-    
-    def save(self):
-        for node in self._changed_nodes:
-            node.save()
-    
-    def get_absolute_url(self):
-        return reverse('navigation_tree')
+#from django.contrib.admin.views.decorators import staff_member_required
 
 def view_navnode(request):
     """show info about the node when selected"""
@@ -181,7 +153,29 @@ def add_navnode(request):
     
     return response
 
-
+def get_suggest_list(request):
+    response = {}
+    suggestions = []
+    term = request.POST["term"]#the 1st chars entered in the autocomplete
+    
+    for nt in NavigableType.objects.all():
+        ct = nt.content_type
+        
+        #Get the name of the default field for the current type (eg: Page->title, Url->url ...)
+        lookup = {nt.search_field+'__icontains': term}
+        
+        #Get suggestions as a list of {label: object.get_label() or unicode if no get_label, 'value':<object.id>}
+        for object in ct.model_class().objects.filter(**lookup):
+            suggestions.append({
+                'label': get_object_label(ct, object),
+                'value': object.id,
+                'category': ct.model_class()._meta.verbose_name.capitalize(),
+                'type': ct.app_label+u'.'+ct.model,
+            })
+    
+    response['suggestions'] = suggestions
+    return response
+    
 def process_nav_edition(request):
     """This handle ajax request sent by the tree component"""
     if request.method == 'POST' and request.is_ajax and request.POST.has_key('msg_id'):
@@ -189,7 +183,7 @@ def process_nav_edition(request):
             supported_msg = {}
             #create a map between message name and handler
             #use the function name as message id
-            for fct in (view_navnode, rename_navnode, remove_navnode, move_navnode, add_navnode):
+            for fct in (view_navnode, rename_navnode, remove_navnode, move_navnode, add_navnode, get_suggest_list):
                 supported_msg[fct.__name__] = fct
             
             #Call the handler corresponding to the requested message
@@ -212,65 +206,5 @@ def process_nav_edition(request):
             response = {'status': 'error', 'message': _("An error occured")}
 
         #return the result as json object
-        return HttpResponse(json.dumps(response), mimetype='application/json')    
-
-def view_tree(request):
-    nav_tree = NavTree(NavNode.objects.all())
-    
-    root_nodes = NavNode.objects.filter(parent__isnull=True).order_by("ordering")
-    response = process_nav_edition(request)
-    if response:
-        return response
-    
-    response = process_object_edition(request, nav_tree, perm='coop_tree.change_navnode')
-    if response:
-        return response
-    
-    nodes_li = u''.join([node.as_li() for node in root_nodes])
-    
-    nav_types = []
-    for nt in NavigableType.objects.all():
-        nav_types.append({
-            'type': 'type-' + nt.content_type.app_label + '.' + nt.content_type.model,
-            'label': nt.content_type.model_class()._meta.verbose_name.capitalize()
-        })
-    
-    return render_to_response(
-        'tree.html',
-        {'nodes_li': nodes_li, 'object': nav_tree, 'nav_types': nav_types},
-        context_instance=RequestContext(request)
-    )
-    
-def edit_node(request, id):
-    node = NavNode.objects.get(id=id)
-    if node.content_object:
-        return HttpResponseRedirect(node.content_object.get_absolute_url())
+        return HttpResponse(json.dumps(response), mimetype='application/json')
     raise Http404
-
-@staff_member_required
-def get_object_suggest_list(request):
-    if not request.is_ajax:
-        return Http404
-    
-    term = request.GET.get("term") #the 1st chars entered in the autocomplete
-    
-    #the requested content type 
-    suggestions = []
-    
-    for nt in NavigableType.objects.all():
-        ct = nt.content_type
-        
-        #Get the name of the default field for the current type (eg: Page->title, Url->url ...)
-        lookup = {nt.search_field+'__icontains': term}
-        
-        #Get suggestions as a list of {label: object.get_label() or unicode if no get_label, 'value':<object.id>}
-        for object in ct.model_class().objects.filter(**lookup):
-            suggestions.append({
-                'label': get_object_label(ct, object),
-                'value': object.id,
-                'category': ct.model_class()._meta.verbose_name.capitalize(),
-                'type': ct.app_label+u'.'+ct.model,
-            })
-    
-    return HttpResponse(json.dumps(suggestions), mimetype='application/json')    
-    

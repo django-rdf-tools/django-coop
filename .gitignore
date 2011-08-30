@@ -12,6 +12,7 @@
 #logs/
 coop_env
 static_collected
+test_app
 
 # Specific files #
 ##################

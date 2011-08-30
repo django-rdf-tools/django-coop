@@ -62,25 +62,9 @@
 <div id="main" role="main" class="container_12 clearfix">
   {% block navigation %}
   <nav>
-      <ul class="sf-menu">{% navigation_as_nested_ul %}</ul>
+      <ul>{% navigation_as_nested_ul %}</ul>
   </nav>
   {% endblock %}
-  <hr />
-  {% block breadcrumbs %}
-    <h4>breadcrumbs</h4>
-    <ul>{% navigation_breadcrumb %}</ul>
-  {% endblock%}
-  <hr />
-  {% block children %}
-    <h4>children</h4>
-    <ul>{% navigation_children %}</ul>
-  {% endblock%}
-  <hr />
-  {% block siblings %}
-    <h4>siblings</h4>
-    <ul>{% navigation_siblings %}</ul>
-  {% endblock%}
-  <hr />
 
     <div id="content" class="grid_9 grid">
       {% block document %}
@@ -121,7 +105,6 @@ $(function(){
     {% endblock %}
 });
 </script>
-
 
 
 </body>
