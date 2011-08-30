@@ -31,14 +31,28 @@ DR2Q_MAPPING = ConfigurationGroup(
     'd2rq',               # key: internal name of the group to be created
     _('Configuration du mapper RDF'),  # name: verbose name which can be automatically translated
     ordering=0             # ordering: order of group in the list (default is 1)
-    )
+)
 
 # Another example of allowing the user to select from several values
 config_register(MultipleStringValue(
-        DR2Q_MAPPING,
-        'MAPPED_APPS',
-        description=_("Selection des applications"),
-        help_text=_("Selectionnez les applications avec des donnees a publier en RDF"),
-        choices=all_apps,
-        default=""
-    ))
+    DR2Q_MAPPING,
+    'MAPPED_APPS',
+    description=_("Selection des applications"),
+    help_text=_("Selectionnez les applications avec des donnees a publier en RDF"),
+    choices=all_apps,
+    default=""
+))
+
+
+COOPTREE_MAPPING = ConfigurationGroup('coop_tree', _('Navigation'))
+
+# Another example of allowing the user to select from several values
+config_register(MultipleStringValue(
+    COOPTREE_MAPPING,
+    'CONTENT_APPS',
+    description=_("Selection des applications"),
+    help_text=_("Selectionnez des applications contenant des objets navigables"),
+    choices=all_apps,
+    default=""
+))
+

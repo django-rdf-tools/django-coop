@@ -157,8 +157,15 @@ INSTALLED_APPS = (
 )
 
 LIVESETTINGS_OPTIONS = \
-{   1: {   'DB': True,
-           'SETTINGS': {   u'd2rq': {   u'MAPPED_APPS': u'["local", "skosxl"]'}}}}
+{
+    1: {
+    'DB': True,
+       'SETTINGS': {
+            u'd2rq': {u'MAPPED_APPS': u'["local", "skosxl"]'},
+            u'coop_tree': {u'CONTENT_APPS': u'["coop_tree", "coop_page"]'}
+        }
+    }
+}
 
 
 AUTH_PROFILE_MODULE = 'local.membre'

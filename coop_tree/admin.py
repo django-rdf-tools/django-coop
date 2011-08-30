@@ -2,10 +2,15 @@
 from django.contrib import admin
 from django.core.urlresolvers import reverse
 import models
-
+from forms import NavigableTypeForm
 admin.site.register(models.Url)
 admin.site.register(models.NavNode)
-admin.site.register(models.NavigableType)
+
+
+class NavigableTypeAdmin(admin.ModelAdmin):
+    form = NavigableTypeForm
+    
+admin.site.register(models.NavigableType, NavigableTypeAdmin)
 
 class NavTreeAdmin(admin.ModelAdmin):
 
