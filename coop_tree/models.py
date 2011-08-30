@@ -76,12 +76,29 @@ class NavNode(models.Model):
     def get_children(self):
         return NavNode.objects.filter(parent=self).order_by("ordering")
         
+    def get_siblings(self):
+        return NavNode.objects.filter(parent=self.parent).exclude(id=self.id).order_by("ordering")
+        
     def as_li(self):
         #Display the node and his children as nested ul and li html tags.
         #Render from a template who is in charge of rendering children
         #This prints the whole tree recursively
         t = get_template('_node_li.html')
         return t.render(Context({'node': self}))
+        
+    def as_breadcrumb(self):
+        t = get_template('_node_breadcrumb.html')
+        return t.render(Context({'node': self}))
+
+    def children_as_li(self):
+        t = get_template('_node_children_li.html')
+        return t.render(Context({'node': self}))
+        
+    def siblings_as_li(self):
+        t = get_template('_node_sibling_li.html')
+        return t.render(Context({'node': self}))
+        
+
     
 class NavTree(models.Model):
     last_update = models.DateTimeField(auto_now=True)

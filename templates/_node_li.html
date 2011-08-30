@@ -1,20 +1,9 @@
 {% load i18n %}
 
 <li class="nav-nodex" id="node_{{node.id}}">
-{% with node.content_object.get_absolute_url as url %}
 	<a href="{{node.get_absolute_url}}">
 	{{node.label}}
-	{% comment %}
-	<span id="label_{{node.id}}" class="node-label">{{node.label}}</span>
-	<span class="actions">
-	{% if url %}
-	<a href="{{url}}?mode=edit">{% trans "Edit" %} {{node.get_content_name}}</a>
-	{% endif %}
-	<a href="{{node.get_absolute_url}}?mode=edit">{% trans "Delete" %}</a>
-	</span>
-	{%endcomment%}
 	</a>
-{% endwith %}
 
 	{% with node.get_children as children %}
 	{% if children %}

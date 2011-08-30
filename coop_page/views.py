@@ -26,14 +26,11 @@ def view_page(request, url):
     if response:
         return response
 
-    root_nodes = NavNode.objects.filter(parent__isnull=True).order_by("ordering")
-
     context_dict = {
         'object': page,
         'links': Page.objects.all(),
         'editable': True,
         'edit_mode': request.GET.get('mode', 'view')=='edit',
-        'nodes_li': u''.join([node.as_li() for node in root_nodes]),
     }
 
     return render_to_response(

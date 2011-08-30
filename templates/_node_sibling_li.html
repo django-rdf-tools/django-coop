@@ -1,0 +1,7 @@
+{% load i18n %}
+
+{% with node.get_siblings as siblings %}
+{% for sibling in siblings %}
+<li><a href="{{sibling.get_absolute_url}}">{{sibling.label}}</a></li>
+{% endfor %}
+{% endwith %}
