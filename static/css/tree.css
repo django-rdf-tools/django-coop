@@ -33,7 +33,7 @@ li.nav-node {
 	margin-right: 5px;
 }
 
-aside {
+aside, #aside {
 	float: right;
 	width: 50%;
 	border: solid 2px #eee;

@@ -12,6 +12,7 @@ from django.core.exceptions import ValidationError, PermissionDenied
 from djaloha.views import process_object_edition
 from django.template.loader import select_template
 from django.db.models.aggregates import Max
+from django.contrib.admin.views.decorators import staff_member_required
 
 class NavTree:
         
@@ -50,8 +51,7 @@ def view_navnode(request):
 
     #get the admin url
     app, mod = node.content_type.app_label, node.content_type.model
-    kwargs = {id: node.id}
-    admin_url = reverse("admin:{0}_{1}_change".format(app, mod), args=(node.id,))
+    admin_url = reverse("admin:{0}_{1}_change".format(app, mod), args=(node.object_id,))
     
     #load and render template for the object
     #try to load the corresponding template and if not found use the default one
@@ -127,14 +127,22 @@ def move_navnode(request):
     
     return response
 
+def get_object_label(content_type, object):
+    nt = NavigableType.objects.get(content_type=content_type)
+    
+    if nt.label_rule == NavigableType.LABEL_USE_SEARCH_FIELD:
+        return getattr(object, nt.search_field)
+    elif nt.label_rule == NavigableType.LABEL_USE_GET_LABEL:
+        return object.get_label()
+    else:
+        return unicode(object)
+    
 def add_navnode(request):
     """Add a new node"""
     response = {}
     
     #get the type of object
     object_type = request.POST['object_type']
-    prefix = 'type-'
-    object_type = object_type[len(prefix):]
     app_label, model_name = object_type.split('.')
     ct = ContentType.objects.get(app_label=app_label, model=model_name)
     model_class = ct.model_class()
@@ -147,11 +155,8 @@ def add_navnode(request):
     except model_class.DoesNotExist:
         raise ValidationError(_(u"{0} {1} not found").format(model_class._meta.verbose_name, object_id))
     
-    #If the object has get_label use it, else use cast it to unicode
-    try:
-        label = object.get_label()
-    except Exception, msg:
-        label = unicode(object)
+    #Try to use the label_field of the type if defined
+    label = get_object_label(ct, object)
     
     #Create the node
     node = NavNode(label=label)
@@ -161,6 +166,7 @@ def add_navnode(request):
         node.parent = NavNode.objects.get(id=parent_id)
         sibling_nodes = NavNode.objects.filter(parent=node.parent)
     else:
+        node.parent = None
         sibling_nodes = NavNode.objects.filter(parent__isnull=True)
     max_ordering = sibling_nodes.aggregate(max_ordering=Max('ordering'))['max_ordering'] or 0
     node.ordering = max_ordering + 1
@@ -240,33 +246,31 @@ def edit_node(request, id):
     if node.content_object:
         return HttpResponseRedirect(node.content_object.get_absolute_url())
     raise Http404
-    
+
+@staff_member_required
 def get_object_suggest_list(request):
-    ####TODO: USE DECORATORS
     if not request.is_ajax:
-        return Http404
-    
-    if not request.user.is_staff:
-        return HttpResponseForbidden
-    ###################
-    object_type = request.GET.get("object_type")
-    if not object_type:
         return Http404
     
     term = request.GET.get("term") #the 1st chars entered in the autocomplete
     
     #the requested content type 
-    prefix = 'type-'
-    app_label, model_name = object_type[len(prefix):].split('.')
-    ct = ContentType.objects.get(app_label=app_label, model=model_name)
+    suggestions = []
     
-    #Get the name of the default field for the current type (eg: Page->title, Url->url ...)
-    search_field = NavigableType.objects.get(content_type=ct).search_field
-    lookup = {search_field+'__icontains': term}
-    
-    #Get suggestions as a list of {label: object.get_label() or unicode if no get_label, 'value':<object.id>}
-    suggestions = [{'label': x.get_label() if hasattr(x, 'get_label') else unicode(x), 'value': x.id}
-        for x in ct.model_class().objects.filter(**lookup)]
+    for nt in NavigableType.objects.all():
+        ct = nt.content_type
+        
+        #Get the name of the default field for the current type (eg: Page->title, Url->url ...)
+        lookup = {nt.search_field+'__icontains': term}
+        
+        #Get suggestions as a list of {label: object.get_label() or unicode if no get_label, 'value':<object.id>}
+        for object in ct.model_class().objects.filter(**lookup):
+            suggestions.append({
+                'label': get_object_label(ct, object),
+                'value': object.id,
+                'category': ct.model_class()._meta.verbose_name.capitalize(),
+                'type': ct.app_label+u'.'+ct.model,
+            })
     
     return HttpResponse(json.dumps(suggestions), mimetype='application/json')    
     
