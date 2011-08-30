@@ -4,20 +4,6 @@ from livesettings import config_register, ConfigurationGroup, PositiveIntegerVal
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 
-
-# 
-# banned = ('auth','django','contenttypes','south','sessions','admin','d2rq')
-# done = []
-# AVAILABLE_MODELS = []
-# all_models = ContentType.objects.exclude(app_label__in=banned).order_by('app_label')
-# for a in all_models:
-#     if(a.app_label not in done):
-#         AVAILABLE_MODELS.append((
-#             a.app_label , tuple((x.model,x.name) for x in all_models.filter(app_label=a.app_label))
-#             ))
-#     done.append(a.app_label)
-
-
 not_to_be_mapped = ('south','livesettings','django_extensions','d2rq')
 
 import settings
