@@ -1,0 +1,4051 @@
+[
+    {
+        "pk": 2,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "dct",
+            "format": "rdf",
+            "vocab_type": "rdfs",
+            "uri": "http://purl.org/dc/terms/",
+            "label": "DCMI Metadata Terms in the /terms/ namespace"
+        }
+    },
+    {
+        "pk": 9,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "opmv",
+            "format": "rdf",
+            "vocab_type": "owl",
+            "uri": "http://purl.org/net/opmv/ns#",
+            "label": "Open Provenance Model Vocabulary Core namespace"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "foaf",
+            "format": "rdf",
+            "vocab_type": "owl",
+            "uri": "http://xmlns.com/foaf/0.1/",
+            "label": "Friend of a Friend (FOAF) vocabulary"
+        }
+    },
+    {
+        "pk": 6,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "vcard",
+            "format": "rdf",
+            "vocab_type": "owl",
+            "uri": "http://www.w3.org/2006/vcard/ns#",
+            "label": "An Ontology for vCards"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "gr",
+            "format": "rdf",
+            "vocab_type": "owl",
+            "uri": "http://purl.org/goodrelations/v1#",
+            "label": "The GoodRelations Ontology for Semantic Web-based E-Commerce"
+        }
+    },
+    {
+        "pk": 17,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "skosxl",
+            "format": "rdf",
+            "vocab_type": "owl",
+            "uri": "http://www.w3.org/2008/05/skos-xl",
+            "label": "SKOS XL Vocabulary"
+        }
+    },
+    {
+        "pk": 14,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "cs",
+            "format": "rdf",
+            "vocab_type": "owl",
+            "uri": "http://purl.org/vocab/changeset/schema#",
+            "label": "Changeset"
+        }
+    },
+    {
+        "pk": 10,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "xsd",
+            "format": "xml",
+            "vocab_type": "???",
+            "uri": "http://www.w3.org/2001/XMLSchema#",
+            "label": "http://www.w3.org/2001/XMLSchema#"
+        }
+    },
+    {
+        "pk": 15,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "geo",
+            "format": "rdf",
+            "vocab_type": "rdfs",
+            "uri": "http://www.w3.org/2003/01/geo/wgs84_pos#",
+            "label": "WGS84 Geo Positioning: an RDF vocabulary"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "org",
+            "format": "ttl",
+            "vocab_type": "owl",
+            "uri": "http://www.w3.org/ns/org#",
+            "label": "Core organization ontology@en"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "skos",
+            "format": "rdf",
+            "vocab_type": "owl",
+            "uri": "http://www.w3.org/2004/02/skos/core#",
+            "label": "SKOS Vocabulary"
+        }
+    },
+    {
+        "pk": 16,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "sioc",
+            "format": "rdf",
+            "vocab_type": "owl",
+            "uri": "http://rdfs.org/sioc/ns#",
+            "label": "SIOC Core Ontology Namespace"
+        }
+    },
+    {
+        "pk": 12,
+        "model": "d2rq.schema",
+        "fields": {
+            "prefix": "time",
+            "format": "rdf",
+            "vocab_type": "owl",
+            "uri": "http://www.w3.org/2006/time#",
+            "label": "An OWL Ontology of Time (OWL-Time)."
+        }
+    },
+    {
+        "pk": 660,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2004/02/skos/core#Concept",
+            "class_label": "Concept",
+            "schema": 3
+        }
+    },
+    {
+        "pk": 661,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2004/02/skos/core#ConceptScheme",
+            "class_label": "Concept Scheme",
+            "schema": 3
+        }
+    },
+    {
+        "pk": 662,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2004/02/skos/core#Collection",
+            "class_label": "Collection",
+            "schema": 3
+        }
+    },
+    {
+        "pk": 663,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2004/02/skos/core#OrderedCollection",
+            "class_label": "Ordered Collection",
+            "schema": 3
+        }
+    },
+    {
+        "pk": 664,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://rdfs.org/sioc/ns#Community",
+            "class_label": "Community",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 665,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://rdfs.org/sioc/ns#Container",
+            "class_label": "Container",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 666,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://rdfs.org/sioc/ns#Forum",
+            "class_label": "Forum",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 667,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://rdfs.org/sioc/ns#Item",
+            "class_label": "Item",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 668,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://rdfs.org/sioc/ns#Post",
+            "class_label": "Post",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 669,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://rdfs.org/sioc/ns#Role",
+            "class_label": "Role",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 670,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://rdfs.org/sioc/ns#Space",
+            "class_label": "Space",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 671,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://rdfs.org/sioc/ns#Site",
+            "class_label": "Site",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 672,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://rdfs.org/sioc/ns#Thread",
+            "class_label": "Thread",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 673,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://rdfs.org/sioc/ns#UserAccount",
+            "class_label": "User Account",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 674,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://rdfs.org/sioc/ns#Usergroup",
+            "class_label": "Usergroup",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 643,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#PriceSpecification",
+            "class_label": "Price specification",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 644,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#QualitativeValue",
+            "class_label": "Qualitative value",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 645,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#WarrantyPromise",
+            "class_label": "Warranty promise",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 646,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#PaymentMethod",
+            "class_label": "Payment method",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 647,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#Brand",
+            "class_label": "Brand",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 648,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2008/05/skos-xl#Label",
+            "class_label": "Label",
+            "schema": 17
+        }
+    },
+    {
+        "pk": 649,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/vocab/changeset/schema#ChangeSet",
+            "class_label": "ChangeSet",
+            "schema": 14
+        }
+    },
+    {
+        "pk": 650,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing",
+            "class_label": "SpatialThing",
+            "schema": 15
+        }
+    },
+    {
+        "pk": 651,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2003/01/geo/wgs84_pos#Point",
+            "class_label": "point",
+            "schema": 15
+        }
+    },
+    {
+        "pk": 652,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/ns/org#Organization",
+            "class_label": "Organization",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 653,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/ns/org#FormalOrganization",
+            "class_label": "FormalOrganization",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 654,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/ns/org#OrganizationalUnit",
+            "class_label": "OrganizationalUnit",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 655,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/ns/org#Role",
+            "class_label": "Role",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 656,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/ns/org#Membership",
+            "class_label": "Membership",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 657,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/ns/org#Site",
+            "class_label": "Site",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 658,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/ns/org#OrganizationalCollaboration",
+            "class_label": "Endeavour",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 659,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/ns/org#ChangeEvent",
+            "class_label": "ChangeEvent",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 540,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/time#Instant",
+            "class_label": "Instant",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 541,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/time#Interval",
+            "class_label": "Interval",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 542,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/time#TemporalEntity",
+            "class_label": "TemporalEntity",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 543,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/time#ProperInterval",
+            "class_label": "ProperInterval",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 544,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/time#DurationDescription",
+            "class_label": "DurationDescription",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 545,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/time#Year",
+            "class_label": "Year",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 546,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/time#DateTimeInterval",
+            "class_label": "DateTimeInterval",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 547,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/time#TemporalUnit",
+            "class_label": "TemporalUnit",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 548,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/time#DateTimeDescription",
+            "class_label": "DateTimeDescription",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 549,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/time#DayOfWeek",
+            "class_label": "DayOfWeek",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 550,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/time#January",
+            "class_label": "January",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 551,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/dc/terms/Agent",
+            "class_label": "Agent",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 552,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/dc/terms/AgentClass",
+            "class_label": "Agent Class",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 553,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/dc/terms/BibliographicResource",
+            "class_label": "Bibliographic Resource",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 554,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/dc/terms/FileFormat",
+            "class_label": "File Format",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 555,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/dc/terms/Frequency",
+            "class_label": "Frequency",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 556,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/dc/terms/Jurisdiction",
+            "class_label": "Jurisdiction",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 557,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/dc/terms/LicenseDocument",
+            "class_label": "License Document",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 558,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/dc/terms/LinguisticSystem",
+            "class_label": "Linguistic System",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 559,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/dc/terms/Location",
+            "class_label": "Location",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 560,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/dc/terms/LocationPeriodOrJurisdiction",
+            "class_label": "Location, Period, or Jurisdiction",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 561,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/dc/terms/MediaType",
+            "class_label": "Media Type",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 562,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/dc/terms/MediaTypeOrExtent",
+            "class_label": "Media Type or Extent",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 563,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/dc/terms/MethodOfInstruction",
+            "class_label": "Method of Instruction",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 564,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/dc/terms/MethodOfAccrual",
+            "class_label": "Method of Accrual",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 565,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/dc/terms/PeriodOfTime",
+            "class_label": "Period of Time",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 566,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/dc/terms/PhysicalMedium",
+            "class_label": "Physical Medium",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 567,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/dc/terms/PhysicalResource",
+            "class_label": "Physical Resource",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 568,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/dc/terms/Policy",
+            "class_label": "Policy",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 569,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/dc/terms/ProvenanceStatement",
+            "class_label": "Provenance Statement",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 570,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/dc/terms/RightsStatement",
+            "class_label": "Rights Statement",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 571,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/dc/terms/SizeOrDuration",
+            "class_label": "Size or Duration",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 572,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/dc/terms/Standard",
+            "class_label": "Standard",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 573,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/net/opmv/ns#Process",
+            "class_label": "Process",
+            "schema": 9
+        }
+    },
+    {
+        "pk": 574,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/net/opmv/ns#Agent",
+            "class_label": "Agent",
+            "schema": 9
+        }
+    },
+    {
+        "pk": 575,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/net/opmv/ns#Artifact",
+            "class_label": "Artifact",
+            "schema": 9
+        }
+    },
+    {
+        "pk": 576,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://xmlns.com/foaf/0.1/LabelProperty",
+            "class_label": "Label Property",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 577,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://xmlns.com/foaf/0.1/Person",
+            "class_label": "Person",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 578,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://xmlns.com/foaf/0.1/Agent",
+            "class_label": "Agent",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 579,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://xmlns.com/foaf/0.1/Document",
+            "class_label": "Document",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 580,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://xmlns.com/foaf/0.1/Organization",
+            "class_label": "Organization",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 581,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://xmlns.com/foaf/0.1/Group",
+            "class_label": "Group",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 582,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://xmlns.com/foaf/0.1/Project",
+            "class_label": "Project",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 583,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://xmlns.com/foaf/0.1/Image",
+            "class_label": "Image",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 584,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://xmlns.com/foaf/0.1/PersonalProfileDocument",
+            "class_label": "PersonalProfileDocument",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 585,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://xmlns.com/foaf/0.1/OnlineAccount",
+            "class_label": "Online Account",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 586,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://xmlns.com/foaf/0.1/OnlineGamingAccount",
+            "class_label": "Online Gaming Account",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 587,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://xmlns.com/foaf/0.1/OnlineEcommerceAccount",
+            "class_label": "Online E-commerce Account",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 588,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://xmlns.com/foaf/0.1/OnlineChatAccount",
+            "class_label": "Online Chat Account",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 589,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#Address",
+            "class_label": "vCard Address Class",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 590,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#BBS",
+            "class_label": "Bulletin Board System",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 591,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#Car",
+            "class_label": "Car Phone",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 592,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#Cell",
+            "class_label": "Cellular Telephone",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 593,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#Dom",
+            "class_label": "Domestic",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 594,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#Email",
+            "class_label": "Email",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 595,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#Fax",
+            "class_label": "Fax",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 596,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#Home",
+            "class_label": "Home",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 597,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#ISDN",
+            "class_label": "ISDN",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 598,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#Internet",
+            "class_label": "Internet",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 599,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#Intl",
+            "class_label": "International",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 600,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#Label",
+            "class_label": "Label",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 601,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#Location",
+            "class_label": "vCard Geographic Location Class",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 602,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#Modem",
+            "class_label": "Modem",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 603,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#Msg",
+            "class_label": "Voice Messenger",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 604,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#Name",
+            "class_label": "vCard Name Class",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 605,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#Organization",
+            "class_label": "vCard Organization Class",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 606,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#PCS",
+            "class_label": "Personal Communications Service",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 607,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#Pager",
+            "class_label": "Pager Device",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 608,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#Parcel",
+            "class_label": "Parcel",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 609,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#Postal",
+            "class_label": "Postal",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 610,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#Pref",
+            "class_label": "Preferred",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 611,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#Tel",
+            "class_label": "Telephone",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 612,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#VCard",
+            "class_label": "vCard Class",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 613,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#Video",
+            "class_label": "Video",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 614,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#Voice",
+            "class_label": "Voice",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 615,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#Work",
+            "class_label": "Work",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 616,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2006/vcard/ns#X400",
+            "class_label": "X.400",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 617,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#N-Ary-Relations",
+            "class_label": "N-ary relations (DEPRECATED)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 618,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#UnitPriceSpecification",
+            "class_label": "Unit price specification",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 619,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#ProductOrService",
+            "class_label": "Product or service",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 620,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#QuantitativeValue",
+            "class_label": "Quantitative value",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 621,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#OpeningHoursSpecification",
+            "class_label": "Opening hours specification",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 622,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#BusinessFunction",
+            "class_label": "Business function",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 623,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#DeliveryChargeSpecification",
+            "class_label": "Delivery charge specification",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 624,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#DayOfWeek",
+            "class_label": "Day of week",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 625,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#QuantitativeValueInteger",
+            "class_label": "Quantitative value integer",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 626,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#SomeItems",
+            "class_label": "Some items",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 627,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#ActualProductOrServiceInstance",
+            "class_label": "Actual product or service instance (DEPRECATED)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 628,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#QuantitativeValueFloat",
+            "class_label": "Quantitative value float",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 629,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#LocationOfSalesOrServiceProvisioning",
+            "class_label": "Location of sales or service provisioning (DEPRECATED)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 630,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#Individual",
+            "class_label": "Individual",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 631,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#DeliveryMethod",
+            "class_label": "Delivery method",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 632,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#Offering",
+            "class_label": "Offering",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 633,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#ProductOrServicesSomeInstancesPlaceholder",
+            "class_label": "Product or services some instances placeholder (DEPRECATED)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 634,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#TypeAndQuantityNode",
+            "class_label": "Type and quantity node",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 635,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#BusinessEntityType",
+            "class_label": "Business entity type",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 636,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#DeliveryModeParcelService",
+            "class_label": "Delivery mode parcel service",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 637,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#Location",
+            "class_label": "Location",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 638,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#PaymentMethodCreditCard",
+            "class_label": "Payment method credit card",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 639,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#PaymentChargeSpecification",
+            "class_label": "Payment charge specification",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 640,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#WarrantyScope",
+            "class_label": "Warranty scope",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 641,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#ProductOrServiceModel",
+            "class_label": "Product or service model",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 642,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/goodrelations/v1#BusinessEntity",
+            "class_label": "Business entity",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1272,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2008/05/skos-xl#prefLabel",
+            "prop_label": "preferred label",
+            "schema": 17
+        }
+    },
+    {
+        "pk": 1273,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2008/05/skos-xl#altLabel",
+            "prop_label": "alternative label",
+            "schema": 17
+        }
+    },
+    {
+        "pk": 1274,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2008/05/skos-xl#hiddenLabel",
+            "prop_label": "hidden label",
+            "schema": 17
+        }
+    },
+    {
+        "pk": 1275,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2008/05/skos-xl#labelRelation",
+            "prop_label": "label relation",
+            "schema": 17
+        }
+    },
+    {
+        "pk": 1276,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/vocab/changeset/schema#statement",
+            "prop_label": "statement",
+            "schema": 14
+        }
+    },
+    {
+        "pk": 1277,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/vocab/changeset/schema#addition",
+            "prop_label": "addition",
+            "schema": 14
+        }
+    },
+    {
+        "pk": 1278,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/vocab/changeset/schema#removal",
+            "prop_label": "removal",
+            "schema": 14
+        }
+    },
+    {
+        "pk": 1279,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/vocab/changeset/schema#subjectOfChange",
+            "prop_label": "subjectOfChange",
+            "schema": 14
+        }
+    },
+    {
+        "pk": 1280,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/vocab/changeset/schema#precedingChangeSet",
+            "prop_label": "precedingChangeSet",
+            "schema": 14
+        }
+    },
+    {
+        "pk": 1281,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2003/01/geo/wgs84_pos#lat",
+            "prop_label": "latitude",
+            "schema": 15
+        }
+    },
+    {
+        "pk": 1282,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2003/01/geo/wgs84_pos#location",
+            "prop_label": "location",
+            "schema": 15
+        }
+    },
+    {
+        "pk": 1283,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2003/01/geo/wgs84_pos#long",
+            "prop_label": "longitude",
+            "schema": 15
+        }
+    },
+    {
+        "pk": 1284,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2003/01/geo/wgs84_pos#alt",
+            "prop_label": "altitude",
+            "schema": 15
+        }
+    },
+    {
+        "pk": 1285,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2003/01/geo/wgs84_pos#lat_long",
+            "prop_label": "lat/long",
+            "schema": 15
+        }
+    },
+    {
+        "pk": 1286,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#subOrganizationOf",
+            "prop_label": "subOrganization of",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1287,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#transitiveSubOrganizationOf",
+            "prop_label": "transitive sub-organization",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1288,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#hasSubOrganization",
+            "prop_label": "subOrganization",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1289,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#hasUnit",
+            "prop_label": "unit",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1290,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#unitOf",
+            "prop_label": "unit Of",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1291,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#classification",
+            "prop_label": "classification",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1292,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#linkedTo",
+            "prop_label": "linkedTo",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1293,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#memberOf",
+            "prop_label": "member of",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1294,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#hasMember",
+            "prop_label": "member",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1295,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#reportsTo",
+            "prop_label": "reportsTo",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1296,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#member",
+            "prop_label": "member",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1297,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#organization",
+            "prop_label": "organization",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1298,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#role",
+            "prop_label": "role",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1299,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#hasMembership",
+            "prop_label": "membership",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1300,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#memberDuring",
+            "prop_label": "memberDuring",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1301,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#headOf",
+            "prop_label": "head of",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1302,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#remuneration",
+            "prop_label": "remuneration",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1303,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#siteAddress",
+            "prop_label": "siteAddress",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1304,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#hasSite",
+            "prop_label": "site",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1305,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#siteOf",
+            "prop_label": "site Of",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1306,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#hasPrimarySite",
+            "prop_label": "primarySite",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1307,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#hasRegisteredSite",
+            "prop_label": "registeredSite",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1308,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#basedAt",
+            "prop_label": "basedAt",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1309,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#originalOrganization",
+            "prop_label": "original organization",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1310,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#changedBy",
+            "prop_label": "changed by",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1311,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#resultedFrom",
+            "prop_label": "resulted from",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1312,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#resultingOrganization",
+            "prop_label": "resulted in",
+            "schema": 4
+        }
+    },
+    {
+        "pk": 1313,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2004/02/skos/core#inScheme",
+            "prop_label": "is in scheme",
+            "schema": 3
+        }
+    },
+    {
+        "pk": 1314,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2004/02/skos/core#hasTopConcept",
+            "prop_label": "has top concept",
+            "schema": 3
+        }
+    },
+    {
+        "pk": 1315,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2004/02/skos/core#topConceptOf",
+            "prop_label": "is top concept in scheme",
+            "schema": 3
+        }
+    },
+    {
+        "pk": 1316,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2004/02/skos/core#semanticRelation",
+            "prop_label": "is in semantic relation with",
+            "schema": 3
+        }
+    },
+    {
+        "pk": 1317,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2004/02/skos/core#broader",
+            "prop_label": "has broader",
+            "schema": 3
+        }
+    },
+    {
+        "pk": 1318,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2004/02/skos/core#narrower",
+            "prop_label": "has narrower",
+            "schema": 3
+        }
+    },
+    {
+        "pk": 1319,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2004/02/skos/core#related",
+            "prop_label": "has related",
+            "schema": 3
+        }
+    },
+    {
+        "pk": 1320,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2004/02/skos/core#broaderTransitive",
+            "prop_label": "has broader transitive",
+            "schema": 3
+        }
+    },
+    {
+        "pk": 1321,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2004/02/skos/core#narrowerTransitive",
+            "prop_label": "has narrower transitive",
+            "schema": 3
+        }
+    },
+    {
+        "pk": 1322,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2004/02/skos/core#member",
+            "prop_label": "has member",
+            "schema": 3
+        }
+    },
+    {
+        "pk": 1323,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2004/02/skos/core#memberList",
+            "prop_label": "has member list",
+            "schema": 3
+        }
+    },
+    {
+        "pk": 1324,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2004/02/skos/core#mappingRelation",
+            "prop_label": "is in mapping relation with",
+            "schema": 3
+        }
+    },
+    {
+        "pk": 1325,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2004/02/skos/core#broadMatch",
+            "prop_label": "has broader match",
+            "schema": 3
+        }
+    },
+    {
+        "pk": 1326,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2004/02/skos/core#narrowMatch",
+            "prop_label": "has narrower match",
+            "schema": 3
+        }
+    },
+    {
+        "pk": 1327,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2004/02/skos/core#relatedMatch",
+            "prop_label": "has related match",
+            "schema": 3
+        }
+    },
+    {
+        "pk": 1328,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2004/02/skos/core#exactMatch",
+            "prop_label": "has exact match",
+            "schema": 3
+        }
+    },
+    {
+        "pk": 1329,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2004/02/skos/core#closeMatch",
+            "prop_label": "has close match",
+            "schema": 3
+        }
+    },
+    {
+        "pk": 1330,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#about",
+            "prop_label": "about",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1331,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#account_of",
+            "prop_label": "account of",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1332,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#addressed_to",
+            "prop_label": "addressed to",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1333,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#administrator_of",
+            "prop_label": "administrator of",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1334,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#attachment",
+            "prop_label": "attachment",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1335,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#avatar",
+            "prop_label": "avatar",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1336,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#container_of",
+            "prop_label": "container of",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1337,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#creator_of",
+            "prop_label": "creator of",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1338,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#email",
+            "prop_label": "email",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1339,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#embeds_knowledge",
+            "prop_label": "embeds knowledge",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1340,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#feed",
+            "prop_label": "feed",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1341,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#follows",
+            "prop_label": "follows",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1342,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#function_of",
+            "prop_label": "function of",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1343,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#has_administrator",
+            "prop_label": "has administrator",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1344,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#has_container",
+            "prop_label": "has container",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1345,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#has_creator",
+            "prop_label": "has creator",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1346,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#has_discussion",
+            "prop_label": "has discussion",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1347,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#has_function",
+            "prop_label": "has function",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1348,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#has_host",
+            "prop_label": "has host",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1349,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#has_member",
+            "prop_label": "has member",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1350,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#has_moderator",
+            "prop_label": "has moderator",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1351,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#has_modifier",
+            "prop_label": "has modifier",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1352,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#has_owner",
+            "prop_label": "has owner",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1353,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#has_parent",
+            "prop_label": "has parent",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1354,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#has_reply",
+            "prop_label": "has reply",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1355,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#has_scope",
+            "prop_label": "has scope",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1356,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#has_space",
+            "prop_label": "has space",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1357,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#has_subscriber",
+            "prop_label": "has subscriber",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1085,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#before",
+            "prop_label": "before",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1086,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#after",
+            "prop_label": "after",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1087,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#hasBeginning",
+            "prop_label": "hasBeginning",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1088,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#hasEnd",
+            "prop_label": "hasEnd",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1089,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#inside",
+            "prop_label": "inside",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1090,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#intervalEquals",
+            "prop_label": "intervalEquals",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1091,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#intervalBefore",
+            "prop_label": "intervalBefore",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1092,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#intervalMeets",
+            "prop_label": "intervalMeets",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1093,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#intervalOverlaps",
+            "prop_label": "intervalOverlaps",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1094,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#intervalStarts",
+            "prop_label": "intervalStarts",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1095,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#intervalDuring",
+            "prop_label": "intervalDuring",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1096,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#intervalFinishes",
+            "prop_label": "intervalFinishes",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1097,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#intervalAfter",
+            "prop_label": "intervalAfter",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1098,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#intervalMetBy",
+            "prop_label": "intervalMetBy",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1099,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#intervalOverlappedBy",
+            "prop_label": "intervalOverlappedBy",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1100,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#intervalStartedBy",
+            "prop_label": "intervalStartedBy",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1101,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#intervalContains",
+            "prop_label": "intervalContains",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1102,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#intervalFinishedBy",
+            "prop_label": "intervalFinishedBy",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1103,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#hasDurationDescription",
+            "prop_label": "hasDurationDescription",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1104,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#unitType",
+            "prop_label": "unitType",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1105,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#dayOfWeek",
+            "prop_label": "dayOfWeek",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1106,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#timeZone",
+            "prop_label": "timeZone",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1107,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#inDateTime",
+            "prop_label": "inDateTime",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1108,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/time#hasDateTimeDescription",
+            "prop_label": "hasDateTimeDescription",
+            "schema": 12
+        }
+    },
+    {
+        "pk": 1109,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/title",
+            "prop_label": "Title",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1110,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/creator",
+            "prop_label": "Creator",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1111,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/subject",
+            "prop_label": "Subject",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1112,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/description",
+            "prop_label": "Description",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1113,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/publisher",
+            "prop_label": "Publisher",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1114,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/contributor",
+            "prop_label": "Contributor",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1115,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/date",
+            "prop_label": "Date",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1116,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/type",
+            "prop_label": "Type",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1117,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/format",
+            "prop_label": "Format",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1118,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/identifier",
+            "prop_label": "Identifier",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1119,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/source",
+            "prop_label": "Source",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1120,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/language",
+            "prop_label": "Language",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1121,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/relation",
+            "prop_label": "Relation",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1122,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/coverage",
+            "prop_label": "Coverage",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1123,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/rights",
+            "prop_label": "Rights",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1124,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/audience",
+            "prop_label": "Audience",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1125,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/alternative",
+            "prop_label": "Alternative Title",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1126,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/tableOfContents",
+            "prop_label": "Table Of Contents",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1127,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/abstract",
+            "prop_label": "Abstract",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1128,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/created",
+            "prop_label": "Date Created",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1129,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/valid",
+            "prop_label": "Date Valid",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1130,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/available",
+            "prop_label": "Date Available",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1131,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/issued",
+            "prop_label": "Date Issued",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1132,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/modified",
+            "prop_label": "Date Modified",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1133,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/extent",
+            "prop_label": "Extent",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1134,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/medium",
+            "prop_label": "Medium",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1135,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/isVersionOf",
+            "prop_label": "Is Version Of",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1136,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/hasVersion",
+            "prop_label": "Has Version",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1137,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/isReplacedBy",
+            "prop_label": "Is Replaced By",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1138,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/replaces",
+            "prop_label": "Replaces",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1139,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/isRequiredBy",
+            "prop_label": "Is Required By",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1140,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/requires",
+            "prop_label": "Requires",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1141,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/isPartOf",
+            "prop_label": "Is Part Of",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1142,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/hasPart",
+            "prop_label": "Has Part",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1143,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/isReferencedBy",
+            "prop_label": "Is Referenced By",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1144,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/references",
+            "prop_label": "References",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1145,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/isFormatOf",
+            "prop_label": "Is Format Of",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1146,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/hasFormat",
+            "prop_label": "Has Format",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1147,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/conformsTo",
+            "prop_label": "Conforms To",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1148,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/spatial",
+            "prop_label": "Spatial Coverage",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1149,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/temporal",
+            "prop_label": "Temporal Coverage",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1150,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/mediator",
+            "prop_label": "Mediator",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1151,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/dateAccepted",
+            "prop_label": "Date Accepted",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1152,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/dateCopyrighted",
+            "prop_label": "Date Copyrighted",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1153,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/dateSubmitted",
+            "prop_label": "Date Submitted",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1154,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/educationLevel",
+            "prop_label": "Audience Education Level",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1155,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/accessRights",
+            "prop_label": "Access Rights",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1156,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/bibliographicCitation",
+            "prop_label": "Bibliographic Citation",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1157,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/license",
+            "prop_label": "License",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1158,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/rightsHolder",
+            "prop_label": "Rights Holder",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1159,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/provenance",
+            "prop_label": "Provenance",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1160,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/instructionalMethod",
+            "prop_label": "Instructional Method",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1161,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/accrualMethod",
+            "prop_label": "Accrual Method",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1162,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/accrualPeriodicity",
+            "prop_label": "Accrual Periodicity",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1163,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/dc/terms/accrualPolicy",
+            "prop_label": "Accrual Policy",
+            "schema": 2
+        }
+    },
+    {
+        "pk": 1164,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/net/opmv/ns#wasControlledBy",
+            "prop_label": "wasControlledBy",
+            "schema": 9
+        }
+    },
+    {
+        "pk": 1165,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/net/opmv/ns#wasGeneratedAt",
+            "prop_label": "wasGeneratedAt",
+            "schema": 9
+        }
+    },
+    {
+        "pk": 1166,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/net/opmv/ns#withRespectOf",
+            "prop_label": "withRespectOf",
+            "schema": 9
+        }
+    },
+    {
+        "pk": 1167,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/net/opmv/ns#wasEndedAt",
+            "prop_label": "wasEndedAt",
+            "schema": 9
+        }
+    },
+    {
+        "pk": 1168,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/net/opmv/ns#wasTriggeredBy",
+            "prop_label": "wasTriggeredBy",
+            "schema": 9
+        }
+    },
+    {
+        "pk": 1169,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/net/opmv/ns#wasStartedAt",
+            "prop_label": "wasStartedAt",
+            "schema": 9
+        }
+    },
+    {
+        "pk": 1170,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/net/opmv/ns#wasPerformedAt",
+            "prop_label": "wasPerformedAt",
+            "schema": 9
+        }
+    },
+    {
+        "pk": 1171,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/net/opmv/ns#wasDerivedFrom",
+            "prop_label": "wasDerivedFrom",
+            "schema": 9
+        }
+    },
+    {
+        "pk": 1172,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/net/opmv/ns#wasPerformedBy",
+            "prop_label": "wasPerformedBy",
+            "schema": 9
+        }
+    },
+    {
+        "pk": 1173,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/net/opmv/ns#wasEncodedBy",
+            "prop_label": "wasEncodedBy",
+            "schema": 9
+        }
+    },
+    {
+        "pk": 1174,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/net/opmv/ns#wasGeneratedBy",
+            "prop_label": "wasGeneratedBy",
+            "schema": 9
+        }
+    },
+    {
+        "pk": 1175,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/net/opmv/ns#wasUsedAt",
+            "prop_label": "wasUsedAt",
+            "schema": 9
+        }
+    },
+    {
+        "pk": 1176,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/net/opmv/ns#used",
+            "prop_label": "used",
+            "schema": 9
+        }
+    },
+    {
+        "pk": 1177,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/mbox",
+            "prop_label": "personal mailbox",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1178,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/based_near",
+            "prop_label": "based near",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1179,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/phone",
+            "prop_label": "phone",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1180,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/homepage",
+            "prop_label": "homepage",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1181,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/weblog",
+            "prop_label": "weblog",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1182,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/openid",
+            "prop_label": "openid",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1183,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/tipjar",
+            "prop_label": "tipjar",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1184,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/made",
+            "prop_label": "made",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1185,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/maker",
+            "prop_label": "maker",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1186,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/img",
+            "prop_label": "image",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1187,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/depiction",
+            "prop_label": "depiction",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1188,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/depicts",
+            "prop_label": "depicts",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1189,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/thumbnail",
+            "prop_label": "thumbnail",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1190,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/workplaceHomepage",
+            "prop_label": "workplace homepage",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1191,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/workInfoHomepage",
+            "prop_label": "work info homepage",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1192,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/schoolHomepage",
+            "prop_label": "schoolHomepage",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1193,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/knows",
+            "prop_label": "knows",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1194,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/interest",
+            "prop_label": "interest",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1195,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/topic_interest",
+            "prop_label": "topic_interest",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1196,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/publications",
+            "prop_label": "publications",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1197,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/currentProject",
+            "prop_label": "current project",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1198,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/pastProject",
+            "prop_label": "past project",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1199,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/fundedBy",
+            "prop_label": "funded by",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1200,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/logo",
+            "prop_label": "logo",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1201,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/topic",
+            "prop_label": "topic",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1202,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/primaryTopic",
+            "prop_label": "primary topic",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1203,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/focus",
+            "prop_label": "focus",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1204,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/page",
+            "prop_label": "page",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1205,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/theme",
+            "prop_label": "theme",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1206,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/account",
+            "prop_label": "account",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1207,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/holdsAccount",
+            "prop_label": "account",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1208,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/accountServiceHomepage",
+            "prop_label": "account service homepage",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1209,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://xmlns.com/foaf/0.1/member",
+            "prop_label": "member",
+            "schema": 1
+        }
+    },
+    {
+        "pk": 1210,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/vcard/ns#adr",
+            "prop_label": "address",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 1211,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/vcard/ns#agent",
+            "prop_label": "agent",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 1212,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/vcard/ns#email",
+            "prop_label": "email",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 1213,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/vcard/ns#geo",
+            "prop_label": "geographic location",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 1214,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/vcard/ns#key",
+            "prop_label": "key",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 1215,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/vcard/ns#logo",
+            "prop_label": "logo",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 1216,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/vcard/ns#n",
+            "prop_label": "name",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 1217,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/vcard/ns#org",
+            "prop_label": "organization",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 1218,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/vcard/ns#photo",
+            "prop_label": "photo",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 1219,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/vcard/ns#sound",
+            "prop_label": "sound",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 1220,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/vcard/ns#tel",
+            "prop_label": "phone",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 1221,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/2006/vcard/ns#url",
+            "prop_label": "url",
+            "schema": 6
+        }
+    },
+    {
+        "pk": 1222,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#isSimilarTo",
+            "prop_label": "is similar to (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1223,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#eligibleTransactionVolume",
+            "prop_label": "eligible transaction volume (0..1)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1224,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#owns",
+            "prop_label": "owns (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1225,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#nonEqual",
+            "prop_label": "non equal (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1226,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#advanceBookingRequirement",
+            "prop_label": "advance booking requirement (0..1)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1227,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#seeks",
+            "prop_label": "seeks (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1228,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#qualitativeProductOrServiceProperty",
+            "prop_label": "qualitative product or service property (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1229,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#isConsumableFor",
+            "prop_label": "is consumable for (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1230,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#includesObject",
+            "prop_label": "includes object (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1231,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#eligibleCustomerTypes",
+            "prop_label": "eligible customer types (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1232,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#deliveryLeadTime",
+            "prop_label": "delivery lead time (0..1)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1233,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#appliesToDeliveryMethod",
+            "prop_label": "applies to delivery method (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1234,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#hasOpeningHoursSpecification",
+            "prop_label": "has opening hours specification (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1235,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#height",
+            "prop_label": "height (0..1)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1358,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#has_usergroup",
+            "prop_label": "has usergroup",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1359,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#host_of",
+            "prop_label": "host of",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1360,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#latest_version",
+            "prop_label": "latest version",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1361,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#link",
+            "prop_label": "link",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1362,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#links_to",
+            "prop_label": "links to",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1363,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#member_of",
+            "prop_label": "member of",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1364,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#moderator_of",
+            "prop_label": "moderator of",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1365,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#modifier_of",
+            "prop_label": "modifier of",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1366,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#next_by_date",
+            "prop_label": "next by date",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1367,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#next_version",
+            "prop_label": "next version",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1368,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#owner_of",
+            "prop_label": "owner of",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1369,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#parent_of",
+            "prop_label": "parent of",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1370,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#previous_by_date",
+            "prop_label": "previous by date",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1371,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#previous_version",
+            "prop_label": "previous version",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1372,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#related_to",
+            "prop_label": "related to",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1373,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#reply_of",
+            "prop_label": "reply of",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1374,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#scope_of",
+            "prop_label": "scope of",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1375,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#space_of",
+            "prop_label": "space of",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1376,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#subscriber_of",
+            "prop_label": "subscriber of",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1377,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#topic",
+            "prop_label": "topic",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1378,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#usergroup_of",
+            "prop_label": "usergroup of",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1379,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#group_of",
+            "prop_label": "group of",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1380,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#has_group",
+            "prop_label": "has group",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1381,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#has_part",
+            "prop_label": "has part",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1382,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#part_of",
+            "prop_label": "part of",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1383,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://rdfs.org/sioc/ns#reference",
+            "prop_label": "reference",
+            "schema": 16
+        }
+    },
+    {
+        "pk": 1236,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#quantitativeProductOrServiceProperty",
+            "prop_label": "quantitative product or service property (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1237,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#hasManufacturer",
+            "prop_label": "has manufacturer (0..1)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1238,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#hasBusinessFunction",
+            "prop_label": "has business function (1..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1239,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#availableDeliveryMethods",
+            "prop_label": "available delivery methods (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1240,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#equal",
+            "prop_label": "equal (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1241,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#valueReference",
+            "prop_label": "value reference (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1242,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#appliesToPaymentMethod",
+            "prop_label": "applies to payment method (1..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1243,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#hasEligibleQuantity",
+            "prop_label": "has eligible quantity (0..1)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1244,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#depth",
+            "prop_label": "depth (0..1)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1245,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#width",
+            "prop_label": "width (0..1)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1246,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#availableAtOrFrom",
+            "prop_label": "available at or from (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1247,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#isVariantOf",
+            "prop_label": "is variant of (0..1)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1248,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#hasWarrantyPromise",
+            "prop_label": "has warranty promise (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1249,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#includes",
+            "prop_label": "includes (0..1)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1250,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#acceptedPaymentMethods",
+            "prop_label": "accepted payment methods (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1251,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#eligibleDuration",
+            "prop_label": "eligible duration (0..1)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1252,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#isAccessoryOrSparePartFor",
+            "prop_label": "is accessory or spare part for (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1253,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#hasPOS",
+            "prop_label": "has POS (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1254,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#hasWarrantyScope",
+            "prop_label": "has warranty scope (0..1)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1255,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#addOn",
+            "prop_label": "add-on (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1256,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#hasPriceSpecification",
+            "prop_label": "has price specification (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1257,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#hasMakeAndModel",
+            "prop_label": "has make and model (0..1)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1258,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#typeOfGood",
+            "prop_label": "type of good (1..1)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1259,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#offers",
+            "prop_label": "offers (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1260,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#hasInventoryLevel",
+            "prop_label": "has inventory level (0..1)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1261,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#hasBrand",
+            "prop_label": "has brand (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1262,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#weight",
+            "prop_label": "weight (0..1)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1263,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#hasOpeningHoursDayOfWeek",
+            "prop_label": "has opening hours day of week (1..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1264,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#greater",
+            "prop_label": "greater (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1265,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#lesser",
+            "prop_label": "lesser (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1266,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#successorOf",
+            "prop_label": "successor of (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1267,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#predecessorOf",
+            "prop_label": "predecessor of (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1268,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#greaterOrEqual",
+            "prop_label": "greater or equal (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1269,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#lesserOrEqual",
+            "prop_label": "lesser or equal (0..*)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1270,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#hasNext",
+            "prop_label": "has next (0..1)",
+            "schema": 5
+        }
+    },
+    {
+        "pk": 1271,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://purl.org/goodrelations/v1#hasPrevious",
+            "prop_label": "has previous (0..1)",
+            "schema": 5
+        }
+    }
+]
