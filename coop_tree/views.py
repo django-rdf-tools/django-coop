@@ -246,24 +246,22 @@ def get_object_suggest_list(request):
     if not request.is_ajax:
         return Http404
     
-    object_type = request.GET.get("object_type")
-    if not object_type:
-        return Http404
-    
     term = request.GET.get("term") #the 1st chars entered in the autocomplete
     
     #the requested content type 
-    prefix = 'type-'
-    app_label, model_name = object_type[len(prefix):].split('.')
-    ct = ContentType.objects.get(app_label=app_label, model=model_name)
+    suggestions = []
     
-    #Get the name of the default field for the current type (eg: Page->title, Url->url ...)
-    search_field = NavigableType.objects.get(content_type=ct).search_field
-    lookup = {search_field+'__icontains': term}
-    
-    #Get suggestions as a list of {label: object.get_label() or unicode if no get_label, 'value':<object.id>}
-    suggestions = [{'label': x.get_label() if hasattr(x, 'get_label') else unicode(x), 'value': x.id}
-        for x in ct.model_class().objects.filter(**lookup)]
+    apps = ('coop_page.page', 'coop_tree.url')
+    for app_label, model_name in [app.split('.') for app in apps]:
+        ct = ContentType.objects.get(app_label=app_label, model=model_name)
+        
+        #Get the name of the default field for the current type (eg: Page->title, Url->url ...)
+        search_field = NavigableType.objects.get(content_type=ct).search_field
+        lookup = {search_field+'__icontains': term}
+        
+        #Get suggestions as a list of {label: object.get_label() or unicode if no get_label, 'value':<object.id>}
+        suggestions += [{'label': x.get_label() if hasattr(x, 'get_label') else unicode(x), 'value': x.id, 'category': model_name}
+            for x in ct.model_class().objects.filter(**lookup)]
     
     return HttpResponse(json.dumps(suggestions), mimetype='application/json')    
     

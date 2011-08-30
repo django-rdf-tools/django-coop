@@ -9,10 +9,51 @@
 {% block extrahead %}
 <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/tree.css" />
 <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/smoothness/jquery-ui-1.8.14.custom.css" />
+<style>
+.ui-autocomplete-category {
+  font-weight: bold;
+  padding: .2em .4em;
+  margin: .8em 0 .2em;
+  line-height: 1.5;
+}
+
+.ui-widget li{
+  list-style: none;
+}
+
+.ui-autocomplete {
+  max-height: 200px;
+  overflow-y: auto;
+  /* prevent horizontal scrollbar */
+  overflow-x: hidden;
+  /* add padding to account for vertical scrollbar */
+  padding-right: 20px;
+}
+/* IE 6 doesn't support max-height
+ * we use height instead, but this forces the menu to always be this tall
+ */
+* html .ui-autocomplete {
+  height: 200px;
+}
+</style>
 <script src="{{STATIC_URL}}js/jquery-1.5.1.min.js"></script>
 <script src="{{STATIC_URL}}js/jquery-ui-1.8.14.custom.min.js"></script>
 {% include "djaloha/_csrf_ajax_jquery.html" %}
 <script src="{{STATIC_URL}}js/jquery.jstree.js"></script>
+<script>
+  $.widget("custom.catcomplete", $.ui.autocomplete, {
+    _renderMenu: function(ul, items) {
+      var self = this, currentCategory = "";
+      $.each( items, function( index, item ) {
+        if ( item.category != currentCategory ) {
+          ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
+          currentCategory = item.category;
+        }
+        self._renderItem( ul, item );
+      });
+    }
+  });
+</script>
 <script type="text/javascript">
   $(function() {
     var last_selection = null;
@@ -54,7 +95,6 @@
     
     $("#add_object").click(function() {
       data = {msg_id: 'add_navnode'};
-      data["object_type"] = $("#object_types option:selected").attr("id");
       data["object_id"] = $("#object_id").val();
       try {
         var selected_nodes = $("#nodes").jstree('get_selected');
@@ -70,11 +110,6 @@
           }
         }
       );
-    });
-    
-    $("#object_types").change(function() {
-      $("#object_label").val("");
-      $("#object_id").val("");
     });
     
     $("#nodes").jstree({ 
@@ -146,10 +181,9 @@
       }
     });
     
-    $("#object_label").autocomplete({
+    $("#object_label").catcomplete({
         source: function(req, add){
-          var object_type = $("#object_types option:selected").attr("id");
-          $.getJSON("{% url object_suggest_list %}?object_type="+object_type, req, function(data) {
+          $.getJSON("{% url object_suggest_list %}", req, function(data) {
             var existing_objects = [];
             $.each(data, function(i, val){
               existing_objects.push(val);
@@ -225,11 +259,6 @@
     <div class="button-bar">
         <span class="add_object_section">
             <button id="add_object">{% trans "Add a new node" %}</button>
-            <select id="object_types">
-            {% for nt in cl.model_admin.nav_types %}
-                <option id="{{nt.type}}">{{nt.label}}</option>
-            {% endfor %}
-            </select>
             <input id="object_label" size=30/>
             <input id="object_id" type="hidden"/>
         </span>
