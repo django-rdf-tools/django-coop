@@ -108,6 +108,7 @@
           admin_printMessage(data.message, data.status);
           if (data.status==='success') {
             $("#nodes").jstree("create",null,"last",{data:data.label, attr:{id: data.id}});
+            $("#object_label").val("");
           }
         }
       );
