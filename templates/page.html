@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block document %}
-<h1 id="title" class="djaloha-editable">{{object.title}}</h1>
+<h1 id="title" class="djaloha-editable">{{object.title|safe}}</h1>
 
 <div id="content" class="djaloha-editable">
     {{object.content|safe}}
