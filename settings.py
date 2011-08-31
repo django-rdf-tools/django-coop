@@ -138,10 +138,9 @@ INSTALLED_APPS = (
     'south',
     'django_extensions',
     'extended_choices',
-#    'djutils',
-    
-    #3rd parties d2rq
-    'smart_selects',
+    'genericm2m',
+#    'djutils',#for async, not working
+    'smart_selects',#d2rq to come
     'livesettings',
 
     #apps

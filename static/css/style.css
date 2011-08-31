@@ -1,7 +1,11 @@
-/* @override http://dev.quinode.fr:8000/static/css/style.css */
+/* @override 
+	http://dev.quinode.fr:8000/static/css/style.css
+	http://localhost:8000/static/css/style.css
+*/
 
 body {
 	font-family: "Droid Sans", Lucida, Verdana, sans-serif;
+	background-color: #9d9d9d;
 }
 
 
@@ -13,15 +17,22 @@ header{
 }
 
 div#main{
-	border: 1px dashed #b9b9b9;
 	border-top-style: none;
 	border-bottom-style: none;
+	background-color: white;
 }
+
+
 
 #content{
 	padding-bottom: 20px;
 	padding-top: 20px;
 	min-height: 400px;
+}
+
+table td{
+	border-collapse: collapse;
+	border: 1px solid silver;
 }
 
 /* @group hCard */
