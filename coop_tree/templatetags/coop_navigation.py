@@ -7,7 +7,6 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from coop_tree.models import NavNode
 from django.contrib.contenttypes.models import ContentType
-
 register = template.Library()
 
 class NavigationAsNestedUlNode(template.Node):
@@ -17,11 +16,18 @@ class NavigationAsNestedUlNode(template.Node):
 
 @register.tag
 def navigation_as_nested_ul(parser, token):
+   args = token.contents.split()
+   if len(args) != 1:
+       raise template.TemplateSyntaxError(_("navigation_as_nested_ul has no argument"))
+       
    return NavigationAsNestedUlNode()
 
 class NavigationBreadcrumbNode(template.Node):
+   def __init__(self, object):
+      self.object_var = template.Variable(object)
+
    def render(self, context):
-      object = context.get("object")
+      object = self.object_var.resolve(context)
       ct=ContentType.objects.get_for_model(object.__class__)
       nav_nodes = NavNode.objects.filter(content_type=ct, object_id=object.id)
       if nav_nodes.count()>0:
@@ -30,11 +36,19 @@ class NavigationBreadcrumbNode(template.Node):
 
 @register.tag
 def navigation_breadcrumb(parser, token):
-   return NavigationBreadcrumbNode()
+   args = token.contents.split()
+   if len(args) != 2:
+       raise template.TemplateSyntaxError(_("navigation_breadcrumb requires object as argument"))
+
+   return NavigationBreadcrumbNode(args[1])
 
 class NavigationChildrenNode(template.Node):
+
+   def __init__(self, object):
+      self.object_var = template.Variable(object)
+
    def render(self, context):
-      object = context.get("object")
+      object = self.object_var.resolve(context)
       ct=ContentType.objects.get_for_model(object.__class__)
       nav_nodes = NavNode.objects.filter(content_type=ct, object_id=object.id)
       if nav_nodes.count()>0:
@@ -43,11 +57,18 @@ class NavigationChildrenNode(template.Node):
 
 @register.tag
 def navigation_children(parser, token):
-   return NavigationChildrenNode()
+   args = token.contents.split()
+   if len(args) != 2:
+       raise template.TemplateSyntaxError(_("navigation_children requires object as argument"))
+   return NavigationChildrenNode(args[1])
 
 class NavigationSiblingsNode(template.Node):
+   
+   def __init__(self, object):
+      self.object_var = template.Variable(object)
+   
    def render(self, context):
-      object = context.get("object")
+      object = self.object_var.resolve(context)
       ct=ContentType.objects.get_for_model(object.__class__)
       nav_nodes = NavNode.objects.filter(content_type=ct, object_id=object.id)
       if nav_nodes.count()>0:
@@ -56,4 +77,7 @@ class NavigationSiblingsNode(template.Node):
 
 @register.tag
 def navigation_siblings(parser, token):
-   return NavigationSiblingsNode()
+   args = token.contents.split()
+   if len(args) != 2:
+       raise template.TemplateSyntaxError(_("navigation_siblings requires object as argument"))
+   return NavigationSiblingsNode(args[1])

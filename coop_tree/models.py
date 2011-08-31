@@ -77,7 +77,7 @@ class NavNode(models.Model):
         return NavNode.objects.filter(parent=self).order_by("ordering")
         
     def get_siblings(self):
-        return NavNode.objects.filter(parent=self.parent).exclude(id=self.id).order_by("ordering")
+        return NavNode.objects.filter(parent=self.parent).order_by("ordering")
         
     def as_li(self):
         #Display the node and his children as nested ul and li html tags.
