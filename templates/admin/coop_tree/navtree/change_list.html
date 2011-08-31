@@ -160,7 +160,7 @@
       $("#nodes").jstree("deselect_all");
       disable_actions();
       last_selection = null;
-      $("#aside").html("");
+      $("#aside .object-links").html("");
     }
     
     $("#nodes").bind("select_node.jstree", function (event, data) {
@@ -174,9 +174,9 @@
           function(data) {
             //admin_printMessage(data.message, data.status);
             if (data.status === "success") {
-              $("#aside").html(data.html);
+              $("#aside .object-links").html(data.html);
             } else {
-              $("#aside").html("");
+              $("#aside .object-links").html("");
             }
           }
         );
@@ -186,7 +186,6 @@
     $("#object_label").catcomplete({
         source: function(request, add){
           post_msg('get_suggest_list', {term: request.term}, function(data) {
-          //$.getJSON("", req, function(data) {
             var existing_objects = [];
             if (data.status === "success") {
               $.each(data.suggestions, function(i, val){
@@ -264,22 +263,23 @@
 {% block content %}
 <noscript><div id="jswarning">{% trans "The site requires javascript to be enabled!" %}</div></noscript>
 <div id="content">
-    <div class="button-bar">
-        <span class="add_object_section">
-            <button id="add_object">{% trans "Add a new node" %}</button>
-            <input id="object_label" size=30/>
-            <input id="object_id" type="hidden"/>
-            <input id="object_type" type="hidden"/>
-        </span>
-        <button id="rename_node">{% trans "Rename" %}</button>
-        <button id="delete_node">{% trans "Remove" %}</button>
-        <span id="admin-status"></span>
+  <div class="button-bar">
+    <span class="add_object_section">
+      <button id="add_object">{% trans "Add a new node" %}</button>
+      <input id="object_label" size=30/>
+      <input id="object_id" type="hidden"/>
+      <input id="object_type" type="hidden"/>
+    </span>
+    <span id="admin-status"></span>
+  </div>
+  <div id="aside">
+    <button id="rename_node">{% trans "Rename" %}</button>
+    <button id="delete_node">{% trans "Remove" %}</button>
+    <div class="object-links">
     </div>
-    <div id="aside">
-    </div>
-
-    <div id="nodes" class="">
-        <ul>{{cl.model_admin.nodes_li|safe}}</ul>
-    </div>
+  </div>
+  <div id="nodes" class="">
+    <ul>{{cl.model_admin.nodes_li|safe}}</ul>
+  </div>
 </div>
 {% endblock %}
