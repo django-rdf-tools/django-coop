@@ -43,7 +43,10 @@ def rename_navnode(request):
     old_name = node.label #get the old name for success message
     node.label = request.POST['name'] #change the name
     node.save()
-    response['message'] = _(u"The node '{0}' has been renamed into '{1}'.").format(old_name, node.label)
+    if old_name != node.label:
+        response['message'] = _(u"The node '{0}' has been renamed into '{1}'.").format(old_name, node.label)
+    else:
+        response['message'] = ''
     return response
 
 def remove_navnode(request):
