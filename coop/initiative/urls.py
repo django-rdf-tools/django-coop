@@ -3,7 +3,7 @@
 from django.conf.urls.defaults import *
 from django.views.generic import ListView
 from initiative.views import ISDetailView
-from local.models import Initiative
+from coop_local.models import Initiative
 
 urlpatterns = patterns('',
     (r'^$', ListView.as_view(

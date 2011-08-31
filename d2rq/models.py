@@ -194,22 +194,22 @@ class SchemaProperty(models.Model):
 from livesettings import config_value
 done = []
 AVAILABLE_MODELS = []
-all_models = ContentType.objects.filter(app_label__in=config_value('d2rq','MAPPED_APPS')).order_by('app_label')
-for m in all_models:
-    if(m.app_label not in done):
-        AVAILABLE_MODELS.append((
-            m.app_label , 
-            tuple((x.model,x.name) for x in all_models.filter(app_label=m.app_label))
-            ))
-    done.append(m.app_label)        
+# all_models = ContentType.objects.filter(app_label__in=config_value('d2rq','MAPPED_APPS')).order_by('app_label')
+# for m in all_models:
+#     if(m.app_label not in done):
+#         AVAILABLE_MODELS.append((
+#             m.app_label , 
+#             tuple((x.model,x.name) for x in all_models.filter(app_label=m.app_label))
+#             ))
+#     done.append(m.app_label)        
 
 
 AVAILABLE_CLASSES = []
-for s in Schema.objects.all().order_by('prefix'):
-    AVAILABLE_CLASSES.append((
-        s.prefix+':', 
-        tuple((x.class_name,x.class_label) for x in SchemaClass.objects.filter(schema=s))
-    ))
+# for s in Schema.objects.all().order_by('prefix'):
+#     AVAILABLE_CLASSES.append((
+#         s.prefix+':', 
+#         tuple((x.class_name,x.class_label) for x in SchemaClass.objects.filter(schema=s))
+#     ))
 
 
 class MappedModel(models.Model):

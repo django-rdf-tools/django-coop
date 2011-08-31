@@ -145,9 +145,8 @@ INSTALLED_APPS = (
     'livesettings',
 
     #apps
-    'membre',
-    'initiative',
-    'local',
+    'coop',
+    'coop_local',
     'd2rq',
     'djaloha',
     'coop_tree',
@@ -161,14 +160,14 @@ LIVESETTINGS_OPTIONS = \
     1: {
     'DB': True,
        'SETTINGS': {
-            u'd2rq': {u'MAPPED_APPS': u'["local", "skosxl"]'},
+            u'd2rq': {u'MAPPED_APPS': u'["coop_local", "skosxl"]'},
             u'coop_tree': {u'CONTENT_APPS': u'["coop_tree", "coop_page"]'}
         }
     }
 }
 
 
-AUTH_PROFILE_MODULE = 'local.membre'
+AUTH_PROFILE_MODULE = 'coop_local.membre'
 
 SITE_TITLE = 'CREDIS'
 

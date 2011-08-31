@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.views.generic import DetailView
-from local.models import Initiative, Membre, Engagement
+from coop_local.models import Initiative, Membre, Engagement
 
 class ISDetailView(DetailView):
     

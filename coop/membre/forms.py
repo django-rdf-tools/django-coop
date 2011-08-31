@@ -2,7 +2,7 @@
 from django.contrib.auth.models import User
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from local.models import Membre
+from coop_local.models import Membre
 
 # Repiquage carrément du modèle
 attrs_dict = { 'class': 'required' }

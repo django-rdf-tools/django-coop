@@ -1,7 +1,7 @@
 [
     {
         "pk": 1,
-        "model": "local.engagement",
+        "model": "coop_local.engagement",
         "fields": {
             "uuid": "ffdeb33d-cf1e-11e0-b1ca-001b63b6e445",
             "created": "2011-08-25 15:34:46",
@@ -13,7 +13,7 @@
     },
     {
         "pk": 2,
-        "model": "local.engagement",
+        "model": "coop_local.engagement",
         "fields": {
             "uuid": "1d33dd68-cf1f-11e0-b895-001b63b6e445",
             "created": "2011-08-25 15:35:36",
@@ -25,7 +25,7 @@
     },
     {
         "pk": 2,
-        "model": "local.membre",
+        "model": "coop_local.membre",
         "fields": {
             "ville": "Clermont-Ferrand",
             "adherent": false,
@@ -41,7 +41,7 @@
     },
     {
         "pk": 1,
-        "model": "local.membre",
+        "model": "coop_local.membre",
         "fields": {
             "ville": "Trezioux",
             "adherent": true,
@@ -57,7 +57,7 @@
     },
     {
         "pk": 1,
-        "model": "local.role",
+        "model": "coop_local.role",
         "fields": {
             "slug": "membre-du-ca",
             "label": "Membre du CA"
@@ -65,7 +65,7 @@
     },
     {
         "pk": 2,
-        "model": "local.role",
+        "model": "coop_local.role",
         "fields": {
             "slug": "salariee",
             "label": "Salari\u00e9e"
@@ -73,7 +73,7 @@
     },
     {
         "pk": 1,
-        "model": "local.initiative",
+        "model": "coop_local.initiative",
         "fields": {
             "web": "http://www.credis.org/",
             "description": "Collectif R\u00e9gional pour le D\u00e9veloppement des Initiatives Solidaires",

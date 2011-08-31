@@ -3,8 +3,8 @@ from django.db import models
 from datetime import *
 from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
-from initiative.models import BaseInitiative,BaseEngagement,BaseRole
-from membre.models import BaseMembre
+from coop.initiative.models import BaseInitiative,BaseEngagement,BaseRole
+from coop.membre.models import BaseMembre
 
 # Personnaliser vos modèle ici en ajoutant les champs nécessaires
 # exemple : personnalisation CREDIS
