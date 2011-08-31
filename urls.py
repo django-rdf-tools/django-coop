@@ -17,10 +17,10 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^settings/', include('livesettings.urls')),
     
-    url(r'^is/', include('initiative.urls')),
+    url(r'^is/', include('coop.initiative.urls')),
 
 
-    (r'^membre/', include('membre.urls')),
+    (r'^membre/', include('coop.membre.urls')),
 
     url(r'^tree/$', 'coop_tree.views.process_nav_edition', name='navigation_tree'),
 )

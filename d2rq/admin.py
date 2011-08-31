@@ -2,7 +2,13 @@
 from django.contrib import admin
 from d2rq.models import Schema,SchemaClass,SchemaProperty,MappedModel,MappedField
 from django import forms
+from forms import MappableModelForm
 
+
+class MappableModelAdmin(admin.ModelAdmin):
+    form = MappableModelForm
+    
+admin.site.register(MappedModel, MappableModelAdmin)
 
 
 class ClassInline(admin.TabularInline):
@@ -21,41 +27,10 @@ class SchemaAdmin(admin.ModelAdmin):
             ClassInline,PropertyInline
         ]
 admin.site.register(Schema,SchemaAdmin)
-admin.site.register(MappedModel)
-
 
 class OntologySelectWidget(forms.Select):
     pass
-
-def ontology_get_list(uri,prefix):  
-    import surf,rdflib
-    liste = []
-    try:
-        store = surf.Store(**{"reader": "librdf", "writer" : "librdf"})
-        #store = surf.Store(reader='rdflib',writer='rdflib',rdflib_store='IOMemory')
-        session = surf.Session(store)
-        store.load_triples(source=uri)
-        #ontology = session.get_class(surf.ns.OWL.Ontology)
-        #o = ontology("http://www.w3.org/ns/org#")
-        #unicode(o.rdfs_label.first)
-        classes = session.get_class(surf.ns.RDFS.Class)
-        print classes
-        proprietes = session.get_class(surf.ns.RDF.Property)
-        #subclasses = session.get_class(surf.ns.RDFS.subClassOf)
-        for c in classes.all():
-            if(isinstance(c.subject,rdflib.term.URIRef)):
-                option = (c.subject.replace(uri,prefix+':'),u'[C] '+unicode(c.rdfs_label.first))
-                liste.append(option)
-        for p in proprietes.all():
-            if(isinstance(c.subject,rdflib.term.URIRef)):
-                option = (c.subject.replace(uri,prefix+':'),u'[P] '+unicode(c.rdfs_label.first))
-                liste.append(option)        
-        session.close()
-        store.close()        
-    except Exception,e:
-        print e
-    return tuple(liste)
-
+    
 
 class ClassPropAdminForm(forms.ModelForm):
     class Meta:

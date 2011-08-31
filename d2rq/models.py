@@ -2,8 +2,6 @@
 from django.db import models
 from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.contenttypes.models import ContentType
-import config # not unused, needed by livesettings !
 import surf, rdflib
 from surf import ns
 from surf.query import select,a
@@ -191,31 +189,11 @@ class SchemaProperty(models.Model):
     #     verbose_name_plural = _(u'Propriétés RDF')        
 
 
-from livesettings import config_value
-done = []
-AVAILABLE_MODELS = []
-# all_models = ContentType.objects.filter(app_label__in=config_value('d2rq','MAPPED_APPS')).order_by('app_label')
-# for m in all_models:
-#     if(m.app_label not in done):
-#         AVAILABLE_MODELS.append((
-#             m.app_label , 
-#             tuple((x.model,x.name) for x in all_models.filter(app_label=m.app_label))
-#             ))
-#     done.append(m.app_label)        
-
-
-AVAILABLE_CLASSES = []
-# for s in Schema.objects.all().order_by('prefix'):
-#     AVAILABLE_CLASSES.append((
-#         s.prefix+':', 
-#         tuple((x.class_name,x.class_label) for x in SchemaClass.objects.filter(schema=s))
-#     ))
-
 
 class MappedModel(models.Model):
-    model_name = models.CharField(_(u'Modéle mappé'),max_length=200,choices=AVAILABLE_MODELS,null=True)
+    model_name = models.CharField(_(u'Modéle mappé'),max_length=200,null=True)
     #model_name = models.ForeignKey(ContentType,to_field='model',verbose_name=_(u'Modéle mappé'))
-    rdf_class = models.ForeignKey(SchemaClass,verbose_name=_(u'Classe RDF'),choices=AVAILABLE_CLASSES,null=True) 
+    rdf_class = models.ForeignKey(SchemaClass,verbose_name=_(u'Classe RDF'),null=True) 
     classMap_label = exfields.AutoSlugField('d2rq:classDefinitionLabel',populate_from=('model_name'))
 
 
