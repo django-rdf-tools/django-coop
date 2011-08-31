@@ -58,7 +58,7 @@ def download_schema(uri, prefix):
     return extension
 
 
-def get_label(subject,store):
+def get_label(subject,baseuri,store):
     label = None
     ns_titles = [ns.RDFS["comment"],ns.RDFS["label"],ns.DC["title"],ns.DCTERMS["title"]]
     for title in ns_titles:
@@ -68,7 +68,7 @@ def get_label(subject,store):
         if(len(found_title)>0):
             label = literal_lang_select([found_title[x]['o'] for x in range(len(found_title))])
     if(label==None): #on n'a rien trouvé du tout
-        label = unicode(subject)
+        label = unicode(subject).replace(baseuri,'')
     return label    
 
 
@@ -102,10 +102,9 @@ def get_schema_label(uri,prefix,format):
         try:
             print "Le schema est un vocabulaire RDFS"
             vocab_type = 'rdfs'
-            label = get_label(rdflib.term.URIRef(uri),store)
+            label = get_label(rdflib.term.URIRef(uri),uri,store)
         except:
             raise
-    
     lookup_args = { 'owl':  (ns.OWL.Class,ns.OWL.ObjectProperty),
                     'rdfs': (ns.RDFS.Class,ns.RDF.Property)}
     vocab_classes = list(store.reader._to_table(store.reader._execute(
@@ -118,7 +117,7 @@ def get_schema_label(uri,prefix,format):
     for items in ((vocab_classes,'classes'),(vocab_proprietes,'proprietes')):
         for triple in items[0]:
             if(isinstance(triple['s'],rdflib.term.URIRef) and bool(re.compile(uri).match(unicode(triple['s'])))): #ugly patch waiting for query to work
-                clabel = get_label(triple['s'],store) #on envoie le subject pour l'identifier
+                clabel = get_label(triple['s'],uri,store) #on envoie le subject pour l'identifier
                 cp[items[1]].append((unicode(triple['s']),clabel))
                 print items[1]+':'+clabel
     store.clear()
