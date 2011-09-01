@@ -35,7 +35,7 @@ def process_object_edition(request, object, object_validator=None, perm=None):
     If the request is an ajax post, the calling view should return the result of this function
     If not, the calling view is in charge of returning the appropriate response
     """
-    if request.method == 'POST' and request.is_ajax:
+    if request.method == 'POST' and request.is_ajax():
         old_values = {}
         try:
             for (field, value) in request.POST.items():

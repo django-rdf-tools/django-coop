@@ -4,7 +4,11 @@ from django.core.urlresolvers import reverse
 import models
 from forms import NavigableTypeForm
 admin.site.register(models.Url)
-admin.site.register(models.NavNode)
+
+class NavNodeAdmin(admin.ModelAdmin):
+    list_display = ["label", 'parent', 'ordering', 'content_type', 'object_id']
+
+admin.site.register(models.NavNode, NavNodeAdmin)
 
 
 class NavigableTypeAdmin(admin.ModelAdmin):

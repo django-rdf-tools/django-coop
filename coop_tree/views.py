@@ -12,7 +12,6 @@ from django.core.exceptions import ValidationError, PermissionDenied
 from djaloha.views import process_object_edition
 from django.template.loader import select_template
 from django.db.models.aggregates import Max
-#from django.contrib.admin.views.decorators import staff_member_required
 
 def view_navnode(request):
     """show info about the node when selected"""
@@ -44,7 +43,10 @@ def rename_navnode(request):
     old_name = node.label #get the old name for success message
     node.label = request.POST['name'] #change the name
     node.save()
-    response['message'] = _(u"The node '{0}' has been renamed into '{1}'.").format(old_name, node.label)
+    if old_name != node.label:
+        response['message'] = _(u"The node '{0}' has been renamed into '{1}'.").format(old_name, node.label)
+    else:
+        response['message'] = ''
     return response
 
 def remove_navnode(request):
@@ -70,30 +72,86 @@ def move_navnode(request):
     ref_id = request.POST.get('ref_id', 0)
     
     node = NavNode.objects.get(id=node_id)
-    node_parent_id = node.parent.id if node.parent else 0
     
-    #Update parent if changed
-    if node_parent_id != parent_id:
-        if parent_id:
-            parent_node = NavNode.objects.get(id=parent_id)
-        else:
-            parent_node = None
-        node.parent = parent_node
-    
-    #Update pos if changed
+    if parent_id:
+        sibling_nodes = NavNode.objects.filter(parent__id=parent_id)
+        parent_node = NavNode.objects.get(id=parent_id)
+    else:
+        sibling_nodes = NavNode.objects.filter(parent__isnull=True)
+        parent_node = None
+        
     if ref_id:
         ref_node = NavNode.objects.get(id=ref_id)
-        for next_sibling_node in NavNode.objects.filter(parent=node.parent, ordering__gt=ref_node.ordering):
-            next_sibling_node.ordering += 1
-            next_sibling_node.save()
-        if ref_pos == "before":
-            node.ordering = ref_node.ordering
-            ref_node.ordering += 1
-            ref_node.save()
-        elif ref_pos == "after":
-            node.ordering = ref_node.ordering + 1
     else:
-        node.ordering = NavNode.objects.filter(parent=node.parent).count()+1
+        ref_node = None
+    
+    #Update parent if changed
+    if parent_node != node.parent:
+        if node.parent:
+            ex_siblings = NavNode.objects.filter(parent=node.parent).exclude(id=node.id)
+        else:
+            ex_siblings = NavNode.objects.filter(parent__isnull=True).exclude(id=node.id)
+        
+        node.parent = parent_node
+        
+        #restore exsiblings
+        for n in ex_siblings.filter(ordering__gt=node.ordering):
+            n.ordering -= 1
+            n.save()
+        
+        #move siblings if inserted
+        if ref_node:
+            if ref_pos == "before":
+                to_be_moved = sibling_nodes.filter(ordering__gte=ref_node.ordering)
+                node.ordering = ref_node.ordering
+            elif ref_pos == "after":
+                to_be_moved = sibling_nodes.filter(ordering__gt=ref_node.ordering)
+                node.ordering = ref_node.ordering+1
+            for n in to_be_moved:
+                n.ordering += 1
+                n.save()
+            
+        else:
+            #add at the end
+            max_ordering = sibling_nodes.aggregate(max_ordering=Max('ordering'))['max_ordering'] or 0
+            node.ordering = max_ordering+1
+    
+    else:
+    
+        #Update pos if changed
+        if ref_node:
+            if ref_node.ordering > node.ordering:
+                #move forward
+                to_be_moved = sibling_nodes.filter(ordering__lt=ref_node.ordering, ordering__gt=node.ordering)
+                for next_sibling_node in to_be_moved:
+                    next_sibling_node.ordering -= 1
+                    next_sibling_node.save()
+                
+                if ref_pos == "before":
+                    node.ordering = ref_node.ordering - 1
+                elif ref_pos == "after":
+                    node.ordering = ref_node.ordering
+                    ref_node.ordering -= 1
+                    ref_node.save()
+    
+            elif ref_node.ordering < node.ordering:
+                #move backward
+                to_be_moved = sibling_nodes.filter(ordering__gt=ref_node.ordering, ordering__lt=node.ordering)
+                for next_sibling_node in to_be_moved:
+                    next_sibling_node.ordering += 1
+                    next_sibling_node.save()
+    
+                if ref_pos == "before":
+                    node.ordering = ref_node.ordering
+                    ref_node.ordering += 1
+                    ref_node.save()
+                elif ref_pos == "after":
+                    node.ordering = ref_node.ordering + 1
+        
+        else:
+            max_ordering = sibling_nodes.aggregate(max_ordering=Max('ordering'))['max_ordering'] or 0
+            node.ordering = max_ordering+1
+        
     node.save()
     response['message'] = _(u"The node '{0}' has been moved.").format(node.label)
     
@@ -178,8 +236,12 @@ def get_suggest_list(request):
     
 def process_nav_edition(request):
     """This handle ajax request sent by the tree component"""
-    if request.method == 'POST' and request.is_ajax and request.POST.has_key('msg_id'):
+    if request.method == 'POST' and request.is_ajax() and request.POST.has_key('msg_id'):
         try:
+            #check permissions
+            if not request.user.has_perm('coop_tree.change_navtree'):
+                raise PermissionDenied
+            
             supported_msg = {}
             #create a map between message name and handler
             #use the function name as message id
