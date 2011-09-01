@@ -12,7 +12,7 @@ urlpatterns = patterns('',
 
     url("^$", direct_to_template, {"template": "base.html"}, name="home"),
 #url(r"^$", 'views.home', name="home"),
-
+    url(r'^chaining/', include('smart_selects.urls')),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^settings/', include('livesettings.urls')),

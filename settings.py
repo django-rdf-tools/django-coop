@@ -138,6 +138,7 @@ INSTALLED_APPS = (
     'south',
     'django_extensions',
     'extended_choices',
+    'genericm2m',
 #    'djutils',
     
     #3rd parties d2rq

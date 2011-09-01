@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.db import models
+from django.contrib.contenttypes.models import ContentType
 from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
 import surf, rdflib
@@ -9,6 +10,7 @@ from urllib2 import Request, urlopen, URLError, HTTPError
 #from djutils.decorators import async
 import settings
 import re
+import os.path
 
 def literal_lang_select(list):
     '''
@@ -128,19 +130,35 @@ def update_class_and_properties(schema):
     pass
 
 
+
+class SchemaManager(models.Manager):
+    def get_by_natural_key(self, prefix, uri):
+        return self.get(prefix=prefix, uri=uri)
+
 class Schema(models.Model):
+    objects = SchemaManager()
     prefix = models.CharField(_(u'Préfixe du schéma'),max_length=10)
     uri = models.CharField(_(u'URI du schéma'),max_length=200) #TODO URIField that does not cut "#" at the end would be cool
     label = models.CharField(_(u'Intitulé'),max_length=200,blank=True,editable=False)
     format = models.CharField(blank=True, max_length=5,editable=False)
     vocab_type = models.CharField(blank=True, max_length=5,editable=False)
+    def natural_key(self):
+        return (self.prefix, self.uri)
+    class Meta:
+        ordering = ('prefix',)
+        unique_together =(('prefix','uri'),)
     def __unicode__(self):
         return unicode(self.label)
     def link_in_admin(self):
         return '<a target="_blank" href="%s">%s</a>' % (self.uri, self.uri)
     link_in_admin.allow_tags = True   
-    def save(self, *args, **kwargs):        
-        self.format = download_schema(self.uri,self.prefix)
+    def save(self, *args, **kwargs): 
+        print 'Ajout/mise à jour de '+str(self.uri)     
+        if(os.path.exists(settings.PROJECT_PATH+'/d2rq/vocab/'+self.prefix+'.'+self.format)):
+            print 'Utilisation de la copie locale'
+        else:        
+            self.format = download_schema(self.uri,self.prefix)
+            print 'Téléchargement du fichier'
         print 'Serialisation du schema : '+self.format
         #exception : pas téléchargeable
         if(self.format in ['rdf','n3','ttl']):
@@ -164,42 +182,71 @@ class Schema(models.Model):
                 sp = SchemaProperty(schema=self,prop_name=sp[0],prop_label=sp[1])
                 sp.save()
 
+from utils import FkFilterSpec
+FkFilterSpec.register_filterspec()
 
 class SchemaClass(models.Model):
     schema = models.ForeignKey(Schema)
     class_name = models.CharField(_(u'Classe RDF'),max_length=250,unique=True)
-    class_label = models.CharField(_(u'Libellé de classe RDF'),max_length=250)
+    class_label = models.CharField(_(u'Libellé'),max_length=250)
+
     def __unicode__(self):
-        return(self.class_label)
-    # class Meta:
-    #     ordering = 'class_label'
-    #     verbose_name = _(u'Classe RDF')
-    #     verbose_name_plural = _(u'Classes RDF')
+        return(self.class_label)    
+    class Meta:
+        #unique_together = (('class_name', 'class_label'),)
+        ordering = ('class_label',)
+        verbose_name = _(u'Classe RDF')
+        verbose_name_plural = _(u'Classes RDF')
 
 
 class SchemaProperty(models.Model):
     schema = models.ForeignKey(Schema)
     prop_name = models.CharField(_(u'Propriété RDF'),max_length=250,unique=True)
-    prop_label = models.CharField(_(u'Libellé de propriété RDF'),max_length=250)
+    prop_label = models.CharField(_(u'Libellé'),max_length=250)
     def __unicode__(self):
         return(self.prop_label)
-    # class Meta:
-    #     ordering = 'prop_label'
-    #     verbose_name = _(u'Propriété RDF')
-    #     verbose_name_plural = _(u'Propriétés RDF')        
+    class Meta:
+        #unique_together = (('prop_name', 'prop_label'),)
+        ordering = ('prop_label',)
+        verbose_name = _(u'Propriété RDF')
+        verbose_name_plural = _(u'Propriétés RDF')        
 
 
+from smart_selects.db_fields import ChainedForeignKey
 
 class MappedModel(models.Model):
-    model_name = models.CharField(_(u'Modéle mappé'),max_length=200,null=True)
-    #model_name = models.ForeignKey(ContentType,to_field='model',verbose_name=_(u'Modéle mappé'))
-    rdf_class = models.ForeignKey(SchemaClass,verbose_name=_(u'Classe RDF'),null=True) 
-    classMap_label = exfields.AutoSlugField('d2rq:classDefinitionLabel',populate_from=('model_name'))
+    model_name = models.ForeignKey(ContentType,verbose_name=_(u'Modéle mappé'))
+    schema = models.ForeignKey(Schema)
+    rdf_class = ChainedForeignKey(SchemaClass,
+                    chained_field='schema',
+                    chained_model_field='schema',
+                    show_all=False,
+                    verbose_name=_(u'Classe RDF'))
+    
+    #rdf_class = models.ForeignKey(SchemaClass,verbose_name=_(u'Classe RDF')) 
+    classMap_label = exfields.AutoSlugField('d2rq:classDefinitionLabel',populate_from=('rdf_class'))
+    class Meta:
+        verbose_name = _(u'Modèle mappé')
+        verbose_name_plural = _(u'Modèles mappés')
+    def __unicode__(self):
+        return(unicode(self.model_name.app_label)+u'.'+unicode(self.model_name)+u' ➔ '+
+                unicode(self.rdf_class.schema.prefix)+u':'+unicode(self.rdf_class))
 
 
 class MappedField(models.Model):
-    model = models.ForeignKey(MappedModel)
-    field_name = models.TextField(_(u'Champ mappé'),null=True)
-    rdf_proprety = models.ForeignKey(SchemaProperty,verbose_name=_(u'Propriété RDF'),null=True)
-
-   
+    model = models.ForeignKey(MappedModel,verbose_name=_(u'Mapping'))
+    field_name = models.CharField(max_length=250)
+    schema = models.ForeignKey(Schema)
+    rdf_property = ChainedForeignKey(SchemaProperty,
+                    chained_field='schema',
+                    chained_model_field='schema',
+                    show_all=False,
+                    verbose_name=_(u'Propriété RDF'))
+    #rdf_property = models.ForeignKey(SchemaProperty,verbose_name=_(u'Propriété RDF'),null=True)
+    # PropertyDef_label = exfields.AutoSlugField('d2rq:propertyDefinitionLabel',populate_from=('rdf_property'))
+    # def __unicode__(self):
+    #     return(unicode(self.model.model_name.app_label)+u'.'+unicode(self.model_name)+u' ➔ '+
+    #             unicode(self.rdf_class.schema.prefix)+u':'+unicode(self.rdf_class))
+    class Meta:
+        verbose_name = _(u'Champ mappé')
+        verbose_name_plural = _(u'Champs mappés')
