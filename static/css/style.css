@@ -4,7 +4,7 @@
 */
 
 body {
-	font-family: "Droid Sans", Lucida, Verdana, sans-serif;
+	font-family: Nobile, Lucida, Verdana, sans-serif;
 	background-color: #9d9d9d;
 }
 
@@ -12,7 +12,7 @@ body {
 
 header{
 	background-color: #e2e2e2;
-	height: 100px;
+	height: 80px;
 
 }
 
@@ -34,6 +34,155 @@ table td{
 	border-collapse: collapse;
 	border: 1px solid silver;
 }
+
+h1,h2,h3,h4,h5,h6{
+	font-family: "PT Sans Narrow", "Trebuchet MS", Trebuchet, Tahoma, Arial;
+}
+
+h1{
+	font-size: 3.5em;
+	padding-top: 10px;
+	padding-left: 20px;
+	color: #6c6c6c;
+}
+
+h2{
+	font-size: 3em;
+}
+
+h3{
+	font-size: 2.7em;
+}
+
+
+
+/* @group Basic CSS Menu */
+
+/* 
+http://www.htmldog.com/articles/suckerfish/dropdowns/
+Laisser tranquille , surclasser ailleurs 
+*/
+
+#nav, #nav ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	position: relative;
+}
+
+#nav a {
+	display: block;
+	width: 12em;
+}
+
+#nav li {
+	float: left;
+	width: 12em;
+}
+
+#nav li ul {
+	position: absolute;
+	width: 12em;
+	left: -999em;
+}
+
+#nav li:hover ul {
+	left: auto;
+}
+
+#nav li:hover ul, #nav li.sfhover ul {
+	left: auto;
+}
+
+/* Mulit-level*/
+
+#nav li ul ul {
+	margin: -1em 0 0 12em;
+}
+
+
+#nav, #nav ul {
+	padding: 0;
+	margin: 0;
+	list-style: none; 
+	line-height: 1;
+}
+
+
+#nav li:hover ul ul, #nav li.sfhover ul ul {
+	left: -999em;
+}
+
+
+#nav li:hover ul, #nav li li:hover ul, #nav li.sfhover ul, #nav li li.sfhover ul {
+	left: auto;
+}
+
+
+/* @end */
+
+/* @group Personnalisation Menu CSS */
+
+
+#nav {
+	background-color: #f5524a;
+	border: 1px solid #bc717f;
+	
+	width: 100%;
+	height: 3em;
+	background-color: #f7797c;
+	border-right-style: none;
+	border-left-style: none;
+}
+
+#nav li a{
+	font-size: 1.4em;
+	position: relative;
+	text-decoration: none;
+	color: #feffff;
+	padding-left: 0.5em;
+	font-weight: bold;
+}
+
+#nav, #nav ul {
+	padding: 0;
+	line-height: 2;
+}
+
+#nav li ul ul {
+	margin: -2.5em 0 0 12em;
+}
+
+#nav > li {
+	height: 100%;
+	border-right: 1px solid #d3604c;
+}
+
+#nav ul{
+	background-color: #d1453e;
+	border: 1px solid #cd887f;
+	border-top-style: none;
+}
+
+#nav ul > li a{
+	font-size: 1.2em;
+}
+
+#nav ul ul > li a{
+	font-size: 1.1em;
+}
+
+
+#nav li ul li:hover{
+	background-color: #7e5245;
+}
+
+
+/* @end */
+
+
+
+
 
 /* @group hCard */
 

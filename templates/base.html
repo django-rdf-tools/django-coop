@@ -37,12 +37,7 @@
     <link rel="stylesheet" href="{{ STATIC_ROOT }}css/admin_bar.css" type="text/css" />
 
     <link href='http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold' rel='stylesheet' type='text/css'>
-    
-    <link href='http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="{{STATIC_ROOT}}superfish-1.4.8/css/superfish.css" media="screen">
-    
-    <!-- Uncomment if you are specifically targeting less enabled mobile browsers
-    <link rel="stylesheet" media="handheld" href="css/handheld.css?v=2">  -->
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow:700|Nobile:400,400italic,700' rel='stylesheet' type='text/css'>
     
     
     <script src="{{ STATIC_ROOT }}js/libs/modernizr.js"></script>
@@ -56,19 +51,22 @@
 
 <header class="container_12">
     
+    <h1>Django-coop démo</h1>
+    
+    
 </header>
 
 
 <div id="main" role="main" class="container_12 clearfix">
   {% block navigation %}
   <nav>
-      <ul>{% navigation_as_nested_ul %}</ul>
+      <ul id="nav">{% navigation_as_nested_ul %}</ul>
   </nav>
   {% endblock %}
 
     <div id="content" class="grid_9 grid">
       {% block document %}
-        <h1>{% block title %}{% endblock %}</h1>
+        {% block title %}{% endblock %}
         
         {% block content %}
                 
@@ -105,6 +103,22 @@ $(function(){
     {% endblock %}
 });
 </script>
+
+
+<script type="text/javascript"><!--//--><![CDATA[//><!--
+sfHover = function() {
+	var sfEls = document.getElementById("nav").getElementsByTagName("LI");
+	for (var i=0; i<sfEls.length; i++) {
+		sfEls[i].onmouseover=function() {
+			this.className+=" sfhover";
+		}
+		sfEls[i].onmouseout=function() {
+			this.className=this.className.replace(new RegExp(" sfhover\\b"), "");
+		}
+	}
+}
+if (window.attachEvent) window.attachEvent("onload", sfHover);
+//--><!]]></script>
 
 
 </body>
