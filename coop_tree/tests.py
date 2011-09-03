@@ -311,7 +311,7 @@ class NavigationTest(TestCase):
         self.assertEqual(result['status'], 'success')
         self.assertTrue(result['html'].find(nodes[0].get_absolute_url())>=0)
         self.assertTrue(result['html'].find(nodes[1].get_absolute_url())<0)
-        self.assertTemplateUsed(response, 'coop_tree/tree_content/default.html')
+        self.assertTemplateUsed(response, 'tree_content/default.html')
         
     def test_get_suggest_list(self):
         addrs = ("http://www.google.fr", "http://www.python.org", "http://www.quinode.fr", "http://www.apidev.fr")
