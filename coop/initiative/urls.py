@@ -8,10 +8,17 @@ from coop_local.models import Initiative
 urlpatterns = patterns('',
     (r'^$', ListView.as_view(
         model=Initiative,
-        context_object_name='liste_initiatives'
+        context_object_name='liste_initiatives',
+        template_name='initiative/initiative_list.html'
         )),
-    (r'^(?P<slug>\w+).html$', ISDetailView.as_view(
-        model=Initiative,
-        context_object_name='liste_initiatives'
-        )),    
+    
+    url(r'^(?P<slug>\w+).html$', 'coop.initiative.views.ISDetailView', name="initiative_detail"),
+    #     
+    # (r'^(?P<slug>\w+).html$', ISDetailView.as_view(
+    #     model=Initiative,
+    #     #context_object_name='liste_initiatives'
+    #     template_name = 'initiative_detail.html'
+    #     
+    #     )),    
+        
 )

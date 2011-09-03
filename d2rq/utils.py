@@ -1,7 +1,7 @@
 from django.contrib.contenttypes.models import ContentType
 import config # not unused, needed by livesettings !
 from livesettings import config_value
-from models import Schema, SchemaClass
+from d2rq.models import Schema
 
 def get_mappable_content_types():
     done = []
@@ -15,15 +15,6 @@ def get_mappable_content_types():
                 ))
             done.append(m.app_label)
     return AVAILABLE_MODELS
-   
-def get_rdf_classes():              
-    AVAILABLE_CLASSES = []
-    for s in Schema.objects.all().order_by('prefix'):
-        AVAILABLE_CLASSES.append((
-            s.prefix+':', 
-            tuple((x.id,x.class_label) for x in SchemaClass.objects.filter(schema=s))
-        ))
-    return AVAILABLE_CLASSES
 
 
 # alternative pour faire des menus select sur fkey avec optgroup

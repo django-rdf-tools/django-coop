@@ -1,6 +1,6 @@
 from django import forms
 from models import Schema, MappedModel, SchemaClass, SchemaProperty, MappedField
-from utils import get_mappable_content_types, get_rdf_classes
+from utils import get_mappable_content_types
 from django.utils.translation import ugettext as _
 
 
@@ -17,15 +17,15 @@ class MappableModelForm(forms.ModelForm):
     class Meta:
         model = MappedModel
 
-
-def get_rdf_properties():              
-    AVAILABLE_PROPERTIES = []
-    for s in Schema.objects.all().order_by('prefix'):
-        AVAILABLE_PROPERTIES.append((
-            s.prefix+':', 
-            tuple((x.id,x.prop_label) for x in SchemaProperty.objects.filter(schema=s))
-        ))
-    return AVAILABLE_PROPERTIES
+# 
+# def get_rdf_properties():              
+#     AVAILABLE_PROPERTIES = []
+#     for s in Schema.objects.all().order_by('prefix'):
+#         AVAILABLE_PROPERTIES.append((
+#             s.prefix+':', 
+#             tuple((x.id,x.prop_label) for x in SchemaProperty.objects.filter(schema=s))
+#         ))
+#     return AVAILABLE_PROPERTIES
 
 def get_fields_from_model(model):
     AVAILABLE_FIELDS =[]

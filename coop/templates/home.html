@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Accueil{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block document %}
+  
+  {% block content %}
+          
+          <div id="dernieres_initiatives"><ul>
+              {% for i in dernieres_initiatives %}
+              <li><a href="{{i.get_absolute_url}}">{{ i.title }}</a></li>
+              {%endfor%}
+          </ul>
+          </div>
+          
+          <div id="inscrits">
+              <p>Nombre d'inscrits sur le site : <span>{{inscrits}}</span>
+          </div>
+          
+  {% endblock %}
+  
+  
+  
+{% endblock %}

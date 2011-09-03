@@ -185,6 +185,16 @@ class Schema(models.Model):
 from utils import FkFilterSpec
 FkFilterSpec.register_filterspec()
 
+# def get_rdf_classes():              
+#     AVAILABLE_CLASSES = []
+#     for s in Schema.objects.all().order_by('prefix'):
+#         AVAILABLE_CLASSES.append((
+#             s.prefix+':', 
+#             tuple((x.id,x.class_label) for x in SchemaClass.objects.filter(schema=s))
+#         ))
+#     return AVAILABLE_CLASSES
+
+
 class SchemaClass(models.Model):
     schema = models.ForeignKey(Schema)
     class_name = models.CharField(_(u'Classe RDF'),max_length=250,unique=True)
