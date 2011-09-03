@@ -12,15 +12,15 @@ urlpatterns = patterns('',
 
     url("^$", direct_to_template, {"template": "base.html"}, name="home"),
 #url(r"^$", 'views.home', name="home"),
-
+    url(r'^chaining/', include('smart_selects.urls')),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^settings/', include('livesettings.urls')),
     
-    url(r'^is/', include('initiative.urls')),
+    url(r'^is/', include('coop.initiative.urls')),
 
 
-    (r'^membre/', include('membre.urls')),
+    (r'^membre/', include('coop.membre.urls')),
 
     url(r'^tree/$', 'coop_tree.views.process_nav_edition', name='navigation_tree'),
 )

@@ -13,9 +13,9 @@ class BaseRole(models.Model):
         return unicode(self.label) 
 
 class BaseEngagement(models.Model):
-    membre = models.ForeignKey('local.Membre',related_name='pkid')
-    initiative = models.ForeignKey('local.Initiative')
-    role = models.ForeignKey('local.Role')
+    membre = models.ForeignKey('coop_local.Membre',related_name='pkid')
+    initiative = models.ForeignKey('coop_local.Initiative')
+    role = models.ForeignKey('coop_local.Role')
     created = exfields.CreationDateTimeField(_(u'Création rôle'))
     modified = exfields.ModificationDateTimeField(_(u'Modification rôle'))
     #membre_uri = models.CharField(_(u'Profil FOAF'),blank=True, max_length=250, editable=False)

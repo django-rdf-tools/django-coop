@@ -3,6 +3,7 @@ from django.db import models
 from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
+from genericm2m.models import RelatedObjectsDescriptor
 
 #Based on SKOS+XL model
 
@@ -50,6 +51,8 @@ class Concept(models.Model):
     
 
 class Term(models.Model):
+    related = RelatedObjectsDescriptor()
+    
     literal = models.CharField(_(u'Forme literale'),max_length=255)
     slug = exfields.AutoSlugField(populate_from=('literal'))
     language= models.CharField(_(u'Langue'),max_length=10, choices=LANG_LABELS, default='@fr')

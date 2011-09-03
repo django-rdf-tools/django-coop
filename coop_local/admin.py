@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.contrib import admin
-from local.models import Membre,Role,Engagement,Initiative
+from coop_local.models import Membre,Role,Engagement,Initiative
 from django_extensions.admin import ForeignKeyAutocompleteAdmin
 from django_extensions.admin.widgets import ForeignKeySearchInput
 
