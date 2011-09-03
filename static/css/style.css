@@ -4,14 +4,12 @@
 */
 
 body {
+	background-color: #c5d3da;
 	font-family: Nobile, Lucida, Verdana, sans-serif;
-	background-color: #9d9d9d;
 }
 
-
-
 header{
-	background-color: #e2e2e2;
+	background-color: white;
 	height: 80px;
 
 }
@@ -54,7 +52,9 @@ h3{
 	font-size: 2.7em;
 }
 
-
+#content{
+	font-size: 1.1em;
+}
 
 /* @group Basic CSS Menu */
 
@@ -245,10 +245,15 @@ div.vcard abbr {
 
 /* @group footer */
 
-
 footer {
-	background: #444 url(../img/ombre.png) repeat-x;
-	padding-top: 30px;
+	
+	background: white url(../img/ombre.png) repeat-x;
+	border-top: 1px solid #bababa;
+}
+
+footer div{
+	text-align: right;
+	padding: 10px;
 }
 
 footer ul {
