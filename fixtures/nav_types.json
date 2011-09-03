@@ -7,7 +7,8 @@
             "content_type": [
                 "coop_page",
                 "page"
-            ]
+            ],
+            "label_rule": 1
         }
     },
     {
@@ -18,7 +19,8 @@
             "content_type": [
                 "coop_tree",
                 "url"
-            ]
+            ],
+            "label_rule": 1
         }
     }
 ]
