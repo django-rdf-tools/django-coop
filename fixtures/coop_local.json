@@ -1,0 +1,1583 @@
+[
+    {
+        "pk": 53232,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Prolongent l\u2019accompagnement  vers l\u2019emploi de femmes  en difficult\u00e9 en organisant la production d\u2019articles originaux en feutre de laine de moutons, \u00e0 partir de la technique du feutrage de laine acquise par ces femmes au sein de leurs ateliers d\u2019insertion.",
+            "telephone_fixe": null,
+            "title": "LES ATELIERS DE LA BRUY\u00c8RE",
+            "uri": null,
+            "slug": "ateliers_bruyere",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "lesateliersdelabruyere@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53233,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "F\u00e9d\u00e8re des agriculteurs bio en difficult\u00e9 pour la reprise d'une fromagerie qui assurera la valorisation de leur production laiti\u00e8re.",
+            "telephone_fixe": null,
+            "title": "ENSEMBLE POUR LA FROMAGERIE BIO",
+            "uri": null,
+            "slug": "ensemble_fromagerie_bio",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "hauteloirebio@free.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53234,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "D\u00e9veloppement du r\u00e9seau d'\u00e9changes de savoirs dans les communes rurales du pays de St FLOUR.",
+            "telephone_fixe": null,
+            "title": "RERS HAUTE AUVERGNE",
+            "uri": null,
+            "slug": "rers_haute_auvergne",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "rers.ha@tiscali.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53235,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "D\u00e9veloppe une pluriactivit\u00e9 dans le domaine informatique en \u00e9quipant en wi-fi des zones d'ombre pour  internet, en cr\u00e9ant une boutique  de recyclage informatique eten animant des d\u00e9monstrations et formations aux NTIC.",
+            "telephone_fixe": null,
+            "title": "QUINODE",
+            "uri": null,
+            "slug": "quinode",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 5,
+            "email": "contact@quinode.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53236,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Veux cr\u00e9er et d\u00e9velopper une boutique de commerce \u00e9quitable \u00e0 Moulins.",
+            "telephone_fixe": null,
+            "title": "BOUTIQUE COMMERCE \u00c9QUITABLE/LEA",
+            "uri": null,
+            "slug": "boutique_commerce_equitable_lea",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "fal.allier@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53237,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Est un restaurant associatif et un lieu d'accueil cr\u00e9\u00e9 et g\u00e9r\u00e9 par et pour des personnes pr\u00e9caires.",
+            "telephone_fixe": null,
+            "title": "MAISON DE LA SOLIDARIT\u00c9",
+            "uri": null,
+            "slug": "maison_solidarite",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "Amsmontlu@aol.com",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53238,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "D\u00e9veloppe de nouveaux r\u00e9seaux d'AMAPS du Brivadois.",
+            "telephone_fixe": null,
+            "title": "ABSOLU",
+            "uri": null,
+            "slug": "absolu",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "plein.air.cocept@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53239,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Exp\u00e9rimente une diversification des actions d'insertion qu'elle g\u00e8re en proposant aux petites communes rurale un service d'entretien de leurs espaces.",
+            "telephone_fixe": null,
+            "title": "JARDIN DES ESTREYS",
+            "uri": null,
+            "slug": "jardin_estreys",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53240,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "La flexibilit\u00e9 sans pr\u00e9carit\u00e9... un groupement d'employeurs propose aux entreprises de ce secteur rural de cr\u00e9er de v\u00e9ritables emplois de services en regroupant leurs micro-besoins.",
+            "telephone_fixe": null,
+            "title": "ARKOSE",
+            "uri": null,
+            "slug": "arkose",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "ge.arkose@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53241,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Promeut le temps partag\u00e9 dans l'Allier comme un outil de retour \u00e0 l'emploi pour des porteurs de comp\u00e9tences, un levier de d\u00e9veloppement pour les employeurs.",
+            "telephone_fixe": null,
+            "title": "CTP AUVERGNE",
+            "uri": null,
+            "slug": "ctp_auvergne",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "Contact@ctpauvergne.org",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53242,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "D\u00e9veloppe un projet \u00e9conomiquement viable \u00e0 partir de ses activit\u00e9s  de repas biologique dans les structures collectives et r\u00e9fl\u00e9chit \u00e0 la prise d'autonomie juridique du projet.",
+            "telephone_fixe": null,
+            "title": "AUVERGNE BIOLOGIQUE",
+            "uri": null,
+            "slug": "auvergne_biologique",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "auvergne.biologique@auvergne.chambagri.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53243,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "D\u00e9veloppe  des modes nouveaux  de commercialisation en mutualisant l'offre de produits biologiques r\u00e9gionaux avec d'autres producteurs et travaille pour ce faire \u00e0 un passage en SCIC.",
+            "telephone_fixe": null,
+            "title": "BIAU JARDIN",
+            "uri": null,
+            "slug": "biau_jardin",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "Lebiaujardin@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53244,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Dynamise et professionnalise son activit\u00e9 militante en associant des activit\u00e9s p\u00e9dagogiques \u00e0 la diffusion de produits issus du commerce \u00e9quitable",
+            "telephone_fixe": null,
+            "title": "L'ORANGE BLEUE",
+            "uri": null,
+            "slug": "orange_bleue",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "anne.leny@laposte.net",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53245,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Organise par le d\u00e9veloppement de nouvelles activit\u00e9s la prise d'autonomie \u00e9conomique et juridique du projet de covoiturage qu'il a initi\u00e9.",
+            "telephone_fixe": null,
+            "title": "COVOITURE 63",
+            "uri": null,
+            "slug": "covoiture_63",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 6,
+            "email": "covoiture63@",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53246,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Commercialise des produits issus du\n commerce \u00e9quitable.",
+            "telephone_fixe": null,
+            "title": "ARTISANS DU MONDE YSSINGEAUX-MONISTROL",
+            "uri": null,
+            "slug": "artisans_monde_yssingeaux_monistrol",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "monistrol-yssingeaux@artisansdumonde.org",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53247,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "D\u00e9veloppe un magasin de produits de qualit\u00e9 issus de  l'\u00e9conomie solidaire en valorisant notamment les produits de son entreprise d'insertion.",
+            "telephone_fixe": null,
+            "title": "MODE D'EMPLOI",
+            "uri": null,
+            "slug": "mode_emploi",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "modedemploi@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53248,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Organise la vente et le promotion de produits biologiques au sein d'une coop\u00e9rative de consommateurs.",
+            "telephone_fixe": null,
+            "title": "L'ARBRE \u00c0 PAIN",
+            "uri": null,
+            "slug": "arbre_pain",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53249,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Commercialise des produits issus du\n commerce \u00e9quitable.",
+            "telephone_fixe": null,
+            "title": "ARTISANS DU MONDE",
+            "uri": null,
+            "slug": "artisans_monde",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "montlucon@artisansdumonde.org",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53250,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Propose des contrats d'achats sur la longue p\u00e9riode\ndirectement entre les producteurs et les consommateurs.",
+            "telephone_fixe": null,
+            "title": "AMAP DE VICHY",
+            "uri": null,
+            "slug": "amap_vichy",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "annemariechambeau@tele2.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53251,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Commercialise des produits issus du \ncommerce \u00e9quitable.",
+            "telephone_fixe": null,
+            "title": "ARTISANS DU MONDE",
+            "uri": null,
+            "slug": "artisans_monde",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "cusset@artisansdumonde.org",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53252,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Propose des contrats d'achats sur la longue p\u00e9riode\ndirectement entre les producteurs et les consommateurs.",
+            "telephone_fixe": null,
+            "title": "AMAP DU BOURBONNAIS",
+            "uri": null,
+            "slug": "amap_bourbonnais",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "d.delvincourt@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53253,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Organise de nombreux \u00e9v\u00e8nements consolidant le \nmaintien d'activit\u00e9s durables dans les espaces ruraux",
+            "telephone_fixe": null,
+            "title": "GD CIVAM  AUVERGNE",
+            "uri": null,
+            "slug": "gd_civam_auvergne",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 4,
+            "email": "gdcivam43@libertysurf.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53254,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Commercialise des produits issus du \ncommerce \u00e9quitable.",
+            "telephone_fixe": null,
+            "title": "ARTISANS DU MONDE LE PUY",
+            "uri": null,
+            "slug": "artisans_monde_puy",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "le-puy-en-velay@artisansdumonde.org",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53255,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "D\u00e9veloppe des actions culturelles favorisant les \u00e9changes artistiques selon les principes r\u00e9ciproques de savoirs.",
+            "telephone_fixe": null,
+            "title": "RERS MURAT",
+            "uri": null,
+            "slug": "rers_murat",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 2,
+            "email": "rers.murat@laposte.net",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53256,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Met en place un r\u00e9seau de d\u00e9veloppement des activit\u00e9s d'accueil chez les agriculteurs.",
+            "telephone_fixe": null,
+            "title": "ACCUEIL PAYSAN AUVERGNE",
+            "uri": null,
+            "slug": "accueil_paysan_auvergne",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 3,
+            "email": "accueilpaysan.auvergne@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53257,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Met en place une ferme biologique d'insertion et\n exp\u00e9rimentation des m\u00e9thodes de gestion",
+            "telephone_fixe": null,
+            "title": "CULTURES DIVERSES",
+            "uri": null,
+            "slug": "cultures_diverses",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "dussola@free.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53258,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Commercialise des produits issus du\n commerce \u00e9quitable.",
+            "telephone_fixe": null,
+            "title": "ASPAL ARTISANS DU MONDE CLERMONT",
+            "uri": null,
+            "slug": "aspal_artisans_monde_clermont",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "vandame@clermont-inra.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53259,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "G\u00e8re un garage associatif permettant une initiation \u00e0 la m\u00e9canique automobile.",
+            "telephone_fixe": null,
+            "title": "ASSOCIATION POUR L'INITIATIVE M\u00c9CANIQUE AUTOMOBILE (APIMA)",
+            "uri": null,
+            "slug": "association_initiative_mecanique_automobile_apima",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "roger.berry@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53260,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Organise des \u00e9changes non mon\u00e9taires de savoirs et de savoirs faire.",
+            "telephone_fixe": null,
+            "title": "RERS DE COURNON",
+            "uri": null,
+            "slug": "rers_cournon",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53261,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Vend des paniers de l\u00e9gumes biologiques.",
+            "telephone_fixe": null,
+            "title": "JARDINS D'YS",
+            "uri": null,
+            "slug": "jardins_ys",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "jardindys@free.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53262,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Propose des mises en situation de travail dans le domaine de la restauration \u00e0 des personnes en difficult\u00e9 d'insertion professionnelle.",
+            "telephone_fixe": null,
+            "title": "LA TRUFFADE",
+            "uri": null,
+            "slug": "truffade",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 8,
+            "email": "latruffade.montoldre@orange.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53263,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Propose des mises en situation de travail dans le domaine de la vente \u00e0 des personnes en difficult\u00e9 s'insertion professionnelle",
+            "telephone_fixe": null,
+            "title": "PENELOPE ULYSSE",
+            "uri": null,
+            "slug": "penelope_ulysse",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 1,
+            "email": "association.penelope@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53264,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "propose des mises en situation de travail dans le domaine de la blanchisserie \u00e0 des personnes en difficult\u00e9 d'insertion",
+            "telephone_fixe": null,
+            "title": "RAPID' NET SERVICE",
+            "uri": null,
+            "slug": "rapid_net_service",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 8,
+            "email": "ass-rapidenet.service@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53265,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Propose des mises en situation de travail dans le domaine du b\u00e2timent \u00e0 des personnes en difficult\u00e9 d'insertion professionnelle.",
+            "telephone_fixe": null,
+            "title": "SIAEP 03",
+            "uri": null,
+            "slug": "siaep_03",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 8,
+            "email": "georges .parent@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53266,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Propose des mises en situation de travail dans le domaine du b\u00e2timent \u00e0 des personnes en difficult\u00e9 d'insertion professionnelle.",
+            "telephone_fixe": null,
+            "title": "ADAJ",
+            "uri": null,
+            "slug": "adaj",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 8,
+            "email": "",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53267,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Propose des mises en situation de travail dans le domaine des NTIC \u00e0 des personnes en difficult\u00e9 d'insertion professionn",
+            "telephone_fixe": null,
+            "title": "NTA",
+            "uri": null,
+            "slug": "nta",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 5,
+            "email": "c.derancourt@nta43.com",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53268,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "propose des mises en situation de travail dans le domaine de la blanchisserie \u00e0 des personnes en difficult\u00e9 d'insertion",
+            "telephone_fixe": null,
+            "title": "BLANC PLUS",
+            "uri": null,
+            "slug": "blanc_plus",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 8,
+            "email": "claude.aigueparses@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53269,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Proposes des mises en situation de travail dans le domaine de l'imprimerie \u00e0 des personnes en difficult\u00e9 d'insertion professionnelle.",
+            "telephone_fixe": null,
+            "title": "COMB'AT",
+            "uri": null,
+            "slug": "comb_at",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 8,
+            "email": "iedouardcmobat@club.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53270,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Propose des mises en situation de travail dans le domaine du b\u00e2timent \u00e0 des personnes en difficult\u00e9 d'insertion professionnelle.",
+            "telephone_fixe": null,
+            "title": "EJA",
+            "uri": null,
+            "slug": "eja",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 8,
+            "email": "pc.groupejobagglo@orange.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53271,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Propose des mises en situation de travail dans le domaine de la restauration \u00e0 des personnes en difficult\u00e9 d'insertion professionnelle.",
+            "telephone_fixe": null,
+            "title": "SIX TROIS",
+            "uri": null,
+            "slug": "six_trois",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 8,
+            "email": "sixtrois@lacoope.com",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53272,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Am\u00e9nage un camping \u00abtout \u00e9cologique\u00bb pour l'accueil de groupes de personnes en difficult\u00e9 avec leurs accompagnants.",
+            "telephone_fixe": null,
+            "title": "M\u00c9ANDRES",
+            "uri": null,
+            "slug": "meandres",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 3,
+            "email": "association-meandres@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53273,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Pr\u00e9pare un chantier d'insertion innovant destin\u00e9 \u00e0 de jeunes dipl\u00f4m\u00e9s, portant sur la communication autour de la gastronomie \u00e0 partir des produits du terroir et de la di\u00e9t\u00e9tique.",
+            "telephone_fixe": null,
+            "title": "I.S.A.\u00c9.",
+            "uri": null,
+            "slug": "isae",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 8,
+            "email": "isae03@tiscali.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53274,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Organise une offre de comp\u00e9tences pour  le d\u00e9veloppement de l'utilisation du cheval de trait poitevin",
+            "telephone_fixe": null,
+            "title": "ASSOCIATION NATIONALE DU CHEVAL DE TRAIT POITEVIN",
+            "uri": null,
+            "slug": "association_nationale_cheval_trait_poitevin",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 3,
+            "email": "a.b.neron@cegetel.net",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53275,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "P\u00e9rennise et d\u00e9veloppe ses activit\u00e9s d'insertion en auto-construisant un local technique et lieu de vie pour un public en tr\u00e8s grande difficult\u00e9.",
+            "telephone_fixe": null,
+            "title": "ASSOCIATION D'INSERTION DE CHEMIN DE FER DU LIVRADOIS FOREZ",
+            "uri": null,
+            "slug": "association_insertion_chemin_fer_livradois_forez",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 8,
+            "email": "saplachaisedieu@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53276,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Organise des s\u00e9jours de loisirs pour un public handicap\u00e9 en adaptant les propositions touristiques locales d'animation et d'h\u00e9bergement.",
+            "telephone_fixe": null,
+            "title": "ACCRO'NAT",
+            "uri": null,
+            "slug": "accro_nat",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 2,
+            "email": "accro-nat@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53277,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Lutte contre la pr\u00e9carit\u00e9 des animatrices sportives de gymnastique volontaire en d\u00e9veloppant un Groupement d'Employeurs pour \u00e9tendre ses activit\u00e9s sur l'ensemble du d\u00e9partement 43, en  recrutant de nouveaux clubs adh\u00e9rents et en professionnalisant leurs a",
+            "telephone_fixe": null,
+            "title": "GEGV BORDS DE LOIRE",
+            "uri": null,
+            "slug": "gegv_bords_loire",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 2,
+            "email": "irene-guerin@tele2.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53278,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Ateliers de la pierre \u00e0 Montaigu le Blin",
+            "telephone_fixe": null,
+            "title": "\u00c9TUDES ET CHANTIERS",
+            "uri": null,
+            "slug": "etudes_chantiers",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 8,
+            "email": "ecec@unarec.org",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53279,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Forte d'exp\u00e9riences personnelles du handicap et d'un solide partenariat communal, l'association cr\u00e9e le premier village-vacance adapt\u00e9 \u00e0 l'accueil familial de personnes atteintes de tout type de handicap.",
+            "telephone_fixe": null,
+            "title": "LIO'HAND EVASION",
+            "uri": null,
+            "slug": "lio_hand_evasion",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 2,
+            "email": "lionel.bory@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53280,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Con\u00e7oit une offre de formation sur les techniques d'accueil des publics handicap\u00e9s et en assurer la promotion au plan national aupr\u00e8s des personnels des sites touristiques et culturels en charge de l'accueil de ces publics.",
+            "telephone_fixe": null,
+            "title": "ASSOCIATION BRAILLE ET CULTURE",
+            "uri": null,
+            "slug": "association_braille_culture",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 2,
+            "email": "brailleetculture@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53281,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "D\u00e9veloppe des animations autour de la pratique collective du jeux pour tous  publics, fonctionne aussi en ludoth\u00e8que associative.",
+            "telephone_fixe": null,
+            "title": "MAISON DES JEUX",
+            "uri": null,
+            "slug": "maison_jeux",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 2,
+            "email": "maison.jeux@free.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53282,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "D\u00e9velopper une nouvelle activit\u00e9 touristique .",
+            "telephone_fixe": null,
+            "title": "CNSB",
+            "uri": null,
+            "slug": "cnsb",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 3,
+            "email": "cnsb@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53283,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Mettre en place un outil int\u00e9ractif mettant \u00e0 disposition \ndes informations sur la vie culturelle du territoire \nbourbonnais",
+            "telephone_fixe": null,
+            "title": "MINER ALLIER PLUS",
+            "uri": null,
+            "slug": "miner_allier_plus",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 5,
+            "email": "minerallierplus@free.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53284,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Relance et professionnalise son activit\u00e9 d'accompagnement \u00e0 domicile de personnes en difficult\u00e9s et ou handicap\u00e9es.",
+            "telephone_fixe": null,
+            "title": "ALEH",
+            "uri": null,
+            "slug": "aleh",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 8,
+            "email": "aleh@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53285,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "A pour objectif la cr\u00e9ation d'une soci\u00e9t\u00e9 coop\u00e9ratives de services \u00e0 la personne.",
+            "telephone_fixe": null,
+            "title": "ADEF / CASAP",
+            "uri": null,
+            "slug": "adef__casap",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 7,
+            "email": "adefplus@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53286,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Propose un service d'aide \u00e0 domicile en milieu rural en qualifiant des personnes en difficult\u00e9 du territoire, en partenariat avec les collectivit\u00e9s locales et les structures associatives existantes.",
+            "telephone_fixe": null,
+            "title": "VIVRE \u00c0 DOMICILE",
+            "uri": null,
+            "slug": "vivre_domicile",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 7,
+            "email": "vivreadomicile@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53287,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Cr\u00e9e un r\u00e9seau de lieux associatifs d'accueil de jeunes enfants et propose \u00e0 ces cr\u00e8ches parentales des outils pour am\u00e9liorer leurs modalit\u00e9s d'accueil et assurer leur d\u00e9veloppement et leur p\u00e9rennit\u00e9.",
+            "telephone_fixe": null,
+            "title": "CAPEA",
+            "uri": null,
+            "slug": "capea",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 7,
+            "email": "capea.auvergne@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53288,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "propose des mises en situation de travail \u00e0 des personnes en difficult\u00e9 d'insertion",
+            "telephone_fixe": null,
+            "title": "COUP DE MAIN",
+            "uri": null,
+            "slug": "coup_main",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 8,
+            "email": "",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53289,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Exp\u00e9rimente un dispositif original de soutien \u00e0 l'apprentissage de la conduite automobile pour des personnes en difficult\u00e9s.",
+            "telephone_fixe": null,
+            "title": "AAC AUVERGNE",
+            "uri": null,
+            "slug": "aac_auvergne",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 8,
+            "email": "ecf.riom@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53290,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "propose des mises en situation de travail \u00e0 des personnes en difficult\u00e9 d'insertion",
+            "telephone_fixe": null,
+            "title": "PASSERELLE",
+            "uri": null,
+            "slug": "passerelle",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 8,
+            "email": "passerelle.plus@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53291,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "G\u00e9olografis Interface graphique des sciences de la terre. Coop\u00e9rative de ressources.",
+            "telephone_fixe": null,
+            "title": "COOP\u00c9RATIVE G\u00c9OLOGRAFIS",
+            "uri": null,
+            "slug": "cooperative_geolografis",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 5,
+            "email": "geologis@free.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53292,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Exp\u00e9rimente un dispositif d'accompagnement d'agriculteurs souhaitant transmettre leurs exploitations dans l'optique d'un d\u00e9veloppement durable et solidaire.",
+            "telephone_fixe": null,
+            "title": "FR CIVAM AUVERGNE",
+            "uri": null,
+            "slug": "fr_civam_auvergne",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 4,
+            "email": "auvergne.fr.civam@libertysurf.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53293,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Sensibiliser, \u00e9duquer, former tous les publics aux multiples facettes de la th\u00e9matique de l'alimentation.",
+            "telephone_fixe": null,
+            "title": "A.N.I.S. \u00c9TOIL\u00c9",
+            "uri": null,
+            "slug": "anis_etoile",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 4,
+            "email": "amis.etoile@fr.aleane.com",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53294,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Met au point des actions d'animation et de sensibilisation au d\u00e9veloppement durable en Combraille.",
+            "telephone_fixe": null,
+            "title": "CENTRE D'EDUCATION AU D\u00c9VELOPPEMENT DURABLE",
+            "uri": null,
+            "slug": "centre_education_developpement_durable",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 4,
+            "email": "assoc.cedd@orange.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53295,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Veux cr\u00e9er un service d'\u00e9ducation \u00e0 l'environnement dans le cadre d'une petite SCOOP  \u00e9quip\u00e9e d'un v\u00e9hicule de transport des usagers.",
+            "telephone_fixe": null,
+            "title": "CARBALA",
+            "uri": null,
+            "slug": "carbala",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 4,
+            "email": "animation-nature@carbala.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53296,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Eco-construction et nouvelles formes d'entreprendre dans le secteur du b\u00e2timent.",
+            "telephone_fixe": null,
+            "title": "CABESTAN OBSIDIENNE",
+            "uri": null,
+            "slug": "cabestan_obsidienne",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 4,
+            "email": "csurville@gmail.com",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53297,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Collecte et valorise des d\u00e9chets m\u00e9nagers recyclables en lien avec les collectivit\u00e9s territoriales.",
+            "telephone_fixe": null,
+            "title": "TOUS ENSEMBLE",
+            "uri": null,
+            "slug": "tous_ensemble",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 4,
+            "email": "",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53298,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "D\u00e9veloppe l'emploi local en pr\u00e9parant la production et la commercialisation de plaquettes de bois-\u00e9nergie pour l'unit\u00e9 de stockage et fabrication en cours de construction.",
+            "telephone_fixe": null,
+            "title": "VIVRE AU PAYS",
+            "uri": null,
+            "slug": "vivre_pays",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 4,
+            "email": "mairiepinols@wanadoo.Fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53299,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Professionnalise l'animation du village de L\u00e9otoing afin d'en faire un projet de d\u00e9veloppement local durable, culturel, artistique, agricole et \u00e9cotouristique.",
+            "telephone_fixe": null,
+            "title": "LES AMIS DE L\u00c9OTOING",
+            "uri": null,
+            "slug": "amis_leotoing",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 3,
+            "email": "cormerais@hotmail.com",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53300,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Construit de nouveaux partenariats pour organiser une v\u00e9ritable fili\u00e8re \u00ab\u00e9nergies renouvelables\u00bb en Haute-Loire",
+            "telephone_fixe": null,
+            "title": "ERE 43",
+            "uri": null,
+            "slug": "ere_43",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 4,
+            "email": "Jacques.villevieille@libertysurf.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53301,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Cr\u00e9e \u00e0 titre exp\u00e9rimental une unit\u00e9 de production, stockage et commercialisation de plaquettes bois \u00e9nergie.",
+            "telephone_fixe": null,
+            "title": "GEPETO",
+            "uri": null,
+            "slug": "gepeto",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 4,
+            "email": "gepeto6@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53302,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Mutualise les int\u00e9r\u00eats d'une association d'\u00e9ducation \u00e0 l'environnement, d'une commune et d'un centre de vacances pour cr\u00e9er un projet \u00e9conomique et p\u00e9dagogique autour de la gestion d'un \u00e9tang communal.",
+            "telephone_fixe": null,
+            "title": "CEMEA,  EPE",
+            "uri": null,
+            "slug": "cemea_epe",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 3,
+            "email": "cemea.auvergne@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53303,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Propose des mises en situation de travail dans le domaine du tri s\u00e9lectif \u00e0 des personnes en difficult\u00e9 d'insertion professionnelle.",
+            "telephone_fixe": null,
+            "title": "APIVALE",
+            "uri": null,
+            "slug": "apivale",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 4,
+            "email": "apivale63@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53304,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "D\u00e9velopper des actions d'\u00e9ducation \u00e0 l'environnement",
+            "telephone_fixe": null,
+            "title": "SUR LES TRACES DU  COQ NOIR",
+            "uri": null,
+            "slug": "traces_coq_noir",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 3,
+            "email": "coq-noir@hotmail.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53305,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "D\u00e9velopper et promouvoir les activit\u00e9s de l'association.",
+            "telephone_fixe": null,
+            "title": "BIO INSTITUT",
+            "uri": null,
+            "slug": "bio_institut",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 4,
+            "email": "bio-institut@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53306,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Propose des mises en situation de travail dans le domaine du recyclage \u00e0 des personnes en difficult\u00e9 d'insertion professionnelle.",
+            "telephone_fixe": null,
+            "title": "RECYPLUS",
+            "uri": null,
+            "slug": "recyplus",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 4,
+            "email": "recyplus@orange.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53307,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Propose des mises en situation de travail dans le domaine du tri s\u00e9lectif \u00e0 des personnes en difficult\u00e9 d'insertion professionnelle.",
+            "telephone_fixe": null,
+            "title": "OXYPLUS",
+            "uri": null,
+            "slug": "oxyplus",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 4,
+            "email": "oxygene.association@wandoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53308,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Propose des mises en situation de travail dans le domaine du recyclage \u00e0 des personnes en difficult\u00e9 d'insertion professionnelle.",
+            "telephone_fixe": null,
+            "title": "ENVIE 43",
+            "uri": null,
+            "slug": "envie_43",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 8,
+            "email": "envie.mot@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53309,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Propose des mises en situation de travai \u00e0 des personnes en difficult\u00e9 d'insertion professionnelle prenant appui sur la mobilit\u00e9 professionnelle et/ou g\u00e9ographique .",
+            "telephone_fixe": null,
+            "title": "ID\u00c9E TRAVAUX",
+            "uri": null,
+            "slug": "idee_travaux",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 8,
+            "email": "ch.chanceau@laposte.net",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53310,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Propose des mises en situation de travail dans le domaine du recyclage \u00e0 des personnes en difficult\u00e9 d'insertion professionnelle.",
+            "telephone_fixe": null,
+            "title": "ENVIE MO",
+            "uri": null,
+            "slug": "envie_mo",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 8,
+            "email": "envie.mot@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53312,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Professionnalise l'animation de lieux de rencontre interg\u00e9n\u00e9rationnelles pour construire ensemble des r\u00e9ponses aux probl\u00e8mes rencontr\u00e9s par tous les acteurs de l'\u00e9ducation.",
+            "telephone_fixe": null,
+            "title": "\u00c9COLE DES PARENTS ET DES \u00c9DUCATEURS DU CANTAL",
+            "uri": null,
+            "slug": "ecole_parents_educateurs_cantal",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 7,
+            "email": "contact@epe15.com",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53313,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Pr\u00e9pare la prise en charge et le fonctionnement d'un futur espace de cr\u00e9ation culturel g\u00e9r\u00e9 par ses usagers.",
+            "telephone_fixe": null,
+            "title": "SESSION LIBRE",
+            "uri": null,
+            "slug": "session_libre",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 2,
+            "email": "contact@sessionlibre.com",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53314,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Veut cr\u00e9er du lien social dans le Cantal en proposant des animations culturelles en Occitan \u00e0 des personnes \u00e2g\u00e9es d\u00e9pend",
+            "telephone_fixe": null,
+            "title": "INSTITUT D'\u00c9TUDES OCCITANES",
+            "uri": null,
+            "slug": "institut_etudes_occitanes",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 2,
+            "email": "ioecantal@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53315,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Cr\u00e9er un label solidaire d'\u00e9dition musicale autour de nouvelles musiques en mutualisant des moyens financiers,artistiq",
+            "telephone_fixe": null,
+            "title": "SIRVENT\u00c9S",
+            "uri": null,
+            "slug": "sirventes",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 2,
+            "email": "developpement@sirventes.com",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53316,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Accueille des adultes en difficult\u00e9s pour les remobiliser autour d'activit\u00e9s artisanales et \u00e9cocitoyennes.",
+            "telephone_fixe": null,
+            "title": "LE CRENEAU",
+            "uri": null,
+            "slug": "creneau",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 8,
+            "email": "sj.auvergne@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53317,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Mobilise un groupe de femmes victimes de violence sur un projet de cr\u00e9ation de centre d'accueil autog\u00e9r\u00e9.",
+            "telephone_fixe": null,
+            "title": "CIDF ALLIER",
+            "uri": null,
+            "slug": "cidf_allier",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 8,
+            "email": "cidf.03@orange.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53318,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Accompagne des personnes en grandes difficult\u00e9s morales par l'initiaiton \u00e0 la g\u00e9n\u00e9alogie.",
+            "telephone_fixe": null,
+            "title": "CGHB",
+            "uri": null,
+            "slug": "cghb",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 5,
+            "email": "genea.bourbonnais@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53319,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Cr\u00e9e de fa\u00e7on participative un outil audiovisuel pour favoriser l'\u00e9mergence de projets d'\u00e9conomie solidaire.",
+            "telephone_fixe": null,
+            "title": "SCOP'ZIMAGES",
+            "uri": null,
+            "slug": "scop_zimages",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 5,
+            "email": "scop-zimages-productions@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53320,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Professionnalise et transmet ses comp\u00e9tences dans les domaines artistiques, techniques, administratifs, et de communication, et se donne les moyens n\u00e9cessaires \u00e0 la r\u00e9ussite de son ancrage sur le territoire de Cusset.",
+            "telephone_fixe": null,
+            "title": "LE PIED SUR LA T\u00caTE",
+            "uri": null,
+            "slug": "pied_tete",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 2,
+            "email": "pied_dur_la_tete@hotmail.com",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53321,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Cr\u00e9e une activit\u00e9 professionnelle de clown social en proposant des interventions sur le th\u00e8me de l'\u00e9galit\u00e9 homme femme.",
+            "telephone_fixe": null,
+            "title": "ODYSS\u00c9E",
+            "uri": null,
+            "slug": "odyssee",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 2,
+            "email": "asso.odyssee03@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53322,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Pour la cr\u00e9ation et la diffusion d'initiatives agri-culturelles et artisanales en milieu rural.",
+            "telephone_fixe": null,
+            "title": "ARTIZ\u00c2NE",
+            "uri": null,
+            "slug": "artizane",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 2,
+            "email": "info@artizane.org",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53323,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Regroupe plusieurs associations d'aide aux femmes afin de mutualiser les outils d'accompagnement et favoriser l'insertion sociale puis l'\u00e9laboration de projets professionnelles de femmes.",
+            "telephone_fixe": null,
+            "title": "FCOMFEMMES",
+            "uri": null,
+            "slug": "fcomfemmes",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 8,
+            "email": "cidfhloire@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53324,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "Professionnalise ses activit\u00e9s avec des outils de communication (site internet, plaquette,...) destin\u00e9s \u00e0 faire conna\u00eetre les comp\u00e9tences et le savoir faire de l'association et la diffusion d' un catalogue de formation pour promouvoir ses programmes.",
+            "telephone_fixe": null,
+            "title": "S\u00c9MAPHORE 43",
+            "uri": null,
+            "slug": "semaphore_43",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 2,
+            "email": "sema-phore@wanadoo.fr",
+            "rss": null
+        }
+    },
+    {
+        "pk": 53326,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": null,
+            "description": "G\u00e8re une salle alternative de spectacle et promeut des \u00e9changes cluturels europ\u00e9ens.",
+            "telephone_fixe": null,
+            "title": "PEC",
+            "uri": null,
+            "slug": "pec",
+            "created": null,
+            "modified": null,
+            "secteur_fse": 2,
+            "email": "peupleetculture@yahoo.fr",
+            "rss": null
+        }
+    }
+]

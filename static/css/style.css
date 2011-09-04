@@ -33,7 +33,7 @@ table td{
 	border: 1px solid silver;
 }
 
-h1,h2,h3,h4,h5,h6{
+h1,h2,h3,h4,h5,h6, nav{
 	font-family: "PT Sans Narrow", "Trebuchet MS", Trebuchet, Tahoma, Arial;
 }
 
@@ -41,15 +41,27 @@ h1{
 	font-size: 3.5em;
 	padding-top: 10px;
 	padding-left: 20px;
+}
+
+header h1 a, header h1 a:visited{
 	color: #6c6c6c;
+	text-decoration: none;
+}
+
+header h1 a:active{
+	background-color: white;
 }
 
 h2{
-	font-size: 3em;
+	font-size: 2.7em;
 }
 
 h3{
-	font-size: 2.7em;
+	font-size: 2.3em;
+}
+
+h4{
+	font-size: 1.8em;
 }
 
 #content{
@@ -127,21 +139,20 @@ Laisser tranquille , surclasser ailleurs
 #nav {
 	background-color: #f5524a;
 	border: 1px solid #bc717f;
-	
 	width: 100%;
-	height: 3em;
+	height: 3.2em;
 	background-color: #f7797c;
 	border-right-style: none;
 	border-left-style: none;
 }
 
 #nav li a{
-	font-size: 1.4em;
 	position: relative;
 	text-decoration: none;
 	color: #feffff;
 	padding-left: 0.5em;
 	font-weight: bold;
+	font-size: 1.6em;
 }
 
 #nav, #nav ul {
@@ -150,7 +161,7 @@ Laisser tranquille , surclasser ailleurs
 }
 
 #nav li ul ul {
-	margin: -2.5em 0 0 12em;
+	margin: -2.4em 0 0 12em;
 }
 
 #nav > li {

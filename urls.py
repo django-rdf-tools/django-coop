@@ -23,7 +23,7 @@ urlpatterns = patterns('',
     url(r'^settings', include('livesettings.urls')),
     url(r'^settings/', include('livesettings.urls')),
     
-    url(r'^initiatives/', include('coop.initiative.urls')),
+    url(r'^initiative/', include('coop.initiative.urls')),
 
     (r'^membre/', include('coop.membre.urls')),
 

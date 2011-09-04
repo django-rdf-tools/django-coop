@@ -73,7 +73,7 @@
             "format": "ttl",
             "vocab_type": "owl",
             "uri": "http://www.w3.org/ns/org#",
-            "label": "Core organization ontology@en"
+            "label": "Ontologie des organisations"
         }
     },
     {
@@ -311,18 +311,6 @@
         }
     },
     {
-        "pk": 783,
-        "model": "d2rq.schemaclass",
-        "fields": {
-            "class_name": "http://www.w3.org/ns/org#ChangeEvent",
-            "class_label": "ChangeEvent",
-            "schema": [
-                "org",
-                "http://www.w3.org/ns/org#"
-            ]
-        }
-    },
-    {
         "pk": 773,
         "model": "d2rq.schemaclass",
         "fields": {
@@ -527,11 +515,11 @@
         }
     },
     {
-        "pk": 782,
+        "pk": 814,
         "model": "d2rq.schemaclass",
         "fields": {
-            "class_name": "http://www.w3.org/ns/org#OrganizationalCollaboration",
-            "class_label": "Endeavour",
+            "class_name": "http://www.w3.org/ns/org#Membership",
+            "class_label": "Engagement",
             "schema": [
                 "org",
                 "http://www.w3.org/ns/org#"
@@ -559,18 +547,6 @@
             "schema": [
                 "dct",
                 "http://purl.org/dc/terms/"
-            ]
-        }
-    },
-    {
-        "pk": 777,
-        "model": "d2rq.schemaclass",
-        "fields": {
-            "class_name": "http://www.w3.org/ns/org#FormalOrganization",
-            "class_label": "FormalOrganization",
-            "schema": [
-                "org",
-                "http://www.w3.org/ns/org#"
             ]
         }
     },
@@ -743,18 +719,6 @@
         }
     },
     {
-        "pk": 772,
-        "model": "d2rq.schemaclass",
-        "fields": {
-            "class_name": "http://www.w3.org/2008/05/skos-xl#Label",
-            "class_label": "Label",
-            "schema": [
-                "skosxl",
-                "http://www.w3.org/2008/05/skos-xl"
-            ]
-        }
-    },
-    {
         "pk": 724,
         "model": "d2rq.schemaclass",
         "fields": {
@@ -763,6 +727,18 @@
             "schema": [
                 "vcard",
                 "http://www.w3.org/2006/vcard/ns#"
+            ]
+        }
+    },
+    {
+        "pk": 772,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/2008/05/skos-xl#Label",
+            "class_label": "Label",
+            "schema": [
+                "skosxl",
+                "http://www.w3.org/2008/05/skos-xl"
             ]
         }
     },
@@ -803,18 +779,6 @@
         }
     },
     {
-        "pk": 683,
-        "model": "d2rq.schemaclass",
-        "fields": {
-            "class_name": "http://purl.org/dc/terms/Location",
-            "class_label": "Location",
-            "schema": [
-                "dct",
-                "http://purl.org/dc/terms/"
-            ]
-        }
-    },
-    {
         "pk": 761,
         "model": "d2rq.schemaclass",
         "fields": {
@@ -823,6 +787,18 @@
             "schema": [
                 "gr",
                 "http://purl.org/goodrelations/v1#"
+            ]
+        }
+    },
+    {
+        "pk": 683,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://purl.org/dc/terms/Location",
+            "class_label": "Location",
+            "schema": [
+                "dct",
+                "http://purl.org/dc/terms/"
             ]
         }
     },
@@ -871,18 +847,6 @@
             "schema": [
                 "dct",
                 "http://purl.org/dc/terms/"
-            ]
-        }
-    },
-    {
-        "pk": 780,
-        "model": "d2rq.schemaclass",
-        "fields": {
-            "class_name": "http://www.w3.org/ns/org#Membership",
-            "class_label": "Membership",
-            "schema": [
-                "org",
-                "http://www.w3.org/ns/org#"
             ]
         }
     },
@@ -1019,11 +983,23 @@
         }
     },
     {
-        "pk": 776,
+        "pk": 810,
         "model": "d2rq.schemaclass",
         "fields": {
             "class_name": "http://www.w3.org/ns/org#Organization",
-            "class_label": "Organization",
+            "class_label": "Organisation",
+            "schema": [
+                "org",
+                "http://www.w3.org/ns/org#"
+            ]
+        }
+    },
+    {
+        "pk": 811,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/ns/org#FormalOrganization",
+            "class_label": "Organisation Formelle",
             "schema": [
                 "org",
                 "http://www.w3.org/ns/org#"
@@ -1039,18 +1015,6 @@
             "schema": [
                 "foaf",
                 "http://xmlns.com/foaf/0.1/"
-            ]
-        }
-    },
-    {
-        "pk": 778,
-        "model": "d2rq.schemaclass",
-        "fields": {
-            "class_name": "http://www.w3.org/ns/org#OrganizationalUnit",
-            "class_label": "OrganizationalUnit",
-            "schema": [
-                "org",
-                "http://www.w3.org/ns/org#"
             ]
         }
     },
@@ -1075,6 +1039,18 @@
             "schema": [
                 "vcard",
                 "http://www.w3.org/2006/vcard/ns#"
+            ]
+        }
+    },
+    {
+        "pk": 816,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/ns/org#OrganizationalCollaboration",
+            "class_label": "Partenariat",
+            "schema": [
+                "org",
+                "http://www.w3.org/ns/org#"
             ]
         }
     },
@@ -1403,11 +1379,11 @@
         }
     },
     {
-        "pk": 779,
+        "pk": 813,
         "model": "d2rq.schemaclass",
         "fields": {
             "class_name": "http://www.w3.org/ns/org#Role",
-            "class_label": "Role",
+            "class_label": "R\u00f4le",
             "schema": [
                 "org",
                 "http://www.w3.org/ns/org#"
@@ -1415,7 +1391,7 @@
         }
     },
     {
-        "pk": 781,
+        "pk": 815,
         "model": "d2rq.schemaclass",
         "fields": {
             "class_name": "http://www.w3.org/ns/org#Site",
@@ -1567,6 +1543,18 @@
             "schema": [
                 "gr",
                 "http://purl.org/goodrelations/v1#"
+            ]
+        }
+    },
+    {
+        "pk": 812,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/ns/org#OrganizationalUnit",
+            "class_label": "Unit\u00e9 op\u00e9rationnelle",
+            "schema": [
+                "org",
+                "http://www.w3.org/ns/org#"
             ]
         }
     },
@@ -1759,6 +1747,18 @@
             "schema": [
                 "vcard",
                 "http://www.w3.org/2006/vcard/ns#"
+            ]
+        }
+    },
+    {
+        "pk": 817,
+        "model": "d2rq.schemaclass",
+        "fields": {
+            "class_name": "http://www.w3.org/ns/org#ChangeEvent",
+            "class_label": "\u00c9v\u00e8nement",
+            "schema": [
+                "org",
+                "http://www.w3.org/ns/org#"
             ]
         }
     },
@@ -2423,6 +2423,42 @@
         }
     },
     {
+        "pk": 1710,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#resultingOrganization",
+            "prop_label": "a donn\u00e9 naissance \u00e0",
+            "schema": [
+                "org",
+                "http://www.w3.org/ns/org#"
+            ]
+        }
+    },
+    {
+        "pk": 1701,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#hasSite",
+            "prop_label": "a un site",
+            "schema": [
+                "org",
+                "http://www.w3.org/ns/org#"
+            ]
+        }
+    },
+    {
+        "pk": 1685,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#hasSubOrganization",
+            "prop_label": "a une Sous-Organization",
+            "schema": [
+                "org",
+                "http://www.w3.org/ns/org#"
+            ]
+        }
+    },
+    {
         "pk": 1605,
         "model": "d2rq.schemaproperty",
         "fields": {
@@ -2447,10 +2483,10 @@
         }
     },
     {
-        "pk": 1481,
+        "pk": 1482,
         "model": "d2rq.schemaproperty",
         "fields": {
-            "prop_name": "http://xmlns.com/foaf/0.1/account",
+            "prop_name": "http://xmlns.com/foaf/0.1/holdsAccount",
             "prop_label": "account",
             "schema": [
                 "foaf",
@@ -2459,10 +2495,10 @@
         }
     },
     {
-        "pk": 1482,
+        "pk": 1481,
         "model": "d2rq.schemaproperty",
         "fields": {
-            "prop_name": "http://xmlns.com/foaf/0.1/holdsAccount",
+            "prop_name": "http://xmlns.com/foaf/0.1/account",
             "prop_label": "account",
             "schema": [
                 "foaf",
@@ -2551,6 +2587,18 @@
             "schema": [
                 "sioc",
                 "http://rdfs.org/sioc/ns#"
+            ]
+        }
+    },
+    {
+        "pk": 1700,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#siteAddress",
+            "prop_label": "adresse du Site",
+            "schema": [
+                "org",
+                "http://www.w3.org/ns/org#"
             ]
         }
     },
@@ -2699,11 +2747,11 @@
         }
     },
     {
-        "pk": 1583,
+        "pk": 1705,
         "model": "d2rq.schemaproperty",
         "fields": {
             "prop_name": "http://www.w3.org/ns/org#basedAt",
-            "prop_label": "basedAt",
+            "prop_label": "bas\u00e9 \u00e0",
             "schema": [
                 "org",
                 "http://www.w3.org/ns/org#"
@@ -2723,19 +2771,7 @@
         }
     },
     {
-        "pk": 1585,
-        "model": "d2rq.schemaproperty",
-        "fields": {
-            "prop_name": "http://www.w3.org/ns/org#changedBy",
-            "prop_label": "changed by",
-            "schema": [
-                "org",
-                "http://www.w3.org/ns/org#"
-            ]
-        }
-    },
-    {
-        "pk": 1566,
+        "pk": 1688,
         "model": "d2rq.schemaproperty",
         "fields": {
             "prop_name": "http://www.w3.org/ns/org#classification",
@@ -2843,6 +2879,18 @@
         }
     },
     {
+        "pk": 1697,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#memberDuring",
+            "prop_label": "dur\u00e9e d'engagement",
+            "schema": [
+                "org",
+                "http://www.w3.org/ns/org#"
+            ]
+        }
+    },
+    {
         "pk": 1506,
         "model": "d2rq.schemaproperty",
         "fields": {
@@ -2915,6 +2963,18 @@
         }
     },
     {
+        "pk": 1696,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#hasMembership",
+            "prop_label": "engagement",
+            "schema": [
+                "org",
+                "http://www.w3.org/ns/org#"
+            ]
+        }
+    },
+    {
         "pk": 1515,
         "model": "d2rq.schemaproperty",
         "fields": {
@@ -2923,6 +2983,18 @@
             "schema": [
                 "gr",
                 "http://purl.org/goodrelations/v1#"
+            ]
+        }
+    },
+    {
+        "pk": 1692,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#reportsTo",
+            "prop_label": "est subordonn\u00e9 \u00e0",
+            "schema": [
+                "org",
+                "http://www.w3.org/ns/org#"
             ]
         }
     },
@@ -3623,18 +3695,6 @@
         }
     },
     {
-        "pk": 1576,
-        "model": "d2rq.schemaproperty",
-        "fields": {
-            "prop_name": "http://www.w3.org/ns/org#headOf",
-            "prop_label": "head of",
-            "schema": [
-                "org",
-                "http://www.w3.org/ns/org#"
-            ]
-        }
-    },
-    {
         "pk": 1510,
         "model": "d2rq.schemaproperty",
         "fields": {
@@ -4007,6 +4067,18 @@
         }
     },
     {
+        "pk": 1709,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#resultedFrom",
+            "prop_label": "issue de",
+            "schema": [
+                "org",
+                "http://www.w3.org/ns/org#"
+            ]
+        }
+    },
+    {
         "pk": 1489,
         "model": "d2rq.schemaproperty",
         "fields": {
@@ -4115,18 +4187,6 @@
         }
     },
     {
-        "pk": 1567,
-        "model": "d2rq.schemaproperty",
-        "fields": {
-            "prop_name": "http://www.w3.org/ns/org#linkedTo",
-            "prop_label": "linkedTo",
-            "schema": [
-                "org",
-                "http://www.w3.org/ns/org#"
-            ]
-        }
-    },
-    {
         "pk": 1637,
         "model": "d2rq.schemaproperty",
         "fields": {
@@ -4135,6 +4195,18 @@
             "schema": [
                 "sioc",
                 "http://rdfs.org/sioc/ns#"
+            ]
+        }
+    },
+    {
+        "pk": 1706,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#location",
+            "prop_label": "localisation",
+            "schema": [
+                "org",
+                "http://www.w3.org/ns/org#"
             ]
         }
     },
@@ -4211,19 +4283,7 @@
         }
     },
     {
-        "pk": 1484,
-        "model": "d2rq.schemaproperty",
-        "fields": {
-            "prop_name": "http://xmlns.com/foaf/0.1/member",
-            "prop_label": "member",
-            "schema": [
-                "foaf",
-                "http://xmlns.com/foaf/0.1/"
-            ]
-        }
-    },
-    {
-        "pk": 1571,
+        "pk": 1693,
         "model": "d2rq.schemaproperty",
         "fields": {
             "prop_name": "http://www.w3.org/ns/org#member",
@@ -4235,26 +4295,14 @@
         }
     },
     {
-        "pk": 1569,
+        "pk": 1484,
         "model": "d2rq.schemaproperty",
         "fields": {
-            "prop_name": "http://www.w3.org/ns/org#hasMember",
+            "prop_name": "http://xmlns.com/foaf/0.1/member",
             "prop_label": "member",
             "schema": [
-                "org",
-                "http://www.w3.org/ns/org#"
-            ]
-        }
-    },
-    {
-        "pk": 1568,
-        "model": "d2rq.schemaproperty",
-        "fields": {
-            "prop_name": "http://www.w3.org/ns/org#memberOf",
-            "prop_label": "member of",
-            "schema": [
-                "org",
-                "http://www.w3.org/ns/org#"
+                "foaf",
+                "http://xmlns.com/foaf/0.1/"
             ]
         }
     },
@@ -4271,23 +4319,11 @@
         }
     },
     {
-        "pk": 1575,
+        "pk": 1690,
         "model": "d2rq.schemaproperty",
         "fields": {
-            "prop_name": "http://www.w3.org/ns/org#memberDuring",
-            "prop_label": "memberDuring",
-            "schema": [
-                "org",
-                "http://www.w3.org/ns/org#"
-            ]
-        }
-    },
-    {
-        "pk": 1574,
-        "model": "d2rq.schemaproperty",
-        "fields": {
-            "prop_name": "http://www.w3.org/ns/org#hasMembership",
-            "prop_label": "membership",
+            "prop_name": "http://www.w3.org/ns/org#memberOf",
+            "prop_label": "membre de",
             "schema": [
                 "org",
                 "http://www.w3.org/ns/org#"
@@ -4315,6 +4351,18 @@
             "schema": [
                 "sioc",
                 "http://rdfs.org/sioc/ns#"
+            ]
+        }
+    },
+    {
+        "pk": 1708,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#changedBy",
+            "prop_label": "modifi\u00e9e par",
+            "schema": [
+                "org",
+                "http://www.w3.org/ns/org#"
             ]
         }
     },
@@ -4391,6 +4439,30 @@
         }
     },
     {
+        "pk": 1694,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#organization",
+            "prop_label": "organisation",
+            "schema": [
+                "org",
+                "http://www.w3.org/ns/org#"
+            ]
+        }
+    },
+    {
+        "pk": 1707,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#originalOrganization",
+            "prop_label": "organisation originelle",
+            "schema": [
+                "org",
+                "http://www.w3.org/ns/org#"
+            ]
+        }
+    },
+    {
         "pk": 1492,
         "model": "d2rq.schemaproperty",
         "fields": {
@@ -4399,30 +4471,6 @@
             "schema": [
                 "vcard",
                 "http://www.w3.org/2006/vcard/ns#"
-            ]
-        }
-    },
-    {
-        "pk": 1572,
-        "model": "d2rq.schemaproperty",
-        "fields": {
-            "prop_name": "http://www.w3.org/ns/org#organization",
-            "prop_label": "organization",
-            "schema": [
-                "org",
-                "http://www.w3.org/ns/org#"
-            ]
-        }
-    },
-    {
-        "pk": 1584,
-        "model": "d2rq.schemaproperty",
-        "fields": {
-            "prop_name": "http://www.w3.org/ns/org#originalOrganization",
-            "prop_label": "original organization",
-            "schema": [
-                "org",
-                "http://www.w3.org/ns/org#"
             ]
         }
     },
@@ -4547,6 +4595,30 @@
         }
     },
     {
+        "pk": 1691,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#hasMember",
+            "prop_label": "poss\u00e8de un membre",
+            "schema": [
+                "org",
+                "http://www.w3.org/ns/org#"
+            ]
+        }
+    },
+    {
+        "pk": 1686,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#hasUnit",
+            "prop_label": "poss\u00e8de une Unit\u00e9",
+            "schema": [
+                "org",
+                "http://www.w3.org/ns/org#"
+            ]
+        }
+    },
+    {
         "pk": 1555,
         "model": "d2rq.schemaproperty",
         "fields": {
@@ -4619,18 +4691,6 @@
         }
     },
     {
-        "pk": 1581,
-        "model": "d2rq.schemaproperty",
-        "fields": {
-            "prop_name": "http://www.w3.org/ns/org#hasPrimarySite",
-            "prop_label": "primarySite",
-            "schema": [
-                "org",
-                "http://www.w3.org/ns/org#"
-            ]
-        }
-    },
-    {
         "pk": 1471,
         "model": "d2rq.schemaproperty",
         "fields": {
@@ -4679,18 +4739,6 @@
         }
     },
     {
-        "pk": 1582,
-        "model": "d2rq.schemaproperty",
-        "fields": {
-            "prop_name": "http://www.w3.org/ns/org#hasRegisteredSite",
-            "prop_label": "registeredSite",
-            "schema": [
-                "org",
-                "http://www.w3.org/ns/org#"
-            ]
-        }
-    },
-    {
         "pk": 1647,
         "model": "d2rq.schemaproperty",
         "fields": {
@@ -4699,6 +4747,18 @@
             "schema": [
                 "sioc",
                 "http://rdfs.org/sioc/ns#"
+            ]
+        }
+    },
+    {
+        "pk": 1689,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#linkedTo",
+            "prop_label": "reli\u00e9 \u00e0",
+            "schema": [
+                "org",
+                "http://www.w3.org/ns/org#"
             ]
         }
     },
@@ -4715,18 +4775,6 @@
         }
     },
     {
-        "pk": 1577,
-        "model": "d2rq.schemaproperty",
-        "fields": {
-            "prop_name": "http://www.w3.org/ns/org#remuneration",
-            "prop_label": "remuneration",
-            "schema": [
-                "org",
-                "http://www.w3.org/ns/org#"
-            ]
-        }
-    },
-    {
         "pk": 1648,
         "model": "d2rq.schemaproperty",
         "fields": {
@@ -4739,11 +4787,11 @@
         }
     },
     {
-        "pk": 1570,
+        "pk": 1698,
         "model": "d2rq.schemaproperty",
         "fields": {
-            "prop_name": "http://www.w3.org/ns/org#reportsTo",
-            "prop_label": "reportsTo",
+            "prop_name": "http://www.w3.org/ns/org#headOf",
+            "prop_label": "responsable de",
             "schema": [
                 "org",
                 "http://www.w3.org/ns/org#"
@@ -4751,11 +4799,11 @@
         }
     },
     {
-        "pk": 1586,
+        "pk": 1699,
         "model": "d2rq.schemaproperty",
         "fields": {
-            "prop_name": "http://www.w3.org/ns/org#resultedFrom",
-            "prop_label": "resulted from",
+            "prop_name": "http://www.w3.org/ns/org#remuneration",
+            "prop_label": "r\u00e9muneration",
             "schema": [
                 "org",
                 "http://www.w3.org/ns/org#"
@@ -4763,23 +4811,11 @@
         }
     },
     {
-        "pk": 1587,
-        "model": "d2rq.schemaproperty",
-        "fields": {
-            "prop_name": "http://www.w3.org/ns/org#resultingOrganization",
-            "prop_label": "resulted in",
-            "schema": [
-                "org",
-                "http://www.w3.org/ns/org#"
-            ]
-        }
-    },
-    {
-        "pk": 1573,
+        "pk": 1695,
         "model": "d2rq.schemaproperty",
         "fields": {
             "prop_name": "http://www.w3.org/ns/org#role",
-            "prop_label": "role",
+            "prop_label": "r\u00f4le",
             "schema": [
                 "org",
                 "http://www.w3.org/ns/org#"
@@ -4823,23 +4859,11 @@
         }
     },
     {
-        "pk": 1579,
-        "model": "d2rq.schemaproperty",
-        "fields": {
-            "prop_name": "http://www.w3.org/ns/org#hasSite",
-            "prop_label": "site",
-            "schema": [
-                "org",
-                "http://www.w3.org/ns/org#"
-            ]
-        }
-    },
-    {
-        "pk": 1580,
+        "pk": 1702,
         "model": "d2rq.schemaproperty",
         "fields": {
             "prop_name": "http://www.w3.org/ns/org#siteOf",
-            "prop_label": "site Of",
+            "prop_label": "site de",
             "schema": [
                 "org",
                 "http://www.w3.org/ns/org#"
@@ -4847,11 +4871,23 @@
         }
     },
     {
-        "pk": 1578,
+        "pk": 1703,
         "model": "d2rq.schemaproperty",
         "fields": {
-            "prop_name": "http://www.w3.org/ns/org#siteAddress",
-            "prop_label": "siteAddress",
+            "prop_name": "http://www.w3.org/ns/org#hasPrimarySite",
+            "prop_label": "site principal",
+            "schema": [
+                "org",
+                "http://www.w3.org/ns/org#"
+            ]
+        }
+    },
+    {
+        "pk": 1704,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#hasRegisteredSite",
+            "prop_label": "si\u00e8ge social",
             "schema": [
                 "org",
                 "http://www.w3.org/ns/org#"
@@ -4867,6 +4903,30 @@
             "schema": [
                 "vcard",
                 "http://www.w3.org/2006/vcard/ns#"
+            ]
+        }
+    },
+    {
+        "pk": 1683,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#subOrganizationOf",
+            "prop_label": "sous-Organization de",
+            "schema": [
+                "org",
+                "http://www.w3.org/ns/org#"
+            ]
+        }
+    },
+    {
+        "pk": 1684,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#transitiveSubOrganizationOf",
+            "prop_label": "sous-Organization transitive de",
+            "schema": [
+                "org",
+                "http://www.w3.org/ns/org#"
             ]
         }
     },
@@ -4891,30 +4951,6 @@
             "schema": [
                 "cs",
                 "http://purl.org/vocab/changeset/schema#"
-            ]
-        }
-    },
-    {
-        "pk": 1563,
-        "model": "d2rq.schemaproperty",
-        "fields": {
-            "prop_name": "http://www.w3.org/ns/org#hasSubOrganization",
-            "prop_label": "subOrganization",
-            "schema": [
-                "org",
-                "http://www.w3.org/ns/org#"
-            ]
-        }
-    },
-    {
-        "pk": 1561,
-        "model": "d2rq.schemaproperty",
-        "fields": {
-            "prop_name": "http://www.w3.org/ns/org#subOrganizationOf",
-            "prop_label": "subOrganization of",
-            "schema": [
-                "org",
-                "http://www.w3.org/ns/org#"
             ]
         }
     },
@@ -5039,18 +5075,6 @@
         }
     },
     {
-        "pk": 1562,
-        "model": "d2rq.schemaproperty",
-        "fields": {
-            "prop_name": "http://www.w3.org/ns/org#transitiveSubOrganizationOf",
-            "prop_label": "transitive sub-organization",
-            "schema": [
-                "org",
-                "http://www.w3.org/ns/org#"
-            ]
-        }
-    },
-    {
         "pk": 1533,
         "model": "d2rq.schemaproperty",
         "fields": {
@@ -5063,30 +5087,6 @@
         }
     },
     {
-        "pk": 1564,
-        "model": "d2rq.schemaproperty",
-        "fields": {
-            "prop_name": "http://www.w3.org/ns/org#hasUnit",
-            "prop_label": "unit",
-            "schema": [
-                "org",
-                "http://www.w3.org/ns/org#"
-            ]
-        }
-    },
-    {
-        "pk": 1565,
-        "model": "d2rq.schemaproperty",
-        "fields": {
-            "prop_name": "http://www.w3.org/ns/org#unitOf",
-            "prop_label": "unit Of",
-            "schema": [
-                "org",
-                "http://www.w3.org/ns/org#"
-            ]
-        }
-    },
-    {
         "pk": 1678,
         "model": "d2rq.schemaproperty",
         "fields": {
@@ -5095,6 +5095,18 @@
             "schema": [
                 "time",
                 "http://www.w3.org/2006/time#"
+            ]
+        }
+    },
+    {
+        "pk": 1687,
+        "model": "d2rq.schemaproperty",
+        "fields": {
+            "prop_name": "http://www.w3.org/ns/org#unitOf",
+            "prop_label": "unit\u00e9 de",
+            "schema": [
+                "org",
+                "http://www.w3.org/ns/org#"
             ]
         }
     },

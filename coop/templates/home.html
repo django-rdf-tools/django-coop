@@ -8,17 +8,29 @@
 {% block document %}
   
   {% block content %}
+     
+     <div id="content" class="grid_4 grid">
           
-          <div id="dernieres_initiatives"><ul>
+          <div id="dernieres_initiatives">
+              <h4>Les 10 dernières initiatives</h4>
+              <ul>
               {% for i in dernieres_initiatives %}
               <li><a href="{{i.get_absolute_url}}">{{ i.title }}</a></li>
               {%endfor%}
           </ul>
           </div>
+    </div>
+    <div id="content" class="grid_4 grid">
           
           <div id="inscrits">
-              <p>Nombre d'inscrits sur le site : <span>{{inscrits}}</span>
+              <h4>Utilisateurs du site : <span>{{inscrits}}</span></h4>
           </div>
+    </div>
+    <div id="content" class="grid_4 grid">
+        <h4>Les 10 dernières annonces</h4>
+        
+    </div>
+          
           
   {% endblock %}
   

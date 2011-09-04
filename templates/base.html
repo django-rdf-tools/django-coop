@@ -51,11 +51,9 @@
 
 <header class="container_12">
     
-    <h1>Django-coop démo</h1>
-    
+    <h1><a href="/" title="Accueil">Django-coop démo</a></h1>
     
 </header>
-
 
 <div id="main" role="main" class="container_12 clearfix">
   {% block navigation %}
@@ -63,8 +61,7 @@
       <ul id="nav">{% navigation_as_nested_ul %}</ul>
   </nav>
   {% endblock %}
-
-    <div id="content" class="grid_9 grid">
+    
       {% block document %}
         {% block title %}{% endblock %}
         
@@ -72,14 +69,8 @@
                 
         {% endblock %}
       {% endblock %}
-    </div>
 
-    <div id="grid-right" class="grid_3 grid">
-               
-        {% block right_panel %}
 
-        {% endblock %}
-    </div>
 </div>
 
 <footer class="container_12 clearfix">

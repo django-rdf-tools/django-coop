@@ -21,6 +21,8 @@ from django.core.urlresolvers import reverse
 
 def ISDetailView(request,slug):
     context = {}
-    context['object'] = Initiative.objects.get(slug=slug)
+    initiative = Initiative.objects.get(slug=slug)
+    context['object'] = initiative
+    context['adresses'] = initiative.site_set.all()
     context['engagements'] = Engagement.objects.filter(initiative=context['object'])
     return render_to_response('initiative/initiative_detail.html',context,RequestContext(request))

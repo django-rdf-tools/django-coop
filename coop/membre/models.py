@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from django.contrib.auth.models import User
 from django.db import models
+from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
 
 # class SameAs(models.Model):
@@ -18,6 +19,8 @@ class BaseMembre(models.Model):
     telephone_fixe = models.CharField(_(u'Téléphone fixe'),blank=True, max_length=14)
     telephone_portable = models.CharField(_(u'Téléphone mobile'),blank=True, max_length=14)
     email = models.EmailField(_(u'Email personnel'),blank=True)
+    created = exfields.CreationDateTimeField(_(u'Création'),null=True)
+    modified = exfields.ModificationDateTimeField(_(u'Modification'),null=True)
     class Meta:
         abstract = True
     def __unicode__(self):

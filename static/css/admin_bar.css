@@ -1,6 +1,8 @@
+/* @override http://localhost:8000/static/css/admin_bar.css */
+
 /* */
 .success {
-	color: #8f4;
+	color: #519e27;
 }
 
 .error {
@@ -8,34 +10,41 @@
 }
 
 .warning {
-	color: #f80;
+	color: #f7832a;
 }
 
 #admin-bar {
 	position: absolute;
-	top: 0;
-	left: 0;
-	height: 20px;
-	text-align: left;
-	background: black;
-	color: white;
-	width: 100%;
+	top: 10px;
+	width: 120px;
+	-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+-webkit-box-shadow: #666 0px 2px 3px;
+-moz-box-shadow: #666 0px 2px 3px;
+box-shadow: #666 0px 2px 3px;
+background: #FFFFFF;
+background: -webkit-gradient(linear, 0 0, 0 bottom, from(#FFFFFF), to(#ABABAB));
+background: -webkit-linear-gradient(#FFFFFF, #ABABAB);
+background: -moz-linear-gradient(#FFFFFF, #ABABAB);
+background: -ms-linear-gradient(#FFFFFF, #ABABAB);
+background: -o-linear-gradient(#FFFFFF, #ABABAB);
+background: linear-gradient(#FFFFFF, #ABABAB);
+	padding: 7px;
+	right: 10px;
 }
 
 #admin-bar a, #admin-bar span {
-    font-family: monospace;
-    font-size: medium;
-    font-weight: bolder;
 	padding-left: 8px;
 	padding-right: 8px;
     text-decoration: none;
+	font-weight: bold;
 }
 
 #admin-bar a {
-	color: #fff;
+	color: #3b416d;
 }
 
 #admin-bar a:hover {
-	background: #ccc;
-	color: black;
+	color: #9c131b;
 }
