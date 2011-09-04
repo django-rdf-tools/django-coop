@@ -16,11 +16,8 @@ urlpatterns = patterns('',
 
     url(r'^chaining/', include('smart_selects.urls')),
     
-    url(r'^admin/doc', include('django.contrib.admindocs.urls')),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    url(r'^admin', include(admin.site.urls)),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^settings', include('livesettings.urls')),
     url(r'^settings/', include('livesettings.urls')),
     
     url(r'^initiative/', include('coop.initiative.urls')),

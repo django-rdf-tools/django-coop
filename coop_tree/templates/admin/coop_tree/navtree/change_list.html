@@ -1,0 +1,303 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static adminmedia %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/changelists.css" />
+{% endblock %}
+
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/tree.css" />
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/smoothness/jquery-ui-1.8.14.custom.css" />
+<style>
+.ui-autocomplete-category {
+  font-weight: bold;
+  padding: .2em .4em;
+  margin: .8em 0 .2em;
+  line-height: 1.5;
+}
+
+.ui-widget li{
+  list-style: none;
+}
+
+.ui-autocomplete {
+  max-height: 200px;
+  overflow-y: auto;
+  /* prevent horizontal scrollbar */
+  overflow-x: hidden;
+  /* add padding to account for vertical scrollbar */
+  padding-right: 20px;
+}
+/* IE 6 doesn't support max-height
+ * we use height instead, but this forces the menu to always be this tall
+ */
+* html .ui-autocomplete {
+  height: 200px;
+}
+</style>
+<script src="{{STATIC_URL}}js/jquery-1.5.1.min.js"></script>
+<script src="{{STATIC_URL}}js/jquery-ui-1.8.14.custom.min.js"></script>
+{% include "djaloha/_csrf_ajax_jquery.html" %}
+<script src="{{STATIC_URL}}js/jquery.jstree.js"></script>
+<script>
+  $.widget("custom.catcomplete", $.ui.autocomplete, {
+    _renderMenu: function(ul, items) {
+      var self = this, currentCategory = "";
+      $.each( items, function( index, item ) {
+        if ( item.category != currentCategory ) {
+          ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
+          currentCategory = item.category;
+        }
+        self._renderItem( ul, item );
+      });
+    }
+  });
+</script>
+<script type="text/javascript">
+  $(function() {
+    var last_selection = null;
+
+    var admin_hideMessage = function ()  {
+        $('#admin-status').hide();
+        $(".error-field").removeClass("error-field");
+    };
+    
+    var admin_printMessage = function (message, css_class) {
+        $('#admin-status').removeClass().html(message).addClass(css_class).show();
+        setTimeout(admin_hideMessage, 3000);
+    };
+
+    function disable_actions() {
+      //$("#rename_node").attr('disabled', 'disabled');
+      //$("#delete_node").attr('disabled', 'disabled');   
+      $("#rename_node").parent('li').hide(); 
+      $("#delete_node").parent('li').hide(); 
+    }
+    
+    function enable_actions() {
+      //$("#rename_node").removeAttr('disabled');
+      //$("#delete_node").removeAttr('disabled');
+      $("#rename_node").parent('li').show(); 
+      $("#delete_node").parent('li').show();
+    }
+    disable_actions();
+    
+    function post_msg(msg_id, data, callback) {
+      data['msg_id'] = msg_id;
+      $.post(
+        "{{cl.model_admin.get_absolute_url}}",
+        data,
+        callback,
+        'json'
+      );
+    }
+    
+    function get_node_id(node) {
+      return node.attr("id").slice(5);
+    }
+    
+    $("#add_object").click(function() {
+      data = {msg_id: 'add_navnode'};
+      data["object_id"] = $("#object_id").val();
+      data["object_type"] = $("#object_type").val();
+      try {
+        var selected_nodes = $("#nodes").jstree('get_selected');
+        data['parent_id'] = get_node_id($(selected_nodes[0]));
+      } catch (ex) {
+        //alert(''+ex);
+      }
+      post_msg('add_navnode', data,
+        function(data) {
+          admin_printMessage(data.message, data.status);
+          if (data.status==='success') {
+            $("#nodes").jstree("create",null,"last",{data:data.label, attr:{id: data.id}});
+            $("#object_label").val("");
+          }
+        }
+      );
+    });
+    
+    $("#nodes").jstree({ 
+        "themes" : {
+            "theme" : "classic",
+            "dots" : true,
+            "icons" : true
+            },
+      "dnd" : {
+        "drop_target": false,
+        "drag_target": false,
+        "drag_check" : function () { 
+          return { after : true, before : true, inside : true };
+        }
+      },
+      "ui" : {
+        "select_limit" : 1,
+      },
+      "plugins" : [ "themes", "html_data", "dnd", "ui", "crrm" ]
+    })
+    
+    $("#nodes").bind("move_node.jstree", function (event, data) {
+      var tree_data = {
+        node_id: get_node_id(data.rslt.o),
+        ref_pos: data.rslt.p,
+      };
+      try {
+        tree_data['ref_id'] = get_node_id(data.rslt.or);
+      } catch (ex) {}
+        
+      try {
+        tree_data['parent_id'] = get_node_id(data.rslt.np);
+      } catch (ex) {}
+      
+      post_msg('move_navnode', tree_data, function(data) {
+        admin_printMessage(data.message, data.status);
+      });
+    })
+    $("#nodes").bind("rename_node.jstree", function (event, data) {
+        var tree_data = {
+        node_id: get_node_id(data.rslt.obj),
+        name: data.rslt.name,
+        };
+        post_msg('rename_navnode', tree_data, function(data) {
+          if (data.message) {
+            admin_printMessage(data.message, data.status);
+          }
+          deselect_all();
+        });
+    });
+    
+    function deselect_all() {
+      $("#nodes").jstree("deselect_all");
+      disable_actions();
+      last_selection = null;
+      $("#aside #object-links").html("");
+    }
+    
+    $("#nodes").bind("select_node.jstree", function (event, data) {
+      if (last_selection === get_node_id(data.rslt.obj)) {
+          deselect_all();
+      } else {
+        last_selection = get_node_id(data.rslt.obj);
+        enable_actions();
+        
+        post_msg('view_navnode', {node_id: get_node_id(data.rslt.obj)}, 
+          function(data) {
+            //admin_printMessage(data.message, data.status);
+            if (data.status === "success") {
+              $("#aside #object-links").html(data.html);
+            } else {
+              $("#aside #object-links").html("");
+            }
+          }
+        );
+      }
+    });
+    
+    $("#object_label").catcomplete({
+        source: function(request, add){
+          post_msg('get_suggest_list', {term: request.term}, function(data) {
+            var existing_objects = [];
+            if (data.status === "success") {
+              $.each(data.suggestions, function(i, val){
+                existing_objects.push(val);
+              });
+            } else {
+              admin_printMessage(data.message, data.status);  
+            }
+            add(existing_objects);
+          });
+        },
+        select: function(event, ui) {
+          $("#object_label").val(ui.item.label);
+          $("#object_id").val(ui.item.value);
+          $("#object_type").val(ui.item.type);
+          return false;
+        },
+        focus: function(event, ui) {
+          $("#object_label").val(ui.item.label);
+          $("#object_id").val(ui.item.value);
+          return false;
+        }
+    });
+    
+    $("#rename_node").click(function () { 
+		$("#nodes").jstree("rename"); 
+	});
+    $("#delete_node").click(function () {
+      var selected_nodes = $("#nodes").jstree('get_selected');
+      var length = selected_nodes.length;
+      if (length>0){
+        var confirm_msg = '{% trans "Are you sure to delete the selected node?"%}'
+        if (confirm(confirm_msg)) {
+          var node_ids = [];
+          for (var i=0; i<length; i++) {
+            node_ids.push(get_node_id($(selected_nodes[i])))
+          }
+          post_msg('remove_navnode', {'node_ids': node_ids.join(";")}, function(data) {
+            admin_printMessage(data.message, data.status);
+            if (data.status === "success"){
+              for (var i=0; i<length; i++) {
+                $("#nodes").jstree("remove", "#"+$(selected_nodes[i]).attr("id"));
+              }
+            }
+          });
+        }
+      }
+	});
+  })();
+</script>
+{% endblock %}
+
+{% block bodyclass %}change-list{% endblock %}
+
+{% if not is_popup %}
+  {% block breadcrumbs %}
+    <div class="breadcrumbs">
+      <a href="../../">
+        {% trans "Home" %}
+      </a>
+       &rsaquo;
+       <a href="../">
+         {{ app_label|capfirst }}
+      </a>
+      &rsaquo;
+      {{ cl.opts.verbose_name_plural|capfirst }}
+    </div>
+  {% endblock %}
+{% endif %}
+
+{% block coltype %}flex{% endblock %}
+
+{% block content_title %}<h1>{% trans "Navigation tree" %}</h1>{% endblock %}
+
+{% block content %}
+<noscript><div id="jswarning">{% trans "The site requires javascript to be enabled!" %}</div></noscript>
+<div id="content">
+  <div class="button-bar">
+    <span class="add_object_section">
+      <input id="object_label" size=30/>
+      <button id="add_object">{% trans "Add a new node" %}</button>
+      <input id="object_id" type="hidden"/>
+      <input id="object_type" type="hidden"/>
+    </span>
+    <span id="admin-status"></span>
+  </div>
+  <div id="aside">
+
+    <div id="object-links">
+    </div>
+    <ul class="content-links">
+
+        <li><a href="{{admin_url}}" id="rename_node">{% trans "Rename" %}</a></li>
+        <li><a href="{{content.get_absolute_url}}" id="delete_node">{% trans "Remove" %}</a></li>
+    </ul>
+<!--    <button id="rename_node">{% trans "Rename" %}</button>
+    <button id="delete_node">{% trans "Remove" %}</button>-->
+    
+  </div>
+  <div id="nodes" class="">
+    <ul>{{cl.model_admin.nodes_li|safe}}</ul>
+  </div>
+</div>
+{% endblock %}

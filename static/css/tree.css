@@ -1,10 +1,12 @@
+/* @override http://localhost:8000/static/css/tree.css */
+
 /* */
 
 .actions a{
 	border: solid thin #ccc;
 	text-decoration: none;
 	background: #ddd;
-	font-size: 0.7em;
+	font-size: 1em;
 	padding: 1px 1px 1px 1px;
 }
 
@@ -24,13 +26,30 @@ li.nav-node {
 }
 
 .ui-autocomplete .ui-menu-item {
-	font-size: 9px;
+	font-size: 12px;
+}
+
+.ui-autocomplete-category{
+	background-color: #cbd4e3;
+	color: white;
+	font-weight: normal;
+	font-style: normal;
 }
 
 .add_object_section {
 	border: thin #ccc solid;
-	padding: 5px 0 8px 5px;
-	margin-right: 5px;
+	padding: 10px;
+}
+
+#add_object{
+	top: 2px;
+	position: relative;
+	height: 22px;
+}
+
+#object_label{
+	height: 14px;
+	width: 250px;
 }
 
 aside, #aside {
@@ -42,26 +61,6 @@ aside, #aside {
 	font-size: small;
 }
 
-aside ul {
-	margin-left: 0;
-	padding-left: 0;
-}
-
-aside li {
-	display: inline;
-	list-style: none;
-	margin-right: 20px;
-}
-
-aside li a{
-	color: black;
-	font-weight: bold;
-	padding: 2px 2px 2px 2px;
-}
-
-aside li a:hover{
-	background-color: #ddd;
-}
 
 .button-bar {
 	font-size: 10px;
@@ -69,5 +68,12 @@ aside li a:hover{
 }
 
 .content-links {
-	margin-top: 10px;
+	margin: 0;
 }
+
+.content-links li{
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 16px;
+}
+

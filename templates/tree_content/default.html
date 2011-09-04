@@ -3,6 +3,7 @@
 <h3>{% block tree_content_title %}{{node.content_type|capfirst}}: {{content}}{% endblock %}</h3>
 {% block tree_content_command%}
 <ul class="content-links">
+    
     <li><a href="{{admin_url}}">{% trans "Edit in admin"%}</a></li>
     <li><a href="{{content.get_absolute_url}}">{% trans "View on site"%}</a></li>
     {% block tree_content_extracommand%}
