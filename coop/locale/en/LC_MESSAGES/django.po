@@ -1,0 +1,222 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: django-coop\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-09-05 12:59+0200\n"
+"PO-Revision-Date: 2011-09-05 13:05+0100\n"
+"Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
+"Language-Team: Quinode <contact@quinode.fr>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: fr\n"
+"X-Poedit-Country: FR\n"
+
+#: agenda/models.py:8
+#: agenda/models.py:23
+#: exchange/models.py:16
+#: exchange/models.py:36
+#: initiative/models.py:32
+#: place/models.py:7
+msgid "Titre"
+msgstr "Title"
+
+#: agenda/models.py:9
+#: agenda/models.py:24
+#: exchange/models.py:17
+#: exchange/models.py:37
+#: initiative/models.py:33
+#: place/models.py:8
+msgid "Description"
+msgstr "Description"
+
+#: agenda/models.py:10
+#: exchange/models.py:23
+#: initiative/models.py:34
+#: place/models.py:13
+msgid "URI principale"
+msgstr "Main URI"
+
+#: agenda/models.py:12
+#: agenda/models.py:27
+#: exchange/models.py:26
+#: exchange/models.py:38
+#: initiative/models.py:19
+#: initiative/models.py:44
+#: membre/models.py:22
+#: place/models.py:19
+msgid "Création"
+msgstr "Created"
+
+#: agenda/models.py:13
+#: agenda/models.py:28
+#: exchange/models.py:27
+#: exchange/models.py:39
+#: initiative/models.py:20
+#: initiative/models.py:45
+#: membre/models.py:23
+#: place/models.py:20
+msgid "Modification"
+msgstr "Modified"
+
+#: exchange/models.py:20
+msgid "Type d’annonce"
+msgstr "Classified Type"
+
+#: initiative/models.py:8
+msgid "Intitulé"
+msgstr "Title"
+
+#: initiative/models.py:39
+#: membre/models.py:19
+msgid "Téléphone fixe"
+msgstr "Phone"
+
+#: initiative/models.py:40
+msgid "Email général"
+msgstr "Main email"
+
+#: initiative/models.py:41
+msgid "Site web"
+msgstr "Web site"
+
+#: initiative/models.py:42
+msgid "Flux RSS"
+msgstr "RSS feed"
+
+#: membre/forms.py:15
+msgid "Nom ou raison sociale"
+msgstr "Legal name"
+
+#: membre/forms.py:20
+msgid "Nom d'utilisateur"
+msgstr "Username"
+
+#: membre/forms.py:21
+msgid "This value must contain only letters, numbers and underscores."
+msgstr "This value must contain only letters, numbers and underscores."
+
+#: membre/forms.py:26
+msgid "Email address"
+msgstr "Email address"
+
+#: membre/models.py:11
+msgid "Utilisateur"
+msgstr "User"
+
+#: membre/models.py:14
+msgid "Nom"
+msgstr "Last name"
+
+#: membre/models.py:15
+msgid "Prénom"
+msgstr "First name"
+
+#: membre/models.py:16
+msgid "Adresse"
+msgstr "Address"
+
+#: membre/models.py:17
+msgid "Ville"
+msgstr "City"
+
+#: membre/models.py:18
+msgid "Code postal"
+msgstr "Zipcode"
+
+#: membre/models.py:20
+msgid "Téléphone mobile"
+msgstr "Mobile"
+
+#: membre/models.py:21
+msgid "Email personnel"
+msgstr "Personal email"
+
+#: templates/registration/password_reset_complete.html:4
+msgid "Home"
+msgstr "Home"
+
+#: templates/registration/password_reset_complete.html:4
+msgid "Password reset"
+msgstr "Password reset"
+
+#: templates/registration/password_reset_complete.html:6
+msgid "Password reset complete"
+msgstr "Password reset complete"
+
+#: templates/registration/password_reset_complete.html:10
+msgid "Your password has been set.  You may go ahead and log in now."
+msgstr "Your password has been set.  You may go ahead and log in now."
+
+#: templates/registration/password_reset_complete.html:12
+msgid "Log in"
+msgstr "Log in"
+
+#: templates/registration/password_reset_confirm.html:13
+msgid "Enter new password"
+msgstr "Enter new password"
+
+#: templates/registration/password_reset_confirm.html:14
+msgid "Please enter your new password twice so we can verify you typed it in correctly."
+msgstr "Please enter your new password twice so we can verify you typed it in correctly."
+
+#: templates/registration/password_reset_confirm.html:22
+msgid "New password:"
+msgstr "New password:"
+
+#: templates/registration/password_reset_confirm.html:24
+msgid "Confirm password:"
+msgstr "Confirm password:"
+
+#: templates/registration/password_reset_confirm.html:25
+msgid "Change my password"
+msgstr "Change my password"
+
+#: templates/registration/password_reset_confirm.html:31
+msgid "Password reset unsuccessful"
+msgstr "Password reset unsuccessful"
+
+#: templates/registration/password_reset_confirm.html:33
+msgid "The password reset link was invalid, possibly because it has already been used.  Please request a new password reset."
+msgstr "The password reset link was invalid, possibly because it has already been used.  Please request a new password reset."
+
+#: templates/registration/password_reset_done.html:4
+msgid "Password reset successful"
+msgstr "Password reset successful"
+
+#: templates/registration/password_reset_done.html:8
+msgid "We've e-mailed you instructions for setting your password to the e-mail address you submitted. You should be receiving it shortly."
+msgstr "We've e-mailed you instructions for setting your password to the e-mail address you submitted. You should be receiving it shortly."
+
+#: templates/registration/password_reset_email.html:2
+msgid "You're receiving this e-mail because you requested a password reset"
+msgstr "You're receiving this e-mail because you requested a password reset"
+
+#: templates/registration/password_reset_email.html:3
+#, python-format
+msgid "for your user account at %(site_name)s"
+msgstr "for your user account at %(site_name)s"
+
+#: templates/registration/password_reset_email.html:5
+msgid "Please go to the following page and choose a new password:"
+msgstr "Please go to the following page and choose a new password:"
+
+#: templates/registration/password_reset_email.html:9
+msgid "Your username, in case you've forgotten:"
+msgstr "Your username, in case you've forgotten:"
+
+#: templates/registration/password_reset_email.html:11
+msgid "Thanks for using our site!"
+msgstr "Thanks for using our site!"
+
+#: templates/registration/password_reset_email.html:13
+#, python-format
+msgid "The %(site_name)s team"
+msgstr "The %(site_name)s team"
+

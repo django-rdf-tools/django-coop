@@ -33,6 +33,13 @@ SECTEURS_FSE = Choices(
     ('AUTRE',       8,  'Autres activités')
 )
 
+STATUTS = Choices(
+    ('ASSO',    1,  'Association de loi 1901'),
+    ('SCOP',    2,  'Société Coopérative Ouvrière de Production'),
+    ('SCIC',    3,  'Société Coopérative d’Intérêt Collectif'),
+    ('COOP47',  4,  'Société Coopérative de loi 1947'),
+)
+
 class Calendar(BaseCalendar):
     pass
 
@@ -49,7 +56,12 @@ class Site(BaseSite):
     pass
 
 class Initiative(BaseInitiative):
-    secteur_fse = models.PositiveSmallIntegerField( _(u'Secteur d’activité FSE'),
+    siret = models.CharField('Numero SIRET',blank=True, null=True, max_length=20)
+    naf = models.CharField('Code d’activité NAF',blank=True, null=True, max_length=10)
+    statut = models.PositiveSmallIntegerField('Statut juridique',
+                                                choices=STATUTS.CHOICES, 
+                                                  default=STATUTS.ASSO)
+    secteur_fse = models.PositiveSmallIntegerField('Secteur d’activité FSE',
                                                     choices=SECTEURS_FSE.CHOICES, 
                                                     default=SECTEURS_FSE.TOUS)
 

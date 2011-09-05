@@ -16,6 +16,8 @@ class BaseSite(models.Model):
     zipcode = models.CharField(null=True,blank=True, max_length=5)
     city = models.CharField(null=True,blank=True, max_length=100)
     latlong = models.CharField(null=True,blank=True, max_length=100)
+    lat = models.CharField(null=True,blank=True, max_length=100)
+    long = models.CharField(null=True,blank=True, max_length=100)
     created = exfields.CreationDateTimeField(_(u'Création'),null=True)
     modified = exfields.ModificationDateTimeField(_(u'Modification'),null=True)
     #membre_uri = models.CharField(_(u'Profil FOAF'),blank=True, max_length=250, editable=False)

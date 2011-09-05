@@ -1,5 +1,1958 @@
 [
     {
+        "pk": 6,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Le Bourg",
+            "city": "TREZIOUX",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63520",
+            "latlong": "46.0708232,3.6669905",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53235,
+            "event": null,
+            "uuid": "16341b59-d6cd-11e0-b818-001b63b6e445"
+        }
+    },
+    {
+        "pk": 7,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "42 rue du progr\u00e8s",
+            "city": "MOULINS",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "03000",
+            "latlong": "46.5731413,3.3357808",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53236,
+            "event": null,
+            "uuid": "1634ae75-d6cd-11e0-b99d-001b63b6e445"
+        }
+    },
+    {
+        "pk": 10,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Route des Estreys",
+            "city": "POLIGNAC",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "43000",
+            "latlong": "45.0682588,3.8337004",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53239,
+            "event": null,
+            "uuid": "16367d63-d6cd-11e0-9136-001b63b6e445"
+        }
+    },
+    {
+        "pk": 9,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "2, Place Lafayette",
+            "city": "BRIOUDE",
+            "adr2": "Mairie",
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "43100",
+            "latlong": "45.29422610812957, 3.3844971656799316",
+            "created": null,
+            "modified": "2011-09-04 10:08:35",
+            "organization": 53238,
+            "event": null,
+            "uuid": "1635e607-d6cd-11e0-85f4-001b63b6e445"
+        }
+    },
+    {
+        "pk": 11,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "roussel",
+            "city": "ISSERTAUX",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63270",
+            "latlong": "45.6596271,3.3704822",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53240,
+            "event": null,
+            "uuid": "1638068c-d6cd-11e0-a7a2-001b63b6e445"
+        }
+    },
+    {
+        "pk": 14,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Le moulin du roy",
+            "city": "GERZAT",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63360",
+            "latlong": "45.8261576,3.1542282",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53243,
+            "event": null,
+            "uuid": "163a0c99-d6cd-11e0-8292-001b63b6e445"
+        }
+    },
+    {
+        "pk": 13,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "9, all\u00e9e Pierre Fermat",
+            "city": "AUBI\u00c8RE",
+            "adr2": "Parc Technologique la Pardieu",
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63170",
+            "latlong": "45.759575, 3.135902",
+            "created": null,
+            "modified": "2011-09-04 10:08:35",
+            "organization": 53242,
+            "event": null,
+            "uuid": "16393ebd-d6cd-11e0-a15d-001b63b6e445"
+        }
+    },
+    {
+        "pk": 16,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "42, rue Auger",
+            "city": "CLERMONT-FERRAND",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63100",
+            "latlong": "45.7826275,3.1069390",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53245,
+            "event": null,
+            "uuid": "163b3f5c-d6cd-11e0-bf97-001b63b6e445"
+        }
+    },
+    {
+        "pk": 17,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Le p\u00eacher",
+            "city": "MONISTROL-SUR-LOIRE",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "43120",
+            "latlong": "45.2875995,4.1614491",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53246,
+            "event": null,
+            "uuid": "163bd570-d6cd-11e0-a8ee-001b63b6e445"
+        }
+    },
+    {
+        "pk": 19,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "7 all\u00e9e Georges Pompidou",
+            "city": "AURILLAC",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "15000",
+            "latlong": "44.9135288,2.4459550",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53248,
+            "event": null,
+            "uuid": "163d0c42-d6cd-11e0-a622-001b63b6e445"
+        }
+    },
+    {
+        "pk": 20,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "5 place Saint Pierre",
+            "city": "MONTLU\u00c7ON",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "03100",
+            "latlong": "46.3411438,2.6029586",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53249,
+            "event": null,
+            "uuid": "163da88c-d6cd-11e0-a846-001b63b6e445"
+        }
+    },
+    {
+        "pk": 22,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "20 rue de la constitution",
+            "city": "CUSSET",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "03300",
+            "latlong": "46.1332138,3.4582993",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53251,
+            "event": null,
+            "uuid": "163ee561-d6cd-11e0-99f3-001b63b6e445"
+        }
+    },
+    {
+        "pk": 23,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "42 rue du progr\u00e8s",
+            "city": "MOULINS",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "03000",
+            "latlong": "46.5731413,3.3357808",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53252,
+            "event": null,
+            "uuid": "163f7cf3-d6cd-11e0-b674-001b63b6e445"
+        }
+    },
+    {
+        "pk": 29,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "14 rue de la boucherie",
+            "city": "CLERMONT\n FERRAND",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63100",
+            "latlong": "45.7941076,3.1138505",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53258,
+            "event": null,
+            "uuid": "16430e3a-d6cd-11e0-9810-001b63b6e445"
+        }
+    },
+    {
+        "pk": 26,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "6 avenue du Docteur Mallet",
+            "city": "MURAT",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "15170",
+            "latlong": "45.1095772,2.8685757",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53255,
+            "event": null,
+            "uuid": "164145f0-d6cd-11e0-98fd-001b63b6e445"
+        }
+    },
+    {
+        "pk": 30,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "rue de l'Industrie",
+            "city": "AUBIERE",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63170",
+            "latlong": "45.7557384,3.1376620",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53259,
+            "event": null,
+            "uuid": "1643a4a8-d6cd-11e0-9b78-001b63b6e445"
+        }
+    },
+    {
+        "pk": 28,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Avenue beranger",
+            "city": "THIERS",
+            "adr2": "b\u00e2timent K",
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63300",
+            "latlong": "45.8542224,3.5422711",
+            "created": null,
+            "modified": "2011-09-04 10:16:03",
+            "organization": 53257,
+            "event": null,
+            "uuid": "1642752e-d6cd-11e0-a1ff-001b63b6e445"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "16, bd du pr\u00e9sident Bertrand",
+            "city": "LE PUY",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "43000",
+            "latlong": "45.0361092,3.8840648",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53233,
+            "event": null,
+            "uuid": "16329eba-d6cd-11e0-b94e-001b63b6e445"
+        }
+    },
+    {
+        "pk": 32,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "18 route de reignat",
+            "city": "MONTAIGUT\n LE BLANC",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63320",
+            "latlong": "45.5828922,3.0913913",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53261,
+            "event": null,
+            "uuid": "1644cce8-d6cd-11e0-93d9-001b63b6e445"
+        }
+    },
+    {
+        "pk": 33,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Le Bourg",
+            "city": "MONTOLDRE",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "03150",
+            "latlong": "46.334444,3.447857",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53262,
+            "event": null,
+            "uuid": "16456338-d6cd-11e0-b258-001b63b6e445"
+        }
+    },
+    {
+        "pk": 35,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "89 rue du Port",
+            "city": "DOMPIERRE SUR BRESBRE",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "03290",
+            "latlong": "46.5202063,3.6850564",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53264,
+            "event": null,
+            "uuid": "16468ac2-d6cd-11e0-99fd-001b63b6e445"
+        }
+    },
+    {
+        "pk": 36,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "27, route de Lyon",
+            "city": "MOULINS",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "03000",
+            "latlong": "46.5542166,3.3364816",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53265,
+            "event": null,
+            "uuid": "16471e94-d6cd-11e0-8a7a-001b63b6e445"
+        }
+    },
+    {
+        "pk": 37,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "6, rue de L'Yser",
+            "city": "AURILLAC",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "15000",
+            "latlong": "44.9093125,2.4430277",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53266,
+            "event": null,
+            "uuid": "1647b2c7-d6cd-11e0-8cb7-001b63b6e445"
+        }
+    },
+    {
+        "pk": 39,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "173 Etienne Clementel",
+            "city": "CLERMONT-FERRAND",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63100",
+            "latlong": "45.8059299,3.1094654",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53268,
+            "event": null,
+            "uuid": "1648e08a-d6cd-11e0-8a34-001b63b6e445"
+        }
+    },
+    {
+        "pk": 41,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "33 rue de Gomel",
+            "city": "CLERMONT-FERRAND",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63100",
+            "latlong": "45.8121243,3.0997003",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53270,
+            "event": null,
+            "uuid": "164a07b3-d6cd-11e0-a5be-001b63b6e445"
+        }
+    },
+    {
+        "pk": 43,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Le puy basset",
+            "city": "FONTANGES",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "15140",
+            "latlong": "45.0987431,2.5275321",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53272,
+            "event": null,
+            "uuid": "164b3100-d6cd-11e0-8f8e-001b63b6e445"
+        }
+    },
+    {
+        "pk": 45,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Les sapins",
+            "city": "SAINT DIDIER LA FOR\u00caT",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "03110",
+            "latlong": "46.1974126,3.3429275",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53274,
+            "event": null,
+            "uuid": "164c6123-d6cd-11e0-a14e-001b63b6e445"
+        }
+    },
+    {
+        "pk": 46,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Mairie de Bonneval",
+            "city": "BONNEVAL",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "43160",
+            "latlong": "45.312601,3.741042",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53275,
+            "event": null,
+            "uuid": "164cf48f-d6cd-11e0-a647-001b63b6e445"
+        }
+    },
+    {
+        "pk": 47,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "La petite besse",
+            "city": "YSSINGEAUX",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "43200",
+            "latlong": "45.170936,4.124071",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53276,
+            "event": null,
+            "uuid": "164d8d2e-d6cd-11e0-a2ec-001b63b6e445"
+        }
+    },
+    {
+        "pk": 49,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "3 rue des petits gras",
+            "city": "CLERMONT-FERRAND",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63000",
+            "latlong": "45.7782506,3.0836698",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53278,
+            "event": null,
+            "uuid": "164eb69c-d6cd-11e0-aaea-001b63b6e445"
+        }
+    },
+    {
+        "pk": 51,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "140 bis grande rue",
+            "city": "AIGUEPERSE",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63260",
+            "latlong": "46.0238903,3.2036744",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53280,
+            "event": null,
+            "uuid": "164fe0ba-d6cd-11e0-b93e-001b63b6e445"
+        }
+    },
+    {
+        "pk": 52,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "3\u00a0 rue Gaultier de Biauzat",
+            "city": "CLERMONT   FERRAND",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63000",
+            "latlong": "45.7823202,3.0830990",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53281,
+            "event": null,
+            "uuid": "16507459-d6cd-11e0-a863-001b63b6e445"
+        }
+    },
+    {
+        "pk": 54,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "3 rue Voltaire",
+            "city": "MOULINS",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "03000",
+            "latlong": "46.5658690,3.3339990",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53283,
+            "event": null,
+            "uuid": "16519e47-d6cd-11e0-9599-001b63b6e445"
+        }
+    },
+    {
+        "pk": 57,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "4 rue des pins",
+            "city": "SAINT REMY \nSUR DUROLLE",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63550",
+            "latlong": "45.8904584,3.5902988",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53286,
+            "event": null,
+            "uuid": "16536105-d6cd-11e0-be07-001b63b6e445"
+        }
+    },
+    {
+        "pk": 55,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Mairie ",
+            "city": "ROFFIAC",
+            "adr2": "Le Bourg",
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "15100",
+            "latlong": "45.040961869560626,3.0717945098876953",
+            "created": null,
+            "modified": "2011-09-04 10:08:35",
+            "organization": 53284,
+            "event": null,
+            "uuid": "165232f0-d6cd-11e0-b30f-001b63b6e445"
+        }
+    },
+    {
+        "pk": 58,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "30, rue des jacobins",
+            "city": "CLERMONT   FERRAND",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63000",
+            "latlong": "45.7814870,3.0942372",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53287,
+            "event": null,
+            "uuid": "1653fc2e-d6cd-11e0-a77f-001b63b6e445"
+        }
+    },
+    {
+        "pk": 60,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "108 avenue de la Lib\u00e9ration",
+            "city": "RIOM",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63200",
+            "latlong": "45.8879500,3.1141895",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53289,
+            "event": null,
+            "uuid": "16552bee-d6cd-11e0-86cc-001b63b6e445"
+        }
+    },
+    {
+        "pk": 61,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "7 rue Fernand Forest",
+            "city": "THIERS",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63300",
+            "latlong": "45.8550387,3.5466217",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53290,
+            "event": null,
+            "uuid": "1655bfcf-d6cd-11e0-be27-001b63b6e445"
+        }
+    },
+    {
+        "pk": 63,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "48 avenue de la r\u00e9sistance ",
+            "city": "AMBERT",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63600",
+            "latlong": "45.5373438,3.7436596",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53292,
+            "event": null,
+            "uuid": "1656eb9c-d6cd-11e0-9baf-001b63b6e445"
+        }
+    },
+    {
+        "pk": 66,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Le Bourg",
+            "city": "COURNOLS",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63450",
+            "latlong": "45.64753,3.033754",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53295,
+            "event": null,
+            "uuid": "1658bcc5-d6cd-11e0-9471-001b63b6e445"
+        }
+    },
+    {
+        "pk": 69,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Le Bourg",
+            "city": "PINOLS",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": "Mairie",
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "43300",
+            "latlong": "45.03033231036956,3.355400562286377",
+            "created": null,
+            "modified": "2011-09-04 10:08:35",
+            "organization": 53298,
+            "event": null,
+            "uuid": "165a7f8c-d6cd-11e0-b5ca-001b63b6e445"
+        }
+    },
+    {
+        "pk": 67,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "53 rue de la Pardige",
+            "city": "BRIOUDE",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "43100",
+            "latlong": "45.2923424,3.3835224",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53296,
+            "event": null,
+            "uuid": "165953e8-d6cd-11e0-b3d1-001b63b6e445"
+        }
+    },
+    {
+        "pk": 70,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "1 rue de l'\u00e9cole",
+            "city": "L\u00c9OTOING",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "43410",
+            "latlong": "45.3865205,3.3043024",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53299,
+            "event": null,
+            "uuid": "165b2042-d6cd-11e0-8baf-001b63b6e445"
+        }
+    },
+    {
+        "pk": 64,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Marmilhat",
+            "city": "LEMPDES",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": "Maison des paysans",
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63370",
+            "latlong": "45.773862,3.197626",
+            "created": null,
+            "modified": "2011-09-04 10:08:35",
+            "organization": 53293,
+            "event": null,
+            "uuid": "165786a8-d6cd-11e0-9f86-001b63b6e445"
+        }
+    },
+    {
+        "pk": 72,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "12 Z. A. Lachaud",
+            "city": "LES VILETTES",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "43600",
+            "latlong": "45.2346,4.18289",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53301,
+            "event": null,
+            "uuid": "165c4f23-d6cd-11e0-ad29-001b63b6e445"
+        }
+    },
+    {
+        "pk": 74,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Rue Pierre et Marie Curie",
+            "city": "GERZAT",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63300",
+            "latlong": "45.8159649,3.1484118",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53303,
+            "event": null,
+            "uuid": "165d8133-d6cd-11e0-8424-001b63b6e445"
+        }
+    },
+    {
+        "pk": 75,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Le bourg",
+            "city": "MARAT",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63480",
+            "latlong": "45.658716,3.682079",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53304,
+            "event": null,
+            "uuid": "165e1a17-d6cd-11e0-b051-001b63b6e445"
+        }
+    },
+    {
+        "pk": 42,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Rue Serge Gainsbourg",
+            "city": "CLERMONT-FERRAND",
+            "adr2": "place du 1er Mai",
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63000",
+            "latlong": "45.78802570556423,3.1008267402648926",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53271,
+            "event": null,
+            "uuid": "164a9f19-d6cd-11e0-985d-001b63b6e445"
+        }
+    },
+    {
+        "pk": 77,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "23, rue de romainville",
+            "city": "CUSSET",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "03300",
+            "latlong": "46.1424783,3.4300155",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53306,
+            "event": null,
+            "uuid": "165f4a28-d6cd-11e0-bf00-001b63b6e445"
+        }
+    },
+    {
+        "pk": 78,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "35 Bd de Canteloube",
+            "city": "AURILLAC",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "15000",
+            "latlong": "44.9034429,2.4311158",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53307,
+            "event": null,
+            "uuid": "165fe28a-d6cd-11e0-8f15-001b63b6e445"
+        }
+    },
+    {
+        "pk": 81,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "6 rue Pierre et Marie Curie",
+            "city": "GERZAT",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63360",
+            "latlong": "45.8159649,3.1484118",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53310,
+            "event": null,
+            "uuid": "1661a0ab-d6cd-11e0-a816-001b63b6e445"
+        }
+    },
+    {
+        "pk": 79,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Rue du 8 Mai",
+            "city": "CUSSAC/LOIRE",
+            "adr2": "ZI les Baraques",
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "43370",
+            "latlong": "44.9980372793758,3.8675308227539062",
+            "created": null,
+            "modified": "2011-09-04 10:17:11",
+            "organization": 53308,
+            "event": null,
+            "uuid": "1660766e-d6cd-11e0-9292-001b63b6e445"
+        }
+    },
+    {
+        "pk": 80,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "20 avenue Jean Jaur\u00e8s",
+            "city": "BRIOUDE",
+            "adr2": "BP 124",
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "43103",
+            "latlong": "45.28898,3.367111",
+            "created": null,
+            "modified": "2011-09-04 10:17:11",
+            "organization": 53309,
+            "event": null,
+            "uuid": "16610d4a-d6cd-11e0-90c4-001b63b6e445"
+        }
+    },
+    {
+        "pk": 82,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "13,rue du 14 juillet",
+            "city": "AURILLAC",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "15000",
+            "latlong": "44.9275461,2.4422235",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53312,
+            "event": null,
+            "uuid": "166232a6-d6cd-11e0-ae61-001b63b6e445"
+        }
+    },
+    {
+        "pk": 21,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "4 rue du 29 juillet",
+            "city": "CUSSET",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "03300",
+            "latlong": "46.1324043,3.4553916",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53250,
+            "event": null,
+            "uuid": "163e4275-d6cd-11e0-bf7f-001b63b6e445"
+        }
+    },
+    {
+        "pk": 24,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Avenue de l'Ermitage",
+            "city": "LE PUY EN \nVELAY",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": "Lyc\u00e9e Professionnel Agricole",
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "43000",
+            "latlong": "45.054863747237114, 3.852553367614746",
+            "created": null,
+            "modified": "2011-09-04 10:08:35",
+            "organization": 53253,
+            "event": null,
+            "uuid": "1640190a-d6cd-11e0-bbdc-001b63b6e445"
+        }
+    },
+    {
+        "pk": 31,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "6 avenue de la r\u00e9publique",
+            "city": "COURNON",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63800",
+            "latlong": "45.7408907,3.1867674",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53260,
+            "event": null,
+            "uuid": "1644379c-d6cd-11e0-9a8f-001b63b6e445"
+        }
+    },
+    {
+        "pk": 86,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Ch\u00e2teau des prureaux",
+            "city": "MONTCOMBROUX-LES-MINES",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "03130",
+            "latlong": "46.347505276180435,3.744170665740967",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53316,
+            "event": null,
+            "uuid": "16648875-d6cd-11e0-ba2c-001b63b6e445"
+        }
+    },
+    {
+        "pk": 87,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "6 rue Jean Jacques ROUSSEAU",
+            "city": "MOULINS",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "03000",
+            "latlong": "46.5629824,3.3340787",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53317,
+            "event": null,
+            "uuid": "16651a70-d6cd-11e0-8d60-001b63b6e445"
+        }
+    },
+    {
+        "pk": 88,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "93 rue de Paris",
+            "city": "MOULINS",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "03000",
+            "latlong": "46.5751104,3.3251275",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53318,
+            "event": null,
+            "uuid": "1665b7d1-d6cd-11e0-ac32-001b63b6e445"
+        }
+    },
+    {
+        "pk": 89,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "16 rue de l'oiseau",
+            "city": "MOULINS",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "03000",
+            "latlong": "46.5618964,3.3348077",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53319,
+            "event": null,
+            "uuid": "16664dee-d6cd-11e0-b5e9-001b63b6e445"
+        }
+    },
+    {
+        "pk": 90,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "2 rue du faubourg",
+            "city": "CUSSET",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "03300",
+            "latlong": "46.131099,3.458954",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53320,
+            "event": null,
+            "uuid": "1666e2eb-d6cd-11e0-b0c1-001b63b6e445"
+        }
+    },
+    {
+        "pk": 83,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "8 place de la paix",
+            "city": "AURILLAC",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": "Maison des associations",
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "15000",
+            "latlong": "44.924019281046654,2.4416685104370117",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53313,
+            "event": null,
+            "uuid": "1662c770-d6cd-11e0-99f5-001b63b6e445"
+        }
+    },
+    {
+        "pk": 53,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "39 rue de la  Guilloti\u00e8re",
+            "city": "EBREUIL",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "03450",
+            "latlong": "46.1138772,3.0866707",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53282,
+            "event": null,
+            "uuid": "16510830-d6cd-11e0-a7f2-001b63b6e445"
+        }
+    },
+    {
+        "pk": 25,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "63 rue chaussade",
+            "city": "LE PUY EN\n VELAY",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "43000",
+            "latlong": "45.0430405,3.8861184",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53254,
+            "event": null,
+            "uuid": "1640b2fa-d6cd-11e0-b682-001b63b6e445"
+        }
+    },
+    {
+        "pk": 27,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Mairie; 1 place de Martouret",
+            "city": "LE PUY EN \nVELAY",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "43000",
+            "latlong": "45.04370612831548, 3.8837528228759766",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53256,
+            "event": null,
+            "uuid": "1641dfc2-d6cd-11e0-b9ea-001b63b6e445"
+        }
+    },
+    {
+        "pk": 91,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "7 rue de la Corre",
+            "city": "CREUZIER LE VIEUX",
+            "adr2": "NULL",
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "03300",
+            "latlong": "46.1625669,3.4391946",
+            "created": null,
+            "modified": "2011-09-05 18:47:01",
+            "organization": 53321,
+            "event": null,
+            "uuid": "adbb0e54-d7de-11e0-a129-001b63b6e445"
+        }
+    },
+    {
+        "pk": 84,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "32, Cit\u00e9 Clair Vivre",
+            "city": "AURILLAC",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "15006",
+            "latlong": "44.920989,2.442898",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53314,
+            "event": null,
+            "uuid": "16635e73-d6cd-11e0-a2ea-001b63b6e445"
+        }
+    },
+    {
+        "pk": 92,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Labarthe",
+            "city": "DOMEYRAT",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "43230",
+            "latlong": "45.2503076,3.5086588",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53322,
+            "event": null,
+            "uuid": "4a24256e-d6ce-11e0-8a97-001b63b6e445"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "cours gervais ",
+            "city": "SAUGUES",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "43170",
+            "latlong": "44.9596569,3.5470575",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53232,
+            "event": null,
+            "uuid": "d692776b-d6cc-11e0-9138-001b63b6e445"
+        }
+    },
+    {
+        "pk": 93,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "6 avenue du G\u00e9n\u00e9ral de Gaulle",
+            "city": "LE PUY EN VELAY",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "43000",
+            "latlong": "45.0410422,3.8839770",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53323,
+            "event": null,
+            "uuid": "4a260abd-d6ce-11e0-ba82-001b63b6e445"
+        }
+    },
+    {
+        "pk": 94,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "35 rue verdun",
+            "city": "LE PUY EN VELAY",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "43000",
+            "latlong": "45.0439642,3.8877668",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53324,
+            "event": null,
+            "uuid": "4a26b4ee-d6ce-11e0-a759-001b63b6e445"
+        }
+    },
+    {
+        "pk": 40,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "4 route du Thiex",
+            "city": "SAINT ELOY LES MINES",
+            "adr2": "Rond-point sud",
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63700",
+            "latlong": "46.17983040759436,2.63671875",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53269,
+            "event": null,
+            "uuid": "164972e8-d6cd-11e0-a1df-001b63b6e445"
+        }
+    },
+    {
+        "pk": 85,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "9 cit\u00e9 Clair Vivre",
+            "city": "AURILLAC",
+            "adr2": "BP 312",
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "15003",
+            "latlong": "44.921222,2.442794",
+            "created": null,
+            "modified": "2011-09-04 10:17:11",
+            "organization": 53315,
+            "event": null,
+            "uuid": "1663f58c-d6cd-11e0-8ace-001b63b6e445"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "place R\u00e9n\u00e9 Amarger",
+            "city": "SAINT FLOUR",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": "Maison des Agiales",
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "15100",
+            "latlong": "45.035200014059676, 3.1002044677734375",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53234,
+            "event": null,
+            "uuid": "16337902-d6cd-11e0-b256-001b63b6e445"
+        }
+    },
+    {
+        "pk": 8,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "188 avenue de la r\u00e9publique",
+            "city": "MONTLU\u00c7ON",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "03100",
+            "latlong": "46.3472186,2.5961627",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53237,
+            "event": null,
+            "uuid": "163542b3-d6cd-11e0-9d98-001b63b6e445"
+        }
+    },
+    {
+        "pk": 12,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "11, rue des Saul\u00e9es",
+            "city": "CHAMALI\u00c8RES",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63400",
+            "latlong": "45.7771071,3.0663519",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53241,
+            "event": null,
+            "uuid": "1638a1b5-d6cd-11e0-a5fb-001b63b6e445"
+        }
+    },
+    {
+        "pk": 15,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "3 rue de la Gravi\u00e8re",
+            "city": "BILLOM",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63160",
+            "latlong": "45.7233406,3.3395297",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53244,
+            "event": null,
+            "uuid": "163aa511-d6cd-11e0-b3bb-001b63b6e445"
+        }
+    },
+    {
+        "pk": 18,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "3 route de parentignat",
+            "city": "ISSOIRE",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63500",
+            "latlong": "45.5413390,3.2552701",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53247,
+            "event": null,
+            "uuid": "163c73c2-d6cd-11e0-ac62-001b63b6e445"
+        }
+    },
+    {
+        "pk": 34,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Avenue du Pr\u00e9sident Auriol",
+            "city": "MONTLU\u00c7ON",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "03100",
+            "latlong": "46.3279487,2.5840888",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53263,
+            "event": null,
+            "uuid": "1645f7ba-d6cd-11e0-afb2-001b63b6e445"
+        }
+    },
+    {
+        "pk": 38,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "60, rue des Farges",
+            "city": "LE PUY EN VELAY",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "43000",
+            "latlong": "45.0468421,3.8802458",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53267,
+            "event": null,
+            "uuid": "164844f3-d6cd-11e0-b6c2-001b63b6e445"
+        }
+    },
+    {
+        "pk": 95,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "3 rue Gaultier de Biauzat",
+            "city": "CLERMONT-FERRAND",
+            "adr2": "NULL",
+            "description": null,
+            "exchange": null,
+            "title": "Peuple et Cultures",
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63000",
+            "latlong": "45.7823202,3.0830990",
+            "created": null,
+            "modified": "2011-09-05 18:46:59",
+            "organization": 53326,
+            "event": null,
+            "uuid": "ac8f3f59-d7de-11e0-842a-001b63b6e445"
+        }
+    },
+    {
+        "pk": 44,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "31, rue emile littr\u00e9",
+            "city": "MONTLU\u00c7ON",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "03100",
+            "latlong": "46.3487842,2.6139063",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53273,
+            "event": null,
+            "uuid": "164bc8b8-d6cd-11e0-900d-001b63b6e445"
+        }
+    },
+    {
+        "pk": 48,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Le chomeil",
+            "city": "LE BRIGNON",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "43370",
+            "latlong": "44.9332787,3.8882446",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53277,
+            "event": null,
+            "uuid": "164e220c-d6cd-11e0-9510-001b63b6e445"
+        }
+    },
+    {
+        "pk": 50,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "La Boucharde",
+            "city": "BRUGHEAS",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "03700",
+            "latlong": "46.0842660,3.3816447",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53279,
+            "event": null,
+            "uuid": "164f4785-d6cd-11e0-8693-001b63b6e445"
+        }
+    },
+    {
+        "pk": 56,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "1/3 rue Berthelot",
+            "city": "MOULINS",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "03000",
+            "latlong": "46.5644914,3.3351273",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53285,
+            "event": null,
+            "uuid": "1652c96b-d6cd-11e0-8b09-001b63b6e445"
+        }
+    },
+    {
+        "pk": 59,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "29 boulevard Henri IV",
+            "city": "AMBERT",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63600",
+            "latlong": "45.5490605,3.7419134",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53288,
+            "event": null,
+            "uuid": "165493cf-d6cd-11e0-9fba-001b63b6e445"
+        }
+    },
+    {
+        "pk": 62,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Le Bourg",
+            "city": "COURNOLS",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63450",
+            "latlong": "45.64753,3.033754",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53291,
+            "event": null,
+            "uuid": "16565800-d6cd-11e0-93d9-001b63b6e445"
+        }
+    },
+    {
+        "pk": 65,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "Mairie Le Bourg",
+            "city": "CHARENSAT",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63640",
+            "latlong": "45.986559,2.636793",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53294,
+            "event": null,
+            "uuid": "16582357-d6cd-11e0-879f-001b63b6e445"
+        }
+    },
+    {
+        "pk": 68,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "18 , rue Camille Joubert",
+            "city": "THIERS",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63300",
+            "latlong": "45.8562270,3.5460316",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53297,
+            "event": null,
+            "uuid": "1659eb59-d6cd-11e0-b8b9-001b63b6e445"
+        }
+    },
+    {
+        "pk": 71,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "34 rue Roderie",
+            "city": "AIGUILHE",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "43000",
+            "latlong": "45.0508247,3.8936460",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53300,
+            "event": null,
+            "uuid": "165bba35-d6cd-11e0-92db-001b63b6e445"
+        }
+    },
+    {
+        "pk": 73,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "61, avenue de L'URSS",
+            "city": "CLERMONT-FERRAND",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63000",
+            "latlong": "45.780235,3.102268",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53302,
+            "event": null,
+            "uuid": "165ce205-d6cd-11e0-873a-001b63b6e445"
+        }
+    },
+    {
+        "pk": 76,
+        "model": "coop_local.site",
+        "fields": {
+            "adr1": "L'\u00e9tang",
+            "city": "SALLEDES",
+            "adr2": null,
+            "description": null,
+            "exchange": null,
+            "title": null,
+            "site_principal": true,
+            "uri": null,
+            "zipcode": "63270",
+            "latlong": "45.64146786465494,3.349628448486328",
+            "created": null,
+            "modified": "2011-09-05 18:50:38",
+            "organization": 53305,
+            "event": null,
+            "uuid": "165eb18a-d6cd-11e0-93f9-001b63b6e445"
+        }
+    },
+    {
         "pk": 53232,
         "model": "coop_local.initiative",
         "fields": {
@@ -10,7 +1963,7 @@
             "uri": null,
             "slug": "ateliers_bruyere",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "lesateliersdelabruyere@wanadoo.fr",
             "rss": null
@@ -27,7 +1980,7 @@
             "uri": null,
             "slug": "ensemble_fromagerie_bio",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "hauteloirebio@free.fr",
             "rss": null
@@ -44,7 +1997,7 @@
             "uri": null,
             "slug": "rers_haute_auvergne",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "rers.ha@tiscali.fr",
             "rss": null
@@ -61,7 +2014,7 @@
             "uri": null,
             "slug": "quinode",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 5,
             "email": "contact@quinode.fr",
             "rss": null
@@ -78,7 +2031,7 @@
             "uri": null,
             "slug": "boutique_commerce_equitable_lea",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "fal.allier@wanadoo.fr",
             "rss": null
@@ -95,7 +2048,7 @@
             "uri": null,
             "slug": "maison_solidarite",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "Amsmontlu@aol.com",
             "rss": null
@@ -112,7 +2065,7 @@
             "uri": null,
             "slug": "absolu",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "plein.air.cocept@wanadoo.fr",
             "rss": null
@@ -129,7 +2082,7 @@
             "uri": null,
             "slug": "jardin_estreys",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "",
             "rss": null
@@ -146,7 +2099,7 @@
             "uri": null,
             "slug": "arkose",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "ge.arkose@wanadoo.fr",
             "rss": null
@@ -163,7 +2116,7 @@
             "uri": null,
             "slug": "ctp_auvergne",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "Contact@ctpauvergne.org",
             "rss": null
@@ -180,7 +2133,7 @@
             "uri": null,
             "slug": "auvergne_biologique",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "auvergne.biologique@auvergne.chambagri.fr",
             "rss": null
@@ -197,7 +2150,7 @@
             "uri": null,
             "slug": "biau_jardin",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "Lebiaujardin@wanadoo.fr",
             "rss": null
@@ -214,7 +2167,7 @@
             "uri": null,
             "slug": "orange_bleue",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "anne.leny@laposte.net",
             "rss": null
@@ -231,7 +2184,7 @@
             "uri": null,
             "slug": "covoiture_63",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 6,
             "email": "covoiture63@",
             "rss": null
@@ -248,7 +2201,7 @@
             "uri": null,
             "slug": "artisans_monde_yssingeaux_monistrol",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "monistrol-yssingeaux@artisansdumonde.org",
             "rss": null
@@ -265,7 +2218,7 @@
             "uri": null,
             "slug": "mode_emploi",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "modedemploi@wanadoo.fr",
             "rss": null
@@ -282,7 +2235,7 @@
             "uri": null,
             "slug": "arbre_pain",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "",
             "rss": null
@@ -299,7 +2252,7 @@
             "uri": null,
             "slug": "artisans_monde",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "montlucon@artisansdumonde.org",
             "rss": null
@@ -316,7 +2269,7 @@
             "uri": null,
             "slug": "amap_vichy",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "annemariechambeau@tele2.fr",
             "rss": null
@@ -333,7 +2286,7 @@
             "uri": null,
             "slug": "artisans_monde",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "cusset@artisansdumonde.org",
             "rss": null
@@ -350,7 +2303,7 @@
             "uri": null,
             "slug": "amap_bourbonnais",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "d.delvincourt@wanadoo.fr",
             "rss": null
@@ -367,7 +2320,7 @@
             "uri": null,
             "slug": "gd_civam_auvergne",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 4,
             "email": "gdcivam43@libertysurf.fr",
             "rss": null
@@ -384,7 +2337,7 @@
             "uri": null,
             "slug": "artisans_monde_puy",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "le-puy-en-velay@artisansdumonde.org",
             "rss": null
@@ -401,7 +2354,7 @@
             "uri": null,
             "slug": "rers_murat",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 2,
             "email": "rers.murat@laposte.net",
             "rss": null
@@ -418,7 +2371,7 @@
             "uri": null,
             "slug": "accueil_paysan_auvergne",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 3,
             "email": "accueilpaysan.auvergne@wanadoo.fr",
             "rss": null
@@ -435,7 +2388,7 @@
             "uri": null,
             "slug": "cultures_diverses",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "dussola@free.fr",
             "rss": null
@@ -452,7 +2405,7 @@
             "uri": null,
             "slug": "aspal_artisans_monde_clermont",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "vandame@clermont-inra.fr",
             "rss": null
@@ -469,7 +2422,7 @@
             "uri": null,
             "slug": "association_initiative_mecanique_automobile_apima",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "roger.berry@wanadoo.fr",
             "rss": null
@@ -486,7 +2439,7 @@
             "uri": null,
             "slug": "rers_cournon",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "",
             "rss": null
@@ -503,7 +2456,7 @@
             "uri": null,
             "slug": "jardins_ys",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "jardindys@free.fr",
             "rss": null
@@ -520,7 +2473,7 @@
             "uri": null,
             "slug": "truffade",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 8,
             "email": "latruffade.montoldre@orange.fr",
             "rss": null
@@ -537,7 +2490,7 @@
             "uri": null,
             "slug": "penelope_ulysse",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 1,
             "email": "association.penelope@wanadoo.fr",
             "rss": null
@@ -554,7 +2507,7 @@
             "uri": null,
             "slug": "rapid_net_service",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 8,
             "email": "ass-rapidenet.service@wanadoo.fr",
             "rss": null
@@ -571,7 +2524,7 @@
             "uri": null,
             "slug": "siaep_03",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 8,
             "email": "georges .parent@wanadoo.fr",
             "rss": null
@@ -588,7 +2541,7 @@
             "uri": null,
             "slug": "adaj",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 8,
             "email": "",
             "rss": null
@@ -605,7 +2558,7 @@
             "uri": null,
             "slug": "nta",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 5,
             "email": "c.derancourt@nta43.com",
             "rss": null
@@ -622,7 +2575,7 @@
             "uri": null,
             "slug": "blanc_plus",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 8,
             "email": "claude.aigueparses@wanadoo.fr",
             "rss": null
@@ -639,7 +2592,7 @@
             "uri": null,
             "slug": "comb_at",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 8,
             "email": "iedouardcmobat@club.fr",
             "rss": null
@@ -656,7 +2609,7 @@
             "uri": null,
             "slug": "eja",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 8,
             "email": "pc.groupejobagglo@orange.fr",
             "rss": null
@@ -673,7 +2626,7 @@
             "uri": null,
             "slug": "six_trois",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 8,
             "email": "sixtrois@lacoope.com",
             "rss": null
@@ -690,7 +2643,7 @@
             "uri": null,
             "slug": "meandres",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 3,
             "email": "association-meandres@wanadoo.fr",
             "rss": null
@@ -707,7 +2660,7 @@
             "uri": null,
             "slug": "isae",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 8,
             "email": "isae03@tiscali.fr",
             "rss": null
@@ -724,7 +2677,7 @@
             "uri": null,
             "slug": "association_nationale_cheval_trait_poitevin",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 3,
             "email": "a.b.neron@cegetel.net",
             "rss": null
@@ -741,7 +2694,7 @@
             "uri": null,
             "slug": "association_insertion_chemin_fer_livradois_forez",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 8,
             "email": "saplachaisedieu@wanadoo.fr",
             "rss": null
@@ -758,7 +2711,7 @@
             "uri": null,
             "slug": "accro_nat",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 2,
             "email": "accro-nat@wanadoo.fr",
             "rss": null
@@ -775,7 +2728,7 @@
             "uri": null,
             "slug": "gegv_bords_loire",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 2,
             "email": "irene-guerin@tele2.fr",
             "rss": null
@@ -792,7 +2745,7 @@
             "uri": null,
             "slug": "etudes_chantiers",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 8,
             "email": "ecec@unarec.org",
             "rss": null
@@ -809,7 +2762,7 @@
             "uri": null,
             "slug": "lio_hand_evasion",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 2,
             "email": "lionel.bory@wanadoo.fr",
             "rss": null
@@ -826,7 +2779,7 @@
             "uri": null,
             "slug": "association_braille_culture",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 2,
             "email": "brailleetculture@wanadoo.fr",
             "rss": null
@@ -843,7 +2796,7 @@
             "uri": null,
             "slug": "maison_jeux",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 2,
             "email": "maison.jeux@free.fr",
             "rss": null
@@ -860,7 +2813,7 @@
             "uri": null,
             "slug": "cnsb",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 3,
             "email": "cnsb@wanadoo.fr",
             "rss": null
@@ -877,7 +2830,7 @@
             "uri": null,
             "slug": "miner_allier_plus",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 5,
             "email": "minerallierplus@free.fr",
             "rss": null
@@ -894,7 +2847,7 @@
             "uri": null,
             "slug": "aleh",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 8,
             "email": "aleh@wanadoo.fr",
             "rss": null
@@ -911,7 +2864,7 @@
             "uri": null,
             "slug": "adef__casap",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 7,
             "email": "adefplus@wanadoo.fr",
             "rss": null
@@ -928,7 +2881,7 @@
             "uri": null,
             "slug": "vivre_domicile",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 7,
             "email": "vivreadomicile@wanadoo.fr",
             "rss": null
@@ -945,7 +2898,7 @@
             "uri": null,
             "slug": "capea",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 7,
             "email": "capea.auvergne@wanadoo.fr",
             "rss": null
@@ -962,7 +2915,7 @@
             "uri": null,
             "slug": "coup_main",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 8,
             "email": "",
             "rss": null
@@ -979,7 +2932,7 @@
             "uri": null,
             "slug": "aac_auvergne",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 8,
             "email": "ecf.riom@wanadoo.fr",
             "rss": null
@@ -996,7 +2949,7 @@
             "uri": null,
             "slug": "passerelle",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 8,
             "email": "passerelle.plus@wanadoo.fr",
             "rss": null
@@ -1013,7 +2966,7 @@
             "uri": null,
             "slug": "cooperative_geolografis",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 5,
             "email": "geologis@free.fr",
             "rss": null
@@ -1030,7 +2983,7 @@
             "uri": null,
             "slug": "fr_civam_auvergne",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 4,
             "email": "auvergne.fr.civam@libertysurf.fr",
             "rss": null
@@ -1047,7 +3000,7 @@
             "uri": null,
             "slug": "anis_etoile",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 4,
             "email": "amis.etoile@fr.aleane.com",
             "rss": null
@@ -1064,7 +3017,7 @@
             "uri": null,
             "slug": "centre_education_developpement_durable",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 4,
             "email": "assoc.cedd@orange.fr",
             "rss": null
@@ -1081,7 +3034,7 @@
             "uri": null,
             "slug": "carbala",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 4,
             "email": "animation-nature@carbala.fr",
             "rss": null
@@ -1098,7 +3051,7 @@
             "uri": null,
             "slug": "cabestan_obsidienne",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 4,
             "email": "csurville@gmail.com",
             "rss": null
@@ -1115,7 +3068,7 @@
             "uri": null,
             "slug": "tous_ensemble",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 4,
             "email": "",
             "rss": null
@@ -1132,7 +3085,7 @@
             "uri": null,
             "slug": "vivre_pays",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 4,
             "email": "mairiepinols@wanadoo.Fr",
             "rss": null
@@ -1149,7 +3102,7 @@
             "uri": null,
             "slug": "amis_leotoing",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 3,
             "email": "cormerais@hotmail.com",
             "rss": null
@@ -1166,7 +3119,7 @@
             "uri": null,
             "slug": "ere_43",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 4,
             "email": "Jacques.villevieille@libertysurf.fr",
             "rss": null
@@ -1183,7 +3136,7 @@
             "uri": null,
             "slug": "gepeto",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 4,
             "email": "gepeto6@wanadoo.fr",
             "rss": null
@@ -1200,7 +3153,7 @@
             "uri": null,
             "slug": "cemea_epe",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 3,
             "email": "cemea.auvergne@wanadoo.fr",
             "rss": null
@@ -1217,7 +3170,7 @@
             "uri": null,
             "slug": "apivale",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 4,
             "email": "apivale63@wanadoo.fr",
             "rss": null
@@ -1234,7 +3187,7 @@
             "uri": null,
             "slug": "traces_coq_noir",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 3,
             "email": "coq-noir@hotmail.fr",
             "rss": null
@@ -1251,7 +3204,7 @@
             "uri": null,
             "slug": "bio_institut",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 4,
             "email": "bio-institut@wanadoo.fr",
             "rss": null
@@ -1268,7 +3221,7 @@
             "uri": null,
             "slug": "recyplus",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 4,
             "email": "recyplus@orange.fr",
             "rss": null
@@ -1285,7 +3238,7 @@
             "uri": null,
             "slug": "oxyplus",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 4,
             "email": "oxygene.association@wandoo.fr",
             "rss": null
@@ -1302,7 +3255,7 @@
             "uri": null,
             "slug": "envie_43",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 8,
             "email": "envie.mot@wanadoo.fr",
             "rss": null
@@ -1319,7 +3272,7 @@
             "uri": null,
             "slug": "idee_travaux",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 8,
             "email": "ch.chanceau@laposte.net",
             "rss": null
@@ -1336,7 +3289,7 @@
             "uri": null,
             "slug": "envie_mo",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 8,
             "email": "envie.mot@wanadoo.fr",
             "rss": null
@@ -1353,7 +3306,7 @@
             "uri": null,
             "slug": "ecole_parents_educateurs_cantal",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 7,
             "email": "contact@epe15.com",
             "rss": null
@@ -1370,7 +3323,7 @@
             "uri": null,
             "slug": "session_libre",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 2,
             "email": "contact@sessionlibre.com",
             "rss": null
@@ -1387,7 +3340,7 @@
             "uri": null,
             "slug": "institut_etudes_occitanes",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 2,
             "email": "ioecantal@wanadoo.fr",
             "rss": null
@@ -1404,7 +3357,7 @@
             "uri": null,
             "slug": "sirventes",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 2,
             "email": "developpement@sirventes.com",
             "rss": null
@@ -1421,7 +3374,7 @@
             "uri": null,
             "slug": "creneau",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 8,
             "email": "sj.auvergne@wanadoo.fr",
             "rss": null
@@ -1438,7 +3391,7 @@
             "uri": null,
             "slug": "cidf_allier",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 8,
             "email": "cidf.03@orange.fr",
             "rss": null
@@ -1455,7 +3408,7 @@
             "uri": null,
             "slug": "cghb",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 5,
             "email": "genea.bourbonnais@wanadoo.fr",
             "rss": null
@@ -1472,7 +3425,7 @@
             "uri": null,
             "slug": "scop_zimages",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 5,
             "email": "scop-zimages-productions@wanadoo.fr",
             "rss": null
@@ -1489,7 +3442,7 @@
             "uri": null,
             "slug": "pied_tete",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 2,
             "email": "pied_dur_la_tete@hotmail.com",
             "rss": null
@@ -1506,7 +3459,7 @@
             "uri": null,
             "slug": "odyssee",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 2,
             "email": "asso.odyssee03@wanadoo.fr",
             "rss": null
@@ -1523,7 +3476,7 @@
             "uri": null,
             "slug": "artizane",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 2,
             "email": "info@artizane.org",
             "rss": null
@@ -1540,7 +3493,7 @@
             "uri": null,
             "slug": "fcomfemmes",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 8,
             "email": "cidfhloire@wanadoo.fr",
             "rss": null
@@ -1557,7 +3510,7 @@
             "uri": null,
             "slug": "semaphore_43",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 2,
             "email": "sema-phore@wanadoo.fr",
             "rss": null
@@ -1574,7 +3527,7 @@
             "uri": null,
             "slug": "pec",
             "created": null,
-            "modified": null,
+            "modified": "2011-09-04 09:32:53",
             "secteur_fse": 2,
             "email": "peupleetculture@yahoo.fr",
             "rss": null

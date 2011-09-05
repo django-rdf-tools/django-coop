@@ -20,6 +20,15 @@ div#main{
 	background-color: white;
 }
 
+span.unicon{
+	font-size: 1.8em;
+	display: inline-block;
+	margin-top: -0.2em;
+	height: 1em;
+	margin-right: 0.2em;
+	position: relative;
+	top: 0.1em;
+}
 
 
 #content{
@@ -43,6 +52,7 @@ h1{
 	padding-left: 20px;
 }
 
+
 header h1 a, header h1 a:visited{
 	color: #6c6c6c;
 	text-decoration: none;
@@ -58,6 +68,7 @@ h2{
 
 h3{
 	font-size: 2.3em;
+	padding-top: 10px;
 }
 
 h4{

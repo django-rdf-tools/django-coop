@@ -3,41 +3,58 @@
 {% block meta_title %}{{object.title}}{% endblock %}
 
 
+{% block document %}
 
+<div id="title" class="grid_12 grid">
 {% block title %}<h3>{{object.title}}</h3>{% endblock %}
-
+</div>
 
 {% block content %}
-
-    <div id="content" class="grid_8 grid">
+<div id="content">
+    <div class="grid_8 grid">
     
         <p>{{object.description}}</p>
     
         <br/>
     
+    {% if engagements %}
         <h4>Membres</h4>
         <ul>
             {% for engagement in engagements %}
                 <li><a href="{{engagement.membre.get_absolute_url}}">{{ engagement.membre }}</a>, {{engagement.role}}</li>
             {% endfor %}
-        </ul>
-    
+        </ul>    
         <br/>
+    {% endif %}
     
+    {% if relations %}
         <h4>Relations</h4>
+        
+    {% endif %}    
     </div>
+ 
     
-    <div id="grid-right" class="grid_4 grid">
+    
+    <div id="grid-right" class="grid_4 grid">       
+       <h4>Coordonn√©es</h4>
        
        {% for adresse in adresses %}     
-       
+            <img src="http://maps.googleapis.com/maps/api/staticmap?markers=color:red|{{adresse.latlong}}&maptype=hybrid&size=280x200&sensor=false&zoom=8">
+            <br/><br/>
             {{adresse.adr1}}<br/>
-            {% if adresse.adr2 != '' %}{{adresse.adr2}}<br/>{% endif %}
+            {% if adresse.adr2 %}{{adresse.adr2}}<br/>{% endif %}
             {{adresse.zipcode}} {{adresse.city}}<br/><br/>
-            
-       {% endfor %}   
-
+       {% endfor %}  
+       
+       {% if object.telephone_fixe %}
+        <span class="unicon">‚úÜ</span> : {{object.telephone_fixe}}<br/>
+        {%endif%}
+        {% if object.telephone_fixe %}
+        <span class="unicon">Ì†ºÌºè</spn >: {{object.web}}<br/>
+        {% endif %}
     </div>
     
     
+</div>
+{% endblock %}    
 {% endblock %}
