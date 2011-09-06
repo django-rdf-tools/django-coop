@@ -4,6 +4,6 @@ from django.conf.urls.defaults import *
 urlpatterns = patterns('',
 
     url(r'^$', 'skosxl.views.tag_list', name="tag_list"),
-    url(r'^(?P<slug>\w+).html$', 'skosxl.views.tag_detail', name="tag_detail"),
+    url(r'^(?P<slug>[\w-]+).html$', 'skosxl.views.tag_detail', name="tag_detail"),
         
 )
