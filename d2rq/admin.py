@@ -18,11 +18,13 @@ class SchemaClassAdmin(admin.ModelAdmin):
     list_filter = ('schema__prefix',)
 admin.site.register(SchemaClass,SchemaClassAdmin)
 
-admin.site.register(SchemaProperty)
+class SchemaPropertyAdmin(admin.ModelAdmin):
+    list_filter = ('schema__prefix',)
+admin.site.register(SchemaProperty,SchemaPropertyAdmin)
 
 
 class SchemaAdmin(admin.ModelAdmin):
-    list_display = ('prefix','label','link_in_admin',)
+    list_display = ('prefix','label','vocab_type','format','link_in_admin',)
     list_display_links =('prefix','label')
     ordering = ('prefix',)
     
