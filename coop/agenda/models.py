@@ -14,6 +14,8 @@ class BaseCalendar(models.Model):
     #membre_uri = models.CharField(_(u'Profil FOAF'),blank=True, max_length=250, editable=False)
     class Meta:
         abstract = True
+    def __unicode__(self):
+        return self.title    
         
 
 class BaseEvent(models.Model):
@@ -21,6 +23,9 @@ class BaseEvent(models.Model):
     org = models.ForeignKey('coop_local.Initiative',blank=True,null=True)
     member = models.ForeignKey('coop_local.Membre')
     title = models.CharField(_('Titre'),blank=True,max_length=250)
+    
+    sites = models.ManyToManyField('coop_local.Site')#localisation des événements
+    
     description = models.TextField(_(u'Description'),blank=True)
     datetime = models.DateField(default=datetime.datetime.today)
     slug = exfields.AutoSlugField(populate_from='title')

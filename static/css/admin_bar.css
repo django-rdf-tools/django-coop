@@ -42,6 +42,11 @@ background: linear-gradient(#FFFFFF, #ABABAB);
 	position: relative;
 }
 
+#admin-status{
+	margin-top: 10px;
+	font-weight: bold;
+}
+
 #admin-bar a {
 	color: #3b416d;
 }

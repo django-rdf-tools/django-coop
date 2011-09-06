@@ -3,7 +3,7 @@ from django.db import models
 from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
-from genericm2m.models import RelatedObjectsDescriptor
+from django.core.urlresolvers import reverse
 
 #Based on SKOS+XL model
 
@@ -37,6 +37,8 @@ LANG_LABELS = (
 # Le terme c'est le "tag" brut
 # Le but c'est de pouvoir appeler tag.concept
 
+#manque le conceptscheme (une ou deux instances)
+
 class Concept(models.Model):
     definition = models.TextField(blank=True)
     changenote = models.TextField(blank=True)
@@ -46,13 +48,11 @@ class Concept(models.Model):
     sem_relations = models.ManyToManyField("self",symmetrical=False,through='SemRelation')
 
     def __unicode__(self):
-        preflabel = Label.objects.filter(type=LABEL_TYPES.PREF,term__language='@fr')[0].term.literal
+        preflabel = Label.objects.filter(concept=self,type=LABEL_TYPES.PREF,term__language='@fr')[0].term.literal
         return unicode(preflabel)
     
 
-class Term(models.Model):
-    related = RelatedObjectsDescriptor()
-    
+class Term(models.Model):    
     literal = models.CharField(_(u'Forme literale'),max_length=255)
     slug = exfields.AutoSlugField(populate_from=('literal'))
     language= models.CharField(_(u'Langue'),max_length=10, choices=LANG_LABELS, default='@fr')
@@ -60,9 +60,12 @@ class Term(models.Model):
     modified = exfields.ModificationDateTimeField(_(u'Mdate de modification'))
     author = models.CharField(_(u'Auteur'),blank=True, max_length=250, editable=False)
     concept = models.ManyToManyField(Concept,through='Label')
-    
+    def get_absolute_url(self):
+        return reverse('tag_detail', args=[self.slug])
     def __unicode__(self):
         return unicode(self.literal)
+    # def save(self):
+    #     self.author =     comment on récupère le current user
     #createConcept from Term -> pas automatique , demande une revue
     class Meta: 
         verbose_name = _(u'Terme')

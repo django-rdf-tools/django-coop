@@ -2,13 +2,12 @@
 from django.db import models
 from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse
+
 
 class BaseSite(models.Model):
     title = models.CharField(_('Titre'),null=True,blank=True,max_length=250)
     description = models.TextField(_(u'Description'),null=True,blank=True)
-    organization = models.ForeignKey('coop_local.Initiative',null=True,blank=True)
-    event = models.ForeignKey('coop_local.Event',null=True,blank=True)
-    exchange = models.ForeignKey('coop_local.Exchange',null=True,blank=True)
     site_principal = models.BooleanField(default=True)
     uri = models.CharField(_(u'URI principale'),null=True,blank=True, max_length=250, editable=False)
     adr1 = models.CharField(null=True,blank=True, max_length=100)
@@ -24,3 +23,17 @@ class BaseSite(models.Model):
     uuid = exfields.UUIDField(null=True) #nécessaire pour URI de l'engagement
     class Meta:
         abstract = True
+    def __unicode__(self):
+        if self.title != None:
+            return self.title+u', '+self.city
+        else:
+            return self.adr1+u', '+self.city
+    def get_absolute_url(self):
+        return reverse('place_detail', args=[self.uuid])
+            
+    def links(self):
+        links = {
+            'inits' : self.initiative_set.all().count()-1,
+            'events': self.event_set.all().count()-1}                
+        return links
+        

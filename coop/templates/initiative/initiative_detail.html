@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% load smart_if %}
+{% load cache %}
+{% load rss %}
 
 {% block meta_title %}{{object.title}}{% endblock %}
 
@@ -13,15 +16,24 @@
 <div id="content">
     <div class="grid_8 grid">
     
+        <p class="statut">{{object.get_statut_display}} 
+            {% if object.get_secteur_display %}- {{object.get_secteur_display}}{% endif %}
+        </p>
+    
         <p>{{object.description}}</p>
     
         <br/>
     
     {% if engagements %}
         <h4>Membres</h4>
-        <ul>
+        <ul class="membres">
             {% for engagement in engagements %}
-                <li><a href="{{engagement.membre.get_absolute_url}}">{{ engagement.membre }}</a>, {{engagement.role}}</li>
+                <li><img src="{{STATIC_ROOT}}img/blank_avatar.png">
+                    <p>
+                    <a href="{{engagement.membre.get_absolute_url}}">{{ engagement.membre }}</a>, 
+                    <a class="role" href="{{engagement.role.get_absolute_url}}">{{engagement.role}}</a>
+                    </p>
+                </li>
             {% endfor %}
         </ul>    
         <br/>
@@ -33,9 +45,37 @@
     {% endif %}    
     </div>
  
+
+    {% if object.rss %}
+    {% cache 500 rss_display %}
+        {% get_rss object.rss as rss %}
+        {% for entry in rss.entries %}
+            <b>{{entry.title}}</b>
+            <p>
+                {{entry.summary|safe}}
+            </p>
+            <p>
+                <a href="{{entry.link}}">read more...</a>
+            </p>
+        {% endfor %}
+    {% endcache %}
+    {% endif %}
+ 
     
     
-    <div id="grid-right" class="grid_4 grid">       
+    <div id="grid-right" class="grid_4 grid"> 
+        
+        {% if object.get_tags %}
+        <h4>Tags</h4>
+        <div id="tags">
+        {% for tag in object.get_tags %}
+        
+            <a href="{{tag.get_absolute_url}}">{{tag}}</a>
+        
+        {% endfor %}
+        </div><br/>
+        {% endif %}
+              
        <h4>Coordonn√©es</h4>
        
        {% for adresse in adresses %}     
@@ -43,17 +83,25 @@
             <br/><br/>
             {{adresse.adr1}}<br/>
             {% if adresse.adr2 %}{{adresse.adr2}}<br/>{% endif %}
-            {{adresse.zipcode}} {{adresse.city}}<br/><br/>
+            {{adresse.zipcode}} {{adresse.city}}<br/>
+            {% if adresse.links.inits > 0 %}
+                <a href="{{adresse.get_absolute_url}}">
+                    ({{adresse.links.inits}} autre{{ adresse.links.inits|pluralize }} 
+                    initiative{{ adresse.links.inits|pluralize }} 
+                    √† cette adresse)</a><br/>
+            {% endif %}
+            
+            <br/>
+            
        {% endfor %}  
        
        {% if object.telephone_fixe %}
         <span class="unicon">‚úÜ</span> : {{object.telephone_fixe}}<br/>
         {%endif%}
-        {% if object.telephone_fixe %}
-        <span class="unicon">Ì†ºÌºè</spn >: {{object.web}}<br/>
+        {% if object.web %}
+        <span class="unicon">Ì†ºÌºè</span>: {{object.web}}<br/>
         {% endif %}
     </div>
-    
     
 </div>
 {% endblock %}    

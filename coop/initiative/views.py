@@ -1,4 +1,6 @@
 # # -*- coding:utf-8 -*-
+
+
 # from django.views.generic import DetailView
 # from coop_local.models import Initiative, Membre, Engagement
 # 
@@ -12,10 +14,8 @@
 #         context['engagements'] = Engagement.objects.filter(initiative=context['object'])
 #         return context
         
-# -*- coding:utf-8 -*-
-
 from django.shortcuts import render_to_response, redirect
-from coop_local.models import Initiative, Membre, Engagement
+from coop_local.models import Initiative, Membre, Engagement, Role
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 
@@ -23,6 +23,23 @@ def ISDetailView(request,slug):
     context = {}
     initiative = Initiative.objects.get(slug=slug)
     context['object'] = initiative
-    context['adresses'] = initiative.site_set.all()
+    context['adresses'] = initiative.sites.all()
     context['engagements'] = Engagement.objects.filter(initiative=context['object'])
     return render_to_response('initiative/initiative_detail.html',context,RequestContext(request))
+    
+
+def list(request):
+    context = {}
+    context['liste_initiatives'] = Initiative.objects.filter(active=True).order_by('secteur_fse','title')#FIXME ah là il faut surclasser
+    return render_to_response('initiative/initiative_list.html',context,RequestContext(request))
+        
+    
+def role_detail(request,slug):
+    context = {}
+    role = Role.objects.get(slug=slug)
+    context['object'] = role
+    context['engagements'] = Engagement.objects.filter(role=role).select_related('membre').order_by('membre__nom')
+    return render_to_response('initiative/role_detail.html',context,RequestContext(request))
+    
+    
+            

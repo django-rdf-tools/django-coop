@@ -18,6 +18,7 @@ div#main{
 	border-top-style: none;
 	border-bottom-style: none;
 	background-color: white;
+	padding-bottom: 20px;
 }
 
 span.unicon{
@@ -35,6 +36,11 @@ span.unicon{
 	padding-bottom: 20px;
 	padding-top: 20px;
 	min-height: 400px;
+	position: relative;
+}
+
+p{
+	margin-bottom: 1em;
 }
 
 table td{
@@ -69,15 +75,53 @@ h2{
 h3{
 	font-size: 2.3em;
 	padding-top: 10px;
+	margin-bottom: 10px;
 }
 
 h4{
-	font-size: 1.8em;
+	font-size: 1.6em;
 }
 
 #content{
 	font-size: 1.1em;
 }
+
+#tags a{
+	font-size: 14px;
+	display: inline-block;
+	border: 1px solid #8fc6db;
+	background-color: #daf2f4;
+	margin-top: 4px;
+	padding: 4px;
+	font-style: italic;
+	
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+background: #FFFFFF;
+background: -webkit-gradient(linear, 0 0, 0 bottom, from(#FFFFFF), to(#A8D7E1));
+background: -webkit-linear-gradient(#FFFFFF, #A8D7E1);
+background: -moz-linear-gradient(#FFFFFF, #A8D7E1);
+background: -ms-linear-gradient(#FFFFFF, #A8D7E1);
+background: -o-linear-gradient(#FFFFFF, #A8D7E1);
+background: linear-gradient(#FFFFFF, #A8D7E1);
+	text-decoration: none;
+	color: #1d1e1e;
+}
+
+#tags a:hover{
+	
+	background: #FDFCF7;
+background: -webkit-gradient(linear, 0 0, 0 bottom, from(#FDFCF7), to(#F0DA2D));
+background: -webkit-linear-gradient(#FDFCF7, #F0DA2D);
+background: -moz-linear-gradient(#FDFCF7, #F0DA2D);
+background: -ms-linear-gradient(#FDFCF7, #F0DA2D);
+background: -o-linear-gradient(#FDFCF7, #F0DA2D);
+background: linear-gradient(#FDFCF7, #F0DA2D);
+	border-color: #fff6ca;
+	color: black;
+}
+
 
 /* @group Basic CSS Menu */
 
@@ -421,3 +465,49 @@ fieldset.client label {
 }
 
 /* @end */
+
+
+
+
+p.statut{
+	font-weight: bold;
+	color: #929292;
+}
+
+ul.membres{
+	padding-left: 5px;
+}
+
+ul.membres li{
+	list-style-type: none;
+	padding-left: 0;
+	margin-left: 0;
+	border: 1px solid #dadada;
+	height: 48px;
+	position: relative;
+	padding: 5px;
+	margin-bottom: 7px;
+}
+
+ul.membres li p{
+	padding-left: 60px;
+	position: relative;
+	margin-top: 8px;
+	font-size: 0.9em;
+}
+
+ul.membres li img{
+	float: left;
+}
+
+ul.membres li a{
+	text-decoration: none;
+}
+
+a.role{
+	color: #555;
+}
+
+a.role:hover{
+	color: #265aff;
+}

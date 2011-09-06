@@ -1,13 +1,33 @@
 {% extends "base.html" %}
 
 {% block meta_title %}Liste des Initiatives{% endblock %}
-{% block title %}Liste des Initiatives{% endblock %}
 
+
+{% block document %}
+<div id="title" class="grid_12 grid">
+{% block title %}<h3>Liste des Initiatives</h3>{% endblock %}
+</div>
 
 {% block content %}
+
+<div id="content">
+    <div class="grid_12 grid">
+    {% regroup liste_initiatives by get_secteur_fse_display as liste_groupee %}
+    
     <ul>
-        {% for initiative in liste_initiatives %}
-            <li><a href="{{initiative.get_absolute_url}}">{{ initiative.title }}</a></li>
-        {% endfor %}
+        {% for get_secteur_fse_display in liste_groupee %}
+        <li><h4>{{ get_secteur_fse_display.grouper }}</h4>
+        <ul>
+            {% for item in get_secteur_fse_display.list %}
+            <li><a href="{{item.get_absolute_url}}">{{ item.title }}</a></li>
+            {% endfor %}
+        </ul>
+        </li>
+    {% endfor %}
     </ul>
+    </div>
+    
+    
+</div>    
+{% endblock %}
 {% endblock %}

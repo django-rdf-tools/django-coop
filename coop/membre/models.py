@@ -12,12 +12,12 @@ class BaseMembre(models.Model):
     #uri = models.URLField(blank=True, unique=True, verify_exists=False,verbose_name=_(u'URI principale'))
     #sameas = models.ManyToManyField(SameAs,blank=True, null=True,verbose_name=_(u'Autres URI'))
     nom = models.CharField(_(u'Nom'),max_length=100)
-    prenom = models.CharField(_(u'Prénom'),max_length=100)
-    adresse = models.TextField(_(u'Adresse'),blank=True)
-    ville = models.CharField(_(u'Ville'),blank=True, max_length=100)
-    code_postal = models.CharField(_(u'Code postal'),blank=True, max_length=5)
-    telephone_fixe = models.CharField(_(u'Téléphone fixe'),blank=True, max_length=14)
-    telephone_portable = models.CharField(_(u'Téléphone mobile'),blank=True, max_length=14)
+    prenom = models.CharField(_(u'Prénom'),max_length=100,null=True,blank=True)
+    adresse = models.TextField(_(u'Adresse'),null=True,blank=True)
+    ville = models.CharField(_(u'Ville'),null=True,blank=True, max_length=100)
+    code_postal = models.CharField(_(u'Code postal'),null=True,blank=True, max_length=5)
+    telephone_fixe = models.CharField(_(u'Téléphone fixe'),null=True,blank=True, max_length=14)
+    telephone_portable = models.CharField(_(u'Téléphone mobile'),null=True,blank=True, max_length=14)
     email = models.EmailField(_(u'Email personnel'),blank=True)
     created = exfields.CreationDateTimeField(_(u'Création'),null=True)
     modified = exfields.ModificationDateTimeField(_(u'Modification'),null=True)
@@ -29,8 +29,11 @@ class BaseMembre(models.Model):
     def get_absolute_url(self):
         return ('profiles_profile_detail', (), { 'username': self.user.username })
         
-    def liste_engagements(self):
-        return '' 
+    def engagements(self):
+        eng = []
+        for e in self.engagement_set.all():
+            eng.append({'initiative':e.initiative,'role':e.role})
+        return eng
         
     '''
     def save(self):

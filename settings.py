@@ -140,10 +140,10 @@ INSTALLED_APPS = (
     'south',
     'django_extensions',
     'extended_choices',
-    'genericm2m',
 #    'djutils',#for async, not working
     'smart_selects',#d2rq to come
     'livesettings',
+    'admin_tools',
 
     #apps
     'coop_local',

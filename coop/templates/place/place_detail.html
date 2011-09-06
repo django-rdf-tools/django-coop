@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block meta_title %}{{object}}{% endblock %}
+
+{% block document %}
+
+<div id="title" class="grid_12 grid">
+{% block title %}<h3>{{object}}</h3>{% endblock %}
+</div>
+
+{% block content %}
+<div id="content">
+    <div class="grid_8 grid">
+    
+    {% if object.description %}
+        <p>{{object.description}}</p>
+        <br/>
+    {% endif %}
+    
+    {% if initiatives %}
+        <h4>Initiatives à cet endroit</h4>
+        <ul>
+        {% for i in initiatives %}
+        <li><a href="{{i.get_absolute_url}}">{{ i.title }}</a></li>
+        {%endfor%} 
+        </ul>
+        <br/>
+    {% endif %}
+    </div>
+    
+    <div id="grid-right" class="grid_4 grid">       
+       <h4>Coordonnées</h4>
+       
+   
+    <img src="http://maps.googleapis.com/maps/api/staticmap?markers=color:red|{{object.latlong}}&maptype=hybrid&size=280x200&sensor=false&zoom=8">
+    <br/><br/>
+    {{object.adr1}}<br/>
+    {% if adresse.adr2 %}{{object.adr2}}<br/>{% endif %}
+    {{object.zipcode}} {{object.city}}<br/><br/>
+
+        
+    </div>
+    
+    
+</div>
+{% endblock %}    
+{% endblock %}

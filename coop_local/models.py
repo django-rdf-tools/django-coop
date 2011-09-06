@@ -16,7 +16,8 @@ class Engagement(BaseEngagement):
     pass
 
 class Membre(BaseMembre):
-    adherent = models.BooleanField(default=False)
+    adherent = models.NullBooleanField(default=False)
+    batisseur = models.BooleanField(default=False)
 
 class Role(BaseRole):
     pass
@@ -58,6 +59,7 @@ class Site(BaseSite):
 class Initiative(BaseInitiative):
     siret = models.CharField('Numero SIRET',blank=True, null=True, max_length=20)
     naf = models.CharField('Code d’activité NAF',blank=True, null=True, max_length=10)
+    presage = models.CharField('Numero PRESAGE',blank=True, null=True, max_length=10)
     statut = models.PositiveSmallIntegerField('Statut juridique',
                                                 choices=STATUTS.CHOICES, 
                                                   default=STATUTS.ASSO)

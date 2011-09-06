@@ -11,6 +11,17 @@
         }
     },
     {
+        "pk": 2,
+        "model": "skosxl.concept",
+        "fields": {
+            "definition": "Production agricole, cueillette et \u00e9levage.",
+            "author": "",
+            "modified": "2011-09-06 00:36:01",
+            "changenote": "",
+            "created": "2011-09-06 00:36:01"
+        }
+    },
+    {
         "pk": 1,
         "model": "skosxl.term",
         "fields": {
@@ -44,6 +55,798 @@
             "modified": "2011-08-11 14:34:32",
             "literal": "Economia Solidaria",
             "slug": "economia-solidaria"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 00:28:19",
+            "modified": "2011-09-06 00:28:20",
+            "literal": "agriculture",
+            "slug": "agriculture"
+        }
+    },
+    {
+        "pk": 6,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 06:50:01",
+            "modified": "2011-09-06 06:50:01",
+            "literal": "panier",
+            "slug": "panier"
+        }
+    },
+    {
+        "pk": 7,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 06:50:22",
+            "modified": "2011-09-06 06:50:22",
+            "literal": "citoyen",
+            "slug": "citoyen"
+        }
+    },
+    {
+        "pk": 8,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 06:58:45",
+            "modified": "2011-09-06 06:58:45",
+            "literal": "recyclage",
+            "slug": "recyclage"
+        }
+    },
+    {
+        "pk": 9,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 06:58:51",
+            "modified": "2011-09-06 06:58:51",
+            "literal": "for\u00eat",
+            "slug": "foret"
+        }
+    },
+    {
+        "pk": 10,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 06:59:10",
+            "modified": "2011-09-06 06:59:10",
+            "literal": "accompagnement",
+            "slug": "accompagnement"
+        }
+    },
+    {
+        "pk": 11,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 06:59:21",
+            "modified": "2011-09-06 06:59:21",
+            "literal": "mise en r\u00e9seau",
+            "slug": "mise-en-reseau"
+        }
+    },
+    {
+        "pk": 12,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 06:59:25",
+            "modified": "2011-09-06 06:59:25",
+            "literal": "handicap",
+            "slug": "handicap"
+        }
+    },
+    {
+        "pk": 13,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 06:59:46",
+            "modified": "2011-09-06 06:59:46",
+            "literal": "d\u00e9marches administratives",
+            "slug": "demarches-administratives"
+        }
+    },
+    {
+        "pk": 14,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 06:59:53",
+            "modified": "2011-09-06 06:59:53",
+            "literal": "exclusion",
+            "slug": "exclusion"
+        }
+    },
+    {
+        "pk": 15,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:00:07",
+            "modified": "2011-09-06 07:00:07",
+            "literal": "ch\u00f4mage",
+            "slug": "chomage"
+        }
+    },
+    {
+        "pk": 16,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:00:13",
+            "modified": "2011-09-06 07:00:13",
+            "literal": "ruralit\u00e9",
+            "slug": "ruralite"
+        }
+    },
+    {
+        "pk": 17,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:00:20",
+            "modified": "2011-09-06 07:00:20",
+            "literal": "environnement",
+            "slug": "environnement"
+        }
+    },
+    {
+        "pk": 18,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:00:35",
+            "modified": "2011-09-06 07:00:35",
+            "literal": "\u00e9ducation \u00e0 l'environnement",
+            "slug": "education-a-lenvironnement"
+        }
+    },
+    {
+        "pk": 19,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:00:44",
+            "modified": "2011-09-06 07:00:44",
+            "literal": "loisirs",
+            "slug": "loisirs"
+        }
+    },
+    {
+        "pk": 20,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:01:12",
+            "modified": "2011-09-06 07:01:12",
+            "literal": "gestion alternative",
+            "slug": "gestion-alternative"
+        }
+    },
+    {
+        "pk": 21,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:01:16",
+            "modified": "2011-09-06 07:01:16",
+            "literal": "l\u00e9gumes",
+            "slug": "legumes"
+        }
+    },
+    {
+        "pk": 22,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:01:28",
+            "modified": "2011-09-06 07:01:28",
+            "literal": "v\u00eatements",
+            "slug": "vetements"
+        }
+    },
+    {
+        "pk": 23,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:01:36",
+            "modified": "2011-09-06 07:01:36",
+            "literal": "artisanat",
+            "slug": "artisanat"
+        }
+    },
+    {
+        "pk": 24,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:01:45",
+            "modified": "2011-09-06 07:01:45",
+            "literal": "th\u00e9\u00e2tre",
+            "slug": "theatre"
+        }
+    },
+    {
+        "pk": 25,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:01:52",
+            "modified": "2011-09-06 07:01:52",
+            "literal": "spectacle vivant",
+            "slug": "spectacle-vivant"
+        }
+    },
+    {
+        "pk": 26,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:01:56",
+            "modified": "2011-09-06 07:01:56",
+            "literal": "culture",
+            "slug": "culture"
+        }
+    },
+    {
+        "pk": 27,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:02:02",
+            "modified": "2011-09-06 07:02:02",
+            "literal": "transport",
+            "slug": "transport"
+        }
+    },
+    {
+        "pk": 28,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:02:17",
+            "modified": "2011-09-06 07:02:18",
+            "literal": "logement",
+            "slug": "logement"
+        }
+    },
+    {
+        "pk": 29,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:02:21",
+            "modified": "2011-09-06 07:02:21",
+            "literal": "habitat",
+            "slug": "habitat"
+        }
+    },
+    {
+        "pk": 30,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:02:25",
+            "modified": "2011-09-06 07:02:25",
+            "literal": "construction",
+            "slug": "construction"
+        }
+    },
+    {
+        "pk": 31,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:02:30",
+            "modified": "2011-09-06 07:02:30",
+            "literal": "eco-construction",
+            "slug": "eco-construction"
+        }
+    },
+    {
+        "pk": 32,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:02:42",
+            "modified": "2011-09-06 07:02:42",
+            "literal": "mat\u00e9riaux \u00e9cologiques",
+            "slug": "materiaux-ecologiques"
+        }
+    },
+    {
+        "pk": 33,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:02:49",
+            "modified": "2011-09-06 07:02:49",
+            "literal": "apprentissage",
+            "slug": "apprentissage"
+        }
+    },
+    {
+        "pk": 34,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:02:54",
+            "modified": "2011-09-06 07:02:54",
+            "literal": "formation continue",
+            "slug": "formation-continue"
+        }
+    },
+    {
+        "pk": 35,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:03:13",
+            "modified": "2011-09-06 07:03:13",
+            "literal": "m\u00e9diation animale",
+            "slug": "mediation-animale"
+        }
+    },
+    {
+        "pk": 36,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:03:17",
+            "modified": "2011-09-06 07:03:17",
+            "literal": "animation",
+            "slug": "animation"
+        }
+    },
+    {
+        "pk": 37,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:03:25",
+            "modified": "2011-09-06 07:03:25",
+            "literal": "sport",
+            "slug": "sport"
+        }
+    },
+    {
+        "pk": 38,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:03:32",
+            "modified": "2011-09-06 07:03:32",
+            "literal": "lien social",
+            "slug": "lien-social"
+        }
+    },
+    {
+        "pk": 39,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:03:39",
+            "modified": "2011-09-06 07:03:39",
+            "literal": "proximit\u00e9",
+            "slug": "proximite"
+        }
+    },
+    {
+        "pk": 40,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:04:25",
+            "modified": "2011-09-06 07:04:25",
+            "literal": "insertion",
+            "slug": "insertion"
+        }
+    },
+    {
+        "pk": 41,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:04:34",
+            "modified": "2011-09-06 07:04:34",
+            "literal": "insertion par le travail",
+            "slug": "insertion-par-le-travail"
+        }
+    },
+    {
+        "pk": 42,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:05:01",
+            "modified": "2011-09-06 07:05:01",
+            "literal": "petite enfance",
+            "slug": "petite-enfance"
+        }
+    },
+    {
+        "pk": 43,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:05:08",
+            "modified": "2011-09-06 07:05:08",
+            "literal": "jeux",
+            "slug": "jeux"
+        }
+    },
+    {
+        "pk": 44,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:05:25",
+            "modified": "2011-09-06 07:05:25",
+            "literal": "livre",
+            "slug": "livre"
+        }
+    },
+    {
+        "pk": 45,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:05:30",
+            "modified": "2011-09-06 07:05:30",
+            "literal": "documentation",
+            "slug": "documentation"
+        }
+    },
+    {
+        "pk": 46,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:05:46",
+            "modified": "2011-09-06 07:05:46",
+            "literal": "alimentation",
+            "slug": "alimentation"
+        }
+    },
+    {
+        "pk": 47,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:05:51",
+            "modified": "2011-09-06 07:05:51",
+            "literal": "bien-\u00eatre",
+            "slug": "bien-etre"
+        }
+    },
+    {
+        "pk": 48,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:25:00",
+            "modified": "2011-09-06 07:25:00",
+            "literal": "services",
+            "slug": "services"
+        }
+    },
+    {
+        "pk": 49,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:25:09",
+            "modified": "2011-09-06 07:25:09",
+            "literal": "services \u00e0 la personne",
+            "slug": "services-a-la-personne"
+        }
+    },
+    {
+        "pk": 50,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:25:29",
+            "modified": "2011-09-06 07:25:29",
+            "literal": "coop\u00e9ration",
+            "slug": "cooperation"
+        }
+    },
+    {
+        "pk": 51,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:25:38",
+            "modified": "2011-09-06 07:25:38",
+            "literal": "partage",
+            "slug": "partage"
+        }
+    },
+    {
+        "pk": 52,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:25:49",
+            "modified": "2011-09-06 07:25:49",
+            "literal": "financement",
+            "slug": "financement"
+        }
+    },
+    {
+        "pk": 53,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:25:55",
+            "modified": "2011-09-06 07:25:55",
+            "literal": "\u00e9ducation",
+            "slug": "education"
+        }
+    },
+    {
+        "pk": 54,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:27:09",
+            "modified": "2011-09-06 07:27:09",
+            "literal": "commerce \u00e9quitable",
+            "slug": "commerce-equitable"
+        }
+    },
+    {
+        "pk": 55,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:27:17",
+            "modified": "2011-09-06 07:27:17",
+            "literal": "agriculture biologique",
+            "slug": "agriculture-biologique"
+        }
+    },
+    {
+        "pk": 56,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:27:21",
+            "modified": "2011-09-06 07:27:21",
+            "literal": "\u00e9cologie",
+            "slug": "ecologie"
+        }
+    },
+    {
+        "pk": 57,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:28:08",
+            "modified": "2011-09-06 07:28:08",
+            "literal": "patrimoine",
+            "slug": "patrimoine"
+        }
+    },
+    {
+        "pk": 58,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:28:40",
+            "modified": "2011-09-06 07:28:40",
+            "literal": "amap",
+            "slug": "amap"
+        }
+    },
+    {
+        "pk": 59,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:29:05",
+            "modified": "2011-09-06 07:29:05",
+            "literal": "tourisme",
+            "slug": "tourisme"
+        }
+    },
+    {
+        "pk": 60,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:29:13",
+            "modified": "2011-09-06 07:29:13",
+            "literal": "h\u00e9bergement",
+            "slug": "hebergement"
+        }
+    },
+    {
+        "pk": 61,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:29:19",
+            "modified": "2011-09-06 07:29:19",
+            "literal": "tourisme rural",
+            "slug": "tourisme-rural"
+        }
+    },
+    {
+        "pk": 62,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:30:40",
+            "modified": "2011-09-06 07:30:40",
+            "literal": "musique",
+            "slug": "musique"
+        }
+    },
+    {
+        "pk": 63,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:31:19",
+            "modified": "2011-09-06 07:31:19",
+            "literal": "itin\u00e9rant",
+            "slug": "itinerant"
+        }
+    },
+    {
+        "pk": 64,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:35:35",
+            "modified": "2011-09-06 07:35:35",
+            "literal": "cr\u00e9ation d'entreprise",
+            "slug": "creation-dentreprise"
+        }
+    },
+    {
+        "pk": 65,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:35:45",
+            "modified": "2011-09-06 07:35:45",
+            "literal": "d\u00e9veloppement local",
+            "slug": "developpement-local"
+        }
+    },
+    {
+        "pk": 66,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:36:59",
+            "modified": "2011-09-06 07:36:59",
+            "literal": "Egalit\u00e9 hommes-femmes",
+            "slug": "egalite-hommes-femmes"
+        }
+    },
+    {
+        "pk": 67,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:37:14",
+            "modified": "2011-09-06 07:37:14",
+            "literal": "droits des femmes",
+            "slug": "droits-des-femmes"
+        }
+    },
+    {
+        "pk": 68,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:38:14",
+            "modified": "2011-09-06 07:38:14",
+            "literal": "\u00e9nergie",
+            "slug": "energie"
+        }
+    },
+    {
+        "pk": 69,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:38:22",
+            "modified": "2011-09-06 07:38:22",
+            "literal": "panneau solaire",
+            "slug": "panneau-solaire"
+        }
+    },
+    {
+        "pk": 70,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-09-06 07:38:45",
+            "modified": "2011-09-06 07:38:45",
+            "literal": "coop\u00e9rative",
+            "slug": "cooperative"
         }
     },
     {
@@ -86,6 +889,15 @@
         "fields": {
             "term": 3,
             "concept": 1,
+            "type": 0
+        }
+    },
+    {
+        "pk": 4,
+        "model": "skosxl.label",
+        "fields": {
+            "term": 4,
+            "concept": 2,
             "type": 0
         }
     }

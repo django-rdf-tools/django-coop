@@ -14,13 +14,15 @@ urlpatterns = patterns('',
     
     url(r'^$', 'coop.views.home', name="home"),
 
-    url(r'^chaining/', include('smart_selects.urls')),
+    (r'^chaining/', include('smart_selects.urls')),
     
-    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^settings/', include('livesettings.urls')),
+    (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    (r'^admin/', include(admin.site.urls)),
+    (r'^settings/', include('livesettings.urls')),
     
-    url(r'^initiative/', include('coop.initiative.urls')),
+    (r'^initiative/', include('coop.initiative.urls')),
+    (r'^lieu/', include('coop.place.urls')),
+    (r'^tag/', include('skosxl.urls')),
 
     (r'^membre/', include('coop.membre.urls')),
 
