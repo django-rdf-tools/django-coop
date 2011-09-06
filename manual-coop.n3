@@ -19,6 +19,8 @@
 @prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
 @prefix event: <http://purl.org/NET/c4dm/event.owl#> .
 @prefix sioc: <http://rdfs.org/sioc/ns#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#Name> .
+@prefix ctag: <http://commontag.org/ns#> .
 
 #les deux points collés au prefixe
 # column AVANT condition
@@ -281,7 +283,7 @@ map:initiative a d2rq:ClassMap;
 map:initiative__label a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:initiative;
 	d2rq:property rdfs:label;
-	d2rq:pattern "#@@coop_local_initiative.title@@";
+	d2rq:pattern "@@coop_local_initiative.title@@";
 	.
 map:initiative_title a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:initiative;
@@ -388,297 +390,174 @@ map:initiative_presage a d2rq:PropertyBridge;
 	d2rq:column "coop_local_initiative.presage";
 	d2rq:condition "coop_local_initiative.presage <> ''"
 	.
-
-# Table coop_local_initiative_sites
-map:initiative_sites a d2rq:ClassMap;
-	d2rq:dataStorage map:database;
-	d2rq:uriPattern "place/@@coop_local_initiative_sites.id@@";
-	d2rq:class org:Site;
-	.
-map:initiative_sites__label a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:initiative_sites;
-	d2rq:property rdfs:label;
-	d2rq:pattern "Lieu #@@coop_local_initiative_sites.id@@";
-	.
-map:initiative_sites_initiative_id a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:initiative_sites;
-	d2rq:property vocab:initiative_sites_initiative_id;
-	d2rq:refersToClassMap map:initiative;
+map:initiative_sites a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:initiative;
+	d2rq:property org:hasSite;
+	d2rq:refersToClassMap map:site;
 	d2rq:join "coop_local_initiative_sites.initiative_id => coop_local_initiative.id";
 	d2rq:join "coop_local_initiative_sites.site_id => coop_local_site.id";
-	
-	.
-map:initiative_sites_site_id a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:initiative_sites;
-	d2rq:property vocab:initiative_sites_site_id;
-	d2rq:refersToClassMap map:site;
-	d2rq:join "coop_local_initiative_sites.site_id => coop_local_site.id";
 	.
 
-
-# Table coop_local_initiative_tags
-map:initiative_tags a d2rq:ClassMap;
-	d2rq:dataStorage map:database;
-	d2rq:uriPattern "coop_local_initiative_tags/@@coop_local_initiative_tags.id@@";
-	d2rq:class vocab:initiative_tags;
-	d2rq:classDefinitionLabel "coop_local_initiative_tags";
-	.
-map:initiative_tags__label a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:initiative_tags;
-	d2rq:property rdfs:label;
-	d2rq:pattern "coop_local_initiative_tags #@@coop_local_initiative_tags.id@@";
-	.
-map:initiative_tags_id a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:initiative_tags;
-	d2rq:property vocab:initiative_tags_id;
-	d2rq:propertyDefinitionLabel "coop_local_initiative_tags id";
-	d2rq:column "coop_local_initiative_tags.id";
-	d2rq:datatype xsd:int;
-	.
-map:initiative_tags_term_id a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:initiative_tags;
-	d2rq:property vocab:initiative_tags_term_id;
+map:initiative_tags a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:initiative;
+	d2rq:property ctag:tagged;
 	d2rq:refersToClassMap map:term;
+	d2rq:join "coop_local_initiative_tags.initiative_id => coop_local_initiative.id";
 	d2rq:join "coop_local_initiative_tags.term_id => skosxl_term.id";
 	.
-map:initiative_tags_initiative_id a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:initiative_tags;
-	d2rq:property vocab:initiative_tags_initiative_id;
-	d2rq:refersToClassMap map:initiative;
-	d2rq:join "coop_local_initiative_tags.initiative_id => coop_local_initiative.id";
-	.
+
 
 # Table coop_local_membre
 map:membre a d2rq:ClassMap;
 	d2rq:dataStorage map:database;
 	d2rq:uriPattern "coop_local_membre/@@coop_local_membre.id@@";
-	d2rq:class vocab:membre;
+	d2rq:class org:Member;
 	d2rq:classDefinitionLabel "coop_local_membre";
 	.
 map:membre__label a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:membre;
 	d2rq:property rdfs:label;
-	d2rq:pattern "coop_local_membre #@@coop_local_membre.id@@";
-	.
-map:membre_id a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:membre;
-	d2rq:property vocab:membre_id;
-	d2rq:propertyDefinitionLabel "coop_local_membre id";
-	d2rq:column "coop_local_membre.id";
-	d2rq:datatype xsd:int;
+	d2rq:pattern "@@coop_local_membre.prenom@@ @@coop_local_membre.nom@@";
 	.
 map:membre_nom a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:membre;
-	d2rq:property vocab:membre_nom;
-	d2rq:propertyDefinitionLabel "coop_local_membre nom";
+	d2rq:property foaf:familyName;
 	d2rq:column "coop_local_membre.nom";
 	.
 map:membre_prenom a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:membre;
-	d2rq:property vocab:membre_prenom;
-	d2rq:propertyDefinitionLabel "coop_local_membre prenom";
+	d2rq:property foaf:givenName;
 	d2rq:column "coop_local_membre.prenom";
 	.
 map:membre_adresse a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:membre;
-	d2rq:property vocab:membre_adresse;
-	d2rq:propertyDefinitionLabel "coop_local_membre adresse";
-	d2rq:column "coop_local_membre.adresse";
-	.
-map:membre_ville a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:membre;
-	d2rq:property vocab:membre_ville;
-	d2rq:propertyDefinitionLabel "coop_local_membre ville";
+	d2rq:property foaf:based_near;
 	d2rq:column "coop_local_membre.ville";
-	.
-map:membre_code_postal a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:membre;
-	d2rq:property vocab:membre_code_postal;
-	d2rq:propertyDefinitionLabel "coop_local_membre code_postal";
-	d2rq:column "coop_local_membre.code_postal";
 	.
 map:membre_telephone_fixe a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:membre;
-	d2rq:property vocab:membre_telephone_fixe;
-	d2rq:propertyDefinitionLabel "coop_local_membre telephone_fixe";
+	d2rq:property foaf:phone;
 	d2rq:column "coop_local_membre.telephone_fixe";
 	.
 map:membre_telephone_portable a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:membre;
-	d2rq:property vocab:membre_telephone_portable;
-	d2rq:propertyDefinitionLabel "coop_local_membre telephone_portable";
+	d2rq:property foaf:phone;
 	d2rq:column "coop_local_membre.telephone_portable";
 	.
 map:membre_email a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:membre;
-	d2rq:property vocab:membre_email;
-	d2rq:propertyDefinitionLabel "coop_local_membre email";
+	d2rq:property foaf:mbox;
 	d2rq:column "coop_local_membre.email";
 	.
 map:membre_created a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:membre;
-	d2rq:property vocab:membre_created;
-	d2rq:propertyDefinitionLabel "coop_local_membre created";
+	d2rq:property dct:created;
 	d2rq:column "coop_local_membre.created";
 	d2rq:datatype xsd:dateTime;
 	.
 map:membre_modified a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:membre;
-	d2rq:property vocab:membre_modified;
-	d2rq:propertyDefinitionLabel "coop_local_membre modified";
+	d2rq:property dct:modified;
 	d2rq:column "coop_local_membre.modified";
 	d2rq:datatype xsd:dateTime;
 	.
-map:membre_adherent a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:membre;
-	d2rq:property vocab:membre_adherent;
-	d2rq:propertyDefinitionLabel "coop_local_membre adherent";
-	d2rq:column "coop_local_membre.adherent";
-	d2rq:datatype xsd:boolean;
-	.
-map:membre_batisseur a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:membre;
-	d2rq:property vocab:membre_batisseur;
-	d2rq:propertyDefinitionLabel "coop_local_membre batisseur";
-	d2rq:column "coop_local_membre.batisseur";
-	d2rq:datatype xsd:boolean;
-	.
+# map:membre_adherent a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:membre;
+#   d2rq:property vocab:membre_adherent;
+#   d2rq:propertyDefinitionLabel "coop_local_membre adherent";
+#   d2rq:column "coop_local_membre.adherent";
+#   d2rq:datatype xsd:boolean;
+#   .
+
+
 # Table coop_local_role
 map:role a d2rq:ClassMap;
 	d2rq:dataStorage map:database;
-	d2rq:uriPattern "coop_local_role/@@coop_local_role.id@@";
-	d2rq:class vocab:role;
+	d2rq:uriPattern "role/@@coop_local_role.slug@@";
+	d2rq:class org:Role;
 	d2rq:classDefinitionLabel "coop_local_role";
-	.
-map:role__label a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:role;
-	d2rq:property rdfs:label;
-	d2rq:pattern "coop_local_role #@@coop_local_role.id@@";
-	.
-map:role_id a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:role;
-	d2rq:property vocab:role_id;
-	d2rq:propertyDefinitionLabel "coop_local_role id";
-	d2rq:column "coop_local_role.id";
-	d2rq:datatype xsd:int;
 	.
 map:role_label a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:role;
-	d2rq:property vocab:role_label;
-	d2rq:propertyDefinitionLabel "coop_local_role label";
+	d2rq:property dct:title;
 	d2rq:column "coop_local_role.label";
-	.
-map:role_slug a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:role;
-	d2rq:property vocab:role_slug;
-	d2rq:propertyDefinitionLabel "coop_local_role slug";
-	d2rq:column "coop_local_role.slug";
 	.
 
 # Table coop_local_site
 map:site a d2rq:ClassMap;
 	d2rq:dataStorage map:database;
-	d2rq:uriPattern "coop_local_site/@@coop_local_site.id@@";
-	d2rq:class vocab:site;
-	d2rq:classDefinitionLabel "coop_local_site";
+	d2rq:uriPattern "place/@@coop_local_site.uuid@@";
+	d2rq:class org:Site;
 	.
 map:site__label a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:site;
 	d2rq:property rdfs:label;
-	d2rq:pattern "coop_local_site #@@coop_local_site.id@@";
-	.
-map:site_id a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:site;
-	d2rq:property vocab:site_id;
-	d2rq:propertyDefinitionLabel "coop_local_site id";
-	d2rq:column "coop_local_site.id";
-	d2rq:datatype xsd:int;
+	d2rq:pattern "@@coop_local_site.title@@ @@coop_local_site.city@@";
 	.
 map:site_title a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:site;
-	d2rq:property vocab:site_title;
-	d2rq:propertyDefinitionLabel "coop_local_site title";
+	d2rq:property dct:title;
 	d2rq:column "coop_local_site.title";
 	.
 map:site_description a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:site;
-	d2rq:property vocab:site_description;
-	d2rq:propertyDefinitionLabel "coop_local_site description";
+	d2rq:property dct:description;
 	d2rq:column "coop_local_site.description";
 	.
-map:site_site_principal a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:site;
-	d2rq:property vocab:site_site_principal;
-	d2rq:propertyDefinitionLabel "coop_local_site site_principal";
-	d2rq:column "coop_local_site.site_principal";
-	d2rq:datatype xsd:boolean;
-	.
-map:site_uri a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:site;
-	d2rq:property vocab:site_uri;
-	d2rq:propertyDefinitionLabel "coop_local_site uri";
-	d2rq:column "coop_local_site.uri";
-	.
+# map:site_site_principal a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:site;
+#   d2rq:property vocab:site_site_principal;
+#   d2rq:propertyDefinitionLabel "coop_local_site site_principal";
+#   d2rq:column "coop_local_site.site_principal";
+#   d2rq:datatype xsd:boolean;
+#   .
+# exemple de choix différent selon ce champ : hasSite ou hasPrimarySite
+
 map:site_adr1 a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:site;
-	d2rq:property vocab:site_adr1;
-	d2rq:propertyDefinitionLabel "coop_local_site adr1";
+	d2rq:property vcard:Address;
 	d2rq:column "coop_local_site.adr1";
 	.
 map:site_adr2 a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:site;
-	d2rq:property vocab:site_adr2;
-	d2rq:propertyDefinitionLabel "coop_local_site adr2";
+	d2rq:property vcard:Address;
 	d2rq:column "coop_local_site.adr2";
 	.
 map:site_zipcode a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:site;
-	d2rq:property vocab:site_zipcode;
-	d2rq:propertyDefinitionLabel "coop_local_site zipcode";
+	d2rq:property vcard:postal-code;
 	d2rq:column "coop_local_site.zipcode";
 	.
 map:site_city a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:site;
-	d2rq:property vocab:site_city;
-	d2rq:propertyDefinitionLabel "coop_local_site city";
+	d2rq:property vcard:locality;
 	d2rq:column "coop_local_site.city";
 	.
 map:site_latlong a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:site;
-	d2rq:property vocab:site_latlong;
-	d2rq:propertyDefinitionLabel "coop_local_site latlong";
+	d2rq:property geo:latlong;
 	d2rq:column "coop_local_site.latlong";
 	.
 map:site_created a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:site;
-	d2rq:property vocab:site_created;
-	d2rq:propertyDefinitionLabel "coop_local_site created";
+	d2rq:property dct:created;
 	d2rq:column "coop_local_site.created";
 	d2rq:datatype xsd:dateTime;
 	.
 map:site_modified a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:site;
-	d2rq:property vocab:site_modified;
-	d2rq:propertyDefinitionLabel "coop_local_site modified";
+	d2rq:property dct:modified;
 	d2rq:column "coop_local_site.modified";
 	d2rq:datatype xsd:dateTime;
 	.
-map:site_uuid a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:site;
-	d2rq:property vocab:site_uuid;
-	d2rq:propertyDefinitionLabel "coop_local_site uuid";
-	d2rq:column "coop_local_site.uuid";
-	.
 map:site_lat a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:site;
-	d2rq:property vocab:site_lat;
-	d2rq:propertyDefinitionLabel "coop_local_site lat";
+	d2rq:property vcard:latitude;
 	d2rq:column "coop_local_site.lat";
 	.
 map:site_long a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:site;
-	d2rq:property vocab:site_long;
-	d2rq:propertyDefinitionLabel "coop_local_site long";
+	d2rq:property vcard:longitude;
 	d2rq:column "coop_local_site.long";
 	.
 # 
@@ -745,275 +624,257 @@ map:site_long a d2rq:PropertyBridge;
 #   d2rq:refersToClassMap map:exchange;
 #   d2rq:join "coop_local_transaction.destination_id => coop_local_exchange.id";
 #   .
-
-# Table skosxl_concept
-map:concept a d2rq:ClassMap;
-	d2rq:dataStorage map:database;
-	d2rq:uriPattern "skosxl_concept/@@skosxl_concept.id@@";
-	d2rq:class vocab:concept;
-	d2rq:classDefinitionLabel "skosxl_concept";
-	.
-map:concept__label a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:concept;
-	d2rq:property rdfs:label;
-	d2rq:pattern "skosxl_concept #@@skosxl_concept.id@@";
-	.
-map:concept_id a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:concept;
-	d2rq:property vocab:concept_id;
-	d2rq:propertyDefinitionLabel "skosxl_concept id";
-	d2rq:column "skosxl_concept.id";
-	d2rq:datatype xsd:int;
-	.
-map:concept_definition a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:concept;
-	d2rq:property vocab:concept_definition;
-	d2rq:propertyDefinitionLabel "skosxl_concept definition";
-	d2rq:column "skosxl_concept.definition";
-	.
-map:concept_changenote a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:concept;
-	d2rq:property vocab:concept_changenote;
-	d2rq:propertyDefinitionLabel "skosxl_concept changenote";
-	d2rq:column "skosxl_concept.changenote";
-	.
-map:concept_created a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:concept;
-	d2rq:property vocab:concept_created;
-	d2rq:propertyDefinitionLabel "skosxl_concept created";
-	d2rq:column "skosxl_concept.created";
-	d2rq:datatype xsd:dateTime;
-	.
-map:concept_modified a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:concept;
-	d2rq:property vocab:concept_modified;
-	d2rq:propertyDefinitionLabel "skosxl_concept modified";
-	d2rq:column "skosxl_concept.modified";
-	d2rq:datatype xsd:dateTime;
-	.
-map:concept_author a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:concept;
-	d2rq:property vocab:concept_author;
-	d2rq:propertyDefinitionLabel "skosxl_concept author";
-	d2rq:column "skosxl_concept.author";
-	.
-
-# Table skosxl_label
-map:label a d2rq:ClassMap;
-	d2rq:dataStorage map:database;
-	d2rq:uriPattern "skosxl_label/@@skosxl_label.id@@";
-	d2rq:class vocab:label;
-	d2rq:classDefinitionLabel "skosxl_label";
-	.
-map:label__label a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:label;
-	d2rq:property rdfs:label;
-	d2rq:pattern "skosxl_label #@@skosxl_label.id@@";
-	.
-map:label_id a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:label;
-	d2rq:property vocab:label_id;
-	d2rq:propertyDefinitionLabel "skosxl_label id";
-	d2rq:column "skosxl_label.id";
-	d2rq:datatype xsd:int;
-	.
-map:label_type a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:label;
-	d2rq:property vocab:label_type;
-	d2rq:propertyDefinitionLabel "skosxl_label type";
-	d2rq:column "skosxl_label.type";
-	d2rq:datatype xsd:short;
-	.
-map:label_term_id a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:label;
-	d2rq:property vocab:label_term_id;
-	d2rq:refersToClassMap map:term;
-	d2rq:join "skosxl_label.term_id => skosxl_term.id";
-	.
-map:label_concept_id a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:label;
-	d2rq:property vocab:label_concept_id;
-	d2rq:refersToClassMap map:concept;
-	d2rq:join "skosxl_label.concept_id => skosxl_concept.id";
-	.
-
-# Table skosxl_semrelation
-map:semrelation a d2rq:ClassMap;
-	d2rq:dataStorage map:database;
-	d2rq:uriPattern "skosxl_semrelation/@@skosxl_semrelation.id@@";
-	d2rq:class vocab:semrelation;
-	d2rq:classDefinitionLabel "skosxl_semrelation";
-	.
-map:semrelation__label a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:semrelation;
-	d2rq:property rdfs:label;
-	d2rq:pattern "skosxl_semrelation #@@skosxl_semrelation.id@@";
-	.
-map:semrelation_id a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:semrelation;
-	d2rq:property vocab:semrelation_id;
-	d2rq:propertyDefinitionLabel "skosxl_semrelation id";
-	d2rq:column "skosxl_semrelation.id";
-	d2rq:datatype xsd:int;
-	.
-map:semrelation_type a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:semrelation;
-	d2rq:property vocab:semrelation_type;
-	d2rq:propertyDefinitionLabel "skosxl_semrelation type";
-	d2rq:column "skosxl_semrelation.type";
-	d2rq:datatype xsd:short;
-	.
-map:semrelation_target_concept_id a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:semrelation;
-	d2rq:property vocab:semrelation_target_concept_id;
-	d2rq:refersToClassMap map:concept;
-	d2rq:join "skosxl_semrelation.target_concept_id => skosxl_concept.id";
-	.
-map:semrelation_origin_concept_id a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:semrelation;
-	d2rq:property vocab:semrelation_origin_concept_id;
-	d2rq:refersToClassMap map:concept;
-	d2rq:join "skosxl_semrelation.origin_concept_id => skosxl_concept.id";
-	.
-
-# Table skosxl_similarconcept
-map:similarconcept a d2rq:ClassMap;
-	d2rq:dataStorage map:database;
-	d2rq:uriPattern "skosxl_similarconcept/@@skosxl_similarconcept.id@@";
-	d2rq:class vocab:similarconcept;
-	d2rq:classDefinitionLabel "skosxl_similarconcept";
-	.
-map:similarconcept__label a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:similarconcept;
-	d2rq:property rdfs:label;
-	d2rq:pattern "skosxl_similarconcept #@@skosxl_similarconcept.id@@";
-	.
-map:similarconcept_id a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:similarconcept;
-	d2rq:property vocab:similarconcept_id;
-	d2rq:propertyDefinitionLabel "skosxl_similarconcept id";
-	d2rq:column "skosxl_similarconcept.id";
-	d2rq:datatype xsd:int;
-	.
-map:similarconcept_Preflabel a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:similarconcept;
-	d2rq:property vocab:similarconcept_Preflabel;
-	d2rq:propertyDefinitionLabel "skosxl_similarconcept Preflabel";
-	d2rq:column "skosxl_similarconcept.Preflabel";
-	.
-map:similarconcept_uri a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:similarconcept;
-	d2rq:property vocab:similarconcept_uri;
-	d2rq:propertyDefinitionLabel "skosxl_similarconcept uri";
-	d2rq:column "skosxl_similarconcept.uri";
-	.
-map:similarconcept_match_type a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:similarconcept;
-	d2rq:property vocab:similarconcept_match_type;
-	d2rq:propertyDefinitionLabel "skosxl_similarconcept match_type";
-	d2rq:column "skosxl_similarconcept.match_type";
-	d2rq:datatype xsd:short;
-	.
-map:similarconcept_voc_id a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:similarconcept;
-	d2rq:property vocab:similarconcept_voc_id;
-	d2rq:refersToClassMap map:vocabulary;
-	d2rq:join "skosxl_similarconcept.voc_id => skosxl_vocabulary.id";
-	.
-map:similarconcept_similar_to_id a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:similarconcept;
-	d2rq:property vocab:similarconcept_similar_to_id;
-	d2rq:refersToClassMap map:concept;
-	d2rq:join "skosxl_similarconcept.similar_to_id => skosxl_concept.id";
-	.
-
+# 
+# # Table skosxl_concept
+# map:concept a d2rq:ClassMap;
+#   d2rq:dataStorage map:database;
+#   d2rq:uriPattern "skosxl_concept/@@skosxl_concept.id@@";
+#   d2rq:class vocab:concept;
+#   d2rq:classDefinitionLabel "skosxl_concept";
+#   .
+# map:concept__label a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:concept;
+#   d2rq:property rdfs:label;
+#   d2rq:pattern "skosxl_concept #@@skosxl_concept.id@@";
+#   .
+# map:concept_id a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:concept;
+#   d2rq:property vocab:concept_id;
+#   d2rq:propertyDefinitionLabel "skosxl_concept id";
+#   d2rq:column "skosxl_concept.id";
+#   d2rq:datatype xsd:int;
+#   .
+# map:concept_definition a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:concept;
+#   d2rq:property vocab:concept_definition;
+#   d2rq:propertyDefinitionLabel "skosxl_concept definition";
+#   d2rq:column "skosxl_concept.definition";
+#   .
+# map:concept_changenote a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:concept;
+#   d2rq:property vocab:concept_changenote;
+#   d2rq:propertyDefinitionLabel "skosxl_concept changenote";
+#   d2rq:column "skosxl_concept.changenote";
+#   .
+# map:concept_created a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:concept;
+#   d2rq:property vocab:concept_created;
+#   d2rq:propertyDefinitionLabel "skosxl_concept created";
+#   d2rq:column "skosxl_concept.created";
+#   d2rq:datatype xsd:dateTime;
+#   .
+# map:concept_modified a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:concept;
+#   d2rq:property vocab:concept_modified;
+#   d2rq:propertyDefinitionLabel "skosxl_concept modified";
+#   d2rq:column "skosxl_concept.modified";
+#   d2rq:datatype xsd:dateTime;
+#   .
+# map:concept_author a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:concept;
+#   d2rq:property vocab:concept_author;
+#   d2rq:propertyDefinitionLabel "skosxl_concept author";
+#   d2rq:column "skosxl_concept.author";
+#   .
+# 
+# # Table skosxl_label
+# map:label a d2rq:ClassMap;
+#   d2rq:dataStorage map:database;
+#   d2rq:uriPattern "skosxl_label/@@skosxl_label.id@@";
+#   d2rq:class vocab:label;
+#   d2rq:classDefinitionLabel "skosxl_label";
+#   .
+# map:label__label a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:label;
+#   d2rq:property rdfs:label;
+#   d2rq:pattern "skosxl_label #@@skosxl_label.id@@";
+#   .
+# map:label_id a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:label;
+#   d2rq:property vocab:label_id;
+#   d2rq:propertyDefinitionLabel "skosxl_label id";
+#   d2rq:column "skosxl_label.id";
+#   d2rq:datatype xsd:int;
+#   .
+# map:label_type a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:label;
+#   d2rq:property vocab:label_type;
+#   d2rq:propertyDefinitionLabel "skosxl_label type";
+#   d2rq:column "skosxl_label.type";
+#   d2rq:datatype xsd:short;
+#   .
+# map:label_term_id a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:label;
+#   d2rq:property vocab:label_term_id;
+#   d2rq:refersToClassMap map:term;
+#   d2rq:join "skosxl_label.term_id => skosxl_term.id";
+#   .
+# map:label_concept_id a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:label;
+#   d2rq:property vocab:label_concept_id;
+#   d2rq:refersToClassMap map:concept;
+#   d2rq:join "skosxl_label.concept_id => skosxl_concept.id";
+#   .
+# 
+# # Table skosxl_semrelation
+# map:semrelation a d2rq:ClassMap;
+#   d2rq:dataStorage map:database;
+#   d2rq:uriPattern "skosxl_semrelation/@@skosxl_semrelation.id@@";
+#   d2rq:class vocab:semrelation;
+#   d2rq:classDefinitionLabel "skosxl_semrelation";
+#   .
+# map:semrelation__label a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:semrelation;
+#   d2rq:property rdfs:label;
+#   d2rq:pattern "skosxl_semrelation #@@skosxl_semrelation.id@@";
+#   .
+# map:semrelation_id a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:semrelation;
+#   d2rq:property vocab:semrelation_id;
+#   d2rq:propertyDefinitionLabel "skosxl_semrelation id";
+#   d2rq:column "skosxl_semrelation.id";
+#   d2rq:datatype xsd:int;
+#   .
+# map:semrelation_type a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:semrelation;
+#   d2rq:property vocab:semrelation_type;
+#   d2rq:propertyDefinitionLabel "skosxl_semrelation type";
+#   d2rq:column "skosxl_semrelation.type";
+#   d2rq:datatype xsd:short;
+#   .
+# map:semrelation_target_concept_id a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:semrelation;
+#   d2rq:property vocab:semrelation_target_concept_id;
+#   d2rq:refersToClassMap map:concept;
+#   d2rq:join "skosxl_semrelation.target_concept_id => skosxl_concept.id";
+#   .
+# map:semrelation_origin_concept_id a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:semrelation;
+#   d2rq:property vocab:semrelation_origin_concept_id;
+#   d2rq:refersToClassMap map:concept;
+#   d2rq:join "skosxl_semrelation.origin_concept_id => skosxl_concept.id";
+#   .
+# 
+# # Table skosxl_similarconcept
+# map:similarconcept a d2rq:ClassMap;
+#   d2rq:dataStorage map:database;
+#   d2rq:uriPattern "skosxl_similarconcept/@@skosxl_similarconcept.id@@";
+#   d2rq:class vocab:similarconcept;
+#   d2rq:classDefinitionLabel "skosxl_similarconcept";
+#   .
+# map:similarconcept__label a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:similarconcept;
+#   d2rq:property rdfs:label;
+#   d2rq:pattern "skosxl_similarconcept #@@skosxl_similarconcept.id@@";
+#   .
+# map:similarconcept_id a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:similarconcept;
+#   d2rq:property vocab:similarconcept_id;
+#   d2rq:propertyDefinitionLabel "skosxl_similarconcept id";
+#   d2rq:column "skosxl_similarconcept.id";
+#   d2rq:datatype xsd:int;
+#   .
+# map:similarconcept_Preflabel a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:similarconcept;
+#   d2rq:property vocab:similarconcept_Preflabel;
+#   d2rq:propertyDefinitionLabel "skosxl_similarconcept Preflabel";
+#   d2rq:column "skosxl_similarconcept.Preflabel";
+#   .
+# map:similarconcept_uri a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:similarconcept;
+#   d2rq:property vocab:similarconcept_uri;
+#   d2rq:propertyDefinitionLabel "skosxl_similarconcept uri";
+#   d2rq:column "skosxl_similarconcept.uri";
+#   .
+# map:similarconcept_match_type a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:similarconcept;
+#   d2rq:property vocab:similarconcept_match_type;
+#   d2rq:propertyDefinitionLabel "skosxl_similarconcept match_type";
+#   d2rq:column "skosxl_similarconcept.match_type";
+#   d2rq:datatype xsd:short;
+#   .
+# map:similarconcept_voc_id a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:similarconcept;
+#   d2rq:property vocab:similarconcept_voc_id;
+#   d2rq:refersToClassMap map:vocabulary;
+#   d2rq:join "skosxl_similarconcept.voc_id => skosxl_vocabulary.id";
+#   .
+# map:similarconcept_similar_to_id a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:similarconcept;
+#   d2rq:property vocab:similarconcept_similar_to_id;
+#   d2rq:refersToClassMap map:concept;
+#   d2rq:join "skosxl_similarconcept.similar_to_id => skosxl_concept.id";
+#   .
+# 
 # Table skosxl_term
 map:term a d2rq:ClassMap;
-	d2rq:dataStorage map:database;
-	d2rq:uriPattern "skosxl_term/@@skosxl_term.id@@";
-	d2rq:class vocab:term;
-	d2rq:classDefinitionLabel "skosxl_term";
-	.
+  d2rq:dataStorage map:database;
+  d2rq:uriPattern "tag/@@skosxl_term.slug@@";
+  d2rq:class ctag:Tag;
+  .
 map:term__label a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:term;
-	d2rq:property rdfs:label;
-	d2rq:pattern "skosxl_term #@@skosxl_term.id@@";
-	.
-map:term_id a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:term;
-	d2rq:property vocab:term_id;
-	d2rq:propertyDefinitionLabel "skosxl_term id";
-	d2rq:column "skosxl_term.id";
-	d2rq:datatype xsd:int;
-	.
+  d2rq:belongsToClassMap map:term;
+  d2rq:property rdfs:label;
+  d2rq:pattern "@@skosxl_term.literal@@";
+  .
 map:term_literal a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:term;
-	d2rq:property vocab:term_literal;
-	d2rq:propertyDefinitionLabel "skosxl_term literal";
-	d2rq:column "skosxl_term.literal";
-	.
-map:term_slug a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:term;
-	d2rq:property vocab:term_slug;
-	d2rq:propertyDefinitionLabel "skosxl_term slug";
-	d2rq:column "skosxl_term.slug";
-	.
-map:term_language a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:term;
-	d2rq:property vocab:term_language;
-	d2rq:propertyDefinitionLabel "skosxl_term language";
-	d2rq:column "skosxl_term.language";
-	.
+  d2rq:belongsToClassMap map:term;
+  d2rq:property rdfs:label;
+  d2rq:column "skosxl_term.literal";
+  .
+# map:term_language a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:term;
+#   d2rq:property vocab:term_language;
+#   d2rq:column "skosxl_term.language";
+#   .
+#FIXME : comment on definit les langues des labels ?
 map:term_created a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:term;
-	d2rq:property vocab:term_created;
-	d2rq:propertyDefinitionLabel "skosxl_term created";
-	d2rq:column "skosxl_term.created";
-	d2rq:datatype xsd:dateTime;
-	.
+  d2rq:belongsToClassMap map:term;
+  d2rq:property dct:created;
+  d2rq:column "skosxl_term.created";
+  d2rq:datatype xsd:dateTime;
+  .
 map:term_modified a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:term;
-	d2rq:property vocab:term_modified;
-	d2rq:propertyDefinitionLabel "skosxl_term modified";
-	d2rq:column "skosxl_term.modified";
-	d2rq:datatype xsd:dateTime;
-	.
+  d2rq:belongsToClassMap map:term;
+  d2rq:property dct:modified;
+  d2rq:column "skosxl_term.modified";
+  d2rq:datatype xsd:dateTime;
+  .
 map:term_author a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:term;
-	d2rq:property vocab:term_author;
-	d2rq:propertyDefinitionLabel "skosxl_term author";
-	d2rq:column "skosxl_term.author";
-	.
-
-# Table skosxl_vocabulary
-map:vocabulary a d2rq:ClassMap;
-	d2rq:dataStorage map:database;
-	d2rq:uriPattern "skosxl_vocabulary/@@skosxl_vocabulary.id@@";
-	d2rq:class vocab:vocabulary;
-	d2rq:classDefinitionLabel "skosxl_vocabulary";
-	.
-map:vocabulary__label a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:vocabulary;
-	d2rq:property rdfs:label;
-	d2rq:pattern "skosxl_vocabulary #@@skosxl_vocabulary.id@@";
-	.
-map:vocabulary_id a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:vocabulary;
-	d2rq:property vocab:vocabulary_id;
-	d2rq:propertyDefinitionLabel "skosxl_vocabulary id";
-	d2rq:column "skosxl_vocabulary.id";
-	d2rq:datatype xsd:int;
-	.
-map:vocabulary_name a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:vocabulary;
-	d2rq:property vocab:vocabulary_name;
-	d2rq:propertyDefinitionLabel "skosxl_vocabulary name";
-	d2rq:column "skosxl_vocabulary.name";
-	.
-map:vocabulary_info_url a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:vocabulary;
-	d2rq:property vocab:vocabulary_info_url;
-	d2rq:propertyDefinitionLabel "skosxl_vocabulary info_url";
-	d2rq:column "skosxl_vocabulary.info_url";
-	.
-
+  d2rq:belongsToClassMap map:term;
+  d2rq:property foaf:made;
+  d2rq:column "skosxl_term.author";
+  .
+# 
+# # Table skosxl_vocabulary
+# map:vocabulary a d2rq:ClassMap;
+#   d2rq:dataStorage map:database;
+#   d2rq:uriPattern "skosxl_vocabulary/@@skosxl_vocabulary.id@@";
+#   d2rq:class vocab:vocabulary;
+#   d2rq:classDefinitionLabel "skosxl_vocabulary";
+#   .
+# map:vocabulary__label a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:vocabulary;
+#   d2rq:property rdfs:label;
+#   d2rq:pattern "skosxl_vocabulary #@@skosxl_vocabulary.id@@";
+#   .
+# map:vocabulary_id a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:vocabulary;
+#   d2rq:property vocab:vocabulary_id;
+#   d2rq:propertyDefinitionLabel "skosxl_vocabulary id";
+#   d2rq:column "skosxl_vocabulary.id";
+#   d2rq:datatype xsd:int;
+#   .
+# map:vocabulary_name a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:vocabulary;
+#   d2rq:property vocab:vocabulary_name;
+#   d2rq:propertyDefinitionLabel "skosxl_vocabulary name";
+#   d2rq:column "skosxl_vocabulary.name";
+#   .
+# map:vocabulary_info_url a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:vocabulary;
+#   d2rq:property vocab:vocabulary_info_url;
+#   d2rq:propertyDefinitionLabel "skosxl_vocabulary info_url";
+#   d2rq:column "skosxl_vocabulary.info_url";
+#   .
+# 

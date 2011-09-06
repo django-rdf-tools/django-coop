@@ -14,3 +14,4 @@ django-keyedcache==1.4-1
 django-livesettings==1.4-7
 django-smart-selects==1.0.4
 django-admin-tools==0.4.0
+feedparser==5.0.1
