@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load smart_if %}
-{% load cache %}
-{% load rss %}
+
 
 {% block meta_title %}{{object.title}}{% endblock %}
 
@@ -44,22 +43,6 @@
         
     {% endif %}    
     </div>
- 
-
-    {% if object.rss %}
-    {% cache 500 rss_display %}
-        {% get_rss object.rss as rss %}
-        {% for entry in rss.entries %}
-            <b>{{entry.title}}</b>
-            <p>
-                {{entry.summary|safe}}
-            </p>
-            <p>
-                <a href="{{entry.link}}">read more...</a>
-            </p>
-        {% endfor %}
-    {% endcache %}
-    {% endif %}
  
     
     
@@ -108,7 +91,7 @@
 {% endblock %}
 
 {% block footer%}        
-<a href="http://data.django.coop:2020/page/initiative/{{object.slug}}/">
+<a href="http://data.django.coop:2020/page/initiative/{{object.slug}}">
     <img border="0" align="left" src="{{STATIC_ROOT}}img/semweb.png"></a>
     <br/>
 {% endblock %}

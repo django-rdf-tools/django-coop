@@ -23,6 +23,7 @@ def ISDetailView(request,slug):
     context = {}
     initiative = Initiative.objects.get(slug=slug)
     context['object'] = initiative
+    context['rss'] = initiative.rss
     context['adresses'] = initiative.sites.all()
     context['engagements'] = Engagement.objects.filter(initiative=context['object'])
     return render_to_response('initiative/initiative_detail.html',context,RequestContext(request))
