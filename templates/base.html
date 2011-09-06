@@ -74,9 +74,16 @@
 </div>
 
 <footer class="container_12 clearfix">
-            <div>{% include "footer.html" %}</div>
-</footer>
+    <div>
+        {% block footer %}        
 
+
+        {% endblock %}
+        <a href="http://django-fr.org/">
+            <img id="django" border="0" src="{{ STATIC_ROOT }}img/djangoproject.gif"/>
+        </a>
+    </div>
+</footer>
 
 </div>
 
