@@ -12,6 +12,5 @@ south==0.7.3
 -e git+git://github.com/digi604/django-smart-selects.git#egg=smart_selects
 django-keyedcache==1.4-1
 django-livesettings==1.4-7
-django-taggit==0.9.3
 django-smart-selects==1.0.4
-django-generic-m2m==0.2.0
+django-admin-tools==0.4.0
