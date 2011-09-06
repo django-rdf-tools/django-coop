@@ -100,9 +100,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
-    os.path.abspath(PROJECT_PATH+'/templates/'),
-    #'/uriresolve/templates/',
-    
+    os.path.abspath(PROJECT_PATH+'/templates/'),    
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -140,8 +138,7 @@ INSTALLED_APPS = (
     'south',
     'django_extensions',
     'extended_choices',
-#    'djutils',#for async, not working
-    'smart_selects',#d2rq to come
+    'smart_selects',
     'livesettings',
     'admin_tools',
 
