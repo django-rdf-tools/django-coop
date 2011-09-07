@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^settings/', include('livesettings.urls')),
     
+    (r'^perso/$', 'coop.membre.views.perso'),
     (r'^initiative/', include('coop.initiative.urls')),
     (r'^lieu/', include('coop.place.urls')),
     (r'^tag/', include('skosxl.urls')),

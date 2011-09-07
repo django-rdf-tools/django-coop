@@ -25,8 +25,8 @@
     
 
 
-    <script type="text/javascript" charset="utf-8" src="{{ STATIC_ROOT }}js/jquery-1.5.2.min.js"></script>
-    <script type="text/javascript" src="{{STATIC_ROOT}}superfish-1.4.8/js/superfish.js" charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8" src="{{ STATIC_ROOT }}js/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_ROOT }}js/jquery.pageslide.min.js"></script>
 
     <!-- CSS: implied media="all" -->
     <link rel="stylesheet" href="{{ STATIC_ROOT }}css/html5.css?v=2">
@@ -59,6 +59,9 @@
   {% block navigation %}
   <nav>
       <ul id="nav">{% navigation_as_nested_ul %}</ul>
+      
+      <a href="/perso/" id="perso" class="pageslide-close">Votre espace perso</a>
+      
   </nav>
   {% endblock %}
     
@@ -97,6 +100,7 @@
 <script type="text/javascript">
 $(function(){
     {% block jquery %}
+    $("#perso").pageSlide({width:'350px', direction:'right'});
 
     {% endblock %}
 });
@@ -105,15 +109,15 @@ $(function(){
 
 <script type="text/javascript"><!--//--><![CDATA[//><!--
 sfHover = function() {
-	var sfEls = document.getElementById("nav").getElementsByTagName("LI");
-	for (var i=0; i<sfEls.length; i++) {
-		sfEls[i].onmouseover=function() {
-			this.className+=" sfhover";
-		}
-		sfEls[i].onmouseout=function() {
-			this.className=this.className.replace(new RegExp(" sfhover\\b"), "");
-		}
-	}
+    var sfEls = document.getElementById("nav").getElementsByTagName("LI");
+    for (var i=0; i<sfEls.length; i++) {
+        sfEls[i].onmouseover=function() {
+            this.className+=" sfhover";
+        }
+        sfEls[i].onmouseout=function() {
+            this.className=this.className.replace(new RegExp(" sfhover\\b"), "");
+        }
+    }
 }
 if (window.attachEvent) window.attachEvent("onload", sfHover);
 //--><!]]></script>

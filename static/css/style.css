@@ -85,6 +85,30 @@ h4{
 	font-size: 1.1em;
 }
 
+nav{
+	position: relative;
+}
+
+#perso{
+	position: absolute;
+	top: 12px;
+	right: 20px;
+	font-size: 16px;
+	font-weight: bold;
+	text-decoration: underline;
+	color: #fffeff;
+}
+
+#pageslide-slide-wrap{
+	background-color: #797979;
+}
+
+#ppanel h3{
+	text-align: center;
+	color: #fffeff;
+}
+
+
 #tags a{
 	font-size: 14px;
 	display: inline-block;
@@ -128,6 +152,8 @@ background: linear-gradient(#FDFCF7, #F0DA2D);
 http://www.htmldog.com/articles/suckerfish/dropdowns/
 Laisser tranquille , surclasser ailleurs 
 */
+
+
 
 #nav, #nav ul {
 	padding: 0;

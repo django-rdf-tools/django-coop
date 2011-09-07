@@ -68,7 +68,7 @@ STATICFILES_DIRS = (
     os.path.abspath(PROJECT_PATH+'/static/'),
     os.path.abspath(PROJECT_PATH+'/djaloha/static/'),
     os.path.abspath(PROJECT_PATH+'/coop_tree/static/'),
-    os.path.abspath(PROJECT_PATH+'/uriresolve/static/'),
+    os.path.abspath(PROJECT_PATH+'/coop/static/'),
 )
 
 # List of finder classes that know how to find static files in
