@@ -12,7 +12,7 @@ class NavigationTest(TestCase):
 
     def setUp(self):
         self.url_ct = ContentType.objects.get(app_label='coop_tree', model='url')
-        NavigableType.objects.create(content_type=self.url_ct, search_field='url')
+        NavigableType.objects.create(content_type=self.url_ct, search_field='url', label_rule=NavigableType.LABEL_USE_SEARCH_FIELD)
         self.editor = None
         self.staff = None
         self.srv_url = reverse("navigation_tree")
@@ -313,7 +313,7 @@ class NavigationTest(TestCase):
         self.assertTrue(result['html'].find(nodes[1].get_absolute_url())<0)
         self.assertTemplateUsed(response, 'tree_content/default.html')
         
-    def test_get_suggest_list(self):
+    def _do_test_get_suggest_list(self):
         addrs = ("http://www.google.fr", "http://www.python.org", "http://www.quinode.fr", "http://www.apidev.fr")
         urls = [Url.objects.create(url=a) for a in addrs]
         
@@ -322,7 +322,6 @@ class NavigationTest(TestCase):
             nodes.append(NavNode.objects.create(label=url.url, content_object=url, ordering=i+1, parent=None))
         
         self._log_as_editor()
-        
         
         data = {
             'msg_id': 'get_suggest_list',
@@ -333,6 +332,26 @@ class NavigationTest(TestCase):
         result = json.loads(response.content)
         self.assertEqual(result['status'], 'success')
         self.assertEqual(len(result['suggestions']), 3)
+        
+    def test_get_suggest_list(self):
+        self._do_test_get_suggest_list()
+        
+    def test_get_suggest_list_get_label(self):
+        
+        nt = NavigableType.objects.get(content_type=self.url_ct)
+        nt.search_field = ''
+        nt.label_rule=NavigableType.LABEL_USE_GET_LABEL
+        nt.save()
+        self._do_test_get_suggest_list()
+        
+    def test_get_suggest_list_unicode(self):
+        
+        nt = NavigableType.objects.get(content_type=self.url_ct)
+        nt.search_field = ''
+        nt.label_rule=NavigableType.LABEL_USE_UNICODE
+        nt.save()
+        self._do_test_get_suggest_list()
+        
         
     def test_unknow_message(self):
         self._log_as_editor()
