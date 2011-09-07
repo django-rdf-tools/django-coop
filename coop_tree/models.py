@@ -36,7 +36,7 @@ class NavigableType(models.Model):
     
     """Define which ContentTypes can be inserted in the tree as content"""
     content_type = models.ForeignKey(ContentType, unique=True)
-    search_field = models.CharField(max_length=200)
+    search_field = models.CharField(max_length=200, blank=True, default="")
     label_rule = models.IntegerField(verbose_name=_(u'How to generate the label'),
         choices=LABEL_RULE_CHOICES, default=LABEL_USE_SEARCH_FIELD)
     

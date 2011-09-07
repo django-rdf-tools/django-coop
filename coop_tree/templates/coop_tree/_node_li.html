@@ -1,0 +1,9 @@
+{% load i18n %}
+{% spaceless %}
+<li class="nav-nodex" id="node_{{node.id}}">
+	<a href="{{node.get_absolute_url}}">{{node.label}}</a>
+	{% with node.get_children as children %}{% if children %}
+	<ul>{% for child in children %}{{child.as_li}}{% endfor %}</ul>
+	{% endif %}	{% endwith %}
+</li>
+{% endspaceless %}

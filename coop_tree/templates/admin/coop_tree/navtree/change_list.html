@@ -222,7 +222,8 @@
     });
     
     $("#rename_node").click(function () { 
-		$("#nodes").jstree("rename"); 
+		$("#nodes").jstree("rename");
+        return false;
 	});
     $("#delete_node").click(function () {
       var selected_nodes = $("#nodes").jstree('get_selected');
@@ -244,6 +245,7 @@
           });
         }
       }
+      return false;
 	});
   })();
 </script>
@@ -289,7 +291,7 @@
     </div>
     <ul class="content-links">
 
-        <li><a href="{{admin_url}}" id="rename_node">{% trans "Rename" %}</a></li>
+        <li><a href="{{content.get_absolute_url}}" id="rename_node">{% trans "Rename" %}</a></li>
         <li><a href="{{content.get_absolute_url}}" id="delete_node">{% trans "Remove" %}</a></li>
     </ul>
 <!--    <button id="rename_node">{% trans "Rename" %}</button>

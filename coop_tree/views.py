@@ -218,12 +218,18 @@ def get_suggest_list(request):
     
     for nt in NavigableType.objects.all():
         ct = nt.content_type
-        
-        #Get the name of the default field for the current type (eg: Page->title, Url->url ...)
-        lookup = {nt.search_field+'__icontains': term}
-        
+            
+        if nt.label_rule == NavigableType.LABEL_USE_SEARCH_FIELD:
+            #Get the name of the default field for the current type (eg: Page->title, Url->url ...)
+            lookup = {nt.search_field+'__icontains': term}
+            objects = ct.model_class().objects.filter(**lookup)
+        elif nt.label_rule == NavigableType.LABEL_USE_GET_LABEL:
+            objects = [obj for obj in ct.model_class().objects.all() if term in obj.get_label()]
+        else:
+            objects = [obj for obj in ct.model_class().objects.all() if term in unicode(obj)]
+    
         #Get suggestions as a list of {label: object.get_label() or unicode if no get_label, 'value':<object.id>}
-        for object in ct.model_class().objects.filter(**lookup):
+        for object in objects:
             suggestions.append({
                 'label': get_object_label(ct, object),
                 'value': object.id,
