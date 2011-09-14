@@ -60,6 +60,9 @@ STATIC_URL = '/static/'
 # Examples: "http://foo.com/static/admin/", "/static/admin/".
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
+import admin_tools
+ADMIN_TOOLS_PATH = os.path.dirname(os.path.abspath(admin_tools.__file__))
+
 # Additional locations of static files
 STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
@@ -69,7 +72,7 @@ STATICFILES_DIRS = (
     os.path.abspath(PROJECT_PATH+'/djaloha/static/'),
     os.path.abspath(PROJECT_PATH+'/coop_cms/static/'),
     os.path.abspath(PROJECT_PATH+'/coop/static/'),
-#    '/Users/dom/django/.virtualenvs/coop/lib/python2.7/site-packages/admin_tools/media/admin_tools'
+    os.path.abspath(ADMIN_TOOLS_PATH+'/media/'),
 )
 
 # List of finder classes that know how to find static files in
@@ -125,11 +128,13 @@ CACHES = {
 }
 
 INSTALLED_APPS = (
-    # Contribs
+    # Admin tools
     'admin_tools',
-#    'admin_tools.theming',
+    'admin_tools.theming',
     'admin_tools.menu',
     'admin_tools.dashboard',
+
+    # Contribs
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -156,9 +161,9 @@ INSTALLED_APPS = (
 #    'uriresolve',
 )
 
-ADMIN_TOOLS_MENU = 'base.menu.CustomMenu'
-ADMIN_TOOLS_INDEX_DASHBOARD = 'base.dashboard.CustomIndexDashboard'
-ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'base.dashboard.CustomAppIndexDashboard'
+#ADMIN_TOOLS_MENU = 'base.menu.CustomMenu'
+#ADMIN_TOOLS_INDEX_DASHBOARD = 'base.dashboard.CustomIndexDashboard'
+#ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'base.dashboard.CustomAppIndexDashboard'
 #ADMIN_TOOLS_THEMING_CSS = 'css/coop_theming.css'
 
 LIVESETTINGS_OPTIONS = \
@@ -167,7 +172,7 @@ LIVESETTINGS_OPTIONS = \
     'DB': True,
        'SETTINGS': {
             u'd2rq': {u'MAPPED_APPS': u'["coop_local", "skosxl"]'},
-            u'coop_tree': {u'CONTENT_APPS': u'["coop_tree"]'}
+            u'coop_cms': {u'CONTENT_APPS': u'["coop_cms"]'}
         }
     }
 }

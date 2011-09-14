@@ -4,7 +4,7 @@ from livesettings import config_value
 
 def get_navigable_content_types():
     ct_choices = []
-    content_apps = config_value('coop_cms', 'CONTENT_APPS')
+    content_apps = config_value(u'coop_cms', 'CONTENT_APPS')
     navigable_content_types = ContentType.objects.filter(app_label__in=content_apps).order_by('app_label')
     for ct in navigable_content_types:
         is_navnode = ((ct.model == 'navnode') and (ct.app_label == 'coop_cms'))

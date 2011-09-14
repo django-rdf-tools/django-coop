@@ -30,7 +30,7 @@ config_register(MultipleStringValue(
 ))
 
 
-COOPTREE_MAPPING = ConfigurationGroup('coop_tree', _('Navigation'))
+COOPTREE_MAPPING = ConfigurationGroup('coop_cms', _('Navigation'))
 
 # Another example of allowing the user to select from several values
 config_register(MultipleStringValue(
