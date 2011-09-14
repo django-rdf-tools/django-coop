@@ -28,6 +28,10 @@ class NavType(models.Model):
     def __unicode__(self):
         return self.content_type.app_label+'.'+self.content_type.model
 
+    class Meta:
+        verbose_name = _(u'navigable type')
+        verbose_name_plural = _(u'navigable types')
+
     
 class NavNode(models.Model):
     """
@@ -44,6 +48,7 @@ class NavNode(models.Model):
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
+    in_navigation = models.BooleanField(_("Visible dans l'arborescence"), default=True)
     
     def get_absolute_url(self):
         return self.content_object.get_absolute_url()
@@ -63,13 +68,16 @@ class NavNode(models.Model):
         
     def get_siblings(self):
         return NavNode.objects.filter(parent=self.parent).order_by("ordering")
+    
+    def as_li_navigation_tree_editor(self):
+        return self.as_li(True)
         
-    def as_li(self):
+    def as_li(self, navigation_tree_editor=False):
         #Display the node and his children as nested ul and li html tags.
         #Render from a template who is in charge of rendering children
         #This prints the whole tree recursively
         t = get_template('coop_cms/_node_li.html')
-        return t.render(Context({'node': self}))
+        return t.render(Context({'node': self, 'navigation_tree_editor': navigation_tree_editor}))
         
     def as_breadcrumb(self):
         t = get_template('coop_cms/_node_breadcrumb.html')

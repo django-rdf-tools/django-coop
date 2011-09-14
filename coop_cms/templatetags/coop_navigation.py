@@ -22,8 +22,18 @@ def navigation_as_nested_ul(parser, token):
        
    return NavigationAsNestedUlNode()
 
+@register.tag
+def navigation_as_nested_ul(parser, token):
+   args = token.contents.split()
+   if len(args) != 1:
+       raise template.TemplateSyntaxError(_("navigation_as_nested_ul has no argument"))
+       
+   return NavigationAsNestedUlNode()
+
+
 class NavigationBreadcrumbNode(template.Node):
    def __init__(self, object):
+      super(NavigationBreadcrumbNode, self).__init__()
       self.object_var = template.Variable(object)
 
    def render(self, context):
@@ -45,6 +55,7 @@ def navigation_breadcrumb(parser, token):
 class NavigationChildrenNode(template.Node):
 
    def __init__(self, object):
+      super(NavigationChildrenNode, self).__init__()
       self.object_var = template.Variable(object)
 
    def render(self, context):
@@ -65,6 +76,7 @@ def navigation_children(parser, token):
 class NavigationSiblingsNode(template.Node):
    
    def __init__(self, object):
+      super(NavigationSiblingsNode, self).__init__()
       self.object_var = template.Variable(object)
    
    def render(self, context):

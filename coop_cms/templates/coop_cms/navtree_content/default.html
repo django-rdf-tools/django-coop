@@ -1,5 +1,12 @@
 {% load i18n %}
 {% with node.content_object as content %}
+<script>
+    {% if node.in_navigation %}
+    $("#navnode_in_navigation").html('{% trans "Remove from navigation" %}');
+    {% else %}
+    $("#navnode_in_navigation").html('{% trans "Add to navigation" %}');
+    {% endif %}
+</script>
 <h3>{% block navtree_content_title %}{{node.content_type|capfirst}}: {{content}}{% endblock %}</h3>
 {% block navtree_content_command%}
 <ul class="content-links">

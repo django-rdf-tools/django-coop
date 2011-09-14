@@ -5,7 +5,7 @@ import models
 from forms import NavTypeForm
 
 class NavNodeAdmin(admin.ModelAdmin):
-    list_display = ["label", 'parent', 'ordering', 'content_type', 'object_id']
+    list_display = ["label", 'parent', 'ordering', 'in_navigation', 'content_type', 'object_id']
 
 admin.site.register(models.NavNode, NavNodeAdmin)
 
@@ -19,7 +19,7 @@ class NavTreeAdmin(admin.ModelAdmin):
 
     def nodes_li(self):
         root_nodes = models.NavNode.objects.filter(parent__isnull=True).order_by("ordering")
-        nodes_li = u''.join([node.as_li() for node in root_nodes])
+        nodes_li = u''.join([node.as_li(navigation_tree_editor=True) for node in root_nodes])
         return nodes_li
     
     def suggest_list_url(self):

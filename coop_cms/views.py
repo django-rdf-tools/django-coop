@@ -275,6 +275,23 @@ def get_suggest_list(request):
     response['suggestions'] = suggestions
     return response
     
+def navnode_in_navigation(request):
+    """toogle the is_visible_flag of a navnode"""
+    response = {}
+    node_id = request.POST['node_id']
+    node = NavNode.objects.get(id=node_id) #get the node
+    node.in_navigation = not node.in_navigation
+    node.save()
+    if node.in_navigation:
+        response['message'] = _(u"The node is now in navigation.")
+        response['label'] = _(u"Remove from navigation")
+        response['icon'] = "in_nav"
+    else:
+        response['message'] = _(u"The node has been removed of the navigation.")
+        response['label'] = _(u"Add to navigation")
+        response['icon'] = "out_nav"
+    return response
+    
 def process_nav_edition(request):
     """This handle ajax request sent by the tree component"""
     if request.method == 'POST' and request.is_ajax() and request.POST.has_key('msg_id'):
@@ -286,7 +303,8 @@ def process_nav_edition(request):
             supported_msg = {}
             #create a map between message name and handler
             #use the function name as message id
-            for fct in (view_navnode, rename_navnode, remove_navnode, move_navnode, add_navnode, get_suggest_list):
+            for fct in (view_navnode, rename_navnode, remove_navnode, move_navnode,
+                add_navnode, get_suggest_list, navnode_in_navigation):
                 supported_msg[fct.__name__] = fct
             
             #Call the handler corresponding to the requested message

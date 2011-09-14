@@ -1,9 +1,19 @@
 {% load i18n %}
 {% spaceless %}
-<li class="nav-nodex" id="node_{{node.id}}">
+{% if node.in_navigation or navigation_tree_editor %}
+<li class="nav-nodex" id="node_{{node.id}}" rel={% if node.in_navigation %}"in_nav"{%else%}"out_nav"{%endif%}>
 	<a href="{{node.get_absolute_url}}">{{node.label}}</a>
 	{% with node.get_children as children %}{% if children %}
-	<ul>{% for child in children %}{{child.as_li}}{% endfor %}</ul>
+	<ul>
+		{% for child in children %}
+			{% if navigation_tree_editor %}
+				{{child.as_li}}
+			{% else %}
+				{{child.as_li_navigation_tree_editor}}
+			{% endif %}
+		{% endfor %}
+	</ul>
 	{% endif %}	{% endwith %}
 </li>
+{% endif %}
 {% endspaceless %}
