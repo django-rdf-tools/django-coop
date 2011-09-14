@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseForbidden
-from models import NavNode, NavigableType, Article
+from models import NavNode, NavType, Article
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, Context
 from django.core.urlresolvers import reverse
@@ -60,7 +60,8 @@ def view_navnode(request):
     
     #load and render template for the object
     #try to load the corresponding template and if not found use the default one
-    tplt = select_template(["tree_content/{0}.html".format(node.content_type), "tree_content/default.html"])
+    tplt = select_template(["coop_cms/navtree_content/{0}.html".format(node.content_type),
+                            "coop_cms/navtree_content/default.html"])
     html = tplt.render(RequestContext(request, {'node': node, "admin_url": admin_url}))
     
     #return data has dictionnary
@@ -192,11 +193,11 @@ def move_navnode(request):
     return response
 
 def get_object_label(content_type, object):
-    nt = NavigableType.objects.get(content_type=content_type)
+    nt = NavType.objects.get(content_type=content_type)
     
-    if nt.label_rule == NavigableType.LABEL_USE_SEARCH_FIELD:
+    if nt.label_rule == NavType.LABEL_USE_SEARCH_FIELD:
         return getattr(object, nt.search_field)
-    elif nt.label_rule == NavigableType.LABEL_USE_GET_LABEL:
+    elif nt.label_rule == NavType.LABEL_USE_GET_LABEL:
         return object.get_label()
     else:
         return unicode(object)
@@ -250,14 +251,14 @@ def get_suggest_list(request):
     suggestions = []
     term = request.POST["term"]#the 1st chars entered in the autocomplete
     
-    for nt in NavigableType.objects.all():
+    for nt in NavType.objects.all():
         ct = nt.content_type
             
-        if nt.label_rule == NavigableType.LABEL_USE_SEARCH_FIELD:
+        if nt.label_rule == NavType.LABEL_USE_SEARCH_FIELD:
             #Get the name of the default field for the current type (eg: Page->title, Url->url ...)
             lookup = {nt.search_field+'__icontains': term}
             objects = ct.model_class().objects.filter(**lookup)
-        elif nt.label_rule == NavigableType.LABEL_USE_GET_LABEL:
+        elif nt.label_rule == NavType.LABEL_USE_GET_LABEL:
             objects = [obj for obj in ct.model_class().objects.all() if term in obj.get_label()]
         else:
             objects = [obj for obj in ct.model_class().objects.all() if term in unicode(obj)]
@@ -279,7 +280,7 @@ def process_nav_edition(request):
     if request.method == 'POST' and request.is_ajax() and request.POST.has_key('msg_id'):
         try:
             #check permissions
-            if not request.user.has_perm('coop_tree.change_navtree'):
+            if not request.user.has_perm('coop_cms.change_navtree'):
                 raise PermissionDenied
             
             supported_msg = {}

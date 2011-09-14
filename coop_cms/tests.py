@@ -5,14 +5,14 @@ from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 from django.template import Template, Context
-from models import Link, NavNode, NavigableType, Article
+from models import Link, NavNode, NavType, Article
 import json
 
 class NavigationTest(TestCase):
 
     def setUp(self):
-        self.url_ct = ContentType.objects.get(app_label='coop_tree', model='link')
-        NavigableType.objects.create(content_type=self.url_ct, search_field='url', label_rule=NavigableType.LABEL_USE_SEARCH_FIELD)
+        self.url_ct = ContentType.objects.get(app_label='coop_cms', model='link')
+        NavType.objects.create(content_type=self.url_ct, search_field='url', label_rule=NavType.LABEL_USE_SEARCH_FIELD)
         self.editor = None
         self.staff = None
         self.srv_url = reverse("navigation_tree")
@@ -21,7 +21,7 @@ class NavigationTest(TestCase):
         if not self.editor:
             self.editor = User.objects.create_user('toto', 'toto@toto.fr', 'toto')
             self.editor.is_staff = True
-            can_edit_tree = Permission.objects.get(content_type__app_label='coop_tree', codename='change_navtree')
+            can_edit_tree = Permission.objects.get(content_type__app_label='coop_cms', codename='change_navtree')
             self.editor.user_permissions.add(can_edit_tree)
             self.editor.save()
         
@@ -37,7 +37,7 @@ class NavigationTest(TestCase):
 
     def test_view_in_admin(self):
         self._log_as_editor()
-        url = reverse("admin:coop_tree_navtree_changelist")
+        url = reverse("admin:coop_cms_navtree_changelist")
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         
@@ -47,7 +47,7 @@ class NavigationTest(TestCase):
         
         data = {
             'msg_id': 'add_navnode',
-            'object_type':'coop_tree.link',
+            'object_type':'coop_cms.link',
             'object_id': link.id,
         }
         response = self.client.post(self.srv_url, data=data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
@@ -311,7 +311,7 @@ class NavigationTest(TestCase):
         self.assertEqual(result['status'], 'success')
         self.assertTrue(result['html'].find(nodes[0].get_absolute_url())>=0)
         self.assertTrue(result['html'].find(nodes[1].get_absolute_url())<0)
-        self.assertTemplateUsed(response, 'tree_content/default.html')
+        self.assertTemplateUsed(response, 'coop_cms/navtree_content/default.html')
         
     def _do_test_get_suggest_list(self):
         addrs = ("http://www.google.fr", "http://www.python.org", "http://www.quinode.fr", "http://www.apidev.fr")
@@ -338,17 +338,17 @@ class NavigationTest(TestCase):
         
     def test_get_suggest_list_get_label(self):
         
-        nt = NavigableType.objects.get(content_type=self.url_ct)
+        nt = NavType.objects.get(content_type=self.url_ct)
         nt.search_field = ''
-        nt.label_rule=NavigableType.LABEL_USE_GET_LABEL
+        nt.label_rule=NavType.LABEL_USE_GET_LABEL
         nt.save()
         self._do_test_get_suggest_list()
         
     def test_get_suggest_list_unicode(self):
         
-        nt = NavigableType.objects.get(content_type=self.url_ct)
+        nt = NavType.objects.get(content_type=self.url_ct)
         nt.search_field = ''
-        nt.label_rule=NavigableType.LABEL_USE_UNICODE
+        nt.label_rule=NavType.LABEL_USE_UNICODE
         nt.save()
         self._do_test_get_suggest_list()
         
@@ -378,7 +378,7 @@ class NavigationTest(TestCase):
         
         data = {
             'msg_id': 'add_navnode',
-            'object_type':'coop_tree.link',
+            'object_type':'coop_cms.link',
             'object_id': link.id,
         }
         
@@ -391,7 +391,7 @@ class NavigationTest(TestCase):
         
         data = {
             'msg_id': 'add_navnode',
-            'object_type':'coop_tree.link',
+            'object_type':'coop_cms.link',
             'object_id': 11,
         }
         
@@ -438,7 +438,7 @@ class NavigationTest(TestCase):
             'ref_pos': 'after',
             'name': 'oups',
             'term': 'goo',
-            'object_type':'coop_tree.link',
+            'object_type':'coop_cms.link',
             'object_id': link.id,
         }
         
@@ -546,7 +546,7 @@ class ArticleTest(TestCase):
     def _log_as_editor(self):
         user = User.objects.create_user('toto', 'toto@toto.fr', 'toto')
         
-        can_edit_article = Permission.objects.get(content_type__app_label='coop_tree', codename='change_article')
+        can_edit_article = Permission.objects.get(content_type__app_label='coop_cms', codename='change_article')
         user.user_permissions.add(can_edit_article)
         
         self.client.login(username='toto', password='toto')

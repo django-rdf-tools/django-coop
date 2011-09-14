@@ -1,247 +1,247 @@
 [
     {
-        "pk": 1,
-        "model": "coop_page.page",
+        "pk": 1, 
+        "model": "coop_cms.article", 
         "fields": {
-            "content": "\n    \n    Bienvenue sur ce site d'exemple qui reprend des biographies de jazzmen.<br><br><a class=\"\" data-gentics-aloha-object-id=\"/biographie-de-django-reinhardt\" data-gentics-aloha-repository=\"com.gentics.aloha.repositories.LinkList\" href=\"/biographie-de-django-reinhardt\">Django Reinhardt</a><br><a class=\"\" data-gentics-aloha-object-id=\"/biographie-de-birelli-lagrene\" data-gentics-aloha-repository=\"com.gentics.aloha.repositories.LinkList\" data-name=\"Biographie de Birelli Lagrene\" href=\"/biographie-de-birelli-lagrene\">Bir\u00e9li Lagr\u00e8ne</a><br><a class=\"\" data-gentics-aloha-object-id=\"/biographie-de-tchavolo-schmitt\" data-gentics-aloha-repository=\"com.gentics.aloha.repositories.LinkList\" data-name=\"Biographie de Tchavolo Schmitt\" href=\"/biographie-de-tchavolo-schmitt\">Tchavolo Schmidt</a><br><br>\n\n\n",
-            "slug": "bienvenue",
+            "content": "\n    \n    Bienvenue sur ce site d'exemple qui reprend des biographies de jazzmen.<br><br><a class=\"\" data-gentics-aloha-object-id=\"/biographie-de-django-reinhardt\" data-gentics-aloha-repository=\"com.gentics.aloha.repositories.LinkList\" href=\"/biographie-de-django-reinhardt\">Django Reinhardt</a><br><a class=\"\" data-gentics-aloha-object-id=\"/biographie-de-birelli-lagrene\" data-gentics-aloha-repository=\"com.gentics.aloha.repositories.LinkList\" data-name=\"Biographie de Birelli Lagrene\" href=\"/biographie-de-birelli-lagrene\">Bir\u00e9li Lagr\u00e8ne</a><br><a class=\"\" data-gentics-aloha-object-id=\"/biographie-de-tchavolo-schmitt\" data-gentics-aloha-repository=\"com.gentics.aloha.repositories.LinkList\" data-name=\"Biographie de Tchavolo Schmitt\" href=\"/biographie-de-tchavolo-schmitt\">Tchavolo Schmidt</a><br><br>\n\n\n", 
+            "slug": "bienvenue", 
             "title": "Bienvenue"
         }
-    },
+    }, 
     {
-        "pk": 2,
-        "model": "coop_page.page",
+        "pk": 2, 
+        "model": "coop_cms.article", 
         "fields": {
-            "content": "<p>Ce site reprend des liens vers quelques <i></i>jazzmen <i></i>c\u00e9l\u00e8bres en guise d'exemple<br></p><p><br class=\"GENTICS_ephemera\"></p><p><br class=\"GENTICS_ephemera\"></p><ul><li><br></li></ul>",
-            "slug": "presentation",
+            "content": "<p>Ce site reprend des liens vers quelques <i></i>jazzmen <i></i>c\u00e9l\u00e8bres en guise d'exemple<br></p><p><br class=\"GENTICS_ephemera\"></p><p><br class=\"GENTICS_ephemera\"></p><ul><li><br></li></ul>", 
+            "slug": "presentation", 
             "title": "Pr\u00e9sentation"
         }
-    },
+    }, 
     {
-        "pk": 3,
-        "model": "coop_page.page",
+        "pk": 3, 
+        "model": "coop_cms.article", 
         "fields": {
-            "content": "Page content",
-            "slug": "biographie-de-django-reinhardt",
+            "content": "Page content", 
+            "slug": "biographie-de-django-reinhardt", 
             "title": "Biographie de Django Reinhardt"
         }
-    },
+    }, 
     {
-        "pk": 4,
-        "model": "coop_page.page",
+        "pk": 4, 
+        "model": "coop_cms.article", 
         "fields": {
-            "content": "\n    Guitariste de jazz manouche h\u00e9ritier de Django Reinhardt.<br><br><br>Il commence sa carri\u00e8re tr\u00e8s jeune.<br><br><br><h2>Citations</h2><p><br class=\"GENTICS_ephemera\"></p><p></p><blockquote>\n<div>\n<ul><li>Le jazz manouche n'existe pas, je suis un jazzman.</li></ul><p><br></p></div>\n</blockquote><p>\n</p><blockquote>\n<div>\n<ul><li>Je ne peux pas concevoir la musique sans qu'elle soit partag\u00e9e avec d'autres musiciens, c'est vraiment vital...<br></li></ul></div>\n</blockquote><p>\n</p><blockquote>\n<div>\n<p><br class=\"GENTICS_ephemera\"></p><ul><li>Le swing c'est le swing, il n'y a pas de secret&nbsp;!</li></ul><p><br class=\"GENTICS_ephemera\"></p><h3><br class=\"GENTICS_ephemera\"></h3></div>\n</blockquote><h3>Voir aussi</h3><h3><br class=\"GENTICS_ephemera\"></h3><p><a data-name=\"Biographie de Django Reinhardt\" data-gentics-aloha-object-id=\"/biographie-de-django-reinhardt\" data-gentics-aloha-repository=\"com.gentics.aloha.repositories.LinkList\" href=\"/biographie-de-django-reinhardt\">Django Reinhardt</a><br class=\"GENTICS_ephemera\"></p><h2>\n</h2>\n",
-            "slug": "biographie-de-birelli-lagrene",
+            "content": "\n    Guitariste de jazz manouche h\u00e9ritier de Django Reinhardt.<br><br><br>Il commence sa carri\u00e8re tr\u00e8s jeune.<br><br><br><h2>Citations</h2><p><br class=\"GENTICS_ephemera\"></p><p></p><blockquote>\n<div>\n<ul><li>Le jazz manouche n'existe pas, je suis un jazzman.</li></ul><p><br></p></div>\n</blockquote><p>\n</p><blockquote>\n<div>\n<ul><li>Je ne peux pas concevoir la musique sans qu'elle soit partag\u00e9e avec d'autres musiciens, c'est vraiment vital...<br></li></ul></div>\n</blockquote><p>\n</p><blockquote>\n<div>\n<p><br class=\"GENTICS_ephemera\"></p><ul><li>Le swing c'est le swing, il n'y a pas de secret&nbsp;!</li></ul><p><br class=\"GENTICS_ephemera\"></p><h3><br class=\"GENTICS_ephemera\"></h3></div>\n</blockquote><h3>Voir aussi</h3><h3><br class=\"GENTICS_ephemera\"></h3><p><a data-name=\"Biographie de Django Reinhardt\" data-gentics-aloha-object-id=\"/biographie-de-django-reinhardt\" data-gentics-aloha-repository=\"com.gentics.aloha.repositories.LinkList\" href=\"/biographie-de-django-reinhardt\">Django Reinhardt</a><br class=\"GENTICS_ephemera\"></p><h2>\n</h2>\n", 
+            "slug": "biographie-de-birelli-lagrene", 
             "title": "Biographie de Birelli Lagrene"
         }
-    },
+    }, 
     {
-        "pk": 5,
-        "model": "coop_page.page",
+        "pk": 5, 
+        "model": "coop_cms.article", 
         "fields": {
-            "content": "Page content",
-            "slug": "biographie-de-tchavolo-schmitt",
+            "content": "Page content", 
+            "slug": "biographie-de-tchavolo-schmitt", 
             "title": "Biographie de Tchavolo Schmitt"
         }
-    },
+    }, 
     {
-        "pk": 6,
-        "model": "coop_page.page",
+        "pk": 6, 
+        "model": "coop_cms.article", 
         "fields": {
-            "content": "Page content",
-            "slug": "contatcs",
+            "content": "Page content", 
+            "slug": "contatcs", 
             "title": "Contatcs"
         }
-    },
+    }, 
     {
-        "pk": 7,
-        "model": "coop_page.page",
+        "pk": 7, 
+        "model": "coop_cms.article", 
         "fields": {
-            "content": "Dans le menu Wikipedia, des liens sur les pages de cette c\u00e9l\u00e8bre encyclop\u00e9die.\n",
-            "slug": "wikipedia",
+            "content": "Dans le menu Wikipedia, des liens sur les pages de cette c\u00e9l\u00e8bre encyclop\u00e9die.\n", 
+            "slug": "wikipedia", 
             "title": "Wikipedia"
         }
-    },
+    }, 
     {
-        "pk": 8,
-        "model": "coop_page.page",
+        "pk": 8, 
+        "model": "coop_cms.article", 
         "fields": {
-            "content": "Page content",
-            "slug": "biographies",
+            "content": "Page content", 
+            "slug": "biographies", 
             "title": "Biographies"
         }
-    },
+    }, 
     {
-        "pk": 5,
-        "model": "coop_tree.navnode",
+        "pk": 5, 
+        "model": "coop_cms.navnode", 
         "fields": {
-            "ordering": 1,
-            "object_id": 1,
+            "ordering": 1, 
+            "parent": null, 
             "content_type": [
-                "coop_page",
-                "page"
-            ],
-            "parent": null,
+                "coop_cms", 
+                "article"
+            ], 
+            "object_id": 1, 
             "label": "Bienvenue"
         }
-    },
+    }, 
     {
-        "pk": 6,
-        "model": "coop_tree.navnode",
+        "pk": 6, 
+        "model": "coop_cms.navnode", 
         "fields": {
-            "ordering": 1,
-            "object_id": 2,
+            "ordering": 1, 
+            "parent": 5, 
             "content_type": [
-                "coop_page",
-                "page"
-            ],
-            "parent": 5,
+                "coop_cms", 
+                "article"
+            ], 
+            "object_id": 2, 
             "label": "Pr\u00e9sentation"
         }
-    },
+    }, 
     {
-        "pk": 7,
-        "model": "coop_tree.navnode",
+        "pk": 7, 
+        "model": "coop_cms.navnode", 
         "fields": {
-            "ordering": 3,
-            "object_id": 6,
+            "ordering": 3, 
+            "parent": 5, 
             "content_type": [
-                "coop_page",
-                "page"
-            ],
-            "parent": 5,
+                "coop_cms", 
+                "article"
+            ], 
+            "object_id": 6, 
             "label": "Contacts"
         }
-    },
+    }, 
     {
-        "pk": 8,
-        "model": "coop_tree.navnode",
+        "pk": 8, 
+        "model": "coop_cms.navnode", 
         "fields": {
-            "ordering": 1,
-            "object_id": 3,
+            "ordering": 1, 
+            "parent": 11, 
             "content_type": [
-                "coop_page",
-                "page"
-            ],
-            "parent": 11,
+                "coop_cms", 
+                "article"
+            ], 
+            "object_id": 3, 
             "label": "Django Reinhardt\t\t\t\t"
         }
-    },
+    }, 
     {
-        "pk": 9,
-        "model": "coop_tree.navnode",
+        "pk": 9, 
+        "model": "coop_cms.navnode", 
         "fields": {
-            "ordering": 2,
-            "object_id": 4,
+            "ordering": 2, 
+            "parent": 11, 
             "content_type": [
-                "coop_page",
-                "page"
-            ],
-            "parent": 11,
+                "coop_cms", 
+                "article"
+            ], 
+            "object_id": 4, 
             "label": "Bir\u00e9li Lagr\u00e8ne\t\t\t\t"
         }
-    },
+    }, 
     {
-        "pk": 10,
-        "model": "coop_tree.navnode",
+        "pk": 10, 
+        "model": "coop_cms.navnode", 
         "fields": {
-            "ordering": 3,
-            "object_id": 5,
+            "ordering": 3, 
+            "parent": 11, 
             "content_type": [
-                "coop_page",
-                "page"
-            ],
-            "parent": 11,
+                "coop_cms", 
+                "article"
+            ], 
+            "object_id": 5, 
             "label": "Tchavolo Schmitt\t\t\t\t"
         }
-    },
+    }, 
     {
-        "pk": 11,
-        "model": "coop_tree.navnode",
+        "pk": 11, 
+        "model": "coop_cms.navnode", 
         "fields": {
-            "ordering": 2,
-            "object_id": 8,
+            "ordering": 2, 
+            "parent": 5, 
             "content_type": [
-                "coop_page",
-                "page"
-            ],
-            "parent": 5,
+                "coop_cms", 
+                "article"
+            ], 
+            "object_id": 8, 
             "label": "Biographies"
         }
-    },
+    }, 
     {
-        "pk": 12,
-        "model": "coop_tree.navnode",
+        "pk": 12, 
+        "model": "coop_cms.navnode", 
         "fields": {
-            "ordering": 2,
-            "object_id": 7,
+            "ordering": 2, 
+            "parent": null, 
             "content_type": [
-                "coop_page",
-                "page"
-            ],
-            "parent": null,
+                "coop_cms", 
+                "article"
+            ], 
+            "object_id": 7, 
             "label": "Wikipedia"
         }
-    },
+    }, 
     {
-        "pk": 13,
-        "model": "coop_tree.navnode",
+        "pk": 13, 
+        "model": "coop_cms.navnode", 
         "fields": {
-            "ordering": 2,
-            "object_id": 3,
+            "ordering": 2, 
+            "parent": 12, 
             "content_type": [
-                "coop_tree",
-                "url"
-            ],
-            "parent": 12,
+                "coop_cms", 
+                "link"
+            ], 
+            "object_id": 3, 
             "label": "Bir\u00e9li"
         }
-    },
+    }, 
     {
-        "pk": 14,
-        "model": "coop_tree.navnode",
+        "pk": 14, 
+        "model": "coop_cms.navnode", 
         "fields": {
-            "ordering": 1,
-            "object_id": 2,
+            "ordering": 1, 
+            "parent": 12, 
             "content_type": [
-                "coop_tree",
-                "url"
-            ],
-            "parent": 12,
+                "coop_cms", 
+                "link"
+            ], 
+            "object_id": 2, 
             "label": "Django"
         }
-    },
+    }, 
     {
-        "pk": 15,
-        "model": "coop_tree.navnode",
+        "pk": 15, 
+        "model": "coop_cms.navnode", 
         "fields": {
-            "ordering": 3,
-            "object_id": 1,
+            "ordering": 3, 
+            "parent": 12, 
             "content_type": [
-                "coop_tree",
-                "url"
-            ],
-            "parent": 12,
+                "coop_cms", 
+                "link"
+            ], 
+            "object_id": 1, 
             "label": "Tchavolo"
         }
-    },
+    }, 
     {
-        "pk": 1,
-        "model": "coop_tree.url",
+        "pk": 1, 
+        "model": "coop_cms.link", 
         "fields": {
             "url": "http://fr.wikipedia.org/wiki/Tchavolo_Schmitt"
         }
-    },
+    }, 
     {
-        "pk": 2,
-        "model": "coop_tree.url",
+        "pk": 2, 
+        "model": "coop_cms.link", 
         "fields": {
             "url": "http://fr.wikipedia.org/wiki/Django_Reinhardt"
         }
-    },
+    }, 
     {
-        "pk": 3,
-        "model": "coop_tree.url",
+        "pk": 3, 
+        "model": "coop_cms.link", 
         "fields": {
             "url": "http://fr.wikipedia.org/wiki/Bir%C3%A9li_Lagr%C3%A8ne"
         }

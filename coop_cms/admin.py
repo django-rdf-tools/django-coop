@@ -2,7 +2,7 @@
 from django.contrib import admin
 from django.core.urlresolvers import reverse
 import models
-from forms import NavigableTypeForm
+from forms import NavTypeForm
 
 class NavNodeAdmin(admin.ModelAdmin):
     list_display = ["label", 'parent', 'ordering', 'content_type', 'object_id']
@@ -10,10 +10,10 @@ class NavNodeAdmin(admin.ModelAdmin):
 admin.site.register(models.NavNode, NavNodeAdmin)
 
 
-class NavigableTypeAdmin(admin.ModelAdmin):
-    form = NavigableTypeForm
+class NavTypeAdmin(admin.ModelAdmin):
+    form = NavTypeForm
     
-admin.site.register(models.NavigableType, NavigableTypeAdmin)
+admin.site.register(models.NavType, NavTypeAdmin)
 
 class NavTreeAdmin(admin.ModelAdmin):
 

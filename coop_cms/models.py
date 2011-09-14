@@ -7,7 +7,7 @@ from django.template.loader import get_template
 from django.template import Context
 from django_extensions.db.models import TimeStampedModel, AutoSlugField
 
-class NavigableType(models.Model):
+class NavType(models.Model):
     
     LABEL_USE_UNICODE = 0
     LABEL_USE_SEARCH_FIELD = 1
@@ -68,19 +68,19 @@ class NavNode(models.Model):
         #Display the node and his children as nested ul and li html tags.
         #Render from a template who is in charge of rendering children
         #This prints the whole tree recursively
-        t = get_template('coop_tree/_node_li.html')
+        t = get_template('coop_cms/_node_li.html')
         return t.render(Context({'node': self}))
         
     def as_breadcrumb(self):
-        t = get_template('coop_tree/_node_breadcrumb.html')
+        t = get_template('coop_cms/_node_breadcrumb.html')
         return t.render(Context({'node': self}))
 
     def children_as_li(self):
-        t = get_template('coop_tree/_node_children_li.html')
+        t = get_template('coop_cms/_node_children_li.html')
         return t.render(Context({'node': self}))
         
     def siblings_as_li(self):
-        t = get_template('coop_tree/_node_sibling_li.html')
+        t = get_template('coop_cms/_node_sibling_li.html')
         return t.render(Context({'node': self}))
         
 

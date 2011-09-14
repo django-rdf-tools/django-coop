@@ -5,7 +5,7 @@ from django.template.loader import get_template
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
-from coop_tree.models import NavNode
+from coop_cms.models import NavNode
 from django.contrib.contenttypes.models import ContentType
 register = template.Library()
 

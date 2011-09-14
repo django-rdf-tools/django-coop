@@ -27,7 +27,7 @@ urlpatterns = patterns('',
 
     (r'^membre/', include('coop.membre.urls')),
 
-    url(r'^tree/$', 'coop_tree.views.process_nav_edition', name='navigation_tree'),
+    url(r'^tree/$', 'coop_cms.views.process_nav_edition', name='navigation_tree'),
 )
 
 if settings.DEBUG or ('test' in sys.argv):
@@ -37,7 +37,7 @@ if settings.DEBUG or ('test' in sys.argv):
     )
 
 urlpatterns += patterns('',
-    (r'^(?P<url>.*)$', 'coop_tree.views.view_article'),
+    (r'^(?P<url>.*)$', 'coop_cms.views.view_article'),
 )
 
 # urlpatterns += patterns('',

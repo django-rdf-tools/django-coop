@@ -67,7 +67,7 @@ STATICFILES_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     os.path.abspath(PROJECT_PATH+'/static/'),
     os.path.abspath(PROJECT_PATH+'/djaloha/static/'),
-    os.path.abspath(PROJECT_PATH+'/coop_tree/static/'),
+    os.path.abspath(PROJECT_PATH+'/coop_cms/static/'),
     os.path.abspath(PROJECT_PATH+'/coop/static/'),
 )
 
@@ -147,7 +147,7 @@ INSTALLED_APPS = (
     'coop',
     'd2rq',
     'djaloha',
-    'coop_tree',
+    'coop_cms',
     'skosxl',
 #    'uriresolve',
 )

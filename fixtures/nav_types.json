@@ -1,25 +1,25 @@
 [
     {
-        "pk": 1,
-        "model": "coop_tree.navigabletype",
+        "pk": 1, 
+        "model": "coop_cms.navtype", 
         "fields": {
-            "search_field": "title",
+            "search_field": "title", 
             "content_type": [
-                "coop_page",
-                "page"
-            ],
+                "coop_cms", 
+                "article"
+            ], 
             "label_rule": 1
         }
-    },
+    }, 
     {
-        "pk": 2,
-        "model": "coop_tree.navigabletype",
+        "pk": 2, 
+        "model": "coop_cms.navtype", 
         "fields": {
-            "search_field": "url",
+            "search_field": "url", 
             "content_type": [
-                "coop_tree",
-                "url"
-            ],
+                "coop_cms", 
+                "link"
+            ], 
             "label_rule": 1
         }
     }
