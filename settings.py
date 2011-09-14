@@ -148,7 +148,6 @@ INSTALLED_APPS = (
     'd2rq',
     'djaloha',
     'coop_tree',
-    'coop_page',
     'skosxl',
 #    'uriresolve',
 )
@@ -159,7 +158,7 @@ LIVESETTINGS_OPTIONS = \
     'DB': True,
        'SETTINGS': {
             u'd2rq': {u'MAPPED_APPS': u'["coop_local", "skosxl"]'},
-            u'coop_tree': {u'CONTENT_APPS': u'["coop_tree", "coop_page"]'}
+            u'coop_tree': {u'CONTENT_APPS': u'["coop_tree"]'}
         }
     }
 }

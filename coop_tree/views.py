@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseForbidden
-from models import NavNode, NavigableType
+from models import NavNode, NavigableType, Article
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, Context
 from django.core.urlresolvers import reverse
@@ -12,6 +12,40 @@ from django.core.exceptions import ValidationError, PermissionDenied
 from djaloha.views import process_object_edition
 from django.template.loader import select_template
 from django.db.models.aggregates import Max
+import re
+
+def view_article(request, url):
+    
+    article = get_object_or_404(Article, slug=url)
+    
+    def validate_article(article):
+        #remove the <br> added by aloha
+        article.title = article.title.replace('<br>', '')
+        
+        #Make sure that there is no HTML content in the title
+        if re.search(u'<(.*)>', article.title):
+            raise ValidationError(_(u'HTML content is not allowed in the title'))
+    
+    response = process_object_edition(request, article, object_validator=validate_article)
+    
+    if response:
+        return response
+
+    context_dict = {
+        'object': article,
+        'links': Article.objects.all(),
+        'editable': True,
+        'edit_mode': request.GET.get('mode', 'view')=='edit',
+    }
+
+    return render_to_response(
+        'article.html',
+        context_dict,
+        context_instance=RequestContext(request)
+    )
+
+
+#navigation tree --------------------------------------------------------------
 
 def view_navnode(request):
     """show info about the node when selected"""

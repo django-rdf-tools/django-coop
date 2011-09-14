@@ -5,22 +5,7 @@ from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.template.loader import get_template
 from django.template import Context
-from django.core.urlresolvers import reverse
-
-class Url(models.Model):
-    """A url. This is a content: Maybe misplaced. Included in his own app?"""
-    url = models.URLField()
-    
-    def get_absolute_url(self):
-        return self.url
-    
-    def get_label(self):
-        if self.url.find('http://')==0:
-            return self.url[7:]
-        return self.url
-    
-    def __unicode__(self):
-        return self.url
+from django_extensions.db.models import TimeStampedModel, AutoSlugField
 
 class NavigableType(models.Model):
     
@@ -105,3 +90,41 @@ class NavTree(models.Model):
     
     class Meta:
         verbose_name_plural = verbose_name = _(u'Navigation tree')
+
+class Article(TimeStampedModel):
+    """An article : static page, blog item, ..."""
+    slug = AutoSlugField(populate_from='title', max_length=100, unique=True)
+    title = models.TextField(_(u'title'), default=_('Page title'))
+    content = models.TextField(_(u'content'), default=_('Page content'))
+        
+    class Meta:
+        verbose_name = _(u"article")
+        verbose_name_plural = _(u"articles")
+    
+    def __unicode__(self):
+        return self.slug
+    
+    def get_label(self):
+        return self.title
+    
+    def get_absolute_url(self):
+        return u'/'+self.slug
+    
+class Link(TimeStampedModel):
+    """Link to a given url"""
+    url = models.URLField()
+    
+    def get_absolute_url(self):
+        return self.url
+    
+    def get_label(self):
+        if self.url.find('http://')==0:
+            return self.url[7:]
+        return self.url
+    
+    def __unicode__(self):
+        return self.url
+
+    class Meta:
+        verbose_name = _(u"link")
+        verbose_name_plural = _(u"links")

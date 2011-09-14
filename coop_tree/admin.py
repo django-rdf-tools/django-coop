@@ -3,7 +3,6 @@ from django.contrib import admin
 from django.core.urlresolvers import reverse
 import models
 from forms import NavigableTypeForm
-admin.site.register(models.Url)
 
 class NavNodeAdmin(admin.ModelAdmin):
     list_display = ["label", 'parent', 'ordering', 'content_type', 'object_id']
@@ -30,3 +29,6 @@ class NavTreeAdmin(admin.ModelAdmin):
         return reverse('navigation_tree')
 
 admin.site.register(models.NavTree, NavTreeAdmin)
+
+admin.site.register(models.Article)
+admin.site.register(models.Link)

@@ -5,13 +5,13 @@ from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 from django.template import Template, Context
-from models import Url, NavNode, NavigableType
+from models import Link, NavNode, NavigableType, Article
 import json
 
 class NavigationTest(TestCase):
 
     def setUp(self):
-        self.url_ct = ContentType.objects.get(app_label='coop_tree', model='url')
+        self.url_ct = ContentType.objects.get(app_label='coop_tree', model='link')
         NavigableType.objects.create(content_type=self.url_ct, search_field='url', label_rule=NavigableType.LABEL_USE_SEARCH_FIELD)
         self.editor = None
         self.staff = None
@@ -42,13 +42,13 @@ class NavigationTest(TestCase):
         self.assertEqual(response.status_code, 200)
         
     def test_add_node(self):
-        url = Url.objects.create(url="http://www.google.fr")
+        link = Link.objects.create(url="http://www.google.fr")
         self._log_as_editor()
         
         data = {
             'msg_id': 'add_navnode',
-            'object_type':'coop_tree.url',
-            'object_id': url.id,
+            'object_type':'coop_tree.link',
+            'object_id': link.id,
         }
         response = self.client.post(self.srv_url, data=data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
@@ -56,34 +56,34 @@ class NavigationTest(TestCase):
         self.assertEqual(result['status'], 'success')
         self.assertEqual(result['label'], 'http://www.google.fr')
         
-        nav_node = NavNode.objects.get(object_id=url.id, content_type=self.url_ct)
+        nav_node = NavNode.objects.get(object_id=link.id, content_type=self.url_ct)
         self.assertEqual(nav_node.label, 'http://www.google.fr')
-        self.assertEqual(nav_node.content_object, url)
+        self.assertEqual(nav_node.content_object, link)
         self.assertEqual(nav_node.parent, None)
         self.assertEqual(nav_node.ordering, 1)
         
         #Add a second node as child
-        url2 = Url.objects.create(url="http://www.python.org")
-        data['object_id'] = url2.id
-        data['parent_id'] = url.id
+        link2 = Link.objects.create(url="http://www.python.org")
+        data['object_id'] = link2.id
+        data['parent_id'] = link.id
         response = self.client.post(self.srv_url, data=data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
         result = json.loads(response.content)
         self.assertEqual(result['status'], 'success')
         self.assertEqual(result['label'], 'http://www.python.org')
-        nav_node2 = NavNode.objects.get(object_id=url2.id, content_type=self.url_ct)
+        nav_node2 = NavNode.objects.get(object_id=link2.id, content_type=self.url_ct)
         self.assertEqual(nav_node2.label, 'http://www.python.org')
-        self.assertEqual(nav_node2.content_object, url2)
+        self.assertEqual(nav_node2.content_object, link2)
         self.assertEqual(nav_node2.parent, nav_node)
         self.assertEqual(nav_node.ordering, 1)
         
     def test_move_node_to_parent(self):
         addrs = ("http://www.google.fr", "http://www.python.org", "http://www.quinode.fr", "http://www.apidev.fr")
-        urls = [Url.objects.create(url=a) for a in addrs]
+        links = [Link.objects.create(url=a) for a in addrs]
         
         nodes = []
-        for i, url in enumerate(urls):
-            nodes.append(NavNode.objects.create(label=url.url, content_object=url, ordering=i+1, parent=None))
+        for i, link in enumerate(links):
+            nodes.append(NavNode.objects.create(label=link.url, content_object=link, ordering=i+1, parent=None))
         
         self._log_as_editor()
         
@@ -108,11 +108,11 @@ class NavigationTest(TestCase):
         
     def test_move_node_to_root(self):
         addrs = ("http://www.google.fr", "http://www.python.org", "http://www.toto.fr")
-        urls = [Url.objects.create(url=a) for a in addrs]
+        links = [Link.objects.create(url=a) for a in addrs]
         
         nodes = []
-        for i, url in enumerate(urls):
-            nodes.append(NavNode.objects.create(label=url.url, content_object=url, ordering=i+1, parent=None))
+        for i, link in enumerate(links):
+            nodes.append(NavNode.objects.create(label=link.url, content_object=link, ordering=i+1, parent=None))
         nodes[1].parent = nodes[0]
         nodes[1].ordering = 1
         nodes[1].save()
@@ -162,11 +162,11 @@ class NavigationTest(TestCase):
         
     def test_move_same_level(self):
         addrs = ("http://www.google.fr", "http://www.python.org", "http://www.quinode.fr", "http://www.apidev.fr")
-        urls = [Url.objects.create(url=a) for a in addrs]
+        links = [Link.objects.create(url=a) for a in addrs]
         
         nodes = []
-        for i, url in enumerate(urls):
-            nodes.append(NavNode.objects.create(label=url.url, content_object=url, ordering=i+1, parent=None))
+        for i, link in enumerate(links):
+            nodes.append(NavNode.objects.create(label=link.url, content_object=link, ordering=i+1, parent=None))
         
         self._log_as_editor()
         
@@ -204,11 +204,11 @@ class NavigationTest(TestCase):
         
     def test_delete_node(self):
         addrs = ("http://www.google.fr", "http://www.python.org", "http://www.quinode.fr", "http://www.apidev.fr")
-        urls = [Url.objects.create(url=a) for a in addrs]
+        links = [Link.objects.create(url=a) for a in addrs]
         
         nodes = []
-        for i, url in enumerate(urls):
-            nodes.append(NavNode.objects.create(label=url.url, content_object=url, ordering=i+1, parent=None))
+        for i, link in enumerate(links):
+            nodes.append(NavNode.objects.create(label=link.url, content_object=link, ordering=i+1, parent=None))
         
         self._log_as_editor()
         
@@ -231,11 +231,11 @@ class NavigationTest(TestCase):
             
     def test_delete_node_and_children(self):
         addrs = ("http://www.google.fr", "http://www.python.org", "http://www.quinode.fr", "http://www.apidev.fr")
-        urls = [Url.objects.create(url=a) for a in addrs]
+        links = [Link.objects.create(url=a) for a in addrs]
         
         nodes = []
-        for i, url in enumerate(urls):
-            nodes.append(NavNode.objects.create(label=url.url, content_object=url, ordering=i+1, parent=None))
+        for i, link in enumerate(links):
+            nodes.append(NavNode.objects.create(label=link.url, content_object=link, ordering=i+1, parent=None))
         
         nodes[-1].parent = nodes[-2]
         nodes[-1].ordering = 1
@@ -263,11 +263,11 @@ class NavigationTest(TestCase):
             
     def test_rename_node(self):
         addrs = ("http://www.google.fr", "http://www.python.org", "http://www.quinode.fr", "http://www.apidev.fr")
-        urls = [Url.objects.create(url=a) for a in addrs]
+        links = [Link.objects.create(url=a) for a in addrs]
         
         nodes = []
-        for i, url in enumerate(urls):
-            nodes.append(NavNode.objects.create(label=url.url, content_object=url, ordering=i+1, parent=None))
+        for i, link in enumerate(links):
+            nodes.append(NavNode.objects.create(label=link.url, content_object=link, ordering=i+1, parent=None))
         
         self._log_as_editor()
         
@@ -284,7 +284,7 @@ class NavigationTest(TestCase):
     
         node = NavNode.objects.get(id=nodes[0].id)
         self.assertEqual(data["name"], node.label)
-        self.assertEqual(urls[0].url, node.content_object.url)#object not renamed
+        self.assertEqual(links[0].url, node.content_object.url)#object not renamed
         
         for n in nodes[1:]:
             node = NavNode.objects.get(id=n.id)
@@ -292,11 +292,11 @@ class NavigationTest(TestCase):
         
     def test_view_node(self):
         addrs = ("http://www.google.fr", "http://www.python.org", "http://www.quinode.fr", "http://www.apidev.fr")
-        urls = [Url.objects.create(url=a) for a in addrs]
+        links = [Link.objects.create(url=a) for a in addrs]
         
         nodes = []
-        for i, url in enumerate(urls):
-            nodes.append(NavNode.objects.create(label=url.url, content_object=url, ordering=i+1, parent=None))
+        for i, link in enumerate(links):
+            nodes.append(NavNode.objects.create(label=link.url, content_object=link, ordering=i+1, parent=None))
         
         self._log_as_editor()
         
@@ -315,11 +315,11 @@ class NavigationTest(TestCase):
         
     def _do_test_get_suggest_list(self):
         addrs = ("http://www.google.fr", "http://www.python.org", "http://www.quinode.fr", "http://www.apidev.fr")
-        urls = [Url.objects.create(url=a) for a in addrs]
+        links = [Link.objects.create(url=a) for a in addrs]
         
         nodes = []
-        for i, url in enumerate(urls):
-            nodes.append(NavNode.objects.create(label=url.url, content_object=url, ordering=i+1, parent=None))
+        for i, link in enumerate(links):
+            nodes.append(NavNode.objects.create(label=link.url, content_object=link, ordering=i+1, parent=None))
         
         self._log_as_editor()
         
@@ -373,13 +373,13 @@ class NavigationTest(TestCase):
         self.assertEqual(response.status_code, 404)
         
     def test_not_ajax(self):
-        url = Url.objects.create(url="http://www.google.fr")
+        link = Link.objects.create(url="http://www.google.fr")
         self._log_as_editor()
         
         data = {
             'msg_id': 'add_navnode',
-            'object_type':'coop_tree.url',
-            'object_id': url.id,
+            'object_type':'coop_tree.link',
+            'object_id': link.id,
         }
         
         response = self.client.post(self.srv_url, data=data)
@@ -391,7 +391,7 @@ class NavigationTest(TestCase):
         
         data = {
             'msg_id': 'add_navnode',
-            'object_type':'coop_tree.url',
+            'object_type':'coop_tree.link',
             'object_id': 11,
         }
         
@@ -429,8 +429,8 @@ class NavigationTest(TestCase):
         self.assertEqual(result['status'], 'error')
         
     def test_check_auth(self):
-        url = Url.objects.create(url='http://www.google.fr')
-        node = NavNode.objects.create(label=url.url, content_object=url, ordering=1, parent=None)
+        link = Link.objects.create(url='http://www.google.fr')
+        node = NavNode.objects.create(label=link.url, content_object=link, ordering=1, parent=None)
 
         data = {
             'node_id': node.id,
@@ -438,8 +438,8 @@ class NavigationTest(TestCase):
             'ref_pos': 'after',
             'name': 'oups',
             'term': 'goo',
-            'object_type':'coop_tree.url',
-            'object_id': url.id,
+            'object_type':'coop_tree.link',
+            'object_id': link.id,
         }
         
         for msg_id in ('add_navnode', 'move_navnode', 'rename_navnode', 'get_suggest_list', 'view_navnode', 'remove_navnode'):
@@ -460,21 +460,21 @@ class NavigationTest(TestCase):
 class TemplateTagsTest(TestCase):
     
     def setUp(self):
-        url1 = Url.objects.create(url='http://www.google.fr')
-        url2 = Url.objects.create(url='http://www.python.org')
-        url3 = Url.objects.create(url='http://www.quinode.fr')
-        url4 = Url.objects.create(url='http://www.apidev.fr')
-        url5 = Url.objects.create(url='http://www.toto.fr')
-        url6 = Url.objects.create(url='http://www.titi.fr')
+        link1 = Link.objects.create(url='http://www.google.fr')
+        link2 = Link.objects.create(url='http://www.python.org')
+        link3 = Link.objects.create(url='http://www.quinode.fr')
+        link4 = Link.objects.create(url='http://www.apidev.fr')
+        link5 = Link.objects.create(url='http://www.toto.fr')
+        link6 = Link.objects.create(url='http://www.titi.fr')
         
         self.nodes = []
         
-        self.nodes.append(NavNode.objects.create(label=url1.url, content_object=url1, ordering=1, parent=None))
-        self.nodes.append(NavNode.objects.create(label=url2.url, content_object=url2, ordering=2, parent=None))
-        self.nodes.append(NavNode.objects.create(label=url3.url, content_object=url3, ordering=2, parent=None))
-        self.nodes.append(NavNode.objects.create(label=url4.url, content_object=url4, ordering=2, parent=self.nodes[2]))
-        self.nodes.append(NavNode.objects.create(label=url5.url, content_object=url5, ordering=2, parent=self.nodes[3]))
-        self.nodes.append(NavNode.objects.create(label=url6.url, content_object=url6, ordering=2, parent=self.nodes[3]))
+        self.nodes.append(NavNode.objects.create(label=link1.url, content_object=link1, ordering=1, parent=None))
+        self.nodes.append(NavNode.objects.create(label=link2.url, content_object=link2, ordering=2, parent=None))
+        self.nodes.append(NavNode.objects.create(label=link3.url, content_object=link3, ordering=2, parent=None))
+        self.nodes.append(NavNode.objects.create(label=link4.url, content_object=link4, ordering=2, parent=self.nodes[2]))
+        self.nodes.append(NavNode.objects.create(label=link5.url, content_object=link5, ordering=2, parent=self.nodes[3]))
+        self.nodes.append(NavNode.objects.create(label=link6.url, content_object=link6, ordering=2, parent=self.nodes[3]))
         
     def test_view_navigation(self):
         tpl = Template('{% load coop_navigation %}{%navigation_as_nested_ul%}')
@@ -521,21 +521,159 @@ class TemplateTagsTest(TestCase):
             
     def test_breadcrumb_no_nodes(self):
         NavNode.objects.all().delete()
-        url = Url.objects.get(url='http://www.python.org')
+        link = Link.objects.get(url='http://www.python.org')
         tpl = Template('{% load coop_navigation %}{% navigation_breadcrumb obj %}')
-        html = tpl.render(Context({'obj': url})).replace(' ', '')
+        html = tpl.render(Context({'obj': link})).replace(' ', '')
         self.assertEqual(html, '')
             
     def test_children_no_nodes(self):
         NavNode.objects.all().delete()
-        url = Url.objects.get(url='http://www.python.org')
+        link = Link.objects.get(url='http://www.python.org')
         tpl = Template('{% load coop_navigation %}{%navigation_children obj %}')
-        html = tpl.render(Context({'obj': url })).replace(' ', '')
+        html = tpl.render(Context({'obj': link })).replace(' ', '')
         self.assertEqual(html, '')
             
     def test_siblings_no_nodes(self):
         NavNode.objects.all().delete()
-        url = Url.objects.get(url='http://www.python.org')
+        link = Link.objects.get(url='http://www.python.org')
         tpl = Template('{% load coop_navigation %}{% navigation_siblings obj %}')
-        html = tpl.render(Context({'obj': url})).replace(' ', '')
+        html = tpl.render(Context({'obj': link})).replace(' ', '')
         self.assertEqual(html, '')
+        
+
+class ArticleTest(TestCase):
+    
+    def _log_as_editor(self):
+        user = User.objects.create_user('toto', 'toto@toto.fr', 'toto')
+        
+        can_edit_article = Permission.objects.get(content_type__app_label='coop_tree', codename='change_article')
+        user.user_permissions.add(can_edit_article)
+        
+        self.client.login(username='toto', password='toto')
+        
+    def _edit_article(self, url, data, expected_status="success"):
+        response = self.client.post(url, data=data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(200, response.status_code)
+        result = json.loads(response.content)
+        self.assertEqual(expected_status, result["status"])
+        return result
+
+    def _check_article(self, article, data):
+        article = Article.objects.get(slug=article.slug) #refresh
+        for (key, value) in data.items():
+            self.assertEqual(getattr(article, key), data[key])
+            
+    def _check_article_not_changed(self, article, data, initial_data):
+        article = Article.objects.get(slug=article.slug) #refresh
+        
+        for (key, value) in data.items():
+            self.assertNotEqual(getattr(article, key), data[key])
+            
+        for (key, value) in initial_data.items():
+            self.assertEqual(getattr(article, key), initial_data[key])
+
+    def test_view_article(self):
+        article = Article.objects.create(title="test")
+        self.assertEqual(article.slug, 'test')
+        response = self.client.get(article.get_absolute_url())
+        self.assertEqual(200, response.status_code)
+        
+    def test_404_ok(self):
+        response = self.client.get("/jhjhjkahekhj")
+        self.assertEqual(404, response.status_code)
+        
+    def test_is_navigable(self):
+        article = Article.objects.create(title="test")
+        self.assertEqual('/test', article.get_absolute_url())
+
+    def test_create_slug(self):
+        article = Article.objects.create(title=u"voici l'été")
+        self.assertEqual(article.slug, 'voici-lete')
+        response = self.client.get(article.get_absolute_url())
+        self.assertEqual(200, response.status_code)
+        
+    def test_edit_article(self):
+        article = Article.objects.create(title="test")
+        
+        data = {"title": 'salut', 'content': 'bonjour!'}
+        
+        self._log_as_editor()
+        for (key, value) in data.items():
+            self._edit_article(article.get_absolute_url(), {key: value})
+            self._check_article(article, {key: value})
+        self._check_article(article, data)
+        
+        data = {"title": 'bye', 'content': 'au revoir'}
+        self._edit_article(article.get_absolute_url(), data)
+        self._check_article(article, data)
+        
+    def test_article_edition_permission(self):
+        initial_data = {'title': "test", 'content': "this is my article content"}
+        article = Article.objects.create(**initial_data)
+        
+        data = {"title": 'salut'}
+        result = self._edit_article(article.get_absolute_url(), data, 'error')
+        self.assertEqual({'title': initial_data['title']} , result["old_values"])
+        
+        self._check_article_not_changed(article, data, initial_data)
+        
+        
+    def test_article_html_in_title(self):
+        initial_data = {'title': "test", 'content': "this is my article content"}
+        article = Article.objects.create(**initial_data)
+        
+        self._log_as_editor()
+        data = {"title": "<a href='http://www.google.fr'>Google</a>"}
+        result = self._edit_article(article.get_absolute_url(), data, 'error')
+        self.assertEqual({'title': initial_data['title']} , result["old_values"])
+        
+        self._check_article_not_changed(article, data, initial_data)
+        
+        
+    def test_ajax_required_for_article_edition(self):
+        initial_data = {'title': "test", 'content': "this is my article content"}
+        article = Article.objects.create(**initial_data)
+        
+        self._log_as_editor()
+        data = {"title": u"coucou"}
+        response = self.client.post(article.get_absolute_url(), data=data)
+        self.assertEqual(200, response.status_code)
+        
+        self._check_article_not_changed(article, data, initial_data)
+        
+    def _is_aloha_found(self, response):
+        self.assertEqual(200, response.status_code)
+        return (response.content.find('aloha/aloha.js')>0)
+        
+    def test_aloha_loaded(self):
+        initial_data = {'title': "test", 'content': "this is my article content"}
+        article = Article.objects.create(**initial_data)
+        response = self.client.get(article.get_absolute_url())
+        self.assertFalse(self._is_aloha_found(response))
+        
+        response = self.client.get(article.get_absolute_url()+"?mode=view")
+        self.assertFalse(self._is_aloha_found(response))
+        
+        response = self.client.get(article.get_absolute_url()+"?mode=edit")
+        self.assertTrue(self._is_aloha_found(response))
+        
+        self._log_as_editor()
+        response = self.client.get(article.get_absolute_url()+"?mode=edit")
+        self.assertTrue(self._is_aloha_found(response))
+        
+    def test_checks_aloah_links(self):
+        slugs = ("un", "deux", "trois", "quatre")
+        for slug in slugs:
+            Article.objects.create(title=slug)
+        initial_data = {'title': "test", 'content': "this is my article content"}
+        article = Article.objects.create(**initial_data)
+        
+        self._log_as_editor()
+        response = self.client.get(article.get_absolute_url()+"?mode=edit")
+        self.assertTrue(self._is_aloha_found(response))
+        
+        context_slugs = [article.slug for article in response.context['links']]
+        for slug in slugs:
+            self.assertTrue(slug in context_slugs)
+        
+        
