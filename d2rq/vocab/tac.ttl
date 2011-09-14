@@ -1,0 +1,72 @@
+﻿# baseURI: http://ns.bergnet.org/tac/0.1/triple-access-control
+
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix dc: <http://purl.org/dc/elements/1.1/>.
+@prefix acl: <http://www.w3.org/ns/auth/acl#>.
+@prefix tac: <http://ns.bergnet.org/tac/0.1/triple-access-control#>.
+
+
+tac:
+	a owl:Ontology;
+	dc:title "TripleAccessControl Vocabulary";
+	dc:description "TripleAccessControl extension for WebAccessControl";
+	dc:created "2011-09-02";
+	dc:creator <http://www.bergnet.org/people/bergi/card#me>;
+	owl:imports
+		rdf:,
+		acl:.
+
+tac:TripleAuthorization
+	a owl:Class;
+	rdfs:label "TripleAuthorization";
+	rdfs:comment "Defines a set of triple authorizations.";
+	rdfs:subClassOf acl:Authorization.
+
+tac:Filter
+	a owl:Class;
+	rdfs:label "Filter";
+	rdfs:comment "Defines a triple filter.".
+
+tac:accessToTriple
+	a owl:ObjectProperty;
+	rdfs:label "accesToTriple";
+	rdfs:comment "Contains triple authorization information.";
+	rdfs:domain acl:Authorization;
+	rdfs:range tac:TripleAuthorization.
+
+tac:filter
+	a owl:ObjectProperty;
+	rdfs:label "filter";
+	rdfs:comment "Contains triple filter rules.";
+	rdfs:domain tac:TripleAuthorization;
+	rdfs:range tac:Filter.
+
+tac:children
+	a owl:ObjectProperty;
+	rdfs:label "children";
+	rdfs:comment "Contains sub triple authorization informations.";
+	rdfs:domain tac:TripleAuthorization;
+	rdfs:range acl:Authorization.
+
+tac:required
+	a owl:ObjectProperty;
+	rdfs:label "required";
+	rdfs:comment "If this property is true access to the parent triple is only granted if childrens are found.";
+
+acl:mode
+	rdfs:comment "Access mode is defined per triple authorization.";
+	rdfs:domain tac:TripleAuthorization.
+
+rdf:subject
+	rdfs:comment "Subject for a triple filter.";
+	rdfs:domain tac:Filter.
+
+rdf:predicate
+	rdfs:comment "Predicate for a triple filter.";
+	rdfs:domain tac:Filter.
+
+rdf:object
+	rdfs:comment "Object for a triple filter";
+	rdfs:domain tac:Filter.

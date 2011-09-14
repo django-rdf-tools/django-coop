@@ -69,6 +69,7 @@ STATICFILES_DIRS = (
     os.path.abspath(PROJECT_PATH+'/djaloha/static/'),
     os.path.abspath(PROJECT_PATH+'/coop_cms/static/'),
     os.path.abspath(PROJECT_PATH+'/coop/static/'),
+#    '/Users/dom/django/.virtualenvs/coop/lib/python2.7/site-packages/admin_tools/media/admin_tools'
 )
 
 # List of finder classes that know how to find static files in
@@ -125,6 +126,10 @@ CACHES = {
 
 INSTALLED_APPS = (
     # Contribs
+    'admin_tools',
+#    'admin_tools.theming',
+    'admin_tools.menu',
+    'admin_tools.dashboard',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -140,7 +145,6 @@ INSTALLED_APPS = (
     'extended_choices',
     'smart_selects',
     'livesettings',
-    'admin_tools',
 
     #apps
     'coop_local',
@@ -151,6 +155,11 @@ INSTALLED_APPS = (
     'skosxl',
 #    'uriresolve',
 )
+
+ADMIN_TOOLS_MENU = 'base.menu.CustomMenu'
+ADMIN_TOOLS_INDEX_DASHBOARD = 'base.dashboard.CustomIndexDashboard'
+ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'base.dashboard.CustomAppIndexDashboard'
+#ADMIN_TOOLS_THEMING_CSS = 'css/coop_theming.css'
 
 LIVESETTINGS_OPTIONS = \
 {

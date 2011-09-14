@@ -1,0 +1,124 @@
+[
+    {
+        "pk": 1,
+        "model": "coop_tree.url",
+        "fields": {
+            "url": "http://localhost:8000/initiative/"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "coop_tree.navigabletype",
+        "fields": {
+            "search_field": "title",
+            "content_type": [
+                "coop_page",
+                "page"
+            ],
+            "label_rule": 1
+        }
+    },
+    {
+        "pk": 2,
+        "model": "coop_tree.navigabletype",
+        "fields": {
+            "search_field": "url",
+            "content_type": [
+                "coop_tree",
+                "url"
+            ],
+            "label_rule": 0
+        }
+    },
+    {
+        "pk": 3,
+        "model": "coop_tree.navigabletype",
+        "fields": {
+            "search_field": "title",
+            "content_type": [
+                "coop_local",
+                "initiative"
+            ],
+            "label_rule": 0
+        }
+    },
+    {
+        "pk": 4,
+        "model": "coop_tree.navnode",
+        "fields": {
+            "ordering": 1,
+            "object_id": 10110,
+            "content_type": [
+                "coop_local",
+                "initiative"
+            ],
+            "parent": 3,
+            "label": "ex : P\u00e9n\u00e9lope"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "coop_tree.navnode",
+        "fields": {
+            "ordering": 1,
+            "object_id": 1,
+            "content_type": [
+                "coop_page",
+                "page"
+            ],
+            "parent": 1,
+            "label": "Pr\u00e9sentation \t \t"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "coop_tree.navnode",
+        "fields": {
+            "ordering": 1,
+            "object_id": 1,
+            "content_type": [
+                "coop_page",
+                "page"
+            ],
+            "parent": null,
+            "label": "Pr\u00e9sentation \t \t"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "coop_tree.navnode",
+        "fields": {
+            "ordering": 2,
+            "object_id": 1,
+            "content_type": [
+                "coop_tree",
+                "url"
+            ],
+            "parent": null,
+            "label": "Initiatives"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "coop_tree.navnode",
+        "fields": {
+            "ordering": 2,
+            "object_id": 10128,
+            "content_type": [
+                "coop_local",
+                "initiative"
+            ],
+            "parent": 3,
+            "label": "ex : K\u00fctu Folk"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "coop_page.page",
+        "fields": {
+            "content": "\n        \n        \n        <p>\n        \n    Le CREDIS&nbsp;Lion comes with <a href=\"http://git-scm.com/\" class=\"\">git</a>, which is a welcome addition.</p><p>I'm partial to <a class=\"\" href=\"http://mercurial.selenic.com/\">Mercurial</a>, so for those that want both options, the following command will do the trick:<br></p><p><br class=\"GENTICS_ephemera\"></p><ul><li>un</li><li>deux</li><li>hgj</li><li>kljlkj<br class=\"GENTICS_ephemera\"></li><li>trois</li></ul><h4>Un gros titre</h4>\n    \n    \n    ",
+            "slug": "presentation",
+            "title": "Pr\u00e9sentation!"
+        }
+    }
+]
