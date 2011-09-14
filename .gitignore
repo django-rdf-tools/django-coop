@@ -22,6 +22,7 @@ test_app
 /activate_env.bat
 /deactivate_env.bat
 /local_settings.py
+/d2rq/vocab/catalog-v001.xml
 
 # OS generated files #
 ######################
