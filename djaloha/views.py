@@ -65,7 +65,7 @@ def process_object_edition(request, object, object_validator=None, perm=None):
                 response = {'status': 'warning', 'message': _('Warning: It seems that nothing has been changed')}
         
         except PermissionDenied:
-            response = {'status': 'error', 'message': _("You are not allowed to change this page")}
+            response = {'status': 'error', 'message': _("You are not allowed to change this object")}
         except ValidationError, ex:
             response = {'status': 'error', 'message': u' - '.join(ex.messages)}
         except Exception, msg:
