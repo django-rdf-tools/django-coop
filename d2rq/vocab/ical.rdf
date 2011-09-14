@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:dt="http://www.w3.org/2001/XMLSchema#" xmlns:spec="http://www.w3.org/2002/12/cal/icalSpec#" xmlns:cal="http://www.w3.org/2002/12/cal/icaltzd#" xml:base="http://www.w3.org/2002/12/cal/icaltzd">
-  <owl:Thing rdf:about="http://www.w3.org/2002/12/cal/icaltzd">
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:dt="http://www.w3.org/2001/XMLSchema#" xmlns:spec="http://www.w3.org/2002/12/cal/icalSpec#" xmlns:cal="http://www.w3.org/2002/12/cal/ical#" xml:base="http://www.w3.org/2002/12/cal/ical">
+  <owl:Thing rdf:about="http://www.w3.org/2002/12/cal/ical">
     <dc:source>
       <owl:Thing rdf:about="http://www.ietf.org/rfc/rfc2445.txt"/>
     </dc:source>
-    <owl:versionInfo>$Id: icaltzd.rdf,v 1.6 2007/06/28 18:22:09 connolly Exp $</owl:versionInfo>
+    <owl:versionInfo>$Id: ical.rdf,v 1.14 2004/04/07 18:45:16 connolly Exp $</owl:versionInfo>
     <owl:versionInfo>subject to change with notice to www-rdf-calendar@w3.org</owl:versionInfo>
     <rdfs:seeAlso rdf:resource="http://www.w3.org/2002/12/cal/"/>
     <rdfs:seeAlso rdf:resource="http://lists.w3.org/Archives/Public/www-rdf-calendar/"/>
@@ -14,7 +14,7 @@
   <owl:AnnotationProperty rdf:about="http://www.w3.org/2002/12/cal/icalSpec#valueListType"/>
   <owl:ObjectProperty rdf:about="http://purl.org/dc/elements/1.1/source"/>
   <owl:Class rdf:ID="Vevent">
-    <rdfs:label>Event</rdfs:label>
+    <rdfs:label>VEVENT</rdfs:label>
     <rdfs:comment>Provide a grouping of component properties that describe an event.</rdfs:comment>
     <rdfs:subClassOf>
       <owl:Restriction>
@@ -210,7 +210,7 @@
     </rdfs:subClassOf>
   </owl:Class>
   <owl:Class rdf:ID="Vtodo">
-    <rdfs:label>To-do</rdfs:label>
+    <rdfs:label>VTODO</rdfs:label>
     <rdfs:comment>Provide a grouping of calendar properties that describe a to-do.</rdfs:comment>
     <rdfs:subClassOf>
       <owl:Restriction>
@@ -412,6 +412,7 @@
     </rdfs:subClassOf>
   </owl:Class>
   <owl:Class rdf:ID="Vjournal">
+    <rdfs:label>VJOURNAL</rdfs:label>
     <rdfs:comment>Provide a grouping of component properties that describe a journal entry.</rdfs:comment>
     <rdfs:subClassOf>
       <owl:Restriction>
@@ -553,6 +554,7 @@
     </rdfs:subClassOf>
   </owl:Class>
   <owl:Class rdf:ID="Vfreebusy">
+    <rdfs:label>VFREEBUSY</rdfs:label>
     <rdfs:comment>Provide a grouping of component properties that describe either a request for free/busy time, describe a response to a request for free/busy time or describe a published set of busy time.</rdfs:comment>
     <rdfs:subClassOf>
       <owl:Restriction>
@@ -628,6 +630,7 @@
     </rdfs:subClassOf>
   </owl:Class>
   <owl:Class rdf:ID="Vtimezone">
+    <rdfs:label>VTIMEZONE</rdfs:label>
     <rdfs:comment>Provide a grouping of component properties that defines a time zone.</rdfs:comment>
     <rdfs:subClassOf>
       <owl:Restriction>
@@ -702,25 +705,8 @@
       </owl:Restriction>
     </rdfs:subClassOf>
   </owl:Class>
-  <owl:ObjectProperty rdf:ID="standard">
-    <rdfs:label>STANDARD</rdfs:label>
-  </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:ID="daylight">
-    <rdfs:label>DAYLIGHT</rdfs:label>
-  </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:ID="standard">
-    <rdfs:label>STANDARD</rdfs:label>
-  </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:ID="daylight">
-    <rdfs:label>DAYLIGHT</rdfs:label>
-  </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:ID="standard">
-    <rdfs:label>STANDARD</rdfs:label>
-  </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:ID="daylight">
-    <rdfs:label>DAYLIGHT</rdfs:label>
-  </owl:ObjectProperty>
   <owl:Class rdf:ID="Valarm">
+    <rdfs:label>VALARM</rdfs:label>
     <rdfs:comment>Provide a grouping of component properties that define an alarm.</rdfs:comment>
     <rdfs:subClassOf>
       <owl:Restriction>
@@ -772,6 +758,7 @@
     </rdfs:subClassOf>
   </owl:Class>
   <rdf:Description rdf:ID="calscale">
+    <rdfs:label>CALSCALE</rdfs:label>
     <rdfs:comment>This property defines the calendar scale used for the calendar information specified in the iCalendar object.</rdfs:comment>
     <rdfs:comment>
 	    value type: TEXT</rdfs:comment>
@@ -782,6 +769,7 @@
     </rdfs:range>
   </rdf:Description>
   <rdf:Description rdf:ID="method">
+    <rdfs:label>METHOD</rdfs:label>
     <rdfs:comment>This property defines the iCalendar object method associated with the calendar object.</rdfs:comment>
     <rdfs:comment>
 	    value type: TEXT</rdfs:comment>
@@ -792,6 +780,7 @@
     </rdfs:range>
   </rdf:Description>
   <rdf:Description rdf:ID="prodid">
+    <rdfs:label>PRODID</rdfs:label>
     <rdfs:comment>This property specifies the identifier for the product that created the iCalendar object.</rdfs:comment>
     <rdfs:comment>
 	    value type: TEXT</rdfs:comment>
@@ -802,6 +791,7 @@
     </rdfs:range>
   </rdf:Description>
   <rdf:Description rdf:ID="version">
+    <rdfs:label>VERSION</rdfs:label>
     <rdfs:comment>This property specifies the identifier corresponding to the highest version number or the minimum and maximum range of the iCalendar specification that is required in order to interpret the iCalendar object.</rdfs:comment>
     <rdfs:comment>
 	    value type: TEXT</rdfs:comment>
@@ -812,6 +802,7 @@
     </rdfs:range>
   </rdf:Description>
   <rdf:Description rdf:ID="attach">
+    <rdfs:label>ATTACH</rdfs:label>
     <rdfs:comment>The property provides the capability to associate a document object with a calendar component.</rdfs:comment>
     <rdfs:comment>
 	    default value type: URI</rdfs:comment>
@@ -833,6 +824,7 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="categories">
+    <rdfs:label>CATEGORIES</rdfs:label>
     <rdfs:comment>This property defines the categories for a calendar component.</rdfs:comment>
     <rdfs:comment>
 	    value type: TEXT</rdfs:comment>
@@ -855,6 +847,7 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="class">
+    <rdfs:label>CLASS</rdfs:label>
     <rdfs:comment>This property defines the access classification for a calendar component.</rdfs:comment>
     <rdfs:comment>
 	    value type: TEXT</rdfs:comment>
@@ -874,6 +867,7 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="comment">
+    <rdfs:label>COMMENT</rdfs:label>
     <rdfs:comment>This property specifies non-processing information intended to provide a comment to the calendar user.</rdfs:comment>
     <rdfs:comment>
 	    value type: TEXT</rdfs:comment>
@@ -895,6 +889,7 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="description">
+    <rdfs:label>DESCRIPTION</rdfs:label>
     <rdfs:comment>This property provides a more complete description of the calendar component, than that provided by the "SUMMARY" property.</rdfs:comment>
     <rdfs:comment>
 	    value type: TEXT</rdfs:comment>
@@ -920,6 +915,7 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="geo">
+    <rdfs:label>GEO</rdfs:label>
     <rdfs:comment>This property specifies information related to the global position for the activity specified by a calendar component.</rdfs:comment>
     <rdfs:comment>
 	    value type: list of FLOAT</rdfs:comment>
@@ -938,7 +934,7 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="location">
-    <rdfs:label>location</rdfs:label>
+    <rdfs:label>LOCATION</rdfs:label>
     <rdfs:comment>The property defines the intended venue for the activity defined by a calendar component.</rdfs:comment>
     <rdfs:comment>
 	    value type: TEXT</rdfs:comment>
@@ -957,6 +953,7 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="percentComplete">
+    <rdfs:label>PERCENT-COMPLETE</rdfs:label>
     <rdfs:comment>This property is used by an assignee or delegatee of a to-do to convey the percent completion of a to-do to the Organizer.</rdfs:comment>
     <rdfs:comment>
 	    value type: INTEGER</rdfs:comment>
@@ -968,6 +965,7 @@
     <rdfs:domain rdf:resource="#Vtodo"/>
   </rdf:Description>
   <rdf:Description rdf:ID="priority">
+    <rdfs:label>PRIORITY</rdfs:label>
     <rdfs:comment>The property defines the relative priority for a calendar component.</rdfs:comment>
     <rdfs:comment>
 	    value type: INTEGER</rdfs:comment>
@@ -988,6 +986,7 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="resources">
+    <rdfs:label>RESOURCES</rdfs:label>
     <rdfs:comment>This property defines the equipment or resources anticipated for an activity specified by a calendar entity..</rdfs:comment>
     <rdfs:comment>
 	    value type: TEXT</rdfs:comment>
@@ -1006,6 +1005,7 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="status">
+    <rdfs:label>STATUS</rdfs:label>
     <rdfs:comment>This property defines the overall status or confirmation for the calendar component.</rdfs:comment>
     <rdfs:comment>
 	    value type: TEXT</rdfs:comment>
@@ -1028,9 +1028,8 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="summary">
-    <rdfs:label>summary</rdfs:label>
+    <rdfs:label>SUMMARY</rdfs:label>
     <rdfs:comment>This property defines a short summary or subject for the calendar component.</rdfs:comment>
-    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#label"/>
     <rdfs:comment>
 	    value type: TEXT</rdfs:comment>
     <spec:valueType>TEXT</spec:valueType>
@@ -1054,23 +1053,32 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="completed">
+    <rdfs:label>COMPLETED</rdfs:label>
     <rdfs:comment>This property defines the date and time that a to-do was actually completed.</rdfs:comment>
     <rdfs:comment>
 	    value type: DATE-TIME</rdfs:comment>
     <spec:valueType>DATE-TIME</spec:valueType>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
     <rdfs:range>
-      <rdfs:Datatype rdf:about="#Value_DATE-TIME"/>
+      <owl:Class rdf:about="#Value_DATE-TIME"/>
     </rdfs:range>
     <rdfs:domain rdf:resource="#Vtodo"/>
   </rdf:Description>
   <rdf:Description rdf:ID="dtend">
-    <rdfs:label>end</rdfs:label>
+    <rdfs:label>DTEND</rdfs:label>
     <rdfs:comment>This property specifies the date and time that a calendar component ends.</rdfs:comment>
     <rdfs:comment>
 	    default value type: DATE-TIME</rdfs:comment>
     <spec:valueType>DATE-TIME</spec:valueType>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Value_DATE-TIME"/>
+          <owl:Class rdf:about="#Value_DATE"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:range>
     <rdfs:domain>
       <owl:Class rdf:nodeID="DomainOf_dtend">
         <owl:unionOf rdf:parseType="Collection">
@@ -1083,20 +1091,38 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="due">
+    <rdfs:label>DUE</rdfs:label>
     <rdfs:comment>This property defines the date and time that a to-do is expected to be completed.</rdfs:comment>
     <rdfs:comment>
 	    default value type: DATE-TIME</rdfs:comment>
     <spec:valueType>DATE-TIME</spec:valueType>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Value_DATE-TIME"/>
+          <owl:Class rdf:about="#Value_DATE"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:range>
     <rdfs:domain rdf:resource="#Vtodo"/>
   </rdf:Description>
   <rdf:Description rdf:ID="dtstart">
-    <rdfs:label>start</rdfs:label>
+    <rdfs:label>DTSTART</rdfs:label>
     <rdfs:comment>This property specifies when the calendar component begins.</rdfs:comment>
     <rdfs:comment>
 	    default value type: DATE-TIME</rdfs:comment>
     <spec:valueType>DATE-TIME</spec:valueType>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Value_DATE-TIME"/>
+          <owl:Class rdf:about="#Value_DATE"/>
+          <owl:Class rdf:about="#Value_DATE"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:range>
     <rdfs:domain>
       <owl:Class rdf:nodeID="DomainOf_dtstart">
         <owl:unionOf rdf:parseType="Collection">
@@ -1114,6 +1140,7 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="duration">
+    <rdfs:label>DURATION</rdfs:label>
     <rdfs:comment>The property specifies a positive duration of time.</rdfs:comment>
     <rdfs:comment>
 	    value type: DURATION</rdfs:comment>
@@ -1138,6 +1165,7 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="freebusy">
+    <rdfs:label>FREEBUSY</rdfs:label>
     <rdfs:comment>The property defines one or more free or busy time intervals.</rdfs:comment>
     <rdfs:comment>
 	    value type: PERIOD</rdfs:comment>
@@ -1156,6 +1184,7 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="transp">
+    <rdfs:label>TRANSP</rdfs:label>
     <rdfs:comment>This property defines whether an event is transparent or not to busy time searches.</rdfs:comment>
     <rdfs:comment>
 	    value type: TEXT</rdfs:comment>
@@ -1167,6 +1196,7 @@
     <rdfs:domain rdf:resource="#Vevent"/>
   </rdf:Description>
   <rdf:Description rdf:ID="tzid">
+    <rdfs:label>TZID</rdfs:label>
     <rdfs:comment>This property specifies the text value that uniquely identifies the "VTIMEZONE" calendar component.</rdfs:comment>
     <rdfs:comment>
 	    value type: TEXT</rdfs:comment>
@@ -1178,6 +1208,7 @@
     <rdfs:domain rdf:resource="#Vtimezone"/>
   </rdf:Description>
   <rdf:Description rdf:ID="tzname">
+    <rdfs:label>TZNAME</rdfs:label>
     <rdfs:comment>This property specifies the customary designation for a time zone description.</rdfs:comment>
     <rdfs:comment>
 	    value type: TEXT</rdfs:comment>
@@ -1189,6 +1220,7 @@
     <rdfs:domain rdf:resource="#Vtimezone"/>
   </rdf:Description>
   <rdf:Description rdf:ID="tzoffsetfrom">
+    <rdfs:label>TZOFFSETFROM</rdfs:label>
     <rdfs:comment>This property specifies the offset which is in use prior to this time zone observance.</rdfs:comment>
     <rdfs:comment>
 	    value type: UTC-OFFSET</rdfs:comment>
@@ -1208,6 +1240,7 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="tzoffsetto">
+    <rdfs:label>TZOFFSETTO</rdfs:label>
     <rdfs:comment>This property specifies the offset which is in use in this time zone observance.</rdfs:comment>
     <rdfs:comment>
 	    value type: UTC-OFFSET</rdfs:comment>
@@ -1219,6 +1252,7 @@
     <rdfs:domain rdf:resource="#Vtimezone"/>
   </rdf:Description>
   <rdf:Description rdf:ID="tzurl">
+    <rdfs:label>TZURL</rdfs:label>
     <rdfs:comment>The TZURL provides a means for a VTIMEZONE component to point to a network location that can be used to retrieve an up-to- date version of itself.</rdfs:comment>
     <rdfs:comment>
 	    value type: URI</rdfs:comment>
@@ -1235,7 +1269,7 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="attendee">
-    <rdfs:label>attendee</rdfs:label>
+    <rdfs:label>ATTENDEE</rdfs:label>
     <rdfs:comment>The property defines an "Attendee" within a calendar component.</rdfs:comment>
     <rdfs:comment>
 	    value type: CAL-ADDRESS</rdfs:comment>
@@ -1258,6 +1292,7 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="contact">
+    <rdfs:label>CONTACT</rdfs:label>
     <rdfs:comment>The property is used to represent contact information or alternately a reference to contact information associated with the calendar component.</rdfs:comment>
     <rdfs:comment>
 	    value type: TEXT</rdfs:comment>
@@ -1278,6 +1313,7 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="organizer">
+    <rdfs:label>ORGANIZER</rdfs:label>
     <rdfs:comment>The property defines the organizer for a calendar component.</rdfs:comment>
     <rdfs:comment>
 	    value type: CAL-ADDRESS</rdfs:comment>
@@ -1299,16 +1335,28 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="recurrenceId">
+    <rdfs:label>RECURRENCE-ID</rdfs:label>
     <rdfs:comment>This property is used in conjunction with the "UID" and "SEQUENCE" property to identify a specific instance of a recurring "VEVENT", "VTODO" or "VJOURNAL" calendar component. The property value is the effective value of the "DTSTART" property of the recurrence instance.</rdfs:comment>
     <rdfs:comment>
 	    default value type: DATE-TIME</rdfs:comment>
     <spec:valueType>DATE-TIME</spec:valueType>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Value_DATE-TIME"/>
+          <owl:Class rdf:about="#Value_DATE"/>
+          <owl:Class rdf:about="#Value_DATE"/>
+          <owl:Class rdf:about="#Value_DATE"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:range>
     <rdfs:domain>
       <owl:Class rdf:about="#DomainOf_rrule"/>
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="relatedTo">
+    <rdfs:label>RELATED-TO</rdfs:label>
     <rdfs:comment>The property is used to represent a relationship or reference between one calendar component and another.</rdfs:comment>
     <rdfs:comment>
 	    value type: TEXT</rdfs:comment>
@@ -1328,7 +1376,7 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="url">
-    <rdfs:label>see also</rdfs:label>
+    <rdfs:label>URL</rdfs:label>
     <rdfs:comment>This property defines a Uniform Resource Locator (URL) associated with the iCalendar object.</rdfs:comment>
     <rdfs:comment>
 	    value type: URI</rdfs:comment>
@@ -1346,6 +1394,7 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="uid">
+    <rdfs:label>UID</rdfs:label>
     <rdfs:comment>This property defines the persistent, globally unique identifier for the calendar component.</rdfs:comment>
     <rdfs:comment>
 	    value type: TEXT</rdfs:comment>
@@ -1372,16 +1421,26 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="exdate">
+    <rdfs:label>EXDATE</rdfs:label>
     <rdfs:comment>This property defines the list of date/time exceptions for a recurring calendar component.</rdfs:comment>
     <rdfs:comment>
 	    default value type: DATE-TIME</rdfs:comment>
     <spec:valueType>DATE-TIME</spec:valueType>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Value_DATE-TIME"/>
+          <owl:Class rdf:about="#Value_DATE"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:range>
     <rdfs:domain>
       <owl:Class rdf:about="#DomainOf_rrule"/>
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="exrule">
+    <rdfs:label>EXRULE</rdfs:label>
     <rdfs:comment>This property defines a rule or repeating pattern for an exception to a recurrence set.</rdfs:comment>
     <rdfs:comment>
 	    value type: RECUR</rdfs:comment>
@@ -1401,11 +1460,21 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="rdate">
+    <rdfs:label>RDATE</rdfs:label>
     <rdfs:comment>This property defines the list of date/times for a recurrence set.</rdfs:comment>
     <rdfs:comment>
 	    default value type: DATE-TIME</rdfs:comment>
     <spec:valueType>DATE-TIME</spec:valueType>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Value_DATE-TIME"/>
+          <owl:Class rdf:about="#Value_DATE"/>
+          <owl:Class rdf:about="#Value_PERIOD"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:range>
     <rdfs:domain>
       <owl:Class rdf:nodeID="DomainOf_rdate">
         <owl:unionOf rdf:parseType="Collection">
@@ -1418,6 +1487,7 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="rrule">
+    <rdfs:label>RRULE</rdfs:label>
     <rdfs:comment>This property defines a rule or repeating pattern for recurring events, to-dos, or time zone definitions.</rdfs:comment>
     <rdfs:comment>
 	    value type: RECUR</rdfs:comment>
@@ -1441,6 +1511,7 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="action">
+    <rdfs:label>ACTION</rdfs:label>
     <rdfs:comment>This property defines the action to be invoked when an alarm is triggered.</rdfs:comment>
     <rdfs:comment>
 	    value type: TEXT</rdfs:comment>
@@ -1459,6 +1530,7 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="repeat">
+    <rdfs:label>REPEAT</rdfs:label>
     <rdfs:comment>This property defines the number of time the alarm should be repeated, after the initial trigger.</rdfs:comment>
     <rdfs:comment>
 	    value type: INTEGER</rdfs:comment>
@@ -1470,6 +1542,7 @@
     <rdfs:domain rdf:resource="#Valarm"/>
   </rdf:Description>
   <rdf:Description rdf:ID="trigger">
+    <rdfs:label>TRIGGER</rdfs:label>
     <rdfs:comment>This property specifies when an alarm will trigger.</rdfs:comment>
     <rdfs:comment>
 	    default value type: DURATION</rdfs:comment>
@@ -1498,13 +1571,14 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="created">
+    <rdfs:label>CREATED</rdfs:label>
     <rdfs:comment>This property specifies the date and time that the calendar information was created by the calendar user agent in the calendar store. Note: This is analogous to the creation date and time for a file in the file system.</rdfs:comment>
     <rdfs:comment>
 	    value type: DATE-TIME</rdfs:comment>
     <spec:valueType>DATE-TIME</spec:valueType>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
     <rdfs:range>
-      <rdfs:Datatype rdf:about="#Value_DATE-TIME"/>
+      <owl:Class rdf:about="#Value_DATE-TIME"/>
     </rdfs:range>
     <rdfs:domain>
       <owl:Class rdf:nodeID="DomainOf_created">
@@ -1517,13 +1591,14 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="dtstamp">
+    <rdfs:label>DTSTAMP</rdfs:label>
     <rdfs:comment>The property indicates the date/time that the instance of the iCalendar object was created.</rdfs:comment>
     <rdfs:comment>
 	    value type: DATE-TIME</rdfs:comment>
     <spec:valueType>DATE-TIME</spec:valueType>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
     <rdfs:range>
-      <rdfs:Datatype rdf:about="#Value_DATE-TIME"/>
+      <owl:Class rdf:about="#Value_DATE-TIME"/>
     </rdfs:range>
     <rdfs:domain>
       <owl:Class rdf:nodeID="DomainOf_dtstamp">
@@ -1537,13 +1612,14 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="lastModified">
+    <rdfs:label>LAST-MODIFIED</rdfs:label>
     <rdfs:comment>The property specifies the date and time that the information associated with the calendar component was last revised in the calendar store. Note: This is analogous to the modification date and time for a file in the file system.</rdfs:comment>
     <rdfs:comment>
 	    value type: DATE-TIME</rdfs:comment>
     <spec:valueType>DATE-TIME</spec:valueType>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
     <rdfs:range>
-      <rdfs:Datatype rdf:about="#Value_DATE-TIME"/>
+      <owl:Class rdf:about="#Value_DATE-TIME"/>
     </rdfs:range>
     <rdfs:domain>
       <owl:Class rdf:nodeID="DomainOf_lastModified">
@@ -1557,6 +1633,7 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="sequence">
+    <rdfs:label>SEQUENCE</rdfs:label>
     <rdfs:comment>This property defines the revision sequence number of the calendar component within a sequence of revisions.</rdfs:comment>
     <rdfs:comment>
 	    value type: integer</rdfs:comment>
@@ -1576,6 +1653,7 @@
     </rdfs:domain>
   </rdf:Description>
   <rdf:Description rdf:ID="X-">
+    <rdfs:label>Any property name with a "X-" prefix</rdfs:label>
     <rdfs:comment>This class of property provides a framework for defining non-standard properties.</rdfs:comment>
     <rdfs:comment>
 	    value type: TEXT</rdfs:comment>
@@ -1586,6 +1664,7 @@
     </rdfs:range>
   </rdf:Description>
   <rdf:Description rdf:ID="requestStatus">
+    <rdfs:label>REQUEST-STATUS</rdfs:label>
     <rdfs:comment>This property defines the status code returned for a scheduling request.</rdfs:comment>
     <rdfs:comment>
 	    value type: TEXT</rdfs:comment>
@@ -1605,251 +1684,4 @@
       </owl:Class>
     </rdfs:domain>
   </rdf:Description>
-  <owl:DatatypeProperty rdf:ID="freq">
-    <rdfs:label>FREQ</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="interval">
-    <rdfs:label>INTERVAL</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="until">
-    <rdfs:label>UNTIL</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="until">
-    <rdfs:label>UNTIL</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="count">
-    <rdfs:label>COUNT</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="count">
-    <rdfs:label>COUNT</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="bysecond">
-    <rdfs:label>BYSECOND</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="byminute">
-    <rdfs:label>BYMINUTE</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="byhour">
-    <rdfs:label>BYHOUR</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="byday">
-    <rdfs:label>BYDAY</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="byday">
-    <rdfs:label>BYDAY</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="bymonth">
-    <rdfs:label>BYMONTH</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="byyearday">
-    <rdfs:label>BYYEARDAY</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="byweekno">
-    <rdfs:label>BYWEEKNO</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="wkst">
-    <rdfs:label>WKST</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="bymonth">
-    <rdfs:label>BYMONTH</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="wkst">
-    <rdfs:label>WKST</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="byday">
-    <rdfs:label>BYDAY</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="byweekno">
-    <rdfs:label>BYWEEKNO</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="bysetpos">
-    <rdfs:label>BYSETPOS</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="freq">
-    <rdfs:label>FREQ</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="byday">
-    <rdfs:label>BYDAY</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="bysetpos">
-    <rdfs:label>BYSETPOS</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="bysetpos">
-    <rdfs:label>BYSETPOS</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="bymonth">
-    <rdfs:label>BYMONTH</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="freq">
-    <rdfs:label>FREQ</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="bymonth">
-    <rdfs:label>BYMONTH</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="freq">
-    <rdfs:label>FREQ</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="bymonth">
-    <rdfs:label>BYMONTH</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="bymonth">
-    <rdfs:label>BYMONTH</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="freq">
-    <rdfs:label>FREQ</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="bymonth">
-    <rdfs:label>BYMONTH</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="bymonth">
-    <rdfs:label>BYMONTH</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="freq">
-    <rdfs:label>FREQ</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="interval">
-    <rdfs:label>INTERVAL</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="bymonth">
-    <rdfs:label>BYMONTH</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="byweekno">
-    <rdfs:label>BYWEEKNO</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="byyearday">
-    <rdfs:label>BYYEARDAY</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="byday">
-    <rdfs:label>BYDAY</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="byhour">
-    <rdfs:label>BYHOUR</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="byminute">
-    <rdfs:label>BYMINUTE</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="bysecond">
-    <rdfs:label>BYSECOND</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="bysetpos">
-    <rdfs:label>BYSETPOS</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="count">
-    <rdfs:label>COUNT</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="until">
-    <rdfs:label>UNTIL</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="freq">
-    <rdfs:label>FREQ</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="interval">
-    <rdfs:label>INTERVAL</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="bymonth">
-    <rdfs:label>BYMONTH</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="byday">
-    <rdfs:label>BYDAY</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="byhour">
-    <rdfs:label>BYHOUR</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="byminute">
-    <rdfs:label>BYMINUTE</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="interval">
-    <rdfs:label>INTERVAL</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="freq">
-    <rdfs:label>FREQ</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="bymonth">
-    <rdfs:label>BYMONTH</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="byday">
-    <rdfs:label>BYDAY</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="byhour">
-    <rdfs:label>BYHOUR</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="byminute">
-    <rdfs:label>BYMINUTE</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="byminute">
-    <rdfs:label>BYMINUTE</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="byhour">
-    <rdfs:label>BYHOUR</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="byday">
-    <rdfs:label>BYDAY</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="bymonth">
-    <rdfs:label>BYMONTH</rdfs:label>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="altrep">
-    <rdfs:comment>To specify an alternate text representation for the property value.</rdfs:comment>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="cn">
-    <rdfs:comment>To specify the common name to be associated with the calendar user specified by the property.</rdfs:comment>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="cutype">
-    <rdfs:comment>To specify the type of calendar user specified by the property.</rdfs:comment>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="delegatedFrom">
-    <rdfs:comment>To specify the calendar users that have delegated their participation to the calendar user specified by the property.</rdfs:comment>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="delegatedTo">
-    <rdfs:comment>To specify the calendar users to whom the calendar user specified by the property has delegated participation.</rdfs:comment>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="dir">
-    <rdfs:comment>To specify reference to a directory entry associated with the calendar user specified by the property.</rdfs:comment>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="encoding">
-    <rdfs:comment>To specify an alternate inline encoding for the property value.</rdfs:comment>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="fmttype">
-    <rdfs:comment>To specify the content type of a referenced object.</rdfs:comment>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="fbtype">
-    <rdfs:comment>To specify the free or busy time type.</rdfs:comment>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="language">
-    <rdfs:comment>To specify the language for text values in a property or property parameter.</rdfs:comment>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="member">
-    <rdfs:comment>To specify the group or list membership of the calendar user specified by the property.</rdfs:comment>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="partstat">
-    <rdfs:comment>To specify the participation status for the calendar user specified by the property.</rdfs:comment>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="range">
-    <rdfs:comment>To specify the effective range of recurrence instances from the instance specified by the recurrence identifier specified by the property.</rdfs:comment>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="related">
-    <rdfs:comment>To specify the relationship of the alarm trigger with respect to the start or end of the calendar component.</rdfs:comment>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="reltype">
-    <rdfs:comment>To specify the type of hierarchical relationship associated with the calendar component specified by the property.</rdfs:comment>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="role">
-    <rdfs:comment>To specify the participation role for the calendar user specified by the property.</rdfs:comment>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="rsvp">
-    <rdfs:comment>To specify whether there is an expectation of a favor of a reply from the calendar user specified by the property value.</rdfs:comment>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="sentBy">
-    <rdfs:comment>To specify the calendar user that is acting on behalf of the calendar user specified by the property.</rdfs:comment>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:ID="tzid">
-    <rdfs:comment>To specify the identifier for the time zone definition for a time component in the property value.</rdfs:comment>
-  </owl:DatatypeProperty>
-  <owl:Class rdf:ID="Vcalendar">
-    <rdfs:label>VCALENDAR</rdfs:label>
-  </owl:Class>
-  <owl:ObjectProperty rdf:ID="component"/>
-  <rdfs:Datatype rdf:about="#dateTime"/>
-  <owl:ObjectProperty rdf:about="#calAddress"/>
-  <owl:DatatypeProperty rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#value"/>
 </rdf:RDF>
