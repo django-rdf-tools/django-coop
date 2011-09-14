@@ -37,7 +37,7 @@ if settings.DEBUG or ('test' in sys.argv):
     )
 
 urlpatterns += patterns('',
-    (r'^(?P<url>.*)$', 'coop_page.views.view_page'),
+    (r'^(?P<url>.*)$', 'coop_tree.views.view_article'),
 )
 
 # urlpatterns += patterns('',
