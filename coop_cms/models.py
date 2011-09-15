@@ -39,16 +39,16 @@ class NavNode(models.Model):
     Part of the tree as child of his parent
     Point on a content_object 
     """
-    label = models.CharField(max_length=200)
+    label = models.CharField(max_length=200, verbose_name=_("label"))
     
-    parent = models.ForeignKey("NavNode", blank=True, null=True, default=0)
-    ordering = models.PositiveIntegerField(default=0)
+    parent = models.ForeignKey("NavNode", blank=True, null=True, default=0, verbose_name=_("parent"))
+    ordering = models.PositiveIntegerField(_("ordering"), default=0)
     
     #generic relation
-    content_type = models.ForeignKey(ContentType)
-    object_id = models.PositiveIntegerField()
+    content_type = models.ForeignKey(ContentType, verbose_name=_("content_type"))
+    object_id = models.PositiveIntegerField(verbose_name=_("object id"))
     content_object = generic.GenericForeignKey('content_type', 'object_id')
-    in_navigation = models.BooleanField(_("Visible dans l'arborescence"), default=True)
+    in_navigation = models.BooleanField(_("in navigation"), default=True)
     
     def get_absolute_url(self):
         return self.content_object.get_absolute_url()

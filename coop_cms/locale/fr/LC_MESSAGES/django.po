@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-14 15:59+0200\n"
+"POT-Creation-Date: 2011-09-15 07:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,9 @@ msgstr ""
 msgid ""
 "Invalid rule for this content type: The object class doesn't have a "
 "get_label method"
-msgstr "Règle invalide pour ce content type: La classe de l'objet n'a pas de méthode get_label"
+msgstr ""
+"Règle invalide pour ce content type: La classe de l'objet n'a pas de méthode "
+"get_label"
 
 #: .\models.py:17
 msgid "Use object unicode"
@@ -39,47 +41,80 @@ msgstr "Utiliser la méthode get_label"
 msgid "How to generate the label"
 msgstr "Comment générer le label"
 
-#: .\models.py:58
+#: .\models.py:32
+msgid "navigable type"
+msgstr "type navigable"
+
+#: .\models.py:33
+msgid "navigable types"
+msgstr "types navigables"
+
+#: .\models.py:42
+msgid "label"
+msgstr "label"
+
+#: .\models.py:44
+msgid "parent"
+msgstr "parent"
+
+#: .\models.py:45
+msgid "ordering"
+msgstr "ordre"
+
+#: .\models.py:48
+msgid "content_type"
+msgstr "type de contenu"
+
+#: .\models.py:49
+#, fuzzy
+msgid "object id"
+msgstr "identifiant de l'objet"
+
+#: .\models.py:51
+msgid "in navigation"
+msgstr "visible dans la navigation"
+
+#: .\models.py:63
 msgid "navigation node"
 msgstr "noeud de navigation"
 
-#: .\models.py:59
+#: .\models.py:64
 msgid "navigation nodes"
 msgstr "noeuds de navigation"
 
-#: .\models.py:92 .\templates\admin\coop_cms\navtree\change_list.html.py:274
+#: .\models.py:100 .\templates\admin\coop_cms\navtree\change_list.html.py:307
 msgid "Navigation tree"
 msgstr "Arborescence"
 
-#: .\models.py:97
+#: .\models.py:105
 msgid "title"
 msgstr "titre"
 
-#: .\models.py:97
+#: .\models.py:105
 msgid "Page title"
 msgstr "titre de la page"
 
-#: .\models.py:98
+#: .\models.py:106
 msgid "content"
 msgstr "contenu"
 
-#: .\models.py:98
+#: .\models.py:106
 msgid "Page content"
 msgstr "contenu de la page"
 
-#: .\models.py:101
+#: .\models.py:109
 msgid "article"
 msgstr "article"
 
-#: .\models.py:102
+#: .\models.py:110
 msgid "articles"
 msgstr "articles"
 
-#: .\models.py:129
+#: .\models.py:137
 msgid "link"
 msgstr "lien"
 
-#: .\models.py:130
+#: .\models.py:138
 msgid "links"
 msgstr "liens"
 
@@ -119,41 +154,57 @@ msgstr "{0} {1} est introuvable"
 msgid "'{0}' has added to the navigation tree."
 msgstr "'{0}' a été ajouté à l'arborescence."
 
-#: .\views.py:300
+#: .\views.py:286
+msgid "The node is now in navigation."
+msgstr "le noeud est à présent visible dans la navigation"
+
+#: .\views.py:287 .\templates\coop_cms\navtree_content\default.html.py:5
+msgid "Remove from navigation"
+msgstr "Supprimer de la navigation"
+
+#: .\views.py:290
+msgid "The node has been removed of the navigation."
+msgstr "Le noeud a été supprimé de la navigation"
+
+#: .\views.py:291 .\templates\coop_cms\navtree_content\default.html.py:7
+msgid "Add to navigation"
+msgstr "Rendre le noeud visible dans la navigation"
+
+#: .\views.py:318
 msgid "Unsupported message {0}"
 msgstr "Message {0} inconnu"
 
-#: .\views.py:302
+#: .\views.py:320
 msgid "You are not allowed to add a node"
 msgstr "Vous n'êtes pas autorisé à ajouter un noeud"
 
-#: .\views.py:307 .\views.py:309
+#: .\views.py:325 .\views.py:327
 msgid "An error occured"
 msgstr "Une erreur est survenue"
 
-#: .\templates\admin\coop_cms\navtree\change_list.html.py:232
+#: .\templates\admin\coop_cms\navtree\change_list.html.py:251
 msgid "Are you sure to delete the selected node?"
 msgstr "Etes-vous sur de supprimer le noeud sélectionné"
 
-#: .\templates\admin\coop_cms\navtree\change_list.html.py:260
+#: .\templates\admin\coop_cms\navtree\change_list.html.py:293
 msgid "Home"
 msgstr "Accueil"
 
-#: .\templates\admin\coop_cms\navtree\change_list.html.py:277
+#: .\templates\admin\coop_cms\navtree\change_list.html.py:310
 msgid "The site requires javascript to be enabled!"
 msgstr "Le site nécessite l'activation de javascript"
 
-#: .\templates\admin\coop_cms\navtree\change_list.html.py:282
+#: .\templates\admin\coop_cms\navtree\change_list.html.py:315
 msgid "Add a new node"
 msgstr "Ajouter un nouveau noeud"
 
-#: .\templates\admin\coop_cms\navtree\change_list.html.py:294
-#: .\templates\admin\coop_cms\navtree\change_list.html.py:297
+#: .\templates\admin\coop_cms\navtree\change_list.html.py:327
+#: .\templates\admin\coop_cms\navtree\change_list.html.py:331
 msgid "Rename"
 msgstr "Renommer"
 
-#: .\templates\admin\coop_cms\navtree\change_list.html.py:295
-#: .\templates\admin\coop_cms\navtree\change_list.html.py:298
+#: .\templates\admin\coop_cms\navtree\change_list.html.py:328
+#: .\templates\admin\coop_cms\navtree\change_list.html.py:332
 msgid "Remove"
 msgstr "Supprimer"
 
@@ -161,26 +212,26 @@ msgstr "Supprimer"
 msgid "Edit on site"
 msgstr "Editer sur le site"
 
-#: .\templates\coop_cms\navtree_content\default.html.py:7
+#: .\templates\coop_cms\navtree_content\default.html.py:14
 msgid "Edit in admin"
 msgstr "Editer en back-office"
 
-#: .\templates\coop_cms\navtree_content\default.html.py:8
+#: .\templates\coop_cms\navtree_content\default.html.py:15
 msgid "View on site"
 msgstr "Voir sur le site"
 
-#: .\templatetags\coop_navigation.py:21
+#: .\templatetags\coop_navigation.py:21 .\templatetags\coop_navigation.py:29
 msgid "navigation_as_nested_ul has no argument"
 msgstr "navigation_as_nested_ul n'a pas d'arguments"
 
-#: .\templatetags\coop_navigation.py:41
+#: .\templatetags\coop_navigation.py:51
 msgid "navigation_breadcrumb requires object as argument"
 msgstr "navigation_breadcrumb requiert un objet en argument"
 
-#: .\templatetags\coop_navigation.py:62
+#: .\templatetags\coop_navigation.py:73
 msgid "navigation_children requires object as argument"
 msgstr "navigation_children requiert un objet en argument"
 
-#: .\templatetags\coop_navigation.py:82
+#: .\templatetags\coop_navigation.py:94
 msgid "navigation_siblings requires object as argument"
 msgstr "navigation_siblings requiert un objet en argument"
