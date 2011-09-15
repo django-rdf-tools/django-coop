@@ -4,6 +4,7 @@
 {% for sibling in siblings %}
 {% if sibling.in_navigation %}
 <li><a href="{{sibling.get_absolute_url}}">{{sibling.label}}</a></li>
+{% endif %}
 {% endfor %}
 {% endwith %}
-{% endif %}
+
