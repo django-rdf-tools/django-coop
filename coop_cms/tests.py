@@ -457,6 +457,47 @@ class NavigationTest(TestCase):
             result = json.loads(response.content)
             self.assertEqual(result['status'], 'success')
             
+    def test_set_out_of_nav(self):
+        self._log_as_editor()
+        
+        link = Link.objects.create(url='http://www.google.fr')
+        node = NavNode.objects.create(label=link.url, content_object=link, ordering=1, parent=None, in_navigation=True)
+        
+        data = {
+            'msg_id': 'navnode_in_navigation',
+            'node_id': node.id,
+        }
+        
+        response = self.client.post(self.srv_url, data=data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
+        result = json.loads(response.content)
+        self.assertEqual(result['status'], 'success')
+        self.assertNotEqual(result['message'], '')
+        self.assertEqual(result['icon'], 'out_nav')
+        node = NavNode.objects.get(id=node.id)
+        self.assertFalse(node.in_navigation)
+        
+    def test_set_in_nav(self):
+        self._log_as_editor()
+        
+        link = Link.objects.create(url='http://www.google.fr')
+        node = NavNode.objects.create(label=link.url, content_object=link, ordering=1, parent=None, in_navigation=False)
+        
+        data = {
+            'msg_id': 'navnode_in_navigation',
+            'node_id': node.id,
+        }
+        
+        response = self.client.post(self.srv_url, data=data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
+        result = json.loads(response.content)
+        self.assertEqual(result['status'], 'success')
+        self.assertNotEqual(result['message'], '')
+        self.assertEqual(result['icon'], 'in_nav')
+        node = NavNode.objects.get(id=node.id)
+        self.assertTrue(node.in_navigation)
+        
+            
 class TemplateTagsTest(TestCase):
     
     def setUp(self):
@@ -483,7 +524,34 @@ class TemplateTagsTest(TestCase):
         for n in self.nodes:
             self.assertTrue(html.find('{0}'.format(n.content_object.url))>=0)
             
+    def test_view_out_of_navigation(self):
+        self.nodes[2].in_navigation = False
+        self.nodes[2].save()
+        
+        tpl = Template('{% load coop_navigation %}{%navigation_as_nested_ul%}')
+        html = tpl.render(Context({}))
+        
+        for n in self.nodes[:2]:
+            self.assertTrue(html.find('{0}'.format(n.content_object.url))>=0)
+            
+        for n in self.nodes[2:]:
+            self.assertFalse(html.find('{0}'.format(n.content_object.url))>=0)
+            
     def test_view_breadcrumb(self):
+        tpl = Template('{% load coop_navigation %}{% navigation_breadcrumb obj %}')
+        html = tpl.render(Context({'obj': self.nodes[5].content_object}))
+        
+        for n in (self.nodes[2], self.nodes[3], self.nodes[5]) :
+            self.assertTrue(html.find('{0}'.format(n.content_object.url))>=0)
+            
+        for n in (self.nodes[0], self.nodes[1], self.nodes[4]) :
+            self.assertFalse(html.find('{0}'.format(n.content_object.url))>=0)
+            
+    def test_view_breadcrumb_out_of_navigation(self):
+        for n in self.nodes:
+            n.in_navigation = False
+            n.save()
+        
         tpl = Template('{% load coop_navigation %}{% navigation_breadcrumb obj %}')
         html = tpl.render(Context({'obj': self.nodes[5].content_object}))
         
@@ -503,6 +571,22 @@ class TemplateTagsTest(TestCase):
         for n in self.nodes[:4]:
             self.assertFalse(html.find('{0}'.format(n.content_object.url))>=0)
             
+    def test_view_children_out_of_navigation(self):
+        self.nodes[1].in_navigation = False
+        self.nodes[1].save()
+        
+        self.nodes[5].in_navigation = False
+        self.nodes[5].save()
+        
+        tpl = Template('{% load coop_navigation %}{%navigation_children obj %}')
+        html = tpl.render(Context({'obj': self.nodes[3].content_object}))
+        
+        for n in (self.nodes[4], ):
+            self.assertTrue(html.find(n.content_object.url)>=0)
+            
+        for n in self.nodes[:4] + [self.nodes[5]]:
+            self.assertFalse(html.find('{0}'.format(n.content_object.url))>=0)
+            
     def test_view_siblings(self):
         tpl = Template('{% load coop_navigation %}{% navigation_siblings obj %}')
         html = tpl.render(Context({'obj': self.nodes[0].content_object}))
@@ -511,6 +595,22 @@ class TemplateTagsTest(TestCase):
             self.assertTrue(html.find('{0}'.format(n.content_object.url))>=0)
             
         for n in self.nodes[3:]:
+            self.assertFalse(html.find('{0}'.format(n.content_object.url))>=0)
+            
+    def test_view_siblings_out_of_navigation(self):
+        self.nodes[2].in_navigation = False
+        self.nodes[2].save()
+        
+        self.nodes[5].in_navigation = False
+        self.nodes[5].save()
+        
+        tpl = Template('{% load coop_navigation %}{% navigation_siblings obj %}')
+        html = tpl.render(Context({'obj': self.nodes[0].content_object}))
+        
+        for n in self.nodes[:2]:
+            self.assertTrue(html.find('{0}'.format(n.content_object.url))>=0)
+            
+        for n in self.nodes[2:]:
             self.assertFalse(html.find('{0}'.format(n.content_object.url))>=0)
             
     def test_navigation_no_nodes(self):
