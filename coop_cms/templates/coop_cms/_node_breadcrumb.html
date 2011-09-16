@@ -1,8 +1,0 @@
-{% load i18n %}
-
-{% if node.parent %}
-	{{node.parent.as_breadcrumb}}
-{% endif %}
-<li>
-	<a href="{{node.get_absolute_url}}">{{node.label}}</a>
-</li>

@@ -19,7 +19,7 @@ class NavTreeAdmin(admin.ModelAdmin):
 
     def nodes_li(self):
         root_nodes = models.NavNode.objects.filter(parent__isnull=True).order_by("ordering")
-        nodes_li = u''.join([node.as_li(navigation_tree_editor=True) for node in root_nodes])
+        nodes_li = u''.join([node.as_jstree() for node in root_nodes])
         return nodes_li
     
     def suggest_list_url(self):

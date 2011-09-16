@@ -512,17 +512,40 @@ class TemplateTagsTest(TestCase):
         
         self.nodes.append(NavNode.objects.create(label=link1.url, content_object=link1, ordering=1, parent=None))
         self.nodes.append(NavNode.objects.create(label=link2.url, content_object=link2, ordering=2, parent=None))
-        self.nodes.append(NavNode.objects.create(label=link3.url, content_object=link3, ordering=2, parent=None))
-        self.nodes.append(NavNode.objects.create(label=link4.url, content_object=link4, ordering=2, parent=self.nodes[2]))
-        self.nodes.append(NavNode.objects.create(label=link5.url, content_object=link5, ordering=2, parent=self.nodes[3]))
+        self.nodes.append(NavNode.objects.create(label=link3.url, content_object=link3, ordering=3, parent=None))
+        self.nodes.append(NavNode.objects.create(label=link4.url, content_object=link4, ordering=1, parent=self.nodes[2]))
+        self.nodes.append(NavNode.objects.create(label=link5.url, content_object=link5, ordering=1, parent=self.nodes[3]))
         self.nodes.append(NavNode.objects.create(label=link6.url, content_object=link6, ordering=2, parent=self.nodes[3]))
         
     def test_view_navigation(self):
         tpl = Template('{% load coop_navigation %}{%navigation_as_nested_ul%}')
         html = tpl.render(Context({}))
         
-        for n in self.nodes:
-            self.assertTrue(html.find('{0}'.format(n.content_object.url))>=0)
+        positions = [html.find('{0}'.format(n.content_object.url)) for n in self.nodes]
+        for pos in positions:
+            self.assertTrue(pos>=0)
+        sorted_positions = positions[:]
+        sorted_positions.sort()
+        self.assertEqual(positions, sorted_positions)
+        
+    def _insert_new_node(self):
+        link7 = Link.objects.create(url='http://www.tutu.fr')
+        self.nodes.insert(-1, NavNode.objects.create(label=link7.url, content_object=link7, ordering=2, parent=self.nodes[3]))
+        self.nodes[-1].ordering = 3
+        self.nodes[-1].save()
+        
+    def test_view_navigation_order(self):
+        self._insert_new_node()
+        
+        tpl = Template('{% load coop_navigation %}{%navigation_as_nested_ul%}')
+        html = tpl.render(Context({}))
+        
+        positions = [html.find('{0}'.format(n.content_object.url)) for n in self.nodes]
+        for pos in positions:
+            self.assertTrue(pos>=0)
+        sorted_positions = positions[:]
+        sorted_positions.sort()
+        self.assertEqual(positions, sorted_positions)
             
     def test_view_out_of_navigation(self):
         self.nodes[2].in_navigation = False
@@ -536,6 +559,41 @@ class TemplateTagsTest(TestCase):
             
         for n in self.nodes[2:]:
             self.assertFalse(html.find('{0}'.format(n.content_object.url))>=0)
+            
+    def test_view_navigation_custom_template(self):
+        cst_tpl = Template('<span id="{{node.id}}">{{node.label}}</span>')
+        tpl = Template('{% load coop_navigation %}{%navigation_as_nested_ul li_template=cst_tpl%}')
+        
+        html = tpl.render(Context({'cst_tpl': cst_tpl}))
+        
+        for n in self.nodes:
+            self.assertTrue(html.find(u'<span id="{0.id}">{0.label}</span>'.format(n))>=0)
+            self.assertFalse(html.find('<a href="{0}">{1}</a>'.format(n.content_object.url, n.label))>=0)
+            
+    def test_view_navigation_custom_template_file(self):
+        tpl = Template('{% load coop_navigation %}{%navigation_as_nested_ul li_template=coop_cms/test_li.html%}')
+        
+        html = tpl.render(Context({}))
+        
+        for n in self.nodes:
+            self.assertTrue(html.find(u'<span id="{0.id}">{0.label}</span>'.format(n))>=0)
+            self.assertFalse(html.find('<a href="{0}">{1}</a>'.format(n.content_object.url, n.label))>=0)
+            
+    def test_view_navigation_css(self):
+        tpl = Template('{% load coop_navigation %}{%navigation_as_nested_ul css_class=toto%}')
+        html = tpl.render(Context({}))
+        self.assertTrue(html.count('<li class="toto">'), len(self.nodes))
+        
+    def test_view_navigation_custom_template_and_css(self):
+        tpl = Template(
+            '{% load coop_navigation %}{%navigation_as_nested_ul li_template=coop_cms/test_li.html css_class=toto%}'
+        )
+        html = tpl.render(Context({}))
+        self.assertTrue(html.count('<li class="toto">'), len(self.nodes))
+            
+        for n in self.nodes:
+            self.assertTrue(html.find(u'<span id="{0.id}">{0.label}</span>'.format(n))>=0)
+            self.assertFalse(html.find('<a href="{0}">{1}</a>'.format(n.content_object.url, n.label))>=0)
             
     def test_view_breadcrumb(self):
         tpl = Template('{% load coop_navigation %}{% navigation_breadcrumb obj %}')
@@ -560,6 +618,25 @@ class TemplateTagsTest(TestCase):
             
         for n in (self.nodes[0], self.nodes[1], self.nodes[4]) :
             self.assertFalse(html.find('{0}'.format(n.content_object.url))>=0)
+
+    def test_view_breadcrumb_custom_template(self):
+        cst_tpl = Template('<span id="{{node.id}}">{{node.label}}</span>')
+        tpl = Template('{% load coop_navigation %}{% navigation_breadcrumb obj li_template=cst_tpl%}')
+        
+        html = tpl.render(Context({'obj': self.nodes[5].content_object, 'cst_tpl': cst_tpl}))
+        
+        for n in (self.nodes[2], self.nodes[3], self.nodes[5]) :
+            self.assertTrue(html.find(u'<span id="{0.id}">{0.label}</span>'.format(n))>=0)
+            self.assertFalse(html.find('<a href="{0}">{1}</a>'.format(n.content_object.url, n.label))>=0)
+            
+    def test_view_breadcrumb_custom_template_file(self):
+        tpl = Template('{% load coop_navigation %}{% navigation_breadcrumb obj li_template=coop_cms/test_li.html%}')
+        
+        html = tpl.render(Context({'obj': self.nodes[5].content_object}))
+        
+        for n in (self.nodes[2], self.nodes[3], self.nodes[5]) :
+            self.assertTrue(html.find(u'<span id="{0.id}">{0.label}</span>'.format(n))>=0)
+            self.assertFalse(html.find('<a href="{0}">{1}</a>'.format(n.content_object.url, n.label))>=0)
             
     def test_view_children(self):
         tpl = Template('{% load coop_navigation %}{%navigation_children obj %}')
@@ -587,15 +664,56 @@ class TemplateTagsTest(TestCase):
         for n in self.nodes[:4] + [self.nodes[5]]:
             self.assertFalse(html.find('{0}'.format(n.content_object.url))>=0)
             
+    def test_view_children_custom_template(self):
+        cst_tpl = Template('<span id="{{node.id}}">{{node.label}}</span>')
+        tpl = Template('{% load coop_navigation %}{%navigation_children obj  li_template=cst_tpl %}')
+        html = tpl.render(Context({'obj': self.nodes[3].content_object, 'cst_tpl': cst_tpl}))
+        
+        for n in self.nodes[4:]:
+            self.assertTrue(html.find(u'<span id="{0.id}">{0.label}</span>'.format(n))>=0)
+            self.assertFalse(html.find('<a href="{0}">{1}</a>'.format(n.content_object.url, n.label))>=0)
+            
+    def test_view_children_custom_template_file(self):
+        tpl = Template('{% load coop_navigation %}{%navigation_children obj li_template=coop_cms/test_li.html %}')
+        html = tpl.render(Context({'obj': self.nodes[3].content_object}))
+        
+        for n in self.nodes[4:]:
+            self.assertTrue(html.find(u'<span id="{0.id}">{0.label}</span>'.format(n))>=0)
+            self.assertFalse(html.find('<a href="{0}">{1}</a>'.format(n.content_object.url, n.label))>=0)
+            
+    def test_view_children_order(self):
+        self._insert_new_node()
+        nodes = self.nodes[3].get_children(in_navigation=True)
+        tpl = Template('{% load coop_navigation %}{%navigation_children obj%}')
+        html = tpl.render(Context({'obj': self.nodes[3].content_object}))
+        positions = [html.find(n.content_object.url) for n in nodes]
+        for pos in positions:
+            self.assertTrue(pos>=0)
+        sorted_positions = positions[:]
+        sorted_positions.sort()
+        self.assertEqual(positions, sorted_positions)
+            
     def test_view_siblings(self):
         tpl = Template('{% load coop_navigation %}{% navigation_siblings obj %}')
         html = tpl.render(Context({'obj': self.nodes[0].content_object}))
-        
         for n in self.nodes[:3]:
             self.assertTrue(html.find('{0}'.format(n.content_object.url))>=0)
             
         for n in self.nodes[3:]:
             self.assertFalse(html.find('{0}'.format(n.content_object.url))>=0)
+    
+    def test_view_siblings_order(self):
+        self._insert_new_node()
+        all_nodes = [n for n in self.nodes]
+        nodes = all_nodes[-1].get_siblings(in_navigation=True)
+        tpl = Template('{% load coop_navigation %}{%navigation_siblings obj%}')
+        html = tpl.render(Context({'obj': all_nodes[-1].content_object}))
+        positions = [html.find(n.content_object.url) for n in nodes]
+        for pos in positions:
+            self.assertTrue(pos>=0)
+        sorted_positions = positions[:]
+        sorted_positions.sort()
+        self.assertEqual(positions, sorted_positions)
             
     def test_view_siblings_out_of_navigation(self):
         self.nodes[2].in_navigation = False
@@ -612,6 +730,23 @@ class TemplateTagsTest(TestCase):
             
         for n in self.nodes[2:]:
             self.assertFalse(html.find('{0}'.format(n.content_object.url))>=0)
+    
+    def test_view_siblings_custom_template(self):
+        cst_tpl = Template('<span id="{{node.id}}">{{node.label}}</span>')
+        tpl = Template('{% load coop_navigation %}{% navigation_siblings obj li_template=cst_tpl%}')
+        html = tpl.render(Context({'obj': self.nodes[0].content_object, 'cst_tpl': cst_tpl}))
+        
+        for n in self.nodes[:3]:
+            self.assertTrue(html.find(u'<span id="{0.id}">{0.label}</span>'.format(n))>=0)
+            self.assertFalse(html.find('<a href="{0}">{1}</a>'.format(n.content_object.url, n.label))>=0)
+            
+    def test_view_siblings_custom_template_file(self):
+        tpl = Template('{% load coop_navigation %}{% navigation_siblings obj li_template=coop_cms/test_li.html%}')
+        html = tpl.render(Context({'obj': self.nodes[0].content_object}))
+        
+        for n in self.nodes[:3]:
+            self.assertTrue(html.find(u'<span id="{0.id}">{0.label}</span>'.format(n))>=0)
+            self.assertFalse(html.find('<a href="{0}">{1}</a>'.format(n.content_object.url, n.label))>=0)
             
     def test_navigation_no_nodes(self):
         NavNode.objects.all().delete()

@@ -1,5 +1,0 @@
-{% load i18n %}
-{% with node.get_children as children %}{% for child in children %}
-{% if child.in_navigation %}
-<li><a href="{{child.get_absolute_url}}">{{child.label}}</a></li>
-{% endif %}{% endfor %}{% endwith %}

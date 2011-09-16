@@ -63,35 +63,60 @@ class NavNode(models.Model):
         verbose_name = _(u'navigation node')
         verbose_name_plural = _(u'navigation nodes')
     
-    def get_children(self):
-        return NavNode.objects.filter(parent=self).order_by("ordering")
+    def get_children(self, in_navigation=None):
+        nodes = NavNode.objects.filter(parent=self).order_by("ordering")
+        if in_navigation != None:
+            nodes = nodes.filter(in_navigation=in_navigation)
+        return nodes
         
-    def get_siblings(self):
-        return NavNode.objects.filter(parent=self.parent).order_by("ordering")
+    def get_siblings(self, in_navigation=None):
+        nodes = NavNode.objects.filter(parent=self.parent).order_by("ordering")
+        if in_navigation != None:
+            nodes = nodes.filter(in_navigation=in_navigation)
+        return nodes
     
-    def as_li_navigation_tree_editor(self):
-        return self.as_li(True)
+    def as_jstree(self):
+        li_content = u'<a href="{0}">{1}</a>'.format(self.get_absolute_url(), self.label)
         
-    def as_li(self, navigation_tree_editor=False):
+        children_li = [child.as_jstree() for child in self.get_children()]
+        
+        return u'<li id="node_{0}" rel={3}>{1}<ul>{2}</ul></li>'.format(
+            self.id, li_content, u''.join(children_li), "in_nav" if self.in_navigation else "out_nav"
+        )
+    
+    def _get_li_content(self, li_template):
+        if li_template:
+            t = get_template(li_template) if type(li_template) is unicode else li_template
+            return t.render(Context({'node': self}))
+        else:
+            return u'<a href="{0}">{1}</a>'.format(self.get_absolute_url(), self.label)
+    
+    def as_navigation(self, li_template=None, css_class=""):
         #Display the node and his children as nested ul and li html tags.
-        #Render from a template who is in charge of rendering children
-        #This prints the whole tree recursively
-        t = get_template('coop_cms/_node_li.html')
-        return t.render(Context({'node': self, 'navigation_tree_editor': navigation_tree_editor}))
+        #li_template is a custom template that can be passed
         
-    def as_breadcrumb(self):
-        t = get_template('coop_cms/_node_breadcrumb.html')
-        return t.render(Context({'node': self}))
+        if not self.in_navigation:
+            return ""
+        
+        children_li = [child.as_navigation(li_template) for child in self.get_children(in_navigation=True)]
+        children_html = u"<ul>{0}</ul>".format(u''.join(children_li)) if children_li else ""
+        
+        return u'<li{0}>{1}{2}</li>'.format(css_class, self._get_li_content(li_template), children_html)
+        
+    def as_breadcrumb(self, li_template=None, css_class=""):
+        html = self.parent.as_breadcrumb(li_template) if self.parent else u""
+        return html + u'<li{0}>{1}</li>'.format(css_class, self._get_li_content(li_template))
 
-    def children_as_li(self):
-        t = get_template('coop_cms/_node_children_li.html')
-        return t.render(Context({'node': self}))
+    def children_as_navigation(self, li_template=None, css_class=""):
+        children_li = [u'<li{0}>{1}</li>'.format(css_class, child._get_li_content(li_template))
+            for child in self.get_children(in_navigation=True)]
+        return  u''.join(children_li)
         
-    def siblings_as_li(self):
-        t = get_template('coop_cms/_node_sibling_li.html')
-        return t.render(Context({'node': self}))
+    def siblings_as_navigation(self, li_template=None, css_class=""):
+        siblings_li = [u'<li{0}>{1}</li>'.format(css_class, sibling._get_li_content(li_template))
+            for sibling in self.get_siblings(in_navigation=True)]
+        return  u''.join(siblings_li)
         
-
     
 class NavTree(models.Model):
     last_update = models.DateTimeField(auto_now=True)
