@@ -142,30 +142,33 @@ var TAPO = function(){
                 var files = e.dataTransfer.files;
                 var count = files.length;
                 
+                /* LJ Patch */
                 if (count < 1) {
-                    var html = e.dataTransfer.mozSourceNode;
-                    if (html.tagName === 'IMG') {
-                        var img_url = "";
-                        var alt_txt = "";
-                        for (var i=0; i<html.attributes.length; i++) {
-                            if (html.attributes[i].name === "rel") {
-                                img_url = html.attributes[i].value;
-                            } else if (html.attributes[i].name === "title"){
-                                alt_txt = html.attributes[i].value;
+                    var node = e.dataTransfer.mozSourceNode;
+                    if (node.tagName === 'IMG') {
+                        var url = "", title = "", cls = "", src = "";
+                        for (var i=0; i<node.attributes.length; i++) {
+                            if (node.attributes[i].name === "rel") {
+                                url = node.attributes[i].value;
+                            } else if (node.attributes[i].name === "title"){
+                                title = node.attributes[i].value;
+                            } else if (node.attributes[i].name === "class"){
+                                cls = node.attributes[i].value;
+                            }else if (node.attributes[i].name === "src"){
+                                src = node.attributes[i].value;
                             }
                         }
-                        
-                        var img = jQuery('<img src="'+img_url+'" title="'+alt_txt+'" alt="'+alt_txt+'">');
-                        GENTICS.Utils.Dom.insertIntoDOM(
-                            img,
-                            GENTICS.Aloha.Selection.getRangeObject(),
-                            the_obj);
+                        if (cls==='doc') {
+                            var html = '<a href="'+url+'" target="_blank"><img src="'+src+'" title="'+title+'" alt="'+title+'"></a>';
+                        } else {
+                            var html = '<img src="'+url+'" title="'+title+'" alt="'+title+'">';
+                        }
+                        alert(html);
+                        GENTICS.Utils.Dom.insertIntoDOM(jQuery(html), GENTICS.Aloha.Selection.getRangeObject(), the_obj);
                         return false;
                     }
-                    
                     return true;
                 }
-                /* LJ Patch */
                 /*
                 // if no files where dropped, use default handler
                 if (count < 1) {

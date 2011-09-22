@@ -332,6 +332,7 @@ def process_nav_edition(request):
 
 def show_media_library(request):
     context = {
-        'images': Image.objects.all()
+        'images': Image.objects.all(),
+        'documents': Document.objects.all(),
     }
     return render_to_response('coop_cms/media_library.html', context, RequestContext(request))

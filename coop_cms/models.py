@@ -8,6 +8,7 @@ from django.template import Context
 from django_extensions.db.models import TimeStampedModel, AutoSlugField
 from django.conf import settings
 from sorl.thumbnail import default as sorl_thumbnail
+import os.path
 
 class NavType(models.Model):
     
@@ -200,6 +201,13 @@ class Image(Media):
 class Document(Media):
     file = models.FileField(_('file'), upload_to=get_doc_folder)
 
+    def get_ico_url(self):
+        root, ext = os.path.splitext(self.file.name)
+        ext = ext[1:] #remove leading dot
+        if ext in ('pdf', 'doc', 'xls', 'txt'):
+            return settings.STATIC_URL+u'img/{0}.png'.format(ext)
+        else:
+            return settings.STATIC_URL+u'img/default-icon.png'
 
     
     
