@@ -26,8 +26,7 @@
 
 
     <script type="text/javascript" charset="utf-8" src="{{ STATIC_ROOT }}js/jquery-1.6.2.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_ROOT }}js/jquery.pageslide.min.js"></script>
-
+    
     <!-- CSS: implied media="all" -->
     <link rel="stylesheet" href="{{ STATIC_ROOT }}css/html5.css?v=2">
     
@@ -43,6 +42,9 @@
     <script src="{{ STATIC_ROOT }}js/libs/modernizr.js"></script>
     
     {% block extra_head %}{% endblock %}
+    
+    <!-- TO BE FIXED: jquery plugins should be after extra_head -> aloah import another jquery -->
+    <script type="text/javascript" src="{{ STATIC_ROOT }}js/jquery.pageslide.min.js"></script>
 
 </head>
 <body id="{% block body_id %}{% endblock %}">
@@ -101,6 +103,7 @@
 $(function(){
     {% block jquery %}
     $("#perso").pageSlide({width:'350px', direction:'right'});
+    $("#media-library").pageSlide({width:'350px', direction:'right'});
 
     {% endblock %}
 });

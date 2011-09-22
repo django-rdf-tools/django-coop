@@ -1,0 +1,23 @@
+{% load i18n thumbnail %}
+<style>
+.library .library-items {
+    max-height: 100px;
+}
+.library img {
+    display: block;
+    padding-bottom: 20px;
+    margin: auto;
+}
+</style>
+<div id="ppanel" class="library">
+    
+    <h3>{% trans "Media library" %}</h3>
+    
+    {% spaceless %}
+    <div class="library-items">
+    {% for img in images %}
+        <img src="{{ img.as_thumbnail.url }}" title="{{img.name}}" rel="{{img.file.url}}">
+    {% endfor %}
+    {% endspaceless %}
+    </div>
+</div>    

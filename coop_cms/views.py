@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseForbidden
-from models import NavNode, NavType, Article
+from models import NavNode, NavType, Article, Image, Document
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, Context
 from django.core.urlresolvers import reverse
@@ -329,3 +329,9 @@ def process_nav_edition(request):
         #return the result as json object
         return HttpResponse(json.dumps(response), mimetype='application/json')
     raise Http404
+
+def show_media_library(request):
+    context = {
+        'images': Image.objects.all()
+    }
+    return render_to_response('coop_cms/media_library.html', context, RequestContext(request))

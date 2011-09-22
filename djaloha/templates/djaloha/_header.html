@@ -8,6 +8,8 @@
 <script type="text/javascript" src="{{STATIC_URL}}aloha/plugins/com.gentics.aloha.plugins.Link/LinkList.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}aloha/plugins/com.gentics.aloha.plugins.Paste/plugin.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}aloha/plugins/com.gentics.aloha.plugins.Paste/wordpastehandler.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}aloha/plugins/at.tapo.aloha.plugins.Image/plugin.js"></script>
+<link media="all" rel="stylesheet" href="{{STATIC_URL}}aloha/plugins/at.tapo.aloha.plugins.Image/resources/imageplugin.css" type="text/css" />
 <script type="text/javascript">
 $(function(){
     // Aloha configuration
@@ -16,7 +18,7 @@ $(function(){
         errorhandling : false,
         ribbon: false,	
         "i18n": {
-            "current": "{{LANGUAGE_CODE}}" 
+            "current": "{%if LANGUAGE_CODE|length > 2%}{{LANGUAGE_CODE|slice:':2'}}{%else%}{{LANGAGE_CODE}}{%endif%}" 
         },
         "repositories": {
             "com.gentics.aloha.repositories.LinkList": {
@@ -79,6 +81,7 @@ $(function(){
 
     // Make fragments editable
     $('.djaloha-editable').aloha();
+    //.bind("drop", handler )
     
     //Callback called when the fragment edition is done
     //Push to the page

@@ -6,6 +6,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.template.loader import get_template
 from django.template import Context
 from django_extensions.db.models import TimeStampedModel, AutoSlugField
+from django.conf import settings
+from sorl.thumbnail import default as sorl_thumbnail
 
 class NavType(models.Model):
     
@@ -161,3 +163,44 @@ class Link(TimeStampedModel):
     class Meta:
         verbose_name = _(u"link")
         verbose_name_plural = _(u"links")
+
+def get_doc_folder(instance, filename):
+    try:
+        doc_root = settings.DOCUMENT_FOLDER
+    except AttributeError:
+        doc_root = 'doc'
+        
+    return u'{0}/{1}/{2}'.format(doc_root,
+        instance.created.strftime('%Y%d%m%H%M%S'), filename)
+
+def get_img_folder(instance, filename):
+    try:
+        img_root = settings.IMAGE_FOLDER
+    except AttributeError:
+        img_root = 'img'
+        
+    return u'{0}/{1}/{2}'.format(img_root,
+        instance.created.strftime('%Y%d%m%H%M%S'), filename)
+
+class Media(TimeStampedModel):
+    name = models.CharField(_('name'), max_length=200)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        abstract = True
+
+class Image(Media):
+    file = models.ImageField(_('file'), upload_to=get_img_folder)
+    
+    def as_thumbnail(self):
+        return sorl_thumbnail.backend.get_thumbnail(self.file.file, "200x100", crop='center')
+
+class Document(Media):
+    file = models.FileField(_('file'), upload_to=get_doc_folder)
+
+
+    
+    
+    

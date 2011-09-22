@@ -32,3 +32,5 @@ admin.site.register(models.NavTree, NavTreeAdmin)
 
 admin.site.register(models.Article)
 admin.site.register(models.Link)
+admin.site.register(models.Document)
+admin.site.register(models.Image)

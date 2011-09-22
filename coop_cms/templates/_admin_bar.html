@@ -15,11 +15,12 @@ var admin_printMessage = function (message, css_class) {
 		<a href="{% url admin:index %}"><span class="unicon">âš’</span>Administration</a>
 		{% if editable %}
 			{% if edit_mode %}
-			<a href="{{object.get_absolute_url}}?mode=view"><span class="unicon">í ¼í¼</span>Visualiser</a>
+			<a href="{{object.get_absolute_url}}?mode=view"><span class="unicon">ğŸŒ</span>Visualiser</a>
 			{% else %}
 			<a href="{{object.get_absolute_url}}?mode=edit"><span class="unicon">âœ</span>Modifier la page</a>
 			{% endif %}
 		{% endif %}
+		<a href="{% url media_library %}" id="media-library"><span class="unicon">âš’</span>{% trans "Media library" %}</a>
 		<div id="admin-status"></div>
 	</div>
 {% endif %}

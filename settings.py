@@ -150,6 +150,7 @@ INSTALLED_APPS = (
     'extended_choices',
     'smart_selects',
     'livesettings',
+    'sorl.thumbnail', 
 
     #apps
     'coop_local',
