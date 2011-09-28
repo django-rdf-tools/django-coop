@@ -155,11 +155,9 @@ INSTALLED_APPS = (
     #apps
     'coop_local',
     'coop',
-    'd2rq',
     'djaloha',
     'coop_cms',
     'skosxl',
-#    'uriresolve',
 )
 
 #ADMIN_TOOLS_MENU = 'base.menu.CustomMenu'
@@ -181,7 +179,8 @@ LIVESETTINGS_OPTIONS = \
 
 AUTH_PROFILE_MODULE = 'coop_local.membre'
 
-SITE_TITLE = 'CREDIS'
+SITE_AUTHOR = 'CREDIS'
+SITE_TITLE = 'CREDIS : Collectif Régional des Initiatives Solidaires en Auvergne'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
