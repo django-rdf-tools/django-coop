@@ -163,8 +163,12 @@ var TAPO = function(){
                         } else {
                             var html = '<img src="'+url+'" title="'+title+'" alt="'+title+'">';
                         }
-                        alert(html);
-                        GENTICS.Utils.Dom.insertIntoDOM(jQuery(html), GENTICS.Aloha.Selection.getRangeObject(), the_obj);
+                        var range = GENTICS.Aloha.Selection.getRangeObject();
+                        if (jQuery.isEmptyObject(range)) {
+                            the_obj.append(html);
+                        } else {
+                            GENTICS.Utils.Dom.insertIntoDOM(jQuery(html), range, the_obj);
+                        }
                         return false;
                     }
                     return true;
