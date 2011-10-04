@@ -20,7 +20,9 @@ var admin_printMessage = function (message, css_class) {
 			<a href="{{object.get_absolute_url}}?mode=edit"><span class="unicon">✍</span>Modifier la page</a>
 			{% endif %}
 		{% endif %}
+		{% if edit_mode %}
 		<a href="{% url media_library %}" id="media-library"><span class="unicon">⚒</span>{% trans "Media library" %}</a>
+		{% endif %}
 		<div id="admin-status"></div>
 	</div>
 {% endif %}
