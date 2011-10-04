@@ -81,31 +81,51 @@ $(function(){
 
     // Make fragments editable
     $('.djaloha-editable').aloha();
-    //.bind("drop", handler )
     
-    //Callback called when the fragment edition is done
-    //Push to the page
-    function saveEditable(event, eventProperties) {
-        data = {};
-        var ed = eventProperties.editable;
-        data[ed.getId()] = ed.getContents();
-        
-        $.post(
-            "{{object.get_absolute_url}}",
-            data,
-            function(data) {
-                if (data.status != 'success') {
-                    //restore value
-                    //ed.disable();
-                    $('#'+ed.getId()).html(data.old_values[ed.getId()]).addClass("error-field");
-                    //ed.enable();
-                }
-                admin_printMessage(data.message, data.status);
-            },
-            'json'
-        );
-    }
+    GENTICS.Aloha.EventRegistry.subscribe(GENTICS.Aloha, "editableDeactivated",
+        //Callback called when the fragment edition is done -> Push to the page
+        function(event, eventProperties) {
+            data = {};
+            var ed = eventProperties.editable;
+            data[ed.getId()] = ed.getContents();
+            
+            $.post(
+                "{{object.get_absolute_url}}",
+                data,
+                function(data) {
+                    if (data.status != 'success') {
+                        $('#'+ed.getId()).html(data.old_values[ed.getId()]).addClass("error-field");
+                    }
+                    admin_printMessage(data.message, data.status);
+                },
+                'json'
+            );
+        }
+    );
     
-    GENTICS.Aloha.EventRegistry.subscribe(GENTICS.Aloha, "editableDeactivated", saveEditable);
+    GENTICS.Aloha.EventRegistry.subscribe(GENTICS.Aloha, 'editableCreated', function(event, editable) {
+        var the_obj = editable.obj;
+        jQuery(editable.obj).bind('drop', function(event){
+            setTimeout(function () {
+                $(".djaloha-editable img.djaloha-thumbnail").each(function(index) {
+                    $(this).removeClass("djaloha-thumbnail")
+                    $(this).attr("src", $(this).attr("rel"));
+                    $(this).attr("rel", "");
+                });
+
+                $(".djaloha-editable a.djaloha-document").each(function(index) {
+                    $(this).removeClass("djaloha-document")
+                    var img = $(this).find("img")
+                    $(this).attr('href', img.attr("rel"));
+                    $(this).attr('target', '_blank');
+                    $(this).removeAttr('rel')
+                });
+
+                //force the focus in order to make sure that the editable is activated
+                //this will cause the deactivated event to be triggered, and the content to be saved
+                the_obj.focus(); 
+            }, 0);
+        });
+    });
 });
 </script>

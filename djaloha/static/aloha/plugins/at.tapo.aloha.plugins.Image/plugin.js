@@ -142,38 +142,6 @@ var TAPO = function(){
                 var files = e.dataTransfer.files;
                 var count = files.length;
                 
-                /* LJ Patch */
-                if (count < 1) {
-                    var node = e.dataTransfer.mozSourceNode;
-                    if (node.tagName === 'IMG') {
-                        var url = "", title = "", cls = "", src = "";
-                        for (var i=0; i<node.attributes.length; i++) {
-                            if (node.attributes[i].name === "rel") {
-                                url = node.attributes[i].value;
-                            } else if (node.attributes[i].name === "title"){
-                                title = node.attributes[i].value;
-                            } else if (node.attributes[i].name === "class"){
-                                cls = node.attributes[i].value;
-                            }else if (node.attributes[i].name === "src"){
-                                src = node.attributes[i].value;
-                            }
-                        }
-                        if (cls==='doc') {
-                            var html = '<a href="'+url+'" target="_blank"><img src="'+src+'" title="'+title+'" alt="'+title+'"></a>';
-                        } else {
-                            var html = '<img src="'+url+'" title="'+title+'" alt="'+title+'">';
-                        }
-                        var range = GENTICS.Aloha.Selection.getRangeObject();
-                        if (jQuery.isEmptyObject(range)) {
-                            the_obj.append(html);
-                        } else {
-                            GENTICS.Utils.Dom.insertIntoDOM(jQuery(html), range, the_obj);
-                        }
-                        return false;
-                    }
-                    return true;
-                }
-                /*
                 // if no files where dropped, use default handler
                 if (count < 1) {
                     return true;
@@ -192,9 +160,6 @@ var TAPO = function(){
                     };
                     reader.readAsDataURL(files[i]);
                 }
-                */
-                /* fin LJ Patch */
-
                 return false;
             });
         });
