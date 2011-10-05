@@ -27,13 +27,13 @@ $(function(){
 {% block document %}
 <div class="grid_12 grid">
 <form id="article_form" method="POST">{% csrf_token %}
-{% include "coop_cms/_form_error.html" with f=form %}
+{% include "coop_cms/_form_error.html" with errs=form.non_field_errors %}
 {% block title %}
-    {% include "coop_cms/_form_error.html" with f=form.title %}
+    {% include "coop_cms/_form_error.html" with errs=form.title.errors %}
     <h2 id="title">{{form.title}}</h2>
 {% endblock %}
     <div id="content">
-    {% include "coop_cms/_form_error.html" with f=form.content %}
+    {% include "coop_cms/_form_error.html" with errs=form.content.errors %}
     {{form.content}}
     </div>
     <input type="submit" style="visibility: hidden">

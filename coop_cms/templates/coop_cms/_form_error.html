@@ -1,6 +1,6 @@
-{% if f.errors %}
+{% if errs %}
 <ul class="form-errors">
-    {% for err in f.errors %}
+    {% for err in errs %}
         <li>{{err}}</li>
     {% endfor %}
 </ul>
