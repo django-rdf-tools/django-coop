@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-22 16:50+0200\n"
+"POT-Creation-Date: 2011-10-05 23:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,13 +17,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 
-#: .\forms.py:18
+#: .\forms.py:21
 msgid ""
 "Invalid rule for this content type: The object class doesn't have a "
 "get_label method"
 msgstr ""
 "Règle invalide pour ce content type: La classe de l'objet n'a pas de méthode "
 "get_label"
+
+#: .\forms.py:42
+msgid "Title can not be empty"
+msgstr "Le titre ne peut pas être vide"
 
 #: .\models.py:20
 msgid "Use object unicode"
@@ -125,74 +129,65 @@ msgstr "nom"
 msgid "file"
 msgstr "fichier"
 
-#: .\views.py:27
-msgid "HTML content is not allowed in the title"
-msgstr "Aucun contenu HTML n'est autorisé dans le titre"
-
-#: .\views.py:69
+#: .\views.py:74
 msgid "Node content loaded."
 msgstr "Contenu du noeud chargé"
 
-#: .\views.py:82
+#: .\views.py:87
 msgid "The node '{0}' has been renamed into '{1}'."
 msgstr "Le noeud '{0}' a été renommé en '{1}'."
 
-#: .\views.py:95
+#: .\views.py:100
 msgid "The node has been removed."
 msgstr "Le noeud a été supprimé"
 
-#: .\views.py:97
+#: .\views.py:102
 msgid "{0} nodes has been removed."
 msgstr "{0} noeuds ont été supprimés"
 
-#: .\views.py:191
+#: .\views.py:196
 msgid "The node '{0}' has been moved."
 msgstr "Le noeud '{0}' a été déplacé"
 
-#: .\views.py:217
+#: .\views.py:222
 msgid "Please choose an existing {0}"
 msgstr "Veuillez choisir un {0} existant"
 
-#: .\views.py:221
+#: .\views.py:226
 msgid "{0} {1} not found"
 msgstr "{0} {1} est introuvable"
 
-#: .\views.py:245
+#: .\views.py:250
 msgid "'{0}' has added to the navigation tree."
 msgstr "'{0}' a été ajouté à l'arborescence."
 
-#: .\views.py:286
+#: .\views.py:291
 msgid "The node is now in navigation."
 msgstr "le noeud est à présent visible dans la navigation"
 
-#: .\views.py:287 .\templates\coop_cms\navtree_content\default.html.py:5
+#: .\views.py:292 .\templates\coop_cms\navtree_content\default.html.py:5
 msgid "Remove from navigation"
 msgstr "Supprimer de la navigation"
 
-#: .\views.py:290
+#: .\views.py:295
 msgid "The node has been removed of the navigation."
 msgstr "Le noeud a été supprimé de la navigation"
 
-#: .\views.py:291 .\templates\coop_cms\navtree_content\default.html.py:7
+#: .\views.py:296 .\templates\coop_cms\navtree_content\default.html.py:7
 msgid "Add to navigation"
 msgstr "Rendre le noeud visible dans la navigation"
 
-#: .\views.py:318
+#: .\views.py:323
 msgid "Unsupported message {0}"
 msgstr "Message {0} inconnu"
 
-#: .\views.py:320
+#: .\views.py:325
 msgid "You are not allowed to add a node"
 msgstr "Vous n'êtes pas autorisé à ajouter un noeud"
 
-#: .\views.py:325 .\views.py:327
+#: .\views.py:330 .\views.py:332
 msgid "An error occured"
 msgstr "Une erreur est survenue"
-
-#: .\templates\_admin_bar.html.py:23
-#: .\templates\coop_cms\media_library.html.py:13
-msgid "Media library"
-msgstr "Médiathèque"
 
 #: .\templates\admin\coop_cms\navtree\change_list.html.py:251
 msgid "Are you sure to delete the selected node?"
@@ -220,11 +215,36 @@ msgstr "Renommer"
 msgid "Remove"
 msgstr "Supprimer"
 
-#: .\templates\coop_cms\media_library.html.py:16
+#: .\templates\coop_cms\_admin_bar.html.py:5
+msgid "Admin"
+msgstr "Admin"
+
+#: .\templates\coop_cms\_admin_bar.html.py:9
+msgid "Cancel"
+msgstr "Annuler"
+
+#: .\templates\coop_cms\_admin_bar.html.py:10
+msgid "Save"
+msgstr "Enregistrer"
+
+#: .\templates\coop_cms\_admin_bar.html.py:12
+msgid "Edit"
+msgstr "Editer"
+
+#: .\templates\coop_cms\_admin_bar.html.py:16
+#: .\templates\coop_cms\media_library.html.py:12
+msgid "Media library"
+msgstr "Médiathèque"
+
+#: .\templates\coop_cms\article.html.py:3
+msgid "Edition"
+msgstr "Edition"
+
+#: .\templates\coop_cms\media_library.html.py:15
 msgid "Images"
 msgstr "Images"
 
-#: .\templates\coop_cms\media_library.html.py:26
+#: .\templates\coop_cms\media_library.html.py:25
 msgid "Documents"
 msgstr "Documents"
 
