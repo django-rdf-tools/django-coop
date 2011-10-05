@@ -14,36 +14,58 @@ from django.template.loader import select_template
 from django.db.models.aggregates import Max
 import re
 
+#def view_article(request, url):
+#    
+#    article = get_object_or_404(Article, slug=url)
+#    
+#    def validate_article(article):
+#        #remove the <br> added by aloha
+#        article.title = article.title.replace('<br>', '')
+#        
+#        #Make sure that there is no HTML content in the title
+#        if re.search(u'<(.*)>', article.title):
+#            raise ValidationError(_(u'HTML content is not allowed in the title'))
+#    
+#    response = process_object_edition(request, article, object_validator=validate_article)
+#    
+#    if response:
+#        return response
+#
+#    context_dict = {
+#        'object': article,
+#        'links': Article.objects.all(),
+#        'editable': True,
+#        'edit_mode': request.GET.get('mode', 'view')=='edit',
+#    }
+#
+#    return render_to_response(
+#        'article.html',
+#        context_dict,
+#        context_instance=RequestContext(request)
+#    )
+
+from forms import ArticleForm
 def view_article(request, url):
     
     article = get_object_or_404(Article, slug=url)
-    
-    def validate_article(article):
-        #remove the <br> added by aloha
-        article.title = article.title.replace('<br>', '')
+    if request.method == "POST":
+        form = ArticleForm(request.POST, instance=article)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(request.path)
+    else:
+        form = ArticleForm(instance=article)
         
-        #Make sure that there is no HTML content in the title
-        if re.search(u'<(.*)>', article.title):
-            raise ValidationError(_(u'HTML content is not allowed in the title'))
+    edit_mode = request.GET.get('mode', 'view')=='edit'
+    context_dict = {'form': form, 'editable': True, 'edit_mode': edit_mode,}
+    if edit_mode:
+        context_dict['links'] = Article.objects.all()
     
-    response = process_object_edition(request, article, object_validator=validate_article)
-    
-    if response:
-        return response
-
-    context_dict = {
-        'object': article,
-        'links': Article.objects.all(),
-        'editable': True,
-        'edit_mode': request.GET.get('mode', 'view')=='edit',
-    }
-
     return render_to_response(
         'article.html',
         context_dict,
         context_instance=RequestContext(request)
     )
-
 
 #navigation tree --------------------------------------------------------------
 

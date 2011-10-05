@@ -9,19 +9,21 @@ var admin_printMessage = function (message, css_class) {
     $('#admin-status').removeClass().html(message).addClass(css_class).show();
     setTimeout(admin_hideMessage, 3000);
 };
+
 </script>
 {% if user.is_authenticated %}
 	<div id="admin-bar">
-		<a href="{% url admin:index %}"><span class="unicon">⚒</span>Administration</a>
+		<a id="adminbar_admin" href="{% url admin:index %}"><span class="unicon">⚒</span>{% trans 'Admin' %}</a>
 		{% if editable %}
 			{% if edit_mode %}
-			<a href="{{object.get_absolute_url}}?mode=view"><span class="unicon">🌏</span>Visualiser</a>
+			<a id="adminbar_cancel" href="{{request.path}}?mode=view"><span class="unicon">x</span>{% trans 'Cancel' %}</a>
+			<a id="adminbar_save" href=""><span class="unicon">v</span>{% trans 'Save' %}</a>
 			{% else %}
-			<a href="{{object.get_absolute_url}}?mode=edit"><span class="unicon">✍</span>Modifier la page</a>
+			<a id="adminbar_edit" href="{{request.path}}?mode=edit"><span class="unicon">✍</span>{% trans 'Edit' %}</a>
 			{% endif %}
 		{% endif %}
 		{% if edit_mode %}
-		<a href="{% url media_library %}" id="media-library"><span class="unicon">⚒</span>{% trans "Media library" %}</a>
+		<a id="adminbar_medialibrary" href="{% url media_library %}"><span class="unicon">m</span>{% trans "Media library" %}</a>
 		{% endif %}
 		<div id="admin-status"></div>
 	</div>

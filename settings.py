@@ -150,7 +150,8 @@ INSTALLED_APPS = (
     'extended_choices',
     'smart_selects',
     'livesettings',
-    'sorl.thumbnail', 
+    'sorl.thumbnail',
+    'floppyforms',
 
     #apps
     'coop_local',
@@ -159,6 +160,8 @@ INSTALLED_APPS = (
     'coop_cms',
     'skosxl',
 )
+
+DJALOHA_LINK_MODELS = ('coop_cms.Article',)
 
 #ADMIN_TOOLS_MENU = 'base.menu.CustomMenu'
 #ADMIN_TOOLS_INDEX_DASHBOARD = 'base.dashboard.CustomIndexDashboard'

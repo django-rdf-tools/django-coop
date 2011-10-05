@@ -4,6 +4,10 @@ from django.utils.translation import ugettext as _
 import json
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied, ValidationError
+from django.conf import settings
+from django.shortcuts import render_to_response, get_object_or_404
+from django.template import RequestContext, Context
+from django.db.models import get_model
 
 def get_field_verbose_name(object, field):
     try:
@@ -80,3 +84,16 @@ def process_object_edition(request, object, object_validator=None, perm=None):
     #if not an ajax POST: don't return anything and let the calling view make the job
     return None
 
+def aloha_config(request):
+    links = []
+    link_models = getattr(settings, 'DJALOHA_LINK_MODELS', ())
+    for full_model_name in link_models:
+        app_name, model_name = full_model_name.split('.')
+        model = get_model(app_name, model_name)
+        links.extend(model.objects.all())
+    
+    return render_to_response(
+        'djaloha/aloha_config.js',
+        {'links': links},
+        context_instance=RequestContext(request)
+    )

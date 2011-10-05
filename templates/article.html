@@ -2,23 +2,45 @@
 
 {% block meta_title %}{{object.title}}{% endblock %}
 
+{% block jquery_declaration %}
+{% if edit_mode %}
+    {{form.media}}
+{% else %}
+    {{block.super}}
+{% endif %}
+{% endblock %}
+
 {% block extra_head %}
 <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/pages.css" />
-{% if edit_mode %}
-    {% include "djaloha/_header.html" %}
-    {% include "djaloha/_csrf_ajax_jquery.html" %}
-{% endif %}
+<script>
+$(function(){
+    $("#adminbar_medialibrary").pageSlide({width:'350px', direction:'right'});
+    $('#adminbar_save').click(function(event) {
+        $("#article_form").submit();
+        event.preventDefault();
+    });
+});
+</script>
 {% endblock %}
 
 {% block document %}
 <div class="grid_12 grid">
-    
+<form id="article_form" method="POST">{% csrf_token %}
 {% block title %}
-    <h2 id="title" class="djaloha-editable">{{object.title|safe}}</h2>
+    <!-- <h2 id="title" class="djaloha-editable">{{object.title|safe}}</h2>-->
+    {% include "_field_error.html" with field=form.title %}
+    <h2 id="title">{{form.title}}</h2>
 {% endblock %}
 
+    {% comment %} 
     <div id="content" class="djaloha-editable">
         {{object.content|safe}}
     </div>
+    {% endcomment %}
+    <div id="content">
+    {{form.content}}
+    </div>
+    <input type="submit" style="visibility: hidden">
+</form>
 </div>
 {% endblock %}

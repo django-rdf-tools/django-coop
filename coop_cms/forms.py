@@ -1,9 +1,11 @@
 from django import forms
-from models import NavType
+from models import NavType, Article
 from django.contrib.contenttypes.models import ContentType
 from settings import get_navigable_content_types
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
+from djaloha.widgets import AlohaInput
+import floppyforms
 
 class NavTypeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -20,3 +22,20 @@ class NavTypeForm(forms.ModelForm):
 
     class Meta:
         model = NavType
+
+
+class ArticleForm(floppyforms.ModelForm):
+
+    class Meta:
+        model = Article
+        fields = ('title', 'content')
+        widgets = {
+            'title': AlohaInput(),
+            'content': AlohaInput(),
+        }
+
+    def clean_title(self):
+        title = self.cleaned_data['title']
+        if not title:
+            raise ValidationError(_("Title can not be empty"))
+        return title

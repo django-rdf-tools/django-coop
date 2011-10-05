@@ -1,0 +1,5 @@
+<span {% for attr in attrs.items %} {{ attr.0 }}{% if attr.1 %}="{{ attr.1 }}"{% endif %}{% endfor %}>
+<div class="djaloha-editable" id="{{name}}">
+{{ value|safe }}
+</div></span>
+<input type="hidden" id="{{name}}_hidden" name="{{ name }}"{% if value %} value="{{ value }}"{% endif %}{% if required %} required{% endif %}>

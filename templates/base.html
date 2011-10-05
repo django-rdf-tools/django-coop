@@ -1,5 +1,4 @@
 {% load i18n static coop_navigation %}
-{% get_static_prefix as STATIC_ROOT %}
 <!DOCYTPE HTML>
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 <!--[if lt IE 7 ]> <html class="ie6" lang="en"> <![endif]-->
@@ -24,28 +23,25 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     
 
-
-    <script type="text/javascript" charset="utf-8" src="{{ STATIC_ROOT }}js/jquery-1.6.2.min.js"></script>
+    {% block jquery_declaration %}
+    <script type="text/javascript" charset="utf-8" src="{{ STATIC_URL }}js/jquery-1.6.2.min.js"></script>
+    {% endblock %}
     
     <!-- CSS: implied media="all" -->
-    <link rel="stylesheet" href="{{ STATIC_ROOT }}css/html5.css?v=2">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/html5.css?v=2">
     
-    <link rel="stylesheet" href="{{ STATIC_ROOT }}css/normalize.css" type="text/css" />
-    <link rel="stylesheet" href="{{ STATIC_ROOT }}css/960.css" type="text/css" />
-    <link rel="stylesheet" href="{{ STATIC_ROOT }}css/style.css" type="text/css" />
-    <link rel="stylesheet" href="{{ STATIC_ROOT }}css/admin_bar.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/normalize.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/960.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/admin_bar.css" type="text/css" />
 
     <link href='http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow:700|Nobile:400,400italic,700' rel='stylesheet' type='text/css'>
     
-    
-    <script src="{{ STATIC_ROOT }}js/libs/modernizr.js"></script>
+    <script src="{{ STATIC_URL }}js/libs/modernizr.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.pageslide.min.js"></script>
     
     {% block extra_head %}{% endblock %}
-    
-    <!-- TO BE FIXED: jquery plugins should be after extra_head -> aloah import another jquery -->
-    <script type="text/javascript" src="{{ STATIC_ROOT }}js/jquery.pageslide.min.js"></script>
-
 </head>
 <body id="{% block body_id %}{% endblock %}">
 
@@ -85,7 +81,7 @@
 
         {% endblock %}
         <a href="http://django-fr.org/">
-            <img id="django" border="0" src="{{ STATIC_ROOT }}img/djangoproject.gif"/>
+            <img id="django" border="0" src="{{ STATIC_URL }}img/djangoproject.gif"/>
         </a>
     </div>
 </footer>
@@ -96,15 +92,13 @@
 {% comment %}
 <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if necessary -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
-<script>window.jQuery || document.write("<script src='{{ STATIC_ROOT }}js/libs/jquery-1.5.2.min.js'>\x3C/script>")</script>
+<script>window.jQuery || document.write("<script src='{{ STATIC_URL }}js/libs/jquery-1.5.2.min.js'>\x3C/script>")</script>
 {% endcomment %}
 
 <script type="text/javascript">
 $(function(){
     {% block jquery %}
     $("#perso").pageSlide({width:'350px', direction:'right'});
-    $("#media-library").pageSlide({width:'350px', direction:'right'});
-
     {% endblock %}
 });
 </script>
