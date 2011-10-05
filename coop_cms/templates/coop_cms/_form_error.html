@@ -1,0 +1,7 @@
+{% if f.errors %}
+<ul class="form-errors">
+    {% for err in f.errors %}
+        <li>{{err}}</li>
+    {% endfor %}
+</ul>
+{% endif %}

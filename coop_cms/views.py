@@ -9,46 +9,19 @@ import json
 from django.utils.translation import ugettext as _
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError, PermissionDenied
-from djaloha.views import process_object_edition
 from django.template.loader import select_template
 from django.db.models.aggregates import Max
-import re
-
-#def view_article(request, url):
-#    
-#    article = get_object_or_404(Article, slug=url)
-#    
-#    def validate_article(article):
-#        #remove the <br> added by aloha
-#        article.title = article.title.replace('<br>', '')
-#        
-#        #Make sure that there is no HTML content in the title
-#        if re.search(u'<(.*)>', article.title):
-#            raise ValidationError(_(u'HTML content is not allowed in the title'))
-#    
-#    response = process_object_edition(request, article, object_validator=validate_article)
-#    
-#    if response:
-#        return response
-#
-#    context_dict = {
-#        'object': article,
-#        'links': Article.objects.all(),
-#        'editable': True,
-#        'edit_mode': request.GET.get('mode', 'view')=='edit',
-#    }
-#
-#    return render_to_response(
-#        'article.html',
-#        context_dict,
-#        context_instance=RequestContext(request)
-#    )
-
 from forms import ArticleForm
+from django.contrib.messages.api import error as error_message
+
 def view_article(request, url):
+    """view and edit a page"""
     
     article = get_object_or_404(Article, slug=url)
     if request.method == "POST":
+        if not request.user.has_perm('coop_cms.change_article'):
+            raise PermissionDenied
+        
         form = ArticleForm(request.POST, instance=article)
         if form.is_valid():
             form.save()
@@ -57,16 +30,26 @@ def view_article(request, url):
         form = ArticleForm(instance=article)
         
     edit_mode = request.GET.get('mode', 'view')=='edit'
-    context_dict = {'form': form, 'editable': True, 'edit_mode': edit_mode,}
-    if edit_mode:
-        context_dict['links'] = Article.objects.all()
+    
+    if edit_mode and not request.user.has_perm('coop_cms.change_article'):
+        raise PermissionDenied
+    
+    context_dict = {'form': form, 'editable': True,
+        'edit_mode': edit_mode, 'title': article.title}
     
     return render_to_response(
-        'article.html',
+        'coop_cms/article.html',
         context_dict,
         context_instance=RequestContext(request)
     )
 
+def show_media_library(request):
+    context = {
+        'images': Image.objects.all(),
+        'documents': Document.objects.all(),
+    }
+    return render_to_response('coop_cms/media_library.html', context, RequestContext(request))
+    
 #navigation tree --------------------------------------------------------------
 
 def view_navnode(request):
@@ -352,9 +335,3 @@ def process_nav_edition(request):
         return HttpResponse(json.dumps(response), mimetype='application/json')
     raise Http404
 
-def show_media_library(request):
-    context = {
-        'images': Image.objects.all(),
-        'documents': Document.objects.all(),
-    }
-    return render_to_response('coop_cms/media_library.html', context, RequestContext(request))

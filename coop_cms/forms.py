@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 from djaloha.widgets import AlohaInput
 import floppyforms
+import re
 
 class NavTypeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -23,7 +24,6 @@ class NavTypeForm(forms.ModelForm):
     class Meta:
         model = NavType
 
-
 class ArticleForm(floppyforms.ModelForm):
 
     class Meta:
@@ -35,7 +35,13 @@ class ArticleForm(floppyforms.ModelForm):
         }
 
     def clean_title(self):
-        title = self.cleaned_data['title']
+        title = self.cleaned_data['title'].strip()
+        if title[-4:].lower() == '<br>':
+            title = title[:-4]
         if not title:
             raise ValidationError(_("Title can not be empty"))
+
+        #if re.search(u'<(.*)>', title):
+        #    raise ValidationError(_(u'HTML content is not allowed in the title'))
+        
         return title

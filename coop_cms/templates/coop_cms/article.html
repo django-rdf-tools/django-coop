@@ -1,17 +1,17 @@
 {% extends "base.html" %}
-
-{% block meta_title %}{{object.title}}{% endblock %}
+{% load i18n djaloha_utils %}
+{% block meta_title %}{{title|remove_br}}{% if edit_mode %} - {% trans "Edition" %}{% endif %}{% endblock %}
 
 {% block jquery_declaration %}
 {% if edit_mode %}
     {{form.media}}
 {% else %}
-    {{block.super}}
+    {{ block.super }}
 {% endif %}
 {% endblock %}
 
 {% block extra_head %}
-<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/pages.css" />
+{% if edit_mode %}
 <script>
 $(function(){
     $("#adminbar_medialibrary").pageSlide({width:'350px', direction:'right'});
@@ -21,23 +21,19 @@ $(function(){
     });
 });
 </script>
+{% endif %}
 {% endblock %}
 
 {% block document %}
 <div class="grid_12 grid">
 <form id="article_form" method="POST">{% csrf_token %}
+{% include "coop_cms/_form_error.html" with f=form %}
 {% block title %}
-    <!-- <h2 id="title" class="djaloha-editable">{{object.title|safe}}</h2>-->
-    {% include "_field_error.html" with field=form.title %}
+    {% include "coop_cms/_form_error.html" with f=form.title %}
     <h2 id="title">{{form.title}}</h2>
 {% endblock %}
-
-    {% comment %} 
-    <div id="content" class="djaloha-editable">
-        {{object.content|safe}}
-    </div>
-    {% endcomment %}
     <div id="content">
+    {% include "coop_cms/_form_error.html" with f=form.content %}
     {{form.content}}
     </div>
     <input type="submit" style="visibility: hidden">

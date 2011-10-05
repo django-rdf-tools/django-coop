@@ -1,29 +1,17 @@
-{% load i18n %}
-<script type="text/javascript" src="{{STATIC_URL}}aloha/aloha.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}aloha/plugins/com.gentics.aloha.plugins.Format/plugin.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}aloha/plugins/com.gentics.aloha.plugins.Table/plugin.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}aloha/plugins/com.gentics.aloha.plugins.List/plugin.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}aloha/plugins/com.gentics.aloha.plugins.Link/plugin.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}aloha/plugins/com.gentics.aloha.plugins.HighlightEditables/plugin.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}aloha/plugins/com.gentics.aloha.plugins.Link/LinkList.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}aloha/plugins/com.gentics.aloha.plugins.Paste/plugin.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}aloha/plugins/com.gentics.aloha.plugins.Paste/wordpastehandler.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}aloha/plugins/at.tapo.aloha.plugins.Image/plugin.js"></script>
-<link media="all" rel="stylesheet" href="{{STATIC_URL}}aloha/plugins/at.tapo.aloha.plugins.Image/resources/imageplugin.css" type="text/css" />
-<script type="text/javascript">
+{% load i18n djaloha_utils %}
 $(function(){
     // Aloha configuration
     GENTICS.Aloha.settings = {
         logLevels: {'error': true, 'warn': true, 'info': true, 'debug': false},
-        errorhandling : false,
+        errorhandling : true,
         ribbon: false,	
         "i18n": {
-            "current": "{%if LANGUAGE_CODE|length > 2%}{{LANGUAGE_CODE|slice:':2'}}{%else%}{{LANGAGE_CODE}}{%endif%}" 
+            "current": "{%if LANGUAGE_CODE|length > 2%}{{LANGUAGE_CODE|slice:':2'}}{%else%}{{LANGAGE_CODE}}{%endif%}"
         },
         "repositories": {
             "com.gentics.aloha.repositories.LinkList": {
                 data: [
-                {% for link in links %}{ name: "{{link.title}}", url: '{{link.get_absolute_url}}', type: 'page', weight: 0.5 }{%if not forloop.last %},{%endif%}
+                {% for link in links %}{ name: "{{link.title|convert_crlf}}", url: '{{link.get_absolute_url}}', type: 'page', weight: 0.5 }{%if not forloop.last %},{%endif%}
                 {% endfor %}
                 ]
             }
@@ -31,7 +19,7 @@ $(function(){
         "plugins": {
             "com.gentics.aloha.plugins.Format": {
                 // all elements with no specific configuration get this configuration
-                config : [ 'b', 'i','sub','sup', 'p', 'title', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre', 'removeFormat'],
+                config : [ 'b', 'i','sub','sup', 'p', 'title', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre', 'removeFormat'],
                 editables : {
                     // no formatting allowed for title
                     '#title': [ ], 
@@ -85,21 +73,8 @@ $(function(){
     GENTICS.Aloha.EventRegistry.subscribe(GENTICS.Aloha, "editableDeactivated",
         //Callback called when the fragment edition is done -> Push to the page
         function(event, eventProperties) {
-            data = {};
             var ed = eventProperties.editable;
-            data[ed.getId()] = ed.getContents();
-            
-            $.post(
-                "{{object.get_absolute_url}}",
-                data,
-                function(data) {
-                    if (data.status != 'success') {
-                        $('#'+ed.getId()).html(data.old_values[ed.getId()]).addClass("error-field");
-                    }
-                    admin_printMessage(data.message, data.status);
-                },
-                'json'
-            );
+            $("#"+ed.getId()+"_hidden").val($.trim(ed.getContents()));
         }
     );
     
@@ -110,7 +85,7 @@ $(function(){
                 $(".djaloha-editable img.djaloha-thumbnail").each(function(index) {
                     $(this).removeClass("djaloha-thumbnail")
                     $(this).attr("src", $(this).attr("rel"));
-                    $(this).attr("rel", "");
+                    $(this).removeAttr('rel');
                 });
 
                 $(".djaloha-editable a.djaloha-document").each(function(index) {
@@ -128,4 +103,3 @@ $(function(){
         });
     });
 });
-</script>

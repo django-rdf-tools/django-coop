@@ -1,0 +1,14 @@
+.highlight {
+	border: solid thin #af7;
+}
+
+.djaloha-editable {
+	min-height: 20px;
+}
+
+ul.form-errors {
+	list-style: none;
+	background-color: #f77;
+	color: #fff;
+	font-weight: bold;
+}

@@ -1,11 +1,4 @@
 # -*- coding: utf-8 -*-
 
-from django.test import TestCase
+# Most of the tests are done in the coop_cms application
 
-
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)

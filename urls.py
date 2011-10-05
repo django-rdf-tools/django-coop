@@ -27,10 +27,6 @@ urlpatterns = patterns('',
     (r'^tag/', include('skosxl.urls')),
 
     (r'^membre/', include('coop.membre.urls')),
-
-    url(r'^djaloha/aloah-config.js', 'djaloha.views.aloha_config', name='aloha_config'),
-    url(r'^cms/tree/$', 'coop_cms.views.process_nav_edition', name='navigation_tree'),
-    url(r'^cms/media-library/$', 'coop_cms.views.show_media_library', name='media_library'),
 )
 
 if settings.DEBUG or ('test' in sys.argv):
@@ -40,10 +36,5 @@ if settings.DEBUG or ('test' in sys.argv):
     )
 
 urlpatterns += patterns('',
-    (r'^(?P<url>.*)$', 'coop_cms.views.view_article'),
+    (r'^', include('coop_cms.urls')),
 )
-
-# urlpatterns += patterns('',
-#    (r'^', include('uriresolve.urls')),
-# )
-

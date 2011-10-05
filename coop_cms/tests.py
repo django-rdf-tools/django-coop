@@ -783,29 +783,27 @@ class ArticleTest(TestCase):
         
         can_edit_article = Permission.objects.get(content_type__app_label='coop_cms', codename='change_article')
         user.user_permissions.add(can_edit_article)
+        user.save()
         
         self.client.login(username='toto', password='toto')
         
-    def _edit_article(self, url, data, expected_status="success"):
-        response = self.client.post(url, data=data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(200, response.status_code)
-        result = json.loads(response.content)
-        self.assertEqual(expected_status, result["status"])
-        return result
+    def _edit_article(self, url, data, expected_status=200):
+        response = self.client.post(url, data=data, follow=True)
+        self.assertEqual(expected_status, response.status_code)
+        return response
 
-    def _check_article(self, article, data):
-        article = Article.objects.get(slug=article.slug) #refresh
+    def _check_article(self, response, data):
         for (key, value) in data.items():
-            self.assertEqual(getattr(article, key), data[key])
+            self.assertContains(response, value)
             
     def _check_article_not_changed(self, article, data, initial_data):
-        article = Article.objects.get(slug=article.slug) #refresh
-        
+        article = Article.objects.get(id=article.id)
+
         for (key, value) in data.items():
-            self.assertNotEqual(getattr(article, key), data[key])
+            self.assertNotEquals(getattr(article, key), value)
             
         for (key, value) in initial_data.items():
-            self.assertEqual(getattr(article, key), initial_data[key])
+            self.assertEquals(getattr(article, key), value)
 
     def test_view_article(self):
         article = Article.objects.create(title="test")
@@ -833,64 +831,64 @@ class ArticleTest(TestCase):
         data = {"title": 'salut', 'content': 'bonjour!'}
         
         self._log_as_editor()
-        for (key, value) in data.items():
-            self._edit_article(article.get_absolute_url(), {key: value})
-            self._check_article(article, {key: value})
-        self._check_article(article, data)
+        response = self._edit_article(article.get_absolute_url(), data)
+        self._check_article(response, data)
         
         data = {"title": 'bye', 'content': 'au revoir'}
-        self._edit_article(article.get_absolute_url(), data)
-        self._check_article(article, data)
+        response = self._edit_article(article.get_absolute_url(), data)
+        self._check_article(response, data)
         
     def test_article_edition_permission(self):
         initial_data = {'title': "test", 'content': "this is my article content"}
         article = Article.objects.create(**initial_data)
         
-        data = {"title": 'salut'}
-        result = self._edit_article(article.get_absolute_url(), data, 'error')
-        self.assertEqual({'title': initial_data['title']} , result["old_values"])
+        data = {"title": 'salut', "content": 'oups'}
+        response = self._edit_article(article.get_absolute_url(), data, 403)
+        article = Article.objects.get(id=article.id)
+        self.assertEquals(article.title, initial_data['title'])
+        self.assertEquals(article.content, initial_data['content'])
         
-        self._check_article_not_changed(article, data, initial_data)
-        
-        
-    def test_article_html_in_title(self):
+    def test_article_empty_title(self):
         initial_data = {'title': "test", 'content': "this is my article content"}
         article = Article.objects.create(**initial_data)
+        data = {'content': "un nouveau contenu"}
         
         self._log_as_editor()
-        data = {"title": "<a href='http://www.google.fr'>Google</a>"}
-        result = self._edit_article(article.get_absolute_url(), data, 'error')
-        self.assertEqual({'title': initial_data['title']} , result["old_values"])
-        
+        data["title"] = ""
+        response = self._edit_article(article.get_absolute_url(), data)
         self._check_article_not_changed(article, data, initial_data)
         
+        data["title"] = "<br>"
+        response = self._edit_article(article.get_absolute_url(), data)
+        self._check_article_not_changed(article, data, initial_data)
         
-    def test_ajax_required_for_article_edition(self):
-        initial_data = {'title': "test", 'content': "this is my article content"}
-        article = Article.objects.create(**initial_data)
-        
-        self._log_as_editor()
-        data = {"title": u"coucou"}
-        response = self.client.post(article.get_absolute_url(), data=data)
-        self.assertEqual(200, response.status_code)
-        
+        data["title"] = " <br> "
+        response = self._edit_article(article.get_absolute_url(), data)
         self._check_article_not_changed(article, data, initial_data)
         
     def _is_aloha_found(self, response):
         self.assertEqual(200, response.status_code)
-        return (response.content.find('aloha/aloha.js')>0)
+        aloha_js = reverse('aloha_init')
+        return (response.content.find(aloha_js)>0)
+        
+    def test_edit_permission(self):
+        initial_data = {'title': "ceci est un test", 'content': "this is my article content"}
+        article = Article.objects.create(**initial_data)
+        response = self.client.get(article.get_absolute_url())
+        self.assertEqual(200, response.status_code)
+        
+        response = self.client.get(article.get_absolute_url()+"?mode=edit")
+        self.assertEqual(403, response.status_code)
+        
+        self._log_as_editor()
+        response = self.client.get(article.get_absolute_url()+"?mode=edit")
+        self.assertEqual(200, response.status_code)
         
     def test_aloha_loaded(self):
-        initial_data = {'title': "test", 'content': "this is my article content"}
+        initial_data = {'title': "ceci est un test", 'content': "this is my article content"}
         article = Article.objects.create(**initial_data)
         response = self.client.get(article.get_absolute_url())
         self.assertFalse(self._is_aloha_found(response))
-        
-        response = self.client.get(article.get_absolute_url()+"?mode=view")
-        self.assertFalse(self._is_aloha_found(response))
-        
-        response = self.client.get(article.get_absolute_url()+"?mode=edit")
-        self.assertTrue(self._is_aloha_found(response))
         
         self._log_as_editor()
         response = self.client.get(article.get_absolute_url()+"?mode=edit")
@@ -904,8 +902,7 @@ class ArticleTest(TestCase):
         article = Article.objects.create(**initial_data)
         
         self._log_as_editor()
-        response = self.client.get(article.get_absolute_url()+"?mode=edit")
-        self.assertTrue(self._is_aloha_found(response))
+        response = self.client.get(reverse('aloha_init'))
         
         context_slugs = [article.slug for article in response.context['links']]
         for slug in slugs:
