@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load i18n djaloha_utils %}
+{% block meta_title %}{% if draft %}{% trans "Draft" %} - {% endif %}{{article.title|remove_br}} - {% trans "Edition" %}{% endblock %}
+
+{% block jquery_declaration %}
+    {{form.media}}
+{% endblock %}
+
+{% block extra_head %}
+<script>
+$(function(){
+    //keep the size of the article unchanged in edit and wiew mode
+    $("#article_form").height($("#article_form_div").height());
+
+    $('#adminbar_cancel').attr('href', '{{article.get_absolute_url}}');
+    $("#adminbar_medialibrary").pageSlide({width:'350px', direction:'right'});
+    $('#adminbar_save').click(function(event) {
+        $("#article_form").submit();
+        event.preventDefault();
+    });
+    {% if draft %}
+    $('#adminbar_publish').click(function(event) {
+        $("#article_publication_form").submit();
+        event.preventDefault();
+    });
+    {% endif %}
+});
+</script>
+{% endblock %}
+
+{% block document %}
+{% spaceless %}
+<form id="article_form" method="POST" action="{{ article.get_edit_url }}">{% csrf_token %}
+<div id="article_form_div" class="grid_12 grid">
+{% include "coop_cms/_form_error.html" with errs=form.non_field_errors %}
+{% block title %}
+    {% include "coop_cms/_form_error.html" with errs=form.title.errors %}
+    <h2 id="title">{{form.title}}</h2>
+{% endblock %}
+    {% include "coop_cms/_form_error.html" with errs=form.content.errors %}
+    <div id="content">
+    {{form.content}}
+    </div>
+</div>
+<input type="submit" style="visibility: hidden">
+</form>
+</div>
+<form style="height: 0" id="article_publication_form" method="POST" action="{{ article.get_publish_url }}"">{% csrf_token %}
+    <input type="hidden" name="status" value="{{ARTICLE_PUBLISHED}}">
+    <input type="submit" style="visibility: hidden">
+</form>
+{% endspaceless %}
+{% endblock %}

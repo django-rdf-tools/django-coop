@@ -9,6 +9,7 @@ from django_extensions.db.models import TimeStampedModel, AutoSlugField
 from django.conf import settings
 from sorl.thumbnail import default as sorl_thumbnail
 import os.path
+from django.core.urlresolvers import reverse
 
 class NavType(models.Model):
     
@@ -128,11 +129,21 @@ class NavTree(models.Model):
         verbose_name_plural = verbose_name = _(u'Navigation tree')
 
 class Article(TimeStampedModel):
+    
+    DRAFT = 0
+    PUBLISHED = 1
+    
+    PUBLICATION_STATUS = (
+        (DRAFT, _(u'Draft')),
+        (PUBLISHED, _(u'Published')),
+    )
+    
     """An article : static page, blog item, ..."""
     slug = AutoSlugField(populate_from='title', max_length=100, unique=True)
     title = models.TextField(_(u'title'), default=_('Page title'))
     content = models.TextField(_(u'content'), default=_('Page content'))
-        
+    publication = models.IntegerField(_(u'publication'), choices=PUBLICATION_STATUS, default=DRAFT)
+    
     class Meta:
         verbose_name = _(u"article")
         verbose_name_plural = _(u"articles")
@@ -144,7 +155,13 @@ class Article(TimeStampedModel):
         return self.title
     
     def get_absolute_url(self):
-        return u'/'+self.slug
+        return reverse('coop_cms_view_article', args=[self.slug])
+        
+    def get_edit_url(self):
+        return reverse('coop_cms_edit_article', args=[self.slug])
+    
+    def get_publish_url(self):
+        return reverse('coop_cms_publish_article', args=[self.slug])
     
 class Link(TimeStampedModel):
     """Link to a given url"""

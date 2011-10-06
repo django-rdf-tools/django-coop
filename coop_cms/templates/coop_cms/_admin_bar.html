@@ -6,14 +6,17 @@
 		{% endif %}
 		{% if editable and perms.coop_cms.can_change_article %}
 			{% if edit_mode %}
-			<a id="adminbar_cancel" href="{{request.path}}"><span class="unicon">x</span>{% trans 'Cancel' %}</a>
-			<a id="adminbar_save" href=""><span class="unicon">v</span>{% trans 'Save' %}</a>
+			<a id="adminbar_cancel" href=""><span class="unicon"></span>{% trans 'Cancel' %}</a>
+			<a id="adminbar_save" href=""><span class="unicon"></span>{% trans 'Save' %}</a>
 			{% else %}
-			<a id="adminbar_edit" href="{{request.path}}?mode=edit"><span class="unicon">✍</span>{% trans 'Edit' %}</a>
+			<a id="adminbar_edit" href=""><span class="unicon">✍</span>{% trans 'Edit' %}</a>
 			{% endif %}
 		{% endif %}
+		{% if edit_mode and draft %}
+			<a id="adminbar_publish" href=""><span class="unicon"></span>{% trans 'Publish' %}</a>
+		{% endif %}
 		{% if edit_mode %}
-		<a id="adminbar_medialibrary" href="{% url coop_cms_media_library %}"><span class="unicon">m</span>{% trans "Media library" %}</a>
+		<a id="adminbar_medialibrary" href="{% url coop_cms_media_library %}"><span class="unicon"></span>{% trans "Media library" %}</a>
 		{% endif %}
 	</div>
 {% endif %}

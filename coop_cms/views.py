@@ -15,33 +15,59 @@ from forms import ArticleForm
 from django.contrib.messages.api import error as error_message
 
 def view_article(request, url):
-    """view and edit a page"""
-    
-    article = get_object_or_404(Article, slug=url)
-    if request.method == "POST":
-        if not request.user.has_perm('coop_cms.change_article'):
-            raise PermissionDenied
-        
-        form = ArticleForm(request.POST, instance=article)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(request.path)
+    """view the article"""
+    if request.user.has_perm('coop_cms.change_article'):
+        article = get_object_or_404(Article, slug=url) #Draft & Published
     else:
-        form = ArticleForm(instance=article)
-        
-    edit_mode = request.GET.get('mode', 'view')=='edit'
-    
-    if edit_mode and not request.user.has_perm('coop_cms.change_article'):
-        raise PermissionDenied
-    
-    context_dict = {'form': form, 'editable': True,
-        'edit_mode': edit_mode, 'title': article.title}
-    
+        article = get_object_or_404(Article, slug=url, publication=Article.PUBLISHED) #Published only
+    context_dict = {
+        'editable': True, 'edit_mode': False, 'article': article, 'draft': article.publication==Article.DRAFT}
     return render_to_response(
         'coop_cms/article.html',
         context_dict,
         context_instance=RequestContext(request)
     )
+
+def edit_article(request, url):
+    """edit the article"""
+    if not request.user.has_perm('coop_cms.change_article'):
+        raise PermissionDenied
+    
+    article = get_object_or_404(Article, slug=url) #Draft and Published
+    
+    if request.method == "POST":
+        form = ArticleForm(request.POST, instance=article)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(article.get_absolute_url())
+    else:
+        form = ArticleForm(instance=article)
+    
+    context_dict = {
+        'form': form,
+        'editable': True, 'edit_mode': True, 'title': article.title,
+        'draft': article.publication==Article.DRAFT,
+        'article': article, 'ARTICLE_PUBLISHED': Article.PUBLISHED
+    }
+    
+    return render_to_response(
+        'coop_cms/article_form.html',
+        context_dict,
+        context_instance=RequestContext(request)
+    )
+
+
+def publish_article(request, url):
+    """change the publication status of an article"""
+    can_change_article = request.user.has_perm('coop_cms.change_article')
+    if not can_change_article:
+        raise PermissionDenied
+    elif request.method == "POST":
+        article = get_object_or_404(Article, slug=url, publication=Article.DRAFT)
+        article.publication = Article.PUBLISHED
+        article.save()
+        return HttpResponseRedirect(article.get_absolute_url())
+    raise Http404
 
 def show_media_library(request):
     context = {

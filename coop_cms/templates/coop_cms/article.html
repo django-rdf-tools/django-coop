@@ -1,42 +1,25 @@
 {% extends "base.html" %}
 {% load i18n djaloha_utils %}
-{% block meta_title %}{{title|remove_br}}{% if edit_mode %} - {% trans "Edition" %}{% endif %}{% endblock %}
-
-{% block jquery_declaration %}
-{% if edit_mode %}
-    {{form.media}}
-{% else %}
-    {{ block.super }}
-{% endif %}
-{% endblock %}
-
+{% block meta_title %}{% if draft %}{% trans "Draft" %} - {% endif %}{{article.title|remove_br}}{% endblock %}
 {% block extra_head %}
-{% if edit_mode %}
+{% if editable and perms.coop_cms.can_change_article %}
 <script>
 $(function(){
-    $("#adminbar_medialibrary").pageSlide({width:'350px', direction:'right'});
-    $('#adminbar_save').click(function(event) {
-        $("#article_form").submit();
-        event.preventDefault();
-    });
+    $('#adminbar_edit').attr('href', '{{article.get_edit_url}}');
 });
 </script>
 {% endif %}
 {% endblock %}
 
 {% block document %}
+{% spaceless %}
 <div class="grid_12 grid">
-<form id="article_form" method="POST">{% csrf_token %}
-{% include "coop_cms/_form_error.html" with errs=form.non_field_errors %}
 {% block title %}
-    {% include "coop_cms/_form_error.html" with errs=form.title.errors %}
-    <h2 id="title">{{form.title}}</h2>
+    <h2 id="title">{{article.title|safe}}</h2>
 {% endblock %}
-    <div id="content">
-    {% include "coop_cms/_form_error.html" with errs=form.content.errors %}
-    {{form.content}}
-    </div>
-    <input type="submit" style="visibility: hidden">
-</form>
+    <div id="content"><div>
+    {{article.content|safe}}
+    </div></div>
 </div>
+{% endspaceless %}
 {% endblock %}
