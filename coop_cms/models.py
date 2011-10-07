@@ -10,6 +10,42 @@ from django.conf import settings
 from sorl.thumbnail import default as sorl_thumbnail
 import os.path
 from django.core.urlresolvers import reverse
+from django.db.models.aggregates import Max
+from django.utils.html import escape
+from django.core.exceptions import ValidationError
+
+def get_object_label(content_type, object):
+    """
+    returns the label used in navigation according to the configured rule
+    """
+    nt = NavType.objects.get(content_type=content_type)
+    if nt.label_rule == NavType.LABEL_USE_SEARCH_FIELD:
+        label = getattr(object, nt.search_field)
+    elif nt.label_rule == NavType.LABEL_USE_GET_LABEL:
+        label = object.get_label()
+    else:
+        label = unicode(object)
+    return escape(label)
+    
+def set_node_ordering(node, parent_id):
+    if parent_id:
+        node.parent = NavNode.objects.get(id=parent_id)
+        sibling_nodes = NavNode.objects.filter(parent=node.parent)
+    else:
+        node.parent = None
+        sibling_nodes = NavNode.objects.filter(parent__isnull=True)
+    max_ordering = sibling_nodes.aggregate(max_ordering=Max('ordering'))['max_ordering'] or 0
+    node.ordering = max_ordering + 1
+    
+def create_navigation_node(content_type, object, parent_id):
+    node = NavNode(label=get_object_label(content_type, object))
+    #add it as last child of the selected node
+    set_node_ordering(node, parent_id)
+    #associate with a content object
+    node.content_type = content_type
+    node.object_id = object.id
+    node.save()
+    return node
 
 class NavType(models.Model):
     
@@ -66,6 +102,8 @@ class NavNode(models.Model):
     class Meta:
         verbose_name = _(u'navigation node')
         verbose_name_plural = _(u'navigation nodes')
+        unique_together = ('content_type', 'object_id')
+
     
     def get_children(self, in_navigation=None):
         nodes = NavNode.objects.filter(parent=self).order_by("ordering")
@@ -120,7 +158,18 @@ class NavNode(models.Model):
         siblings_li = [u'<li{0}>{1}</li>'.format(css_class, sibling._get_li_content(li_template))
             for sibling in self.get_siblings(in_navigation=True)]
         return  u''.join(siblings_li)
+
+    def check_new_navigation_parent(self, parent_id):
+        if parent_id == self.id:
+            raise ValidationError(_(u'A node can not be its own parent'))
         
+        if parent_id:
+            cur_node = NavNode.objects.get(id=parent_id)
+            while cur_node:
+                if cur_node.id == self.id:
+                    raise ValidationError(_(u'A node can not be child of its own child'))
+                cur_node = cur_node.parent
+
     
 class NavTree(models.Model):
     last_update = models.DateTimeField(auto_now=True)
@@ -150,6 +199,36 @@ class Article(TimeStampedModel):
     
     def __unicode__(self):
         return self.slug
+    
+    def _get_navigation_parent(self):
+        ct = ContentType.objects.get_for_model(Article)
+        nodes = NavNode.objects.filter(object_id=self.id, content_type=ct)
+        if nodes.count():
+            return nodes[0].parent.id if nodes[0].parent else 0
+        else:
+            return None
+    
+    def _set_navigation_parent(self, value):
+        ct = ContentType.objects.get_for_model(Article)
+        already_in_navigation = self.id and NavNode.objects.filter(content_type=ct, object_id=self.id)
+        if not already_in_navigation:
+            create_navigation_node(ct, self, value)
+        else:
+            node = NavNode.objects.get(content_type=ct, object_id=self.id)
+            if value == None:
+                node.delete()
+            else:
+                node.parent = NavNode.objects.get(id=value) if value else None
+                if node.parent:
+                    #raise ValidationError if new parent is not valid
+                    node.check_new_navigation_parent(node.parent.id)
+                set_node_ordering(node, node.parent.id if node.parent else 0)
+                node.save()
+    
+
+    
+    navigation_parent = property(_get_navigation_parent, _set_navigation_parent,
+        doc=_("set the parent in navigation. WARNING: delete other nodes pointing to this object"))
     
     def get_label(self):
         return self.title

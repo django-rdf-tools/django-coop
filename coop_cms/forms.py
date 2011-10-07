@@ -1,5 +1,5 @@
 from django import forms
-from models import NavType, Article
+from coop_cms.models import NavType, Article, NavNode
 from django.contrib.contenttypes.models import ContentType
 from settings import get_navigable_content_types
 from django.core.exceptions import ValidationError
@@ -45,3 +45,48 @@ class ArticleForm(floppyforms.ModelForm):
         #    raise ValidationError(_(u'HTML content is not allowed in the title'))
         
         return title
+    
+    
+def get_node_choices():
+    choices = [(None, _(u'<not in navigation>')), (0, _(u'<root node>'))]
+    choices.extend([(n.id, n.label) for n in NavNode.objects.all()])
+    return choices
+
+def get_navigation_parent_help_text():
+    return Article().navigation_parent.__doc__
+
+class ArticleAdminForm(forms.ModelForm):
+    
+    navigation_parent = forms.ChoiceField(
+        choices=get_node_choices(), required=False, help_text=get_navigation_parent_help_text()
+    )
+    
+    def __init__(self, *args, **kwargs):
+        super(ArticleAdminForm, self).__init__(*args, **kwargs)
+        self.article = kwargs.get('instance', None)
+        if self.article:
+            self.initial['navigation_parent'] = self.article.navigation_parent
+    
+    def clean_navigation_parent(self):
+        parent_id = self.cleaned_data['navigation_parent']
+        parent_id = int(parent_id) if parent_id != 'None' else None
+        
+        ct = ContentType.objects.get_for_model(Article)
+        try:
+            node = NavNode.objects.get(object_id=self.article.id, content_type=ct)
+            #raise ValidationError if own parent or child of its own child
+            node.check_new_navigation_parent(parent_id)
+        except NavNode.DoesNotExist:
+            pass
+        return parent_id
+    
+    def save(self, commit=True):
+        article = super(ArticleAdminForm, self).save(commit=False)
+        article.navigation_parent = self.cleaned_data['navigation_parent']
+        if commit:
+            article.save()
+        return article
+    
+    class Meta:
+        model = Article
+    

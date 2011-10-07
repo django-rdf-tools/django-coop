@@ -5,8 +5,9 @@ from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 from django.template import Template, Context
-from models import Link, NavNode, NavType, Article
+from coop_cms.models import Link, NavNode, NavType, Article
 import json
+from django.core.exceptions import ValidationError
 
 class NavigationTest(TestCase):
 
@@ -75,6 +76,40 @@ class NavigationTest(TestCase):
         self.assertEqual(nav_node2.label, 'http://www.python.org')
         self.assertEqual(nav_node2.content_object, link2)
         self.assertEqual(nav_node2.parent, nav_node)
+        self.assertEqual(nav_node.ordering, 1)
+        
+    def test_add_node_twice(self):
+        link = Link.objects.create(url="http://www.google.fr")
+        self._log_as_editor()
+        
+        data = {
+            'msg_id': 'add_navnode',
+            'object_type':'coop_cms.link',
+            'object_id': link.id,
+        }
+        response = self.client.post(self.srv_url, data=data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
+        result = json.loads(response.content)
+        self.assertEqual(result['status'], 'success')
+        self.assertEqual(result['label'], 'http://www.google.fr')
+        
+        nav_node = NavNode.objects.get(object_id=link.id, content_type=self.url_ct)
+        self.assertEqual(nav_node.label, 'http://www.google.fr')
+        self.assertEqual(nav_node.content_object, link)
+        self.assertEqual(nav_node.parent, None)
+        self.assertEqual(nav_node.ordering, 1)
+        
+        #Add a the same object a 2nd time
+        data['object_id'] = link.id
+        response = self.client.post(self.srv_url, data=data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
+        result = json.loads(response.content)
+        self.assertEqual(result['status'], 'error')
+        
+        nav_node = NavNode.objects.get(object_id=link.id, content_type=self.url_ct)
+        self.assertEqual(nav_node.label, 'http://www.google.fr')
+        self.assertEqual(nav_node.content_object, link)
+        self.assertEqual(nav_node.parent, None)
         self.assertEqual(nav_node.ordering, 1)
         
     def test_move_node_to_parent(self):
@@ -317,10 +352,6 @@ class NavigationTest(TestCase):
         addrs = ("http://www.google.fr", "http://www.python.org", "http://www.quinode.fr", "http://www.apidev.fr")
         links = [Link.objects.create(url=a) for a in addrs]
         
-        nodes = []
-        for i, link in enumerate(links):
-            nodes.append(NavNode.objects.create(label=link.url, content_object=link, ordering=i+1, parent=None))
-        
         self._log_as_editor()
         
         data = {
@@ -352,6 +383,25 @@ class NavigationTest(TestCase):
         nt.save()
         self._do_test_get_suggest_list()
         
+    def test_get_suggest_list_only_not_in_navigation(self):
+        addrs = ("http://www.google.fr", "http://www.python.org", "http://www.quinode.fr", "http://www.apidev.fr")
+        links = [Link.objects.create(url=a) for a in addrs]
+        
+        link = links[0]
+        node = NavNode.objects.create(label=link.url, content_object=link, ordering=1, parent=None)
+        
+        self._log_as_editor()
+        
+        data = {
+            'msg_id': 'get_suggest_list',
+            'term': '.fr'
+        }
+        response = self.client.post(self.srv_url, data=data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
+        result = json.loads(response.content)
+        self.assertEqual(result['status'], 'success')
+        self.assertEqual(len(result['suggestions']), 2)
+
         
     def test_unknow_message(self):
         self._log_as_editor()
@@ -430,20 +480,19 @@ class NavigationTest(TestCase):
         
     def test_check_auth(self):
         link = Link.objects.create(url='http://www.google.fr')
-        node = NavNode.objects.create(label=link.url, content_object=link, ordering=1, parent=None)
-
-        data = {
-            'node_id': node.id,
-            'node_ids': node.id,
-            'ref_pos': 'after',
-            'name': 'oups',
-            'term': 'goo',
-            'object_type':'coop_cms.link',
-            'object_id': link.id,
-        }
         
         for msg_id in ('add_navnode', 'move_navnode', 'rename_navnode', 'get_suggest_list', 'view_navnode', 'remove_navnode'):
-            data['msg_id'] = msg_id
+            data = {
+                'ref_pos': 'after',
+                'name': 'oups',
+                'term': 'goo',
+                'object_type':'coop_cms.link',
+                'object_id': link.id,
+                'msg_id': msg_id
+            }
+            if msg_id != 'add_navnode':
+                node = NavNode.objects.create(label=link.url, content_object=link, ordering=1, parent=None)
+                data.update({'node_id': node.id, 'node_ids': node.id})
             
             self._log_as_staff()
             response = self.client.post(self.srv_url, data=data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
@@ -456,6 +505,8 @@ class NavigationTest(TestCase):
             self.assertEqual(response.status_code, 200)
             result = json.loads(response.content)
             self.assertEqual(result['status'], 'success')
+            
+            NavNode.objects.all().delete()
             
     def test_set_out_of_nav(self):
         self._log_as_editor()
@@ -496,6 +547,80 @@ class NavigationTest(TestCase):
         self.assertEqual(result['icon'], 'in_nav')
         node = NavNode.objects.get(id=node.id)
         self.assertTrue(node.in_navigation)
+
+
+class NavigationParentTest(TestCase):
+    
+    def setUp(self):
+        ct = ContentType.objects.get_for_model(Article)
+        NavType.objects.create(content_type=ct, search_field='title', label_rule=NavType.LABEL_USE_SEARCH_FIELD)
+    
+    def test_set_himself_as_parent_raise_error(self):
+        art = Article.objects.create(title='toto', content='oups')
+        node = NavNode.objects.create(label=art.title, content_object=art, ordering=1, parent=None)
+        self.assertRaises(ValidationError, art._set_navigation_parent, node.id)
+        
+    def test_set_child_as_parent_raise_error(self):
+        art1 = Article.objects.create(title='toto', content='oups')
+        node1 = NavNode.objects.create(label=art1.title, content_object=art1, ordering=1, parent=None)
+        
+        art2 = Article.objects.create(title='titi', content='oups')
+        node2 = NavNode.objects.create(label=art2.title, content_object=art2, ordering=1, parent=node1)
+        
+        self.assertRaises(ValidationError, art1._set_navigation_parent, node2.id)
+    
+    def test_add_to_navigation_as_root(self):
+        art1 = Article.objects.create(title='toto', content='oups')
+        art1.navigation_parent = 0
+        ct = ContentType.objects.get_for_model(Article)
+        node = NavNode.objects.get(content_type=ct, object_id=art1.id)
+        
+    def test_add_to_navigation_as_child(self):
+        art1 = Article.objects.create(title='toto', content='oups')
+        node1 = NavNode.objects.create(label=art1.title, content_object=art1, ordering=1, parent=None)
+        art2 = Article.objects.create(title='titi', content='oups')
+        art2.navigation_parent = node1.id
+        ct = ContentType.objects.get_for_model(Article)
+        node = NavNode.objects.get(content_type=ct, object_id=art2.id)
+        self.assertEqual(node.parent.id, node1.id)
+        
+    def test_move_in_navigation_to_root(self):
+        art1 = Article.objects.create(title='toto', content='oups')
+        node1 = NavNode.objects.create(label=art1.title, content_object=art1, ordering=1, parent=None)
+        art2 = Article.objects.create(title='titi', content='oups')
+        node2 = NavNode.objects.create(label=art2.title, content_object=art2, ordering=1, parent=node1)
+        art2.navigation_parent = 0
+        ct = ContentType.objects.get_for_model(Article)
+        node = NavNode.objects.get(content_type=ct, object_id=art2.id)
+        self.assertEqual(node.parent, None)
+        
+    def test_move_in_navigation_to_child(self):
+        art1 = Article.objects.create(title='toto', content='oups')
+        node1 = NavNode.objects.create(label=art1.title, content_object=art1, ordering=1, parent=None)
+        art2 = Article.objects.create(title='titi', content='oups')
+        node2 = NavNode.objects.create(label=art2.title, content_object=art2, ordering=1, parent=None)
+        art2.navigation_parent = node1.id
+        ct = ContentType.objects.get_for_model(Article)
+        node = NavNode.objects.get(content_type=ct, object_id=art2.id)
+        self.assertEqual(node.parent.id, node1.id)
+        
+    def test_remove_from_navigation(self):
+        art1 = Article.objects.create(title='toto', content='oups')
+        node1 = NavNode.objects.create(label=art1.title, content_object=art1, ordering=1, parent=None)
+        art1.navigation_parent = None
+        ct = ContentType.objects.get_for_model(Article)
+        self.assertRaises(NavNode.DoesNotExist, NavNode.objects.get, content_type=ct, object_id=art1.id)
+        
+    def test_get_navigation_parent(self):
+        art1 = Article.objects.create(title='toto', content='oups')
+        node1 = NavNode.objects.create(label=art1.title, content_object=art1, ordering=1, parent=None)
+        art2 = Article.objects.create(title='titi', content='oups')
+        node2 = NavNode.objects.create(label=art2.title, content_object=art2, ordering=1, parent=node1)
+        art3 = Article.objects.create(title='tutu', content='oups')
+        self.assertEqual(art1.navigation_parent, 0)
+        self.assertEqual(art2.navigation_parent, art1.id)
+        self.assertEqual(art3.navigation_parent, None)
+            
         
             
 class TemplateTagsTest(TestCase):

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseForbidden
-from models import NavNode, NavType, Article, Image, Document
+from coop_cms.models import NavNode, NavType, Article, Image, Document
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, Context
 from django.core.urlresolvers import reverse
@@ -13,6 +13,7 @@ from django.template.loader import select_template
 from django.db.models.aggregates import Max
 from forms import ArticleForm
 from django.contrib.messages.api import error as error_message
+from coop_cms.models import get_object_label, create_navigation_node
 
 def view_article(request, url):
     """view the article"""
@@ -223,15 +224,6 @@ def move_navnode(request):
     
     return response
 
-def get_object_label(content_type, object):
-    nt = NavType.objects.get(content_type=content_type)
-    
-    if nt.label_rule == NavType.LABEL_USE_SEARCH_FIELD:
-        return getattr(object, nt.search_field)
-    elif nt.label_rule == NavType.LABEL_USE_GET_LABEL:
-        return object.get_label()
-    else:
-        return unicode(object)
     
 def add_navnode(request):
     """Add a new node"""
@@ -251,29 +243,16 @@ def add_navnode(request):
     except model_class.DoesNotExist:
         raise ValidationError(_(u"{0} {1} not found").format(model_class._meta.verbose_name, object_id))
     
-    #Try to use the label_field of the type if defined
-    label = get_object_label(ct, object)
+    #objects can not be added twice in the navigation tree
+    if NavNode.objects.filter(content_type=ct, object_id=object.id).count() > 0:
+        raise ValidationError(_(u"The {0} is already in navigation").format(model_class._meta.verbose_name))
     
     #Create the node
-    node = NavNode(label=label)
-    #add it as last child of the selected node
-    parent_id = request.POST.get('parent_id', 0)
-    if parent_id:
-        node.parent = NavNode.objects.get(id=parent_id)
-        sibling_nodes = NavNode.objects.filter(parent=node.parent)
-    else:
-        node.parent = None
-        sibling_nodes = NavNode.objects.filter(parent__isnull=True)
-    max_ordering = sibling_nodes.aggregate(max_ordering=Max('ordering'))['max_ordering'] or 0
-    node.ordering = max_ordering + 1
-    #associate with a content object
-    node.content_type = ct
-    node.object_id = object.id
-    node.save()
+    node = create_navigation_node(ct, object, request.POST.get('parent_id', 0))
     
     response['label'] = node.label
     response['id'] = 'node_{0}'.format(node.id)
-    response['message'] = _(u"'{0}' has added to the navigation tree.").format(label)
+    response['message'] = _(u"'{0}' has added to the navigation tree.").format(node.label)
     
     return response
 
@@ -281,10 +260,8 @@ def get_suggest_list(request):
     response = {}
     suggestions = []
     term = request.POST["term"]#the 1st chars entered in the autocomplete
-    
     for nt in NavType.objects.all():
         ct = nt.content_type
-            
         if nt.label_rule == NavType.LABEL_USE_SEARCH_FIELD:
             #Get the name of the default field for the current type (eg: Page->title, Url->url ...)
             lookup = {nt.search_field+'__icontains': term}
@@ -293,15 +270,17 @@ def get_suggest_list(request):
             objects = [obj for obj in ct.model_class().objects.all() if term in obj.get_label()]
         else:
             objects = [obj for obj in ct.model_class().objects.all() if term in unicode(obj)]
-    
+        already_in_navigation = [node.object_id for node in NavNode.objects.filter(content_type=ct)]
         #Get suggestions as a list of {label: object.get_label() or unicode if no get_label, 'value':<object.id>}
         for object in objects:
-            suggestions.append({
-                'label': get_object_label(ct, object),
-                'value': object.id,
-                'category': ct.model_class()._meta.verbose_name.capitalize(),
-                'type': ct.app_label+u'.'+ct.model,
-            })
+            if object.id not in already_in_navigation:
+                #Suggest only articles which are not in navigation yet
+                suggestions.append({
+                    'label': get_object_label(ct, object),
+                    'value': object.id,
+                    'category': ct.model_class()._meta.verbose_name.capitalize(),
+                    'type': ct.app_label+u'.'+ct.model,
+                })
     
     response['suggestions'] = suggestions
     return response
