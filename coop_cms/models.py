@@ -48,6 +48,7 @@ def create_navigation_node(content_type, object, parent_id):
     return node
 
 class NavType(models.Model):
+    """Define which ContentTypes can be inserted in the tree as content"""
     
     LABEL_USE_UNICODE = 0
     LABEL_USE_SEARCH_FIELD = 1
@@ -59,7 +60,6 @@ class NavType(models.Model):
         (LABEL_USE_GET_LABEL, _(u'Use get_label')),
     )
     
-    """Define which ContentTypes can be inserted in the tree as content"""
     content_type = models.ForeignKey(ContentType, unique=True)
     search_field = models.CharField(max_length=200, blank=True, default="")
     label_rule = models.IntegerField(verbose_name=_(u'How to generate the label'),
