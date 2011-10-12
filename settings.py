@@ -152,6 +152,9 @@ INSTALLED_APPS = (
     'livesettings',
     'sorl.thumbnail',
     'floppyforms',
+    
+    #3rd parties integrated as regular apps
+    'html_field',
 
     #apps
     'coop_local',

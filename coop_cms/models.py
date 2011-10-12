@@ -13,6 +13,8 @@ from django.core.urlresolvers import reverse
 from django.db.models.aggregates import Max
 from django.utils.html import escape
 from django.core.exceptions import ValidationError
+from html_field.db.models import HTMLField
+from html_field import html_cleaner
 
 def get_object_label(content_type, object):
     """
@@ -177,6 +179,15 @@ class NavTree(models.Model):
     class Meta:
         verbose_name_plural = verbose_name = _(u'Navigation tree')
 
+
+
+content_cleaner = html_cleaner.HTMLCleaner(
+    allow_tags=['a', 'img', 'p', 'br', 'b', 'i', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+        'sup', 'pre', 'ul', 'li', 'ol', 'table', 'th', 'tr', 'td', 'tbody'],
+    allow_attrs_for_tag={'a': ['href', 'target'], 'img': ['src', 'alt']}
+)
+title_cleaner = html_cleaner.HTMLCleaner(allow_tags=['br'])
+
 class Article(TimeStampedModel):
     
     DRAFT = 0
@@ -189,8 +200,8 @@ class Article(TimeStampedModel):
     
     """An article : static page, blog item, ..."""
     slug = AutoSlugField(populate_from='title', max_length=100, unique=True)
-    title = models.TextField(_(u'title'), default=_('Page title'))
-    content = models.TextField(_(u'content'), default=_('Page content'))
+    title = HTMLField(title_cleaner, verbose_name=_(u'title'), default=_('Page title'))
+    content = HTMLField(content_cleaner, verbose_name=_(u'content'), default=_('Page content'))
     publication = models.IntegerField(_(u'publication'), choices=PUBLICATION_STATUS, default=DRAFT)
     
     class Meta:

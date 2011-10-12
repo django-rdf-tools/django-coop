@@ -1041,3 +1041,29 @@ class ArticleTest(TestCase):
         response = self.client.get(article.get_absolute_url())
         self.assertEqual(200, response.status_code)
         
+    def test_accept_regular_html(self):
+        article = Article.objects.create(title="test", publication=Article.PUBLISHED)
+        html = '<h1>paul</h1><a href="/" target="_blank">georges</a><p><b>ringo</b></p>'
+        html += '<h6>john</h6><img src="/img.jpg"><br><table><tr><th>A</th><td>B</td></tr>'
+        data = {'content': html, 'title': 'ok<br>ok'}
+        self._log_as_editor()
+        response = self._edit_article(article, data)
+        self.assertEqual(response.status_code, 200)
+        #checking html content would not work. Check that the article is updated
+        for b in ['paul', 'georges', 'ringo', 'john']:
+            self.assertContains(response, b)
+        
+    def test_no_malicious_when_editing(self):
+        initial_data = {'title': "test", 'content': "this is my article content"}
+        article = Article.objects.create(publication=Article.PUBLISHED, **initial_data)
+        
+        data1 = {'content': "<script>alert('aahhh');</script>", 'title': 'ok'}
+        data2 = {'title': '<a href="/">home</a>', 'content': 'ok'}
+        
+        self._log_as_editor()
+        response = self._edit_article(article, data1)
+        self._check_article_not_changed(article, data1, initial_data)
+        
+        response = self._edit_article(article, data2)
+        self._check_article_not_changed(article, data2, initial_data)
+        
