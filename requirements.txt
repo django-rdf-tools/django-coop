@@ -13,3 +13,4 @@ feedparser==5.0.1
 sorl-thumbnail==11.09
 PIL==1.1.7
 django-floppyforms==0.4.7
+feedparser==5.0.1

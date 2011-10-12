@@ -25,6 +25,7 @@ urlpatterns = patterns('',
     (r'^initiative/', include('coop.initiative.urls')),
     (r'^lieu/', include('coop.place.urls')),
     (r'^tag/', include('skosxl.urls')),
+    (r'^rss-sync/', include('rss_sync.urls')),
 
     (r'^membre/', include('coop.membre.urls')),
 )

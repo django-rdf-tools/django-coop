@@ -159,6 +159,7 @@ INSTALLED_APPS = (
     'djaloha',
     'coop_cms',
     'skosxl',
+    'rss_sync',
 )
 
 DJALOHA_LINK_MODELS = ('coop_cms.Article',)
