@@ -9,7 +9,7 @@
 			<a id="adminbar_cancel" href=""><span class="unicon"></span>{% trans 'Cancel' %}</a>
 			<a id="adminbar_save" href=""><span class="unicon"></span>{% trans 'Save' %}</a>
 			{% else %}
-			<a id="adminbar_edit" href=""><span class="unicon">✍</span>{% trans 'Edit' %}</a>
+			<a id="adminbar_edit" href=""><span class="unicon">✍</span>{% if draft %}{% trans "Edit draft" %}{% else %}{% trans 'Edit' %}{% endif %}</a>
 			{% endif %}
 		{% endif %}
 		{% if edit_mode and draft %}
