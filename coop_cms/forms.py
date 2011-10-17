@@ -7,6 +7,7 @@ from django.utils.translation import ugettext as _
 from djaloha.widgets import AlohaInput
 import floppyforms
 import re
+from django.conf import settings
 
 class NavTypeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -48,10 +49,11 @@ class ArticleForm(floppyforms.ModelForm):
     
     
 def get_node_choices():
+    prefix = "--"
     choices = [(None, _(u'<not in navigation>')), (0, _(u'<root node>'))]
     for root_node in NavNode.objects.filter(parent__isnull=True).order_by('ordering'):
         for (progeny, level) in root_node.get_progeny():
-            choices.append((progeny.id, '--'*level+progeny.label))
+            choices.append((progeny.id, prefix*level+progeny.label))
     return choices
 
 def get_navigation_parent_help_text():
