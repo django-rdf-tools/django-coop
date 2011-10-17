@@ -3,39 +3,9 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from rss_sync.models import RssSource, RssItem
-from django.core.exceptions import PermissionDenied
-import feedparser
-from datetime import datetime
-from time import mktime
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
-from coop_cms.models import Article
-
-def collect_rss_items(user, source):
-    """
-    download a rss feed and create rss_items
-    the source can be a RssSource or any object with a get_absolute_url method
-    """
-    if not (user.is_staff and user.has_perm('rss_sync.add_rssitem')):
-        raise PermissionDenied
-
-    f = feedparser.parse(source.get_absolute_url())
-    
-    for e in f.entries:
-        #create RSS entries if not exists
-        item, _is_new = RssItem.objects.get_or_create(link=e.link, source=source)
-        #In any case, update the data
-        item.title = e.title
-        item.updated = datetime.fromtimestamp(mktime(e.updated_parsed))
-        item.author = getattr(e, 'author', '')[:100]
-        item.summary = e.summary
-        item.save()
-    
-    if isinstance(source, RssSource):
-        #update info for rss sources only
-        source.title = getattr(f.feed, 'title', '')
-        source.last_collect = datetime.now()
-        source.save()
+from rss_sync.utils import collect_rss_items, create_cms_article
 
 def collect_rss_items_view(request, source_id):
     """The view called when clicking on the button in the object admin form"""
@@ -54,15 +24,6 @@ def collect_rss_items_action(modeladmin, request, queryset):
     return HttpResponseRedirect(url)
 collect_rss_items_action.short_description = _(u'Collect RSS items')
 
-def create_cms_article(user, item):
-    """create a cms coop_cms.article from a RssItem"""
-    if not (user.is_staff and user.has_perm('coop_cms.add_article')):
-        raise PermissionDenied
-    
-    art = Article.objects.create(title=item.title, content=item.summary)
-    item.processed = True
-    item.save()
-    return art
     
 def create_cms_article_view(request, item_id):
     """The view called when clicking on the button in admin object form"""
