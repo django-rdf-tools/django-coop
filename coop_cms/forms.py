@@ -49,7 +49,9 @@ class ArticleForm(floppyforms.ModelForm):
     
 def get_node_choices():
     choices = [(None, _(u'<not in navigation>')), (0, _(u'<root node>'))]
-    choices.extend([(n.id, n.label) for n in NavNode.objects.all()])
+    for root_node in NavNode.objects.filter(parent__isnull=True).order_by('ordering'):
+        for (progeny, level) in root_node.get_progeny():
+            choices.append((progeny.id, '--'*level+progeny.label))
     return choices
 
 def get_navigation_parent_help_text():

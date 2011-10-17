@@ -119,6 +119,13 @@ class NavNode(models.Model):
             nodes = nodes.filter(in_navigation=in_navigation)
         return nodes
     
+    def get_progeny(self, level=0):
+        progeny = []
+        progeny.append((self, level))
+        for child in NavNode.objects.filter(parent=self).order_by("ordering"):
+            progeny.extend(child.get_progeny(level+1))
+        return progeny
+    
     def as_jstree(self):
         li_content = u'<a href="{0}">{1}</a>'.format(self.get_absolute_url(), self.label)
         
