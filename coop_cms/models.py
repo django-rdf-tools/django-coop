@@ -119,6 +119,13 @@ class NavNode(models.Model):
             nodes = nodes.filter(in_navigation=in_navigation)
         return nodes
     
+    def get_progeny(self, level=0):
+        progeny = []
+        progeny.append((self, level))
+        for child in NavNode.objects.filter(parent=self).order_by("ordering"):
+            progeny.extend(child.get_progeny(level+1))
+        return progeny
+    
     def as_jstree(self):
         li_content = u'<a href="{0}">{1}</a>'.format(self.get_absolute_url(), self.label)
         
@@ -236,10 +243,15 @@ class Article(TimeStampedModel):
                 set_node_ordering(node, node.parent.id if node.parent else 0)
                 node.save()
     
-
-    
     navigation_parent = property(_get_navigation_parent, _set_navigation_parent,
         doc=_("set the parent in navigation. WARNING: delete other nodes pointing to this object"))
+    
+    def save(self, *args, **kwargs):
+        ret = super(Article, self).save(*args, **kwargs)
+        parent_id = getattr(self, '_navigation_parent', None)
+        if parent_id:
+            self.navigation_parent = parent_id
+        return ret
     
     def get_label(self):
         return self.title
