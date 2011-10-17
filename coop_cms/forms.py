@@ -64,25 +64,32 @@ class ArticleAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ArticleAdminForm, self).__init__(*args, **kwargs)
         self.article = kwargs.get('instance', None)
+        self.fields['navigation_parent'] = forms.ChoiceField(
+           choices=get_node_choices(), required=False, help_text=get_navigation_parent_help_text()
+        )
         if self.article:
             self.initial['navigation_parent'] = self.article.navigation_parent
     
     def clean_navigation_parent(self):
         parent_id = self.cleaned_data['navigation_parent']
         parent_id = int(parent_id) if parent_id != 'None' else None
-        
-        ct = ContentType.objects.get_for_model(Article)
-        try:
-            node = NavNode.objects.get(object_id=self.article.id, content_type=ct)
-            #raise ValidationError if own parent or child of its own child
-            node.check_new_navigation_parent(parent_id)
-        except NavNode.DoesNotExist:
-            pass
+        if self.article:
+            ct = ContentType.objects.get_for_model(Article)
+            try:
+                node = NavNode.objects.get(object_id=self.article.id, content_type=ct)
+                #raise ValidationError if own parent or child of its own child
+                node.check_new_navigation_parent(parent_id)
+            except NavNode.DoesNotExist:
+                pass
         return parent_id
     
     def save(self, commit=True):
         article = super(ArticleAdminForm, self).save(commit=False)
-        article.navigation_parent = self.cleaned_data['navigation_parent']
+        parent_id = self.cleaned_data['navigation_parent']
+        if article.id:
+            article.navigation_parent = parent_id
+        else:
+            setattr(article, '_navigation_parent', parent_id)
         if commit:
             article.save()
         return article

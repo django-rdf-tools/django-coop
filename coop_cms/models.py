@@ -236,10 +236,15 @@ class Article(TimeStampedModel):
                 set_node_ordering(node, node.parent.id if node.parent else 0)
                 node.save()
     
-
-    
     navigation_parent = property(_get_navigation_parent, _set_navigation_parent,
         doc=_("set the parent in navigation. WARNING: delete other nodes pointing to this object"))
+    
+    def save(self, *args, **kwargs):
+        ret = super(Article, self).save(*args, **kwargs)
+        parent_id = getattr(self, '_navigation_parent', None)
+        if parent_id:
+            self.navigation_parent = parent_id
+        return ret
     
     def get_label(self):
         return self.title
