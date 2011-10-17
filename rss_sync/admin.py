@@ -6,15 +6,24 @@ from django.utils.translation import ugettext_lazy as _
 from rss_sync.forms import RssSourceAdminForm, RssItemAdminForm
 
 class RssSourceAdmin(admin.ModelAdmin):
-    form = RssSourceAdminForm
+    #form = RssSourceAdminForm
     list_display = ('url', 'title', 'last_collect')
     readonly_fields = ('title', 'last_collect')
     fieldsets = (
-        (_(u'Actions'), {'fields': ('id',)}),
         (_(u'Feed'), {'fields': ('url',)}),
         (_(u'Information'), {'fields': ('title', 'last_collect')}),
     )
     actions = [views.collect_rss_items_action]
+    
+    def get_form(self, request, obj=None, **kwargs):
+        print 'get_form', obj, kwargs
+        defaults = dict(kwargs)
+        if obj:
+            defaults.update({
+                'form': RssSourceAdminForm,
+            })
+        return super(RssSourceAdmin, self).get_form(request, obj, **defaults)
+        
 
 admin.site.register(models.RssSource, RssSourceAdmin)
 

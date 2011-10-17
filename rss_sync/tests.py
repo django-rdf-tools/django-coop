@@ -48,8 +48,8 @@ class BaseTestCase(TestCase):
 
 class RssTest(BaseTestCase):
 
-    def test_creatitem_from_source(self):
-        source = RssSource.objects.create(url='http://www.apidev.fr/blog/rss/')
+    def _do_test_creatitem_from_source(self, url):
+        source = RssSource.objects.create(url=url)
         
         self._log_as_synchro()
         
@@ -61,6 +61,12 @@ class RssTest(BaseTestCase):
         for item in RssItem.objects.filter(source=source):
             self.assertTrue(len(item.summary)>0)
             self.assertTrue(len(item.title)>0)
+            
+    def test_creatitem_from_djangoplanet(self):
+        self._do_test_creatitem_from_source("http://www.django-fr.org/planete/rss/")
+        
+    def test_creatitem_from_blogapidev(self):
+        self._do_test_creatitem_from_source("http://www.apidev.fr/blog/rss/")
             
     def test_synchro_url_is_not_rss(self):
         source = RssSource.objects.create(url='http://www.apidev.fr/')

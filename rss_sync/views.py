@@ -27,7 +27,7 @@ def collect_rss_items(user, source):
         #In any case, update the data
         item.title = e.title
         item.updated = datetime.fromtimestamp(mktime(e.updated_parsed))
-        item.author = e.author[:100]
+        item.author = getattr(e, 'author', '')[:100]
         item.summary = e.summary
         item.save()
     

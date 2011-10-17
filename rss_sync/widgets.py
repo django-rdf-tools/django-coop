@@ -5,10 +5,11 @@ from django.forms import HiddenInput
 from django.utils.safestring import mark_safe
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
+from rss_sync.models import RssSource
 
 def get_button_code(label, url):
     """create a html button"""
-    return u"""&nbsp;&nbsp;<input type="button" value="{0}" onclick="window.location={1}" />""".format(label, url)
+    return u"""&nbsp;&nbsp;<input class="cust-btn default" type="button" value="{0}" onclick="window.location={1}" />""".format(label, url)
     
 class AdminCollectRssWidget(HiddenInput):
     """
@@ -19,11 +20,16 @@ class AdminCollectRssWidget(HiddenInput):
         widget = super(AdminCollectRssWidget, self).render(name, value, attrs)
         html = unicode(widget)
         
-        #a bit tricky but the only way I know to get the object id for the button url
-        base_url = reverse('rss_sync_collect_rss_items', args=[99])[:-2]
-        url = "\'{0}\'+document.getElementById(\'{1}\').value".format(base_url, attrs['id'])
+        html += value
         
+        id = RssSource.objects.get(url=value).id
+        
+        url = "\'{0}\'".format(reverse('rss_sync_collect_rss_items', args=[id]))
+    
         html += get_button_code(_('Collect'), url)
+ 
+        #javascript code for moving the button to the submit-row at the bottom of the page
+        html += "<script>django.jQuery(function() {django.jQuery('.cust-btn').appendTo('.submit-row')});</script>"
  
         return mark_safe(html)
 
