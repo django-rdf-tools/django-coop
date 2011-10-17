@@ -89,4 +89,6 @@ class ArticleAdminForm(forms.ModelForm):
     
     class Meta:
         model = Article
-    
+        widgets = {
+            'title': forms.TextInput(attrs={'size': 100})
+        }
