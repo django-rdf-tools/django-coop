@@ -191,6 +191,9 @@ AUTH_PROFILE_MODULE = 'coop_local.membre'
 SITE_AUTHOR = 'CREDIS'
 SITE_TITLE = 'CREDIS : Collectif Régional des Initiatives Solidaires en Auvergne'
 
+# projection used in database
+EPSG_PROJECTION = 4326 # WGS84
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error.

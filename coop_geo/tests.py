@@ -1,16 +1,15 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
-
-Replace this with more appropriate tests for your application.
-"""
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 from django.test import TestCase
+from coop_geo.models import Location
+from django.core.exceptions import ValidationError
 
+class LocationTest(TestCase):
+    def setUp(self):
+        pass
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
+    def test_set_creation(self):
+        with self.assertRaises(ValidationError):
+            location = Location(name=u'Test', point=None, polygon=None)
+            location.save()
