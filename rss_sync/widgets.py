@@ -7,9 +7,14 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from rss_sync.models import RssSource
 
-def get_button_code(label, url):
+def get_button_code(label, url, is_default=False):
     """create a html button"""
-    return u"""&nbsp;&nbsp;<input class="cust-btn default" type="button" value="{0}" onclick="window.location={1}" />""".format(label, url)
+    css_class = u' default' if is_default else ''
+    html = u"""&nbsp;&nbsp;<input class="cust-btn{2}" type="button" value="{0}" onclick="window.location=\'{1}\'" />""".format(
+        label, url, css_class)
+    #javascript code for moving the button to the submit-row at the bottom of the page
+    html += u"<script>django.jQuery(function() {django.jQuery('.cust-btn').appendTo('.submit-row')});</script>"
+    return html
     
 class AdminCollectRssWidget(HiddenInput):
     """
@@ -24,12 +29,9 @@ class AdminCollectRssWidget(HiddenInput):
         
         id = RssSource.objects.get(url=value).id
         
-        url = "\'{0}\'".format(reverse('rss_sync_collect_rss_items', args=[id]))
+        url = reverse('rss_sync_collect_rss_items', args=[id])
     
-        html += get_button_code(_('Collect'), url)
- 
-        #javascript code for moving the button to the submit-row at the bottom of the page
-        html += "<script>django.jQuery(function() {django.jQuery('.cust-btn').appendTo('.submit-row')});</script>"
+        html += get_button_code(_('Collect'), url, True)
  
         return mark_safe(html)
 
@@ -43,9 +45,9 @@ class AdminCreateArticleWidget(HiddenInput):
         widget = super(AdminCreateArticleWidget, self).render(name, value, attrs)
         html = unicode(widget)
         
-        #a bit tricky but the only way I know to get the object id for the button url
-        base_url = reverse('rss_sync_create_cms_article', args=[99])[:-2]
-        url = "\'{0}\'+document.getElementById(\'{1}\').value".format(base_url, attrs['id'])
+        html += unicode(value)
+        
+        url = reverse('rss_sync_create_cms_article', args=[int(value)])
         
         html += get_button_code(_('Create CMS article'), url)
  

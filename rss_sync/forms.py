@@ -19,6 +19,6 @@ class RssSourceAdminForm(forms.ModelForm):
         
         
 class RssItemAdminForm(forms.ModelForm):
-    id = forms.IntegerField(widget=widgets.AdminCreateArticleWidget, label=u'')
+    id = forms.IntegerField(widget=widgets.AdminCreateArticleWidget, label=u'Id')
     class Meta:
         model = models.RssItem
