@@ -9,8 +9,8 @@ django-keyedcache==1.4-1
 django-livesettings==1.4-7
 django-smart-selects==1.0.4
 django-admin-tools==0.4.0
-feedparser==5.0.1
 sorl-thumbnail==11.09
 PIL==1.1.7
 django-floppyforms==0.4.7
 feedparser==5.0.1
+psycopg2==2.4.1

@@ -14,9 +14,9 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'base',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
+        'ENGINE': 'django.contrib.gis.db.backends.postgis', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'djangocoop',                      # Or path to database file if using sqlite3.
+        'USER': 'postgres',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
@@ -144,6 +144,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    'django.contrib.gis',
 
     #3rd parties
     'south',
@@ -164,6 +165,7 @@ INSTALLED_APPS = (
     'coop_cms',
     'skosxl',
     'rss_sync',
+    'coop_geo',
 )
 
 DJALOHA_LINK_MODELS = ('coop_cms.Article',)
@@ -189,6 +191,9 @@ AUTH_PROFILE_MODULE = 'coop_local.membre'
 
 SITE_AUTHOR = 'CREDIS'
 SITE_TITLE = 'CREDIS : Collectif Régional des Initiatives Solidaires en Auvergne'
+
+# projection used in database
+EPSG_PROJECTION = 4326 # WGS84
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

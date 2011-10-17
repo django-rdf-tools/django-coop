@@ -5,6 +5,8 @@
 *.komodoproject
 #*.json
 *.db
+*.swp
+*.bak
 @@*
 
 # Directories #
