@@ -14,11 +14,11 @@ class RssSourceAdminForm(forms.ModelForm):
         
     class Media:
         css = {
-            'all': (settings.STATIC_URL+'css/admin-cust.css',),
+            'all': (settings.STATIC_URL+'css/rss_sync/admin-cust.css',),
         }
         
         
 class RssItemAdminForm(forms.ModelForm):
-    id = forms.IntegerField(widget=widgets.AdminCreateArticleWidget, label=u'')
+    id = forms.IntegerField(widget=widgets.AdminCreateArticleWidget, label=u'Id')
     class Meta:
         model = models.RssItem
