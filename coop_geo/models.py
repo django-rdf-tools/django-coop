@@ -8,7 +8,7 @@ from django.contrib.gis.db import models
 
 class Location(models.Model):
     """Location: a named point or/and polygon"""
-    name = models.CharField(max_length=150, verbose_name=_(u"name"))
+    label = models.CharField(max_length=150, verbose_name=_(u"label"))
     point = models.PointField(_(u"point"), srid=settings.EPSG_PROJECTION,
                               blank=True, null=True)
     polygon = models.PolygonField(_(u"polygon"), srid=settings.EPSG_PROJECTION,
