@@ -194,7 +194,11 @@ SITE_AUTHOR = 'CREDIS'
 SITE_TITLE = 'CREDIS : Collectif Régional des Initiatives Solidaires en Auvergne'
 
 # projection used in database
-EPSG_PROJECTION = 4326 # WGS84
+COOP_GEO_EPSG_PROJECTION = 4326 # WGS84
+
+COOP_GEO_BOUNDING_BOX = []
+COOP_GEO_REGION = LANGUAGE_CODE[:2]
+
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

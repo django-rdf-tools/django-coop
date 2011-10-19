@@ -9,10 +9,10 @@ from django.contrib.gis.db import models
 class Location(models.Model):
     """Location: a named point or/and polygon"""
     label = models.CharField(max_length=150, verbose_name=_(u"label"))
-    point = models.PointField(_(u"point"), srid=settings.EPSG_PROJECTION,
-                              blank=True, null=True)
-    polygon = models.PolygonField(_(u"polygon"), srid=settings.EPSG_PROJECTION,
-                                  blank=True, null=True)
+    point = models.PointField(_(u"point"), blank=True, null=True,
+                              srid=settings.COOP_GEO_EPSG_PROJECTION)
+    polygon = models.PolygonField(_(u"polygon"), blank=True, null=True,
+                                  srid=settings.COOP_GEO_EPSG_PROJECTION)
     objects = models.GeoManager()
 
     def save(self, *args, **kwargs):
