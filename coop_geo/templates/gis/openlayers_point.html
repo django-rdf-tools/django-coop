@@ -1,0 +1,131 @@
+{% load i18n %}
+<style type="text/css">
+    #{{ attrs.id }}_map { width: {{ map_width }}px; height: {{ map_height }}px; border:1px solid #AAA}
+    #{{ attrs.id }}_map .aligned label { float: inherit; }
+    #{{ attrs.id }}_span_control, #{{ attrs.id }}_span_map { margin-right:1em;position: relative; vertical-align: top; float: left; }
+    #{{ attrs.id }}_span_control {width:400px; height:{{map_height}}px;}
+    {% if not display_wkt %}#{{ attrs.id }} { display: none; }{% endif %}
+    .olControlEditingToolbar .olControlModifyFeatureItemActive {
+        background-image: url("{{ ADMIN_MEDIA_PREFIX }}img/gis/move_vertex_on.png");
+        background-repeat: no-repeat;
+    }
+    .olControlEditingToolbar .olControlModifyFeatureItemInactive {
+        background-image: url("{{ ADMIN_MEDIA_PREFIX }}img/gis/move_vertex_off.png");
+        background-repeat: no-repeat;
+    }
+    .address_results{
+        padding:1em;
+        margin:1em;
+        border:1px solid #AAA;
+        background-color:#EEE;
+    }
+    .address_results ul#{{attrs.id}}_results{
+        margin:0em;
+    } 
+</style>
+
+<span id="{{ attrs.id }}_span_control">
+    <ul>
+        <li><a href='#{{ attrs.id }}_address_tab'>{% trans "Location"%}</a></li>
+        <li><a href='#{{ attrs.id }}_area_tab'>{% trans "Areas"%}</a></li>
+    </ul>
+    <div id='{{ attrs.id }}_address_tab'>
+        <div>
+            <label>{% trans "Address"%}</label>
+            <textarea id='{{attrs.id}}_address'></textarea>
+        </div>
+        <div>
+            <label class='required'>{% trans "Town"%}</label>
+            <textarea id='{{attrs.id}}_town'></textarea>
+        </div>
+        <button id="{{attrs.id}}_address_submit" onclick='return false'>{% trans "Search" %}</button>
+        <div id='{{attrs.id}}_address_results' class='address_results' style='display:none'>
+          <strong>{%trans "Click on the choosen location:"%}</strong>
+          <ul id='{{attrs.id}}_results'>
+          </ul>
+        </div>
+    </div>
+    <div id='{{ attrs.id }}_area_tab'>
+        <h4>WIP</h4>
+    </div>
+</span>
+<span id="{{ attrs.id }}_span_map">
+    <div id="{{ attrs.id }}_map"></div>
+    <a href="javascript:{{ module }}.clearFeatures()">{% trans "Delete all Features"%}</a>
+    {% if display_wkt %}<p> WKT debugging window:</p>{% endif %}
+    {% include "floppyforms/textarea.html" %}
+</span>
+<script type="text/javascript">
+    {% block map_options %}var map_options = {};{% endblock %}
+    {% block options %}var options = {
+        geom_type: OpenLayers.Geometry.{{ geom_type }},
+        id: '{{ attrs.id }}',
+        is_collection: {{ is_collection|yesno:"true,false" }},
+        is_linestring: {{ is_linestring|yesno:"true,false" }},
+        is_point: {{ is_point|yesno:"true,false" }},
+        is_polygon: {{ is_polygon|yesno:"true,false" }},
+        map_id: '{{ attrs.id }}_map',
+        map_options: map_options,
+        map_srid: {{ map_srid }},
+        name: '{{ name }}',
+        point_zoom: {{point_zoom}}
+    };{% endblock %}
+    var {{ module }} = new MapWidget(options);
+    var {{attrs.id}}_results = new Array();
+    wkt_parser = new OpenLayers.Format.WKT();
+    function put_{{attrs.id}}_to_location(index){
+        var feat = OpenLayers.Util.properFeatures(
+            {{ module }}.read_wkt({{attrs.id}}_results[index]),
+            {{ module }}.options.geom_type);
+        {% if map_srid != '4326' %}
+        feat = new OpenLayers.Feature.Vector(
+                    feat.geometry.transform(
+                              new OpenLayers.Projection('EPSG:4326'),
+                              new OpenLayers.Projection('EPSG:{{map_srid}}')));
+        {% endif %}
+        {{ module }}.layers.vector.addFeatures([feat]);
+        {{ module }}.write_wkt(feat);
+        {{ module }}.map.zoomToExtent(feat.geometry.getBounds());
+        {{ module }}.map.zoomTo({{ module }}.options.point_zoom);
+    }
+    jQuery("#{{attrs.id}}_address_submit").click(
+        function(){
+            var town = jQuery("#{{attrs.id}}_town").val();
+            if(!town){
+                alert("{%trans "You must at least precise the town."%}")
+                return false;
+            }
+            var address = jQuery("#{{attrs.id}}_address").val();
+            if(address){
+                address = town + ", " + address;
+            } else {
+                address = town;
+            }
+            function display_results(results, status){
+                if (!status == google.maps.GeocoderStatus.OK) {
+                    return false;
+                }
+                jQuery("#{{attrs.id}}_address_results").show();
+                var content = "";
+                {{attrs.id}}_results = new Array();
+                jQuery.each(results, function(index, location){
+                    var lat = location.geometry.location.lat();
+                    var lon = location.geometry.location.lng();
+                    content += "<li><a href='javascript:";
+                    content += "put_{{attrs.id}}_to_location("+ index;
+                    content += ");'>" + location.formatted_address;
+                    content += "</a></li>\n";
+                    {{attrs.id}}_results[index] = 'POINT ('+lon+' '+lat+')';
+                });
+                jQuery("#{{attrs.id}}_results").html(content);
+                return false;
+            }
+            var geocoder = new google.maps.Geocoder();
+            if(geocoder && address){
+                geocoder.geocode(
+                    {'address':address, 'region':'{{geocode_region}}'},
+                    display_results);
+            };
+    });
+    jQuery("#{{ attrs.id }}_span_control").tabs();
+</script>

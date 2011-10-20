@@ -10,6 +10,10 @@ import forms
 class LocationAdmin(admin.ModelAdmin):
     list_display = ['label',]
     form = forms.LocationForm
-
 admin.site.register(models.Location, LocationAdmin)
+
+class AreaAdmin(admin.ModelAdmin):
+    model = models.Area
+    form = forms.AreaForm
+admin.site.register(models.Area, AreaAdmin)
 
