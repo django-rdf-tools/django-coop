@@ -1,3 +1,0 @@
-
-class DisallowedTagError(ValueError):
-	pass

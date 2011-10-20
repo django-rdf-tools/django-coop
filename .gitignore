@@ -11,7 +11,7 @@
 
 # Directories #
 ###############
-#logs/
+logs
 coop_env
 static_collected
 test_app

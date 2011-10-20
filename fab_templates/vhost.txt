@@ -1,0 +1,21 @@
+<VirtualHost *:80>
+
+    ServerName %(domain)s
+    DocumentRoot /home/%(user)s/projects/%(projet)s
+
+    <Directory /home/%(user)s/projects/%(projet)s>
+        Order allow,deny
+        Allow from all
+    </Directory>
+    
+    LogLevel warn
+    ErrorLog  /home/%(user)s/projects/%(projet)s/logs/apache_error.log
+    CustomLog /home/%(user)s/projects/%(projet)s/logs/apache_access.log combined
+    
+
+    WSGIDaemonProcess %(domain)s user=www-data group=www-data threads=25
+    WSGIProcessGroup %(domain)s
+
+    WSGIScriptAlias / /home/%(user)s/%(projet)s.wsgi
+
+</VirtualHost>
