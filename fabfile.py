@@ -89,10 +89,28 @@ def lang():
 
 def postgresql_setup():
     '''PostgreSQL 8.4 installation & configuration'''
-    icanhaz.deb.packages(['libpq-dev','postgresql',
-        'binutils','gdal-bin','libproj-dev','postgis', 
-        'postgresql-server-dev-8.4','python-psycopg2' 
-    ])
+    #'postgresql','binutils','gdal-bin','libproj-dev','postgis',  
+    icanhaz.deb.packages(['libpq-dev'])
+    icanhaz.deb.packages(['postgresql-8.4','postgresql-client-8.4', 'postgis','postgresql-8.4-postgis'])
+    icanhaz.deb.packages(['postgresql-server-dev-8.4','python-psycopg2'])
+    
+    # création d'un utilisateur postgre avec le meme nom d'utilisateur
+    icanhaz.postgres.user(env.user, env.pg_pass)
+    
+    #creation du template postgis
+    with settings( show('user'), hide('warnings', 'running', 'stdout', 'stderr'),warn_only=True ):
+        if not 'template_postgis' in run('echo|psql -l'):
+            sudo('su postgres; POSTGIS_SQL_PATH=`pg_config --sharedir`/contrib/postgis-1.5')
+            sudo('su postgres; createdb -E UTF8 template_postgis')
+            sudo('su postgres; createlang -d template_postgis plpgsql # Adding PLPGSQL language support.')
+            sudo('su postgres; psql -d postgres -c "UPDATE pg_database SET datistemplate=\'true\' WHERE datname=\'template_postgis\';"')
+            sudo('su postgres; psql -d template_postgis -f $POSTGIS_SQL_PATH/postgis.sql')
+            sudo('su postgres; psql -d template_postgis -f $POSTGIS_SQL_PATH/spatial_ref_sys.sql')
+            sudo('su postgres; psql -d template_postgis -c "GRANT ALL ON geometry_columns TO PUBLIC;"')
+            sudo('su postgres; psql -d template_postgis -c "GRANT ALL ON geography_columns TO PUBLIC;"')
+            sudo('su postgres; psql -d template_postgis -c "GRANT ALL ON spatial_ref_sys TO PUBLIC;"')
+
+    
     icanhaz.postgres.server()
     with cd('/etc/postgresql/8.4/main/'):
         change = False
@@ -109,9 +127,9 @@ def postgresql_setup():
             sudo('echo "listen_addresses = \'*\'"|cat - postgresql.conf > /tmp/out && mv /tmp/out postgresql.conf')
             change = True
         if change : sudo('/etc/init.d/postgresql restart')
-    # création d'un utilisateur postgre avec le meme nom d'utilisateur
-    icanhaz.postgres.user(env.user, env.pg_pass)
-    icanhaz.postgres.database(env.projet, env.user)
+    
+    
+    #icanhaz.postgres.database(env.projet, env.user, 'template_postgis')
     
 
 
@@ -230,10 +248,7 @@ def dependencies():
 
 @task
 def test():
-    config()
-    dependencies()
-
-   
+        print('ok')
 @task
 def setup():
     '''Installation serveur'''
@@ -260,7 +275,9 @@ def setup():
     dependencies() #si fichier requirements
     apache_vhost()
     
+    #synchro db
     
+    #git commands
 
 
     
