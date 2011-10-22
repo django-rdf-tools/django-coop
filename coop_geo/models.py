@@ -55,6 +55,18 @@ class Area(models.Model):
             self._level = self.parent.level + 1
         return self._level
 
+    @property
+    def leaf(self):
+        if not hasattr(self, '_leaf'):
+            self._leaf = False
+        return self._leaf
+
+    @property
+    def end_leaf(self):
+        if not hasattr(self, '_end_leaf'):
+            self._end_leaf = 0
+        return self._end_leaf
+
     @classmethod
     def get_all(cls):
         """
@@ -82,6 +94,10 @@ class Area(models.Model):
                 childs.append(child)
                 childs_of_child = _get_childs(child, level)
                 if childs_of_child:
+                    childs[-1]._leaf = True
+                    if not hasattr(childs_of_child[-1], '_end_leaf'):
+                        childs_of_child[-1]._end_leaf = 0
+                    childs_of_child[-1]._end_leaf += 1
                     childs += childs_of_child
             return childs
 
@@ -92,6 +108,10 @@ class Area(models.Model):
             sorted_areas.append(area)
             childs = _get_childs(area, 0)
             if childs:
+                sorted_areas[-1]._leaf = True
+                if not hasattr(childs[-1], '_end_leaf'):
+                    childs[-1]._end_leaf = 0
+                childs[-1]._end_leaf += 1
                 sorted_areas += childs
         return sorted_areas
 

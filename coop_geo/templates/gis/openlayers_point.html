@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load mkrange %}
 <style type="text/css">
     #{{ attrs.id }}_map { width: {{ map_width }}px; height: {{ map_height }}px; border:1px solid #AAA}
     #{{ attrs.id }}_map .aligned label { float: inherit; }
@@ -20,14 +21,19 @@
         background-color:#EEE;
     }
     .address_results ul#{{attrs.id}}_results{
-        margin:0em;
+        margin:0;
     } 
+    .module .area_tree ul,.module .area_tree li{
+        margin:0;
+        padding:0;
+        padding-left:1em;
+    }
 </style>
 
 <span id="{{ attrs.id }}_span_control">
     <ul>
         <li><a href='#{{ attrs.id }}_address_tab'>{% trans "Location"%}</a></li>
-        <li><a href='#{{ attrs.id }}_area_tab'>{% trans "Areas"%}</a></li>
+        {% if areas %}<li><a href='#{{ attrs.id }}_area_tab'>{% trans "Areas"%}</a></li>{% endif %}
     </ul>
     <div id='{{ attrs.id }}_address_tab'>
         <div>
@@ -45,9 +51,24 @@
           </ul>
         </div>
     </div>
-    <div id='{{ attrs.id }}_area_tab'>
-        <h4>WIP</h4>
+    {% if areas %}
+    <div id='{{ attrs.id }}_area_tab' class='area_tree'>
+        {{rendered_areas}}
+<script type="text/javascript">
+var areas = new Array();
+{%for area in areas%}areas[{{forloop.counter0}}]="{{area.polygon.wkt}}";{% endfor %}
+</script>
+        <ul>{%for area in areas%}
+
+        <li><a href='javascript:alert(areas[{{forloop.counter0}}]);'>{{area}}</a></li>
+        {% if area.leaf %}<ul>{% endif %}
+        {% if area.end_leaf%}
+        {% mkrange area.end_leaf as leaf_range %}
+        {% for idx in leaf_range %}</ul>{% endfor %}
+        {% endif %}
+        {%endfor%}</ul>
     </div>
+    {% endif %}
 </span>
 <span id="{{ attrs.id }}_span_map">
     <div id="{{ attrs.id }}_map"></div>
