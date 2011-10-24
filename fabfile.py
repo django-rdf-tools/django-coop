@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
-from fabric.api import env,local,run,sudo,cd,hide,show,settings,prefix,prompt,require
+from fabric.api import env,local,run,sudo,cd,hide,show,settings,prefix,prompt
 from fabric.contrib.console import confirm
 from fabric.colors import red, green,yellow
-from fabric.decorators import task,with_settings
+from fabric.decorators import task
 from fabric.contrib.files import append,contains,exists,sed,upload_template
 from fabtools import icanhaz
 import fabtools
 
-#Paramètres Vagrant
+#Paramétres Vagrant
 env.vm_path = "/Users/dom/VM/devcoop"
-
-
-#Paramètres par défaut
+#Paramétres serveur
+env.locale = 'fr_FR.UTF-8'
+#Paramétres par défaut
 env.domain = "dev.django.coop"
 env.projet = "devcoop"
-# Paramètres PostGreSQL
+# Paramétres PostGreSQL
 env.pgpass = '123456'
-# Paramètres Déploiement
+# Paramétres Déploiement
 env.websrv=1
 
 
@@ -25,9 +25,15 @@ def pretty_apt(pkglist):
         icanhaz.deb.package(pkg)
         print(green(u'Paquet Debian "'+unicode(pkg)+u'" : installé.'))
 
+def pretty_pip(pkglist):
+    for pkg in (pkglist):
+        icanhaz.python.install(pkg)
+        print(green(u'Module Python "'+unicode(pkg)+u'" : installé.'))
+
+
 
 @task
-def _vagrant():
+def _vm():
     '''A utiliser en premier pour une VM locale'''
     # change from the default user to 'vagrant'
     env.user = 'vagrant'
@@ -86,135 +92,94 @@ def gandi():
         sudo('apt-key add pubkey')
         print(green('Gandi public key added.'))
 
+@task
+def test():
+    pass
+    
+@task
+def setup():
+    '''Installation de base pour Ubuntu >= 10.10'''
+    with settings(show('user'),hide('warnings','running','stdout','stderr')):
+        config()
+        #if gandi
+        locale()
+        print(yellow('Mise à jour de l’index APT...'))
+        fabtools.deb.update_index() # apt-get quiet update
+        print(yellow('Mise à jour des paquets debian installés...'))
+        fabtools.deb.upgrade()
+        # paquets communs à tous les serveurs Django+geodjango
+        print(yellow('Installation des paquets de base...'))
+        pretty_apt(['git-core','mercurial','gcc','curl','build-essential',
+                    'python-imaging','python-setuptools',
+                    'memcached','python-memcache'])
+    
+        # pip special case
+        if not fabtools.python.is_pip_installed():
+            fabtools.python.install_pip()    
+            print(green('pip : installé.'))
+    
+        environnement() 
+        #config apache
+        if(env.websrv == 1):
+            apache()
+        elif(env.websrv == 2):
+            apache_nginx()
+    
 
 @task
-def postgresql_setup():
+def postgresql():
     '''PostgreSQL 8.4 + PostGIS 1.5'''
-    config()
-    pretty_apt(['libpq-dev','binutils','gdal-bin','libproj-dev',
-    'postgresql-8.4-postgis','postgresql-server-dev-8.4','python-psycopg2'])
-    fabtools.deb.upgrade()
-    #'postgresql-server-dev-8.4',
-    #'postgresql-8.4','postgresql-client-8.4' ?
-    # création d'un utilisateur postgresql avec le meme nom d'utilisateur
-    icanhaz.postgres.user(env.user, env.pgpass)
-    if not fabtools.postgres.user_exists(env.user):
-        sudo('''psql -c "ALTER ROLE %(user)s CREATEDB;"''' % env, user='postgres')
-        sudo('''psql -c "ALTER USER %(user)s with SUPERUSER;"''' % env, user='postgres')
-        print(green('Création du superuser PostGreSQL %(user)s.' % env))
-    if not exists('.pgpass'):
-        run('echo "*:*:*:vagrant:123456" >> .pgpass')
-        sudo('chmod 0600 .pgpass')
-        print(green('Création fichier .pgpass.'))
-    postgis_template()
-    postgresql_net_access()
-    icanhaz.postgres.server()#start server
-
+    with settings(show('user'),hide('warnings', 'running', 'stdout', 'stderr')):
+        config()
+        print(yellow('Configuration PostgreSQL+PostGIS...'))
+        pretty_apt(['libpq-dev','binutils','gdal-bin','libproj-dev',
+        'postgresql-8.4-postgis','postgresql-server-dev-8.4','python-psycopg2'])
+        fabtools.deb.upgrade()
+        #'postgresql-server-dev-8.4',
+        #'postgresql-8.4','postgresql-client-8.4' ?
+        # création d'un utilisateur postgresql avec le meme nom d'utilisateur
+        icanhaz.postgres.user(env.user, env.pgpass)
+        if not fabtools.postgres.user_exists(env.user):
+            sudo('''psql -c "ALTER ROLE %(user)s CREATEDB;"''' % env, user='postgres')
+            sudo('''psql -c "ALTER USER %(user)s with SUPERUSER;"''' % env, user='postgres')
+            print(green('Création d’un superuser "%(user)s" PostgreSQL.' % env))
+        if not exists('.pgpass'):
+            run('echo "*:*:*:vagrant:123456" >> .pgpass')
+            sudo('chmod 0600 .pgpass')
+            print(green('Création du fichier .pgpass.'))
+        postgis_template()
+        postgresql_net_access()
+        icanhaz.postgres.server()#start server
 
 
 @task
 def django_project():
     '''Créer un projet django dans son virtualenv'''
-    config()
-    if not exists('/home/%(user)s/.virtualenvs/%(projet)s' % env ):
-        #if confirm('Pas de virtualenv nommé "%s", faut-il le créer ?' % (env.projet),default=False):
-        run('mkvirtualenv %(projet)s' % env)
-    if not exists('projects/%s/' % (env.projet)):
-        print(yellow('le projet %(projet)s n’existe pas encore' % env))
-        if confirm('Créer un projet django nommé "%(projet)s" ?' % env ,default=False):
-            with prefix('workon %(projet)s' % env):
-                with cd('projects/'):
-                    run('django-admin.py startproject %s' % (env.projet))
-                    print(green('Projet Django "%(projet)s" créé.' % env))
-    else:
-        print(green('Le projet Django "%(projet)s" existe déjà.' % env))                          
-    #créer la db avec le nom du projet (idempotent)
-    icanhaz.postgres.database(env.projet, env.user, 'template_postgis')
-    print(green('Création d’une base de données %(projet)s.' % env))
-    django_wsgi()
-    apache_vhost()
-    dependencies() 
-    #synchro db
-    #git commands   
-
-
-@task
-@with_settings(show('user'))
-#@with_settings(hide='warnings', 'running', 'stdout', 'stderr'))
-def test():    
-    print('Salut!')
-    
-    
-@task
-def setup():
-    '''Installation de base pour Ubuntu >= 10.10'''
-    config()
-    #if gandi
-    lang()
-    fabtools.deb.update_index() # apt-get quiet update
-    fabtools.deb.upgrade()
-    # paquets communs à tous les serveurs Django+geodjango
-    pretty_apt(['git-core','mercurial','gcc','curl','build-essential',
-        'python-imaging','python-setuptools','memcached','python-memcache'])
-    
-    # pip special case
-    if not fabtools.python.is_pip_installed():
-        fabtools.python.install_pip()    
-        print(green('pip : installé.'))
-    
-    environnement()
-    #config apache
-    if(env.websrv == 1):
-        apache()
-    elif(env.websrv == 2):
-        apache_nginx()
-    
-
-
-def django_wsgi():
-    if not exists('/home/%(user)s/%(projet)s.wsgi'):
-        with prefix('workon %(projet)s' % env):
-            sp_path = run('cdsitepackages ; pwd')
-            wsgi_context = {
-                'site-packages' : sp_path,
-                'user' : env.user,
-                'projet' : env.projet
-            }
-        upload_template('fab_templates/wsgi.txt','%(projet)s.wsgi' % env, context=wsgi_context, use_sudo=True)
-        print(green('Script %(projet)s.wsgi créé.'))
-
-
-def dependencies():
-    '''Installe les modules pythons nécessaires au projet'''
-    with cd('projects/%(projet)s' % env):
-        if exists('requirements.txt'):
-            print(green('Installation des dépendances du projet.'))
-            with prefix('workon %(projet)s' % env):
-                run('pip install -r requirements.txt')
-                sudo('apachectl restart')
+    with settings(show('user'),hide('warnings', 'running', 'stdout', 'stderr')):
+        config()
+        locale()
+        if not exists('/home/%(user)s/.virtualenvs/%(projet)s' % env ):
+            #if confirm('Pas de virtualenv "%(projet)s", faut-il le créer ?' % env, default=False):
+            run('mkvirtualenv %(projet)s' % env)
+        if not exists('projects/%s/' % (env.projet)):
+            print(yellow('le projet %(projet)s n’existe pas encore' % env))
+            if confirm( 'Créer un projet django nommé "%(projet)s" ?' % env ,
+                        default=False):
+                with prefix('workon %(projet)s' % env):
+                    with cd('projects/'):
+                        run('django-admin.py startproject %s' % (env.projet))
+                        print(green('Projet Django "%(projet)s" : OK.' % env))
         else:
-            print(yellow('Aucun fichier "requirements.txt" trouvé.'))
+            print(green('Projet Django "%(projet)s" : OK.' % env))                          
+        #créer la db avec le nom du projet (idempotent)
+        icanhaz.postgres.database(env.projet, env.user, template='template_postgis', locale=env.locale)
+        print(green('Base de données %(projet)s : OK.' % env))
+        django_wsgi()
+        apache_vhost()
+        dependencies() 
+        #synchro db
+        #git commands   
 
-
-def environnement():
-    icanhaz.python.package('virtualenv',use_sudo=True)
-    icanhaz.python.package('virtualenvwrapper',use_sudo=True)
-    #icanhaz.python.package('virtualenvwrapper.django',use_sudo=True)
-    if not 'www-data' in run('echo | groups %s' % (env.user)):
-        sudo('usermod -a -G www-data %s' % (env.user))
-        print(green('Utilisateur %s ajouté au grope "www-data"' % (env.user)))
-    if not exists('projects/'):
-        run('mkdir projects .python-eggs .virtualenvs')
-        sudo('chown %s:www-data .python-eggs' % (env.user))
-        sudo('chgrp -R www-data projects/')
-        sudo('chmod -R 2750 projects/')
-        print(green('Dossier "projects" créé.'))   
-    # sur .bash_profile et pas .bashrc
-    append('.bash_profile','export WORKON_HOME=$HOME/.virtualenvs')
-    append('.bash_profile','export PROJECT_HOME=$HOME/projects')
-    append('.bash_profile','export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python')
-    append('.bash_profile','export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv')
-    append('.bash_profile','source /usr/local/bin/virtualenvwrapper.sh')
 
 
 def apache_nginx():
@@ -236,11 +201,12 @@ def apache_nginx():
         if not contains('nginx.conf','worker_processes 2;',use_sudo=True): 
             sudo("sed -i 's/worker_processes 4;/worker_processes 2;/g' nginx.conf")
             print(green('/etc/nginx/nginx.conf updated'))
-    #to be continued...
+    #to be continued...proxy.conf, vhosts...
 
 
 def apache():
     '''Config générale Apache + mod_wsgi sans media proxy'''
+    print(yellow('Configuration d’Apache...'))
     pretty_apt(['apache2','libapache2-mod-wsgi'])
     #virer le site par défaut
     with cd('/etc/apache2/sites-enabled/'):
@@ -258,21 +224,82 @@ def apache_vhost():
         }
         upload_template('fab_templates/vhost.txt','/etc/apache2/sites-available/%(domain)s' % env, context=vhost_context, use_sudo=True)
         with cd('/etc/apache2/'):
-            sudo('rm sites-enabled/%(domain)s' % env)
+            with settings(warn_only=True):
+                sudo('rm sites-enabled/%(domain)s' % env)
             sudo('ln -s `pwd`/sites-available/%(domain)s sites-enabled/%(domain)s' % env)
-            print(green('VirtualHost Apache pour %(domain)s configuré.' % env))
+            print(green('VirtualHost Apache pour %(domain)s : OK.' % env))
     elif(env.websrv == 2):
-        print(red('Pas encore écrit !!!')) #TODO
+        print(red('Script de déploiement pas encore écrit !!!')) #TODO
     sudo('apachectl restart')
         
 
 
-def lang():
+def environnement():
+    print(yellow('Environnements virtuels et dossier projects...'))
+    icanhaz.python.package('virtualenv',use_sudo=True)
+    icanhaz.python.package('virtualenvwrapper',use_sudo=True)
+    #icanhaz.python.package('virtualenvwrapper.django',use_sudo=True)
+    print(green('Virtualenv installé.'))
+    if not 'www-data' in run('echo | groups %(user)s' % env):
+        sudo('usermod -a -G www-data %(user)s' % env)
+        print(green('Utilisateur %(user)s ajouté au groupe "www-data".' % env))
+    if not exists('projects/'):
+        run('mkdir projects .python-eggs .virtualenvs')
+        sudo('chown %(user)s:www-data .python-eggs' % env)
+        sudo('chgrp -R www-data projects/')
+        sudo('chmod -R 2750 projects/')
+        print(green('Dossier "projects" créé.'))   
+    # sur .bash_profile et pas .bashrc
+    # + fix pour https://bitbucket.org/dhellmann/virtualenvwrapper/issue/62/hooklog-permissions
+    if not contains('.bash_profile','WORKON_HOME'):
+        append('.bash_profile','if [ $USER == %(user)s ]; then' % env)
+        append('.bash_profile','    export WORKON_HOME=$HOME/.virtualenvs')
+        append('.bash_profile','    export PROJECT_HOME=$HOME/projects')
+        append('.bash_profile','    export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python')
+        append('.bash_profile','    export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv')
+        append('.bash_profile','    source /usr/local/bin/virtualenvwrapper.sh')
+        append('.bash_profile','fi')
+        print(green('Virtualenv et Virtualenvwrapper configurés.'))
+    # stop warning from bitbucket https://bitbucket.org/site/master/issue/2780/getting-warning-while-using-https-and-ssh
+    if not contains('.hgrc','bitbucket.org'):
+        append('.hgrc', '[hostfingerprints]')
+        append('.hgrc', 'bitbucket.org = 81:2b:08:90:dc:d3:71:ee:e0:7c:b4:75:ce:9b:6c:48:94:56:a1:fe')
+  
+
+
+
+def django_wsgi():
+    if not exists('/home/%(user)s/%(projet)s.wsgi'):
+        with prefix('workon %(projet)s' % env):
+            sp_path = run('cdsitepackages ; pwd')
+            wsgi_context = {
+                'site-packages' : sp_path,
+                'user' : env.user,
+                'projet' : env.projet
+            }
+        upload_template('fab_templates/wsgi.txt','%(projet)s.wsgi' % env, context=wsgi_context, use_sudo=True)
+        print(green('Script WSGI %(projet)s.wsgi : OK.' % env))
+
+
+def dependencies():
+    '''Installe les modules pythons nécessaires au projet'''
+    with cd('projects/%(projet)s' % env):
+        if exists('requirements.txt'):
+            print(yellow('Installation des dépendances du projet...'))
+            with prefix('workon %(projet)s' % env):
+                with settings(show('running','stdout','stderr')):
+                    run('pip install -r requirements.txt')
+            sudo('apachectl restart')
+        else:
+            print(red('Aucun fichier "requirements.txt" trouvé.'))
+
+
+def locale():
     '''Règlage des locale de l'OS'''
-    lang = run("echo $LANG")
-    if(lang != 'fr_FR.UTF-8'):
-        sudo('locale-gen fr_FR.UTF-8')
-        sudo('/usr/sbin/update-locale LANG=fr_FR.UTF-8')
+    locale = run("echo $LANG")
+    if(locale != env.locale):
+        sudo('locale-gen '+env.locale)
+        sudo('/usr/sbin/update-locale LANG='+env.locale)
         print(green('Locale mise à jour.'))
 
 
