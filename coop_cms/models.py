@@ -65,7 +65,7 @@ class NavType(models.Model):
     content_type = models.ForeignKey(ContentType, unique=True)
     search_field = models.CharField(max_length=200, blank=True, default="")
     label_rule = models.IntegerField(verbose_name=_(u'How to generate the label'),
-        choices=LABEL_RULE_CHOICES, default=LABEL_USE_SEARCH_FIELD)
+        choices=LABEL_RULE_CHOICES, default=LABEL_USE_UNICODE)
     
     def __unicode__(self):
         return self.content_type.app_label+'.'+self.content_type.model
