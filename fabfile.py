@@ -94,7 +94,8 @@ def gandi():
 
 @task
 def test():
-    pass
+    config()
+    icanhaz.postgres.user(env.user,env.pgpass)
     
 @task
 def setup():
@@ -132,14 +133,11 @@ def postgresql():
     with settings(show('user'),hide('warnings', 'running', 'stdout', 'stderr')):
         config()
         print(yellow('Configuration PostgreSQL+PostGIS...'))
-        pretty_apt(['libpq-dev','binutils','gdal-bin','libproj-dev',
-        'postgresql-8.4-postgis','postgresql-server-dev-8.4','python-psycopg2'])
+        pretty_apt(['libpq-dev','binutils','gdal-bin','libproj-dev','postgresql-8.4-postgis','postgresql-server-dev-8.4','python-psycopg2'])
         fabtools.deb.upgrade()
-        #'postgresql-server-dev-8.4',
-        #'postgresql-8.4','postgresql-client-8.4' ?
         # création d'un utilisateur postgresql avec le meme nom d'utilisateur
-        icanhaz.postgres.user(env.user, env.pgpass)
         if not fabtools.postgres.user_exists(env.user):
+            fabtools.postgres.create_user(env.user, env.pgpass)
             sudo('''psql -c "ALTER ROLE %(user)s CREATEDB;"''' % env, user='postgres')
             sudo('''psql -c "ALTER USER %(user)s with SUPERUSER;"''' % env, user='postgres')
             print(green('Création d’un superuser "%(user)s" PostgreSQL.' % env))
@@ -179,6 +177,17 @@ def django_project():
         dependencies() 
         #synchro db
         #git commands   
+
+@task
+def first_syncdb():
+    config()
+    with cd('projects/%(projet)s' % env):
+        with prefix('workon %(projet)s' % env):
+            run('./manage.py syncdb --all --noinput')
+            run('./manage.py migrate --fake')
+            for d in ('auth_users.json','coop_cms.json'):
+                run('./manage.py loaddata fixtures/'+d)
+
 
 
 
@@ -324,11 +333,12 @@ def postgresql_net_access():
             sudo("sed -i 's/local   all         all                               ident/local   all         all                               password/g' pg_hba.conf",user='postgres')
             change = True
             print(green('Accés local PostgreSQL pour Django'))
-        if not contains('pg_hba.conf','host    all         all         0.0.0.0/0             md5'):
+        if not contains('pg_hba.conf','0.0.0.0'):
+            # FIX : teste rate toujours , pourquoi ? - mais pas de double écriture grace à append()
             append('pg_hba.conf','host    all         all         0.0.0.0/0             md5',use_sudo=True)
             change = True
             print(green('Accés à PostgreSQL via interfaces IP externes'))
-        if not contains('postgresql.conf','listen_addresses = \'\\*\'',use_sudo=True):
+        if not contains('postgresql.conf','listen_addresses = \'\*\'',use_sudo=True):
             sudo('echo "listen_addresses = \'*\'"|cat - postgresql.conf > /tmp/out && mv /tmp/out postgresql.conf')
             change = True
             print(green('PostgreSQL écoute sur toutes les interfaces IP'))
