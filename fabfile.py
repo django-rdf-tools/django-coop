@@ -153,30 +153,30 @@ def postgresql():
 @task
 def django_project():
     '''Créer un projet django dans son virtualenv'''
-    # with settings(show('user'),hide('warnings', 'running', 'stdout', 'stderr')):
-    config()
-    locale()
-    if not exists('/home/%(user)s/.virtualenvs/%(projet)s' % env ):
-        #if confirm('Pas de virtualenv "%(projet)s", faut-il le créer ?' % env, default=False):
-        run('mkvirtualenv %(projet)s' % env)
-    if not exists('projects/%s/' % (env.projet)):
-        print(yellow('le projet %(projet)s n’existe pas encore' % env))
-        if confirm( 'Créer un projet django nommé "%(projet)s" ?' % env ,
-                    default=False):
-            with prefix('workon %(projet)s' % env):
-                with cd('projects/'):
-                    run('django-admin.py startproject %s' % (env.projet))
-                    print(green('Projet Django "%(projet)s" : OK.' % env))
-    else:
-        print(green('Projet Django "%(projet)s" : OK.' % env))                          
-    #créer la db avec le nom du projet (idempotent)
-    icanhaz.postgres.database(env.projet, env.user, template='template_postgis', locale=env.locale)
-    print(green('Base de données %(projet)s : OK.' % env))
-    django_wsgi()
-    apache_vhost()
-    dependencies() 
-    #synchro db
-    #git commands   
+    with settings(show('user'),hide('warnings', 'running', 'stdout', 'stderr')):
+        config()
+        locale()
+        if not exists('/home/%(user)s/.virtualenvs/%(projet)s' % env ):
+            #if confirm('Pas de virtualenv "%(projet)s", faut-il le créer ?' % env, default=False):
+            run('mkvirtualenv %(projet)s' % env)
+        if not exists('projects/%s/' % (env.projet)):
+            print(yellow('le projet %(projet)s n’existe pas encore' % env))
+            if confirm( 'Créer un projet django nommé "%(projet)s" ?' % env ,
+                        default=False):
+                with prefix('workon %(projet)s' % env):
+                    with cd('projects/'):
+                        run('django-admin.py startproject %s' % (env.projet))
+                        print(green('Projet Django "%(projet)s" : OK.' % env))
+        else:
+            print(green('Projet Django "%(projet)s" : OK.' % env))                          
+        #créer la db avec le nom du projet (idempotent)
+        icanhaz.postgres.database(env.projet, env.user, template='template_postgis', locale=env.locale)
+        print(green('Base de données %(projet)s : OK.' % env))
+        django_wsgi()
+        apache_vhost()
+        dependencies() 
+        #synchro db
+        #git commands   
 
 @task
 def first_syncdb():
