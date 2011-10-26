@@ -249,7 +249,7 @@ class Article(TimeStampedModel):
     def save(self, *args, **kwargs):
         ret = super(Article, self).save(*args, **kwargs)
         parent_id = getattr(self, '_navigation_parent', None)
-        if parent_id:
+        if parent_id != None:
             self.navigation_parent = parent_id
         return ret
     
