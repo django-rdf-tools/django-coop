@@ -153,30 +153,30 @@ def postgresql():
 @task
 def django_project():
     '''Créer un projet django dans son virtualenv'''
-    with settings(show('user'),hide('warnings', 'running', 'stdout', 'stderr')):
-        config()
-        locale()
-        if not exists('/home/%(user)s/.virtualenvs/%(projet)s' % env ):
-            #if confirm('Pas de virtualenv "%(projet)s", faut-il le créer ?' % env, default=False):
-            run('mkvirtualenv %(projet)s' % env)
-        if not exists('projects/%s/' % (env.projet)):
-            print(yellow('le projet %(projet)s n’existe pas encore' % env))
-            if confirm( 'Créer un projet django nommé "%(projet)s" ?' % env ,
-                        default=False):
-                with prefix('workon %(projet)s' % env):
-                    with cd('projects/'):
-                        run('django-admin.py startproject %s' % (env.projet))
-                        print(green('Projet Django "%(projet)s" : OK.' % env))
-        else:
-            print(green('Projet Django "%(projet)s" : OK.' % env))                          
-        #créer la db avec le nom du projet (idempotent)
-        icanhaz.postgres.database(env.projet, env.user, template='template_postgis', locale=env.locale)
-        print(green('Base de données %(projet)s : OK.' % env))
-        django_wsgi()
-        apache_vhost()
-        dependencies() 
-        #synchro db
-        #git commands   
+    # with settings(show('user'),hide('warnings', 'running', 'stdout', 'stderr')):
+    config()
+    locale()
+    if not exists('/home/%(user)s/.virtualenvs/%(projet)s' % env ):
+        #if confirm('Pas de virtualenv "%(projet)s", faut-il le créer ?' % env, default=False):
+        run('mkvirtualenv %(projet)s' % env)
+    if not exists('projects/%s/' % (env.projet)):
+        print(yellow('le projet %(projet)s n’existe pas encore' % env))
+        if confirm( 'Créer un projet django nommé "%(projet)s" ?' % env ,
+                    default=False):
+            with prefix('workon %(projet)s' % env):
+                with cd('projects/'):
+                    run('django-admin.py startproject %s' % (env.projet))
+                    print(green('Projet Django "%(projet)s" : OK.' % env))
+    else:
+        print(green('Projet Django "%(projet)s" : OK.' % env))                          
+    #créer la db avec le nom du projet (idempotent)
+    icanhaz.postgres.database(env.projet, env.user, template='template_postgis', locale=env.locale)
+    print(green('Base de données %(projet)s : OK.' % env))
+    django_wsgi()
+    apache_vhost()
+    dependencies() 
+    #synchro db
+    #git commands   
 
 @task
 def first_syncdb():
@@ -185,7 +185,7 @@ def first_syncdb():
         with prefix('workon %(projet)s' % env):
             run('./manage.py syncdb --all --noinput')
             run('./manage.py migrate --fake')
-            for d in ('auth_users.json','coop_cms.json'):
+            for d in ('auth_users.json','coop_cms.json','coop_local.json'):
                 run('./manage.py loaddata fixtures/'+d)
 
 
@@ -258,16 +258,20 @@ def environnement():
         sudo('chgrp -R www-data projects/')
         sudo('chmod -R 2750 projects/')
         print(green('Dossier "projects" créé.'))   
-    # sur .bash_profile et pas .bashrc
+    # sur .bashrc et pas .bashrc
     # + fix pour https://bitbucket.org/dhellmann/virtualenvwrapper/issue/62/hooklog-permissions
-    if not contains('.bash_profile','WORKON_HOME'):
-        append('.bash_profile','if [ $USER == %(user)s ]; then' % env)
-        append('.bash_profile','    export WORKON_HOME=$HOME/.virtualenvs')
-        append('.bash_profile','    export PROJECT_HOME=$HOME/projects')
-        append('.bash_profile','    export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python')
-        append('.bash_profile','    export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv')
-        append('.bash_profile','    source /usr/local/bin/virtualenvwrapper.sh')
+    if not contains('.bashrc','WORKON_HOME'):
+        append('.bashrc','if [ $USER == %(user)s ]; then' % env)
+        append('.bashrc','    export WORKON_HOME=$HOME/.virtualenvs')
+        append('.bashrc','    export PROJECT_HOME=$HOME/projects')
+        append('.bashrc','    export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python')
+        append('.bashrc','    export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv')
+        append('.bashrc','    source /usr/local/bin/virtualenvwrapper.sh')
+        append('.bashrc','fi')
+        append('.bash_profile','if [ -f ~/.bashrc ]; then') #fabric source .bash_profile, pas .bashrc
+        append('.bash_profile','    source ~/.bashrc')
         append('.bash_profile','fi')
+        run('source .bashrc')
         print(green('Virtualenv et Virtualenvwrapper configurés.'))
     # stop warning from bitbucket https://bitbucket.org/site/master/issue/2780/getting-warning-while-using-https-and-ssh
     if not contains('.hgrc','bitbucket.org'):
