@@ -268,8 +268,15 @@ def environnement():
         append('.bashrc','    export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv')
         append('.bashrc','    source /usr/local/bin/virtualenvwrapper.sh')
         append('.bashrc','fi')
-        append('.bash_profile','if [ -f ~/.bashrc ]; then') #fabric source .bash_profile, pas .bashrc
-        append('.bash_profile','    source ~/.bashrc')
+        #append('.bash_profile','if [ -f ~/.bashrc ]; then') #fabric source .bash_profile, pas .bashrc
+        #append('.bash_profile','    source ~/.bashrc')
+        #append('.bash_profile','fi')
+        append('.bash_profile','if [ $USER == %(user)s ]; then' % env)
+        append('.bash_profile','    export WORKON_HOME=$HOME/.virtualenvs')
+        append('.bash_profile','    export PROJECT_HOME=$HOME/projects')
+        append('.bash_profile','    export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python')
+        append('.bash_profile','    export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv')
+        append('.bash_profile','    source /usr/local/bin/virtualenvwrapper.sh')
         append('.bash_profile','fi')
         run('source .bashrc')
         print(green('Virtualenv et Virtualenvwrapper configurés.'))
