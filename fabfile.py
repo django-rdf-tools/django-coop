@@ -12,13 +12,16 @@ env.vm_path = "/Users/dom/VM/devcoop"
 #Paramétres serveur
 env.locale = 'fr_FR.UTF-8'
 #Paramétres par défaut
-env.domain = "dev.django.coop"
-env.projet = "devcoop"
-# Paramétres PostGreSQL
-env.pgpass = '123456'
+
+domain = "dev.django.coop"
+projet = "devcoop"
+pgpass = '123456'
 # Paramétres Déploiement
 env.websrv=1
 
+domain = "www.fcpe63.fr"
+projet = "fcpe63"
+pgpass = 'le palmier a des plumes vertes'
 
 def pretty_apt(pkglist):
     for pkg in (pkglist):
@@ -50,6 +53,7 @@ def _vm():
 @task
 def _alias():
     '''load local SSH alias/keys'''
+    env.hosts = [prompt('Alias SSH:')]
     def _annotate_hosts_with_ssh_config_info():
         from os.path import expanduser
         from paramiko.config import SSHConfig
@@ -74,13 +78,14 @@ def _alias():
             env.key_filename = [expanduser(key) for key in keys if key is not None]
             env.hosts = [hostinfo(host, config) for host in env.hosts]
     _annotate_hosts_with_ssh_config_info()
+    
 
 
 def config():
-    if not env.projet :
-        prompt('Nom de domaine:',       default=env.domain, key='domain')
-        prompt('Nom du projet django:', default=env.projet, key='projet')
-        prompt('Passe PostgreSQL :',default=env.pgpass, key='pgpass')
+    if 'projet' not in env.keys() :
+        prompt('Nom de domaine:',       default=domain, key='domain')
+        prompt('Nom du projet django:', default=projet, key='projet')
+        
         #prompt('Config : (1)Apache seul ou (2)Apache+Nginx :',key='websrv',validate=int,default=env.websrv)
 
 
@@ -94,8 +99,7 @@ def gandi():
 
 @task
 def test():
-    config()
-    icanhaz.postgres.user(env.user,env.pgpass)
+    sudo('apt-get update')
     
 @task
 def setup():
@@ -104,6 +108,7 @@ def setup():
         config()
         #if gandi
         locale()
+        sudo('apt-get install aptitude')
         print(yellow('Mise à jour de l’index APT...'))
         fabtools.deb.update_index() # apt-get quiet update
         print(yellow('Mise à jour des paquets debian installés...'))
@@ -111,7 +116,7 @@ def setup():
         # paquets communs à tous les serveurs Django+geodjango
         print(yellow('Installation des paquets de base...'))
         pretty_apt(['git-core','mercurial','gcc','curl','build-essential',
-                    'python-imaging','python-setuptools',
+                    'python-imaging','python-setuptools','nano',
                     'memcached','python-memcache'])
     
         # pip special case
@@ -132,8 +137,12 @@ def postgresql():
     '''PostgreSQL 8.4 + PostGIS 1.5'''
     with settings(show('user'),hide('warnings', 'running', 'stdout', 'stderr')):
         config()
+        if 'pgpass' not in env.keys() :
+            prompt('Passe PostgreSQL :',default=pgpass, key='pgpass')
         print(yellow('Configuration PostgreSQL+PostGIS...'))
-        pretty_apt(['libpq-dev','binutils','gdal-bin','libproj-dev','postgresql-8.4-postgis','postgresql-server-dev-8.4','python-psycopg2'])
+        pretty_apt(['libpq-dev','binutils','gdal-bin','libproj-dev',
+                    'postgresql-8.4-postgis','postgresql-server-dev-8.4',
+                    'python-psycopg2'])
         fabtools.deb.upgrade()
         # création d'un utilisateur postgresql avec le meme nom d'utilisateur
         if not fabtools.postgres.user_exists(env.user):
@@ -153,18 +162,22 @@ def postgresql():
 @task
 def django_project():
     '''Créer un projet django dans son virtualenv'''
-    with settings(show('user'),hide('warnings', 'running', 'stdout', 'stderr')):
+    with settings(show('user','debug'),hide('warnings', 'running', 'stdout', 'stderr')):
         config()
         locale()
         if not exists('/home/%(user)s/.virtualenvs/%(projet)s' % env ):
             #if confirm('Pas de virtualenv "%(projet)s", faut-il le créer ?' % env, default=False):
             run('mkvirtualenv %(projet)s' % env)
+            run('source .bash_profile')
+        with prefix('workon %(projet)s' % env):    
+            run('pip install django')
+            print(green('Django installé.'))
         if not exists('projects/%s/' % (env.projet)):
             print(yellow('le projet %(projet)s n’existe pas encore' % env))
             if confirm( 'Créer un projet django nommé "%(projet)s" ?' % env ,
                         default=False):
-                with prefix('workon %(projet)s' % env):
-                    with cd('projects/'):
+                with cd('projects/'):
+                    with prefix('workon %(projet)s' % env):
                         run('django-admin.py startproject %s' % (env.projet))
                         print(green('Projet Django "%(projet)s" : OK.' % env))
         else:
@@ -268,6 +281,7 @@ def environnement():
         append('.bashrc','    export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv')
         append('.bashrc','    source /usr/local/bin/virtualenvwrapper.sh')
         append('.bashrc','fi')
+        append('.bashrc','')
         #append('.bash_profile','if [ -f ~/.bashrc ]; then') #fabric source .bash_profile, pas .bashrc
         #append('.bash_profile','    source ~/.bashrc')
         #append('.bash_profile','fi')
