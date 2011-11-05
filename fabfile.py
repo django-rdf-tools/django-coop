@@ -19,9 +19,9 @@ pgpass = '123456'
 # Paramétres Déploiement
 env.websrv=1
 
-domain = "www.fcpe63.fr"
-projet = "fcpe63"
-pgpass = 'le palmier a des plumes vertes'
+#domain = "www.fcpe63.fr"
+#projet = "fcpe63"
+
 
 def pretty_apt(pkglist):
     for pkg in (pkglist):
@@ -47,7 +47,11 @@ def _vm():
     result = local('vagrant ssh_config | grep IdentityFile', capture=True)
     env.key_filename = result.split()[1]
     
-    #icanhaz.deb.packages(['dkms'])#mise à jour guest additions
+    # si le partage de dossier ne marche pas bien encore ensuite :
+    #mise à jour guest additions
+    #icanhaz.deb.packages(['dkms','linux-headers-2.6.38-8-generic','linux-headers-generic'])
+    # sudo('/etc/init.d/vboxadd setup') # puis "vagrant reload"
+    
 
 
 @task
@@ -78,7 +82,11 @@ def _alias():
             env.key_filename = [expanduser(key) for key in keys if key is not None]
             env.hosts = [hostinfo(host, config) for host in env.hosts]
     _annotate_hosts_with_ssh_config_info()
-    
+    #sudo apt-get install nano
+    #update-alternatives  --config editor
+    #visudo
+    #Dans le fichier, rendez vous à la ligne %admin ALL=(ALL) ALL. 
+    #Remplacez %admin ALL=(ALL) ALL par %admin ALL=(ALL) NOPASSWD: ALL
 
 
 def config():
@@ -99,7 +107,9 @@ def gandi():
 
 @task
 def test():
-    sudo('apt-get update')
+    with cd("/tmp"):
+        run("curl --silent -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py")
+        sudo("python get-pip.py")
     
 @task
 def setup():
@@ -151,7 +161,7 @@ def postgresql():
             sudo('''psql -c "ALTER USER %(user)s with SUPERUSER;"''' % env, user='postgres')
             print(green('Création d’un superuser "%(user)s" PostgreSQL.' % env))
         if not exists('.pgpass'):
-            run('echo "*:*:*:vagrant:123456" >> .pgpass')
+            run('echo "*:*:*:%(user)s:%(pgpass)s" >> .pgpass' % env )
             sudo('chmod 0600 .pgpass')
             print(green('Création du fichier .pgpass.'))
         postgis_template()
@@ -162,7 +172,7 @@ def postgresql():
 @task
 def django_project():
     '''Créer un projet django dans son virtualenv'''
-    with settings(show('user','debug'),hide('warnings', 'running', 'stdout', 'stderr')):
+    with settings(show('user'),hide('warnings', 'running', 'stdout', 'stderr')):
         config()
         locale()
         if not exists('/home/%(user)s/.virtualenvs/%(projet)s' % env ):
@@ -231,6 +241,9 @@ def apache():
     print(yellow('Configuration d’Apache...'))
     pretty_apt(['apache2','libapache2-mod-wsgi'])
     #virer le site par défaut
+    with cd('/etc/apache2/'):
+        if not contains('apache2.conf','ServerName localhost',use_sudo=True):    
+            sudo("echo 'ServerName %(domain)s'|cat - apache2.conf > /tmp/out && mv /tmp/out apache2.conf" % env)
     with cd('/etc/apache2/sites-enabled/'):
         if exists('000-default'):
             sudo('rm 000-default')
