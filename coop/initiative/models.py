@@ -40,7 +40,7 @@ class BaseInitiative(models.Model):
     uri = models.CharField(_(u'URI principale'),blank=True,null=True, max_length=250, editable=False)
     
     tags = models.ManyToManyField(Term)
-    sites = models.ManyToManyField('coop_local.Site')#TODO : through pour "principal"
+    #sites = models.ManyToManyField('coop_local.Site',related_name='old_rel')
     members = models.ManyToManyField('coop_local.Membre',through='coop_local.Engagement',verbose_name=_(u'Membres'))
     
     telephone_fixe = models.CharField(_(u'Téléphone fixe'),blank=True,null=True, max_length=14)

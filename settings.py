@@ -162,6 +162,7 @@ INSTALLED_APPS = (
     #apps
     'coop_local',
     'coop',
+    'coop.place',
     'djaloha',
     'coop_cms',
     'skosxl',
