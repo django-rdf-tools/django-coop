@@ -346,6 +346,12 @@ MapWidget.prototype.enableEditing = function () {
     this.map.getControlsByClass('OpenLayers.Control.ModifyFeature')[0].activate();
 };
 
+MapWidget.prototype.disableDrawing = function () {
+    var drawFeature = this.map.getControlsByClass('OpenLayers.Control.DrawFeature')[0];
+    drawFeature.deactivate();
+    jQuery("#"+this.panel.id).hide();
+};
+
 MapWidget.prototype.getControls = function(layer) {
     this.panel = new OpenLayers.Control.Panel({'displayClass': 'olControlEditingToolbar'});
     var nav = [new OpenLayers.Control.Navigation()];
