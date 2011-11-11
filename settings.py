@@ -69,8 +69,8 @@ STATICFILES_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.abspath(PROJECT_PATH+'/static/'),
-    os.path.abspath(PROJECT_PATH+'/djaloha/static/'),
-    os.path.abspath(PROJECT_PATH+'/coop_cms/static/'),
+    #os.path.abspath(PROJECT_PATH+'/djaloha/static/'),
+    #os.path.abspath(PROJECT_PATH+'/coop_cms/static/'),
     os.path.abspath(PROJECT_PATH+'/coop_geo/static/'),
     os.path.abspath(PROJECT_PATH+'/coop/static/'),
     os.path.abspath(PROJECT_PATH+'/rss_sync/static/'),
@@ -92,7 +92,7 @@ SECRET_KEY = 'ibhc$tpzg&!8f3l-o@$c5y809j9)i=$v6dg6v@fzf^0ufmj8)q'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+#     'django.template.loaders.eggs.Loader',cd
 )
 
 MIDDLEWARE_CLASSES = (
@@ -106,7 +106,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
-    os.path.abspath(PROJECT_PATH+'/templates/'),    
+    os.path.abspath(PROJECT_PATH+'/templates/'),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.

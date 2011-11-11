@@ -1,6 +1,0 @@
-{% extends "coop_cms/navtree_content/default.html" %}
-{% load i18n %}
-    
-    {% block navtree_content_extracommand%}
-    <li><a href="{{content.get_absolute_url}}?mode=edit">{% trans "Edit on site"%}</a></li>
-    {% endblock %}
