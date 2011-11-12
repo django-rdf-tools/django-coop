@@ -12,7 +12,7 @@ class BaseSite(models.Model):
     uri = models.CharField(_(u'URI principale'),null=True,blank=True, max_length=250, editable=False)
     
     location = models.ForeignKey(Location) 
-    initiative = models.ForeignKey('coop_local.Initiative',null=True,blank=True,related_name='new_rel')
+    initiative = models.ForeignKey('coop_local.Initiative',null=True,blank=True,related_name='sites')
     
     adr1 = models.CharField(null=True,blank=True, max_length=100)
     adr2 = models.CharField(null=True,blank=True, max_length=100)
