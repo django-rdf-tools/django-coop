@@ -13,3 +13,6 @@ sorl-thumbnail==11.09
 PIL==1.1.7
 django-floppyforms==0.4.7
 feedparser==5.0.1
+-e git+git://github.com/quinode/coop_cms.git#egg=coop_cms
+-e git+git://github.com/quinode/djaloha.git#egg=djaloha
+-e git+git://github.com/gabrielgrant/django-html-field.git#egg=html_field
