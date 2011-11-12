@@ -13,8 +13,9 @@ env.vm_path = "/Users/dom/VM/devcoop"
 env.locale = 'fr_FR.UTF-8'
 #Paramétres par défaut
 
-domain = "dev.django.coop"
+domain = "demo.django.coop"
 projet = "devcoop"
+
 pgpass = '123456'
 # Paramétres Déploiement
 env.websrv=1
@@ -198,6 +199,7 @@ def django_project():
         django_wsgi()
         apache_vhost()
         dependencies() 
+        sudo('apachectl restart')
         #synchro db
         #git commands   
 
@@ -240,7 +242,7 @@ def apache():
     '''Config générale Apache + mod_wsgi sans media proxy'''
     print(yellow('Configuration d’Apache...'))
     pretty_apt(['apache2','libapache2-mod-wsgi'])
-    #virer le site par défaut
+    #virer le site par défaut 
     with cd('/etc/apache2/'):
         if not contains('apache2.conf','ServerName localhost',use_sudo=True):    
             sudo("echo 'ServerName %(domain)s'|cat - apache2.conf > /tmp/out && mv /tmp/out apache2.conf" % env)
@@ -294,7 +296,6 @@ def environnement():
         append('.bashrc','    export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv')
         append('.bashrc','    source /usr/local/bin/virtualenvwrapper.sh')
         append('.bashrc','fi')
-        append('.bashrc','')
         #append('.bash_profile','if [ -f ~/.bashrc ]; then') #fabric source .bash_profile, pas .bashrc
         #append('.bash_profile','    source ~/.bashrc')
         #append('.bash_profile','fi')
@@ -327,6 +328,17 @@ def django_wsgi():
         upload_template('fab_templates/wsgi.txt','%(projet)s.wsgi' % env, context=wsgi_context, use_sudo=True)
         print(green('Script WSGI %(projet)s.wsgi : OK.' % env))
 
+@task
+def update():
+    config()
+    with prefix('workon %(projet)s' % env):
+        dependencies()
+        with cd('projects/%(projet)s' % env):
+            run('git pull origin master')
+            run('python manage.py syncdb')
+            run('python manage.py migrate')
+            run('python manage.py collectstatic --noinput')
+        sudo('apachectl restart')
 
 def dependencies():
     '''Installe les modules pythons nécessaires au projet'''
@@ -336,7 +348,6 @@ def dependencies():
             with prefix('workon %(projet)s' % env):
                 with settings(show('running','stdout','stderr')):
                     run('pip install -r requirements.txt')
-            sudo('apachectl restart')
         else:
             print(red('Aucun fichier "requirements.txt" trouvé.'))
 
@@ -349,7 +360,7 @@ def locale():
         sudo('/usr/sbin/update-locale LANG='+env.locale)
         print(green('Locale mise à jour.'))
 
-
+@task
 def postgis_template():
     '''creation du template postgis - pour PostGIS 1.5 et Ubuntu > 10.10'''
     if not 'template_postgis' in run('echo|psql -l'):
