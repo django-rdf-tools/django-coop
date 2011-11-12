@@ -58,7 +58,7 @@ def _vm():
 @task
 def _alias():
     '''load local SSH alias/keys'''
-    env.hosts = [prompt('Alias SSH:')]
+    env.hosts = [prompt('Alias SSH:', default='devcoop')]
     def _annotate_hosts_with_ssh_config_info():
         from os.path import expanduser
         from paramiko.config import SSHConfig
@@ -90,12 +90,15 @@ def _alias():
     #Remplacez %admin ALL=(ALL) ALL par %admin ALL=(ALL) NOPASSWD: ALL
 
 
-def config():
+def project():
     if 'projet' not in env.keys() :
-        prompt('Nom de domaine:',       default=domain, key='domain')
         prompt('Nom du projet django:', default=projet, key='projet')
+
+def domain():
+    if 'domain' not in env.keys() :
+        prompt('Nom de domaine:',       default=domain, key='domain')
         
-        #prompt('Config : (1)Apache seul ou (2)Apache+Nginx :',key='websrv',validate=int,default=env.websrv)
+#prompt('Config : (1)Apache seul ou (2)Apache+Nginx :',key='websrv',validate=int,default=env.websrv)
 
 
 @task
@@ -116,7 +119,8 @@ def test():
 def setup():
     '''Installation de base pour Ubuntu >= 10.10'''
     with settings(show('user'),hide('warnings','running','stdout','stderr')):
-        config()
+        project()
+        domain()
         #if gandi
         locale()
         sudo('apt-get install aptitude')
@@ -147,7 +151,7 @@ def setup():
 def postgresql():
     '''PostgreSQL 8.4 + PostGIS 1.5'''
     with settings(show('user'),hide('warnings', 'running', 'stdout', 'stderr')):
-        config()
+        project()
         if 'pgpass' not in env.keys() :
             prompt('Passe PostgreSQL :',default=pgpass, key='pgpass')
         print(yellow('Configuration PostgreSQL+PostGIS...'))
@@ -174,7 +178,8 @@ def postgresql():
 def django_project():
     '''Créer un projet django dans son virtualenv'''
     with settings(show('user'),hide('warnings', 'running', 'stdout', 'stderr')):
-        config()
+        project()
+        domain()
         locale()
         if not exists('/home/%(user)s/.virtualenvs/%(projet)s' % env ):
             #if confirm('Pas de virtualenv "%(projet)s", faut-il le créer ?' % env, default=False):
@@ -205,15 +210,13 @@ def django_project():
 
 @task
 def first_syncdb():
-    config()
+    project()
     with cd('projects/%(projet)s' % env):
         with prefix('workon %(projet)s' % env):
             run('./manage.py syncdb --all --noinput')
             run('./manage.py migrate --fake')
-            for d in ('auth_users.json','coop_cms.json','coop_local.json'):
-                run('./manage.py loaddata fixtures/'+d)
-
-
+            for f in ('auth_users.json','coop_geo.json','coop_local.json'):
+                run('./manage.py loaddata fixtures/'+f)
 
 
 def apache_nginx():
@@ -330,26 +333,34 @@ def django_wsgi():
 
 @task
 def update():
-    config()
-    with prefix('workon %(projet)s' % env):
-        dependencies()
-        with cd('projects/%(projet)s' % env):
-            run('git pull origin master')
-            run('python manage.py syncdb')
-            run('python manage.py migrate')
-            run('python manage.py collectstatic --noinput')
+    '''Met à jour un serveur depuis le depot git "origin"'''
+    project()
+    with settings(show('user'),hide('warnings', 'running', 'stdout', 'stderr')):
+        with prefix('workon %(projet)s' % env):
+            dependencies()
+            with cd('projects/%(projet)s' % env):
+                print(yellow('Synchronisation du dépôt git...'))
+                run('git pull origin master')
+                print(yellow('Django : synchronisation des nouveaux modèles...'))
+                run('python manage.py syncdb')
+                print(yellow('South : applications des migrations...'))
+                run('python manage.py migrate')
+                print(yellow('Django : Collecte des fichiers statiques...'))
+                run('python manage.py collectstatic --noinput')
         sudo('apachectl restart')
+        print(green('Les mises à jour ont été appliquées.'))
 
 def dependencies():
     '''Installe les modules pythons nécessaires au projet'''
-    with cd('projects/%(projet)s' % env):
-        if exists('requirements.txt'):
-            print(yellow('Installation des dépendances du projet...'))
-            with prefix('workon %(projet)s' % env):
-                with settings(show('running','stdout','stderr')):
-                    run('pip install -r requirements.txt')
-        else:
-            print(red('Aucun fichier "requirements.txt" trouvé.'))
+    with settings(show('user'),hide('warnings', 'running', 'stdout', 'stderr')):
+        with cd('projects/%(projet)s' % env):
+            if exists('requirements.txt'):
+                print(yellow('Installation des dépendances du projet...'))
+                with prefix('workon %(projet)s' % env):
+                    with settings(show('running','stdout','stderr')):
+                        run('pip install -r requirements.txt')
+            else:
+                print(red('Aucun fichier "requirements.txt" trouvé.'))
 
 
 def locale():
