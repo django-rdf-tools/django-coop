@@ -1,6 +1,8 @@
 # -*- coding:utf-8 -*-
 from django.contrib import admin
-from coop_local.models import Membre,Role,Engagement,Initiative
+from coop_local.models import Membre,Role,Engagement,Initiative, Site
+from coop_local.forms import SiteForm
+from coop.place.admin import BaseSiteAdmin
 from skosxl.models import Term
 from django_extensions.admin import ForeignKeyAutocompleteAdmin
 from django_extensions.admin.widgets import ForeignKeySearchInput
@@ -44,8 +46,12 @@ class MembreAdmin(admin.ModelAdmin):
     inlines = [
             EngagementInline,
         ]
- 
+
 admin.site.register(Membre, MembreAdmin)
 
+class SiteAdmin(BaseSiteAdmin):
+    form = SiteForm
+
+admin.site.register(Site, SiteAdmin)
 
 
