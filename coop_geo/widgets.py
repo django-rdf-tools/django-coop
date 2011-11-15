@@ -26,10 +26,11 @@ class PointWidget(ff_gis.PointWidget, ff_gis.BaseOsmWidget):
     map_attrs = list(ff_gis.BaseOsmWidget.map_attrs) + \
                 ['geocode_region', 'geocode_bounding', 'point_zoom']
 
+    """
     def get_context_data(self):
         context = super(PointWidget, self).get_context_data()
         context['areas'] = Area.get_all()
-        return context
+        return context"""
 
 class PolygonWidget(ff_gis.PolygonWidget, ff_gis.BaseOsmWidget):
     template_name = 'gis/osm.html'

@@ -13,7 +13,7 @@ class LocationTest(TestCase):
 
     def test_set_creation(self):
         with self.assertRaises(ValidationError):
-            location = Location(label=u'Test', point=None, area=None)
+            location = Location(label=u'Test', point=None)
             location.save()
 
 class AreaTest(TestCase):

@@ -11,19 +11,11 @@ import widgets
 class LocationForm(forms.ModelForm):
     class Meta:
         model = models.Location
-        fields = ('label', 'point', 'area')
+        fields = ('label', 'point',)
         widgets = {
             'label': forms.TextInput(),
             'point': widgets.PointWidget(),
-            'area': forms.HiddenInput()
         }
-
-    def clean(self):
-        cleaned_data = self.cleaned_data
-        if not cleaned_data.get('point') and not cleaned_data.get('area'):
-            raise ValidationError(u"You must at least set a point or choose "
-                                  u"an area.")
-        return cleaned_data
 
 class AreaForm(forms.ModelForm):
     class Meta:
