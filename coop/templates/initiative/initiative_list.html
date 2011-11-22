@@ -12,6 +12,7 @@
 
 <div id="content">
     <div class="grid_12 grid">
+<p><a href='{% url global_map %}'>Cartographie des initiatives</a></p>
     {% regroup liste_initiatives by get_secteur_fse_display as liste_groupee %}
     
     <ul>
