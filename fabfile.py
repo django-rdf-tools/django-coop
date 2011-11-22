@@ -335,20 +335,20 @@ def django_wsgi():
 def update():
     '''Met à jour un serveur depuis le depot git "origin"'''
     project()
-    with settings(show('user'),hide('warnings', 'running', 'stdout', 'stderr')):
-        with prefix('workon %(projet)s' % env):
-            dependencies()
-            with cd('projects/%(projet)s' % env):
-                print(yellow('Synchronisation du dépôt git...'))
-                run('git pull origin master')
-                print(yellow('Django : synchronisation des nouveaux modèles...'))
-                run('python manage.py syncdb')
-                print(yellow('South : applications des migrations...'))
-                run('python manage.py migrate')
-                print(yellow('Django : Collecte des fichiers statiques...'))
-                run('python manage.py collectstatic --noinput')
-        sudo('apachectl restart')
-        print(green('Les mises à jour ont été appliquées.'))
+    #with settings(show('user'),hide('warnings', 'running', 'stdout', 'stderr')):
+    with prefix('workon %(projet)s' % env):
+        dependencies()
+        with cd('projects/%(projet)s' % env):
+            print(yellow('Synchronisation du dépôt git...'))
+            run('git pull origin master')
+            print(yellow('Django : synchronisation des nouveaux modèles...'))
+            run('python manage.py syncdb')
+            print(yellow('South : applications des migrations...'))
+            run('python manage.py migrate')
+            print(yellow('Django : Collecte des fichiers statiques...'))
+            run('python manage.py collectstatic --noinput')
+    sudo('apachectl restart')
+    print(green('Les mises à jour ont été appliquées.'))
 
 def dependencies():
     '''Installe les modules pythons nécessaires au projet'''
