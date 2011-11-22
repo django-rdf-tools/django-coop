@@ -10,14 +10,22 @@ from django.contrib.gis.db import models
 class Location(models.Model):
     """Location: a named point or/and polygon entered by an administrator"""
     label = models.CharField(max_length=150, verbose_name=_(u"label"))
-    point = models.PointField(_(u"point"),
+    point = models.PointField(_(u"point"), blank=True, null=True,
                               srid=settings.COOP_GEO_EPSG_PROJECTION)
+    area = models.ForeignKey('Area', verbose_name=_(u'area'), blank=True,
+                              null=True)
     owner = models.ForeignKey(User, verbose_name=_(u'owner'), blank=True,
                               null=True)
     objects = models.GeoManager()
 
     def __unicode__(self):
         return self.label
+
+    def save(self, *args, **kwargs):
+        if not self.point and not self.area:
+            raise ValidationError(u"You must at least set a point or choose "
+                                  u"an area.")
+        return super(Location, self).save(*args, **kwargs)
 
     @classmethod
     def get_all(cls, user=None):
