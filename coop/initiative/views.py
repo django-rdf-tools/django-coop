@@ -41,6 +41,9 @@ def role_detail(request,slug):
     context['object'] = role
     context['engagements'] = Engagement.objects.filter(role=role).select_related('membre').order_by('membre__nom')
     return render_to_response('initiative/role_detail.html',context,RequestContext(request))
-    
-    
-            
+
+def global_map(request):
+    context = {}
+    context['initiatives'] = Initiative.objects.filter(active=True)
+    return render_to_response('initiative/initiative_global_map.html',
+                              context, RequestContext(request))

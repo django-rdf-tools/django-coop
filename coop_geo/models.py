@@ -27,6 +27,18 @@ class Location(models.Model):
                                   u"an area.")
         return super(Location, self).save(*args, **kwargs)
 
+    @classmethod
+    def get_all(cls, user=None):
+        """
+        Get all location (by owner)
+        """
+        locations = cls.objects
+        user = None
+        if user:
+            locations = locations.filter(owner=user)
+        return locations.order_by('label')
+
+
 class Area(models.Model):
     """Areas: towns, regions, ... mainly set by import"""
     label = models.CharField(max_length=150, verbose_name=_(u"label"))

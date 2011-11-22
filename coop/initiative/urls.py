@@ -13,7 +13,7 @@ urlpatterns = patterns('',
     #     )),
     
     url(r'^$', 'coop.initiative.views.list', name="initiative_list"),
-    
+    url(r'^global_map$', 'coop.initiative.views.global_map', name="global_map"),
     url(r'^(?P<slug>[\w-]+).html$', 'coop.initiative.views.ISDetailView', name="initiative_detail"),
     url(r'^role/(?P<slug>[\w-]+).html$', 'coop.initiative.views.role_detail', name="role_detail"),
     

@@ -369,12 +369,8 @@ MapWidget.prototype.getControls = function(layer) {
         draw_ctl = [point_ctl, path_ctl, poly_ctl];
     }
     if (this.options.modifiable) {
-        if (!this.options.is_point){
-            var mod = [new OpenLayers.Control.ModifyFeature(layer, {'displayClass': 'olControlModifyFeature'})];
-            this.controls = nav.concat(draw_ctl, mod);
-        } else {
-            this.controls = nav.concat(draw_ctl);
-        }
+        var mod = [new OpenLayers.Control.ModifyFeature(layer, {'displayClass': 'olControlModifyFeature'})];
+        this.controls = nav.concat(draw_ctl, mod);
     } else {
         if (! layer.features.length) {
             this.controls = nav.concat(draw_ctl);

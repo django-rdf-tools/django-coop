@@ -15,7 +15,7 @@ class LocationForm(forms.ModelForm):
         widgets = {
             'label': forms.TextInput(),
             'point': widgets.PointWidget(),
-            'area': forms.HiddenInput()
+            'area': forms.HiddenInput(),
         }
 
     def clean(self):

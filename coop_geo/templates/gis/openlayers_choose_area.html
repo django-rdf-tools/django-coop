@@ -33,16 +33,15 @@
     .module .area_tree ul a.selected{
         color:#00C;
     }
-    .form-row.area{
-        display:none;
-    }
 </style>
 <div id='editing'></div>
 <span id="{{ attrs.id }}_span_control">
+{% comment %}
     <ul>
         <li><a href='#{{ attrs.id }}_address_tab'>{% trans "Location"%}</a></li>
         {% if areas %}<li><a href='#{{ attrs.id }}_area_tab'>{% trans "Areas"%}</a></li>{% endif %}
     </ul>
+{% endcomment %}
     <div id='{{ attrs.id }}_address_tab'>
         <div>
             <label>{% trans "Address"%}</label>
@@ -59,6 +58,7 @@
           </ul>
         </div>
     </div>
+{% comment %}
     {% if areas %}
     <div id='{{ attrs.id }}_area_tab' class='area_tree'>
         {{rendered_areas}}
@@ -80,6 +80,7 @@ var {{attrs.id}}_area_ids = new Array();
         {%endfor%}</ul>
     </div>
     {% endif %}
+{% endcomment %}
 </span>
 <span id="{{ attrs.id }}_span_map">
     <div id="{{ attrs.id }}_map"></div>
@@ -102,9 +103,10 @@ var {{attrs.id}}_area_ids = new Array();
         point_zoom: {{point_zoom}}
     };{% endblock %}
     var {{ module }} = new MapWidget(options);
-    {{module}}.panel.destroy();
+    /*{{module}}.panel.destroy();*/
     var {{attrs.id}}_results = new Array();
     wkt_parser = new OpenLayers.Format.WKT();
+{% comment %}
     var {{attrs.id}}_area_id = {{module}}.options.id.replace('point', 'area');
     /* initialize area */
     jQuery(function() {
@@ -118,9 +120,10 @@ var {{attrs.id}}_area_ids = new Array();
             jQuery('#{{attrs.id}}_span_control').tabs('select', 1);
         }
     });
+{% endcomment %}
     function put_{{attrs.id}}(index, point){
-        var res = {{attrs.id}}_areas;
-        if (point) res = {{attrs.id}}_results;
+        var res = {{attrs.id}}_results;
+        if (!point) res = {{attrs.id}}_areas;
         var feat = OpenLayers.Util.properFeatures(
             {{ module }}.read_wkt(res[index]),
             {{ module }}.options.geom_type);
@@ -134,7 +137,9 @@ var {{attrs.id}}_area_ids = new Array();
         if(point){
             {{ module }}.write_wkt(feat);
             jQuery("#{{attrs.id}}_area_a a").removeClass('selected');
-            document.getElementById({{attrs.id}}_area_id).value = '';
+            if ({{attrs.id}}_area_id){
+                document.getElementById({{attrs.id}}_area_id).value = '';
+            }
         } else {
             var lnk = '#{{attrs.id}}_area_a_' + index;
             jQuery("#{{attrs.id}}_area_a a").removeClass('selected');
@@ -184,6 +189,7 @@ var {{attrs.id}}_area_ids = new Array();
                     display_results);
             };
     });
+{% comment %}
     jQuery("#{{ attrs.id }}_span_control").tabs();
     jQuery('#{{attrs.id}}_span_control').bind('tabsselect', function(event, ui){
         if(ui.panel.id == '{{attrs.id}}_area_tab'){
@@ -193,4 +199,5 @@ var {{attrs.id}}_area_ids = new Array();
             {{module}}.enableDrawing();
         }
     });
+{% endcomment %}
 </script>

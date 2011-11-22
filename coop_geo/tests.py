@@ -7,15 +7,6 @@ from django.contrib.gis.geos import GEOSGeometry
 
 from coop_geo.models import Location, Area
 
-class LocationTest(TestCase):
-    def setUp(self):
-        pass
-
-    def test_set_creation(self):
-        with self.assertRaises(ValidationError):
-            location = Location(label=u'Test', point=None, area=None)
-            location.save()
-
 class AreaTest(TestCase):
     def setUp(self):
         pass
@@ -97,4 +88,23 @@ class AreaTest(TestCase):
         self.assertEqual(areas_dct[8].end_leaf, 1)
         self.assertEqual(areas_dct[5].leaf, True)
         self.assertEqual(areas_dct[7].end_leaf, 2)
+
+class LocationTest(TestCase):
+    def setUp(self):
+        pass
+
+    def test_set_creation(self):
+        with self.assertRaises(ValidationError):
+            location = Location(label=u'Test', point=None, area=None)
+            location.save()
+        point = GEOSGeometry('SRID=4326;POINT(-8.88 53.81)')
+        location = Location(label=u'Test point', point=point, area=None)
+        location.save()
+        polygon = GEOSGeometry('SRID=4326;POLYGON((-8.88 53.81,-1.41 55.84,'\
+                               '-5.54 53.29,0.34 54.69, -8.88 53.81))')
+        area = Area(label=u'Test', polygon=polygon)
+        area.save()
+        location = Location.objects.create(label=u'Test point', point=None,
+                                           area=area)
+        location.save()
 

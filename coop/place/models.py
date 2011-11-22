@@ -11,7 +11,7 @@ class BaseSite(models.Model):
     site_principal = models.BooleanField(default=True)
     uri = models.CharField(_(u'URI principale'),null=True,blank=True, max_length=250, editable=False)
     
-    location = models.ForeignKey(Location) 
+    location = models.ForeignKey(Location)
     initiative = models.ForeignKey('coop_local.Initiative',null=True,blank=True,related_name='sites')
     
     adr1 = models.CharField(null=True,blank=True, max_length=100)
@@ -41,4 +41,3 @@ class BaseSite(models.Model):
             'inits' : self.initiative_set.all().count()-1,
             'events': self.event_set.all().count()-1}                
         return links
-        

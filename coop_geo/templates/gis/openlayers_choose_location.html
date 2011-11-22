@@ -1,0 +1,129 @@
+{% load i18n %}
+{% load mkrange %}
+<style type="text/css">
+    #{{ attrs.id }}_map { width: {{ map_width }}px; height: {{ map_height }}px; border:1px solid #AAA}
+    #{{ attrs.id }}_map .aligned label { float: inherit; }
+    #{{ attrs.id }}_span_control, #{{ attrs.id }}_span_map { margin-right:1em;position: relative; vertical-align: top; float: left; }
+    #{{ attrs.id }}_span_control {width:400px; height:420px;}
+    {% if not display_wkt %}#{{ attrs.id }} { display: none; }{% endif %}
+    .olControlEditingToolbar .olControlModifyFeatureItemActive {
+        background-image: url("{{ ADMIN_MEDIA_PREFIX }}img/gis/move_vertex_on.png");
+        background-repeat: no-repeat;
+    }
+    .olControlEditingToolbar .olControlModifyFeatureItemInactive {
+        background-image: url("{{ ADMIN_MEDIA_PREFIX }}img/gis/move_vertex_off.png");
+        background-repeat: no-repeat;
+    }
+    .address_results{
+        padding:1em;
+        margin:1em;
+        border:1px solid #AAA;
+        background-color:#EEE;
+        height:310px;
+        overflow:auto;
+    }
+    .address_results ul#{{attrs.id}}_results{
+        margin:0;
+    } 
+    .module .area_tree ul,.module .area_tree li{
+        margin:0;
+        padding:0;
+    }
+    .module .area_tree ul{
+        margin-left:1em;
+    }
+    .module .area_tree ul a.selected{
+        color:#00C;
+    }
+    form .aligned #{{ attrs.id }}_address_tab p{
+        padding:2px 0;
+        margin:0;
+    }
+    .add-another-link, .add-another-link:hover,
+    .add-another-link:link, .add-another-link:visited{
+        width:100%;
+        text-align:center;
+        background-color:#5b80b2;
+        color:#FFF;
+        display:block;
+    }
+    .add-another-link:hover{
+        background-color:#003366;
+    }
+</style>
+<div id='editing'></div>
+<span id="{{ attrs.id }}_span_control">
+    <div id='{{ attrs.id }}_address_tab'>
+      <p><strong>{%trans "Current location:"%}</strong> <span id='location_label'>{{location}}</span></p>
+      <p><strong>{%trans "Choose another location:"%}</strong></p>
+        <div id='{{attrs.id}}_address_results' class='address_results'>
+          <ul id='{{attrs.id}}_results'>
+            {% for location in locations %}
+            <li><a href="#" onclick='put_{{attrs.id}}(this, {{forloop.counter0}});return false'>{{location}}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+       <p><a href="{% url admin:coop_geo_location_add %}" class="add-another-link" id="add_id_location" onclick="return showAddAnotherPopup(this);">{% trans "Add another location" %}</a></p>
+    </div>
+</span>
+<script type="text/javascript">
+var {{attrs.id}}_locations = new Array();
+var {{attrs.id}}_location_ids = new Array();
+{%for location in locations%}{{attrs.id}}_locations[{{forloop.counter0}}]="{{location.point.wkt}}";
+{{attrs.id}}_location_ids[{{forloop.counter0}}]="{{location.pk}}";
+{% endfor %}
+</script>
+<span id="{{ attrs.id }}_span_map">
+    <div id="{{ attrs.id }}_map"></div>
+    {% if display_wkt %}<p> WKT debugging window:</p>{% endif %}
+    {% include "floppyforms/textarea.html" %}
+</span>
+<input type='hidden' name='{{attrs.id}}_wkt' id='{{attrs.id}}_wkt' value='{{attrs.value}}'/>
+<script type="text/javascript">
+    {% block map_options %}var map_options = {};{% endblock %}
+    {% block options %}var options = {
+        geom_type: OpenLayers.Geometry.{{ geom_type }},
+        id: '{{ attrs.id }}',
+        is_collection: {{ is_collection|yesno:"true,false" }},
+        is_linestring: {{ is_linestring|yesno:"true,false" }},
+        is_point: {{ is_point|yesno:"true,false" }},
+        is_polygon: {{ is_polygon|yesno:"true,false" }},
+        map_id: '{{ attrs.id }}_map',
+        map_options: map_options,
+        map_srid: {{ map_srid }},
+        name: '{{ name }}',
+        point_zoom: {{point_zoom}}
+    };{% endblock %}
+    var {{ module }} = new MapWidget(options);
+    {{module}}.disableDrawing();
+    {{module}}.panel.destroy();
+    var {{attrs.id}}_results = new Array();
+    wkt_parser = new OpenLayers.Format.WKT();
+    function put_{{attrs.id}}_wkt(){
+        var wkt = jQuery("#{{attrs.id}}_wkt").val();
+        if (!wkt) return;
+        var feat = OpenLayers.Util.properFeatures(
+            {{ module }}.read_wkt(wkt),
+            {{ module }}.options.geom_type);
+        {% if map_srid != '4326' %}
+        feat = new OpenLayers.Feature.Vector(
+                    feat.geometry.transform(
+                              new OpenLayers.Projection('EPSG:4326'),
+                              new OpenLayers.Projection('EPSG:{{map_srid}}')));
+        {% endif %}
+        {{ module }}.layers.vector.addFeatures([feat]);
+        {{ module }}.write_wkt(feat);
+        {{ module }}.map.zoomToExtent(feat.geometry.getBounds());
+        {{ module }}.map.zoomTo({{ module }}.options.point_zoom);
+    }
+    function put_{{attrs.id}}(self, index){
+        var wkt = {{attrs.id}}_locations[index];
+        jQuery("#{{attrs.id}}_wkt").val(wkt);
+        put_{{attrs.id}}_wkt();
+        jQuery("#{{attrs.id}}").val({{attrs.id}}_location_ids[index]);
+        jQuery("#location_label").html(jQuery(self).html());
+    }
+    jQuery(function(){
+        put_{{attrs.id}}_wkt();
+    })
+</script>
