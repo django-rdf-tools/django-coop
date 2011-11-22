@@ -29,8 +29,9 @@ class InitiativeAdminForm(forms.ModelForm):
 
 class InitiativeAdmin(admin.ModelAdmin):
     form = InitiativeAdminForm
-    list_display = ('title','uri')
+    list_display = ('title','active','uri')
     list_display_links =('title',)
+    search_fields = ['title','acronym','description']
     list_filter = ('active',)
     ordering = ('title',)
     inlines = [

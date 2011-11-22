@@ -19,7 +19,11 @@
         <li><h4>{{ get_secteur_fse_display.grouper }}</h4>
         <ul>
             {% for item in get_secteur_fse_display.list %}
-            <li><a href="{{item.get_absolute_url}}">{{ item.title }}</a></li>
+            <li><a href="{{item.get_absolute_url}}">{{ item.title }}</a>
+                {% if item.get_tags %}
+                 <img src="/static/img/tags-label.png" style="position:relative;top:4px;"/>
+                {% endif %}
+                </li>
             {% endfor %}
         </ul>
         </li>

@@ -10,7 +10,6 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 
-    #url("^$", direct_to_template, {"template": "base.html"}, name="home"),
     url(r'^admin_tools/', include('admin_tools.urls')),
     
     url(r'^$', 'coop.views.home', name="home"),

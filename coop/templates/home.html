@@ -27,7 +27,13 @@
     <div id="content" class="grid_4 grid">
           
           <div id="inscrits">
-              <h4>Utilisateurs du site : <span>{{inscrits}}</span></h4>
+              <h4>Tags: </h4>
+              <ul>
+              {% for t in tags %}
+              <li>{{t}}</li>
+              
+              {% endfor %}
+              </ul>
           </div>
     </div>
     <div id="content" class="grid_4 grid">

@@ -5,7 +5,9 @@ from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
 from django.core.urlresolvers import reverse
 
-#Based on SKOS+XL model
+# Based on SKOS ans SKOS-XL ontologies
+# http://www.w3.org/2004/02/skos/core
+# http://www.w3.org/2008/05/skos-xl
 
 LABEL_TYPES = Choices(
     ('PREF',    0,  'PrefLabel'),
@@ -22,9 +24,12 @@ MATCH_TYPES = Choices(
 )
 
 REL_TYPES = Choices(
-    ('BROAD',   0,  'broader'),
-    ('NARROW',  1,  'narrower'),
-    ('RELATED', 2,  'related'),    
+    ('BROADER',     0,  'broaderTransitive'),
+    ('NARROWER',    1,  'narrowerTransitive'),
+    ('RELATED',     2,  'related'),    
+    ('EXACT_MATCH', 3,  'exactMatch',), #for external schemes
+    ('CLOSE_MATCH', 4,  'closeMatch',),
+    
 )
 
 LANG_LABELS = (
@@ -50,6 +55,9 @@ class Concept(models.Model):
     def __unicode__(self):
         preflabel = Label.objects.filter(concept=self,type=LABEL_TYPES.PREF,term__language='@fr')[0].term.literal
         return unicode(preflabel)
+        
+
+            
     
 
 class Term(models.Model):    
@@ -60,6 +68,7 @@ class Term(models.Model):
     modified = exfields.ModificationDateTimeField(_(u'Mdate de modification'))
     author = models.CharField(_(u'Auteur'),blank=True, max_length=250, editable=False)
     concept = models.ManyToManyField(Concept,through='Label')
+    count = models.IntegerField(blank=True, null=True)
     def get_absolute_url(self):
         return reverse('tag_detail', args=[self.slug])
     def __unicode__(self):
@@ -69,6 +78,10 @@ class Term(models.Model):
     #createConcept from Term -> pas automatique , demande une revue
     class Meta: 
         verbose_name = _(u'Terme')
+    def save(self, *args, **kwargs):
+        self.count = self.initiative_set.all().count()
+        super(Term, self).save(*args, **kwargs)
+        
 
 class Vocabulary(models.Model):
     name = models.CharField(max_length=100)
