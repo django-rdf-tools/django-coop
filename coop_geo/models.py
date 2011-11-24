@@ -38,14 +38,26 @@ class Location(models.Model):
             locations = locations.filter(owner=user)
         return locations.order_by('label')
 
+#TODO: set default location
+#TODO: manage auto parent area
+
+AREA_DEFAULT_LOCATION_LBL = _(u"%s (center)")
 
 class Area(models.Model):
     """Areas: towns, regions, ... mainly set by import"""
     label = models.CharField(max_length=150, verbose_name=_(u"label"))
+    reference = models.CharField(max_length=150, verbose_name=_(u"reference"),
+                                 blank=True, null=True)
     polygon = models.PolygonField(_(u"polygon"),
                                   srid=settings.COOP_GEO_EPSG_PROJECTION)
-    parent = models.ForeignKey('Area', verbose_name=_(u"parent"), blank=True,
-                               null=True)
+    default_location = models.ForeignKey(Location, blank=True, null=True,
+            verbose_name=_(u"default location"), related_name='associated_area')
+    related_areas = models.ManyToManyField('Area',
+            verbose_name=_(u"related area"), through='AreaRelations')
+    # when set to true a "parent" area is automaticaly updated with the add
+    # of new childs
+    update_auto = models.BooleanField(verbose_name=_(u"update automatically?"),
+                                      default=False)
     objects = models.GeoManager()
 
     def __unicode__(self):
@@ -127,3 +139,13 @@ class Area(models.Model):
                 sorted_areas += childs
         return sorted_areas
 
+RELATION_TYPES = (('RG', u'région'),
+                  ('DP', u"département"),
+                  ('CC', u"communauté de commune"),
+                  )
+
+class AreaRelations(models.Model):
+    relation_type = models.CharField(max_length=2, verbose_name=_(u"type"),
+                                     choices=RELATION_TYPES)
+    parent = models.ForeignKey(Area, related_name='childs')
+    child = models.ForeignKey(Area, related_name='parents')
