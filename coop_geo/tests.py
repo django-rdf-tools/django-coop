@@ -12,10 +12,12 @@ class AreaTest(TestCase):
         pass
 
     def test_set_creation(self):
-        polygon = GEOSGeometry('SRID=4326;POLYGON((-8.88 53.81,-1.41 55.84,'\
-                               '-5.54 53.29,0.34 54.69, -8.88 53.81))')
+        polygon = GEOSGeometry('SRID=4326;POLYGON((0 0,10 0,10 10,0 10,'\
+                               '0 0))')
         main_area = Area(label=u'Test', polygon=polygon)
         main_area.save()
+        self.assertEqual(main_area.default_location.point,
+                         GEOSGeometry('SRID=4326;POINT (5 5)'))
         with self.assertRaises(ValidationError):
             main_area.parent = main_area
             main_area.save()

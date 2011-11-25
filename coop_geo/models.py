@@ -66,6 +66,10 @@ class Area(models.Model):
     def save(self, *args, **kwargs):
         if self.pk and self.parent and self.pk == self.parent.pk:
             raise ValidationError(u"You can't set a parent relative to itself.")
+        if not self.default_location:
+            datas = {'point':self.polygon.centroid,
+                     'label':AREA_DEFAULT_LOCATION_LBL % self.label}
+            self.default_location = Location.objects.create(**datas)
         return super(Area, self).save(*args, **kwargs)
 
     @property
