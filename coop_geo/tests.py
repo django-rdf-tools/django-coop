@@ -4,8 +4,11 @@
 from django.test import TestCase
 from django.core.exceptions import ValidationError
 from django.contrib.gis.geos import GEOSGeometry
+from django.contrib.gis.geos.collections import GeometryCollection
 
-from coop_geo.models import Location, Area
+from coop_geo.models import Location, Area, AreaRelations, RELATION_TYPES
+
+DEFAULT_RELATION_TYPE = RELATION_TYPES[0][0]
 
 class AreaTest(TestCase):
     def setUp(self):
@@ -18,11 +21,42 @@ class AreaTest(TestCase):
         main_area.save()
         self.assertEqual(main_area.default_location.point,
                          GEOSGeometry('SRID=4326;POINT (5 5)'))
-        with self.assertRaises(ValidationError):
-            main_area.parent = main_area
-            main_area.save()
 
-    def test_levels(self):
+    def test_relations_creation(self):
+        polygon_low = GEOSGeometry('SRID=4326;POLYGON(('\
+                                        '0 0,10 0,10 10,0 10,0 0))')
+        polygon_high = GEOSGeometry('SRID=4326;POLYGON(('\
+                                        '0 10,10 10,10 20,0 20,0 10))')
+        polygon_full = GEOSGeometry('SRID=4326;POLYGON(('\
+                               '0 0,10 0,10 10,10 20,0 20,0 10, 0 0))')
+        polygon_default = GEOSGeometry('SRID=4326;POLYGON(('\
+                                        '0 0,1 0,1 2,0 2,0 0))')
+        area_low = Area.objects.create(label=u'Test low', polygon=polygon_low)
+        area_high = Area.objects.create(label=u'Test high',
+                                        polygon=polygon_high)
+        area_full = Area.objects.create(label=u"Test full", update_auto=True,
+                                        polygon=polygon_default)
+        with self.assertRaises(ValidationError):
+            area_full.add_parent(area_full, DEFAULT_RELATION_TYPE)
+        with self.assertRaises(ValidationError):
+            area_full.add_child(area_full, DEFAULT_RELATION_TYPE)
+        area_full.add_child(area_low, DEFAULT_RELATION_TYPE)
+        area_full.add_child(area_high, DEFAULT_RELATION_TYPE)
+        self.assertEqual(AreaRelations.objects.filter(
+                         parent=area_full).count(), 2)
+        self.assertEqual(AreaRelations.objects.filter(
+                         child=area_full).count(), 0)
+        self.assertEqual(AreaRelations.objects.filter(
+                         child=area_low).count(), 1)
+        self.assertEqual(area_full.polygon.difference(polygon_full).area, 0)
+        area_low.polygon = GEOSGeometry('SRID=4326;POLYGON(('\
+                                        '0 -10,10 -10,10 10,0 10,0 -10))')
+        area_low.save()
+        self.assertEqual(area_full.polygon.difference(
+               GEOSGeometry('SRID=4326;POLYGON(('\
+                            '0 -10,10 -10,10 20,0 20,0 -10))')).area, 0)
+    '''
+    def test_relations_levels(self):
         polygon = GEOSGeometry('SRID=4326;POLYGON((-8.88 53.81,-1.41 55.84,'\
                                '-5.54 53.29,0.34 54.69, -8.88 53.81))')
         """
@@ -90,7 +124,7 @@ class AreaTest(TestCase):
         self.assertEqual(areas_dct[8].end_leaf, 1)
         self.assertEqual(areas_dct[5].leaf, True)
         self.assertEqual(areas_dct[7].end_leaf, 2)
-
+'''
 class LocationTest(TestCase):
     def setUp(self):
         pass

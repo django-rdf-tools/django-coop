@@ -38,7 +38,7 @@ class Location(models.Model):
             locations = locations.filter(owner=user)
         return locations.order_by('label')
 
-#TODO: set default location
+#TODO: manage relations
 #TODO: manage auto parent area
 
 AREA_DEFAULT_LOCATION_LBL = _(u"%s (center)")
@@ -64,13 +64,35 @@ class Area(models.Model):
         return self.label
 
     def save(self, *args, **kwargs):
-        if self.pk and self.parent and self.pk == self.parent.pk:
-            raise ValidationError(u"You can't set a parent relative to itself.")
         if not self.default_location:
             datas = {'point':self.polygon.centroid,
                      'label':AREA_DEFAULT_LOCATION_LBL % self.label}
             self.default_location = Location.objects.create(**datas)
+
         return super(Area, self).save(*args, **kwargs)
+
+    def add_parent(self, parent, relation_type):
+        if parent == self:
+            raise ValidationError(u"You can't set a parent relative to itself.")
+        self.related_areas.through.objects.create(child=self, parent=parent,
+                                          relation_type=relation_type)
+
+    def add_child(self, child, relation_type):
+        if child == self:
+            raise ValidationError(u"You can't set a parent relative to itself.")
+        self.related_areas.through.objects.create(child=child, parent=self,
+                                                  relation_type=relation_type)
+
+    def update_from_childs(self):
+        if not self.update_auto or not self.childs.count():
+            return
+        geocollection = [childrel.child.polygon
+                         for childrel in self.childs.all()]
+        self.polygon = geocollection[0]
+        for polygon in geocollection[1:]:
+            self.polygon = self.polygon.union(polygon)
+        self.save()
+        return
 
     @property
     def level(self):
@@ -149,7 +171,14 @@ RELATION_TYPES = (('RG', u'région'),
                   )
 
 class AreaRelations(models.Model):
+    """
+    Relations between areas.
+    """
     relation_type = models.CharField(max_length=2, verbose_name=_(u"type"),
                                      choices=RELATION_TYPES)
     parent = models.ForeignKey(Area, related_name='childs')
     child = models.ForeignKey(Area, related_name='parents')
+
+    def save(self, *args, **kwargs):
+        super(AreaRelations, self).save(*args, **kwargs)
+        self.parent.update_from_childs()
