@@ -28,12 +28,12 @@
           
           <div id="inscrits">
               <h4>Tags: </h4>
-              <ul>
+              <div id="tags">
               {% for t in tags %}
-              <li>{{t}}</li>
+              <a href="{{t.get_absolute_url}}">{{t}}</a>
               
               {% endfor %}
-              </ul>
+              </div>
           </div>
     </div>
     <div id="content" class="grid_4 grid">

@@ -53,7 +53,10 @@ class Concept(models.Model):
     sem_relations = models.ManyToManyField("self",symmetrical=False,through='SemRelation')
 
     def __unicode__(self):
-        preflabel = Label.objects.filter(concept=self,type=LABEL_TYPES.PREF,term__language='@fr')[0].term.literal
+        preflabel = Label.objects.filter(   concept=self,
+                                            type=LABEL_TYPES.PREF,
+                                            term__language='@fr')[0].term.literal
+                                            # ??? y'a pas une relation inverse ?? 
         return unicode(preflabel)
         
 
