@@ -13,3 +13,6 @@ def current_site(request):
     except Site.DoesNotExist:
         # always return a dict, no matter what!
         return {'current_site':''} # an empty string
+        
+def d2rq_settings(request):
+    return {'D2RQ_ROOT' : settings.D2RQ_ROOT}        

@@ -121,6 +121,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     "django.core.context_processors.static",
     "django.contrib.messages.context_processors.messages",
+    "coop.context_processors.d2rq_settings",
 )
 
 CACHES = {
@@ -171,6 +172,9 @@ INSTALLED_APPS = (
 )
 
 DJALOHA_LINK_MODELS = ('coop_cms.Article',)
+
+D2RQ_ROOT = 'http://demo.django.coop:2020/'
+
 
 #ADMIN_TOOLS_MENU = 'base.menu.CustomMenu'
 #ADMIN_TOOLS_INDEX_DASHBOARD = 'base.dashboard.CustomIndexDashboard'
