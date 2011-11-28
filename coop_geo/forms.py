@@ -28,7 +28,7 @@ class LocationForm(forms.ModelForm):
 class AreaForm(forms.ModelForm):
     class Meta:
         model = models.Area
-        fields = ('label', 'polygon', 'parent')
+        fields = ('label', 'polygon',)
         widgets = {
             'label': forms.TextInput(),
             'polygon': widgets.PolygonWidget(),

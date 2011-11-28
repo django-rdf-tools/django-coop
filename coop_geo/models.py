@@ -127,6 +127,7 @@ class Area(models.Model):
         Get areas sorted in a tree style
         """
         areas = cls.objects.order_by('-parent', 'label').all()
+        return areas
         sorted_areas = []
 
         area_childs_dct = {}
