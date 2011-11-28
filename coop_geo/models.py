@@ -68,8 +68,12 @@ class Area(models.Model):
             datas = {'point':self.polygon.centroid,
                      'label':AREA_DEFAULT_LOCATION_LBL % self.label}
             self.default_location = Location.objects.create(**datas)
-
-        return super(Area, self).save(*args, **kwargs)
+        returned = super(Area, self).save(*args, **kwargs)
+        if self.parent_rels.count():
+            for parentrel in self.parent_rels.all():
+                print "YO"*10
+                parentrel.parent.update_from_childs()
+        return returned
 
     def add_parent(self, parent, relation_type):
         if parent == self:
@@ -84,10 +88,10 @@ class Area(models.Model):
                                                   relation_type=relation_type)
 
     def update_from_childs(self):
-        if not self.update_auto or not self.childs.count():
+        if not self.update_auto or not self.child_rels.count():
             return
         geocollection = [childrel.child.polygon
-                         for childrel in self.childs.all()]
+                         for childrel in self.child_rels.all()]
         self.polygon = geocollection[0]
         for polygon in geocollection[1:]:
             self.polygon = self.polygon.union(polygon)
@@ -176,8 +180,8 @@ class AreaRelations(models.Model):
     """
     relation_type = models.CharField(max_length=2, verbose_name=_(u"type"),
                                      choices=RELATION_TYPES)
-    parent = models.ForeignKey(Area, related_name='childs')
-    child = models.ForeignKey(Area, related_name='parents')
+    parent = models.ForeignKey(Area, related_name='child_rels')
+    child = models.ForeignKey(Area, related_name='parent_rels')
 
     def save(self, *args, **kwargs):
         super(AreaRelations, self).save(*args, **kwargs)

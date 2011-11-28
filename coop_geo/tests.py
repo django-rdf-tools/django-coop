@@ -49,12 +49,15 @@ class AreaTest(TestCase):
         self.assertEqual(AreaRelations.objects.filter(
                          child=area_low).count(), 1)
         self.assertEqual(area_full.polygon.difference(polygon_full).area, 0)
+        self.assertEqual(polygon_full.difference(area_full.polygon).area, 0)
         area_low.polygon = GEOSGeometry('SRID=4326;POLYGON(('\
                                         '0 -10,10 -10,10 10,0 10,0 -10))')
         area_low.save()
-        self.assertEqual(area_full.polygon.difference(
-               GEOSGeometry('SRID=4326;POLYGON(('\
-                            '0 -10,10 -10,10 20,0 20,0 -10))')).area, 0)
+        polygon_full_2 = GEOSGeometry('SRID=4326;POLYGON(('\
+                                         '0 -10,10 -10,10 20,0 20,0 -10))')
+        self.assertEqual(area_full.polygon.difference(polygon_full_2).area, 0)
+        self.assertEqual(polygon_full_2.difference(area_full.polygon).area, 0)
+
     '''
     def test_relations_levels(self):
         polygon = GEOSGeometry('SRID=4326;POLYGON((-8.88 53.81,-1.41 55.84,'\
