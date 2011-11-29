@@ -5733,30 +5733,6 @@
         }
     },
     {
-        "pk": 53276,
-        "model": "coop_local.initiative",
-        "fields": {
-            "web": "",
-            "naf": "",
-            "description": "Organise des s\u00e9jours de loisirs pour un public handicap\u00e9 en adaptant les propositions touristiques locales d'animation et d'h\u00e9bergement.",
-            "statut": 1,
-            "telephone_fixe": "",
-            "acronym": "",
-            "title": "Accro'Nat",
-            "uri": null,
-            "slug": "accro_nat",
-            "siret": "",
-            "created": null,
-            "modified": "2011-09-06 11:27:47",
-            "active": false,
-            "secteur_fse": 2,
-            "presage": "",
-            "email": "accro-nat@wanadoo.fr",
-            "tags": [],
-            "rss": ""
-        }
-    },
-    {
         "pk": 53248,
         "model": "coop_local.initiative",
         "fields": {
@@ -5775,102 +5751,6 @@
             "active": false,
             "secteur_fse": 1,
             "presage": "",
-            "email": "",
-            "tags": [],
-            "rss": ""
-        }
-    },
-    {
-        "pk": 10110,
-        "model": "coop_local.initiative",
-        "fields": {
-            "web": "",
-            "naf": "9529Z",
-            "description": "Insertion par l'activit\u00e9 \u00e9conomique\nSupport d'activit\u00e9s : le textile\n- collecte, tri, recyclage et r\u00e9novation de textile dont cr\u00e9ation de costumes et d\u00e9guisements\n- services aux particuliers et collectivit\u00e9s en lavage, repassage, retouches",
-            "statut": 1,
-            "telephone_fixe": "04.70.51.02.04",
-            "acronym": "",
-            "title": "Association d\u2019Insertion P\u00e9n\u00e9lope",
-            "uri": null,
-            "slug": "association_dinsertion_penelope",
-            "siret": "42925903900023",
-            "created": null,
-            "modified": "2011-09-06 11:27:47",
-            "active": true,
-            "secteur_fse": 2,
-            "presage": "32985",
-            "email": "jean-pierre.siramy@wanadoo.fr",
-            "tags": [],
-            "rss": ""
-        }
-    },
-    {
-        "pk": 10028,
-        "model": "coop_local.initiative",
-        "fields": {
-            "web": "",
-            "naf": "4799A",
-            "description": "La distribution de produits et de services culturels",
-            "statut": 4,
-            "telephone_fixe": "04.73.64.60.00",
-            "acronym": "DSCA",
-            "title": "Diffusion Services Culture en Auvergne",
-            "uri": null,
-            "slug": "diffusion_services_culture_en_auvergne",
-            "siret": "51436634300010",
-            "created": null,
-            "modified": "2011-09-06 11:27:47",
-            "active": true,
-            "secteur_fse": 2,
-            "presage": "32866",
-            "email": "fran\u00e7oise.brochart@wanadoo.fr",
-            "tags": [],
-            "rss": ""
-        }
-    },
-    {
-        "pk": 10029,
-        "model": "coop_local.initiative",
-        "fields": {
-            "web": "",
-            "naf": "9499Z",
-            "description": "L'objectif de l'association est la promotion, tant au niveau des publics que des institutions, de la librairie ind\u00e9pendante en qualit\u00e9 d'acteur culturel, d\u00e9fenseur de la diversit\u00e9 et de la cr\u00e9ation \u00e9ditoriale, et assurant le maillage \u00e9conomique et culture",
-            "statut": 1,
-            "telephone_fixe": "",
-            "acronym": "LIRA",
-            "title": "Libraires Ind\u00e9pendants en R\u00e9gion Auvergne",
-            "uri": null,
-            "slug": "libraires_independants_en_region_auvergne",
-            "siret": "",
-            "created": null,
-            "modified": "2011-09-06 11:27:47",
-            "active": true,
-            "secteur_fse": 2,
-            "presage": "32379",
-            "email": "",
-            "tags": [],
-            "rss": ""
-        }
-    },
-    {
-        "pk": 10020,
-        "model": "coop_local.initiative",
-        "fields": {
-            "web": "",
-            "naf": "9499Z",
-            "description": "L'objet de l'association est le d\u00e9veloppement culturel en milieu rural. Pour ce faire, l'association a mont\u00e9 une librairie-galerie dont les b\u00e9n\u00e9fices permettent de financer d'autres actions culturelles comme des rencontres th\u00e9matiques chaque vendredi soir",
-            "statut": 1,
-            "telephone_fixe": "",
-            "acronym": "",
-            "title": "Les Mots Bleus, librairie associative",
-            "uri": null,
-            "slug": "les_mots_bleus_librairie_associative",
-            "siret": "48204083900029",
-            "created": null,
-            "modified": "2011-09-06 11:27:47",
-            "active": true,
-            "secteur_fse": 2,
-            "presage": "32940",
             "email": "",
             "tags": [],
             "rss": ""
@@ -5949,174 +5829,6 @@
         }
     },
     {
-        "pk": 10117,
-        "model": "coop_local.initiative",
-        "fields": {
-            "web": "",
-            "naf": "9001Z",
-            "description": "La coop\u00e9rative a pour objet l\u2019av\u00e8nement d\u2019un d\u00e9veloppement culturel, social, \u00e9conomique et environnemental durable des territoires par :\n\n\u00b7L\u2019inventaire, la promotion et la valorisation des richesses naturelles, culturelles et touristiques ; \n\u00b7La valo",
-            "statut": 2,
-            "telephone_fixe": "06.83.39.14.33",
-            "acronym": "",
-            "title": "Sirventes",
-            "uri": null,
-            "slug": "sirventes",
-            "siret": "42895479600028",
-            "created": null,
-            "modified": "2011-09-06 11:27:47",
-            "active": true,
-            "secteur_fse": 2,
-            "presage": "32970",
-            "email": "production@sirventes.com",
-            "tags": [],
-            "rss": ""
-        }
-    },
-    {
-        "pk": 10133,
-        "model": "coop_local.initiative",
-        "fields": {
-            "web": "",
-            "naf": "913EO",
-            "description": "Mettre \u00e0 la disposition des femmes et du public en g\u00e9n\u00e9ral et par tous les moyens appropri\u00e9s les informations dans les domaines de l'int\u00e9gration socio-professionnelle ainsi que les moyens d'exercer leurs droits ; faciliter l'acc\u00e8s aux dispositifs de droit",
-            "statut": 1,
-            "telephone_fixe": "04.63.08.97.93",
-            "acronym": "SFI",
-            "title": "Solidarit\u00e9 Femmes Immigr\u00e9es",
-            "uri": null,
-            "slug": "solidarite_femmes_immigrees",
-            "siret": "47872071700014",
-            "created": null,
-            "modified": "2011-09-06 11:27:47",
-            "active": true,
-            "secteur_fse": 1,
-            "presage": "33251",
-            "email": "solifemmesimmigrees@yahoo.fr",
-            "tags": [],
-            "rss": ""
-        }
-    },
-    {
-        "pk": 10046,
-        "model": "coop_local.initiative",
-        "fields": {
-            "web": "",
-            "naf": "",
-            "description": "Elle a pour but:\nDe faire la promotion de personnes cr\u00e9atives, n'ayant pour la plupart jamais expos\u00e9 quelles que soient les disciplines (en priorit\u00e9 des femmes de la r\u00e9gion Auvergne)\nDe d\u00e9velopper et favoriser les \u00e9changes entre plusieurs cr\u00e9ateurs et l",
-            "statut": 1,
-            "telephone_fixe": "",
-            "acronym": "",
-            "title": "Pi\u00e8ce Unique, Atelier-Boutique associatif",
-            "uri": null,
-            "slug": "piece_unique_atelier_boutique_associatif",
-            "siret": "",
-            "created": null,
-            "modified": "2011-09-06 11:27:47",
-            "active": true,
-            "secteur_fse": 1,
-            "presage": "32471",
-            "email": "",
-            "tags": [],
-            "rss": ""
-        }
-    },
-    {
-        "pk": 10097,
-        "model": "coop_local.initiative",
-        "fields": {
-            "web": "",
-            "naf": "",
-            "description": "Cr\u00e9\u00e9e \u00e0 l'initiative de plusieurs familles d'enfants d\u00e9ficients auditifs, l'association Chlo\u00e9 a pour but de favoriser l'int\u00e9gration sociale, culturelles et scolaire en milieu ordinaire, des enfants sourds et malentendants s'exprimant oralement.\nSon activ",
-            "statut": 1,
-            "telephone_fixe": "06.47.56.01.43",
-            "acronym": "",
-            "title": "CHLOE",
-            "uri": null,
-            "slug": "chloe",
-            "siret": "51435207900016",
-            "created": null,
-            "modified": "2011-09-06 11:27:48",
-            "active": true,
-            "secteur_fse": 7,
-            "presage": "32971",
-            "email": "jtartier@free.fr",
-            "tags": [],
-            "rss": ""
-        }
-    },
-    {
-        "pk": 10178,
-        "model": "coop_local.initiative",
-        "fields": {
-            "web": "",
-            "naf": "88.99A",
-            "description": "l'objet:\n -La coop\u00e9rative a pour activit\u00e9 principale l'animation socio -\u00e9ducative autour du patrimoine naturel et de la d\u00e9couverte de la nature, pour tout public et notamment  les scolaires, en lien avec l'\u00e9ducation  \u00e0 l'environnement et au d\u00e9veloppement",
-            "statut": 2,
-            "telephone_fixe": "",
-            "acronym": "",
-            "title": "Carbala",
-            "uri": null,
-            "slug": "carbala_2",
-            "siret": "49869717600010",
-            "created": null,
-            "modified": "2011-09-06 11:27:48",
-            "active": true,
-            "secteur_fse": 4,
-            "presage": "33665",
-            "email": "",
-            "tags": [],
-            "rss": ""
-        }
-    },
-    {
-        "pk": 10111,
-        "model": "coop_local.initiative",
-        "fields": {
-            "web": "",
-            "naf": "94 99Z",
-            "description": "Objet: \nChiffonnier /au singulier pour prendre en consid\u00e9ration les parcours personnels et uniques, au service d\u2019un groupe humain et une cause solidaire.\nMontlu\u00e7onnais/ancrer sur un territoire pour redevenir un citoyen acteur de ses droits et devoirs \n",
-            "statut": 1,
-            "telephone_fixe": "",
-            "acronym": "",
-            "title": "Chiffonnier Montlu\u00e7onnais",
-            "uri": null,
-            "slug": "chiffonnier_montluconnais",
-            "siret": "51268203000014",
-            "created": null,
-            "modified": "2011-09-06 11:27:48",
-            "active": true,
-            "secteur_fse": 1,
-            "presage": "33325",
-            "email": "",
-            "tags": [],
-            "rss": ""
-        }
-    },
-    {
-        "pk": 20072,
-        "model": "coop_local.initiative",
-        "fields": {
-            "web": "",
-            "naf": "3511z",
-            "description": "-promouvoir par tout moyen les \u00e9conomies d'\u00e9nergie et l'efficacit\u00e9 \u00e9nerg\u00e9tique aupr\u00e8s des particuliers et des collectivit\u00e9s\n-produire localement des \u00e9nergies renouvelables de mani\u00e8re durable au sein d'une structure citoyenne \u00e0 but non lucratif afin de g\u00e9",
-            "statut": 1,
-            "telephone_fixe": "",
-            "acronym": "",
-            "title": "Combrailles Durables",
-            "uri": null,
-            "slug": "combrailles_durables",
-            "siret": "51329172400013",
-            "created": null,
-            "modified": "2011-09-06 11:27:48",
-            "active": true,
-            "secteur_fse": 4,
-            "presage": "32936",
-            "email": "",
-            "tags": [],
-            "rss": ""
-        }
-    },
-    {
         "pk": 10096,
         "model": "coop_local.initiative",
         "fields": {
@@ -6165,78 +5877,6 @@
         }
     },
     {
-        "pk": 10038,
-        "model": "coop_local.initiative",
-        "fields": {
-            "web": "",
-            "naf": "",
-            "description": "-Sensibiliser et informer et \u00e9changer\n-Rassembler, valoriser et partager les connaissances et savoirs-faire\n-Transmettre, Ins\u00e9rer et former professionellement\n-Cr\u00e9er, d\u00e9velopper pour l'avenir\n-P\u00e9renniser les pratiques et susciter de nouvelles vocation",
-            "statut": 1,
-            "telephone_fixe": "",
-            "acronym": "IAMPEC",
-            "title": "Traces de Pierre",
-            "uri": null,
-            "slug": "traces_de_pierre",
-            "siret": "51146200400017",
-            "created": null,
-            "modified": "2011-09-06 11:27:47",
-            "active": true,
-            "secteur_fse": 8,
-            "presage": "32256",
-            "email": "",
-            "tags": [],
-            "rss": ""
-        }
-    },
-    {
-        "pk": 10120,
-        "model": "coop_local.initiative",
-        "fields": {
-            "web": "",
-            "naf": "9001Z",
-            "description": "L\u2019association \u00ab FAIS ET RIS \u00bb  a pour but d\u2019\u00eatre vecteur d\u2019une \u00e9ducation populaire se concentrant principalement sur la r\u00e9alisation de projets socioculturels diversifi\u00e9s et pluridisciplinaires, d\u2019\u00e9ducation \u00e0  l\u2019environnement,  de cr\u00e9ation artistiques, et ",
-            "statut": 1,
-            "telephone_fixe": "06.61.64.09.74",
-            "acronym": "",
-            "title": "Fais et Ris",
-            "uri": null,
-            "slug": "fais_et_ris",
-            "siret": "48416429800040",
-            "created": null,
-            "modified": "2011-09-06 11:27:47",
-            "active": true,
-            "secteur_fse": 2,
-            "presage": "33255",
-            "email": "faisetris@no-log.org",
-            "tags": [],
-            "rss": ""
-        }
-    },
-    {
-        "pk": 10128,
-        "model": "coop_local.initiative",
-        "fields": {
-            "web": "",
-            "naf": "7740Z",
-            "description": "L'activit\u00e9 principale de la structure sera la gestion d'un label discographique. Cela comprend la fabrication et production de disques, la promotion et la communication, le booking et l'\u00e9dition musicale.\nLe label a actuellement 4 groupes clermontois, bie",
-            "statut": 4,
-            "telephone_fixe": "06.11.34.34.83",
-            "acronym": "",
-            "title": "K\u00fctu Folk Records",
-            "uri": null,
-            "slug": "kutu_folk_records",
-            "siret": "51752296700010",
-            "created": null,
-            "modified": "2011-09-06 11:27:47",
-            "active": true,
-            "secteur_fse": 2,
-            "presage": "33057",
-            "email": "emiliefernandez1@yahoo.fr",
-            "tags": [],
-            "rss": ""
-        }
-    },
-    {
         "pk": 53284,
         "model": "coop_local.initiative",
         "fields": {
@@ -6261,6 +5901,387 @@
         }
     },
     {
+        "pk": 53276,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": "",
+            "naf": "",
+            "description": "Organise des s\u00e9jours de loisirs pour un public handicap\u00e9 en adaptant les propositions touristiques locales d'animation et d'h\u00e9bergement.",
+            "statut": 1,
+            "telephone_fixe": "",
+            "acronym": "",
+            "title": "Accro'Nat",
+            "uri": null,
+            "slug": "accro_nat",
+            "siret": "",
+            "created": null,
+            "modified": "2011-11-22 18:31:33",
+            "active": false,
+            "secteur_fse": 2,
+            "presage": "",
+            "email": "accro-nat@wanadoo.fr",
+            "tags": [
+                12,
+                36,
+                59,
+                60,
+                61
+            ],
+            "rss": ""
+        }
+    },
+    {
+        "pk": 10110,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": "",
+            "naf": "9529Z",
+            "description": "Insertion par l'activit\u00e9 \u00e9conomique\r\nSupport d'activit\u00e9s : le textile\r\n- collecte, tri, recyclage et r\u00e9novation de textile dont cr\u00e9ation de costumes et d\u00e9guisements\r\n- services aux particuliers et collectivit\u00e9s en lavage, repassage, retouches",
+            "statut": 1,
+            "telephone_fixe": "04.70.51.02.04",
+            "acronym": "",
+            "title": "Association d\u2019Insertion P\u00e9n\u00e9lope",
+            "uri": null,
+            "slug": "association_dinsertion_penelope",
+            "siret": "42925903900023",
+            "created": null,
+            "modified": "2011-11-22 18:36:06",
+            "active": true,
+            "secteur_fse": 2,
+            "presage": "32985",
+            "email": "jean-pierre.siramy@wanadoo.fr",
+            "tags": [
+                22,
+                41,
+                49,
+                74,
+                75
+            ],
+            "rss": ""
+        }
+    },
+    {
+        "pk": 10020,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": "",
+            "naf": "9499Z",
+            "description": "L'objet de l'association est le d\u00e9veloppement culturel en milieu rural. Pour ce faire, l'association a mont\u00e9 une librairie-galerie dont les b\u00e9n\u00e9fices permettent de financer d'autres actions culturelles comme des rencontres th\u00e9matiques chaque vendredi soir",
+            "statut": 1,
+            "telephone_fixe": "",
+            "acronym": "",
+            "title": "Les Mots Bleus, librairie associative",
+            "uri": null,
+            "slug": "les_mots_bleus_librairie_associative",
+            "siret": "48204083900029",
+            "created": null,
+            "modified": "2011-11-22 18:41:07",
+            "active": true,
+            "secteur_fse": 2,
+            "presage": "32940",
+            "email": "",
+            "tags": [
+                26,
+                44,
+                65
+            ],
+            "rss": ""
+        }
+    },
+    {
+        "pk": 10028,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": "",
+            "naf": "4799A",
+            "description": "La distribution de produits et de services culturels",
+            "statut": 4,
+            "telephone_fixe": "04.73.64.60.00",
+            "acronym": "DSCA",
+            "title": "Diffusion Services Culture en Auvergne",
+            "uri": null,
+            "slug": "diffusion_services_culture_en_auvergne",
+            "siret": "51436634300010",
+            "created": null,
+            "modified": "2011-11-22 18:38:54",
+            "active": true,
+            "secteur_fse": 2,
+            "presage": "32866",
+            "email": "francoise.brochart@wanadoo.fr",
+            "tags": [
+                26,
+                44,
+                57,
+                62,
+                70
+            ],
+            "rss": ""
+        }
+    },
+    {
+        "pk": 10029,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": "",
+            "naf": "9499Z",
+            "description": "L'objectif de l'association est la promotion, tant au niveau des publics que des institutions, de la librairie ind\u00e9pendante en qualit\u00e9 d'acteur culturel, d\u00e9fenseur de la diversit\u00e9 et de la cr\u00e9ation \u00e9ditoriale, et assurant le maillage \u00e9conomique et culture",
+            "statut": 1,
+            "telephone_fixe": "",
+            "acronym": "LIRA",
+            "title": "Libraires Ind\u00e9pendants en R\u00e9gion Auvergne",
+            "uri": null,
+            "slug": "libraires_independants_en_region_auvergne",
+            "siret": "",
+            "created": null,
+            "modified": "2011-11-22 18:40:10",
+            "active": true,
+            "secteur_fse": 2,
+            "presage": "32379",
+            "email": "",
+            "tags": [
+                2,
+                26,
+                44,
+                79
+            ],
+            "rss": ""
+        }
+    },
+    {
+        "pk": 10117,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": "",
+            "naf": "9001Z",
+            "description": "La coop\u00e9rative a pour objet l\u2019av\u00e8nement d\u2019un d\u00e9veloppement culturel, social, \u00e9conomique et environnemental durable des territoires par :\r\n\r\n\u00b7L\u2019inventaire, la promotion et la valorisation des richesses naturelles, culturelles et touristiques ; \r\n\u00b7La valo",
+            "statut": 2,
+            "telephone_fixe": "06.83.39.14.33",
+            "acronym": "",
+            "title": "Sirventes",
+            "uri": null,
+            "slug": "sirventes",
+            "siret": "42895479600028",
+            "created": null,
+            "modified": "2011-11-22 18:41:45",
+            "active": true,
+            "secteur_fse": 2,
+            "presage": "32970",
+            "email": "production@sirventes.com",
+            "tags": [
+                24,
+                62,
+                65,
+                79
+            ],
+            "rss": ""
+        }
+    },
+    {
+        "pk": 10178,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": "",
+            "naf": "88.99A",
+            "description": "l'objet:\r\n -La coop\u00e9rative a pour activit\u00e9 principale l'animation socio -\u00e9ducative autour du patrimoine naturel et de la d\u00e9couverte de la nature, pour tout public et notamment  les scolaires, en lien avec l'\u00e9ducation  \u00e0 l'environnement et au d\u00e9veloppement",
+            "statut": 2,
+            "telephone_fixe": "",
+            "acronym": "",
+            "title": "Carbala",
+            "uri": null,
+            "slug": "carbala_2",
+            "siret": "49869717600010",
+            "created": null,
+            "modified": "2011-11-22 18:56:18",
+            "active": true,
+            "secteur_fse": 4,
+            "presage": "33665",
+            "email": "",
+            "tags": [
+                18,
+                36,
+                70
+            ],
+            "rss": ""
+        }
+    },
+    {
+        "pk": 10046,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": "",
+            "naf": "",
+            "description": "Elle a pour but:\r\nDe faire la promotion de personnes cr\u00e9atives, n'ayant pour la plupart jamais expos\u00e9 quelles que soient les disciplines (en priorit\u00e9 des femmes de la r\u00e9gion Auvergne)\r\nDe d\u00e9velopper et favoriser les \u00e9changes entre plusieurs cr\u00e9ateurs et l",
+            "statut": 1,
+            "telephone_fixe": "",
+            "acronym": "",
+            "title": "Pi\u00e8ce Unique, Atelier-Boutique associatif",
+            "uri": null,
+            "slug": "piece_unique_atelier_boutique_associatif",
+            "siret": "",
+            "created": null,
+            "modified": "2011-11-22 18:43:52",
+            "active": true,
+            "secteur_fse": 1,
+            "presage": "32471",
+            "email": "",
+            "tags": [
+                22,
+                79,
+                80,
+                81
+            ],
+            "rss": ""
+        }
+    },
+    {
+        "pk": 10133,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": "",
+            "naf": "913EO",
+            "description": "Mettre \u00e0 la disposition des femmes et du public en g\u00e9n\u00e9ral et par tous les moyens appropri\u00e9s les informations dans les domaines de l'int\u00e9gration socio-professionnelle ainsi que les moyens d'exercer leurs droits ; faciliter l'acc\u00e8s aux dispositifs de droit",
+            "statut": 1,
+            "telephone_fixe": "04.63.08.97.93",
+            "acronym": "SFI",
+            "title": "Solidarit\u00e9 Femmes Immigr\u00e9es",
+            "uri": null,
+            "slug": "solidarite_femmes_immigrees",
+            "siret": "47872071700014",
+            "created": null,
+            "modified": "2011-11-22 18:45:29",
+            "active": true,
+            "secteur_fse": 1,
+            "presage": "33251",
+            "email": "solifemmesimmigrees@yahoo.fr",
+            "tags": [
+                13,
+                14,
+                66,
+                67,
+                81,
+                82
+            ],
+            "rss": ""
+        }
+    },
+    {
+        "pk": 10038,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": "",
+            "naf": "",
+            "description": "-Sensibiliser et informer et \u00e9changer\r\n-Rassembler, valoriser et partager les connaissances et savoirs-faire\r\n-Transmettre, Ins\u00e9rer et former professionellement\r\n-Cr\u00e9er, d\u00e9velopper pour l'avenir\r\n-P\u00e9renniser les pratiques et susciter de nouvelles vocation",
+            "statut": 1,
+            "telephone_fixe": "",
+            "acronym": "IAMPEC",
+            "title": "Traces de Pierre",
+            "uri": null,
+            "slug": "traces_de_pierre",
+            "siret": "51146200400017",
+            "created": null,
+            "modified": "2011-11-22 18:54:48",
+            "active": true,
+            "secteur_fse": 8,
+            "presage": "32256",
+            "email": "",
+            "tags": [
+                23,
+                33,
+                34,
+                57,
+                83,
+                84
+            ],
+            "rss": ""
+        }
+    },
+    {
+        "pk": 20072,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": "",
+            "naf": "3511z",
+            "description": "-promouvoir par tout moyen les \u00e9conomies d'\u00e9nergie et l'efficacit\u00e9 \u00e9nerg\u00e9tique aupr\u00e8s des particuliers et des collectivit\u00e9s\r\n-produire localement des \u00e9nergies renouvelables de mani\u00e8re durable au sein d'une structure citoyenne \u00e0 but non lucratif afin de g\u00e9",
+            "statut": 1,
+            "telephone_fixe": "",
+            "acronym": "",
+            "title": "Combrailles Durables",
+            "uri": null,
+            "slug": "combrailles_durables",
+            "siret": "51329172400013",
+            "created": null,
+            "modified": "2011-11-22 18:55:42",
+            "active": true,
+            "secteur_fse": 4,
+            "presage": "32936",
+            "email": "",
+            "tags": [
+                68,
+                69,
+                70,
+                85
+            ],
+            "rss": ""
+        }
+    },
+    {
+        "pk": 10120,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": "",
+            "naf": "9001Z",
+            "description": "L\u2019association \u00ab FAIS ET RIS \u00bb  a pour but d\u2019\u00eatre vecteur d\u2019une \u00e9ducation populaire se concentrant principalement sur la r\u00e9alisation de projets socioculturels diversifi\u00e9s et pluridisciplinaires, d\u2019\u00e9ducation \u00e0  l\u2019environnement,  de cr\u00e9ation artistiques, et ",
+            "statut": 1,
+            "telephone_fixe": "06.61.64.09.74",
+            "acronym": "",
+            "title": "Fais et Ris",
+            "uri": null,
+            "slug": "fais_et_ris",
+            "siret": "48416429800040",
+            "created": null,
+            "modified": "2011-11-22 19:02:41",
+            "active": true,
+            "secteur_fse": 2,
+            "presage": "33255",
+            "email": "faisetris@no-log.org",
+            "tags": [
+                18,
+                62,
+                86,
+                88
+            ],
+            "rss": ""
+        }
+    },
+    {
+        "pk": 10128,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": "",
+            "naf": "7740Z",
+            "description": "L'activit\u00e9 principale de la structure sera la gestion d'un label discographique. Cela comprend la fabrication et production de disques, la promotion et la communication, le booking et l'\u00e9dition musicale.\r\nLe label a actuellement 4 groupes clermontois, bie",
+            "statut": 4,
+            "telephone_fixe": "06.11.34.34.83",
+            "acronym": "",
+            "title": "K\u00fctu Folk Records",
+            "uri": null,
+            "slug": "kutu_folk_records",
+            "siret": "51752296700010",
+            "created": null,
+            "modified": "2011-11-23 08:47:52",
+            "active": true,
+            "secteur_fse": 2,
+            "presage": "33057",
+            "email": "emiliefernandez1@yahoo.fr",
+            "tags": [
+                26,
+                62,
+                70
+            ],
+            "rss": ""
+        }
+    },
+    {
         "pk": 10141,
         "model": "coop_local.initiative",
         "fields": {
@@ -6280,30 +6301,6 @@
             "secteur_fse": 5,
             "presage": "33330",
             "email": "nordiney20002000@yahoo.fr",
-            "tags": [],
-            "rss": ""
-        }
-    },
-    {
-        "pk": 10114,
-        "model": "coop_local.initiative",
-        "fields": {
-            "web": "",
-            "naf": "",
-            "description": "Rompre l'isolement et accompagner dans la discr\u00e9tion et la confidentialit\u00e9 tout agriculteur ou acteur du milieu rural qui en fait la demande, aider \u00e0 analyser ses difficult\u00e9s et \u00e0 trouver des solutions en particulier par des n\u00e9gociations avec ses partenai",
-            "statut": 1,
-            "telephone_fixe": "",
-            "acronym": "SP03",
-            "title": "Solidarit\u00e9 Paysans 03",
-            "uri": null,
-            "slug": "solidarite_paysans",
-            "siret": "",
-            "created": null,
-            "modified": "2011-09-06 11:27:47",
-            "active": true,
-            "secteur_fse": 7,
-            "presage": "33107",
-            "email": "",
             "tags": [],
             "rss": ""
         }
@@ -6573,30 +6570,6 @@
         }
     },
     {
-        "pk": 10146,
-        "model": "coop_local.initiative",
-        "fields": {
-            "web": "",
-            "naf": "9499Z",
-            "description": "Cette association a pour but de cr\u00e9er des Chantiers d'Insertion autour du v\u00eatement pour que  chaque personne en insertion puisse vivre et s'accomplir dans la dignit\u00e9 en vue d'une r\u00e9elle insertion sociale et professionnelle \nLe Chantier d'Insertion appart",
-            "statut": 1,
-            "telephone_fixe": "",
-            "acronym": "E S I P P",
-            "title": "Espace Solidarit\u00e9 Insertion par le Pr\u00eat \u00e0 Porter",
-            "uri": null,
-            "slug": "espace_solidarite_insertion_par_le_pret_a_porter",
-            "siret": "51853983800012",
-            "created": null,
-            "modified": "2011-09-06 11:27:48",
-            "active": true,
-            "secteur_fse": 1,
-            "presage": "33319",
-            "email": "",
-            "tags": [],
-            "rss": ""
-        }
-    },
-    {
         "pk": 20058,
         "model": "coop_local.initiative",
         "fields": {
@@ -6785,6 +6758,36 @@
             "presage": "",
             "email": "annemariechambeau@tele2.fr",
             "tags": [],
+            "rss": ""
+        }
+    },
+    {
+        "pk": 10114,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": "",
+            "naf": "",
+            "description": "Rompre l'isolement et accompagner dans la discr\u00e9tion et la confidentialit\u00e9 tout agriculteur ou acteur du milieu rural qui en fait la demande, aider \u00e0 analyser ses difficult\u00e9s et \u00e0 trouver des solutions en particulier par des n\u00e9gociations avec ses partenai",
+            "statut": 1,
+            "telephone_fixe": "",
+            "acronym": "SP03",
+            "title": "Solidarit\u00e9 Paysans 03",
+            "uri": null,
+            "slug": "solidarite_paysans",
+            "siret": "",
+            "created": null,
+            "modified": "2011-11-22 18:59:35",
+            "active": true,
+            "secteur_fse": 7,
+            "presage": "33107",
+            "email": "",
+            "tags": [
+                1,
+                4,
+                13,
+                14,
+                71
+            ],
             "rss": ""
         }
     },
@@ -7451,12 +7454,18 @@
             "slug": "les_petits_debrouillards_auvergne",
             "siret": "45189040400028",
             "created": null,
-            "modified": "2011-11-11 18:39:17",
+            "modified": "2011-11-22 18:58:37",
             "active": true,
             "secteur_fse": 2,
             "presage": "33664",
             "email": "pierre.bonton@lasmea.univ-bpclermont.fr",
-            "tags": [],
+            "tags": [
+                18,
+                36,
+                86,
+                87,
+                88
+            ],
             "rss": ""
         }
     },
@@ -9041,6 +9050,94 @@
             "presage": "",
             "email": "amis.etoile@fr.aleane.com",
             "tags": [],
+            "rss": ""
+        }
+    },
+    {
+        "pk": 10111,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": "",
+            "naf": "94 99Z",
+            "description": "Objet: \r\nChiffonnier /au singulier pour prendre en consid\u00e9ration les parcours personnels et uniques, au service d\u2019un groupe humain et une cause solidaire.\r\nMontlu\u00e7onnais/ancrer sur un territoire pour redevenir un citoyen acteur de ses droits et devoirs \r\n",
+            "statut": 1,
+            "telephone_fixe": "",
+            "acronym": "",
+            "title": "Chiffonnier Montlu\u00e7onnais",
+            "uri": null,
+            "slug": "chiffonnier_montluconnais",
+            "siret": "51268203000014",
+            "created": null,
+            "modified": "2011-11-22 18:29:55",
+            "active": true,
+            "secteur_fse": 1,
+            "presage": "33325",
+            "email": "",
+            "tags": [
+                1,
+                8,
+                14,
+                15,
+                22,
+                39,
+                41
+            ],
+            "rss": ""
+        }
+    },
+    {
+        "pk": 10146,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": "",
+            "naf": "9499Z",
+            "description": "Cette association a pour but de cr\u00e9er des Chantiers d'Insertion autour du v\u00eatement pour que  chaque personne en insertion puisse vivre et s'accomplir dans la dignit\u00e9 en vue d'une r\u00e9elle insertion sociale et professionnelle \r\nLe Chantier d'Insertion appart",
+            "statut": 1,
+            "telephone_fixe": "",
+            "acronym": "E S I P P",
+            "title": "Espace Solidarit\u00e9 Insertion par le Pr\u00eat \u00e0 Porter",
+            "uri": null,
+            "slug": "espace_solidarite_insertion_par_le_pret_a_porter",
+            "siret": "51853983800012",
+            "created": null,
+            "modified": "2011-11-22 18:49:54",
+            "active": true,
+            "secteur_fse": 1,
+            "presage": "33319",
+            "email": "",
+            "tags": [
+                22,
+                41,
+                80
+            ],
+            "rss": ""
+        }
+    },
+    {
+        "pk": 10097,
+        "model": "coop_local.initiative",
+        "fields": {
+            "web": "",
+            "naf": "",
+            "description": "Cr\u00e9\u00e9e \u00e0 l'initiative de plusieurs familles d'enfants d\u00e9ficients auditifs, l'association Chlo\u00e9 a pour but de favoriser l'int\u00e9gration sociale, culturelles et scolaire en milieu ordinaire, des enfants sourds et malentendants s'exprimant oralement.\r\nSon activ",
+            "statut": 1,
+            "telephone_fixe": "06.47.56.01.43",
+            "acronym": "",
+            "title": "CHLOE",
+            "uri": null,
+            "slug": "chloe",
+            "siret": "51435207900016",
+            "created": null,
+            "modified": "2011-11-23 08:48:36",
+            "active": true,
+            "secteur_fse": 7,
+            "presage": "32971",
+            "email": "jtartier@free.fr",
+            "tags": [
+                12,
+                53,
+                86
+            ],
             "rss": ""
         }
     }

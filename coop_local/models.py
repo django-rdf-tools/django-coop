@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
 from coop.membre.models import BaseMembre
 from coop.place.models import BaseSite
-from coop.agenda.models import BaseCalendar, BaseEvent
+#from coop.agenda.models import BaseCalendar, BaseEvent
 from coop.exchange.models import BaseExchange, BaseTransaction
 from coop.initiative.models import BaseInitiative,BaseEngagement,BaseRole
 
@@ -41,11 +41,11 @@ STATUTS = Choices(
     ('COOP47',  4,  'Société Coopérative de loi 1947'),
 )
 
-class Calendar(BaseCalendar):
-    pass
-
-class Event(BaseEvent):
-    pass
+# class Calendar(BaseCalendar):
+#     pass
+# 
+# class Event(BaseEvent):
+#     pass
 
 class Exchange(BaseExchange):
     pass
