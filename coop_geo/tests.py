@@ -15,22 +15,22 @@ class AreaTest(TestCase):
         pass
 
     def test_set_creation(self):
-        polygon = GEOSGeometry('SRID=4326;POLYGON((0 0,10 0,10 10,0 10,'\
-                               '0 0))')
+        polygon = GEOSGeometry('SRID=4326;MULTIPOLYGON(((0 0,10 0,10 10,0 10,'\
+                               '0 0)))')
         main_area = Area(label=u'Test', polygon=polygon)
         main_area.save()
         self.assertEqual(main_area.default_location.point,
                          GEOSGeometry('SRID=4326;POINT (5 5)'))
 
     def test_relations_creation(self):
-        polygon_low = GEOSGeometry('SRID=4326;POLYGON(('\
-                                        '0 0,10 0,10 10,0 10,0 0))')
-        polygon_high = GEOSGeometry('SRID=4326;POLYGON(('\
-                                        '0 10,10 10,10 20,0 20,0 10))')
-        polygon_full = GEOSGeometry('SRID=4326;POLYGON(('\
-                               '0 0,10 0,10 10,10 20,0 20,0 10, 0 0))')
-        polygon_default = GEOSGeometry('SRID=4326;POLYGON(('\
-                                        '0 0,1 0,1 2,0 2,0 0))')
+        polygon_low = GEOSGeometry('SRID=4326;MULTIPOLYGON((('\
+                                        '0 0,10 0,10 10,0 10,0 0)))')
+        polygon_high = GEOSGeometry('SRID=4326;MULTIPOLYGON((('\
+                                        '0 10,10 10,10 20,0 20,0 10)))')
+        polygon_full = GEOSGeometry('SRID=4326;MULTIPOLYGON((('\
+                               '0 0,10 0,10 10,10 20,0 20,0 10, 0 0)))')
+        polygon_default = GEOSGeometry('SRID=4326;MULTIPOLYGON((('\
+                                        '0 0,1 0,1 2,0 2,0 0)))')
         area_low = Area.objects.create(label=u'Test low', polygon=polygon_low)
         area_high = Area.objects.create(label=u'Test high',
                                         polygon=polygon_high)
@@ -50,11 +50,13 @@ class AreaTest(TestCase):
                          child=area_low).count(), 1)
         self.assertEqual(area_full.polygon.difference(polygon_full).area, 0)
         self.assertEqual(polygon_full.difference(area_full.polygon).area, 0)
-        area_low.polygon = GEOSGeometry('SRID=4326;POLYGON(('\
-                                        '0 -10,10 -10,10 10,0 10,0 -10))')
+        area_low.polygon = GEOSGeometry('SRID=4326;MULTIPOLYGON((('\
+                                        '0 -10,10 -10,10 10,0 10,0 -10)))')
         area_low.save()
-        polygon_full_2 = GEOSGeometry('SRID=4326;POLYGON(('\
-                                         '0 -10,10 -10,10 20,0 20,0 -10))')
+        print "area_low"
+        print area_full.polygon.wkt
+        polygon_full_2 = GEOSGeometry('SRID=4326;MULTIPOLYGON((('\
+                                         '0 -10,10 -10,10 20,0 20,0 -10)))')
         self.assertEqual(area_full.polygon.difference(polygon_full_2).area, 0)
         self.assertEqual(polygon_full_2.difference(area_full.polygon).area, 0)
 
@@ -139,8 +141,8 @@ class LocationTest(TestCase):
         point = GEOSGeometry('SRID=4326;POINT(-8.88 53.81)')
         location = Location(label=u'Test point', point=point, area=None)
         location.save()
-        polygon = GEOSGeometry('SRID=4326;POLYGON((-8.88 53.81,-1.41 55.84,'\
-                               '-5.54 53.29,0.34 54.69, -8.88 53.81))')
+        polygon = GEOSGeometry('SRID=4326;MULTIPOLYGON(((-8.88 53.81,'\
+                 '-1.41 55.84,-5.54 53.29,0.34 54.69, -8.88 53.81)))')
         area = Area(label=u'Test', polygon=polygon)
         area.save()
         location = Location.objects.create(label=u'Test point', point=None,
