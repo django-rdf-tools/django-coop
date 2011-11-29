@@ -1,7 +1,7 @@
 # # -*- coding:utf-8 -*-
 from django.shortcuts import render_to_response, redirect
 from skosxl.models import Term,Concept
-from coop_local.models import Site, Initiative, Membre, Event
+from coop_local.models import Site, Initiative, Membre
 from django.template import RequestContext
 
 
