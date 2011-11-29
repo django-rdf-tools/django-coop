@@ -180,12 +180,8 @@ def area_post_save(sender, **kwargs):
                  'label':AREA_DEFAULT_LOCATION_LBL % area.label}
         area.default_location = Location.objects.create(**datas)
         area.save()
-    if area.pk == 3:
-        print type(area.polygon)
-        print "22", area.polygon
     if area.parent_rels.count():
         for parentrel in area.parent_rels.all():
-            print "YO"*10
             parentrel.parent.update_from_childs()
 post_save.connect(area_post_save, sender=Area)
 

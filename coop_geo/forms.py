@@ -34,10 +34,3 @@ class AreaForm(forms.ModelForm):
             'polygon': widgets.PolygonWidget(),
         }
 
-    def clean_parent(self):
-        cleaned_data = self.cleaned_data
-        parent = cleaned_data.get('parent')
-        if parent and self.instance == parent:
-            raise ValidationError(u"You can't set a parent relative to itself.")
-        return parent
-

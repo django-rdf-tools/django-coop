@@ -53,8 +53,7 @@ class AreaTest(TestCase):
         area_low.polygon = GEOSGeometry('SRID=4326;MULTIPOLYGON((('\
                                         '0 -10,10 -10,10 10,0 10,0 -10)))')
         area_low.save()
-        print "area_low"
-        print area_full.polygon.wkt
+        area_full = Area.objects.get(pk=3)
         polygon_full_2 = GEOSGeometry('SRID=4326;MULTIPOLYGON((('\
                                          '0 -10,10 -10,10 20,0 20,0 -10)))')
         self.assertEqual(area_full.polygon.difference(polygon_full_2).area, 0)
