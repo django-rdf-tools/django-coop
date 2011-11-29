@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.contrib.gis.db import models
+from django.db.models.signals import post_save
 
 class Location(models.Model):
     """Location: a named point or/and polygon entered by an administrator"""
@@ -48,7 +49,7 @@ class Area(models.Model):
     label = models.CharField(max_length=150, verbose_name=_(u"label"))
     reference = models.CharField(max_length=150, verbose_name=_(u"reference"),
                                  blank=True, null=True)
-    polygon = models.PolygonField(_(u"polygon"),
+    polygon = models.MultiPolygonField(_(u"polygon"),
                                   srid=settings.COOP_GEO_EPSG_PROJECTION)
     default_location = models.ForeignKey(Location, blank=True, null=True,
             verbose_name=_(u"default location"), related_name='associated_area')
@@ -62,18 +63,6 @@ class Area(models.Model):
 
     def __unicode__(self):
         return self.label
-
-    def save(self, *args, **kwargs):
-        if not self.default_location:
-            datas = {'point':self.polygon.centroid,
-                     'label':AREA_DEFAULT_LOCATION_LBL % self.label}
-            self.default_location = Location.objects.create(**datas)
-        returned = super(Area, self).save(*args, **kwargs)
-        if self.parent_rels.count():
-            for parentrel in self.parent_rels.all():
-                print "YO"*10
-                parentrel.parent.update_from_childs()
-        return returned
 
     def add_parent(self, parent, relation_type):
         if parent == self:
@@ -94,7 +83,8 @@ class Area(models.Model):
                          for childrel in self.child_rels.all()]
         self.polygon = geocollection[0]
         for polygon in geocollection[1:]:
-            self.polygon = self.polygon.union(polygon)
+            self.polygon = self.polygon + polygon
+        #TODO: simplify with unions
         self.save()
         return
 
@@ -170,6 +160,24 @@ class Area(models.Model):
                 sorted_areas += childs
         return sorted_areas
 
+def area_post_save(sender, **kwargs):
+    if not kwargs['instance']:
+        return
+    area = kwargs['instance']
+    if not area.default_location:
+        datas = {'point':area.polygon.centroid,
+                 'label':AREA_DEFAULT_LOCATION_LBL % area.label}
+        area.default_location = Location.objects.create(**datas)
+        area.save()
+    if area.pk == 3:
+        print type(area.polygon)
+        print "22", area.polygon
+    if area.parent_rels.count():
+        for parentrel in area.parent_rels.all():
+            print "YO"*10
+            parentrel.parent.update_from_childs()
+post_save.connect(area_post_save, sender=Area)
+
 RELATION_TYPES = (('RG', u'région'),
                   ('DP', u"département"),
                   ('CC', u"communauté de commune"),
@@ -184,6 +192,10 @@ class AreaRelations(models.Model):
     parent = models.ForeignKey(Area, related_name='child_rels')
     child = models.ForeignKey(Area, related_name='parent_rels')
 
-    def save(self, *args, **kwargs):
-        super(AreaRelations, self).save(*args, **kwargs)
-        self.parent.update_from_childs()
+def arearel_post_save(sender, **kwargs):
+    if not kwargs['instance']:
+        return
+    arearel = kwargs['instance']
+    arearel.parent.update_from_childs()
+post_save.connect(arearel_post_save, sender=AreaRelations)
+
