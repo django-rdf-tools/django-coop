@@ -71,7 +71,7 @@ class Term(models.Model):
     modified = exfields.ModificationDateTimeField(_(u'Mdate de modification'))
     author = models.CharField(_(u'Auteur'),blank=True, max_length=250, editable=False)
     concept = models.ManyToManyField(Concept,through='Label')
-    count = models.IntegerField(blank=True, null=True)
+    occurences = models.IntegerField(blank=True, null=True)
     def get_absolute_url(self):
         return reverse('tag_detail', args=[self.slug])
     def __unicode__(self):

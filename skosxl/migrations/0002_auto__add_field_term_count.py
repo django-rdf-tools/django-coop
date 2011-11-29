@@ -9,13 +9,13 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         
         # Adding field 'Term.count'
-        db.add_column('skosxl_term', 'count', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True), keep_default=False)
+        db.add_column('skosxl_term', 'occurences', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True), keep_default=False)
 
 
     def backwards(self, orm):
         
         # Deleting field 'Term.count'
-        db.delete_column('skosxl_term', 'count')
+        db.delete_column('skosxl_term', 'occurences')
 
 
     models = {
@@ -56,12 +56,12 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Term'},
             'author': ('django.db.models.fields.CharField', [], {'max_length': '250', 'blank': 'True'}),
             'concept': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['skosxl.Concept']", 'through': "orm['skosxl.Label']", 'symmetrical': 'False'}),
-            'count': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'language': ('django.db.models.fields.CharField', [], {'default': "'@fr'", 'max_length': '10'}),
             'literal': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            'occurences': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'db_index': 'True', 'max_length': '50', 'blank': 'True'})
         },
         'skosxl.vocabulary': {
