@@ -81,7 +81,7 @@ class ChooseLocationWidget(ff_gis.PointWidget, ff_gis.BaseOsmWidget):
         context['locations'] = Location.get_all(self.user)
         return context
 
-class PolygonWidget(ff_gis.PolygonWidget, ff_gis.BaseOsmWidget):
+class PolygonWidget(ff_gis.MultiPolygonWidget, ff_gis.BaseOsmWidget):
     template_name = 'gis/osm.html'
     map_width = 400
     areas = Area.get_all()

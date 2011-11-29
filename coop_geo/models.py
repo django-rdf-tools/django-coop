@@ -76,6 +76,10 @@ class Area(models.Model):
         self.related_areas.through.objects.create(child=child, parent=self,
                                                   relation_type=relation_type)
 
+    def add_childs(self, childs, relation_type):
+        for child in childs:
+            self.add_child(child, relation_type)
+
     def update_from_childs(self):
         if not self.update_auto or not self.child_rels.count():
             return
@@ -89,14 +93,22 @@ class Area(models.Model):
         return
 
     @property
+    def parent(self):
+        if not self.parent_rels.count():
+            return
+        # only return the first defined parent
+        return self.parent_rels.order_by('id').all()[0].parent
+
+    @property
     def level(self):
         if hasattr(self, '_level') and isinstance(self._level, int):
             return self._level
         level = 0
-        if not self.parent or self.parent == self:
+        if not self.parent_rels.count():
             self._level = 0
         else:
-            self._level = self.parent.level + 1
+            # first relation define the level
+            self._level = self.parent_rels.all()[0].parent.level + 1
         return self._level
 
     @property
@@ -116,8 +128,7 @@ class Area(models.Model):
         """
         Get areas sorted in a tree style
         """
-        areas = cls.objects.order_by('-parent', 'label').all()
-        return areas
+        areas = cls.objects.order_by('label').all()
         sorted_areas = []
 
         area_childs_dct = {}

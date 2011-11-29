@@ -60,10 +60,9 @@ class AreaTest(TestCase):
         self.assertEqual(area_full.polygon.difference(polygon_full_2).area, 0)
         self.assertEqual(polygon_full_2.difference(area_full.polygon).area, 0)
 
-    '''
     def test_relations_levels(self):
-        polygon = GEOSGeometry('SRID=4326;POLYGON((-8.88 53.81,-1.41 55.84,'\
-                               '-5.54 53.29,0.34 54.69, -8.88 53.81))')
+        polygon = GEOSGeometry('SRID=4326;MULTIPOLYGON(((-8.88 53.81'\
+                ',-1.41 55.84,-5.54 53.29,0.34 54.69, -8.88 53.81)))')
         """
         area_1
         > area_2
@@ -74,22 +73,20 @@ class AreaTest(TestCase):
         > area_5
         > > area_7
         """
-        area_1 = Area(label=u'Area 1', polygon=polygon)
-        area_1.save()
-        area_2 = Area(label=u'Area 2', polygon=polygon, parent=area_1)
-        area_2.save()
-        area_3 = Area(label=u'Area 3', polygon=polygon, parent=area_2)
-        area_3.save()
-        area_4 = Area(label=u'Area 4', polygon=polygon, parent=area_3)
-        area_4.save()
-        area_5 = Area(label=u'Area 5', polygon=polygon, parent=area_1)
-        area_5.save()
-        area_6 = Area(label=u'Area 6', polygon=polygon, parent=area_3)
-        area_6.save()
-        area_7 = Area(label=u'Area 7', polygon=polygon, parent=area_5)
-        area_7.save()
-        area_8 = Area(label=u'Area 8', polygon=polygon, parent=area_2)
-        area_8.save()
+        area_1 = Area.objects.create(label=u'Area 1', polygon=polygon)
+        area_2 = Area.objects.create(label=u'Area 2', polygon=polygon)
+        area_1.add_child(area_2, DEFAULT_RELATION_TYPE)
+        area_3 = Area.objects.create(label=u'Area 3', polygon=polygon)
+        area_3.add_parent(area_2, DEFAULT_RELATION_TYPE)
+        area_4 = Area.objects.create(label=u'Area 4', polygon=polygon)
+        area_5 = Area.objects.create(label=u'Area 5', polygon=polygon)
+        area_5.add_parent(area_1, DEFAULT_RELATION_TYPE)
+        area_6 = Area.objects.create(label=u'Area 6', polygon=polygon)
+        area_3.add_childs([area_4, area_6], DEFAULT_RELATION_TYPE)
+        area_7 = Area.objects.create(label=u'Area 7', polygon=polygon)
+        area_5.add_childs([area_7], DEFAULT_RELATION_TYPE)
+        area_8 = Area.objects.create(label=u'Area 8', polygon=polygon)
+        area_2.add_child(area_8, DEFAULT_RELATION_TYPE)
         self.assertEqual(area_1.level, 0)
         self.assertEqual(area_2.level, 1)
         self.assertEqual(area_3.level, 2)
@@ -129,7 +126,7 @@ class AreaTest(TestCase):
         self.assertEqual(areas_dct[8].end_leaf, 1)
         self.assertEqual(areas_dct[5].leaf, True)
         self.assertEqual(areas_dct[7].end_leaf, 2)
-'''
+
 class LocationTest(TestCase):
     def setUp(self):
         pass
