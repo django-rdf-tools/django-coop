@@ -13,6 +13,10 @@ class Location(models.Model):
     label = models.CharField(max_length=150, verbose_name=_(u"label"))
     point = models.PointField(_(u"point"), blank=True, null=True,
                               srid=settings.COOP_GEO_EPSG_PROJECTION)
+    adr1 = models.CharField(null=True, blank=True, max_length=100)
+    adr2 = models.CharField(null=True, blank=True, max_length=100)
+    zipcode = models.CharField(null=True, blank=True, max_length=5)
+    city = models.CharField(null=True, blank=True, max_length=100)
     area = models.ForeignKey('Area', verbose_name=_(u'area'), blank=True,
                               null=True)
     owner = models.ForeignKey(User, verbose_name=_(u'owner'), blank=True,
