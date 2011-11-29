@@ -28,9 +28,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-08-11 14:21:35",
-            "modified": "2011-08-11 14:21:35",
+            "modified": "2011-11-22 19:17:04",
             "literal": "solidaire",
-            "slug": "solidaire"
+            "slug": "solidaire",
+            "occurences": 2
         }
     },
     {
@@ -40,9 +41,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-08-11 14:33:56",
-            "modified": "2011-08-11 14:33:56",
+            "modified": "2011-11-22 19:17:04",
             "literal": "Economie Solidaire",
-            "slug": "economie-solidaire"
+            "slug": "economie-solidaire",
+            "occurences": 1
         }
     },
     {
@@ -52,9 +54,10 @@
             "language": "@es",
             "author": "",
             "created": "2011-08-11 14:34:32",
-            "modified": "2011-08-11 14:34:32",
+            "modified": "2011-11-22 19:17:04",
             "literal": "Economia Solidaria",
-            "slug": "economia-solidaria"
+            "slug": "economia-solidaria",
+            "occurences": 0
         }
     },
     {
@@ -64,9 +67,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 00:28:19",
-            "modified": "2011-09-06 00:28:20",
+            "modified": "2011-11-22 19:17:04",
             "literal": "agriculture",
-            "slug": "agriculture"
+            "slug": "agriculture",
+            "occurences": 1
         }
     },
     {
@@ -76,9 +80,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 06:50:01",
-            "modified": "2011-09-06 06:50:01",
+            "modified": "2011-11-22 19:17:04",
             "literal": "panier",
-            "slug": "panier"
+            "slug": "panier",
+            "occurences": 0
         }
     },
     {
@@ -88,9 +93,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 06:50:22",
-            "modified": "2011-09-06 06:50:22",
+            "modified": "2011-11-22 19:17:04",
             "literal": "citoyen",
-            "slug": "citoyen"
+            "slug": "citoyen",
+            "occurences": 0
         }
     },
     {
@@ -100,9 +106,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 06:58:45",
-            "modified": "2011-09-06 06:58:45",
+            "modified": "2011-11-22 19:17:04",
             "literal": "recyclage",
-            "slug": "recyclage"
+            "slug": "recyclage",
+            "occurences": 1
         }
     },
     {
@@ -112,9 +119,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 06:58:51",
-            "modified": "2011-09-06 06:58:51",
+            "modified": "2011-11-22 19:17:04",
             "literal": "for\u00eat",
-            "slug": "foret"
+            "slug": "foret",
+            "occurences": 0
         }
     },
     {
@@ -124,9 +132,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 06:59:10",
-            "modified": "2011-09-06 06:59:10",
+            "modified": "2011-11-22 19:17:04",
             "literal": "accompagnement",
-            "slug": "accompagnement"
+            "slug": "accompagnement",
+            "occurences": 0
         }
     },
     {
@@ -136,9 +145,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 06:59:21",
-            "modified": "2011-09-06 06:59:21",
+            "modified": "2011-11-22 19:17:04",
             "literal": "mise en r\u00e9seau",
-            "slug": "mise-en-reseau"
+            "slug": "mise-en-reseau",
+            "occurences": 0
         }
     },
     {
@@ -148,9 +158,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 06:59:25",
-            "modified": "2011-09-06 06:59:25",
+            "modified": "2011-11-22 19:17:04",
             "literal": "handicap",
-            "slug": "handicap"
+            "slug": "handicap",
+            "occurences": 1
         }
     },
     {
@@ -160,9 +171,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 06:59:46",
-            "modified": "2011-09-06 06:59:46",
+            "modified": "2011-11-22 19:17:04",
             "literal": "d\u00e9marches administratives",
-            "slug": "demarches-administratives"
+            "slug": "demarches-administratives",
+            "occurences": 2
         }
     },
     {
@@ -172,9 +184,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 06:59:53",
-            "modified": "2011-09-06 06:59:53",
+            "modified": "2011-11-22 19:17:04",
             "literal": "exclusion",
-            "slug": "exclusion"
+            "slug": "exclusion",
+            "occurences": 3
         }
     },
     {
@@ -184,9 +197,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:00:07",
-            "modified": "2011-09-06 07:00:07",
+            "modified": "2011-11-22 19:17:04",
             "literal": "ch\u00f4mage",
-            "slug": "chomage"
+            "slug": "chomage",
+            "occurences": 1
         }
     },
     {
@@ -196,9 +210,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:00:13",
-            "modified": "2011-09-06 07:00:13",
+            "modified": "2011-11-22 19:17:04",
             "literal": "ruralit\u00e9",
-            "slug": "ruralite"
+            "slug": "ruralite",
+            "occurences": 0
         }
     },
     {
@@ -208,9 +223,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:00:20",
-            "modified": "2011-09-06 07:00:20",
+            "modified": "2011-11-22 19:17:04",
             "literal": "environnement",
-            "slug": "environnement"
+            "slug": "environnement",
+            "occurences": 0
         }
     },
     {
@@ -220,9 +236,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:00:35",
-            "modified": "2011-09-06 07:00:35",
+            "modified": "2011-11-22 19:17:04",
             "literal": "\u00e9ducation \u00e0 l'environnement",
-            "slug": "education-a-lenvironnement"
+            "slug": "education-a-lenvironnement",
+            "occurences": 3
         }
     },
     {
@@ -232,9 +249,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:00:44",
-            "modified": "2011-09-06 07:00:44",
+            "modified": "2011-11-22 19:17:04",
             "literal": "loisirs",
-            "slug": "loisirs"
+            "slug": "loisirs",
+            "occurences": 0
         }
     },
     {
@@ -244,9 +262,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:01:12",
-            "modified": "2011-09-06 07:01:12",
+            "modified": "2011-11-22 19:17:04",
             "literal": "gestion alternative",
-            "slug": "gestion-alternative"
+            "slug": "gestion-alternative",
+            "occurences": 0
         }
     },
     {
@@ -256,9 +275,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:01:16",
-            "modified": "2011-09-06 07:01:16",
+            "modified": "2011-11-22 19:17:04",
             "literal": "l\u00e9gumes",
-            "slug": "legumes"
+            "slug": "legumes",
+            "occurences": 0
         }
     },
     {
@@ -268,9 +288,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:01:28",
-            "modified": "2011-09-06 07:01:28",
+            "modified": "2011-11-22 19:17:04",
             "literal": "v\u00eatements",
-            "slug": "vetements"
+            "slug": "vetements",
+            "occurences": 4
         }
     },
     {
@@ -280,9 +301,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:01:36",
-            "modified": "2011-09-06 07:01:36",
+            "modified": "2011-11-22 19:17:04",
             "literal": "artisanat",
-            "slug": "artisanat"
+            "slug": "artisanat",
+            "occurences": 1
         }
     },
     {
@@ -292,9 +314,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:01:45",
-            "modified": "2011-09-06 07:01:45",
+            "modified": "2011-11-22 19:17:04",
             "literal": "th\u00e9\u00e2tre",
-            "slug": "theatre"
+            "slug": "theatre",
+            "occurences": 1
         }
     },
     {
@@ -304,9 +327,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:01:52",
-            "modified": "2011-09-06 07:01:52",
+            "modified": "2011-11-22 19:17:04",
             "literal": "spectacle vivant",
-            "slug": "spectacle-vivant"
+            "slug": "spectacle-vivant",
+            "occurences": 0
         }
     },
     {
@@ -316,9 +340,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:01:56",
-            "modified": "2011-09-06 07:01:56",
+            "modified": "2011-11-22 19:17:04",
             "literal": "culture",
-            "slug": "culture"
+            "slug": "culture",
+            "occurences": 3
         }
     },
     {
@@ -328,9 +353,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:02:02",
-            "modified": "2011-09-06 07:02:02",
+            "modified": "2011-11-22 19:17:04",
             "literal": "transport",
-            "slug": "transport"
+            "slug": "transport",
+            "occurences": 0
         }
     },
     {
@@ -340,9 +366,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:02:17",
-            "modified": "2011-09-06 07:02:18",
+            "modified": "2011-11-22 19:17:04",
             "literal": "logement",
-            "slug": "logement"
+            "slug": "logement",
+            "occurences": 0
         }
     },
     {
@@ -352,9 +379,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:02:21",
-            "modified": "2011-09-06 07:02:21",
+            "modified": "2011-11-22 19:17:04",
             "literal": "habitat",
-            "slug": "habitat"
+            "slug": "habitat",
+            "occurences": 0
         }
     },
     {
@@ -364,9 +392,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:02:25",
-            "modified": "2011-09-06 07:02:25",
+            "modified": "2011-11-22 19:17:04",
             "literal": "construction",
-            "slug": "construction"
+            "slug": "construction",
+            "occurences": 0
         }
     },
     {
@@ -376,9 +405,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:02:30",
-            "modified": "2011-09-06 07:02:30",
+            "modified": "2011-11-22 19:17:04",
             "literal": "eco-construction",
-            "slug": "eco-construction"
+            "slug": "eco-construction",
+            "occurences": 0
         }
     },
     {
@@ -388,9 +418,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:02:42",
-            "modified": "2011-09-06 07:02:42",
+            "modified": "2011-11-22 19:17:04",
             "literal": "mat\u00e9riaux \u00e9cologiques",
-            "slug": "materiaux-ecologiques"
+            "slug": "materiaux-ecologiques",
+            "occurences": 0
         }
     },
     {
@@ -400,9 +431,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:02:49",
-            "modified": "2011-09-06 07:02:49",
+            "modified": "2011-11-22 19:17:04",
             "literal": "apprentissage",
-            "slug": "apprentissage"
+            "slug": "apprentissage",
+            "occurences": 1
         }
     },
     {
@@ -412,9 +444,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:02:54",
-            "modified": "2011-09-06 07:02:54",
+            "modified": "2011-11-22 19:17:05",
             "literal": "formation continue",
-            "slug": "formation-continue"
+            "slug": "formation-continue",
+            "occurences": 1
         }
     },
     {
@@ -424,9 +457,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:03:13",
-            "modified": "2011-09-06 07:03:13",
+            "modified": "2011-11-22 19:17:05",
             "literal": "m\u00e9diation animale",
-            "slug": "mediation-animale"
+            "slug": "mediation-animale",
+            "occurences": 0
         }
     },
     {
@@ -436,9 +470,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:03:17",
-            "modified": "2011-09-06 07:03:17",
+            "modified": "2011-11-22 19:17:05",
             "literal": "animation",
-            "slug": "animation"
+            "slug": "animation",
+            "occurences": 3
         }
     },
     {
@@ -448,9 +483,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:03:25",
-            "modified": "2011-09-06 07:03:25",
+            "modified": "2011-11-22 19:17:05",
             "literal": "sport",
-            "slug": "sport"
+            "slug": "sport",
+            "occurences": 0
         }
     },
     {
@@ -460,9 +496,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:03:32",
-            "modified": "2011-09-06 07:03:32",
+            "modified": "2011-11-22 19:17:05",
             "literal": "lien social",
-            "slug": "lien-social"
+            "slug": "lien-social",
+            "occurences": 0
         }
     },
     {
@@ -472,9 +509,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:03:39",
-            "modified": "2011-09-06 07:03:39",
+            "modified": "2011-11-22 19:17:05",
             "literal": "proximit\u00e9",
-            "slug": "proximite"
+            "slug": "proximite",
+            "occurences": 1
         }
     },
     {
@@ -484,9 +522,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:04:25",
-            "modified": "2011-09-06 07:04:25",
+            "modified": "2011-11-22 19:17:05",
             "literal": "insertion",
-            "slug": "insertion"
+            "slug": "insertion",
+            "occurences": 0
         }
     },
     {
@@ -496,9 +535,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:04:34",
-            "modified": "2011-09-06 07:04:34",
+            "modified": "2011-11-22 19:17:05",
             "literal": "insertion par le travail",
-            "slug": "insertion-par-le-travail"
+            "slug": "insertion-par-le-travail",
+            "occurences": 3
         }
     },
     {
@@ -508,9 +548,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:05:01",
-            "modified": "2011-09-06 07:05:01",
+            "modified": "2011-11-22 19:17:05",
             "literal": "petite enfance",
-            "slug": "petite-enfance"
+            "slug": "petite-enfance",
+            "occurences": 0
         }
     },
     {
@@ -520,9 +561,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:05:08",
-            "modified": "2011-09-06 07:05:08",
+            "modified": "2011-11-22 19:17:05",
             "literal": "jeux",
-            "slug": "jeux"
+            "slug": "jeux",
+            "occurences": 0
         }
     },
     {
@@ -532,9 +574,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:05:25",
-            "modified": "2011-09-06 07:05:25",
+            "modified": "2011-11-22 19:17:05",
             "literal": "livre",
-            "slug": "livre"
+            "slug": "livre",
+            "occurences": 3
         }
     },
     {
@@ -544,9 +587,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:05:30",
-            "modified": "2011-09-06 07:05:30",
+            "modified": "2011-11-22 19:17:05",
             "literal": "documentation",
-            "slug": "documentation"
+            "slug": "documentation",
+            "occurences": 0
         }
     },
     {
@@ -556,9 +600,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:05:46",
-            "modified": "2011-09-06 07:05:46",
+            "modified": "2011-11-22 19:17:05",
             "literal": "alimentation",
-            "slug": "alimentation"
+            "slug": "alimentation",
+            "occurences": 0
         }
     },
     {
@@ -568,9 +613,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:05:51",
-            "modified": "2011-09-06 07:05:51",
+            "modified": "2011-11-22 19:17:05",
             "literal": "bien-\u00eatre",
-            "slug": "bien-etre"
+            "slug": "bien-etre",
+            "occurences": 0
         }
     },
     {
@@ -580,9 +626,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:25:00",
-            "modified": "2011-09-06 07:25:00",
+            "modified": "2011-11-22 19:17:05",
             "literal": "services",
-            "slug": "services"
+            "slug": "services",
+            "occurences": 0
         }
     },
     {
@@ -592,9 +639,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:25:09",
-            "modified": "2011-09-06 07:25:09",
+            "modified": "2011-11-22 19:17:05",
             "literal": "services \u00e0 la personne",
-            "slug": "services-a-la-personne"
+            "slug": "services-a-la-personne",
+            "occurences": 1
         }
     },
     {
@@ -604,9 +652,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:25:29",
-            "modified": "2011-09-06 07:25:29",
+            "modified": "2011-11-22 19:17:05",
             "literal": "coop\u00e9ration",
-            "slug": "cooperation"
+            "slug": "cooperation",
+            "occurences": 0
         }
     },
     {
@@ -616,9 +665,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:25:38",
-            "modified": "2011-09-06 07:25:38",
+            "modified": "2011-11-22 19:17:05",
             "literal": "partage",
-            "slug": "partage"
+            "slug": "partage",
+            "occurences": 0
         }
     },
     {
@@ -628,9 +678,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:25:49",
-            "modified": "2011-09-06 07:25:49",
+            "modified": "2011-11-22 19:17:05",
             "literal": "financement",
-            "slug": "financement"
+            "slug": "financement",
+            "occurences": 0
         }
     },
     {
@@ -640,9 +691,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:25:55",
-            "modified": "2011-09-06 07:25:55",
+            "modified": "2011-11-22 19:17:05",
             "literal": "\u00e9ducation",
-            "slug": "education"
+            "slug": "education",
+            "occurences": 0
         }
     },
     {
@@ -652,9 +704,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:27:09",
-            "modified": "2011-09-06 07:27:09",
+            "modified": "2011-11-22 19:17:05",
             "literal": "commerce \u00e9quitable",
-            "slug": "commerce-equitable"
+            "slug": "commerce-equitable",
+            "occurences": 0
         }
     },
     {
@@ -664,9 +717,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:27:17",
-            "modified": "2011-09-06 07:27:17",
+            "modified": "2011-11-22 19:17:05",
             "literal": "agriculture biologique",
-            "slug": "agriculture-biologique"
+            "slug": "agriculture-biologique",
+            "occurences": 0
         }
     },
     {
@@ -676,9 +730,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:27:21",
-            "modified": "2011-09-06 07:27:21",
+            "modified": "2011-11-22 19:17:05",
             "literal": "\u00e9cologie",
-            "slug": "ecologie"
+            "slug": "ecologie",
+            "occurences": 0
         }
     },
     {
@@ -688,9 +743,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:28:08",
-            "modified": "2011-09-06 07:28:08",
+            "modified": "2011-11-22 19:17:05",
             "literal": "patrimoine",
-            "slug": "patrimoine"
+            "slug": "patrimoine",
+            "occurences": 2
         }
     },
     {
@@ -700,9 +756,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:28:40",
-            "modified": "2011-09-06 07:28:40",
+            "modified": "2011-11-22 19:17:05",
             "literal": "amap",
-            "slug": "amap"
+            "slug": "amap",
+            "occurences": 0
         }
     },
     {
@@ -712,9 +769,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:29:05",
-            "modified": "2011-09-06 07:29:05",
+            "modified": "2011-11-22 19:17:05",
             "literal": "tourisme",
-            "slug": "tourisme"
+            "slug": "tourisme",
+            "occurences": 1
         }
     },
     {
@@ -724,9 +782,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:29:13",
-            "modified": "2011-09-06 07:29:13",
+            "modified": "2011-11-22 19:17:05",
             "literal": "h\u00e9bergement",
-            "slug": "hebergement"
+            "slug": "hebergement",
+            "occurences": 1
         }
     },
     {
@@ -736,9 +795,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:29:19",
-            "modified": "2011-09-06 07:29:19",
+            "modified": "2011-11-22 19:17:05",
             "literal": "tourisme rural",
-            "slug": "tourisme-rural"
+            "slug": "tourisme-rural",
+            "occurences": 1
         }
     },
     {
@@ -748,9 +808,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:30:40",
-            "modified": "2011-09-06 07:30:40",
+            "modified": "2011-11-22 19:17:05",
             "literal": "musique",
-            "slug": "musique"
+            "slug": "musique",
+            "occurences": 3
         }
     },
     {
@@ -760,9 +821,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:31:19",
-            "modified": "2011-09-06 07:31:19",
+            "modified": "2011-11-22 19:17:05",
             "literal": "itin\u00e9rant",
-            "slug": "itinerant"
+            "slug": "itinerant",
+            "occurences": 0
         }
     },
     {
@@ -772,9 +834,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:35:35",
-            "modified": "2011-09-06 07:35:35",
+            "modified": "2011-11-22 19:17:05",
             "literal": "cr\u00e9ation d'entreprise",
-            "slug": "creation-dentreprise"
+            "slug": "creation-dentreprise",
+            "occurences": 0
         }
     },
     {
@@ -784,9 +847,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:35:45",
-            "modified": "2011-09-06 07:35:45",
+            "modified": "2011-11-22 19:17:05",
             "literal": "d\u00e9veloppement local",
-            "slug": "developpement-local"
+            "slug": "developpement-local",
+            "occurences": 2
         }
     },
     {
@@ -796,9 +860,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:36:59",
-            "modified": "2011-09-06 07:36:59",
+            "modified": "2011-11-22 19:17:05",
             "literal": "Egalit\u00e9 hommes-femmes",
-            "slug": "egalite-hommes-femmes"
+            "slug": "egalite-hommes-femmes",
+            "occurences": 1
         }
     },
     {
@@ -808,9 +873,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:37:14",
-            "modified": "2011-09-06 07:37:14",
+            "modified": "2011-11-22 19:17:05",
             "literal": "droits des femmes",
-            "slug": "droits-des-femmes"
+            "slug": "droits-des-femmes",
+            "occurences": 1
         }
     },
     {
@@ -820,9 +886,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:38:14",
-            "modified": "2011-09-06 07:38:14",
+            "modified": "2011-11-22 19:17:05",
             "literal": "\u00e9nergie",
-            "slug": "energie"
+            "slug": "energie",
+            "occurences": 1
         }
     },
     {
@@ -832,9 +899,10 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:38:22",
-            "modified": "2011-09-06 07:38:22",
+            "modified": "2011-11-22 19:17:05",
             "literal": "panneau solaire",
-            "slug": "panneau-solaire"
+            "slug": "panneau-solaire",
+            "occurences": 1
         }
     },
     {
@@ -844,9 +912,218 @@
             "language": "@fr",
             "author": "",
             "created": "2011-09-06 07:38:45",
-            "modified": "2011-09-06 07:38:45",
+            "modified": "2011-11-22 19:17:05",
             "literal": "coop\u00e9rative",
-            "slug": "cooperative"
+            "slug": "cooperative",
+            "occurences": 3
+        }
+    },
+    {
+        "pk": 71,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-11-22 18:22:59",
+            "modified": "2011-11-22 19:17:05",
+            "literal": "paysan",
+            "slug": "paysan",
+            "occurences": 1
+        }
+    },
+    {
+        "pk": 72,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-11-22 18:23:11",
+            "modified": "2011-11-22 19:17:05",
+            "literal": "fermier",
+            "slug": "fermier",
+            "occurences": 0
+        }
+    },
+    {
+        "pk": 73,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-11-22 18:23:20",
+            "modified": "2011-11-22 19:17:05",
+            "literal": "production agricole",
+            "slug": "production-agricole",
+            "occurences": 0
+        }
+    },
+    {
+        "pk": 74,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-11-22 18:35:24",
+            "modified": "2011-11-22 19:17:05",
+            "literal": "services aux collectivit\u00e9s",
+            "slug": "services-aux-collectivites",
+            "occurences": 1
+        }
+    },
+    {
+        "pk": 75,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-11-22 18:35:33",
+            "modified": "2011-11-22 19:17:05",
+            "literal": "textile",
+            "slug": "textile",
+            "occurences": 1
+        }
+    },
+    {
+        "pk": 76,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-11-22 18:37:01",
+            "modified": "2011-11-22 19:17:05",
+            "literal": "distribution",
+            "slug": "distribution",
+            "occurences": 0
+        }
+    },
+    {
+        "pk": 79,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-11-22 18:39:59",
+            "modified": "2011-11-22 19:17:05",
+            "literal": "aide \u00e0 la cr\u00e9ation",
+            "slug": "aide-a-la-creation",
+            "occurences": 3
+        }
+    },
+    {
+        "pk": 80,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-11-22 18:42:11",
+            "modified": "2011-11-22 19:17:05",
+            "literal": "mode",
+            "slug": "mode",
+            "occurences": 2
+        }
+    },
+    {
+        "pk": 81,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-11-22 18:43:35",
+            "modified": "2011-11-22 19:17:05",
+            "literal": "femmes",
+            "slug": "femmes",
+            "occurences": 2
+        }
+    },
+    {
+        "pk": 82,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-11-22 18:44:37",
+            "modified": "2011-11-22 19:17:05",
+            "literal": "immigration",
+            "slug": "immigration",
+            "occurences": 1
+        }
+    },
+    {
+        "pk": 83,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-11-22 18:54:15",
+            "modified": "2011-11-22 19:17:05",
+            "literal": "savoir-faire",
+            "slug": "savoir-faire",
+            "occurences": 1
+        }
+    },
+    {
+        "pk": 84,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-11-22 18:54:23",
+            "modified": "2011-11-22 19:17:05",
+            "literal": "taille de pierre",
+            "slug": "taille-de-pierre",
+            "occurences": 1
+        }
+    },
+    {
+        "pk": 85,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-11-22 18:55:20",
+            "modified": "2011-11-22 19:17:05",
+            "literal": "SCIC",
+            "slug": "scic",
+            "occurences": 1
+        }
+    },
+    {
+        "pk": 86,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-11-22 18:57:29",
+            "modified": "2011-11-22 19:17:05",
+            "literal": "association",
+            "slug": "association",
+            "occurences": 2
+        }
+    },
+    {
+        "pk": 87,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-11-22 18:58:04",
+            "modified": "2011-11-22 19:17:05",
+            "literal": "\u00e9ducation scientifique",
+            "slug": "education-scientifique",
+            "occurences": 1
+        }
+    },
+    {
+        "pk": 88,
+        "model": "skosxl.term",
+        "fields": {
+            "language": "@fr",
+            "author": "",
+            "created": "2011-11-22 18:58:16",
+            "modified": "2011-11-22 19:17:05",
+            "literal": "\u00e9ducation populaire",
+            "slug": "education-populaire",
+            "occurences": 2
         }
     },
     {
