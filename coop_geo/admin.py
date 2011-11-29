@@ -17,3 +17,7 @@ class AreaAdmin(admin.ModelAdmin):
     form = forms.AreaForm
 admin.site.register(models.Area, AreaAdmin)
 
+class AreaRelAdmin(admin.ModelAdmin):
+    model = models.AreaRelations
+admin.site.register(models.AreaRelations, AreaRelAdmin)
+

@@ -198,6 +198,10 @@ class AreaRelations(models.Model):
                                      choices=RELATION_TYPES)
     parent = models.ForeignKey(Area, related_name='child_rels')
     child = models.ForeignKey(Area, related_name='parent_rels')
+    class Meta:
+        verbose_name = _(u"Area relation")
+        verbose_name_plural = _(u"Area relations")
+
 
 def arearel_post_save(sender, **kwargs):
     if not kwargs['instance']:
