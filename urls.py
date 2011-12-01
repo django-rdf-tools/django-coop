@@ -36,5 +36,6 @@ if settings.DEBUG or ('test' in sys.argv):
     )
 
 urlpatterns += patterns('',
+    (r'^', include('coop_geo.urls', app_name='coop_geo')),
     (r'^', include('coop_cms.urls')),
 )

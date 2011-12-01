@@ -2,7 +2,11 @@
 # -*- coding: utf-8 -*-
 
 from django.test import TestCase
+from django.utils import simplejson as json
+from django.utils.http import urlquote
 from django.core.exceptions import ValidationError
+from django.core.urlresolvers import reverse, resolve
+from django.contrib.auth.models import User, Permission
 from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.gis.geos.collections import GeometryCollection
 
@@ -130,6 +134,19 @@ class LocationTest(TestCase):
     def setUp(self):
         pass
 
+    def _log_as_locationadmin(self):
+        if not hasattr(self, 'locationadmin') or not self.locationadmin:
+            self.locationadmin = User.objects.create_user('locationadmin',
+                                                  'locationadmin@noname.org',
+                                                  'locationadmin')
+            self.locationadmin.is_staff = True
+            can_add_location = Permission.objects.get(
+                                    content_type__app_label='coop_geo',
+                                    codename='add_location')
+            self.locationadmin.user_permissions.add(can_add_location)
+            self.locationadmin.save()
+        self.client.login(username='locationadmin', password='locationadmin')
+
     def test_set_creation(self):
         with self.assertRaises(ValidationError):
             location = Location(label=u'Test', point=None, area=None)
@@ -144,4 +161,20 @@ class LocationTest(TestCase):
         location = Location.objects.create(label=u'Test point', point=None,
                                            area=area)
         location.save()
+
+    def test_json_list(self):
+        point = GEOSGeometry('SRID=4326;POINT(-8.88 53.81)')
+        location = Location.objects.create(label=u'Test', point=point,
+                        area=None, city=u'Paris', adr1=u'Rue de la liberté')
+        url = reverse('json_location',
+            kwargs={'city': 'paris', 'address':urlquote(u'rue de la liberté')},
+            current_app='coop_geo',)
+        response = self.client.get(url)
+        self.assertNotEqual(200, response.status_code)
+        self._log_as_locationadmin()
+        response = self.client.get(url)
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(response['Content-Type'], 'application/json')
+        json_response = json.loads(response.content)
+        self.assertEqual(len(json_response), 1)
 

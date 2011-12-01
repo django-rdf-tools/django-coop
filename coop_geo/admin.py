@@ -8,7 +8,7 @@ import models
 import forms
 
 class LocationAdmin(admin.ModelAdmin):
-    list_display = ['label',]
+    list_display = ['label', 'adr1', 'adr2', 'zipcode', 'city']
     form = forms.LocationForm
 admin.site.register(models.Location, LocationAdmin)
 

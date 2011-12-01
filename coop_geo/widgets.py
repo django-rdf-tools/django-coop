@@ -10,8 +10,8 @@ import floppyforms.gis as ff_gis
 
 from models import Area, Location
 
-class PointWidget(ff_gis.PointWidget, ff_gis.BaseOsmWidget):
-    template_name = 'gis/osm_point.html'
+class LocationPointWidget(ff_gis.PointWidget, ff_gis.BaseOsmWidget):
+    template_name = 'gis/osm_location.html'
     map_width = 400
     point_zoom = 18
     geocode_region = settings.COOP_GEO_REGION
@@ -29,7 +29,7 @@ class PointWidget(ff_gis.PointWidget, ff_gis.BaseOsmWidget):
                 ['geocode_region', 'geocode_bounding', 'point_zoom']
 
     def get_context_data(self):
-        context = super(PointWidget, self).get_context_data()
+        context = super(LocationPointWidget, self).get_context_data()
         context['areas'] = Area.get_all()
         return context
 
@@ -78,7 +78,7 @@ class ChooseLocationWidget(ff_gis.PointWidget, ff_gis.BaseOsmWidget):
 
     def get_context_data(self):
         context = super(ChooseLocationWidget, self).get_context_data()
-        context['locations'] = Location.get_all(self.user)
+        #context['locations'] = Location.get_all(self.user)
         return context
 
 class PolygonWidget(ff_gis.MultiPolygonWidget, ff_gis.BaseOsmWidget):

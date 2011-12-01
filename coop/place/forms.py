@@ -15,8 +15,7 @@ from models import BaseSite
 class BaseSiteForm(forms.ModelForm):
     class Meta:
         model = BaseSite
-        fields = ('title', 'description', 'site_principal', 'location',
-                  'adr1', 'adr2', 'zipcode', 'city',)
+        fields = ('title', 'description', 'site_principal', 'location',)
 
 
 

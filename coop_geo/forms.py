@@ -11,10 +11,10 @@ import widgets
 class LocationForm(forms.ModelForm):
     class Meta:
         model = models.Location
-        fields = ('label', 'point', 'area')
+        fields = ('label', 'adr1', 'adr2', 'zipcode', 'city', 'point', 'area')
         widgets = {
             'label': forms.TextInput(),
-            'point': widgets.PointWidget(),
+            'point': widgets.LocationPointWidget(),
             'area': forms.HiddenInput(),
         }
 
@@ -28,7 +28,8 @@ class LocationForm(forms.ModelForm):
 class AreaForm(forms.ModelForm):
     class Meta:
         model = models.Area
-        fields = ('label', 'polygon',)
+        fields = ('label', 'reference', 'polygon', 'update_auto',
+                  'default_location')
         widgets = {
             'label': forms.TextInput(),
             'polygon': widgets.PolygonWidget(),

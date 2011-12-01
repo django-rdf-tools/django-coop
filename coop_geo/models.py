@@ -11,12 +11,16 @@ from django.db.models.signals import post_save
 class Location(models.Model):
     """Location: a named point or/and polygon entered by an administrator"""
     label = models.CharField(max_length=150, verbose_name=_(u"label"))
-    point = models.PointField(_(u"point"), blank=True, null=True,
+    point = models.PointField(verbose_name=_(u"point"), blank=True, null=True,
                               srid=settings.COOP_GEO_EPSG_PROJECTION)
-    adr1 = models.CharField(null=True, blank=True, max_length=100)
-    adr2 = models.CharField(null=True, blank=True, max_length=100)
-    zipcode = models.CharField(null=True, blank=True, max_length=5)
-    city = models.CharField(null=True, blank=True, max_length=100)
+    adr1 = models.CharField(verbose_name=_(u"address"), null=True, blank=True,
+                            max_length=100)
+    adr2 = models.CharField(verbose_name=_(u"address (extra)"), null=True,
+                            blank=True, max_length=100)
+    zipcode = models.CharField(verbose_name=_(u"zipcode"), null=True,
+                               blank=True, max_length=5)
+    city = models.CharField(verbose_name=_(u"city"), null=True, blank=True,
+                            max_length=100)
     area = models.ForeignKey('Area', verbose_name=_(u'area'), blank=True,
                               null=True)
     owner = models.ForeignKey(User, verbose_name=_(u'owner'), blank=True,
@@ -24,7 +28,13 @@ class Location(models.Model):
     objects = models.GeoManager()
 
     def __unicode__(self):
-        return self.label
+        lbl = self.label
+        extra = [getattr(self, attr)
+                 for attr in ['adr1', 'adr2', 'zipcode', 'city']
+                                          if getattr(self, attr)]
+        if extra:
+            lbl = u"%s (%s)" % (lbl, u", ".join(extra))
+        return lbl
 
     def save(self, *args, **kwargs):
         if not self.point and not self.area:
@@ -42,9 +52,6 @@ class Location(models.Model):
         if user:
             locations = locations.filter(owner=user)
         return locations.order_by('label')
-
-#TODO: manage relations
-#TODO: manage auto parent area
 
 AREA_DEFAULT_LOCATION_LBL = _(u"%s (center)")
 
