@@ -3,7 +3,7 @@ from django.contrib import admin
 from skosxl.models import *
 from django.utils.translation import ugettext_lazy as _
 
-from skosxl.autocomplete_admin import FkAutocompleteAdmin,InlineAutocompleteAdmin
+from coop.autocomplete_admin import FkAutocompleteAdmin,InlineAutocompleteAdmin
 
 class TermInline(InlineAutocompleteAdmin):
     model = Term.concept.through
