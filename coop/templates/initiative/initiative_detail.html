@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load smart_if %}
+{% load smart_if comments %}
 
 
 {% block meta_title %}{{object.title}}{% endblock %}
@@ -42,6 +42,11 @@
         <h4>Relations</h4>
         
     {% endif %}    
+    
+    {% render_comment_list for object %}
+    {% render_comment_form for object %}
+    
+    
     </div>
  
     

@@ -149,6 +149,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.gis',
+    'django.contrib.comments',
 
     #3rd parties
     'south',

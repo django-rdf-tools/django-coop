@@ -14,6 +14,8 @@ urlpatterns = patterns('',
     
     url(r'^$', 'coop.views.home', name="home"),
 
+    (r'^comments/', include('django.contrib.comments.urls')),
+
     (r'^chaining/', include('smart_selects.urls')),
     
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
