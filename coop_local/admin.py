@@ -9,12 +9,14 @@ from django_extensions.admin.widgets import ForeignKeySearchInput
 from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
 
+from coop.autocomplete_admin import FkAutocompleteAdmin,InlineAutocompleteAdmin
 
 admin.site.register(Role)
 
 
-class EngagementInline(admin.TabularInline):
+class EngagementInline(InlineAutocompleteAdmin):
     model = Engagement
+    related_search_fields = {  'membre': ('nom','prenom','email','user__username'), }
     extra=1
 
 
@@ -27,7 +29,7 @@ class InitiativeAdminForm(forms.ModelForm):
         model = Initiative
 
 
-class InitiativeAdmin(admin.ModelAdmin):
+class InitiativeAdmin(FkAutocompleteAdmin):
     form = InitiativeAdminForm
     list_display = ('title','active','uri')
     list_display_links =('title',)

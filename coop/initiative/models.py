@@ -51,6 +51,7 @@ class BaseInitiative(models.Model):
     created = exfields.CreationDateTimeField(_(u'Création'),null=True)
     modified = exfields.ModificationDateTimeField(_(u'Modification'),null=True)
     active = models.BooleanField(default=True)
+    notes = models.TextField(blank=True)
     class Meta:
         abstract = True
     def __unicode__(self):

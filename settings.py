@@ -62,6 +62,8 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 import admin_tools
 ADMIN_TOOLS_PATH = os.path.dirname(os.path.abspath(admin_tools.__file__))
+ADMIN_MEDIA_PREFIX = '/static/admin/'
+
 
 # Additional locations of static files
 STATICFILES_DIRS = (
