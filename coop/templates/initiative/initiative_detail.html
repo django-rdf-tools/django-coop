@@ -66,19 +66,12 @@
               
        <h4>Coordonnées</h4>
        
-       {% for adresse in adresses %}     
-            <img src="http://maps.googleapis.com/maps/api/staticmap?markers=color:red|{{adresse.latlong}}&maptype=hybrid&size=280x200&sensor=false&zoom=8">
+       {% for a in adresses %}     
+            <img src="http://maps.googleapis.com/maps/api/staticmap?markers=color:red|{{a.location.point.get_coords.1|stringformat:"f"}},{{a.location.point.get_coords.0|stringformat:"f"}}&maptype=hybrid&size=280x200&sensor=false&zoom=8">
             <br/><br/>
-            {{adresse.adr1}}<br/>
-            {% if adresse.adr2 %}{{adresse.adr2}}<br/>{% endif %}
-            {{adresse.zipcode}} {{adresse.city}}<br/>
-            {% if adresse.links.inits > 0 %}
-                <a href="{{adresse.get_absolute_url}}">
-                    ({{adresse.links.inits}} autre{{ adresse.links.inits|pluralize }} 
-                    initiative{{ adresse.links.inits|pluralize }} 
-                    à cette adresse)</a><br/>
-            {% endif %}
-            
+            {{a.location.adr1}}<br/>
+            {% if adresse.adr2 %}{{a.location.adr2}}<br/>{% endif %}
+            {{a.location.zipcode}} {{a.location.city}}<br/>
             <br/>
             
        {% endfor %}  

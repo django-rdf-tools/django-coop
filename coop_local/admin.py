@@ -3,9 +3,8 @@ from django.contrib import admin
 from coop_local.models import Membre,Role,Engagement,Initiative, Site
 from coop_local.forms import SiteForm
 from coop.place.admin import BaseSiteAdmin
+from coop.admin import BaseEngagementInline,BaseSiteInline,BaseInitiativeAdminForm,BaseInitiativeAdmin,BaseMembreAdmin
 from skosxl.models import Term
-from django_extensions.admin import ForeignKeyAutocompleteAdmin
-from django_extensions.admin.widgets import ForeignKeySearchInput
 from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
 
@@ -14,38 +13,27 @@ from coop.autocomplete_admin import FkAutocompleteAdmin,InlineAutocompleteAdmin
 admin.site.register(Role)
 
 
-class EngagementInline(InlineAutocompleteAdmin):
+class EngagementInline(BaseEngagementInline,InlineAutocompleteAdmin):
     model = Engagement
-    related_search_fields = {  'membre': ('nom','prenom','email','user__username'), }
-    extra=1
+
+class SiteInline(BaseSiteInline,InlineAutocompleteAdmin):
+    model = Site
 
 
-class InitiativeAdminForm(forms.ModelForm):
-    tags = forms.ModelMultipleChoiceField(
-        queryset=Term.objects.all().order_by('literal'),
-        widget=FilteredSelectMultiple('tags', False)
-    )
+class InitiativeAdminForm(BaseInitiativeAdminForm):
     class Meta:
         model = Initiative
 
 
-class InitiativeAdmin(FkAutocompleteAdmin):
-    form = InitiativeAdminForm
-    list_display = ('title','active','uri')
-    list_display_links =('title',)
-    search_fields = ['title','acronym','description']
-    list_filter = ('active',)
-    ordering = ('title',)
+class InitiativeAdmin(BaseInitiativeAdmin,FkAutocompleteAdmin):
+    form = BaseInitiativeAdminForm
     inlines = [
-            EngagementInline,
+            SiteInline,EngagementInline
         ]
     
 admin.site.register(Initiative, InitiativeAdmin)
 
-class MembreAdmin(admin.ModelAdmin):
-    list_display = ('nom','prenom','email',)
-    list_display_links =('nom','prenom')
-    ordering = ('nom',)
+class MembreAdmin(BaseMembreAdmin):
     inlines = [
             EngagementInline,
         ]

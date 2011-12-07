@@ -8,36 +8,37 @@ from coop_geo.models import Location
 class BaseSite(models.Model):
     title = models.CharField(_('Titre'),null=True,blank=True,max_length=250)
     description = models.TextField(_(u'Description'),null=True,blank=True)
-    site_principal = models.BooleanField(default=True)
+    site_principal = models.BooleanField(default=False)
     uri = models.CharField(_(u'URI principale'),null=True,blank=True, max_length=250, editable=False)
     
     location = models.ForeignKey(Location, related_name='sites')
     initiative = models.ForeignKey('coop_local.Initiative',null=True,blank=True,related_name='sites')
+
     
-    adr1 = models.CharField(null=True,blank=True, max_length=100)
-    adr2 = models.CharField(null=True,blank=True, max_length=100)
-    zipcode = models.CharField(null=True,blank=True, max_length=5)
-    city = models.CharField(null=True,blank=True, max_length=100)
-    latlong = models.CharField(null=True,blank=True, max_length=100)
-    lat = models.CharField(null=True,blank=True, max_length=100)
-    long = models.CharField(null=True,blank=True, max_length=100)
+
+
+#tout ça peut gicler maintenant    
+    adr1 = models.CharField(null=True,blank=True, max_length=100, editable=False)
+    adr2 = models.CharField(null=True,blank=True, max_length=100, editable=False)
+    zipcode = models.CharField(null=True,blank=True, max_length=5, editable=False)
+    city = models.CharField(null=True,blank=True, max_length=100, editable=False)
+    latlong = models.CharField(null=True,blank=True, max_length=100, editable=False)
+    lat = models.CharField(null=True,blank=True, max_length=100, editable=False)
+    long = models.CharField(null=True,blank=True, max_length=100, editable=False)
+    
+# par contre transférer ici : tel, fax, portable, email    
+    
     
     created = exfields.CreationDateTimeField(_(u'Création'),null=True)
     modified = exfields.ModificationDateTimeField(_(u'Modification'),null=True)
-    #membre_uri = models.CharField(_(u'Profil FOAF'),blank=True, max_length=250, editable=False)
     uuid = exfields.UUIDField(null=True) #nécessaire pour URI de l'engagement
     class Meta:
         abstract = True
     def __unicode__(self):
         if self.title != None:
-            return self.title+u', '+self.city
+            return unicode(self.title)+u', '+unicode(self.city)
         else:
-            return self.adr1+u', '+self.city
+            return unicode(self.adr1)+u', '+unicode(self.city)
     def get_absolute_url(self):
         return reverse('place_detail', args=[self.uuid])
-            
-    def links(self):
-        links = {
-            'inits' : self.initiative_set.all().count()-1,
-            'events': self.event_set.all().count()-1}                
-        return links
+    #TODO def save si le seul alors principal, si un autre est principal alors erreur

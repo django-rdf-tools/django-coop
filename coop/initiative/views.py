@@ -15,7 +15,7 @@
 #         return context
         
 from django.shortcuts import render_to_response, redirect
-from coop_local.models import Initiative, Membre, Engagement, Role
+from coop_local.models import Initiative, Membre, Engagement, Role, Site
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 
@@ -24,7 +24,7 @@ def ISDetailView(request,slug):
     initiative = Initiative.objects.get(slug=slug)
     context['object'] = initiative
     context['rss'] = initiative.rss
-    context['adresses'] = initiative.sites.all()
+    context['adresses'] = Site.objects.filter(initiative=initiative)
     context['engagements'] = Engagement.objects.filter(initiative=context['object'])
     return render_to_response('initiative/initiative_detail.html',context,RequestContext(request))
     
