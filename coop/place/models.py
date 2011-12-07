@@ -14,6 +14,7 @@ class BaseSite(models.Model):
     location = models.ForeignKey(Location, related_name='sites')
     initiative = models.ForeignKey('coop_local.Initiative',null=True,blank=True,related_name='sites')
 
+    telephone_fixe = models.CharField(_(u'Téléphone fixe'),blank=True,null=True, max_length=14)
     
 
 
