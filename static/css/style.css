@@ -1,6 +1,7 @@
 /* @override 
 	http://dev.quinode.fr:8000/static/css/style.css
 	http://localhost:8000/static/css/style.css
+	http://localhost:8888/static/css/style.css
 */
 
 body {
@@ -83,6 +84,7 @@ h4{
 
 #content{
 	font-size: 1.1em;
+	position: relative;
 }
 
 nav{
@@ -535,4 +537,16 @@ a.role{
 
 a.role:hover{
 	color: #265aff;
+}
+
+p.special_Case{
+	font-weight: bold;
+	padding: 10px;
+	border: 2px solid #f9c641;
+	background-color: #f5ffb7;
+	float: right;
+	position: absolute;
+	right: 0;
+	width: 200px;
+	top: 0;
 }

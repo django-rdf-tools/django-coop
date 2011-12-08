@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n djaloha_utils %}
+{% load i18n djaloha_utils oembed_tags %}
 {% block meta_title %}{% if draft %}{% trans "Draft" %} - {% endif %}{{article.title|remove_br}}{% endblock %}
 {% block extra_head %}
 {% if editable and perms.coop_cms.can_change_article %}
@@ -15,11 +15,12 @@ $(function(){
 {% spaceless %}
 <div class="grid_12 grid">
 {% block title %}
-    <h2 id="title">!!{{article.title|safe}}</h2>
+    <h2 id="title">{{article.title|safe}}</h2>
 {% endblock %}
     <div id="content"><div>
-    {{article.content|safe}}
+    {{article.content|oembed|safe}}
     </div></div>
 </div>
 {% endspaceless %}
 {% endblock %}
+

@@ -43,7 +43,8 @@ class BaseInitiative(models.Model):
     #sites = models.ManyToManyField('coop_local.Site',related_name='old_rel')
     members = models.ManyToManyField('coop_local.Membre',through='coop_local.Engagement',verbose_name=_(u'Membres'))
     
-    telephone_fixe = models.CharField(_(u'Téléphone fixe'),blank=True,null=True, max_length=14)
+    telephone_fixe = models.CharField(_(u'Téléphone fixe'),blank=True,null=True, max_length=14, editable=False)
+    
     email = models.EmailField(_(u'Email général'),blank=True,null=True)
     web = models.URLField(_(u'Site web'),blank=True,null=True, verify_exists=True)
     rss = models.URLField(_(u'Flux RSS'),blank=True,null=True, verify_exists=True)
