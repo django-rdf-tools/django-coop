@@ -7,7 +7,7 @@ from coop.place.models import BaseSite
 #from coop.agenda.models import BaseCalendar, BaseEvent
 from coop.exchange.models import BaseExchange, BaseTransaction
 from coop.initiative.models import BaseInitiative,BaseEngagement,BaseRole
-
+from coop.link.models import BaseSemLink
 
 # Personnaliser vos modèle ici en ajoutant les champs nécessaires
 # exemple : personnalisation CREDIS
@@ -66,4 +66,27 @@ class Initiative(BaseInitiative):
     secteur_fse = models.PositiveSmallIntegerField('Secteur d’activité FSE',
                                                     choices=SECTEURS_FSE.CHOICES, 
                                                     default=SECTEURS_FSE.TOUS)
+
+class SeeAlsoLink(BaseSemLink):
+    pass
+    
+class SameAsLink(BaseSemLink):
+    pass
+
+
+#Patch de coop_cms.Article pour lui adjoindre une relation retour avec events (pour les templates)
+from django.contrib.contenttypes import generic
+from coop_cms.models import Article
+from coop_local.models import Initiative
+from coop_agenda.models import Event
+
+if not hasattr(Article, "events"):
+    e = generic.GenericRelation(Event)
+    e.contribute_to_class(Article, "events")
+
+if not hasattr(Initiative, "events"):
+    e = generic.GenericRelation(Event)
+    e.contribute_to_class(Initiative, "events")
+
+
 

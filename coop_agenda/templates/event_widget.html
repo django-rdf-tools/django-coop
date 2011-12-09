@@ -1,0 +1,5 @@
+<li class="widget-item">
+    <b>{{ o.event.title }}</b>, le {{ o.start_time|date:"j F à G\hi" }} - 
+    {{ o.event.description|truncatewords:10 }}
+    <!-- - <a href="{{ o.event.get_absolute_url }}">En savoir plus</a>-->
+    </li>

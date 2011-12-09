@@ -175,12 +175,14 @@ INSTALLED_APPS = (
     'skosxl',
     'rss_sync',
     'coop_geo',
+    'coop_agenda',
 )
 
 DJALOHA_LINK_MODELS = ('coop_cms.Article',)
 
 D2RQ_ROOT = 'http://demo.django.coop:2020/'
 
+#GENERICADMIN_JS = 'genericadmin/js/'
 
 #ADMIN_TOOLS_MENU = 'base.menu.CustomMenu'
 #ADMIN_TOOLS_INDEX_DASHBOARD = 'base.dashboard.CustomIndexDashboard'

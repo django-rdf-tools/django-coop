@@ -4,6 +4,7 @@ from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
 from skosxl.models import Term
 from django.core.urlresolvers import reverse
+from coop_geo.models import Area
 
 
 class BaseRole(models.Model):
@@ -34,16 +35,20 @@ class BaseEngagement(models.Model):
     '''    
 
 class BaseInitiative(models.Model):
-    title = models.CharField(_('Titre'),max_length=250)
-    acronym = models.CharField(_('Sigle'),blank=True,null=True,max_length=250)
-    description = models.TextField(_(u'Description'),blank=True,null=True)
-    uri = models.CharField(_(u'URI principale'),blank=True,null=True, max_length=250, editable=False)
+    title = models.CharField(_('title'),max_length=250)
+    acronym = models.CharField(_('acronym'),blank=True,null=True,max_length=250)
+    description = models.TextField(_(u'description'),blank=True,null=True)
+    uri = models.CharField(_(u'main URI'),blank=True,null=True, max_length=250, editable=False)
     
     tags = models.ManyToManyField(Term)
-    #sites = models.ManyToManyField('coop_local.Site',related_name='old_rel')
-    members = models.ManyToManyField('coop_local.Membre',through='coop_local.Engagement',verbose_name=_(u'Membres'))
+
+    members = models.ManyToManyField('coop_local.Membre',through='coop_local.Engagement',verbose_name=_(u'members'))
     
-    telephone_fixe = models.CharField(_(u'Téléphone fixe'),blank=True,null=True, max_length=14, editable=False)
+    telephone_fixe = models.CharField(_(u'land line'),blank=True,null=True, max_length=14, editable=False)
+    
+    action_area = models.ForeignKey(Area, verbose_name=_(u'Impact Area'), blank=True, null=True)
+    
+    # date_birth = 
     
     email = models.EmailField(_(u'Email général'),blank=True,null=True)
     web = models.URLField(_(u'Site web'),blank=True,null=True, verify_exists=True)

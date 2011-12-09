@@ -1,0 +1,63 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% blocktrans %}Event: {{ event }}{% endblocktrans %}{% endblock %}
+{% block document %}
+    <h3>{% trans "Event" %}</h3>
+    <h4>{% trans "Event Details" %}</h4>
+    <form action="" method="post">
+    <table>
+        <tfoot>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" name="_update" value="{% trans "Update" %}" />
+                </td>
+            </tr>
+        </tfoot>
+        <tbody>
+        {% include "event_form_part.html" %}
+        </tbody>
+    </table>
+    {% csrf_token %}
+    </form>
+    
+    <h4>{% trans "Notes" %}</h4>
+    {% with event.notes.all as notes %}
+    {% if notes %}
+    <ul>
+        {% for note in notes %}
+        <li>{{ note }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>{% trans "None" %}</p>
+    {% endif %}
+    {% endwith %}
+
+    <h4>{% trans "Occurrences" %}</h4>
+    {% if event.occurrence_set.count %}
+    <ol>
+        {% for o in event.occurrence_set.all %}
+        <li>
+            <a href="{% url agenda-occurrence event.id o.id %}">
+                {{ o.start_time|date:"DATETIME_FORMAT" }} &ndash; 
+                {{ o.end_time|date:"DATETIME_FORMAT" }}</a>
+        </li>
+        {% endfor %}
+    </ol>
+    {% else %}
+    {% endif %}
+    
+    <h4>{% trans "Add Occurrences" %}</h4>
+    <form action="" method="post">
+    <table>
+        <tfoot>
+            <tr>
+                <td colspan="2"><input type="submit" name="_add" value="{% trans "Add" %}" /></td>
+            </tr>
+        </tfoot>
+        <tbody>
+        {% include "recurring_form_part.html" %}
+        </tbody>
+    </table>
+    {% csrf_token %}
+    </form>
+{% endblock %}

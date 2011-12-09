@@ -42,6 +42,7 @@ class BaseInitiativeAdmin(FkAutocompleteAdmin):
 class BaseMembreAdmin(admin.ModelAdmin):
     list_display = ('nom','prenom','email',)
     list_display_links =('nom','prenom')
+    search_fields = ('nom','prenom')
     ordering = ('nom',)
     inlines = [
             BaseEngagementInline,

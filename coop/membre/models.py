@@ -3,24 +3,30 @@ from django.contrib.auth.models import User
 from django.db import models
 from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
-
-# class SameAs(models.Model):
-#     uri = models.URLField(verify_exists=False,unique=True)
+from coop_geo.models import Location
 
 class BaseMembre(models.Model):
-    user = models.OneToOneField(User, blank=True, null=True, unique=True,verbose_name=_(u'Utilisateur'))
-    #uri = models.URLField(blank=True, unique=True, verify_exists=False,verbose_name=_(u'URI principale'))
-    #sameas = models.ManyToManyField(SameAs,blank=True, null=True,verbose_name=_(u'Autres URI'))
-    nom = models.CharField(_(u'Nom'),max_length=100)
-    prenom = models.CharField(_(u'Prénom'),max_length=100,null=True,blank=True)
-    adresse = models.TextField(_(u'Adresse'),null=True,blank=True)
-    ville = models.CharField(_(u'Ville'),null=True,blank=True, max_length=100)
-    code_postal = models.CharField(_(u'Code postal'),null=True,blank=True, max_length=5)
-    telephone_fixe = models.CharField(_(u'Téléphone fixe'),null=True,blank=True, max_length=14)
-    telephone_portable = models.CharField(_(u'Téléphone mobile'),null=True,blank=True, max_length=14)
-    email = models.EmailField(_(u'Email personnel'),blank=True)
-    created = exfields.CreationDateTimeField(_(u'Création'),null=True)
-    modified = exfields.ModificationDateTimeField(_(u'Modification'),null=True)
+    user = models.OneToOneField(User, blank=True, null=True, unique=True,verbose_name=_(u'django user'))
+
+    nom = models.CharField(_(u'first name'),max_length=100)
+    prenom = models.CharField(_(u'last name'),max_length=100,null=True,blank=True)
+    
+    location = models.ForeignKey(Location,null=True,blank=True,verbose_name=_(u'location'))    
+    
+    adresse = models.TextField(_(u'address'),null=True,blank=True)
+    ville = models.CharField(_(u'city'),null=True,blank=True, max_length=100)
+    code_postal = models.CharField(_(u'zip code'),null=True,blank=True, max_length=5)
+    
+    telephone_fixe = models.CharField(_(u'land line'),null=True,blank=True, max_length=14)
+    telephone_portable = models.CharField(_(u'mobile phone'),null=True,blank=True, max_length=14)
+    email = models.EmailField(_(u'personal email'),blank=True)
+    email_sha1 = models.CharField(blank=True, max_length=250)
+    
+    created = exfields.CreationDateTimeField(_(u'created'),null=True)
+    modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)
+    
+    uri = models.URLField(blank=True,verify_exists=False,verbose_name=_(u'main URI'))    
+    
     class Meta:
         abstract = True
     def __unicode__(self):

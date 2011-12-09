@@ -38,6 +38,9 @@
         <br/>
     {% endif %}
     
+    {% include "related_events.html" %}
+    
+    
     {% if relations %}
         <h4>Relations</h4>
         
@@ -45,6 +48,7 @@
     
     {% render_comment_list for object %}
     {% render_comment_form for object %}
+    
     
     
     </div>

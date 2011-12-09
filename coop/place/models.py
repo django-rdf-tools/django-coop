@@ -6,17 +6,16 @@ from django.core.urlresolvers import reverse
 from coop_geo.models import Location
 
 class BaseSite(models.Model):
-    title = models.CharField(_('Titre'),null=True,blank=True,max_length=250)
-    description = models.TextField(_(u'Description'),null=True,blank=True)
+    title = models.CharField(_('title'),null=True,blank=True,max_length=250)
+    description = models.TextField(_(u'description'),null=True,blank=True)
     site_principal = models.BooleanField(default=False)
-    uri = models.CharField(_(u'URI principale'),null=True,blank=True, max_length=250, editable=False)
+    
+    uri = models.CharField(_(u'main URI'),null=True,blank=True, max_length=250, editable=False)
     
     location = models.ForeignKey(Location, related_name='sites')
     initiative = models.ForeignKey('coop_local.Initiative',null=True,blank=True,related_name='sites')
 
     telephone_fixe = models.CharField(_(u'Téléphone fixe'),blank=True,null=True, max_length=14)
-    
-
 
 #tout ça peut gicler maintenant    
     adr1 = models.CharField(null=True,blank=True, max_length=100, editable=False)
@@ -29,12 +28,15 @@ class BaseSite(models.Model):
     
 # par contre transférer ici : tel, fax, portable, email    
     
+    created = exfields.CreationDateTimeField(_(u'created'),null=True)
+    modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)
+    uuid = exfields.UUIDField(null=True) #nécessaire pour URI
     
-    created = exfields.CreationDateTimeField(_(u'Création'),null=True)
-    modified = exfields.ModificationDateTimeField(_(u'Modification'),null=True)
-    uuid = exfields.UUIDField(null=True) #nécessaire pour URI de l'engagement
     class Meta:
         abstract = True
+        verbose_name = _(u'Point de présence')
+        verbose_name_plural = _(u'Points de présence')
+        
     def __unicode__(self):
         if self.title != None:
             return unicode(self.title)+u', '+unicode(self.city)
@@ -42,4 +44,5 @@ class BaseSite(models.Model):
             return unicode(self.adr1)+u', '+unicode(self.city)
     def get_absolute_url(self):
         return reverse('place_detail', args=[self.uuid])
+        
     #TODO def save si le seul alors principal, si un autre est principal alors erreur
