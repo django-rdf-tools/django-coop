@@ -9,13 +9,12 @@ class BaseSite(models.Model):
     title = models.CharField(_('title'),null=True,blank=True,max_length=250)
     description = models.TextField(_(u'description'),null=True,blank=True)
     site_principal = models.BooleanField(default=False)
-    
-    uri = models.CharField(_(u'main URI'),null=True,blank=True, max_length=250, editable=False)
-    
-    location = models.ForeignKey(Location, related_name='sites')
-    initiative = models.ForeignKey('coop_local.Initiative',null=True,blank=True,related_name='sites')
-
-    telephone_fixe = models.CharField(_(u'Téléphone fixe'),blank=True,null=True, max_length=14)
+    uri = models.CharField(_(u'main URI'),blank=True, max_length=250, editable=False)
+    location = models.ForeignKey(Location, related_name='sites',verbose_name=_(u'location'))
+    initiative = models.ForeignKey('coop_local.Initiative',null=True,blank=True,
+                                    related_name='sites',
+                                    verbose_name=_(u'organization'))
+    telephone_fixe = models.CharField(_(u'land line'),blank=True,null=True, max_length=14)
 
 #tout ça peut gicler maintenant    
     adr1 = models.CharField(null=True,blank=True, max_length=100, editable=False)
@@ -34,8 +33,8 @@ class BaseSite(models.Model):
     
     class Meta:
         abstract = True
-        verbose_name = _(u'Point de présence')
-        verbose_name_plural = _(u'Points de présence')
+        verbose_name = _(u'Point of presence')
+        verbose_name_plural = _(u'Points of presence')
         
     def __unicode__(self):
         if self.title != None:

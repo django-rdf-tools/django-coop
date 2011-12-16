@@ -3,44 +3,64 @@
         "pk": 1,
         "model": "skosxl.concept",
         "fields": {
+            "status": 0,
             "definition": "",
-            "author": "",
-            "modified": "2011-08-11 14:34:46",
+            "top_concept": false,
             "changenote": "",
-            "created": "2011-08-11 14:34:46"
-        }
-    },
-    {
-        "pk": 2,
-        "model": "skosxl.concept",
-        "fields": {
-            "definition": "Production agricole, cueillette et \u00e9levage.",
-            "author": "",
-            "modified": "2011-09-06 00:36:01",
-            "changenote": "",
-            "created": "2011-09-06 00:36:01"
+            "created": "2011-08-11 14:34:46",
+            "modified": "2011-12-04 21:58:31",
+            "uri": "",
+            "author_uri": "",
+            "user": null,
+            "scheme": null,
+            "pref_label": "Economie Solidaire"
         }
     },
     {
         "pk": 3,
         "model": "skosxl.concept",
         "fields": {
+            "status": 0,
             "definition": "",
-            "author": "",
-            "modified": "2011-12-03 18:47:57",
+            "top_concept": false,
             "changenote": "",
-            "created": "2011-12-03 18:44:50"
+            "created": "2011-12-03 18:44:50",
+            "modified": "2011-12-04 21:58:31",
+            "uri": "",
+            "author_uri": "",
+            "user": null,
+            "scheme": null,
+            "pref_label": "agriculture biologique"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "skosxl.concept",
+        "fields": {
+            "status": 0,
+            "definition": "Production agricole, cueillette et \u00e9levage.",
+            "top_concept": false,
+            "changenote": "",
+            "created": "2011-09-06 00:36:01",
+            "modified": "2011-12-04 21:58:31",
+            "uri": "",
+            "author_uri": "",
+            "user": null,
+            "scheme": null,
+            "pref_label": "agriculture"
         }
     },
     {
         "pk": 1,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-08-11 14:21:35",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "solidaire",
+            "user": null,
             "slug": "solidaire",
             "occurences": 2
         }
@@ -49,37 +69,28 @@
         "pk": 2,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-08-11 14:33:56",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "Economie Solidaire",
+            "user": null,
             "slug": "economie-solidaire",
             "occurences": 1
-        }
-    },
-    {
-        "pk": 3,
-        "model": "skosxl.term",
-        "fields": {
-            "language": "@es",
-            "author": "",
-            "created": "2011-08-11 14:34:32",
-            "modified": "2011-11-22 19:17:04",
-            "literal": "Economia Solidaria",
-            "slug": "economia-solidaria",
-            "occurences": 0
         }
     },
     {
         "pk": 4,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 00:28:19",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "agriculture",
+            "user": null,
             "slug": "agriculture",
             "occurences": 1
         }
@@ -88,11 +99,13 @@
         "pk": 6,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 06:50:01",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "panier",
+            "user": null,
             "slug": "panier",
             "occurences": 0
         }
@@ -101,11 +114,13 @@
         "pk": 7,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 06:50:22",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "citoyen",
+            "user": null,
             "slug": "citoyen",
             "occurences": 0
         }
@@ -114,11 +129,13 @@
         "pk": 8,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 06:58:45",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "recyclage",
+            "user": null,
             "slug": "recyclage",
             "occurences": 1
         }
@@ -127,11 +144,13 @@
         "pk": 9,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 06:58:51",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "for\u00eat",
+            "user": null,
             "slug": "foret",
             "occurences": 0
         }
@@ -140,11 +159,13 @@
         "pk": 10,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 06:59:10",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "accompagnement",
+            "user": null,
             "slug": "accompagnement",
             "occurences": 0
         }
@@ -153,11 +174,13 @@
         "pk": 11,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 06:59:21",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "mise en r\u00e9seau",
+            "user": null,
             "slug": "mise-en-reseau",
             "occurences": 0
         }
@@ -166,11 +189,13 @@
         "pk": 12,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 06:59:25",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "handicap",
+            "user": null,
             "slug": "handicap",
             "occurences": 1
         }
@@ -179,11 +204,13 @@
         "pk": 13,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 06:59:46",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "d\u00e9marches administratives",
+            "user": null,
             "slug": "demarches-administratives",
             "occurences": 2
         }
@@ -192,11 +219,13 @@
         "pk": 14,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 06:59:53",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "exclusion",
+            "user": null,
             "slug": "exclusion",
             "occurences": 3
         }
@@ -205,11 +234,13 @@
         "pk": 15,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:00:07",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "ch\u00f4mage",
+            "user": null,
             "slug": "chomage",
             "occurences": 1
         }
@@ -218,11 +249,13 @@
         "pk": 16,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:00:13",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "ruralit\u00e9",
+            "user": null,
             "slug": "ruralite",
             "occurences": 0
         }
@@ -231,11 +264,13 @@
         "pk": 17,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:00:20",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "environnement",
+            "user": null,
             "slug": "environnement",
             "occurences": 0
         }
@@ -244,11 +279,13 @@
         "pk": 18,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:00:35",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "\u00e9ducation \u00e0 l'environnement",
+            "user": null,
             "slug": "education-a-lenvironnement",
             "occurences": 3
         }
@@ -257,11 +294,13 @@
         "pk": 19,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:00:44",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "loisirs",
+            "user": null,
             "slug": "loisirs",
             "occurences": 0
         }
@@ -270,11 +309,13 @@
         "pk": 20,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:01:12",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "gestion alternative",
+            "user": null,
             "slug": "gestion-alternative",
             "occurences": 0
         }
@@ -283,11 +324,13 @@
         "pk": 21,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:01:16",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "l\u00e9gumes",
+            "user": null,
             "slug": "legumes",
             "occurences": 0
         }
@@ -296,11 +339,13 @@
         "pk": 22,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:01:28",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "v\u00eatements",
+            "user": null,
             "slug": "vetements",
             "occurences": 4
         }
@@ -309,11 +354,13 @@
         "pk": 23,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:01:36",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "artisanat",
+            "user": null,
             "slug": "artisanat",
             "occurences": 1
         }
@@ -322,11 +369,13 @@
         "pk": 24,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:01:45",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "th\u00e9\u00e2tre",
+            "user": null,
             "slug": "theatre",
             "occurences": 1
         }
@@ -335,11 +384,13 @@
         "pk": 25,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:01:52",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "spectacle vivant",
+            "user": null,
             "slug": "spectacle-vivant",
             "occurences": 0
         }
@@ -348,11 +399,13 @@
         "pk": 26,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:01:56",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "culture",
+            "user": null,
             "slug": "culture",
             "occurences": 3
         }
@@ -361,11 +414,13 @@
         "pk": 27,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:02:02",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "transport",
+            "user": null,
             "slug": "transport",
             "occurences": 0
         }
@@ -374,11 +429,13 @@
         "pk": 28,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:02:17",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "logement",
+            "user": null,
             "slug": "logement",
             "occurences": 0
         }
@@ -387,11 +444,13 @@
         "pk": 29,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:02:21",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "habitat",
+            "user": null,
             "slug": "habitat",
             "occurences": 0
         }
@@ -400,11 +459,13 @@
         "pk": 30,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:02:25",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "construction",
+            "user": null,
             "slug": "construction",
             "occurences": 0
         }
@@ -413,11 +474,13 @@
         "pk": 31,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:02:30",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "eco-construction",
+            "user": null,
             "slug": "eco-construction",
             "occurences": 0
         }
@@ -426,11 +489,13 @@
         "pk": 32,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:02:42",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "mat\u00e9riaux \u00e9cologiques",
+            "user": null,
             "slug": "materiaux-ecologiques",
             "occurences": 0
         }
@@ -439,11 +504,13 @@
         "pk": 33,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:02:49",
-            "modified": "2011-11-22 19:17:04",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "apprentissage",
+            "user": null,
             "slug": "apprentissage",
             "occurences": 1
         }
@@ -452,11 +519,13 @@
         "pk": 34,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:02:54",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "formation continue",
+            "user": null,
             "slug": "formation-continue",
             "occurences": 1
         }
@@ -465,11 +534,13 @@
         "pk": 35,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:03:13",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "m\u00e9diation animale",
+            "user": null,
             "slug": "mediation-animale",
             "occurences": 0
         }
@@ -478,11 +549,13 @@
         "pk": 36,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:03:17",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "animation",
+            "user": null,
             "slug": "animation",
             "occurences": 3
         }
@@ -491,11 +564,13 @@
         "pk": 37,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:03:25",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "sport",
+            "user": null,
             "slug": "sport",
             "occurences": 0
         }
@@ -504,11 +579,13 @@
         "pk": 38,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:03:32",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "lien social",
+            "user": null,
             "slug": "lien-social",
             "occurences": 0
         }
@@ -517,11 +594,13 @@
         "pk": 39,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:03:39",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "proximit\u00e9",
+            "user": null,
             "slug": "proximite",
             "occurences": 1
         }
@@ -530,11 +609,13 @@
         "pk": 40,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:04:25",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "insertion",
+            "user": null,
             "slug": "insertion",
             "occurences": 0
         }
@@ -543,11 +624,13 @@
         "pk": 41,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:04:34",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "insertion par le travail",
+            "user": null,
             "slug": "insertion-par-le-travail",
             "occurences": 3
         }
@@ -556,11 +639,13 @@
         "pk": 42,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:05:01",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "petite enfance",
+            "user": null,
             "slug": "petite-enfance",
             "occurences": 0
         }
@@ -569,11 +654,13 @@
         "pk": 43,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:05:08",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "jeux",
+            "user": null,
             "slug": "jeux",
             "occurences": 0
         }
@@ -582,11 +669,13 @@
         "pk": 44,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:05:25",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "livre",
+            "user": null,
             "slug": "livre",
             "occurences": 3
         }
@@ -595,11 +684,13 @@
         "pk": 45,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:05:30",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "documentation",
+            "user": null,
             "slug": "documentation",
             "occurences": 0
         }
@@ -608,11 +699,13 @@
         "pk": 46,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:05:46",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "alimentation",
+            "user": null,
             "slug": "alimentation",
             "occurences": 0
         }
@@ -621,11 +714,13 @@
         "pk": 47,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:05:51",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "bien-\u00eatre",
+            "user": null,
             "slug": "bien-etre",
             "occurences": 0
         }
@@ -634,11 +729,13 @@
         "pk": 48,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:25:00",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "services",
+            "user": null,
             "slug": "services",
             "occurences": 0
         }
@@ -647,11 +744,13 @@
         "pk": 49,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:25:09",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "services \u00e0 la personne",
+            "user": null,
             "slug": "services-a-la-personne",
             "occurences": 1
         }
@@ -660,11 +759,13 @@
         "pk": 50,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:25:29",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "coop\u00e9ration",
+            "user": null,
             "slug": "cooperation",
             "occurences": 0
         }
@@ -673,11 +774,13 @@
         "pk": 51,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:25:38",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "partage",
+            "user": null,
             "slug": "partage",
             "occurences": 0
         }
@@ -686,11 +789,13 @@
         "pk": 52,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:25:49",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "financement",
+            "user": null,
             "slug": "financement",
             "occurences": 0
         }
@@ -699,11 +804,13 @@
         "pk": 53,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:25:55",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "\u00e9ducation",
+            "user": null,
             "slug": "education",
             "occurences": 0
         }
@@ -712,11 +819,13 @@
         "pk": 54,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:27:09",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "commerce \u00e9quitable",
+            "user": null,
             "slug": "commerce-equitable",
             "occurences": 0
         }
@@ -725,11 +834,13 @@
         "pk": 55,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:27:17",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "agriculture biologique",
+            "user": null,
             "slug": "agriculture-biologique",
             "occurences": 0
         }
@@ -738,11 +849,13 @@
         "pk": 56,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:27:21",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "\u00e9cologie",
+            "user": null,
             "slug": "ecologie",
             "occurences": 0
         }
@@ -751,11 +864,13 @@
         "pk": 57,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:28:08",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "patrimoine",
+            "user": null,
             "slug": "patrimoine",
             "occurences": 2
         }
@@ -764,11 +879,13 @@
         "pk": 58,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:28:40",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "amap",
+            "user": null,
             "slug": "amap",
             "occurences": 0
         }
@@ -777,11 +894,13 @@
         "pk": 59,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:29:05",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "tourisme",
+            "user": null,
             "slug": "tourisme",
             "occurences": 1
         }
@@ -790,11 +909,13 @@
         "pk": 60,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:29:13",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "h\u00e9bergement",
+            "user": null,
             "slug": "hebergement",
             "occurences": 1
         }
@@ -803,11 +924,13 @@
         "pk": 61,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:29:19",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "tourisme rural",
+            "user": null,
             "slug": "tourisme-rural",
             "occurences": 1
         }
@@ -816,11 +939,13 @@
         "pk": 62,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:30:40",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "musique",
+            "user": null,
             "slug": "musique",
             "occurences": 3
         }
@@ -829,11 +954,13 @@
         "pk": 63,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:31:19",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "itin\u00e9rant",
+            "user": null,
             "slug": "itinerant",
             "occurences": 0
         }
@@ -842,11 +969,13 @@
         "pk": 64,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:35:35",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "cr\u00e9ation d'entreprise",
+            "user": null,
             "slug": "creation-dentreprise",
             "occurences": 0
         }
@@ -855,11 +984,13 @@
         "pk": 65,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:35:45",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "d\u00e9veloppement local",
+            "user": null,
             "slug": "developpement-local",
             "occurences": 2
         }
@@ -868,11 +999,13 @@
         "pk": 66,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:36:59",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "Egalit\u00e9 hommes-femmes",
+            "user": null,
             "slug": "egalite-hommes-femmes",
             "occurences": 1
         }
@@ -881,11 +1014,13 @@
         "pk": 67,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:37:14",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "droits des femmes",
+            "user": null,
             "slug": "droits-des-femmes",
             "occurences": 1
         }
@@ -894,11 +1029,13 @@
         "pk": 68,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:38:14",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "\u00e9nergie",
+            "user": null,
             "slug": "energie",
             "occurences": 1
         }
@@ -907,11 +1044,13 @@
         "pk": 69,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:38:22",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "panneau solaire",
+            "user": null,
             "slug": "panneau-solaire",
             "occurences": 1
         }
@@ -920,11 +1059,13 @@
         "pk": 70,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-09-06 07:38:45",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "coop\u00e9rative",
+            "user": null,
             "slug": "cooperative",
             "occurences": 3
         }
@@ -933,11 +1074,13 @@
         "pk": 71,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-11-22 18:22:59",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "paysan",
+            "user": null,
             "slug": "paysan",
             "occurences": 1
         }
@@ -946,11 +1089,13 @@
         "pk": 72,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-11-22 18:23:11",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "fermier",
+            "user": null,
             "slug": "fermier",
             "occurences": 0
         }
@@ -959,11 +1104,13 @@
         "pk": 73,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-11-22 18:23:20",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "production agricole",
+            "user": null,
             "slug": "production-agricole",
             "occurences": 0
         }
@@ -972,11 +1119,13 @@
         "pk": 74,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-11-22 18:35:24",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "services aux collectivit\u00e9s",
+            "user": null,
             "slug": "services-aux-collectivites",
             "occurences": 1
         }
@@ -985,11 +1134,13 @@
         "pk": 75,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-11-22 18:35:33",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "textile",
+            "user": null,
             "slug": "textile",
             "occurences": 1
         }
@@ -998,11 +1149,13 @@
         "pk": 76,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-11-22 18:37:01",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "distribution",
+            "user": null,
             "slug": "distribution",
             "occurences": 0
         }
@@ -1011,11 +1164,13 @@
         "pk": 79,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-11-22 18:39:59",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "aide \u00e0 la cr\u00e9ation",
+            "user": null,
             "slug": "aide-a-la-creation",
             "occurences": 3
         }
@@ -1024,11 +1179,13 @@
         "pk": 80,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-11-22 18:42:11",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "mode",
+            "user": null,
             "slug": "mode",
             "occurences": 2
         }
@@ -1037,11 +1194,13 @@
         "pk": 81,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-11-22 18:43:35",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "femmes",
+            "user": null,
             "slug": "femmes",
             "occurences": 2
         }
@@ -1050,11 +1209,13 @@
         "pk": 82,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-11-22 18:44:37",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "immigration",
+            "user": null,
             "slug": "immigration",
             "occurences": 1
         }
@@ -1063,11 +1224,13 @@
         "pk": 83,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-11-22 18:54:15",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "savoir-faire",
+            "user": null,
             "slug": "savoir-faire",
             "occurences": 1
         }
@@ -1076,11 +1239,13 @@
         "pk": 84,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-11-22 18:54:23",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "taille de pierre",
+            "user": null,
             "slug": "taille-de-pierre",
             "occurences": 1
         }
@@ -1089,11 +1254,13 @@
         "pk": 85,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-11-22 18:55:20",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "SCIC",
+            "user": null,
             "slug": "scic",
             "occurences": 1
         }
@@ -1102,11 +1269,13 @@
         "pk": 86,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-11-22 18:57:29",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "association",
+            "user": null,
             "slug": "association",
             "occurences": 2
         }
@@ -1115,11 +1284,13 @@
         "pk": 87,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-11-22 18:58:04",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "\u00e9ducation scientifique",
+            "user": null,
             "slug": "education-scientifique",
             "occurences": 1
         }
@@ -1128,29 +1299,30 @@
         "pk": 88,
         "model": "skosxl.term",
         "fields": {
-            "language": "@fr",
-            "author": "",
+            "language": "fr",
             "created": "2011-11-22 18:58:16",
-            "modified": "2011-11-22 19:17:05",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
             "literal": "\u00e9ducation populaire",
+            "user": null,
             "slug": "education-populaire",
             "occurences": 2
         }
     },
     {
-        "pk": 1,
-        "model": "skosxl.vocabulary",
+        "pk": 89,
+        "model": "skosxl.term",
         "fields": {
-            "name": "Rameau",
-            "info_url": "http://eculture2.cs.vu.nl:48080/vocreptags/autocompleteplus.jsp"
-        }
-    },
-    {
-        "pk": 2,
-        "model": "skosxl.vocabulary",
-        "fields": {
-            "name": "AGROVOC",
-            "info_url": "http://aims.fao.org/standards/agrovoc/functionalities/hierarchy"
+            "language": "fr",
+            "created": "2011-12-04 11:01:48",
+            "uri": "",
+            "modified": "2011-12-04 18:18:24",
+            "author_uri": "",
+            "literal": "bio",
+            "user": null,
+            "slug": "bio",
+            "occurences": 0
         }
     },
     {
@@ -1172,15 +1344,6 @@
         }
     },
     {
-        "pk": 3,
-        "model": "skosxl.label",
-        "fields": {
-            "term": 3,
-            "concept": 1,
-            "type": 0
-        }
-    },
-    {
         "pk": 4,
         "model": "skosxl.label",
         "fields": {
@@ -1196,6 +1359,15 @@
             "term": 55,
             "concept": 3,
             "type": 0
+        }
+    },
+    {
+        "pk": 6,
+        "model": "skosxl.label",
+        "fields": {
+            "term": 89,
+            "concept": 3,
+            "type": 1
         }
     },
     {

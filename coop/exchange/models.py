@@ -26,8 +26,8 @@ class BaseExchange(models.Model):
                                                     default=EXCHANGE.OFFER)
     expiration = models.DateField(default=datetime.datetime.today,blank=True,null=True)
     slug = exfields.AutoSlugField(populate_from='title')
-    created = exfields.CreationDateTimeField(_(u'Création'),null=True)
-    modified = exfields.ModificationDateTimeField(_(u'Modification'),null=True)
+    created = exfields.CreationDateTimeField(_(u'created'),null=True)
+    modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)
     
     uri = models.CharField(_(u'main URI'),blank=True, max_length=250, editable=False)
     author_uri = models.CharField(_(u'author URI'),blank=True, max_length=200)
@@ -42,10 +42,10 @@ class BaseExchange(models.Model):
         
 
 class BaseTransaction(models.Model):
-    origin = models.ForeignKey('coop_local.Exchange',related_name='origin')
-    destination = models.ForeignKey('coop_local.Exchange',related_name='destination')
+    origin = models.ForeignKey('coop_local.Exchange',related_name='origin', verbose_name=_(u'origine'))
+    destination = models.ForeignKey('coop_local.Exchange',related_name='destination', verbose_name=_(u'destination'))
     title = models.CharField(_('title'),blank=True,max_length=250)
-    description = models.TextField(_(u'Description'),blank=True)
+    description = models.TextField(_(u'description'),blank=True)
     created = exfields.CreationDateTimeField(_(u'created'),null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)
     uuid = exfields.UUIDField() #nécessaire pour URI ?

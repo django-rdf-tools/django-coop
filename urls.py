@@ -30,7 +30,7 @@ urlpatterns = patterns('',
     (r'^lieu/', include('coop.place.urls')),
     (r'^tag/', include('skosxl.urls')),
     (r'^rss-sync/', include('rss_sync.urls')),
-
+    (r'^coop_bar/', include('coop_bar.urls')),
     (r'^membre/', include('coop.membre.urls')),
 )
 

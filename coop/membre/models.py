@@ -25,7 +25,7 @@ class BaseMembre(models.Model):
     created = exfields.CreationDateTimeField(_(u'created'),null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)
     
-    uri = models.URLField(blank=True,verify_exists=False,verbose_name=_(u'main URI'))    
+    uri = models.CharField(blank=True,max_length=250,verbose_name=_(u'main URI'))    
     
     class Meta:
         abstract = True

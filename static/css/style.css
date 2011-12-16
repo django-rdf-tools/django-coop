@@ -110,6 +110,17 @@ nav{
 	color: #fffeff;
 }
 
+#tags{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+#tags li{
+	float: left;
+	padding-bottom: 5px;
+	padding-right: 9px;
+}
 
 #tags a{
 	font-size: 14px;
@@ -117,8 +128,7 @@ nav{
 	border: 1px solid #8fc6db;
 	background-color: #daf2f4;
 	margin-top: 4px;
-	padding: 4px;
-	font-style: italic;
+	padding: 3px 7px 5px;
 	
 -webkit-border-radius: 4px;
 -moz-border-radius: 4px;
@@ -132,6 +142,7 @@ background: -o-linear-gradient(#FFFFFF, #A8D7E1);
 background: linear-gradient(#FFFFFF, #A8D7E1);
 	text-decoration: none;
 	color: #1d1e1e;
+	font-style: italic;
 }
 
 #tags a:hover{
@@ -143,8 +154,10 @@ background: -moz-linear-gradient(#FDFCF7, #F0DA2D);
 background: -ms-linear-gradient(#FDFCF7, #F0DA2D);
 background: -o-linear-gradient(#FDFCF7, #F0DA2D);
 background: linear-gradient(#FDFCF7, #F0DA2D);
-	border-color: #fff6ca;
+	border-color: #ffad4a;
 	color: black;
+	
+	
 }
 
 

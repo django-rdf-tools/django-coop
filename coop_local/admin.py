@@ -4,7 +4,6 @@ from coop_local.models import Membre,Role,Engagement,Initiative, Site, SeeAlsoLi
 from coop_local.forms import SiteForm
 from coop.place.admin import BaseSiteAdmin
 from coop.admin import BaseEngagementInline,BaseSiteInline,BaseInitiativeAdminForm,BaseInitiativeAdmin,BaseMembreAdmin
-from skosxl.models import Term
 from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
 
