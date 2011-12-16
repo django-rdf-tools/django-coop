@@ -1,0 +1,13 @@
+{% load taggit_extras %}
+
+{% if forvar %}
+{% get_taglist as tags for forvar %}
+{% else %}
+{% get_taglist as tags %}
+{% endif %}
+
+<ul>
+{% for tag in tags %}
+<li>{{tag}}</li>
+{% endfor %}
+</ul>
