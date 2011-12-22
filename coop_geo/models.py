@@ -50,8 +50,8 @@ class Location(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.point and not self.area:
-            raise ValidationError(u"You must at least set a point or choose "
-                                  u"an area.")
+            raise ValidationError(_(u"You must at least set a point or choose "
+                                    u"an area."))
         return super(Location, self).save(*args, **kwargs)
 
     @classmethod
@@ -67,6 +67,13 @@ class Location(models.Model):
 
 AREA_DEFAULT_LOCATION_LBL = _(u"%s (center)")
 
+#TODO: manage area relations in admin
+AREA_TYPES = (('TW', u'commune'),
+              ('DP', u"département"),
+              ('CC', u"communauté de commune"),
+              ('RG', u"région"),
+              ('PY', u"pays"),
+             )
 
 #  si nécessaire
 from django.contrib.contenttypes.models import ContentType
@@ -81,8 +88,6 @@ class Located(models.Model):
     def __unicode__(self):
         return unicode(self.content_object) + u" @ " + unicode(self.location)
 
-
-
 class Area(models.Model):
     """Areas: towns, regions, ... mainly set by import"""
     label = models.CharField(max_length=150, verbose_name=_(u"label"))
@@ -94,6 +99,8 @@ class Area(models.Model):
             verbose_name=_(u"default location"), related_name='associated_area')
     related_areas = models.ManyToManyField('Area',
             verbose_name=_(u"related area"), through='AreaRelations')
+    area_type = models.CharField(max_length=2, verbose_name=_(u"type"),
+                                 choices=AREA_TYPES, default=u"TW")
     # when set to true a "parent" area is automaticaly updated with the add
     # of new childs
     update_auto = models.BooleanField(verbose_name=_(u"update automatically?"),
@@ -226,7 +233,8 @@ def area_post_save(sender, **kwargs):
             parentrel.parent.update_from_childs()
 post_save.connect(area_post_save, sender=Area)
 
-RELATION_TYPES = (('RG', u'région'),
+RELATION_TYPES = (('PY', u"pays"),
+                  ('RG', u'région'),
                   ('DP', u"département"),
                   ('CC', u"communauté de commune"),
                   )
@@ -243,6 +251,13 @@ class AreaRelations(models.Model):
         verbose_name = _(u"Area relation")
         verbose_name_plural = _(u"Area relations")
 
+    def __unicode__(self):
+        return u" - ".join((unicode(self.parent), unicode(self.child)))
+
+    def save(self):
+        if self.child == self.parent:
+            raise ValidationError(_(u"Child and Parent have to be different."))
+        return super(AreaRelations, self).save()
 
 def arearel_post_save(sender, **kwargs):
     if not kwargs['instance']:
