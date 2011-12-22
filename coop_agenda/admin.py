@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 from django.contrib import admin
 from coop_agenda.models import *
 #from genericadmin.admin import GenericAdminModelAdmin
