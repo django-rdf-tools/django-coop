@@ -6,13 +6,20 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 import sys
 
+import oembed
+oembed.autodiscover()
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
 
     url(r'^admin_tools/', include('admin_tools.urls')),
+    url(r'^taggit_autocomplete_modified/', include('taggit_autocomplete_modified.urls')),
+    (r'^search/', include('haystack.urls')),
     
     url(r'^$', 'coop.views.home', name="home"),
+
+    (r'^comments/', include('django.contrib.comments.urls')),
 
     (r'^chaining/', include('smart_selects.urls')),
     
@@ -25,7 +32,7 @@ urlpatterns = patterns('',
     (r'^lieu/', include('coop.place.urls')),
     (r'^tag/', include('skosxl.urls')),
     (r'^rss-sync/', include('rss_sync.urls')),
-
+    (r'^coop_bar/', include('coop_bar.urls')),
     (r'^membre/', include('coop.membre.urls')),
 )
 

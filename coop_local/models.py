@@ -2,12 +2,12 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
-from coop.membre.models import BaseMembre
+from coop.membre.models import BaseMembre,BaseMemberCategory
 from coop.place.models import BaseSite
 #from coop.agenda.models import BaseCalendar, BaseEvent
 from coop.exchange.models import BaseExchange, BaseTransaction
-from coop.initiative.models import BaseInitiative,BaseEngagement,BaseRole
-
+from coop.initiative.models import BaseOrganizationCategory,BaseInitiative,BaseEngagement,BaseRole
+from coop.link.models import BaseSemLink
 
 # Personnaliser vos modèle ici en ajoutant les champs nécessaires
 # exemple : personnalisation CREDIS
@@ -15,9 +15,11 @@ from coop.initiative.models import BaseInitiative,BaseEngagement,BaseRole
 class Engagement(BaseEngagement):
     pass
 
+class MemberCategory(BaseMemberCategory):
+    pass
+
 class Membre(BaseMembre):
-    adherent = models.NullBooleanField(default=False)
-    batisseur = models.BooleanField(default=False)
+    pass
 
 class Role(BaseRole):
     pass
@@ -56,6 +58,10 @@ class Transaction(BaseTransaction):
 class Site(BaseSite):
     pass
 
+
+class OrganizationCategory(BaseOrganizationCategory):
+    pass
+
 class Initiative(BaseInitiative):
     siret = models.CharField('Numero SIRET',blank=True, null=True, max_length=20)
     naf = models.CharField('Code d’activité NAF',blank=True, null=True, max_length=10)
@@ -66,4 +72,27 @@ class Initiative(BaseInitiative):
     secteur_fse = models.PositiveSmallIntegerField('Secteur d’activité FSE',
                                                     choices=SECTEURS_FSE.CHOICES, 
                                                     default=SECTEURS_FSE.TOUS)
+
+class SeeAlsoLink(BaseSemLink):
+    pass
+    
+class SameAsLink(BaseSemLink):
+    pass
+
+
+#Patch de coop_cms.Article pour lui adjoindre une relation retour avec events (pour les templates)
+from django.contrib.contenttypes import generic
+from coop_cms.models import Article
+from coop_local.models import Initiative
+from coop_agenda.models import Event
+
+if not hasattr(Article, "events"):
+    e = generic.GenericRelation(Event)
+    e.contribute_to_class(Article, "events")
+
+if not hasattr(Initiative, "events"):
+    e = generic.GenericRelation(Event)
+    e.contribute_to_class(Initiative, "events")
+
+
 

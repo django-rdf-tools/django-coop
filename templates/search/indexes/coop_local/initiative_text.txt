@@ -1,0 +1,4 @@
+{{ object.title }}
+{{ object.acronym }}
+{{ object.description }}
+{{ object.tags }}

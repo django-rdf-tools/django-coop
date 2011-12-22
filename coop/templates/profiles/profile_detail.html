@@ -44,7 +44,7 @@
         <h4>Engagements</h4>
         {% if profile.engagements %}
         <ul class="engagements">
-            {% for engagement in profile.engagements %}
+            {% for engagement in profile.engagements.all %}
             <li>dans <a href="{{engagement.initiative.get_absolute_url}}">{{engagement.initiative}}</a>,
                 en tant que <a href="{{engagement.role.get_absolute_url}}" class="role">{{engagement.role}}</a></li>
             {% endfor %}
@@ -57,7 +57,7 @@
 {% endblock %}
 
 {% block footer%}        
-<a href="{{D2RQ_ROOT}}page/membre/{{object.id}}">
+<a href="{{D2RQ_ROOT}}page/membre/{{profile.id}}">
     <img border="0" align="left" src="{{STATIC_URL}}img/semweb.png"></a>
     <br/>
 {% endblock %}

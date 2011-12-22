@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load taggit_extras %}
 
 {% block meta_title %}Accueil{% endblock %}
 
@@ -10,6 +11,7 @@
   {% block content %}
      
      <div id="content" class="grid_4 grid">
+         
           
           <div id="dernieres_initiatives">
               <h4>Les 10 dernières initiatives</h4>
@@ -24,22 +26,23 @@
           
           </div>
     </div>
-    <div id="content" class="grid_4 grid">
+    <div id="content" class="grid_8 grid">
           
           <div id="inscrits">
               <h4>Tags: </h4>
-              <div id="tags">
-              {% for t in tags %}
-              <a href="{{t.get_absolute_url}}">{{t}}</a>
               
+              <ul id="tags" class="indextags">
+              {% get_taglist asvar all_tags count 25 %}
+              {% for tag in all_tags %}
+                  <li class="tag">
+                      <a href="{{ tag.get_absolute_url }}">{{tag}} ({{tag.num_times}})</a>
+                  </li>
               {% endfor %}
-              </div>
+              </ul>
+              
           </div>
     </div>
-    <div id="content" class="grid_4 grid">
-        <h4>Les 10 dernières annonces</h4>
-        
-    </div>
+
           
           
   {% endblock %}

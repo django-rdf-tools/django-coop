@@ -1,6 +1,7 @@
 /* @override 
 	http://dev.quinode.fr:8000/static/css/style.css
 	http://localhost:8000/static/css/style.css
+	http://localhost:8888/static/css/style.css
 */
 
 body {
@@ -83,6 +84,7 @@ h4{
 
 #content{
 	font-size: 1.1em;
+	position: relative;
 }
 
 nav{
@@ -108,6 +110,17 @@ nav{
 	color: #fffeff;
 }
 
+#tags{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+#tags li{
+	float: left;
+	padding-bottom: 5px;
+	padding-right: 9px;
+}
 
 #tags a{
 	font-size: 14px;
@@ -115,8 +128,7 @@ nav{
 	border: 1px solid #8fc6db;
 	background-color: #daf2f4;
 	margin-top: 4px;
-	padding: 4px;
-	font-style: italic;
+	padding: 3px 7px 5px;
 	
 -webkit-border-radius: 4px;
 -moz-border-radius: 4px;
@@ -130,6 +142,7 @@ background: -o-linear-gradient(#FFFFFF, #A8D7E1);
 background: linear-gradient(#FFFFFF, #A8D7E1);
 	text-decoration: none;
 	color: #1d1e1e;
+	font-style: italic;
 }
 
 #tags a:hover{
@@ -141,8 +154,10 @@ background: -moz-linear-gradient(#FDFCF7, #F0DA2D);
 background: -ms-linear-gradient(#FDFCF7, #F0DA2D);
 background: -o-linear-gradient(#FDFCF7, #F0DA2D);
 background: linear-gradient(#FDFCF7, #F0DA2D);
-	border-color: #fff6ca;
+	border-color: #ffad4a;
 	color: black;
+	
+	
 }
 
 
@@ -337,8 +352,7 @@ div.vcard abbr {
 /* @group footer */
 
 footer {
-	
-	background: white url(../img/ombre.png) repeat-x;
+	background: white url(/static/img/ombre.png) repeat-x;
 	border-top: 1px solid #bababa;
 }
 
@@ -494,6 +508,105 @@ fieldset.client label {
 
 
 
+/* @group Commentaires */
+
+#comment_form{
+	padding-left: 17px;
+}
+
+p.comm_title{
+	background: url(/static/img/comm_title.jpg) no-repeat;
+	padding: 15px 12px 15px 80px;
+	color: #5c5c5c;
+}
+
+p.comm_title b{
+	font: 22px/22px serif;
+	color: #80a839;
+	letter-spacing: 1px;
+	top: -5px;
+	position: relative;
+}
+
+#comment_form label{
+	display: block;
+	font-size: 15px;
+	margin-bottom: 9px;
+	font-weight: bold;
+	line-height: 22px;
+}
+
+#comment_form label span{
+	color: #9c9c9c;
+	font-weight: normal;
+	font-style: normal;
+	font-size: 13px;
+	display: block;
+	margin-top: 30px;
+	margin-bottom: -5px;
+}
+
+#comment_form input.submit-post{
+	background-color: #f5db26;
+	border: 4px outset #f5db26;
+	padding: 4px 15px;
+	position: relative;
+	top: -9px;
+	font-size: 14px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+textarea#id_comment,
+form.survey textarea{
+	font: 0.9em 'Droid Sans', arial, serif;
+	height: 97px;
+	padding: 7px;
+	color: #363636;
+	font-size: 15px;
+	width: 95%;
+	border: 2px solid #a5a5a5;
+	background-image: url(/static/img/petits-carreaux.jpg);
+	overflow-y: auto;
+
+}
+
+div.comment{
+	border-bottom: 2px solid #aaa;
+	padding-bottom: 15px;
+	padding-left: 20px;
+}
+
+div.comment p{
+	font-size: 13px;
+	color: #9c9c9c;
+	margin-left: -20px;
+}
+
+div.comment p a{
+	text-decoration: none;
+	color: #5c83b8;
+}
+
+div.comment p a:hover{
+	text-decoration: underline;
+}
+
+
+ul.errorlist{
+	list-style-type: square;
+	margin: 0;
+	padding: 0 0 0 20px;
+	font-weight: bold;
+	color: #cd0818;
+	display: inline-block;
+}
+
+/* @end */
+
+/* @group initiative */
+
 p.statut{
 	font-weight: bold;
 	color: #929292;
@@ -501,6 +614,8 @@ p.statut{
 
 ul.membres{
 	padding-left: 5px;
+	display: inline-block;
+	position: relative;
 }
 
 ul.membres li{
@@ -512,6 +627,10 @@ ul.membres li{
 	position: relative;
 	padding: 5px;
 	margin-bottom: 7px;
+	width: 278px;
+	float: left;
+	margin-right: 10px;
+	display: inline-block;
 }
 
 ul.membres li p{
@@ -535,4 +654,20 @@ a.role{
 
 a.role:hover{
 	color: #265aff;
+}
+
+
+
+/* @end */
+
+p.special_Case{
+	font-weight: bold;
+	padding: 10px;
+	border: 2px solid #f9c641;
+	background-color: #f5ffb7;
+	float: right;
+	position: absolute;
+	right: 0;
+	width: 200px;
+	top: 0;
 }

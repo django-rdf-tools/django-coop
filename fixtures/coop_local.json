@@ -1,5 +1,1870 @@
 [
     {
+        "pk": 131,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": null,
+            "city": null,
+            "adr2": null,
+            "point": "POINT (4.7604341332037530 48.2832110155234489)",
+            "area": null,
+            "zipcode": null,
+            "label": "zone en plus (center)",
+            "owner": null
+        }
+    },
+    {
+        "pk": 129,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": null,
+            "city": null,
+            "adr2": null,
+            "point": "POINT (3.8837528228759766 45.0437061283154776)",
+            "area": null,
+            "zipcode": null,
+            "label": "Mairie",
+            "owner": null
+        }
+    },
+    {
+        "pk": 1,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Rue de l'Industrie",
+            "city": "Aubiere",
+            "adr2": "",
+            "point": "POINT (3.1376620000000002 45.7557383999999985)",
+            "area": null,
+            "zipcode": "63170",
+            "label": "Rue de l'Industrie",
+            "owner": null
+        }
+    },
+    {
+        "pk": 2,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Le Puy basset",
+            "city": "Fontanges",
+            "adr2": "",
+            "point": "POINT (2.5275321000000002 45.0987431000000001)",
+            "area": null,
+            "zipcode": "15140",
+            "label": "Le Puy basset",
+            "owner": null
+        }
+    },
+    {
+        "pk": 3,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "9, all\u00e9e Pierre Fermat",
+            "city": "Aubi\u00e8re",
+            "adr2": "Parc Technologique la Pardieu",
+            "point": "POINT (3.1359020000000002 45.7595749999999981)",
+            "area": null,
+            "zipcode": "63170",
+            "label": "9, all\u00e9e Pierre Fermat",
+            "owner": null
+        }
+    },
+    {
+        "pk": 4,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "42, rue Auger",
+            "city": "Clermont-Ferrand",
+            "adr2": "",
+            "point": "POINT (3.1069390000000001 45.7826274999999967)",
+            "area": null,
+            "zipcode": "63100",
+            "label": "42, rue Auger",
+            "owner": null
+        }
+    },
+    {
+        "pk": 5,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "7 all\u00e9e Georges Pompidou",
+            "city": "Aurillac",
+            "adr2": "",
+            "point": "POINT (2.4459550000000001 44.9135288000000017)",
+            "area": null,
+            "zipcode": "15000",
+            "label": "7 all\u00e9e Georges Pompidou",
+            "owner": null
+        }
+    },
+    {
+        "pk": 6,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "5 place Saint Pierre",
+            "city": "Montlu\u00e7on",
+            "adr2": "",
+            "point": "POINT (2.6029586000000000 46.3411437999999976)",
+            "area": null,
+            "zipcode": "03100",
+            "label": "5 place Saint Pierre",
+            "owner": null
+        }
+    },
+    {
+        "pk": 7,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "14 rue de la boucherie",
+            "city": "Clermont\n Ferrand",
+            "adr2": "",
+            "point": "POINT (3.1138504999999999 45.7941075999999967)",
+            "area": null,
+            "zipcode": "63100",
+            "label": "14 rue de la boucherie",
+            "owner": null
+        }
+    },
+    {
+        "pk": 8,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "6 avenue du Docteur Mallet",
+            "city": "Murat",
+            "adr2": "",
+            "point": "POINT (2.8685757000000001 45.1095771999999968)",
+            "area": null,
+            "zipcode": "15170",
+            "label": "6 avenue du Docteur Mallet",
+            "owner": null
+        }
+    },
+    {
+        "pk": 9,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "16, bd du pr\u00e9sident Bertrand",
+            "city": "Le Puy En Velay",
+            "adr2": "",
+            "point": "POINT (3.8840648000000000 45.0361091999999985)",
+            "area": null,
+            "zipcode": "43000",
+            "label": "16, bd du pr\u00e9sident Bertrand",
+            "owner": null
+        }
+    },
+    {
+        "pk": 10,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Le Bourg",
+            "city": "Bonneval",
+            "adr2": "",
+            "point": "POINT (3.7410420000000002 45.3126010000000008)",
+            "area": null,
+            "zipcode": "43160",
+            "label": "Mairie",
+            "owner": null
+        }
+    },
+    {
+        "pk": 11,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "18 route de reignat",
+            "city": "Montaigut\n Le Blanc",
+            "adr2": "",
+            "point": "POINT (3.0913913000000002 45.5828922000000034)",
+            "area": null,
+            "zipcode": "63320",
+            "label": "18 route de reignat",
+            "owner": null
+        }
+    },
+    {
+        "pk": 12,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Le Bourg",
+            "city": "Montoldre",
+            "adr2": "",
+            "point": "POINT (3.4478569999999999 46.3344439999999977)",
+            "area": null,
+            "zipcode": "03150",
+            "label": "Le Bourg",
+            "owner": null
+        }
+    },
+    {
+        "pk": 13,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "89 rue du Port",
+            "city": "Dompierre Sur Bresbre",
+            "adr2": "",
+            "point": "POINT (3.6850564000000001 46.5202062999999981)",
+            "area": null,
+            "zipcode": "03290",
+            "label": "89 rue du Port",
+            "owner": null
+        }
+    },
+    {
+        "pk": 14,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "27, route de Lyon",
+            "city": "Moulins",
+            "adr2": "",
+            "point": "POINT (3.3364815999999999 46.5542165999999966)",
+            "area": null,
+            "zipcode": "03000",
+            "label": "27, route de Lyon",
+            "owner": null
+        }
+    },
+    {
+        "pk": 15,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "6, rue de L'Yser",
+            "city": "Aurillac",
+            "adr2": "",
+            "point": "POINT (2.4430277000000000 44.9093124999999986)",
+            "area": null,
+            "zipcode": "15000",
+            "label": "6, rue de L'Yser",
+            "owner": null
+        }
+    },
+    {
+        "pk": 16,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "173 Etienne Clementel",
+            "city": "Clermont-Ferrand",
+            "adr2": "",
+            "point": "POINT (3.1094653999999999 45.8059299000000024)",
+            "area": null,
+            "zipcode": "63100",
+            "label": "173 Etienne Clementel",
+            "owner": null
+        }
+    },
+    {
+        "pk": 17,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "33 rue de Gomel",
+            "city": "Clermont-Ferrand",
+            "adr2": "",
+            "point": "POINT (3.0997002999999999 45.8121243000000007)",
+            "area": null,
+            "zipcode": "63100",
+            "label": "33 rue de Gomel",
+            "owner": null
+        }
+    },
+    {
+        "pk": 18,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Le P\u00eacher",
+            "city": "Monistrol-Sur-Loire",
+            "adr2": "",
+            "point": "POINT (4.1614490999999996 45.2875994999999989)",
+            "area": null,
+            "zipcode": "43120",
+            "label": "Le P\u00eacher",
+            "owner": null
+        }
+    },
+    {
+        "pk": 19,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Roussel",
+            "city": "Issertaux",
+            "adr2": "",
+            "point": "POINT (3.3704822000000001 45.6596271000000016)",
+            "area": null,
+            "zipcode": "63270",
+            "label": "Roussel",
+            "owner": null
+        }
+    },
+    {
+        "pk": 20,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "La petite besse",
+            "city": "Yssingeaux",
+            "adr2": "",
+            "point": "POINT (4.1240709999999998 45.1709359999999975)",
+            "area": null,
+            "zipcode": "43200",
+            "label": "La petite besse",
+            "owner": null
+        }
+    },
+    {
+        "pk": 22,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "3 rue Voltaire",
+            "city": "Moulins",
+            "adr2": "",
+            "point": "POINT (3.3339989999999999 46.5658689999999993)",
+            "area": null,
+            "zipcode": "03000",
+            "label": "3 rue Voltaire",
+            "owner": null
+        }
+    },
+    {
+        "pk": 23,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "30, rue des jacobins",
+            "city": "Clermont   Ferrand",
+            "adr2": "",
+            "point": "POINT (3.0942371999999998 45.7814869999999985)",
+            "area": null,
+            "zipcode": "63000",
+            "label": "30, rue des jacobins",
+            "owner": null
+        }
+    },
+    {
+        "pk": 24,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "2, Place Lafayette",
+            "city": "Brioude",
+            "adr2": "Mairie",
+            "point": "POINT (3.3844971656799316 45.2942261081295712)",
+            "area": null,
+            "zipcode": "43100",
+            "label": "2, Place Lafayette",
+            "owner": null
+        }
+    },
+    {
+        "pk": 25,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "108 avenue de la Lib\u00e9ration",
+            "city": "Riom",
+            "adr2": "",
+            "point": "POINT (3.1141895000000002 45.8879499999999965)",
+            "area": null,
+            "zipcode": "63200",
+            "label": "108 avenue de la Lib\u00e9ration",
+            "owner": null
+        }
+    },
+    {
+        "pk": 26,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "7 rue Fernand Forest",
+            "city": "Thiers",
+            "adr2": "",
+            "point": "POINT (3.5466217000000002 45.8550387000000015)",
+            "area": null,
+            "zipcode": "63300",
+            "label": "7 rue Fernand Forest",
+            "owner": null
+        }
+    },
+    {
+        "pk": 27,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "48 avenue de la r\u00e9sistance ",
+            "city": "Ambert",
+            "adr2": "",
+            "point": "POINT (3.7436596000000000 45.5373438000000021)",
+            "area": null,
+            "zipcode": "63600",
+            "label": "48 avenue de la r\u00e9sistance ",
+            "owner": null
+        }
+    },
+    {
+        "pk": 28,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Le Bourg",
+            "city": "Marat",
+            "adr2": "",
+            "point": "POINT (3.6820789999999999 45.6587159999999983)",
+            "area": null,
+            "zipcode": "63480",
+            "label": "Le Bourg",
+            "owner": null
+        }
+    },
+    {
+        "pk": 29,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Le Bourg",
+            "city": "Pinols",
+            "adr2": "",
+            "point": "POINT (3.3554005622863770 45.0303323103695590)",
+            "area": null,
+            "zipcode": "43300",
+            "label": "Mairie",
+            "owner": null
+        }
+    },
+    {
+        "pk": 30,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "1 rue de l'\u00e9cole",
+            "city": "L\u00e9otoing",
+            "adr2": "",
+            "point": "POINT (3.3043024000000001 45.3865205000000032)",
+            "area": null,
+            "zipcode": "43410",
+            "label": "1 rue de l'\u00e9cole",
+            "owner": null
+        }
+    },
+    {
+        "pk": 31,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "12 Z. A. Lachaud",
+            "city": "Les Vilettes",
+            "adr2": "",
+            "point": "POINT (4.1828900000000004 45.2346000000000004)",
+            "area": null,
+            "zipcode": "43600",
+            "label": "12 Z. A. Lachaud",
+            "owner": null
+        }
+    },
+    {
+        "pk": 32,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Le Moulin du roy",
+            "city": "Gerzat",
+            "adr2": "",
+            "point": "POINT (3.1542281999999999 45.8261576000000019)",
+            "area": null,
+            "zipcode": "63360",
+            "label": "Le Moulin du roy",
+            "owner": null
+        }
+    },
+    {
+        "pk": 33,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "23, rue de romainville",
+            "city": "Cusset",
+            "adr2": "",
+            "point": "POINT (3.4300155000000001 46.1424783000000005)",
+            "area": null,
+            "zipcode": "03300",
+            "label": "23, rue de romainville",
+            "owner": null
+        }
+    },
+    {
+        "pk": 34,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "35 Bd de Canteloube",
+            "city": "Aurillac",
+            "adr2": "",
+            "point": "POINT (2.4311158000000002 44.9034429000000017)",
+            "area": null,
+            "zipcode": "15000",
+            "label": "35 Bd de Canteloube",
+            "owner": null
+        }
+    },
+    {
+        "pk": 35,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "6 rue Pierre et Marie Curie",
+            "city": "Gerzat",
+            "adr2": "",
+            "point": "POINT (3.1484117999999999 45.8159648999999973)",
+            "area": null,
+            "zipcode": "63360",
+            "label": "6 rue Pierre et Marie Curie",
+            "owner": null
+        }
+    },
+    {
+        "pk": 36,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Rue du 8 Mai",
+            "city": "Cussac/Loire",
+            "adr2": "ZI les Baraques",
+            "point": "POINT (3.8675308227539062 44.9980372793758008)",
+            "area": null,
+            "zipcode": "43370",
+            "label": "Rue du 8 Mai",
+            "owner": null
+        }
+    },
+    {
+        "pk": 37,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "53 rue de la Pardige",
+            "city": "Brioude",
+            "adr2": "",
+            "point": "POINT (3.3835223999999999 45.2923424000000026)",
+            "area": null,
+            "zipcode": "43100",
+            "label": "La Pardige",
+            "owner": null
+        }
+    },
+    {
+        "pk": 38,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "42 rue du progr\u00e8s",
+            "city": "Moulins",
+            "adr2": "",
+            "point": "POINT (3.3357808000000002 46.5731413000000032)",
+            "area": null,
+            "zipcode": "03000",
+            "label": "Ligue de l'enseignement Allier",
+            "owner": null
+        }
+    },
+    {
+        "pk": 39,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "20 avenue Jean Jaur\u00e8s",
+            "city": "Brioude",
+            "adr2": "BP 124",
+            "point": "POINT (3.3671110000000000 45.2889800000000022)",
+            "area": null,
+            "zipcode": "43103",
+            "label": "20 avenue Jean Jaur\u00e8s",
+            "owner": null
+        }
+    },
+    {
+        "pk": 40,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Le Bourg",
+            "city": "Roffiac",
+            "adr2": "",
+            "point": "POINT (3.0717945098876953 45.0409618695606255)",
+            "area": null,
+            "zipcode": "15100",
+            "label": "Mairie",
+            "owner": null
+        }
+    },
+    {
+        "pk": 41,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Route des Estreys",
+            "city": "Polignac",
+            "adr2": "",
+            "point": "POINT (3.8337004000000001 45.0682588000000024)",
+            "area": null,
+            "zipcode": "43000",
+            "label": "Route des Estreys",
+            "owner": null
+        }
+    },
+    {
+        "pk": 42,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "6 avenue de la r\u00e9publique",
+            "city": "Cournon",
+            "adr2": "",
+            "point": "POINT (3.1867673999999999 45.7408907000000013)",
+            "area": null,
+            "zipcode": "63800",
+            "label": "6 avenue de la r\u00e9publique",
+            "owner": null
+        }
+    },
+    {
+        "pk": 43,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Ch\u00e2teau des prureaux",
+            "city": "Montcombroux-Les-Mines",
+            "adr2": "",
+            "point": "POINT (3.7441706657409668 46.3475052761804349)",
+            "area": null,
+            "zipcode": "03130",
+            "label": "Ch\u00e2teau des prureaux",
+            "owner": null
+        }
+    },
+    {
+        "pk": 44,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "93 rue de Paris",
+            "city": "Moulins",
+            "adr2": "",
+            "point": "POINT (3.3251274999999998 46.5751103999999998)",
+            "area": null,
+            "zipcode": "03000",
+            "label": "93 rue de Paris",
+            "owner": null
+        }
+    },
+    {
+        "pk": 45,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "16 rue de l'oiseau",
+            "city": "Moulins",
+            "adr2": "",
+            "point": "POINT (3.3348076999999998 46.5618964000000020)",
+            "area": null,
+            "zipcode": "03000",
+            "label": "16 rue de l'oiseau",
+            "owner": null
+        }
+    },
+    {
+        "pk": 46,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "2 rue du faubourg",
+            "city": "Cusset",
+            "adr2": "",
+            "point": "POINT (3.4589539999999999 46.1310989999999990)",
+            "area": null,
+            "zipcode": "03300",
+            "label": "2 rue du faubourg",
+            "owner": null
+        }
+    },
+    {
+        "pk": 47,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "39 rue de la  Guilloti\u00e8re",
+            "city": "Ebreuil",
+            "adr2": "",
+            "point": "POINT (3.0866707000000000 46.1138771999999975)",
+            "area": null,
+            "zipcode": "03450",
+            "label": "39 rue de la  Guilloti\u00e8re",
+            "owner": null
+        }
+    },
+    {
+        "pk": 48,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "7 rue de la Corre",
+            "city": "Creuzier Le Vieux",
+            "adr2": "NULL",
+            "point": "POINT (3.4391946000000000 46.1625669000000016)",
+            "area": null,
+            "zipcode": "03300",
+            "label": "7 rue de la Corre",
+            "owner": null
+        }
+    },
+    {
+        "pk": 49,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "32, Cit\u00e9 Clair Vivre",
+            "city": "Aurillac",
+            "adr2": "",
+            "point": "POINT (2.4428980000000000 44.9209889999999987)",
+            "area": null,
+            "zipcode": "15006",
+            "label": "32, Cit\u00e9 Clair Vivre",
+            "owner": null
+        }
+    },
+    {
+        "pk": 50,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Labarthe",
+            "city": "Domeyrat",
+            "adr2": "",
+            "point": "POINT (3.5086588000000001 45.2503075999999993)",
+            "area": null,
+            "zipcode": "43230",
+            "label": "Labarthe",
+            "owner": null
+        }
+    },
+    {
+        "pk": 51,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "6 avenue du G\u00e9n\u00e9ral de Gaulle",
+            "city": "Le Puy En Velay",
+            "adr2": "",
+            "point": "POINT (3.8839769999999998 45.0410421999999997)",
+            "area": null,
+            "zipcode": "43000",
+            "label": "6 avenue du G\u00e9n\u00e9ral de Gaulle",
+            "owner": null
+        }
+    },
+    {
+        "pk": 52,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "35 rue verdun",
+            "city": "Le Puy En Velay",
+            "adr2": "",
+            "point": "POINT (3.8877668000000001 45.0439641999999978)",
+            "area": null,
+            "zipcode": "43000",
+            "label": "35 rue verdun",
+            "owner": null
+        }
+    },
+    {
+        "pk": 53,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "4 route du Thiex",
+            "city": "Saint Eloy Les Mines",
+            "adr2": "Rond-point sud",
+            "point": "POINT (2.6367187500000000 46.1798304075943591)",
+            "area": null,
+            "zipcode": "63700",
+            "label": "4 route du Thiex",
+            "owner": null
+        }
+    },
+    {
+        "pk": 54,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "3 rue Gaultier de Biauzat",
+            "city": "Clermont-Ferrand",
+            "adr2": "",
+            "point": "POINT (3.0830989999999998 45.7823202000000009)",
+            "area": null,
+            "zipcode": "63000",
+            "label": "Peuple et Culture",
+            "owner": null
+        }
+    },
+    {
+        "pk": 55,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "63 rue chaussade",
+            "city": "Le Puy En Velay",
+            "adr2": "",
+            "point": "POINT (3.8861184000000000 45.0430404999999965)",
+            "area": null,
+            "zipcode": "43000",
+            "label": "63 rue chaussade",
+            "owner": null
+        }
+    },
+    {
+        "pk": 56,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "188 avenue de la r\u00e9publique",
+            "city": "Montlu\u00e7on",
+            "adr2": "",
+            "point": "POINT (2.5961626999999998 46.3472185999999979)",
+            "area": null,
+            "zipcode": "03100",
+            "label": "188 avenue de la r\u00e9publique",
+            "owner": null
+        }
+    },
+    {
+        "pk": 57,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "11, rue des Saul\u00e9es",
+            "city": "Chamali\u00e8res",
+            "adr2": "",
+            "point": "POINT (3.0663518999999999 45.7771071000000020)",
+            "area": null,
+            "zipcode": "63400",
+            "label": "11, rue des Saul\u00e9es",
+            "owner": null
+        }
+    },
+    {
+        "pk": 58,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "3 rue de la Gravi\u00e8re",
+            "city": "Billom",
+            "adr2": "",
+            "point": "POINT (3.3395296999999999 45.7233406000000002)",
+            "area": null,
+            "zipcode": "63160",
+            "label": "3 rue de la Gravi\u00e8re",
+            "owner": null
+        }
+    },
+    {
+        "pk": 59,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "3 route de parentignat",
+            "city": "Issoire",
+            "adr2": "",
+            "point": "POINT (3.2552701000000002 45.5413390000000007)",
+            "area": null,
+            "zipcode": "63500",
+            "label": "3 route de parentignat",
+            "owner": null
+        }
+    },
+    {
+        "pk": 60,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Avenue du Pr\u00e9sident Auriol",
+            "city": "Montlu\u00e7on",
+            "adr2": "",
+            "point": "POINT (2.5840888000000000 46.3279487000000003)",
+            "area": null,
+            "zipcode": "03100",
+            "label": "Avenue du Pr\u00e9sident Auriol",
+            "owner": null
+        }
+    },
+    {
+        "pk": 61,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "60, rue des Farges",
+            "city": "Le Puy En Velay",
+            "adr2": "",
+            "point": "POINT (3.8802458000000000 45.0468420999999992)",
+            "area": null,
+            "zipcode": "43000",
+            "label": "60, rue des Farges",
+            "owner": null
+        }
+    },
+    {
+        "pk": 62,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Les Bathiers",
+            "city": "Charnat",
+            "adr2": "C/o  R\u00e9gazzoni S",
+            "point": "POINT (3.4328325999999998 45.9443930999999992)",
+            "area": null,
+            "zipcode": "63290",
+            "label": "Les Bathiers",
+            "owner": null
+        }
+    },
+    {
+        "pk": 63,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "La Boucharde",
+            "city": "Brugheas",
+            "adr2": "",
+            "point": "POINT (3.3816446999999998 46.0842659999999995)",
+            "area": null,
+            "zipcode": "03700",
+            "label": "La Boucharde",
+            "owner": null
+        }
+    },
+    {
+        "pk": 64,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "29 boulevard Henri IV",
+            "city": "Ambert",
+            "adr2": "",
+            "point": "POINT (3.7419134000000001 45.5490605000000031)",
+            "area": null,
+            "zipcode": "63600",
+            "label": "29 boulevard Henri IV",
+            "owner": null
+        }
+    },
+    {
+        "pk": 65,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Le Bourg",
+            "city": "Cournols",
+            "adr2": "",
+            "point": "POINT (3.0337540000000001 45.6475300000000033)",
+            "area": null,
+            "zipcode": "63450",
+            "label": "Le Bourg",
+            "owner": null
+        }
+    },
+    {
+        "pk": 66,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "18 , rue Camille Joubert",
+            "city": "Thiers",
+            "adr2": "",
+            "point": "POINT (3.5460316000000001 45.8562269999999970)",
+            "area": null,
+            "zipcode": "63300",
+            "label": "18 , rue Camille Joubert",
+            "owner": null
+        }
+    },
+    {
+        "pk": 67,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "6 Rue du Fort",
+            "city": "Champeix",
+            "adr2": "",
+            "point": "POINT (3.1287777000000001 45.5876339000000002)",
+            "area": null,
+            "zipcode": "63320",
+            "label": "6 Rue du Fort",
+            "owner": null
+        }
+    },
+    {
+        "pk": 68,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "34 rue Roderie",
+            "city": "Aiguilhe",
+            "adr2": "",
+            "point": "POINT (3.8936459999999999 45.0508246999999997)",
+            "area": null,
+            "zipcode": "43000",
+            "label": "34 rue Roderie",
+            "owner": null
+        }
+    },
+    {
+        "pk": 69,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "61, avenue de L'URSS",
+            "city": "Clermont-Ferrand",
+            "adr2": "",
+            "point": "POINT (3.1022680000000000 45.7802349999999976)",
+            "area": null,
+            "zipcode": "63000",
+            "label": "61, avenue de L'URSS",
+            "owner": null
+        }
+    },
+    {
+        "pk": 70,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "L'\u00e9tang",
+            "city": "Salledes",
+            "adr2": "",
+            "point": "POINT (3.3496284484863281 45.6414678646549419)",
+            "area": null,
+            "zipcode": "63270",
+            "label": "L'\u00e9tang",
+            "owner": null
+        }
+    },
+    {
+        "pk": 71,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "6 rue Jean Jacques Rousseau",
+            "city": "Moulins",
+            "adr2": "",
+            "point": "POINT (3.3340787000000001 46.5629824000000028)",
+            "area": null,
+            "zipcode": "03000",
+            "label": "6 rue Jean Jacques Rousseau",
+            "owner": null
+        }
+    },
+    {
+        "pk": 72,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "rue Jean de Bourbon",
+            "city": "Yssingeaux",
+            "adr2": "",
+            "point": "POINT (4.1275541999999996 45.1411766000000014)",
+            "area": null,
+            "zipcode": "43200",
+            "label": "Foyer Rural",
+            "owner": null
+        }
+    },
+    {
+        "pk": 73,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Le Bourg",
+            "city": "Charensat",
+            "adr2": "",
+            "point": "POINT (2.6367929999999999 45.9865589999999997)",
+            "area": null,
+            "zipcode": "63640",
+            "label": "Mairie",
+            "owner": null
+        }
+    },
+    {
+        "pk": 74,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "24, rue des Goudoux",
+            "city": "Volvic",
+            "adr2": "",
+            "point": "POINT (3.0360238000000002 45.8689407999999972)",
+            "area": null,
+            "zipcode": "63530",
+            "label": "24, rue des Goudoux",
+            "owner": null
+        }
+    },
+    {
+        "pk": 75,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "58,60 rue du Mar\u00e9chal Lyautey",
+            "city": "Vichy",
+            "adr2": "",
+            "point": "POINT (3.4280602999999998 46.1206209999999999)",
+            "area": null,
+            "zipcode": "03200",
+            "label": "58,60 rue du Mar\u00e9chal Lyautey",
+            "owner": null
+        }
+    },
+    {
+        "pk": 76,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "40 rte de coudes",
+            "city": "Neschers",
+            "adr2": "",
+            "point": "POINT (3.1662686999999998 45.5888773000000000)",
+            "area": null,
+            "zipcode": "63320",
+            "label": "40 rte de coudes",
+            "owner": null
+        }
+    },
+    {
+        "pk": 77,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Avenue de l'Ermitage",
+            "city": "Le Puy En Velay",
+            "adr2": "",
+            "point": "POINT (3.8525533676147461 45.0548637472371141)",
+            "area": null,
+            "zipcode": "43000",
+            "label": "Lyc\u00e9e Professionnel Agricole",
+            "owner": null
+        }
+    },
+    {
+        "pk": 78,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Place R\u00e9n\u00e9 Amarger",
+            "city": "Saint Flour",
+            "adr2": "",
+            "point": "POINT (3.1002044677734375 45.0352000140596758)",
+            "area": null,
+            "zipcode": "15100",
+            "label": "Maison des Agiales",
+            "owner": null
+        }
+    },
+    {
+        "pk": 79,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "4, rue du 14 juillet",
+            "city": "Courpi\u00e8re",
+            "adr2": "",
+            "point": "POINT (3.5384620000000000 45.7548083000000005)",
+            "area": null,
+            "zipcode": "63120",
+            "label": "4, rue du 14 juillet",
+            "owner": null
+        }
+    },
+    {
+        "pk": 80,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Le Chomeil",
+            "city": "Le Brignon",
+            "adr2": "",
+            "point": "POINT (3.8882446000000002 44.9332787000000025)",
+            "area": null,
+            "zipcode": "43370",
+            "label": "Le Chomeil",
+            "owner": null
+        }
+    },
+    {
+        "pk": 81,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "4 rue du 29 juillet",
+            "city": "Cusset",
+            "adr2": "",
+            "point": "POINT (3.4553916000000000 46.1324042999999975)",
+            "area": null,
+            "zipcode": "03300",
+            "label": "4 rue du 29 juillet",
+            "owner": null
+        }
+    },
+    {
+        "pk": 82,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "4 rue Antoine moillier",
+            "city": "Billom",
+            "adr2": "",
+            "point": "POINT (3.3415895000000000 45.7234975000000006)",
+            "area": null,
+            "zipcode": "63160",
+            "label": "4 rue Antoine moillier",
+            "owner": null
+        }
+    },
+    {
+        "pk": 83,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "7 rue de la Caisse d'Epargne",
+            "city": "Riom",
+            "adr2": "",
+            "point": "POINT (3.1126496000000001 45.8934896000000023)",
+            "area": null,
+            "zipcode": "63200",
+            "label": "7 rue de la Caisse d'Epargne",
+            "owner": null
+        }
+    },
+    {
+        "pk": 84,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "2 rue Andr\u00e9 Laplace",
+            "city": "Le Puy En Velay",
+            "adr2": "",
+            "point": "POINT (3.8913289000000000 45.0450666999999996)",
+            "area": null,
+            "zipcode": "43000",
+            "label": "2 rue Andr\u00e9 Laplace",
+            "owner": null
+        }
+    },
+    {
+        "pk": 85,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Domaine de Laluas",
+            "city": "Riom",
+            "adr2": "",
+            "point": "POINT (3.1133676000000001 45.8923518000000001)",
+            "area": null,
+            "zipcode": "63200",
+            "label": "Domaine de Laluas",
+            "owner": null
+        }
+    },
+    {
+        "pk": 86,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Le Bourg",
+            "city": "St Gervais Sous Meymont",
+            "adr2": "",
+            "point": "POINT (3.6085072000000000 45.6898460000000028)",
+            "area": null,
+            "zipcode": "63880",
+            "label": "Maison du Parc Livradois-Forez",
+            "owner": null
+        }
+    },
+    {
+        "pk": 87,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Le Bourg",
+            "city": "Loubeyrat",
+            "adr2": "",
+            "point": "POINT (3.0109088000000002 45.9347081000000017)",
+            "area": null,
+            "zipcode": "63410",
+            "label": "Le Bourg",
+            "owner": null
+        }
+    },
+    {
+        "pk": 88,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "6, place St Andr\u00e9",
+            "city": "Buss\u00e9ol",
+            "adr2": "",
+            "point": "POINT (3.2550406999999999 45.6906415999999993)",
+            "area": null,
+            "zipcode": "63270",
+            "label": "6, place St Andr\u00e9",
+            "owner": null
+        }
+    },
+    {
+        "pk": 89,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Combre",
+            "city": "Chabreloche",
+            "adr2": "",
+            "point": "POINT (3.6970217000000001 45.8777974999999998)",
+            "area": null,
+            "zipcode": "63250",
+            "label": "Combre",
+            "owner": null
+        }
+    },
+    {
+        "pk": 90,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Quai de la Voireuze",
+            "city": "Blesle",
+            "adr2": "",
+            "point": "POINT (3.1708025000000002 45.3177882999999966)",
+            "area": null,
+            "zipcode": "43450",
+            "label": "Quai de la Voireuze",
+            "owner": null
+        }
+    },
+    {
+        "pk": 91,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "3 rue de Serbie",
+            "city": "Clermont-Ferrand",
+            "adr2": "",
+            "point": "POINT (3.0806988000000000 45.7811007000000032)",
+            "area": null,
+            "zipcode": "63000",
+            "label": "3 rue de Serbie",
+            "owner": null
+        }
+    },
+    {
+        "pk": 92,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "8 rue des Potiers",
+            "city": "Moulins",
+            "adr2": "",
+            "point": "POINT (3.3311370999999999 46.5681423999999993)",
+            "area": null,
+            "zipcode": "03000",
+            "label": "8 rue des Potiers",
+            "owner": null
+        }
+    },
+    {
+        "pk": 93,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "26 rue Daguerre",
+            "city": "Clermont Ferrand",
+            "adr2": "",
+            "point": "POINT (3.0981203000000002 45.7605527999999993)",
+            "area": null,
+            "zipcode": "63000",
+            "label": "26 rue Daguerre",
+            "owner": null
+        }
+    },
+    {
+        "pk": 94,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Le Bourg",
+            "city": "Trezioux",
+            "adr2": "",
+            "point": "POINT (3.5038719999999999 45.7103409999999997)",
+            "area": null,
+            "zipcode": "63520",
+            "label": "Le Bourg",
+            "owner": null
+        }
+    },
+    {
+        "pk": 95,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "9 rue sous les Augustins",
+            "city": "Clermont -Ferrand",
+            "adr2": "",
+            "point": "POINT (3.0837897000000001 45.7808514999999971)",
+            "area": null,
+            "zipcode": "63000",
+            "label": "9 rue sous les Augustins",
+            "owner": null
+        }
+    },
+    {
+        "pk": 96,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "158 boulevard Gustave Flaubert",
+            "city": "Clermont Ferrand",
+            "adr2": "",
+            "point": "POINT (3.1260143000000000 45.7623485000000016)",
+            "area": null,
+            "zipcode": "63000",
+            "label": "158 boulevard Gustave Flaubert",
+            "owner": null
+        }
+    },
+    {
+        "pk": 97,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "140 Bis Grande Rue",
+            "city": "Aigueperse",
+            "adr2": "",
+            "point": "POINT (3.2036744000000001 46.0238902999999979)",
+            "area": null,
+            "zipcode": "63260",
+            "label": "140 Bis Grande Rue",
+            "owner": null
+        }
+    },
+    {
+        "pk": 98,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "4 Chemin d'argenti\u00e8re",
+            "city": "Saint-Victor",
+            "adr2": "",
+            "point": "POINT (2.6095210999999998 46.3947438000000005)",
+            "area": null,
+            "zipcode": "03410",
+            "label": "4 Chemin d'argenti\u00e8re",
+            "owner": null
+        }
+    },
+    {
+        "pk": 99,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "9 cit\u00e9 Clair Vivre",
+            "city": "Aurillac Cedex",
+            "adr2": "BP N\u00b0312",
+            "point": "POINT (2.4423393999999998 44.9222614999999976)",
+            "area": null,
+            "zipcode": "15003",
+            "label": "9 cit\u00e9 Clair Vivre",
+            "owner": null
+        }
+    },
+    {
+        "pk": 100,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "10 all\u00e9e Evariste Galois",
+            "city": "Clermont-Ferrand",
+            "adr2": "",
+            "point": "POINT (3.1306126999999999 45.7601506000000029)",
+            "area": null,
+            "zipcode": "63000",
+            "label": "10 all\u00e9e Evariste Galois",
+            "owner": null
+        }
+    },
+    {
+        "pk": 101,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "8 allee des sorbiers",
+            "city": "Paulhaguet",
+            "adr2": "",
+            "point": "POINT (3.5170153000000002 45.2124747000000013)",
+            "area": null,
+            "zipcode": "43230",
+            "label": "8 allee des sorbiers",
+            "owner": null
+        }
+    },
+    {
+        "pk": 102,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "430, rue du clos",
+            "city": "Vic Le Comte",
+            "adr2": "",
+            "point": "POINT (3.2479396000000000 45.6489315999999974)",
+            "area": null,
+            "zipcode": "63270",
+            "label": "430, rue du clos",
+            "owner": null
+        }
+    },
+    {
+        "pk": 103,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "La plenne",
+            "city": "Ruynes En Margeride",
+            "adr2": "",
+            "point": "POINT (3.1656303000000001 44.9861166000000026)",
+            "area": null,
+            "zipcode": "15320",
+            "label": "La plenne",
+            "owner": null
+        }
+    },
+    {
+        "pk": 104,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Marmilhat",
+            "city": "Lempdes",
+            "adr2": "",
+            "point": "POINT (3.1762693000000000 45.7783842999999990)",
+            "area": null,
+            "zipcode": "63370",
+            "label": "Maison des paysans",
+            "owner": null
+        }
+    },
+    {
+        "pk": 105,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "222 boulevard Gustave Flaubert",
+            "city": "Clermont-Ferrand",
+            "adr2": "",
+            "point": "POINT (3.1269114000000000 45.7593819000000011)",
+            "area": null,
+            "zipcode": "63000",
+            "label": "222 boulevard Gustave Flaubert",
+            "owner": null
+        }
+    },
+    {
+        "pk": 106,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Cours gervais ",
+            "city": "Saugues",
+            "adr2": "",
+            "point": "POINT (3.5470575000000002 44.9596568999999988)",
+            "area": null,
+            "zipcode": "43170",
+            "label": "Cours gervais ",
+            "owner": null
+        }
+    },
+    {
+        "pk": 107,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Impasse Dieudonn\u00e9 Costes",
+            "city": "Moulins",
+            "adr2": "",
+            "point": "POINT (3.3374725000000001 46.5429686000000018)",
+            "area": null,
+            "zipcode": "03000",
+            "label": "Maison des Associations",
+            "owner": null
+        }
+    },
+    {
+        "pk": 108,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "22 rue Paul Bert",
+            "city": "Moulins",
+            "adr2": "",
+            "point": "POINT (3.3318173999999998 46.5632700999999969)",
+            "area": null,
+            "zipcode": "03000",
+            "label": "22 rue Paul Bert",
+            "owner": null
+        }
+    },
+    {
+        "pk": 109,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Place du champs de foire",
+            "city": "Bourbon L'Archambault",
+            "adr2": "",
+            "point": "POINT (3.0521265999999998 46.5868474000000035)",
+            "area": null,
+            "zipcode": "03160",
+            "label": "Place du champs de foire",
+            "owner": null
+        }
+    },
+    {
+        "pk": 110,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Rue du pigeonnier",
+            "city": "Langeac",
+            "adr2": "",
+            "point": "POINT (3.4949150000000002 45.0999730999999997)",
+            "area": null,
+            "zipcode": "43300",
+            "label": "Rue du pigeonnier",
+            "owner": null
+        }
+    },
+    {
+        "pk": 111,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "3, rue des Petits Gras",
+            "city": "Clermont Ferrand",
+            "adr2": "",
+            "point": "POINT (3.0836774999999998 45.7782514000000020)",
+            "area": null,
+            "zipcode": "63000",
+            "label": "Espace Central",
+            "owner": null
+        }
+    },
+    {
+        "pk": 112,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "20 rue de la constitution",
+            "city": "Cusset",
+            "adr2": "",
+            "point": "POINT (3.4582993000000002 46.1332138000000000)",
+            "area": null,
+            "zipcode": "03300",
+            "label": "20 rue de la constitution",
+            "owner": null
+        }
+    },
+    {
+        "pk": 113,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Les sapins",
+            "city": "Saint Didier La For\u00eat",
+            "adr2": "",
+            "point": "POINT (3.3429275000000001 46.1974125999999998)",
+            "area": null,
+            "zipcode": "03110",
+            "label": "Les sapins",
+            "owner": null
+        }
+    },
+    {
+        "pk": 114,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "3, rue des Petits Gras",
+            "city": "Clermont-Ferrand",
+            "adr2": "",
+            "point": "POINT (3.0836698000000000 45.7782505999999998)",
+            "area": null,
+            "zipcode": "63000",
+            "label": "Espace Central",
+            "owner": null
+        }
+    },
+    {
+        "pk": 115,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "10 Place des tilleuls",
+            "city": "Verneix",
+            "adr2": "Savigny",
+            "point": "POINT (2.6628523999999998 46.4224345000000014)",
+            "area": null,
+            "zipcode": "03190",
+            "label": "10 Place des tilleuls",
+            "owner": null
+        }
+    },
+    {
+        "pk": 116,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "13,rue du 14 juillet",
+            "city": "Aurillac",
+            "adr2": "",
+            "point": "POINT (2.4422234999999999 44.9275461000000007)",
+            "area": null,
+            "zipcode": "15000",
+            "label": "13,rue du 14 juillet",
+            "owner": null
+        }
+    },
+    {
+        "pk": 117,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "31, rue emile littr\u00e9",
+            "city": "Montlu\u00e7on",
+            "adr2": "",
+            "point": "POINT (2.6139063000000000 46.3487841999999972)",
+            "area": null,
+            "zipcode": "03100",
+            "label": "31, rue emile littr\u00e9",
+            "owner": null
+        }
+    },
+    {
+        "pk": 118,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "1 avenue des cottages",
+            "city": "Clermont Ferrand",
+            "adr2": "",
+            "point": "POINT (3.0790592000000001 45.7648928999999995)",
+            "area": null,
+            "zipcode": "63000",
+            "label": "1 avenue des cottages",
+            "owner": null
+        }
+    },
+    {
+        "pk": 119,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Impasse de l'Ebre",
+            "city": "Charbonnieres Les Varennes",
+            "adr2": "",
+            "point": "POINT (2.9996092000000001 45.9075686999999988)",
+            "area": null,
+            "zipcode": "63410",
+            "label": "Impasse de l'Ebre",
+            "owner": null
+        }
+    },
+    {
+        "pk": 120,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "4 Ter rue Danchet",
+            "city": "Riom Cedex",
+            "adr2": "BP 169",
+            "point": "POINT (3.1119954000000001 45.8925642999999965)",
+            "area": null,
+            "zipcode": "63204",
+            "label": "4 Ter rue Danchet",
+            "owner": null
+        }
+    },
+    {
+        "pk": 121,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "20 rue Mar\u00e9chal Foch",
+            "city": "Vichy Cedex",
+            "adr2": "BP 2677",
+            "point": "POINT (3.4229001000000001 46.1226259000000027)",
+            "area": null,
+            "zipcode": "03206",
+            "label": "Centre Culturel Val\u00e9ry Larbaud",
+            "owner": null
+        }
+    },
+    {
+        "pk": 122,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "1 bd gambetta",
+            "city": "Lurcy L\u00e9vis",
+            "adr2": "",
+            "point": "POINT (2.9392960000000001 46.7315207999999984)",
+            "area": null,
+            "zipcode": "03320",
+            "label": "Maison des associations",
+            "owner": null
+        }
+    },
+    {
+        "pk": 123,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Avenue beranger",
+            "city": "Thiers",
+            "adr2": "b\u00e2timent K",
+            "point": "POINT (3.5422710999999998 45.8542223999999976)",
+            "area": null,
+            "zipcode": "63300",
+            "label": "Avenue beranger",
+            "owner": null
+        }
+    },
+    {
+        "pk": 124,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "4 rue des pins",
+            "city": "Saint Remy \nSur Durolle",
+            "adr2": "",
+            "point": "POINT (3.5902987999999998 45.8904584000000000)",
+            "area": null,
+            "zipcode": "63550",
+            "label": "4 rue des pins",
+            "owner": null
+        }
+    },
+    {
+        "pk": 125,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "8 place de la paix",
+            "city": "Aurillac",
+            "adr2": "",
+            "point": "POINT (2.4416685104370117 44.9240192810466539)",
+            "area": null,
+            "zipcode": "15000",
+            "label": "Maison des associations",
+            "owner": null
+        }
+    },
+    {
+        "pk": 126,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "1/3 rue Berthelot",
+            "city": "Moulins",
+            "adr2": "",
+            "point": "POINT (3.3351272999999999 46.5644914000000014)",
+            "area": null,
+            "zipcode": "03000",
+            "label": "1/3 rue Berthelot",
+            "owner": null
+        }
+    },
+    {
+        "pk": 127,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "ZA du Pont Vert",
+            "city": "Montlu\u00e7on",
+            "adr2": "Avenue Pr\u00e9sident Auriol",
+            "point": "POINT (2.5840888000000000 46.3279487000000003)",
+            "area": null,
+            "zipcode": "03100",
+            "label": "ZA du Pont Vert",
+            "owner": null
+        }
+    },
+    {
+        "pk": 128,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "Rue Serge Gainsbourg",
+            "city": "Clermont-Ferrand",
+            "adr2": "Place du 1er Mai",
+            "point": "POINT (3.1008267402648926 45.7880257055642303)",
+            "area": null,
+            "zipcode": "63000",
+            "label": "La coop\u00e9rative de Mai",
+            "owner": null
+        }
+    },
+    {
+        "pk": 21,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": "3\u00a0 rue Gaultier de Biauzat",
+            "city": "Clermont   Ferrand",
+            "adr2": "",
+            "point": "POINT (3.0830829067423147 45.7811791614779438)",
+            "area": null,
+            "zipcode": "63000",
+            "label": "3\u00a0 rue Gaultier de Biauzat",
+            "owner": null
+        }
+    },
+    {
+        "pk": 130,
+        "model": "coop_geo.location",
+        "fields": {
+            "adr1": null,
+            "city": null,
+            "adr2": null,
+            "point": "POINT (5.2237900906128516 46.9351527890945732)",
+            "area": null,
+            "zipcode": null,
+            "label": "zone test (center)",
+            "owner": null
+        }
+    },
+    {
+        "pk": 1,
+        "model": "coop_geo.area",
+        "fields": {
+            "default_location": 130,
+            "update_auto": false,
+            "polygon": "MULTIPOLYGON (((4.3408203119220392 47.0898362407550124, 5.2636718742567776 47.5589955761434595, 5.3515624992410338 47.1720532438038873, 5.3735351554871205 46.5258766165767739, 4.4616699212754707 46.6165075625559524, 4.3408203119220392 47.0898362407550124)), ((5.5822753898247193 47.0823556651576283, 5.5822753898247193 46.5107567343129986, 6.2963867178217692 46.7371132648946954, 6.1425781240993427 47.1571141510736496, 5.5822753898247193 47.0823556651576283)))",
+            "reference": "",
+            "label": "zone test"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "coop_geo.area",
+        "fields": {
+            "default_location": 131,
+            "update_auto": false,
+            "polygon": "MULTIPOLYGON (((4.8901367180736655 48.2000383778337138, 3.9453124994929292 48.2439559712807622, 5.1428222649034359 48.3973708935097520, 5.2856445305028643 48.2805251852726585, 4.8901367180736655 48.2000383778337138)))",
+            "reference": "",
+            "label": "zone en plus"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "coop_geo.arearelations",
+        "fields": {
+            "parent": 1,
+            "relation_type": "CC",
+            "child": 2
+        }
+    },
+    {
         "pk": 1,
         "model": "coop_local.engagement",
         "fields": {

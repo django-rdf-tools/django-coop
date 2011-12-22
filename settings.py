@@ -62,6 +62,8 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 import admin_tools
 ADMIN_TOOLS_PATH = os.path.dirname(os.path.abspath(admin_tools.__file__))
+ADMIN_MEDIA_PREFIX = '/static/admin/'
+
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -147,6 +149,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.gis',
+    'django.contrib.comments',
 
     #3rd parties
     'south',
@@ -156,9 +159,9 @@ INSTALLED_APPS = (
     'livesettings',
     'sorl.thumbnail',
     'floppyforms',
-    
-    #3rd parties integrated as regular apps
+    'haystack',
     'html_field',
+    'oembed',
 
     #apps
     'coop_local',
@@ -168,13 +171,27 @@ INSTALLED_APPS = (
     'coop_cms',
     'skosxl',
     'rss_sync',
+    #geo
     'coop_geo',
+    #'genericm2m',
+    
+    'coop_agenda',
+    'coop_bar',
+    'taggit',
+    'taggit_templatetags',
+    'taggit_autocomplete_modified',
 )
 
 DJALOHA_LINK_MODELS = ('coop_cms.Article',)
-
 D2RQ_ROOT = 'http://demo.django.coop:2020/'
 
+HAYSTACK_SITECONF = 'coop_local.search_sites'
+HAYSTACK_SEARCH_ENGINE = 'simple'
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+    },
+}
 
 #ADMIN_TOOLS_MENU = 'base.menu.CustomMenu'
 #ADMIN_TOOLS_INDEX_DASHBOARD = 'base.dashboard.CustomIndexDashboard'
@@ -204,6 +221,9 @@ COOP_GEO_EPSG_PROJECTION = 4326 # WGS84
 COOP_GEO_BOUNDING_BOX = []
 COOP_GEO_REGION = LANGUAGE_CODE[:2]
 
+TAGGIT_TAG_MODEL           = ('skosxl','Label')
+TAGGIT_TAGGED_ITEM_MODEL   = ('skosxl','LabelledItem')
+TAGGIT_AUTOCOMPLETE_TAG_MODEL = 'skosxl.Label'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

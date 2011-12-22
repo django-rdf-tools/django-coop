@@ -17,12 +17,10 @@
         <br/>
     {% endif %}
     
-    {% if initiatives %}
+    {% if initiative %}
         <h4>Initiatives à cet endroit</h4>
         <ul>
-        {% for i in initiatives %}
-        <li><a href="{{i.get_absolute_url}}">{{ i.title }}</a></li>
-        {%endfor%} 
+        <li><a href="{{initiative.get_absolute_url}}">{{ initiative.title }}</a></li>
         </ul>
         <br/>
     {% endif %}

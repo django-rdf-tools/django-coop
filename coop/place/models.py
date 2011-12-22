@@ -6,38 +6,42 @@ from django.core.urlresolvers import reverse
 from coop_geo.models import Location
 
 class BaseSite(models.Model):
-    title = models.CharField(_('Titre'),null=True,blank=True,max_length=250)
-    description = models.TextField(_(u'Description'),null=True,blank=True)
-    site_principal = models.BooleanField(default=True)
-    uri = models.CharField(_(u'URI principale'),null=True,blank=True, max_length=250, editable=False)
+    title = models.CharField(_('title'),null=True,blank=True,max_length=250)
+    description = models.TextField(_(u'description'),null=True,blank=True)
+    site_principal = models.BooleanField(default=False)
+    uri = models.CharField(_(u'main URI'),blank=True, max_length=250, editable=False)
+    location = models.ForeignKey(Location, related_name='sites',verbose_name=_(u'location'))
+    initiative = models.ForeignKey('coop_local.Initiative',null=True,blank=True,
+                                    related_name='sites',
+                                    verbose_name=_(u'organization'))
+    telephone_fixe = models.CharField(_(u'land line'),blank=True,null=True, max_length=14)
+
+#tout ça peut gicler maintenant    
+    adr1 = models.CharField(null=True,blank=True, max_length=100, editable=False)
+    adr2 = models.CharField(null=True,blank=True, max_length=100, editable=False)
+    zipcode = models.CharField(null=True,blank=True, max_length=5, editable=False)
+    city = models.CharField(null=True,blank=True, max_length=100, editable=False)
+    latlong = models.CharField(null=True,blank=True, max_length=100, editable=False)
+    lat = models.CharField(null=True,blank=True, max_length=100, editable=False)
+    long = models.CharField(null=True,blank=True, max_length=100, editable=False)
     
-    location = models.ForeignKey(Location, related_name='sites')
-    initiative = models.ForeignKey('coop_local.Initiative',null=True,blank=True,related_name='sites')
+# par contre transférer ici : tel, fax, portable, email    
     
-    adr1 = models.CharField(null=True,blank=True, max_length=100)
-    adr2 = models.CharField(null=True,blank=True, max_length=100)
-    zipcode = models.CharField(null=True,blank=True, max_length=5)
-    city = models.CharField(null=True,blank=True, max_length=100)
-    latlong = models.CharField(null=True,blank=True, max_length=100)
-    lat = models.CharField(null=True,blank=True, max_length=100)
-    long = models.CharField(null=True,blank=True, max_length=100)
+    created = exfields.CreationDateTimeField(_(u'created'),null=True)
+    modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)
+    uuid = exfields.UUIDField(null=True) #nécessaire pour URI
     
-    created = exfields.CreationDateTimeField(_(u'Création'),null=True)
-    modified = exfields.ModificationDateTimeField(_(u'Modification'),null=True)
-    #membre_uri = models.CharField(_(u'Profil FOAF'),blank=True, max_length=250, editable=False)
-    uuid = exfields.UUIDField(null=True) #nécessaire pour URI de l'engagement
     class Meta:
         abstract = True
+        verbose_name = _(u'Point of presence')
+        verbose_name_plural = _(u'Points of presence')
+        
     def __unicode__(self):
         if self.title != None:
-            return self.title+u', '+self.city
+            return unicode(self.title)+u', '+unicode(self.city)
         else:
-            return self.adr1+u', '+self.city
+            return unicode(self.adr1)+u', '+unicode(self.city)
     def get_absolute_url(self):
         return reverse('place_detail', args=[self.uuid])
-            
-    def links(self):
-        links = {
-            'inits' : self.initiative_set.all().count()-1,
-            'events': self.event_set.all().count()-1}                
-        return links
+        
+    #TODO def save si le seul alors principal, si un autre est principal alors erreur

@@ -16,3 +16,10 @@ feedparser==5.0.1
 -e git+git://github.com/quinode/coop_cms.git#egg=coop_cms
 -e git+git://github.com/quinode/djaloha.git#egg=djaloha
 -e git+git://github.com/gabrielgrant/django-html-field.git#egg=html_field
+djangoembed==0.1.1
+django-taggit==0.9.3
+django-taggit-autocomplete-modified==0.1.0b4
+-e git+git://github.com/jonasgeiregat/django-templatetag-sugar.git#egg=templatetag_sugar
+django-haystack==1.2.6
+httplib2==0.7.2
+python-dateutil==1.5

@@ -8,5 +8,5 @@ def detail(request,uuid):
     context = {}
     lieu = Site.objects.get(uuid=uuid)
     context['object'] = lieu
-    context['initiatives'] = lieu.initiative_set.all()
+    context['initiative'] = lieu.initiative
     return render_to_response('place/place_detail.html',context,RequestContext(request))

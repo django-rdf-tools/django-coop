@@ -1,51 +1,55 @@
 # -*- coding:utf-8 -*-
 from django.contrib import admin
-from coop_local.models import Membre,Role,Engagement,Initiative, Site
+from coop_local.models import Membre,MemberCategory, Role,Engagement,\
+    OrganizationCategory, Initiative, Site, SeeAlsoLink, SameAsLink
 from coop_local.forms import SiteForm
 from coop.place.admin import BaseSiteAdmin
-from skosxl.models import Term
-from django_extensions.admin import ForeignKeyAutocompleteAdmin
-from django_extensions.admin.widgets import ForeignKeySearchInput
+from coop.admin import LocatedInline, BaseEngagementInline,\
+    BaseInitiativeAdminForm,BaseInitiativeAdmin,BaseMembreAdmin
 from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
 
+from coop.autocomplete_admin import FkAutocompleteAdmin,InlineAutocompleteAdmin
 
 admin.site.register(Role)
+admin.site.register(MemberCategory)
+admin.site.register(OrganizationCategory)
+
+#from genericadmin.admin import GenericAdminModelAdmin,GenericTabularInline
+from django.contrib.contenttypes.generic import GenericTabularInline
 
 
-class EngagementInline(admin.TabularInline):
-    model = Engagement
+class SeeAlsoInline(GenericTabularInline):
+    model = SeeAlsoLink
     extra=1
+    
+class SameAsInline(GenericTabularInline):
+    model = SameAsLink
+    extra=1    
+
+class EngagementInline(BaseEngagementInline,InlineAutocompleteAdmin):
+    model = Engagement
+
+# class SiteInline(BaseSiteInline,InlineAutocompleteAdmin):
+#     model = Site
 
 
-class InitiativeAdminForm(forms.ModelForm):
-    tags = forms.ModelMultipleChoiceField(
-        queryset=Term.objects.all().order_by('literal'),
-        widget=FilteredSelectMultiple('tags', False)
-    )
+class InitiativeAdminForm(BaseInitiativeAdminForm):
     class Meta:
         model = Initiative
 
 
-class InitiativeAdmin(admin.ModelAdmin):
-    form = InitiativeAdminForm
-    list_display = ('title','active','uri')
-    list_display_links =('title',)
-    search_fields = ['title','acronym','description']
-    list_filter = ('active',)
-    ordering = ('title',)
+class InitiativeAdmin(BaseInitiativeAdmin,FkAutocompleteAdmin):
+    form = BaseInitiativeAdminForm
     inlines = [
-            EngagementInline,
+            LocatedInline,EngagementInline,SeeAlsoInline
         ]
     
 admin.site.register(Initiative, InitiativeAdmin)
 
-class MembreAdmin(admin.ModelAdmin):
-    list_display = ('nom','prenom','email',)
-    list_display_links =('nom','prenom')
-    ordering = ('nom',)
+class MembreAdmin(BaseMembreAdmin):
     inlines = [
-            EngagementInline,
+            SeeAlsoInline,SameAsInline
         ]
 
 admin.site.register(Membre, MembreAdmin)
