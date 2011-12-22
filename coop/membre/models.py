@@ -25,7 +25,7 @@ class BaseMembre(models.Model):
     prenom = models.CharField(_(u'last name'),max_length=100,null=True,blank=True)
     pub_name = models.BooleanField(default=False, verbose_name=_(u'publicize name'))
     
-    location = models.ForeignKey(Location,null=True,blank=True,verbose_name=_(u'location'))    
+    #location = models.ForeignKey(Location,null=True,blank=True,verbose_name=_(u'location'))    
     pub_location = models.BooleanField(default=False, verbose_name=_(u'publicize location'))
     
     adresse = models.TextField(_(u'address'),null=True,blank=True)

@@ -52,23 +52,33 @@ class BaseInitiativeAdmin(FkAutocompleteAdmin):
     list_display_links =('title',)
     search_fields = ['title','acronym','description']
     list_filter = ('active','category')
+    #read_only_fields = ['created','modified']
     ordering = ('title',)
     inlines = [
             LocatedInline,BaseEngagementInline
         ]
+    fieldsets = (
+        (None, {
+            'fields' : (('active','birth'),'title','acronym',
+                        ('telephone_fixe','mobile'),('email','web'),
+                        ('rss','vcal'),'description','category')
+            }),
+        ('Notes', {
+            'classes': ('collapse',),
+            'fields': ('notes',)
+        })
+    )    
     def get_actions(self, request):
         myactions = dict(create_action(s) for s in get_model('coop_local','OrganizationCategory').objects.all())
         return dict(myactions, **super(BaseInitiativeAdmin, self).get_actions(request))#merge des deux dicts
         
         
-from coop_geo.widgets import ChooseLocationWidget, LocationPointWidget   
 class BaseMembreAdmin(admin.ModelAdmin):
     list_display = ('nom','prenom','email','has_user_account','has_role')
     list_filter = ('category',)
     list_display_links =('nom','prenom')
     search_fields = ('nom','prenom','email')
     ordering = ('nom',)
-    widgets = { 'location' : ChooseLocationWidget(None)}
     fieldsets = ()
 
 

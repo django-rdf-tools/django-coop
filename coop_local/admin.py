@@ -40,10 +40,11 @@ class InitiativeAdminForm(BaseInitiativeAdminForm):
 
 
 class InitiativeAdmin(BaseInitiativeAdmin,FkAutocompleteAdmin):
-    form = BaseInitiativeAdminForm
+    form = InitiativeAdminForm
     inlines = [
             LocatedInline,EngagementInline,SeeAlsoInline
         ]
+    fieldsets = BaseInitiativeAdmin.fieldsets + (('CREDIS', {'fields': (('statut','secteur_fse'),('siret','naf'))}),)    
     
 admin.site.register(Initiative, InitiativeAdmin)
 

@@ -54,7 +54,7 @@ class BaseInitiative(models.Model):
     description = models.TextField(_(u'description'),blank=True,null=True)
     uri         = models.CharField(_(u'main URI'),blank=True,null=True, max_length=250, editable=False)
     
-    #tags = TaggableManager(through=LabelledItem, blank=True)
+    tags = TaggableManager(through=LabelledItem, blank=True)
 
     category = models.ManyToManyField('coop_local.OrganizationCategory', blank=True, null=True, verbose_name=_(u'category'))
 
@@ -63,15 +63,16 @@ class BaseInitiative(models.Model):
     mobile = models.CharField(_(u'mobile phone'),blank=True,null=True, max_length=14)
     
     located = generic.GenericRelation(Located)
-    #location = models.ForeignKey(Location, verbose_name=_(u'location'), blank=True, null=True)
     
     action_area = models.ForeignKey(Area, verbose_name=_(u'impact Area'), blank=True, null=True)
     
-    # date_birth = 
-    
+    birth = models.DateField(null=True, blank=True)
     email   = models.EmailField(_(u'global email'),blank=True,null=True)
     web     = models.URLField(_(u'web site'),blank=True,null=True, verify_exists=True)
     rss     = models.URLField(_(u'RSS feed'),blank=True,null=True, verify_exists=True)
+    
+    vcal    = models.URLField(_(u'vCal'),blank=True,null=True, verify_exists=True)
+    
     slug    = exfields.AutoSlugField(populate_from='title',blank=True)
     created = exfields.CreationDateTimeField(_(u'created'),null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)
@@ -79,6 +80,7 @@ class BaseInitiative(models.Model):
     notes   = models.TextField(blank=True, verbose_name=_(u'notes'))
     class Meta:
         abstract = True
+        ordering = ['title']
     def __unicode__(self):
         if(self.acronym != None and len(self.title) > 40):
             return unicode(self.acronym)
