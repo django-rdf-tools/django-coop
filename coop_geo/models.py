@@ -65,6 +65,19 @@ class Location(models.Model):
             locations = locations.filter(owner=user)
         return locations.order_by('label')
 
+#  si nécessaire
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
+
+class Located(models.Model):
+    location = models.ForeignKey(Location,null=True,blank=True)
+    # things which are located
+    content_type = models.ForeignKey(ContentType,blank=True,null=True)
+    object_id = models.PositiveIntegerField()
+    content_object = generic.GenericForeignKey('content_type', 'object_id')
+    def __unicode__(self):
+        return unicode(self.content_object) + u" @ " + unicode(self.location)
+
 AREA_DEFAULT_LOCATION_LBL = _(u"%s (center)")
 
 #TODO: manage area relations in admin
@@ -74,19 +87,6 @@ AREA_TYPES = (('TW', u'commune'),
               ('RG', u"région"),
               ('PY', u"pays"),
              )
-
-#  si nécessaire
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
-
-class Located(models.Model):
-    location = models.ForeignKey(Location,null=True,blank=True)
-    # things which are located
-    content_type    = models.ForeignKey(ContentType,blank=True,null=True)
-    object_id       = models.PositiveIntegerField()
-    content_object  = generic.GenericForeignKey('content_type', 'object_id')
-    def __unicode__(self):
-        return unicode(self.content_object) + u" @ " + unicode(self.location)
 
 class Area(models.Model):
     """Areas: towns, regions, ... mainly set by import"""

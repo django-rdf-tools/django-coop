@@ -71,6 +71,10 @@ var {{attrs.id}}_area_ids = new Array();
         {% endif %}
         {%endfor%}</ul>
     </div>
+    {%else%}
+<script type="text/javascript">
+var {{attrs.id}}_areas = new Array();
+</script>
     {% endif %}
 </span>
 <span id="{{ attrs.id }}_span_map">
