@@ -3,7 +3,7 @@
         "pk": 131,
         "model": "coop_geo.location",
         "fields": {
-            "adr1": null,
+            "adr1": "zone en plus (center)",
             "city": null,
             "adr2": null,
             "point": "POINT (4.7604341332037530 48.2832110155234489)",
@@ -17,7 +17,7 @@
         "pk": 129,
         "model": "coop_geo.location",
         "fields": {
-            "adr1": null,
+            "adr1": "Mairie",
             "city": null,
             "adr2": null,
             "point": "POINT (3.8837528228759766 45.0437061283154776)",
@@ -1823,7 +1823,7 @@
         "pk": 130,
         "model": "coop_geo.location",
         "fields": {
-            "adr1": null,
+            "adr1": "zone test (center)",
             "city": null,
             "adr2": null,
             "point": "POINT (5.2237900906128516 46.9351527890945732)",

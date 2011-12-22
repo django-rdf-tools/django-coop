@@ -8572,7 +8572,7 @@
         "pk": 158,
         "model": "coop_local.site",
         "fields": {
-            "adr1": null,
+            "adr1": "default",
             "city": null,
             "adr2": null,
             "description": "",
@@ -28892,7 +28892,7 @@
         "pk": 131,
         "model": "coop_geo.location",
         "fields": {
-            "adr1": null,
+            "adr1": "default",
             "city": null,
             "adr2": null,
             "uuid": null,
@@ -28909,7 +28909,7 @@
         "pk": 129,
         "model": "coop_geo.location",
         "fields": {
-            "adr1": null,
+            "adr1": "default",
             "city": null,
             "adr2": null,
             "uuid": null,
@@ -31102,7 +31102,7 @@
         "pk": 130,
         "model": "coop_geo.location",
         "fields": {
-            "adr1": null,
+            "adr1": "default",
             "city": null,
             "adr2": null,
             "uuid": null,
