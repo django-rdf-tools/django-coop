@@ -20,3 +20,6 @@ djangoembed==0.1.1
 django-taggit==0.9.3
 django-taggit-autocomplete-modified==0.1.0b4
 -e git+git://github.com/jonasgeiregat/django-templatetag-sugar.git#egg=templatetag_sugar
+django-haystack==1.2.6
+httplib2==0.7.2
+python-dateutil==1.5

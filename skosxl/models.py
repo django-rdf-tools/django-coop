@@ -80,7 +80,7 @@ class Scheme(models.Model):
 class Concept(models.Model):
     definition  = models.TextField(_(u'definition'), blank=True)
     notation    = models.CharField(blank=True, null=True, max_length=100)
-    scheme      = models.ForeignKey(Scheme, blank=True, null=True, default=Scheme.objects.get(slug=DEFAULT_SCHEME_SLUG))
+    scheme      = models.ForeignKey(Scheme, blank=True, null=True)
     changenote  = models.TextField(_(u'change note'),blank=True)
     created     = exfields.CreationDateTimeField(_(u'created'))
     modified    = exfields.ModificationDateTimeField(_(u'modified'))
@@ -100,6 +100,8 @@ class Concept(models.Model):
     def __unicode__(self):
         return self.pref_label
     def save(self,skip_name_lookup=False, *args, **kwargs):
+        if self.scheme is None:
+            self.scheme = Scheme.objects.get(slug=DEFAULT_SCHEME_SLUG)
         if not skip_name_lookup:
             try:
                 lookup_label = self.labels.get(label__language=DEFAULT_LANG,label_type=LABEL_TYPES.prefLabel)
