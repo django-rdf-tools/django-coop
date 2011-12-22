@@ -250,8 +250,10 @@ class AreaRelations(models.Model):
     """
     relation_type = models.CharField(max_length=2, verbose_name=_(u"type"),
                                      choices=RELATION_TYPES)
-    parent = models.ForeignKey(Area, related_name='child_rels')
-    child = models.ForeignKey(Area, related_name='parent_rels')
+    parent = models.ForeignKey(Area, verbose_name=_(u"inside"),
+                               related_name='child_rels')
+    child = models.ForeignKey(Area, verbose_name=_(u"included"),
+                              related_name='parent_rels')
     class Meta:
         verbose_name = _(u"Area relation")
         verbose_name_plural = _(u"Area relations")
