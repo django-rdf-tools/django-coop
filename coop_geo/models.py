@@ -13,10 +13,11 @@ from django_extensions.db import fields as exfields
 
 class Location(models.Model):
     """Location: a named point or/and polygon entered by an administrator"""
-    label = models.CharField(max_length=150, verbose_name=_(u"label"))
+    label = models.CharField(max_length=150, verbose_name=_(u"label"),
+                             blank=True, null=True)
     point = models.PointField(verbose_name=_(u"point"), blank=True, null=True,
                               srid=settings.COOP_GEO_EPSG_PROJECTION)
-    adr1 = models.CharField(verbose_name=_(u"address"), null=True, blank=True,
+    adr1 = models.CharField(verbose_name=_(u"address"),
                             max_length=100)
     adr2 = models.CharField(verbose_name=_(u"address (extra)"), null=True,
                             blank=True, max_length=100)
@@ -29,21 +30,23 @@ class Location(models.Model):
     owner = models.ForeignKey(User, verbose_name=_(u'owner'), blank=True,
                               null=True, editable=False)
     objects = models.GeoManager()
-    
+
     created = exfields.CreationDateTimeField(_(u'created'),null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)
     uuid = exfields.UUIDField(null=True) #nécessaire pour URI
-    
+
     #related = RelatedObjectsDescriptor()
- 
+
     class Meta:
         verbose_name = _(u'Location')
         verbose_name_plural = _(u'Locations')
     def __unicode__(self):
         lbl = self.label
-        extra = [getattr(self, attr)
-                 for attr in ['adr1', 'adr2', 'zipcode', 'city']
-                                          if getattr(self, attr)]
+        extra = []
+        if self.adr1 != self.label:
+            extra = [self.adr1]
+        extra += [getattr(self, attr) for attr in ['adr2', 'zipcode', 'city']
+                                                       if getattr(self, attr)]
         if extra:
             lbl = u"%s (%s)" % (lbl, u", ".join(extra))
         return lbl
@@ -52,6 +55,8 @@ class Location(models.Model):
         if not self.point and not self.area:
             raise ValidationError(_(u"You must at least set a point or choose "
                                     u"an area."))
+        if not self.label:
+            self.label = self.adr1
         return super(Location, self).save(*args, **kwargs)
 
     @classmethod

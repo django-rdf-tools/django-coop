@@ -152,8 +152,9 @@ class LocationTest(TestCase):
             location = Location(label=u'Test', point=None, area=None)
             location.save()
         point = GEOSGeometry('SRID=4326;POINT(-8.88 53.81)')
-        location = Location(label=u'Test point', point=point, area=None)
+        location = Location(adr1=u'Test point', point=point, area=None)
         location.save()
+        self.assertEqual(location.adr1, location.label)
         polygon = GEOSGeometry('SRID=4326;MULTIPOLYGON(((-8.88 53.81,'\
                  '-1.41 55.84,-5.54 53.29,0.34 54.69, -8.88 53.81)))')
         area = Area(label=u'Test', polygon=polygon)
