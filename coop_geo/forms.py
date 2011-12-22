@@ -28,10 +28,18 @@ class LocationForm(forms.ModelForm):
 class AreaForm(forms.ModelForm):
     class Meta:
         model = models.Area
-        fields = ('label', 'reference', 'polygon', 'update_auto',
+        fields = ('label', 'area_type', 'reference', 'polygon', 'update_auto',
                   'default_location')
         widgets = {
             'label': forms.TextInput(),
             'polygon': widgets.PolygonWidget(),
         }
 
+class AreaRelationsForm(forms.ModelForm):
+    class Meta:
+        model = models.AreaRelations
+    def clean(self):
+        if self.cleaned_data['child'] == self.cleaned_data['parent']:
+            raise forms.ValidationError(_(u"Child and Parent have to be "\
+                                          u"different."))
+        return self.cleaned_data
