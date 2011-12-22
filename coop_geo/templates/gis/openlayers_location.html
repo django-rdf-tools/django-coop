@@ -98,7 +98,6 @@ var {{attrs.id}}_areas = new Array();
         point_zoom: {{point_zoom}}
     };{% endblock %}
     var {{ module }} = new MapWidget(options);
-    {{module}}.panel.destroy();
     var {{attrs.id}}_results = new Array();
     wkt_parser = new OpenLayers.Format.WKT();
     var {{attrs.id}}_area_id = {{module}}.options.id.replace('point', 'area');

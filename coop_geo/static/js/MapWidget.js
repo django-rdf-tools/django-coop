@@ -248,12 +248,10 @@ function MapWidget(options) {
     if (!this.options.scrollable) {
         this.map.getControlsByClass('OpenLayers.Control.Navigation')[0].disableZoomWheel();
     }
-    if (wkt) {
-        if (this.options.modifiable) {
-            this.enableEditing();
-        }
+    if (wkt && this.options.modifiable && !this.options.is_point) {
+        this.enableEditing();
     } else {
-        this.enableDrawing();
+        this.enableMoving();
     }
 }
 
@@ -342,6 +340,10 @@ MapWidget.prototype.enableDrawing = function () {
     this.map.getControlsByClass('OpenLayers.Control.DrawFeature')[0].activate();
 };
 
+MapWidget.prototype.enableMoving = function () {
+    this.map.getControlsByClass('OpenLayers.Control.Navigation')[0].activate();
+};
+
 MapWidget.prototype.enableEditing = function () {
     this.map.getControlsByClass('OpenLayers.Control.ModifyFeature')[0].activate();
 };
@@ -369,8 +371,13 @@ MapWidget.prototype.getControls = function(layer) {
         draw_ctl = [point_ctl, path_ctl, poly_ctl];
     }
     if (this.options.modifiable) {
-        var mod = [new OpenLayers.Control.ModifyFeature(layer, {'displayClass': 'olControlModifyFeature'})];
-        this.controls = nav.concat(draw_ctl, mod);
+        if (this.options.is_point){
+            this.controls = nav.concat(draw_ctl);
+        }
+        else{
+            var mod = [new OpenLayers.Control.ModifyFeature(layer, {'displayClass': 'olControlModifyFeature'})];
+            this.controls = nav.concat(draw_ctl, mod);
+        }
     } else {
         if (! layer.features.length) {
             this.controls = nav.concat(draw_ctl);
