@@ -2,11 +2,11 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
-from coop.membre.models import BaseMembre
+from coop.membre.models import BaseMembre,BaseMemberCategory
 from coop.place.models import BaseSite
 #from coop.agenda.models import BaseCalendar, BaseEvent
 from coop.exchange.models import BaseExchange, BaseTransaction
-from coop.initiative.models import BaseInitiative,BaseEngagement,BaseRole
+from coop.initiative.models import BaseOrganizationCategory,BaseInitiative,BaseEngagement,BaseRole
 from coop.link.models import BaseSemLink
 
 # Personnaliser vos modèle ici en ajoutant les champs nécessaires
@@ -15,9 +15,11 @@ from coop.link.models import BaseSemLink
 class Engagement(BaseEngagement):
     pass
 
+class MemberCategory(BaseMemberCategory):
+    pass
+
 class Membre(BaseMembre):
-    adherent = models.NullBooleanField(default=False)
-    batisseur = models.BooleanField(default=False)
+    pass
 
 class Role(BaseRole):
     pass
@@ -54,6 +56,10 @@ class Transaction(BaseTransaction):
     pass
 
 class Site(BaseSite):
+    pass
+
+
+class OrganizationCategory(BaseOrganizationCategory):
     pass
 
 class Initiative(BaseInitiative):

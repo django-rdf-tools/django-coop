@@ -32,13 +32,12 @@
               <h4>Tags: </h4>
               
               <ul id="tags" class="indextags">
-              {% get_taglist as all_tags %}
+              {% get_taglist asvar all_tags count 25 %}
               {% for tag in all_tags %}
                   <li class="tag">
                       <a href="{{ tag.get_absolute_url }}">{{tag}} ({{tag.num_times}})</a>
                   </li>
               {% endfor %}
-                  <li class="tag moretags"> Plus de tags </li>
               </ul>
               
           </div>

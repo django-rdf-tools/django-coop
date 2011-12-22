@@ -7,6 +7,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.contrib.gis.db import models
 from django.db.models.signals import post_save
+from django_extensions.db import fields as exfields
+#from genericm2m.models import RelatedObjectsDescriptor
+
 
 class Location(models.Model):
     """Location: a named point or/and polygon entered by an administrator"""
@@ -24,9 +27,18 @@ class Location(models.Model):
     area = models.ForeignKey('Area', verbose_name=_(u'area'), blank=True,
                               null=True)
     owner = models.ForeignKey(User, verbose_name=_(u'owner'), blank=True,
-                              null=True)
+                              null=True, editable=False)
     objects = models.GeoManager()
-
+    
+    created = exfields.CreationDateTimeField(_(u'created'),null=True)
+    modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)
+    uuid = exfields.UUIDField(null=True) #nécessaire pour URI
+    
+    #related = RelatedObjectsDescriptor()
+ 
+    class Meta:
+        verbose_name = _(u'Location')
+        verbose_name_plural = _(u'Locations')
     def __unicode__(self):
         lbl = self.label
         extra = [getattr(self, attr)
@@ -55,6 +67,22 @@ class Location(models.Model):
 
 AREA_DEFAULT_LOCATION_LBL = _(u"%s (center)")
 
+
+#  si nécessaire
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
+
+class Located(models.Model):
+    location = models.ForeignKey(Location,null=True,blank=True)
+    # things which are located
+    content_type    = models.ForeignKey(ContentType,blank=True,null=True)
+    object_id       = models.PositiveIntegerField()
+    content_object  = generic.GenericForeignKey('content_type', 'object_id')
+    def __unicode__(self):
+        return unicode(self.content_object) + u" @ " + unicode(self.location)
+
+
+
 class Area(models.Model):
     """Areas: towns, regions, ... mainly set by import"""
     label = models.CharField(max_length=150, verbose_name=_(u"label"))
@@ -71,7 +99,9 @@ class Area(models.Model):
     update_auto = models.BooleanField(verbose_name=_(u"update automatically?"),
                                       default=False)
     objects = models.GeoManager()
-
+    class Meta:
+        verbose_name = _(u'Area')
+        verbose_name_plural = _(u'Areas')
     def __unicode__(self):
         return self.label
 

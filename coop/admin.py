@@ -1,53 +1,75 @@
 # -*- coding:utf-8 -*-
 from django.contrib import admin
 from coop.membre.models import BaseMembre
-from coop.initiative.models import BaseRole,BaseEngagement,BaseInitiative
+from coop.initiative.models import BaseRole,BaseEngagement,BaseInitiative,BaseOrganizationCategory
 from coop.place.models import BaseSite
 from skosxl.models import Label
+from coop_geo.models import Location,Located
 from django import forms
 from django.db import models
 from django.contrib.admin.widgets import FilteredSelectMultiple
+from django.db.models.loading import get_model
+from django.utils.translation import ugettext_lazy as _
+from django.contrib.contenttypes.generic import GenericStackedInline
 
 from coop.autocomplete_admin import FkAutocompleteAdmin,InlineAutocompleteAdmin
 
 class BaseEngagementInline(InlineAutocompleteAdmin):
     model = BaseEngagement
     related_search_fields = {'membre': ('nom','prenom','email','user__username'), }
-    extra=1
+    extra=2
 
-class BaseSiteInline(admin.StackedInline,InlineAutocompleteAdmin):
-    model = BaseSite
+# class BaseSiteInline(admin.StackedInline,InlineAutocompleteAdmin):
+#     model = BaseSite
+#     related_search_fields = {'location': ('location__label','location__adr1','location__adr2','location__zipcode','location_city'), }
+#     extra=0
+# 
+#         
+class LocatedInline(GenericStackedInline,InlineAutocompleteAdmin):
+    model = Located
     related_search_fields = {'location': ('label','adr1','adr2','zipcode','city'), }
-    extra=0
+    extra=1
 
 class BaseInitiativeAdminForm(forms.ModelForm):
     # tags = forms.ModelMultipleChoiceField(
-    #     queryset=Term.objects.all().order_by('literal'),
+    #     queryset=Label.objects.all().order_by('name'),
     #     widget=FilteredSelectMultiple('tags', False)
     # )
     class Meta:
         model = BaseInitiative
+
+
+def create_action(category):
+    def add_cat(modeladmin, request, queryset):
+        for obj in queryset:obj.category.add(category)
+    name = "cat_%s" % (category.slug,)
+    return (name, (add_cat, name, _(u'Add to the "%s" category') % (category,)))
+
 
 class BaseInitiativeAdmin(FkAutocompleteAdmin):
     form = BaseInitiativeAdminForm
     list_display = ('title','active','uri')
     list_display_links =('title',)
     search_fields = ['title','acronym','description']
-    list_filter = ('active',)
+    list_filter = ('active','category')
     ordering = ('title',)
     inlines = [
-            BaseSiteInline,BaseEngagementInline
+            LocatedInline,BaseEngagementInline
         ]
-    
+    def get_actions(self, request):
+        myactions = dict(create_action(s) for s in get_model('coop_local','OrganizationCategory').objects.all())
+        return dict(myactions, **super(BaseInitiativeAdmin, self).get_actions(request))#merge des deux dicts
+        
+        
+from coop_geo.widgets import ChooseLocationWidget, LocationPointWidget   
 class BaseMembreAdmin(admin.ModelAdmin):
-    list_display = ('nom','prenom','email',)
+    list_display = ('nom','prenom','email','has_user_account','has_role')
+    list_filter = ('category',)
     list_display_links =('nom','prenom')
-    search_fields = ('nom','prenom')
+    search_fields = ('nom','prenom','email')
     ordering = ('nom',)
-    inlines = [
-            BaseEngagementInline,
-        ]
-
+    widgets = { 'location' : ChooseLocationWidget(None)}
+    fieldsets = ()
 
 
 from django.contrib.admin.filterspecs import FilterSpec, RelatedFilterSpec

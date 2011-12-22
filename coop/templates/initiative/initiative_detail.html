@@ -29,7 +29,7 @@
             {% for engagement in engagements %}
                 <li><img src="{{STATIC_URL}}img/blank_avatar.png">
                     <p>
-                    <a href="{{engagement.membre.get_absolute_url}}">{{ engagement.membre }}</a>, 
+                    <a href="{{engagement.membre.get_absolute_url}}">{{ engagement.membre }}</a>, <br/>
                     <a class="role" href="{{engagement.role.get_absolute_url}}">{{engagement.role}}</a>
                     </p>
                 </li>
@@ -46,10 +46,8 @@
         
     {% endif %}    
     
-    {% render_comment_list for object %}
-    {% render_comment_form for object %}
-    
-    
+    {% include "comments/comments.html" %}
+
     
     </div>
  

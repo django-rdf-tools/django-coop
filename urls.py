@@ -14,6 +14,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
 
     url(r'^admin_tools/', include('admin_tools.urls')),
+    url(r'^taggit_autocomplete_modified/', include('taggit_autocomplete_modified.urls')),
+    (r'^search/', include('haystack.urls')),
     
     url(r'^$', 'coop.views.home', name="home"),
 

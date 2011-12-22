@@ -18,10 +18,11 @@ from django.shortcuts import render_to_response, redirect
 from coop_local.models import Initiative, Membre, Engagement, Role, Site
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
+from django.shortcuts import get_object_or_404
 
 def ISDetailView(request,slug):
     context = {}
-    initiative = Initiative.objects.get(slug=slug)
+    initiative = get_object_or_404(Initiative,slug=slug)    
     context['object'] = initiative
     context['rss'] = initiative.rss
     context['adresses'] = Site.objects.filter(initiative=initiative)
