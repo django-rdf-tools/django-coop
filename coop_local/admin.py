@@ -4,7 +4,7 @@ from coop_local.models import Membre,MemberCategory, Role,Engagement,\
     OrganizationCategory, Initiative, Site, SeeAlsoLink, SameAsLink
 from coop_local.forms import SiteForm
 from coop.place.admin import BaseSiteAdmin
-from coop.admin import LocatedInline, BaseEngagementInline,\
+from coop.admin import LocatedInline, AreaInline, BaseEngagementInline,\
     BaseInitiativeAdminForm,BaseInitiativeAdmin,BaseMembreAdmin
 from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
@@ -42,7 +42,7 @@ class InitiativeAdminForm(BaseInitiativeAdminForm):
 class InitiativeAdmin(BaseInitiativeAdmin,FkAutocompleteAdmin):
     form = InitiativeAdminForm
     inlines = [
-            LocatedInline,EngagementInline,SeeAlsoInline
+        EngagementInline,LocatedInline,AreaInline,SeeAlsoInline
         ]
     fieldsets = BaseInitiativeAdmin.fieldsets + (('CREDIS', {'fields': (('statut','secteur_fse'),('siret','naf'))}),)    
     

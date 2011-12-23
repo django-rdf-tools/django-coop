@@ -3,7 +3,7 @@ from django.db import models
 from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
-from coop_geo.models import Area, Location,Located
+from coop_geo.models import AreaLink,Located
 from skosxl.models import LabelledItem
 from django.contrib.contenttypes import generic
 from taggit_autocomplete_modified.managers \
@@ -65,8 +65,9 @@ class BaseInitiative(models.Model):
     mobile = models.CharField(_(u'mobile phone'),blank=True,null=True, max_length=14)
     
     located = generic.GenericRelation(Located)
+    area = generic.GenericRelation(AreaLink)
     
-    action_area = models.ForeignKey(Area, verbose_name=_(u'impact Area'), blank=True, null=True)
+    #action_area = models.ForeignKey(Area, verbose_name=_(u'impact Area'), blank=True, null=True)
     
     birth = models.DateField(null=True, blank=True)
     email   = models.EmailField(_(u'global email'),blank=True,null=True)

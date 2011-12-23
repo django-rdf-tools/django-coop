@@ -4,7 +4,7 @@ from coop.membre.models import BaseMembre
 from coop.initiative.models import BaseRole,BaseEngagement,BaseInitiative,BaseOrganizationCategory
 from coop.place.models import BaseSite
 from skosxl.models import Label
-from coop_geo.models import Location,Located
+from coop_geo.models import AreaLink,Located
 from django import forms
 from django.db import models
 from django.contrib.admin.widgets import FilteredSelectMultiple
@@ -48,6 +48,10 @@ class LocatedInline(GenericStackedInline,InlineAutocompleteAdmin):
     related_search_fields = {'location': ('label','adr1','adr2','zipcode','city'), }
     extra=1
 
+class AreaInline(GenericStackedInline):
+    model = AreaLink
+    extra=1
+    
 class BaseInitiativeAdminForm(forms.ModelForm):
     # category = chosenforms.ChosenModelMultipleChoiceField(
     #         overlay="Indiquez une ou plusieurs catégories",
@@ -76,7 +80,7 @@ class BaseInitiativeAdmin(AdminImageMixin, FkAutocompleteAdmin):
         URLField: {'widget': URLFieldWidget},
     }
     inlines = [
-            LocatedInline,BaseEngagementInline
+            BaseEngagementInline,LocatedInline,AreaInline
         ]
     fieldsets = (
         (None, {

@@ -238,6 +238,18 @@ def area_post_save(sender, **kwargs):
             parentrel.parent.update_from_childs()
 post_save.connect(area_post_save, sender=Area)
 
+class AreaLink(models.Model):
+    location = models.ForeignKey(Area,null=True,blank=True)
+    # things which are in an area
+    content_type = models.ForeignKey(ContentType,blank=True,null=True)
+    object_id = models.PositiveIntegerField()
+    content_object = generic.GenericForeignKey('content_type', 'object_id')
+    def __unicode__(self):
+        return unicode(self.content_object) + _(u" has area : ") + unicode(self.location)
+
+
+
+
 RELATION_TYPES = (('PY', u"pays"),
                   ('RG', u'région'),
                   ('DP', u"département"),
