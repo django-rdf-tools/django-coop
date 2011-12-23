@@ -6,9 +6,9 @@ from django.core.urlresolvers import reverse
 from coop_geo.models import Area, Location,Located
 from skosxl.models import LabelledItem
 from django.contrib.contenttypes import generic
-
 from taggit_autocomplete_modified.managers \
     import TaggableManagerAutocomplete as TaggableManager
+import sorl
 
 class BaseRole(models.Model):
     label = models.CharField(_(u'label'),max_length=60)
@@ -53,6 +53,8 @@ class BaseInitiative(models.Model):
     acronym     = models.CharField(_('acronym'),blank=True,null=True,max_length=250)
     description = models.TextField(_(u'description'),blank=True,null=True)
     uri         = models.CharField(_(u'main URI'),blank=True,null=True, max_length=250, editable=False)
+    
+    logo = sorl.thumbnail.ImageField(upload_to='logos/',null=True,blank=True)
     
     tags = TaggableManager(through=LabelledItem, blank=True)
 

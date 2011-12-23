@@ -162,6 +162,7 @@ INSTALLED_APPS = (
     'haystack',
     'html_field',
     'oembed',
+    #'chosen',
 
     #apps
     'coop_local',

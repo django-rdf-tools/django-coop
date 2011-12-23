@@ -11,8 +11,26 @@ from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.db.models.loading import get_model
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.generic import GenericStackedInline
-
 from coop.autocomplete_admin import FkAutocompleteAdmin,InlineAutocompleteAdmin
+
+#from chosen import forms as chosenforms
+from django.contrib.admin.widgets import AdminURLFieldWidget
+from django.db.models import URLField
+from django.utils.safestring import mark_safe
+
+from sorl.thumbnail.admin import AdminImageMixin
+
+from sorl.thumbnail import default
+ADMIN_THUMBS_SIZE = '60x60'
+
+
+class URLFieldWidget(AdminURLFieldWidget):
+    def render(self, name, value, attrs=None):
+        widget = super(URLFieldWidget, self).render(name, value, attrs)
+        return mark_safe(u'%s&nbsp;&nbsp;<a href="#" onclick="window.'
+                         u'open(document.getElementById(\'%s\')'
+                         u'.value);return false;" />Ì†ºÌºè</a>' % (widget, attrs['id']))
+
 
 class BaseEngagementInline(InlineAutocompleteAdmin):
     model = BaseEngagement
@@ -31,10 +49,9 @@ class LocatedInline(GenericStackedInline,InlineAutocompleteAdmin):
     extra=1
 
 class BaseInitiativeAdminForm(forms.ModelForm):
-    # tags = forms.ModelMultipleChoiceField(
-    #     queryset=Label.objects.all().order_by('name'),
-    #     widget=FilteredSelectMultiple('tags', False)
-    # )
+    # category = chosenforms.ChosenModelMultipleChoiceField(
+    #         overlay="Indiquez une ou plusieurs cat√©gories",
+    #         queryset=get_model('coop_local','OrganizationCategory').objects.all())    
     class Meta:
         model = BaseInitiative
 
@@ -46,22 +63,26 @@ def create_action(category):
     return (name, (add_cat, name, _(u'Add to the "%s" category') % (category,)))
 
 
-class BaseInitiativeAdmin(FkAutocompleteAdmin):
+class BaseInitiativeAdmin(AdminImageMixin, FkAutocompleteAdmin):
     form = BaseInitiativeAdminForm
-    list_display = ('title','active','uri')
+    list_display = ('logo_thumb','title','active','uri')
     list_display_links =('title',)
     search_fields = ['title','acronym','description']
     list_filter = ('active','category')
     #read_only_fields = ['created','modified']
     ordering = ('title',)
+
+    formfield_overrides = {
+        URLField: {'widget': URLFieldWidget},
+    }
     inlines = [
             LocatedInline,BaseEngagementInline
         ]
     fieldsets = (
         (None, {
-            'fields' : (('active','birth'),'title','acronym',
+            'fields' : ('title','acronym','logo',('active','birth'),
                         ('telephone_fixe','mobile'),('email','web'),
-                        ('rss','vcal'),'description','category')
+                        ('rss','vcal'),'description','category','tags')
             }),
         ('Notes', {
             'classes': ('collapse',),
@@ -71,7 +92,17 @@ class BaseInitiativeAdmin(FkAutocompleteAdmin):
     def get_actions(self, request):
         myactions = dict(create_action(s) for s in get_model('coop_local','OrganizationCategory').objects.all())
         return dict(myactions, **super(BaseInitiativeAdmin, self).get_actions(request))#merge des deux dicts
-        
+        list_display = ['my_image_thumb', 'my_other_field1', 'my_other_field2', ]
+
+    def logo_thumb(self, obj):
+        if obj.logo:
+            thumb = default.backend.get_thumbnail(obj.logo.file, ADMIN_THUMBS_SIZE)
+            return u'<img width="%s" src="%s" />' % (thumb.width, thumb.url)
+        else:
+            return _(u"No Image") 
+    logo_thumb.short_description = _(u"logo")
+    logo_thumb.allow_tags = True
+  
         
 class BaseMembreAdmin(admin.ModelAdmin):
     list_display = ('nom','prenom','email','has_user_account','has_role')
