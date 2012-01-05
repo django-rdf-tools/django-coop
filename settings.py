@@ -97,13 +97,13 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',cd
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE_CLASSES = [
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-)
+]
 
 ROOT_URLCONF = 'urls'
 
@@ -132,7 +132,7 @@ CACHES = {
     }
 }
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     # Admin tools
     # 'admin_tools',
     # 'admin_tools.theming',
@@ -181,7 +181,23 @@ INSTALLED_APPS = (
     'taggit',
     'taggit_templatetags',
     'taggit_autocomplete_modified',
+]
+
+# Sequence for each optional app as a dict containing info about the app.
+OPTIONAL_APPS = (
+    {"import": 'geodjangofla', "apps": ('geodjangofla',)},
 )
+
+# Set up each optional app if available.
+for app in OPTIONAL_APPS:
+    if app.get("condition", True):
+        try:
+            __import__(app["import"])
+        except ImportError:
+            pass
+        else:
+            INSTALLED_APPS += app.get("apps", ())
+            MIDDLEWARE_CLASSES += app.get("middleware", ())
 
 DJALOHA_LINK_MODELS = ('coop_cms.Article',)
 D2RQ_ROOT = 'http://demo.django.coop:2020/'

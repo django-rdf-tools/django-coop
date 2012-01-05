@@ -24,3 +24,4 @@ django-haystack==1.2.6
 httplib2==0.7.2
 python-dateutil==1.5
 -e git+git://github.com/theatlantic/django-chosen.git#egg=django-chosen
+-e git+git://github.com/Nimn/geo-django-fla.git#egg=geo-django-fla
