@@ -19,7 +19,12 @@
             {% for engagement in engagements %}
                 <li><img src="{{STATIC_URL}}img/blank_avatar.png">
                     <p>
-                    <a href="{{engagement.membre.get_absolute_url}}">{{ engagement.membre }}</a>, 
+                    {% if membre.user %}
+                    <a href="{{engagement.membre.get_absolute_url}}">{{ engagement.membre }}</a>
+                    {% else %}
+                    {{ engagement.membre }}
+                    {% endif %}
+                    , 
                     <a class="role" href="{{engagement.role.get_absolute_url}}">{{engagement.role}}</a> pour 
                     <a href="{{engagement.initiative.get_absolute_url}}">{{ engagement.initiative }}</a>.
                     </p>

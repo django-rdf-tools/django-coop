@@ -1,0 +1,110 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: rss_sync\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-12-24 14:58+0000\n"
+"PO-Revision-Date: 2011-12-24 16:16+0100\n"
+"Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
+"Language-Team: Quinode <contact@quinode.fr>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+
+#: admin.py:13
+msgid "Feed"
+msgstr "Flux"
+
+#: admin.py:14
+msgid "Information"
+msgstr "Information"
+
+#: admin.py:37
+msgid "Actions"
+msgstr "Actions"
+
+#: admin.py:38
+msgid "Source"
+msgstr "Source"
+
+#: admin.py:39
+msgid "Content"
+msgstr "Contenu"
+
+#: admin.py:40
+msgid "CMS"
+msgstr ""
+
+#: models.py:8
+msgid "url"
+msgstr "url"
+
+#: models.py:9
+#: models.py:28
+msgid "title"
+msgstr "titre"
+
+#: models.py:10
+msgid "last collect"
+msgstr "dernière collecte"
+
+#: models.py:19
+msgid "RSS source"
+msgstr "source RSS"
+
+#: models.py:20
+msgid "RSS sources"
+msgstr "sources RSS"
+
+#: models.py:27
+msgid "link"
+msgstr "lien"
+
+#: models.py:29
+msgid "summary"
+msgstr "résumé"
+
+#: models.py:30
+msgid "author"
+msgstr "auteur"
+
+#: models.py:31
+msgid "updated"
+msgstr "mise à jour"
+
+#: models.py:32
+msgid "processed"
+msgstr "traité"
+
+#: models.py:38
+msgid "RSS item"
+msgstr "article externe (RSS)"
+
+#: models.py:39
+msgid "RSS items"
+msgstr "articles externe (RSS)"
+
+#: views.py:25
+msgid "Collect RSS items"
+msgstr "Collecter les articles via RSS"
+
+#: views.py:40
+msgid "Create CMS Article"
+msgstr "Créer un article sur le site"
+
+#: widgets.py:34
+msgid "Collect"
+msgstr "Collecter"
+
+#: widgets.py:52
+msgid "Create CMS article"
+msgstr "Créer un article sur le site"
+

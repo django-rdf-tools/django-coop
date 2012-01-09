@@ -4,10 +4,10 @@ contains the two classes for the main dashboard and app index dashboard.
 You can customize these classes as you want.
 
 To activate your index dashboard add the following to your settings.py::
-    ADMIN_TOOLS_INDEX_DASHBOARD = 'base.dashboard.CustomIndexDashboard'
+    ADMIN_TOOLS_INDEX_DASHBOARD = 'devcoop.dashboard.CustomIndexDashboard'
 
 And to activate the app index dashboard::
-    ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'base.dashboard.CustomAppIndexDashboard'
+    ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'devcoop.dashboard.CustomAppIndexDashboard'
 """
 
 from django.utils.translation import ugettext_lazy as _
@@ -19,8 +19,11 @@ from admin_tools.utils import get_admin_site_name
 
 class CustomIndexDashboard(Dashboard):
     """
-    Custom index dashboard for base.
+    Custom index dashboard for devcoop.
     """
+    columns = 2
+    title = ''
+    template = 'coop_dashboard.html'
     def init_with_context(self, context):
         site_name = get_admin_site_name(context)
         # append a link list module for "quick links"
@@ -38,16 +41,35 @@ class CustomIndexDashboard(Dashboard):
             ]
         ))
 
-        # append an app list module for "Applications"
         self.children.append(modules.AppList(
-            _('Applications'),
-            exclude=('django.contrib.*',),
+            _(u"Navigation and articles"),
+            models=('coop_cms.models.NavTree',
+                    'coop_cms.models.Article',
+                    'rss_sync.models.RssItem',
+                    'django.contrib.comments.Comment',
+                    ),
+            template='my_applist.html'
         ))
+        
+        self.children.append(modules.AppList(
+            _(u"My network"),
+            models=('coop_agenda.models.Event',
+                    'coop_agenda.models.EventType',
+                    'coop_local.models.Membre',
+                    'coop_local.models.MemberCategory',
+                    'coop_local.models.Initiative',
+                    'coop_local.models.OrganizationCategory',
+                    
+                    ),
+            template='my_applist.html',
+        ))
+        
 
         # append an app list module for "Administration"
         self.children.append(modules.AppList(
             _('Administration'),
             models=('django.contrib.*',),
+            template='my_applist.html',
         ))
 
         # append a recent actions module
@@ -85,7 +107,7 @@ class CustomIndexDashboard(Dashboard):
 
 class CustomAppIndexDashboard(AppIndexDashboard):
     """
-    Custom app index dashboard for base.
+    Custom app index dashboard for devcoop.
     """
 
     # we disable title because its redundant with the model list module

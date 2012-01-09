@@ -75,7 +75,10 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
 class Located(models.Model):
-    location = models.ForeignKey(Location,null=True,blank=True)
+    location = models.ForeignKey(Location,null=True,blank=True,verbose_name=_(u"location"))
+    main_location = models.BooleanField(default=False,verbose_name=_(u"main venue"))
+    location_type = models.CharField(blank=True, max_length=100,verbose_name=_(u"type of location"))
+    
     # things which are located
     content_type = models.ForeignKey(ContentType,blank=True,null=True)
     object_id = models.PositiveIntegerField()

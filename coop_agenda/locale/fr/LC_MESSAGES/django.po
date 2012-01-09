@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop_agenda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-28 19:05+0100\n"
-"PO-Revision-Date: 2011-11-28 19:06+0100\n"
+"POT-Creation-Date: 2011-12-24 14:56+0000\n"
+"PO-Revision-Date: 2011-12-24 15:57+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
 "Language: \n"
@@ -16,9 +16,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"X-Poedit-Language: fr\n"
+"X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
-"X-Poedit-SourceCharset: utf-8\n"
 
 #: forms.py:16
 msgid "Sun"
@@ -230,7 +229,7 @@ msgid "End time"
 msgstr "Heure de fin"
 
 #: forms.py:213
-#: templates/event_detail.html:34
+#: templates/event_detail.html:35
 msgid "Occurrences"
 msgstr "Occurrences"
 
@@ -269,84 +268,80 @@ msgstr "Options annuelles"
 msgid "Unknown interval rule %s"
 msgstr "Régle d'intervalle inconnue %s"
 
-#: models.py:11
-#: models.py:46
+#: models.py:13
+#: models.py:48
 msgid "title"
 msgstr "titre"
 
-#: models.py:12
-#: models.py:47
+#: models.py:14
+#: models.py:49
 msgid "description"
 msgstr "description"
 
-#: models.py:14
-#: models.py:49
-#: models.py:168
+#: models.py:16
+#: models.py:51
+#: models.py:174
 msgid "created"
 msgstr "créé le"
 
-#: models.py:15
-#: models.py:50
-#: models.py:169
+#: models.py:17
+#: models.py:52
+#: models.py:175
 msgid "modified"
 msgstr "modifié le"
 
-#: models.py:17
-#: models.py:53
+#: models.py:19
+#: models.py:55
 msgid "calendar"
 msgstr "calendrier"
 
-#: models.py:18
+#: models.py:20
 msgid "calendars"
 msgstr "calendriers"
 
-#: models.py:28
+#: models.py:30
 msgid "abbreviation"
 msgstr "abbréviation"
 
-#: models.py:29
+#: models.py:31
 msgid "label"
 msgstr "libellé"
 
-#: models.py:35
-#: models.py:52
+#: models.py:37
+#: models.py:54
 msgid "event type"
-msgstr "type d'événément"
+msgstr "catégorie d'événément"
 
-#: models.py:36
+#: models.py:38
 msgid "event types"
-msgstr "types d'événements"
+msgstr "catégories d'événements"
 
-#: models.py:58
-msgid "organization URI"
-msgstr "URI organisation"
+#: models.py:57
+msgid "django user"
+msgstr "utilisateur django"
 
-#: models.py:59
-msgid "author URI"
-msgstr "URI auteur"
-
-#: models.py:66
-#: models.py:167
+#: models.py:72
+#: models.py:173
 msgid "event"
 msgstr "événement"
 
-#: models.py:67
+#: models.py:73
 msgid "events"
 msgstr "événements"
 
-#: models.py:165
+#: models.py:171
 msgid "start time"
 msgstr "heure de début"
 
-#: models.py:166
+#: models.py:172
 msgid "end time"
 msgstr "heure de fin"
 
-#: models.py:174
+#: models.py:180
 msgid "occurrence"
 msgstr "occurrence"
 
-#: models.py:175
+#: models.py:181
 msgid "occurrences"
 msgstr "occurrences"
 
@@ -406,19 +401,19 @@ msgstr "Détail de l'événement"
 msgid "Update"
 msgstr "Mise à jour"
 
-#: templates/event_detail.html:21
+#: templates/event_detail.html:22
 msgid "Notes"
 msgstr "Notes"
 
-#: templates/event_detail.html:30
+#: templates/event_detail.html:31
 msgid "None"
 msgstr "Aucun"
 
-#: templates/event_detail.html:48
+#: templates/event_detail.html:49
 msgid "Add Occurrences"
 msgstr "Ajouter des occurences"
 
-#: templates/event_detail.html:53
+#: templates/event_detail.html:54
 msgid "Add"
 msgstr "Ajouter"
 
@@ -516,6 +511,12 @@ msgstr "Fin"
 #, python-format
 msgid "<p>No events occurring in %(year)s</p>"
 msgstr "<p>Aucun événement en %(year)s</p>"
+
+#~ msgid "organization URI"
+#~ msgstr "URI organisation"
+
+#~ msgid "author URI"
+#~ msgstr "URI auteur"
 
 #~ msgid "organization"
 #~ msgstr "organisation"

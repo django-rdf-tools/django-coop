@@ -1,16 +1,18 @@
 # -*- coding:utf-8 -*-
 from django.contrib import admin
 from coop.membre.models import BaseMembre
-from coop.initiative.models import BaseRole,BaseEngagement,BaseInitiative,BaseOrganizationCategory
+from coop.initiative.models import BaseRole,BaseEngagement,BaseInitiative,\
+    BaseOrganizationCategory,BaseRelation
 from coop.place.models import BaseSite
 from skosxl.models import Label
 from coop_geo.models import AreaLink,Located
-from django import forms
 from django.db import models
+from django import forms
+
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.db.models.loading import get_model
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.contenttypes.generic import GenericStackedInline
+from django.contrib.contenttypes.generic import GenericStackedInline,GenericTabularInline
 from coop.autocomplete_admin import FkAutocompleteAdmin,InlineAutocompleteAdmin
 
 #from chosen import forms as chosenforms
@@ -23,6 +25,34 @@ from sorl.thumbnail.admin import AdminImageMixin
 from sorl.thumbnail import default
 ADMIN_THUMBS_SIZE = '60x60'
 
+class LinkWidget(forms.Widget):
+    def __init__(self, obj, fkey_name, attrs=None,):
+        self.object = obj
+        self.fkey = fkey_name
+        super(LinkWidget, self).__init__(attrs)
+    def render(self, name, value, attrs=None):
+        if self.object.pk:
+            return mark_safe(u'<a href="../../../%s/%s/%s/" target="_blank">%s</a>' % (self.object._meta.app_label,
+                    getattr(self.object,self.fkey)._meta.object_name.lower(), getattr(self.object,self.fkey).pk, u'Fiche détaillée'))
+        else:
+            return mark_safe(u'')
+
+
+class ContactInlineLinkForm(forms.ModelForm):
+    link = forms.CharField(label='link', required=False)
+    def __init__(self, *args, **kwargs):
+        super(ContactInlineLinkForm, self).__init__(*args, **kwargs)
+        # instance is always available, it just does or doesn't have pk.
+        self.fields['link'].widget = LinkWidget(self.instance,fkey_name='membre')
+
+
+class LocatedInlineLinkForm(forms.ModelForm):
+    link = forms.CharField(label='link', required=False)
+    def __init__(self, *args, **kwargs):
+        super(LocatedInlineLinkForm, self).__init__(*args, **kwargs)
+        # instance is always available, it just does or doesn't have pk.
+        self.fields['link'].widget = LinkWidget(self.instance,fkey_name='location')
+
 
 class URLFieldWidget(AdminURLFieldWidget):
     def render(self, name, value, attrs=None):
@@ -33,9 +63,19 @@ class URLFieldWidget(AdminURLFieldWidget):
 
 
 class BaseEngagementInline(InlineAutocompleteAdmin):
+    form = ContactInlineLinkForm
     model = BaseEngagement
-    related_search_fields = {'membre': ('nom','prenom','email','user__username'), }
+    related_search_fields = {'membre': ('nom','prenom','email','structure','user__username'), }
     extra=2
+
+
+class BaseRelationInline(InlineAutocompleteAdmin):
+    model = BaseRelation
+    fk_name = 'source'
+    readonly_fields = ('created',)
+    fields = ('reltype','target','confirmed','created')
+    related_search_fields = {'target': ('title','acronym','description'), }
+    extra=1
 
 # class BaseSiteInline(admin.StackedInline,InlineAutocompleteAdmin):
 #     model = BaseSite
@@ -43,12 +83,13 @@ class BaseEngagementInline(InlineAutocompleteAdmin):
 #     extra=0
 # 
 #         
-class LocatedInline(GenericStackedInline,InlineAutocompleteAdmin):
+class LocatedInline(GenericTabularInline,InlineAutocompleteAdmin):
+    form = LocatedInlineLinkForm
     model = Located
     related_search_fields = {'location': ('label','adr1','adr2','zipcode','city'), }
     extra=1
 
-class AreaInline(GenericStackedInline):
+class AreaInline(GenericTabularInline):
     model = AreaLink
     extra=1
     
@@ -69,10 +110,13 @@ def create_action(category):
 
 class BaseInitiativeAdmin(AdminImageMixin, FkAutocompleteAdmin):
     form = BaseInitiativeAdminForm
-    list_display = ('logo_thumb','title','active','uri')
+    list_display = ('logo_thumb','title','active','has_location','has_description')
     list_display_links =('title',)
     search_fields = ['title','acronym','description']
     list_filter = ('active','category')
+    actions_on_top = True
+    actions_on_bottom = True
+    save_on_top = True
     #read_only_fields = ['created','modified']
     ordering = ('title',)
 
@@ -80,7 +124,7 @@ class BaseInitiativeAdmin(AdminImageMixin, FkAutocompleteAdmin):
         URLField: {'widget': URLFieldWidget},
     }
     inlines = [
-            BaseEngagementInline,LocatedInline,AreaInline
+            BaseEngagementInline,LocatedInline,AreaInline,BaseRelationInline
         ]
     fieldsets = (
         (None, {
@@ -109,12 +153,23 @@ class BaseInitiativeAdmin(AdminImageMixin, FkAutocompleteAdmin):
   
         
 class BaseMembreAdmin(admin.ModelAdmin):
-    list_display = ('nom','prenom','email','has_user_account','has_role')
+    list_display = ('nom','prenom','email','structure','has_user_account','has_role')
     list_filter = ('category',)
     list_display_links =('nom','prenom')
-    search_fields = ('nom','prenom','email')
+    search_fields = ('nom','prenom','email','structure')
     ordering = ('nom',)
-    fieldsets = ()
+    fieldsets = (
+        (None, {
+            'fields' : ('prenom',('nom','pub_name'),
+                        ('telephone_fixe','pub_phone'),
+                        ('telephone_portable','pub_mobile'),
+                        'email','category'),
+            }),
+        ('Notes', {
+            'classes': ('collapse',),
+            'fields': ('structure','notes',)
+        })
+    )
 
 
 from django.contrib.admin.filterspecs import FilterSpec, RelatedFilterSpec

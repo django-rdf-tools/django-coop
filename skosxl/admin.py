@@ -5,12 +5,19 @@ from django.utils.translation import ugettext_lazy as _
 
 from coop.autocomplete_admin import FkAutocompleteAdmin,InlineAutocompleteAdmin, NoLookupsForeignKeyAutocompleteAdmin
 
-class LabelInline(InlineAutocompleteAdmin):
-    model = LabelProperty
+# class LabelInline(InlineAutocompleteAdmin):
+#     model = LabelProperty
+#     fields = ('label','label_type',)
+#     related_search_fields = {'label' : ('name','slug')}
+#     extra=1
+#     
     
-    fields = ('label','label_type',)
-    related_search_fields = {'label' : ('name','slug')}
-    extra=1
+class LabelInline(InlineAutocompleteAdmin):
+    model = Label
+    readonly_fields = ('slug','created')
+    fields = ('language','label_type','name','slug','created')
+#related_search_fields = {'label' : ('name','slug')}
+    extra=1    
     
 # class SKOSMappingInline(admin.TabularInline):
 #     model = MapRelation

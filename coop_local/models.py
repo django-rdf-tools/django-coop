@@ -6,13 +6,16 @@ from coop.membre.models import BaseMembre,BaseMemberCategory
 from coop.place.models import BaseSite
 #from coop.agenda.models import BaseCalendar, BaseEvent
 from coop.exchange.models import BaseExchange, BaseTransaction
-from coop.initiative.models import BaseOrganizationCategory,BaseInitiative,BaseEngagement,BaseRole
+from coop.initiative.models import BaseOrganizationCategory,BaseInitiative,BaseRelation,BaseEngagement,BaseRole
 from coop.link.models import BaseSemLink
 
 # Personnaliser vos modèle ici en ajoutant les champs nécessaires
 # exemple : personnalisation CREDIS
 
 class Engagement(BaseEngagement):
+    pass
+
+class Relation(BaseRelation):
     pass
 
 class MemberCategory(BaseMemberCategory):
@@ -41,6 +44,7 @@ STATUTS = Choices(
     ('SCOP',    2,  'Société Coopérative Ouvrière de Production'),
     ('SCIC',    3,  'Société Coopérative d’Intérêt Collectif'),
     ('COOP47',  4,  'Société Coopérative de loi 1947'),
+    ('EPCI',    5,  'Collectivité territoriale'),
     
 )
 

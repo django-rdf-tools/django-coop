@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-coop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-21 13:30+0000\n"
-"PO-Revision-Date: 2011-12-21 14:43+0100\n"
+"POT-Creation-Date: 2012-01-07 17:35+0000\n"
+"PO-Revision-Date: 2012-01-07 18:37+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
 "Language: \n"
@@ -19,10 +19,18 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 
-#: admin.py:37
+#: admin.py:96
 #, python-format
 msgid "Add to the \"%s\" category"
 msgstr "Ajouter à la catégorie \"%s\""
+
+#: admin.py:138
+msgid "No Image"
+msgstr "Aucun logo"
+
+#: admin.py:139
+msgid "logo"
+msgstr "logo"
 
 #: autocomplete_admin.py:412
 #: autocomplete_admin.py:526
@@ -63,14 +71,14 @@ msgstr "Question"
 
 #: exchange/models.py:20
 #: exchange/models.py:47
-#: initiative/models.py:49
+#: initiative/models.py:89
 #: place/models.py:9
 msgid "title"
 msgstr "titre"
 
 #: exchange/models.py:21
 #: exchange/models.py:48
-#: initiative/models.py:51
+#: initiative/models.py:91
 #: place/models.py:10
 msgid "description"
 msgstr "description"
@@ -81,28 +89,30 @@ msgstr "type d'annonce"
 
 #: exchange/models.py:29
 #: exchange/models.py:49
-#: initiative/models.py:27
-#: initiative/models.py:70
+#: initiative/models.py:39
+#: initiative/models.py:67
+#: initiative/models.py:119
 #: link/models.py:13
-#: membre/models.py:44
+#: membre/models.py:45
 #: place/models.py:30
 msgid "created"
 msgstr "date de création"
 
 #: exchange/models.py:30
 #: exchange/models.py:50
-#: initiative/models.py:28
-#: initiative/models.py:71
+#: initiative/models.py:40
+#: initiative/models.py:68
+#: initiative/models.py:120
 #: link/models.py:14
-#: membre/models.py:45
+#: membre/models.py:46
 #: place/models.py:31
 msgid "modified"
 msgstr "date de modification"
 
 #: exchange/models.py:32
-#: initiative/models.py:29
-#: initiative/models.py:52
-#: membre/models.py:47
+#: initiative/models.py:69
+#: initiative/models.py:92
+#: membre/models.py:48
 #: place/models.py:12
 msgid "main URI"
 msgstr "URI principale"
@@ -116,7 +126,6 @@ msgid "publisher URI"
 msgstr "URI organiem"
 
 #: exchange/models.py:36
-#: membre/models.py:28
 #: place/models.py:13
 msgid "location"
 msgstr "localisation"
@@ -133,82 +142,147 @@ msgstr ""
 msgid "destination"
 msgstr "destination"
 
-#: initiative/models.py:13
+#: initiative/models.py:16
 msgid "label"
 msgstr "libellé"
 
-#: initiative/models.py:24
+#: initiative/models.py:28
+msgid "My organization is a member of this organization."
+msgstr "Mon organisation est membre de cette organisation."
+
+#: initiative/models.py:29
+msgid "This organization is one of our regular supplier."
+msgstr "Cette organisation est un de nos fournisseurs réguliers."
+
+#: initiative/models.py:30
+msgid "This organization is one of our casual suppliers."
+msgstr "Cette organisation est un de nos fournisseurs occasionnels."
+
+#: initiative/models.py:31
+msgid "This organization provides us technical support."
+msgstr "Cette organisation nous apporte un soutien technique."
+
+#: initiative/models.py:32
+msgid "This organization provides us financial support."
+msgstr "Cette organisation nous apporte un soutien financier."
+
+#: initiative/models.py:36
+msgid "source organization"
+msgstr "initiative déclarant la relation"
+
+#: initiative/models.py:37
+msgid "target organization"
+msgstr "organisation"
+
+#: initiative/models.py:41
+msgid "confirmed by the target organization"
+msgstr "confirmée"
+
+#: initiative/models.py:46
+msgid " is member of "
+msgstr " est membre de "
+
+#: initiative/models.py:47
+msgid " has for regular supplier "
+msgstr " a pour fournisseur régulier "
+
+#: initiative/models.py:48
+msgid " has for casual supplier "
+msgstr " a pour fournisseur occasionnel "
+
+#: initiative/models.py:49
+msgid " received technical support from "
+msgstr " a reçu un support technique de "
+
+#: initiative/models.py:50
+msgid " received financial support from "
+msgstr " a reçu un support financier de "
+
+#: initiative/models.py:63
 msgid "member"
 msgstr "membre"
 
-#: initiative/models.py:25
+#: initiative/models.py:64
 #: place/models.py:16
 msgid "organization"
 msgstr "initiative"
 
-#: initiative/models.py:26
+#: initiative/models.py:65
 msgid "role"
 msgstr "rôle"
 
-#: initiative/models.py:43
-msgid "Organization category"
-msgstr "Catégorie d'Initiative"
+#: initiative/models.py:83
+msgid "organization category"
+msgstr "catégorie d'initiative"
 
-#: initiative/models.py:44
-msgid "Organization categories"
-msgstr "Catégories d'Initiative"
+#: initiative/models.py:84
+msgid "organization categories"
+msgstr "catégories d'initiative"
 
-#: initiative/models.py:50
+#: initiative/models.py:90
 msgid "acronym"
 msgstr "sigle"
 
-#: initiative/models.py:56
+#: initiative/models.py:98
+msgid "relations"
+msgstr "relations"
+
+#: initiative/models.py:100
 #: membre/models.py:22
 msgid "category"
 msgstr "catégorie"
 
-#: initiative/models.py:58
+#: initiative/models.py:102
 msgid "members"
 msgstr "membres"
 
-#: initiative/models.py:59
-#: membre/models.py:35
+#: initiative/models.py:103
+#: membre/models.py:36
 #: place/models.py:17
 msgid "land line"
 msgstr "téléphone fixe"
 
-#: initiative/models.py:60
-#: membre/models.py:38
+#: initiative/models.py:104
+#: membre/models.py:39
 msgid "mobile phone"
 msgstr "téléphone mobile"
 
-#: initiative/models.py:62
-msgid "Impact Area"
-msgstr "Zone d'action"
-
-#: initiative/models.py:66
+#: initiative/models.py:112
 msgid "global email"
 msgstr "email général"
 
-#: initiative/models.py:67
+#: initiative/models.py:113
 msgid "web site"
 msgstr "site web"
 
-#: initiative/models.py:68
+#: initiative/models.py:114
 msgid "RSS feed"
 msgstr "flux RSS"
 
-#: initiative/models.py:72
+#: initiative/models.py:116
+msgid "vCal"
+msgstr "vCal"
+
+#: initiative/models.py:121
 msgid "active"
 msgstr "actif"
 
-#: initiative/models.py:73
+#: initiative/models.py:122
+#: membre/models.py:50
 msgid "notes"
 msgstr "notes"
 
+#: initiative/models.py:134
+msgid "geo"
+msgstr ""
+
+#: initiative/models.py:138
+msgid "desc."
+msgstr ""
+
 #: link/models.py:11
 msgid "Label"
-msgstr ""
+msgstr "Libellé"
 
 #: link/models.py:15
 msgid "modèle"
@@ -243,59 +317,58 @@ msgid "django user"
 msgstr "utilisateur Django"
 
 #: membre/models.py:24
-msgid "first name"
-msgstr "prénom"
-
-#: membre/models.py:25
 msgid "last name"
 msgstr "nom"
 
-#: membre/models.py:26
+#: membre/models.py:25
+msgid "first name"
+msgstr "prénom"
+
+#: membre/models.py:27
 msgid "publicize name"
 msgstr "afficher le nom sur le site"
 
-#: membre/models.py:29
+#: membre/models.py:30
 msgid "publicize location"
 msgstr "afficher l'adresse sur le site"
 
-#: membre/models.py:31
+#: membre/models.py:32
 msgid "address"
 msgstr "adresse"
 
-#: membre/models.py:32
+#: membre/models.py:33
 msgid "city"
 msgstr "ville"
 
-#: membre/models.py:33
+#: membre/models.py:34
 msgid "zip code"
 msgstr "code postal"
 
-#: membre/models.py:36
+#: membre/models.py:37
 msgid "publicize phone"
 msgstr "afficher le téléphone fixe sur le site"
 
-#: membre/models.py:39
+#: membre/models.py:40
 msgid "publicize mobile"
 msgstr "afficher le n° de mobile sur le site"
 
-#: membre/models.py:41
+#: membre/models.py:42
 msgid "personal email"
 msgstr "email personnel"
 
-#: membre/models.py:51
+#: membre/models.py:55
 msgid "Member"
 msgstr "Contact"
 
-#: membre/models.py:52
+#: membre/models.py:56
 msgid "Members"
 msgstr "Contacts"
 
-#: membre/models.py:61
-#, fuzzy
+#: membre/models.py:65
 msgid "django account"
-msgstr "utilisateur Django"
+msgstr "utilisateur django"
 
-#: membre/models.py:66
+#: membre/models.py:70
 msgid "has organization"
 msgstr "membre d'initiative"
 
@@ -401,3 +474,11 @@ msgid ""
 "    "
 msgstr ""
 
+#~ msgid "statement origin"
+#~ msgstr "déclarée par"
+
+#~ msgid "The organization \""
+#~ msgstr "L'organisation \""
+
+#~ msgid "Impact Area"
+#~ msgstr "Zone d'action"

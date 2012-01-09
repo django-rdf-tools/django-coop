@@ -1,0 +1,220 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: coop_geo\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-01-09 21:20+0000\n"
+"PO-Revision-Date: 2012-01-09 22:27+0100\n"
+"Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
+"Language-Team: Quinode <contact@quinode.fr>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+
+#: admin.py:18
+msgid "Included area"
+msgstr "zones inclue"
+
+#: admin.py:19
+msgid "Included areas"
+msgstr "zones inclues"
+
+#: admin.py:25
+msgid "Inside area"
+msgstr "zone englobante"
+
+#: admin.py:26
+msgid "Inside areas"
+msgstr "zones englobantes"
+
+#: models.py:16
+#: models.py:101
+msgid "label"
+msgstr "libellé"
+
+#: models.py:18
+msgid "point"
+msgstr "point"
+
+#: models.py:20
+msgid "address"
+msgstr "adresse"
+
+#: models.py:22
+msgid "address (extra)"
+msgstr "adresse (option)"
+
+#: models.py:24
+msgid "zipcode"
+msgstr "code postal"
+
+#: models.py:26
+msgid "city"
+msgstr "ville"
+
+#: models.py:28
+msgid "area"
+msgstr "zone"
+
+#: models.py:30
+msgid "owner"
+msgstr "auteur"
+
+#: models.py:34
+msgid "created"
+msgstr "création"
+
+#: models.py:35
+msgid "modified"
+msgstr "modification"
+
+#: models.py:41
+#: templates/gis/openlayers_location.html:43
+#: templates/gis/openlayers_point.html:43
+msgid "Location"
+msgstr "Lieu"
+
+#: models.py:42
+msgid "Locations"
+msgstr "Lieux"
+
+#: models.py:56
+msgid "You must at least set a point or choose an area."
+msgstr "Vous devez au moins définir un point ou sélectionner une zone."
+
+#: models.py:78
+msgid "location"
+msgstr "lieu"
+
+#: models.py:79
+msgid "main venue"
+msgstr "lieu principal"
+
+#: models.py:80
+msgid "type of location"
+msgstr "type de lieu"
+
+#: models.py:89
+#, python-format
+msgid "%s (center)"
+msgstr "%s (centre)"
+
+#: models.py:102
+msgid "reference"
+msgstr "référence"
+
+#: models.py:104
+msgid "polygon"
+msgstr "polygone"
+
+#: models.py:107
+msgid "default location"
+msgstr "lieu par défaut"
+
+#: models.py:109
+msgid "related area"
+msgstr "zone liée"
+
+#: models.py:110
+#: models.py:266
+msgid "type"
+msgstr "type"
+
+#: models.py:114
+msgid "update automatically?"
+msgstr "mise à jour automatique ?"
+
+#: models.py:118
+msgid "Area"
+msgstr "Zone"
+
+#: models.py:119
+#: templates/gis/openlayers_location.html:44
+#: templates/gis/openlayers_point.html:44
+msgid "Areas"
+msgstr "Zones"
+
+#: models.py:251
+msgid " has area : "
+msgstr " a pour zone :"
+
+#: models.py:268
+msgid "inside"
+msgstr "englobe"
+
+#: models.py:270
+msgid "included"
+msgstr "inclus"
+
+#: models.py:273
+msgid "Area relation"
+msgstr "relation de zone"
+
+#: models.py:274
+msgid "Area relations"
+msgstr "relationds de zone"
+
+#: models.py:281
+msgid "Child and Parent have to be different."
+msgstr "Les zones parent et enfants doivent être différente."
+
+#: templates/gis/openlayers.html:20
+msgid "Delete all Features"
+msgstr "Effacer toutes les données"
+
+#: templates/gis/openlayers_choose_area.html:47
+#: templates/gis/openlayers_choose_location.html:60
+#: templates/gis/openlayers_point.html:48
+msgid "Address"
+msgstr "Adresse"
+
+#: templates/gis/openlayers_choose_area.html:51
+#: templates/gis/openlayers_choose_location.html:64
+#: templates/gis/openlayers_point.html:52
+msgid "Town"
+msgstr "Ville"
+
+#: templates/gis/openlayers_choose_area.html:54
+#: templates/gis/openlayers_choose_location.html:67
+#: templates/gis/openlayers_point.html:55
+msgid "Search"
+msgstr "Recherche"
+
+#: templates/gis/openlayers_choose_area.html:56
+#: templates/gis/openlayers_choose_location.html:69
+#: templates/gis/openlayers_location.html:49
+#: templates/gis/openlayers_point.html:57
+msgid "Click on the choosen location:"
+msgstr "Cliquez sur le lieu choisi:"
+
+#: templates/gis/openlayers_choose_area.html:157
+#: templates/gis/openlayers_choose_location.html:140
+#: templates/gis/openlayers_location.html:147
+#: templates/gis/openlayers_point.html:152
+msgid "You must at least precise the town."
+msgstr "Vous devez au moins préciser une ville."
+
+#: templates/gis/openlayers_choose_location.html:57
+msgid "Current location:"
+msgstr "Lieu actuel:"
+
+#: templates/gis/openlayers_choose_location.html:58
+msgid "Choose another location:"
+msgstr "Choisissez un autre lieu:"
+
+#: templates/gis/openlayers_choose_location.html:72
+msgid "Add another location"
+msgstr "Ajouter un autre lieu"
+
+#: templates/gis/openlayers_location.html:47
+msgid "Search by address"
+msgstr "Localiser l'adresse"
+

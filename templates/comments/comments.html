@@ -1,12 +1,10 @@
 {% load comments %}
 
-    <p class="comm_title">
-        <b>Discutons-en</b><br/>
-        {% get_comment_count for object as nbcomm %}    
+    <h4>Commentaires
+    {% get_comment_count for object as nbcomm %}    
         {% if nbcomm > 0 %}
-            {{ nbcomm }} commentaires ont été postés sur cette page.
-        {% endif %}
-    </p>
+            ({{ nbcomm }})
+        {% endif %}</h4>
     {% get_comment_list for object as comm_list %}
    
     {% for comment in comm_list %}

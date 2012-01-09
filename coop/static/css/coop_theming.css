@@ -5,6 +5,12 @@
  * 
  */ 
 
+ /** 
+  * theming styles
+  * 
+  */
+
+
 #header {
     background: url(/static/img/coop_admin_header.png) 0 0 repeat-x;
 }

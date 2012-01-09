@@ -62,7 +62,6 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 import admin_tools
 ADMIN_TOOLS_PATH = os.path.dirname(os.path.abspath(admin_tools.__file__))
-ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 
 # Additional locations of static files
@@ -123,6 +122,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     "django.core.context_processors.static",
     "django.contrib.messages.context_processors.messages",
+    # needed to build links to the D2RQ pages
     "coop.context_processors.d2rq_settings",
 )
 
@@ -134,10 +134,10 @@ CACHES = {
 
 INSTALLED_APPS = (
     # Admin tools
-    # 'admin_tools',
-    # 'admin_tools.theming',
-    # 'admin_tools.menu',
-    # 'admin_tools.dashboard',
+    'admin_tools',
+    'admin_tools.theming',
+    'admin_tools.menu',
+    'admin_tools.dashboard',
 
     # Contribs
     'django.contrib.auth',
@@ -183,6 +183,8 @@ INSTALLED_APPS = (
     'taggit_autocomplete_modified',
 )
 
+THUMBNAIL_FORMAT = 'PNG'
+
 DJALOHA_LINK_MODELS = ('coop_cms.Article',)
 D2RQ_ROOT = 'http://demo.django.coop:2020/'
 
@@ -194,10 +196,10 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
-#ADMIN_TOOLS_MENU = 'base.menu.CustomMenu'
-#ADMIN_TOOLS_INDEX_DASHBOARD = 'base.dashboard.CustomIndexDashboard'
-#ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'base.dashboard.CustomAppIndexDashboard'
-#ADMIN_TOOLS_THEMING_CSS = 'css/coop_theming.css'
+ADMIN_TOOLS_MENU = 'coop_local.menu.CustomMenu'
+ADMIN_TOOLS_INDEX_DASHBOARD = 'coop_local.dashboard.CustomIndexDashboard'
+ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'coop_local.dashboard.CustomAppIndexDashboard'
+ADMIN_TOOLS_THEMING_CSS = 'css/coop_theming.css'
 
 LIVESETTINGS_OPTIONS = \
 {

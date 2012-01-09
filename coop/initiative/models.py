@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 from django.db import models
+from extended_choices import Choices
+
 from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
@@ -20,6 +22,42 @@ class BaseRole(models.Model):
         return unicode(self.label)
     def get_absolute_url(self):
         return reverse('role_detail', args=[self.slug])
+   
+
+RELATIONS = Choices(
+    ('MEMBER',          1,  _(u' is member of ')),
+    ('REG_SUPPLIER',    2,  _(u' has for regular supplier ')),
+    ('OCC_SUPPLIER',    3,  _(u' has for casual supplier ')),
+    ('SUPPORT',         4,  _(u' received technical support from ')),
+    ('FUNDING',         5,  _(u' received financial support from ')),
+)
+
+class BaseRelation(models.Model):
+    source = models.ForeignKey('coop_local.Initiative', verbose_name=_(u'source organization'),related_name='source')
+    target = models.ForeignKey('coop_local.Initiative', verbose_name=_(u'target organization'),related_name='target')
+    reltype = models.PositiveSmallIntegerField('Type de relation', choices=RELATIONS.CHOICES)
+    created = exfields.CreationDateTimeField(_(u'created'),null=True)
+    modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)
+    confirmed = models.BooleanField(default=False,verbose_name=_(u'confirmed by the target organization'))
+    class Meta:
+        abstract = True
+    # def rel_label(self):
+    #     rel_labels = {
+    #         RELATIONS.MEMBER : _(u' is member of '),
+    #         RELATIONS.REG_SUPPLIER : _(u' has for regular supplier '),
+    #         RELATIONS.OCC_SUPPLIER : _(u' has for casual supplier '),
+    #         RELATIONS.SUPPORT : _(u' received technical support from '),
+    #         RELATIONS.FUNDING : _(u' received financial support from '),
+    #     }
+    #     return  unicode(rel_labels[self.reltype])
+    def __unicode__(self):    
+        return u'"' + self.source.__unicode__() + u'"' + \
+            unicode(RELATIONS.CHOICES_DICT[self.reltype]) + \
+            u'"' + self.target.__unicode__() + u'".'
+    '''
+    def save(self):
+        vérifier si la relation inverse existe
+    '''
     
 
 class BaseEngagement(models.Model):
@@ -58,6 +96,8 @@ class BaseInitiative(models.Model):
     
     tags = TaggableManager(through=LabelledItem, blank=True)
 
+    relations = models.ManyToManyField('coop_local.Initiative',symmetrical=False,through='coop_local.Relation',verbose_name=_(u'relations'))
+
     category = models.ManyToManyField('coop_local.OrganizationCategory', blank=True, null=True, verbose_name=_(u'category'))
 
     members     = models.ManyToManyField('coop_local.Membre',through='coop_local.Engagement',verbose_name=_(u'members'))
@@ -71,8 +111,8 @@ class BaseInitiative(models.Model):
     
     birth = models.DateField(null=True, blank=True)
     email   = models.EmailField(_(u'global email'),blank=True,null=True)
-    web     = models.URLField(_(u'web site'),blank=True,null=True, verify_exists=True)
-    rss     = models.URLField(_(u'RSS feed'),blank=True,null=True, verify_exists=True)
+    web     = models.URLField(_(u'web site'),blank=True,null=True, verify_exists=False)
+    rss     = models.URLField(_(u'RSS feed'),blank=True,null=True, verify_exists=False)
     
     vcal    = models.URLField(_(u'vCal'),blank=True,null=True, verify_exists=True)
     
@@ -89,7 +129,14 @@ class BaseInitiative(models.Model):
             return unicode(self.acronym)
         else:
             return unicode(self.title)
-        
+    def has_location(self):
+        return self.located.all().count()>0
+    has_location.boolean = True    
+    has_location.short_description = _(u'geo')
+    def has_description(self):
+        return self.description is not None
+    has_description.boolean = True    
+    has_description.short_description = _(u'desc.')
     #@models.permalink
     def get_absolute_url(self):
         return reverse('initiative_detail', args=[self.slug])
@@ -98,13 +145,26 @@ class BaseInitiative(models.Model):
     def get_tags(self):
         return self.tags.all()
         
+    def get_relations(self):
+        relations = {}
+        relmap = RELATIONS.REVERTED_CHOICES_CONST_DICT
+        
+        for rel in self.source.all():
+            reltype = str('OUT_' + relmap[rel.reltype])# les relations de moi vers les autres
+            if reltype not in relations :
+                relations[reltype] = []
+            relations[reltype].append(rel.target)
+        for rel in self.target.all():
+            reltype = str('IN_' + relmap[rel.reltype])# les relations déclarées par les autres
+            if reltype not in relations :
+                relations[reltype] = []
+            if rel.confirmed:# et confirmées
+                relations[reltype].append(rel.source)
+        return relations
+        
     def local_uri(self):
         return ('http://dev.credis.org:8000/initiative/'+self.slug+'/')
 
 
 
 
-
-   
-    
-    

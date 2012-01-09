@@ -21,8 +21,9 @@ class BaseMembre(models.Model):
     
     category = models.ManyToManyField('coop_local.MemberCategory', blank=True, null=True, verbose_name=_(u'category'))
 
-    nom = models.CharField(_(u'first name'),max_length=100)
-    prenom = models.CharField(_(u'last name'),max_length=100,null=True,blank=True)
+    nom = models.CharField(_(u'last name'),max_length=100)
+    prenom = models.CharField(_(u'first name'),max_length=100,null=True,blank=True)
+    
     pub_name = models.BooleanField(default=False, verbose_name=_(u'publicize name'))
     
     #location = models.ForeignKey(Location,null=True,blank=True,verbose_name=_(u'location'))    
@@ -46,6 +47,9 @@ class BaseMembre(models.Model):
     
     uri = models.CharField(blank=True,max_length=250,verbose_name=_(u'main URI'))    
     
+    notes   = models.TextField(blank=True, verbose_name=_(u'notes'))
+    structure = models.CharField(blank=True, max_length=100)
+
     class Meta:
         abstract = True
         verbose_name = _(u'Member')

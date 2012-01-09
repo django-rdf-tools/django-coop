@@ -1,35 +1,50 @@
 {% extends "base.html" %}
-{% load smart_if comments %}
+{% load smart_if thumbnail comments oembed_tags %}
+
+
 
 
 {% block meta_title %}{{object.title}}{% endblock %}
 
+{% block extra_head %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/libs/jquery.tipsy.js"></script>
+{% endblock %}
 
 {% block document %}
 
 <div id="title" class="grid_12 grid">
-{% block title %}<h3>{{object.title}}</h3>{% endblock %}
+{% block title %}
+
+<h3>{{object.title}}</h3>{% endblock %}
 </div>
 
 {% block content %}
 <div id="content">
     <div class="grid_8 grid">
     
-        <p class="statut">{{object.get_statut_display}} 
-            {% if object.get_secteur_display %}- {{object.get_secteur_display}}{% endif %}
+        <p class="statut">{{object.acronym}}</p>
+        
+        <p>{{object.get_statut_display}}
+        {% if object.get_secteur_display %}</br>{{object.get_secteur_display}}{% endif %}
+        {% if object.birth %}</br>Ann√©e de cr√©ation : {{object.birth|date:"Y"}}{% endif %}
         </p>
     
-        <p>{{object.description}}</p>
+        <p>{{object.description|linebreaks|oembed}}</p>
     
         <br/>
     
     {% if engagements %}
-        <h4>Membres</h4>
+        <h4>Contacts</h4>
         <ul class="membres">
             {% for engagement in engagements %}
                 <li><img src="{{STATIC_URL}}img/blank_avatar.png">
                     <p>
-                    <a href="{{engagement.membre.get_absolute_url}}">{{ engagement.membre }}</a>, <br/>
+                    {% if membre.user %}
+                    <a href="{{engagement.membre.get_absolute_url}}">{{ engagement.membre }}</a>
+                    {% else %}
+                    {{ engagement.membre }}
+                    {% endif %}
+                    ,<br/>
                     <a class="role" href="{{engagement.role.get_absolute_url}}">{{engagement.role}}</a>
                     </p>
                 </li>
@@ -38,13 +53,8 @@
         <br/>
     {% endif %}
     
+    
     {% include "related_events.html" %}
-    
-    
-    {% if relations %}
-        <h4>Relations</h4>
-        
-    {% endif %}    
     
     {% include "comments/comments.html" %}
 
@@ -55,8 +65,49 @@
     
     <div id="grid-right" class="grid_4 grid"> 
         
+    {% if object.logo %}    
+       <div class="logo"> 
+        {% thumbnail object.logo "200" as im %}
+            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+        {% endthumbnail %}
+       </div> 
+    {% endif %}
+        
+    {% if object.get_relations %}
+        <h4>Relations</h4>
+        {% if 'IN_MEMBER' in object.get_relations %}<span title="test" class="rel_type">Membre(s) de {{object.title}}</span>
+            <ul class="relations">{% for org in object.get_relations.IN_MEMBER %}
+                <li title="{{org}}">
+                    {% thumbnail org.logo "50x50" colorspace="GRAY" crop="left" as im_nb %}
+                    {% thumbnail org.logo "50x50" crop="left" as im_color %}
+                        <div class="org_icon">
+                            <a href="{{org.get_absolute_url}}">
+                            <img src="{{ im_nb.url }}" width="{{ im_nb.width }}" height="{{ im_nb.height }}"></a>
+                            <div class="fade">
+                                <a href="{{org.get_absolute_url}}">
+                                <img src="{{ im_color.url }}" width="{{ im_color.width }}" height="{{ im_color.height }}">
+                                </a>
+                            </div>
+                        </div>
+                    {% endthumbnail %}
+                    {% endthumbnail %}
+                    </a>
+                </li>
+            {% endfor %}</ul>    
+        {% endif %}
+        {% if 'OUT_MEMBER' in object.get_relations %}<span class="rel_type">Affiliations</span>
+            <ul class="relations">{% for org in object.get_relations.OUT_MEMBER %}
+                <li><a href="{{org.get_absolute_url}}">{{org}}</a></li>
+            {% endfor %}</ul>    
+        {% endif %}
+
+    {% endif %}
+        
+        
+        
+        
         {% if object.get_tags %}
-        <h4>Tags</h4>
+        <h4>Mots-cl√©s</h4>
         <div id="tags">
         {% for tag in object.get_tags %}
         
@@ -67,23 +118,28 @@
         {% endif %}
               
        <h4>Coordonn√©es</h4>
-       
-       {% for a in adresses %}     
-            <img src="http://maps.googleapis.com/maps/api/staticmap?markers=color:red|{{a.location.point.get_coords.1|stringformat:"f"}},{{a.location.point.get_coords.0|stringformat:"f"}}&maptype=hybrid&size=280x200&sensor=false&zoom=8">
-            <br/><br/>
+       <p class="coordonnees">
+       {% if object.telephone_fixe %}<div class="tel">Tel. : {{object.telephone_fixe}}</div>{%endif%}
+       {% if object.telephone_portable %}<div class="tel">Mobile : {{object.telephone_portable}}</div>{%endif%}
+       {% if object.web %}
+       <div class="url"><a target="_blank" href="{{object.web}}">{{object.web}}</a></div>
+        {% endif %}
+        </p>
+          
+        <img src="http://maps.googleapis.com/maps/api/staticmap?markers=size:small%7Ccolor:0xd1453e|{% for a in adresses %}{{a.location.point.get_coords.1|stringformat:"f"}},{{a.location.point.get_coords.0|stringformat:"f"}}|{% endfor %}&maptype=hybrid&size=280x200&sensor=false&zoom=7">
+        
+        <br/><br/>
+        {% for a in adresses %}
+            <div class="adresse{% if a.main_location %} main_location{% endif %}">
+            {% if a.location_type %}<strong>{{a.location_type}}</strong>{% endif %}
+            <div class="postal">
             {{a.location.adr1}}<br/>
             {% if adresse.adr2 %}{{a.location.adr2}}<br/>{% endif %}
-            {{a.location.zipcode}} {{a.location.city}}<br/>
-            <br/>
-            
-       {% endfor %}  
-       
-       {% if object.telephone_fixe %}
-        <span class="unicon">‚úÜ</span> : {{object.telephone_fixe}}<br/>
-        {%endif%}
-        {% if object.web %}
-        <span class="unicon">Ì†ºÌºè</span>: {{object.web}}<br/>
-        {% endif %}
+            {{a.location.zipcode}} {{a.location.city}}</div>
+            </div>
+        {% endfor %}    
+               
+
     </div>
     
 </div>
@@ -95,3 +151,24 @@
     <img border="0" align="left" src="{{STATIC_URL}}img/semweb.png"></a>
     <br/>
 {% endblock %}
+
+
+{% block jquery %}
+
+  $("ul.relations li").tipsy({gravity:"sw"});
+
+  $('div.org_icon').hover(function() {
+    var fade = $('> div', this);
+    if (fade.is(':hidden')) {
+      fade.show();
+    } 
+  }, function () {
+    var fade = $('> div', this);
+    if (fade.is(':visible')) {
+      fade.hide();
+    } 
+  });
+
+
+{% endblock %}
+

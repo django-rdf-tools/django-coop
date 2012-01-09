@@ -1,4 +1,4 @@
-{% load i18n static coop_navigation %}
+{% load i18n static coop_navigation coop_bar_tags %}
 <!DOCYTPE HTML>
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 <!--[if lt IE 7 ]> <html class="ie6" lang="en"> <![endif]-->
@@ -40,7 +40,7 @@
     
     <script src="{{ STATIC_URL }}js/libs/modernizr.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.pageslide.min.js"></script>
-    
+    {% coop_bar_headers %}
     {% block extra_head %}{% endblock %}
 </head>
 <body id="{% block body_id %}{% endblock %}">
@@ -91,7 +91,6 @@
 
 </div>
 
-{% include "coop_cms/_admin_bar.html" %}
 {% comment %}
 <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if necessary -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
@@ -100,10 +99,12 @@
 
 <script type="text/javascript">
 $(function(){
-    {% block jquery %}
+    
     $("#perso").pageSlide({width:'350px', direction:'right'});
-    {% endblock %}
+    {% block jquery %}{% endblock %}
 });
+
+
 </script>
 
 

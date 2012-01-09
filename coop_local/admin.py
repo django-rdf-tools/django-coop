@@ -1,11 +1,12 @@
 # -*- coding:utf-8 -*-
 from django.contrib import admin
-from coop_local.models import Membre,MemberCategory, Role,Engagement,\
-    OrganizationCategory, Initiative, Site, SeeAlsoLink, SameAsLink
+from coop_local.models import Membre,MemberCategory, Role,Engagement, \
+    OrganizationCategory, Initiative, Site, SeeAlsoLink, SameAsLink, Relation
 from coop_local.forms import SiteForm
 from coop.place.admin import BaseSiteAdmin
-from coop.admin import LocatedInline, AreaInline, BaseEngagementInline,\
-    BaseInitiativeAdminForm,BaseInitiativeAdmin,BaseMembreAdmin
+from coop.admin import LocatedInline, AreaInline, BaseEngagementInline, \
+    BaseInitiativeAdminForm, BaseInitiativeAdmin, BaseMembreAdmin, \
+    BaseRelationInline
 from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
 
@@ -30,6 +31,9 @@ class SameAsInline(GenericTabularInline):
 class EngagementInline(BaseEngagementInline,InlineAutocompleteAdmin):
     model = Engagement
 
+class RelationInline(BaseRelationInline,InlineAutocompleteAdmin):
+    model = Relation
+
 # class SiteInline(BaseSiteInline,InlineAutocompleteAdmin):
 #     model = Site
 
@@ -42,7 +46,7 @@ class InitiativeAdminForm(BaseInitiativeAdminForm):
 class InitiativeAdmin(BaseInitiativeAdmin,FkAutocompleteAdmin):
     form = InitiativeAdminForm
     inlines = [
-        EngagementInline,LocatedInline,AreaInline,SeeAlsoInline
+        EngagementInline,LocatedInline,AreaInline,SeeAlsoInline,RelationInline
         ]
     fieldsets = BaseInitiativeAdmin.fieldsets + (('CREDIS', {'fields': (('statut','secteur_fse'),('siret','naf'))}),)    
     

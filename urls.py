@@ -9,6 +9,11 @@ import sys
 import oembed
 oembed.autodiscover()
 
+# https://code.djangoproject.com/ticket/10405#comment:11
+from django.db.models.loading import cache as model_cache
+if not model_cache.loaded:
+    model_cache.get_models()
+    
 admin.autodiscover()
 
 urlpatterns = patterns('',

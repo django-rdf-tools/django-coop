@@ -17,33 +17,33 @@ from taggit.models import TagBase, GenericTaggedItemBase
 
 
 LABEL_TYPES = Choices(
-    ('prefLabel',    0,  _(u'Preferred label')),
-    ('altLabel',     1,  _(u'Aternative label')),
-    ('hiddenLabel',  2,  _(u'Hidden label')),
+    ('prefLabel',    0,  _(u'preferred')),
+    ('altLabel',     1,  _(u'alternative')),
+    ('hiddenLabel',  2,  _(u'hidden')),
 )
 
 REL_TYPES = Choices(
-    ('broaderTransitive',   0,  _(u'Has a broader (transitive) concept')),
-    ('narrowerTransitive',  1,  _(u'Has a narrower (transitive) concept')),
-    ('related',             2,  _(u'Has a related concept')),    
-    ('broader',             3,  _(u'Has a broader concept')),
-    ('narrower',            4,  _(u'Has a narrower concept')),
+    # ('broaderTransitive',   0,  _(u'Has a broader (transitive) concept')),
+    # ('narrowerTransitive',  1,  _(u'Has a narrower (transitive) concept')),
+    ('broader',             0,  _(u'has a broader concept')),
+    ('narrower',            1,  _(u'has a narrower concept')),
+    ('related',             2,  _(u'has a related concept')),    
 )
 
 reverse_map = {   
-    REL_TYPES.narrowerTransitive    : REL_TYPES.broaderTransitive,
-    REL_TYPES.broaderTransitive     : REL_TYPES.narrowerTransitive,
+    # REL_TYPES.narrowerTransitive    : REL_TYPES.broaderTransitive,
+    # REL_TYPES.broaderTransitive     : REL_TYPES.narrowerTransitive,
     REL_TYPES.narrower              : REL_TYPES.broader,
     REL_TYPES.broader               : REL_TYPES.narrower,
     REL_TYPES.related               : REL_TYPES.related
 }
 
 MATCH_TYPES = Choices(
-    ('exactMatch',   0,  _(u'Matches exactly')),
-    ('closeMatch',   1,  _(u'Matches closely')),
-    ('broadMatch',   2,  _(u'Has a broader match')),
-    ('narrowMatch',  3,  _(u'Has a narrower match')),
-    ('relatedMatch', 4,  _(u'Has a related match')),    
+    ('exactMatch',   0,  _(u'matches exactly')),
+    ('closeMatch',   1,  _(u'matches closely')),
+    ('broadMatch',   2,  _(u'has a broader match')),
+    ('narrowMatch',  3,  _(u'has a narrower match')),
+    ('relatedMatch', 4,  _(u'has a related match')),    
 )
 
 
@@ -118,7 +118,7 @@ class Label(TagBase):
     '''
     Defines a SKOS-XL Label Class, and also a Tag in django-taggit
     '''
-    # name and slug are defined in TagBase    
+    # FIELDS name and slug are defined in TagBase    
     language    = models.CharField(_(u'language'),max_length=10, choices=LANG_LABELS, default='fr')
     user        = models.ForeignKey(User,blank=True,null=True,verbose_name=_(u'django user'),editable=False)
     uri         = models.CharField(_(u'author URI'),blank=True,max_length=250,editable=False)    
@@ -143,10 +143,12 @@ class Label(TagBase):
 class LabelledItem(GenericTaggedItemBase):
     tag = models.ForeignKey(Label, related_name="skosxl_label_items")
 
-        
+ 
+ 
+# TODO ne sert plus à rien , à virer        
 class LabelProperty(models.Model):
     '''
-    A model linking a RDF literal (the Term class in our django app) to a skos:Concept
+    Links a RDF literal (the Term class object here) to a skos:Concept
     Qualifies the relation by using a sub-property of skosxl:Label 
     '''
     label       = models.ForeignKey(Label, verbose_name=(_(u'label')))         
@@ -154,10 +156,14 @@ class LabelProperty(models.Model):
     label_type  = models.PositiveSmallIntegerField( _(u'label type'),
                                                     choices=LABEL_TYPES.CHOICES, 
                                                     default=LABEL_TYPES.prefLabel)
-    # a la sauvergarde, verifier qu'il n'y a qu'un preflabel par langue                                      
     class Meta: 
         verbose_name = _(u'Label property')
-        verbose_name_plural = _(u'Label properties')            
+        verbose_name_plural = _(u'Label properties') 
+    def __unicode__(self):
+        return self.label.__unicode__() + unicode(' : ') + \
+            unicode(LABEL_TYPES.CHOICES_DICT[self.label_type]) + \
+            unicode(' of the concept : ') + self.concept.__unicode__()      
+        
     def save(self, *args, **kwargs):
         if self.label_type == LABEL_TYPES.prefLabel:
             if LabelProperty.objects.filter(concept=self.concept,
@@ -166,6 +172,7 @@ class LabelProperty(models.Model):
                                             ).exists():
                 raise ValidationError(_(u'There can be only one preferred label by language'))
             self.concept.save() #pour déclencher la mise à jour du concept.pref_label
+            # TODO modifier le modeladmin clean() aussi sinon moche erreur
         super(LabelProperty, self).save(*args, **kwargs)
     
 
@@ -186,7 +193,7 @@ class SemRelation(models.Model):
     target_concept = models.ForeignKey(Concept,related_name='rel_target',verbose_name=(_(u'Target')))
     rel_type = models.PositiveSmallIntegerField( _(u'Type of semantic relation'),
                                                     choices=REL_TYPES.CHOICES, 
-                                                    default=REL_TYPES.narrowerTransitive)
+                                                    default=REL_TYPES.narrower)
     class Meta: 
         verbose_name = _(u'Semantic relations')
         verbose_name_plural = _(u'Semantic relations')

@@ -25,8 +25,8 @@ def ISDetailView(request,slug):
     initiative = get_object_or_404(Initiative,slug=slug)    
     context['object'] = initiative
     context['rss'] = initiative.rss
-    context['adresses'] = Site.objects.filter(initiative=initiative)
-    context['engagements'] = Engagement.objects.filter(initiative=context['object'])    
+    context['adresses'] = initiative.located.all()
+    context['engagements'] = Engagement.objects.filter(initiative=context['object'])
     return render_to_response('initiative/initiative_detail.html',context,RequestContext(request))
     
 

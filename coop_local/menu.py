@@ -3,7 +3,7 @@ This file was generated with the custommenu management command, it contains
 the classes for the admin menu, you can customize this class as you want.
 
 To activate your custom menu add the following to your settings.py::
-    ADMIN_TOOLS_MENU = 'base.menu.CustomMenu'
+    ADMIN_TOOLS_MENU = 'devcoop.menu.CustomMenu'
 """
 
 from django.core.urlresolvers import reverse
@@ -14,7 +14,7 @@ from admin_tools.menu import items, Menu
 
 class CustomMenu(Menu):
     """
-    Custom Menu for base admin site.
+    Custom Menu for devcoop admin site.
     """
     def __init__(self, **kwargs):
         Menu.__init__(self, **kwargs)
@@ -23,7 +23,7 @@ class CustomMenu(Menu):
             items.Bookmarks(),
             items.AppList(
                 _('Applications'),
-                exclude=('django.contrib.*',)
+                exclude=('django.contrib.*','oembed.*','taggit.*','coop_geo.*')
             ),
             items.AppList(
                 _('Administration'),
