@@ -88,7 +88,6 @@ class Located(models.Model):
 
 AREA_DEFAULT_LOCATION_LBL = _(u"%s (center)")
 
-#TODO: manage area relations in admin
 AREA_TYPES = (('TW', u'commune'),
               ('DP', u"département"),
               ('CC', u"communauté de commune"),
@@ -123,14 +122,14 @@ class Area(models.Model):
     def add_parent(self, parent, relation_type):
         if parent == self:
             raise ValidationError(u"You can't set a parent relative to itself.")
-        self.related_areas.through.objects.create(child=self, parent=parent,
-                                          relation_type=relation_type)
+        self.related_areas.through.objects.get_or_create(child=self,
+                                    parent=parent, relation_type=relation_type)
 
     def add_child(self, child, relation_type):
         if child == self:
             raise ValidationError(u"You can't set a parent relative to itself.")
-        self.related_areas.through.objects.create(child=child, parent=self,
-                                                  relation_type=relation_type)
+        self.related_areas.through.objects.get_or_create(child=child,
+                                    parent=self, relation_type=relation_type)
 
     def add_childs(self, childs, relation_type):
         for child in childs:
@@ -248,10 +247,8 @@ class AreaLink(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
     def __unicode__(self):
-        return unicode(self.content_object) + _(u" has area : ") + unicode(self.location)
-
-
-
+        return unicode(self.content_object) + _(u" has area : ") + \
+               unicode(self.location)
 
 RELATION_TYPES = (('PY', u"pays"),
                   ('RG', u'région'),
@@ -276,10 +273,10 @@ class AreaRelations(models.Model):
     def __unicode__(self):
         return u" - ".join((unicode(self.parent), unicode(self.child)))
 
-    def save(self):
+    def save(self, *args, **kwargs):
         if self.child == self.parent:
             raise ValidationError(_(u"Child and Parent have to be different."))
-        return super(AreaRelations, self).save()
+        return super(AreaRelations, self).save(*args, **kwargs)
 
 def arearel_post_save(sender, **kwargs):
     if not kwargs['instance']:

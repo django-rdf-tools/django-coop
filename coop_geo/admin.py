@@ -30,8 +30,9 @@ class AreaChildRelInline(admin.TabularInline):
 class AreaAdmin(admin.ModelAdmin):
     list_display = ['label', 'reference', 'area_type',]
     list_filter = ['area_type',]
+    search_fields = ['label', 'reference']
     model = models.Area
     form = forms.AreaForm
-    inlines = [AreaParentRelInline, AreaChildRelInline]
+    inlines = [AreaChildRelInline]
 admin.site.register(models.Area, AreaAdmin)
 
