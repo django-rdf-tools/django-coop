@@ -40,3 +40,9 @@ background: linear-gradient(#FFFFFF, #ABABAB);
 #coop-bar a:hover {
 	color: #9c131b;
 }
+
+#coop-bar .separator {
+	margin: 4px 0 4px 0;
+	width: 100%;
+	border: solid thin #3b416d;
+}

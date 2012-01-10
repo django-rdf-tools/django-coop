@@ -1,19 +1,11 @@
 # -*- coding: utf-8 -*-
 
-# -*- coding: utf-8 -*-
-
-VERSION = (0, 1)
+VERSION = (0, 2)
 
 def get_version():
-    version = '%s.%s' % (VERSION[0], VERSION[1])
-#    if VERSION[2]:
-#        version = '%s.%s' % (version, VERSION[2])
-#    if VERSION[3] != "final":
-#        version = '%s%s%s' % (version, VERSION[3], VERSION[4])
-    return version
+    return '%s.%s' % (VERSION[0], VERSION[1])
 
 __version__ = get_version()
-
 
 from django.utils.importlib import import_module
 from django.conf import settings
@@ -41,13 +33,24 @@ class CoopBar:
         
     def register_command(self, callback):
         self._callbacks.append(callback)
+        
+    def register_separator(self):
+        self._callbacks.append(None)
                 
     def get_commands(self, request, context):
         commands = []
+        separator = '<div class="separator"></div>'
         for c in self._callbacks:
-            #when a page wants to display the admin_bar
-            #calls the registred callback in order to know what to display
-            html = c(request, context)
+            if c == None:
+                #Replace None by separator. Avoid 2 following separators
+                if commands and commands[-1]!=separator:
+                    html = separator
+                else:
+                    html = ''
+            else:
+                #when a page wants to display the admin_bar
+                #calls the registred callback in order to know what to display
+                html = c(request, context)
             if html:
                 commands.append(html)
         return commands
