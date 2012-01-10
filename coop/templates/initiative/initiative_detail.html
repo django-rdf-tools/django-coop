@@ -75,7 +75,7 @@
         
     {% if object.get_relations %}
         <h4>Relations</h4>
-        {% if 'IN_MEMBER' in object.get_relations %}<span title="test" class="rel_type">Membre(s) de {{object.title}}</span>
+        {% if 'IN_MEMBER' in object.get_relations %}<div class="rel_type">Membre(s) de {{object.title}}</div>
             <ul class="relations">{% for org in object.get_relations.IN_MEMBER %}
                 <li title="{{org}}">
                     {% thumbnail org.logo "50x50" colorspace="GRAY" crop="left" as im_nb %}
@@ -95,9 +95,24 @@
                 </li>
             {% endfor %}</ul>    
         {% endif %}
-        {% if 'OUT_MEMBER' in object.get_relations %}<span class="rel_type">Affiliations</span>
+        {% if 'OUT_MEMBER' in object.get_relations %}<div class="rel_type">Affiliations</div>
             <ul class="relations">{% for org in object.get_relations.OUT_MEMBER %}
-                <li><a href="{{org.get_absolute_url}}">{{org}}</a></li>
+                <li title="{{org}}">
+                    {% thumbnail org.logo "50x50" colorspace="GRAY" crop="left" as im_nb %}
+                    {% thumbnail org.logo "50x50" crop="left" as im_color %}
+                        <div class="org_icon">
+                            <a href="{{org.get_absolute_url}}">
+                            <img src="{{ im_nb.url }}" width="{{ im_nb.width }}" height="{{ im_nb.height }}"></a>
+                            <div class="fade">
+                                <a href="{{org.get_absolute_url}}">
+                                <img src="{{ im_color.url }}" width="{{ im_color.width }}" height="{{ im_color.height }}">
+                                </a>
+                            </div>
+                        </div>
+                    {% endthumbnail %}
+                    {% endthumbnail %}
+                    </a>
+                </li>
             {% endfor %}</ul>    
         {% endif %}
 
