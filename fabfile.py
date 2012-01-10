@@ -344,15 +344,16 @@ def update():
     #with settings(show('user'),hide('warnings', 'running', 'stdout', 'stderr')):
     with prefix('workon %(projet)s' % env):
         dependencies()
-        with cd('projects/%(projet)s' % env):
-            print(yellow('Synchronisation du dépôt git...'))
-            run('git pull origin master')
-            print(yellow('Django : synchronisation des nouveaux modèles...'))
-            run('python manage.py syncdb')
-            print(yellow('South : applications des migrations...'))
-            run('python manage.py migrate')
-            print(yellow('Django : Collecte des fichiers statiques...'))
-            run('python manage.py collectstatic --noinput')
+        with prefix('workon %(projet)s' % env):
+            with cd('projects/%(projet)s' % env):
+                print(yellow('Synchronisation du dépôt git...'))
+                run('git pull origin master')
+                print(yellow('Django : synchronisation des nouveaux modèles...'))
+                run('python manage.py syncdb --noinput')
+                print(yellow('South : applications des migrations...'))
+                run('python manage.py migrate')
+                print(yellow('Django : Collecte des fichiers statiques...'))
+                run('python manage.py collectstatic --noinput')
     sudo('apachectl restart')
     print(green('Les mises à jour ont été appliquées.'))
 
