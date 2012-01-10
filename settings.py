@@ -177,7 +177,7 @@ INSTALLED_APPS = [
     #'genericm2m',
     
     'coop_agenda',
-    'coop_bar',
+    #'coop_bar',
     'taggit',
     'taggit_templatetags',
     'taggit_autocomplete_modified',
