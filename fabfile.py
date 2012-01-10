@@ -131,7 +131,7 @@ def setup():
         # paquets communs à tous les serveurs Django+geodjango
         print(yellow('Installation des paquets de base...'))
         pretty_apt(['git-core','mercurial','gcc','curl','build-essential',
-                    'python-imaging','python-setuptools','nano',
+                    'python-imaging','python-setuptools','nano','python-dev',
                     'memcached','python-memcache'])
     
         # pip special case
