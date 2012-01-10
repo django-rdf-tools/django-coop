@@ -189,6 +189,7 @@ def django_project():
             run('source .bash_profile')
         with prefix('workon %(projet)s' % env):    
             run('pip install django')
+            pretty_pip('psycopg2','PIL')
             print(green('Django installé.'))
         if not exists('projects/%s/' % (env.projet)):
             print(yellow('le projet %(projet)s n’existe pas encore' % env))
