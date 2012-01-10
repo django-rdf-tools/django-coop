@@ -11,6 +11,7 @@ django-livesettings==1.4-7
 django-smart-selects==1.0.4
 sorl-thumbnail==11.09
 django-floppyforms==0.4.7
+BeautifulSoup==3.2.0
 feedparser==5.0.1
 -e git+git://github.com/quinode/coop_cms.git#egg=coop_cms
 -e git+git://github.com/quinode/djaloha.git#egg=djaloha

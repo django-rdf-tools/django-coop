@@ -131,7 +131,9 @@ def setup():
         # paquets communs à tous les serveurs Django+geodjango
         print(yellow('Installation des paquets de base...'))
         pretty_apt(['git-core','mercurial','gcc','curl','build-essential',
-                    'python-imaging','python-setuptools','nano','python-dev',
+                    'libfreetype6', 'libfreetype6-dev','liblcms1-dev','libpng12-dev',
+                    'libjpeg-devel','python-imaging','python-setuptools',
+                    'nano','python-dev',
                     'memcached','python-memcache'])
     
         # pip special case
@@ -358,7 +360,7 @@ def update():
     print(green('Les mises à jour ont été appliquées.'))
 
 def dependencies():
-    '''Installe les modules pythons nécessaires au projet'''
+    '''Vérification des modules nécessaires au projet'''
     with settings(show('user'),hide('warnings', 'running', 'stdout', 'stderr')):
         with cd('projects/%(projet)s' % env):
             if exists('requirements.txt'):

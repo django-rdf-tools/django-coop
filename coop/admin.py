@@ -110,7 +110,7 @@ def create_action(category):
 
 class BaseInitiativeAdmin(AdminImageMixin, FkAutocompleteAdmin):
     form = BaseInitiativeAdminForm
-    list_display = ('logo_thumb','title','active','has_location','has_description')
+    list_display = ('title','active','has_location','has_description')#'logo_thumb',
     list_display_links =('title',)
     search_fields = ['title','acronym','description']
     list_filter = ('active','category')
@@ -128,7 +128,7 @@ class BaseInitiativeAdmin(AdminImageMixin, FkAutocompleteAdmin):
         ]
     fieldsets = (
         (None, {
-            'fields' : ('title','acronym','logo',('active','birth'),
+            'fields' : ('title','acronym',('active','birth'),#'logo',
                         ('telephone_fixe','mobile'),('email','web'),
                         ('rss','vcal'),'description','category','tags')
             }),
