@@ -44,8 +44,7 @@ STATUTS = Choices(
     ('SCOP',    2,  'Société Coopérative Ouvrière de Production'),
     ('SCIC',    3,  'Société Coopérative d’Intérêt Collectif'),
     ('COOP47',  4,  'Société Coopérative de loi 1947'),
-    ('EPCI',    5,  'Collectivité territoriale'),
-    
+    ('EPCI',    5,  'Collectivité territoriale'),    
 )
 
 # class Calendar(BaseCalendar):

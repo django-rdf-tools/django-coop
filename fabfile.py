@@ -13,14 +13,14 @@ env.vm_path = "/Users/dom/VM/devcoop"
 env.locale = 'fr_FR.UTF-8'
 #Paramétres par défaut
 
-domain = "demo.django.coop"
-projet = "devcoop"
+domaine = "demo.django.coop"
+projet  = "devcoop"
 
 pgpass = '123456'
 # Paramétres Déploiement
 env.websrv=1
 
-#domain = "www.fcpe63.fr"
+#domaine = "www.fcpe63.fr"
 #projet = "fcpe63"
 
 
@@ -95,8 +95,8 @@ def project():
         prompt('Nom du projet django:', default=projet, key='projet')
 
 def domain():
-    if 'domain' not in env.keys() :
-        prompt('Nom de domaine:',       default=domain, key='domain')
+    if 'domaine' not in env.keys() :
+        prompt('Nom de domaine:', default=domaine, key='domaine')
         
 #prompt('Config : (1)Apache seul ou (2)Apache+Nginx :',key='websrv',validate=int,default=env.websrv)
 
@@ -123,7 +123,7 @@ def setup():
         domain()
         #if gandi
         locale()
-        sudo('apt-get install aptitude')
+        sudo('apt-get -y install aptitude') #demande un input
         print(yellow('Mise à jour de l’index APT...'))
         fabtools.deb.update_index() # apt-get quiet update
         print(yellow('Mise à jour des paquets debian installés...'))
@@ -146,6 +146,8 @@ def setup():
         elif(env.websrv == 2):
             apache_nginx()
     
+        postgresql()
+        
 
 @task
 def postgresql():
@@ -195,12 +197,15 @@ def django_project():
                 with cd('projects/'):
                     with prefix('workon %(projet)s' % env):
                         run('django-admin.py startproject %s' % (env.projet))
+                        with cd('%(projet)s' % env):
+                            run('mkdir logs')
                         print(green('Projet Django "%(projet)s" : OK.' % env))
+                        
         else:
-            print(green('Projet Django "%(projet)s" : OK.' % env))                          
+            print(green('Projet Django nommé "%(projet)s" : OK.' % env))                          
         #créer la db avec le nom du projet (idempotent)
         icanhaz.postgres.database(env.projet, env.user, template='template_postgis', locale=env.locale)
-        print(green('Base de données %(projet)s : OK.' % env))
+        print(green('Création base de données Postgre nommée "%(projet)s" : OK.' % env))
         django_wsgi()
         apache_vhost()
         dependencies() 
@@ -248,7 +253,7 @@ def apache():
     #virer le site par défaut 
     with cd('/etc/apache2/'):
         if not contains('apache2.conf','ServerName localhost',use_sudo=True):    
-            sudo("echo 'ServerName %(domain)s'|cat - apache2.conf > /tmp/out && mv /tmp/out apache2.conf" % env)
+            sudo("echo 'ServerName %(domaine)s'|cat - apache2.conf > /tmp/out && mv /tmp/out apache2.conf" % env)
     with cd('/etc/apache2/sites-enabled/'):
         if exists('000-default'):
             sudo('rm 000-default')
@@ -259,15 +264,15 @@ def apache_vhost():
     if(env.websrv == 1):
         vhost_context = {
             'user' : env.user,
-            'domain' : env.domain,
+            'domain' : env.domaine,
             'projet' : env.projet
         }
-        upload_template('fab_templates/vhost.txt','/etc/apache2/sites-available/%(domain)s' % env, context=vhost_context, use_sudo=True)
+        upload_template('fab_templates/vhost.txt','/etc/apache2/sites-available/%(domaine)s' % env, context=vhost_context, use_sudo=True)
         with cd('/etc/apache2/'):
             with settings(warn_only=True):
-                sudo('rm sites-enabled/%(domain)s' % env)
-            sudo('ln -s `pwd`/sites-available/%(domain)s sites-enabled/%(domain)s' % env)
-            print(green('VirtualHost Apache pour %(domain)s : OK.' % env))
+                sudo('rm sites-enabled/%(domaine)s' % env)
+            sudo('ln -s `pwd`/sites-available/%(domaine)s sites-enabled/%(domaine)s' % env)
+            print(green('VirtualHost Apache pour %(domaine)s : OK.' % env))
     elif(env.websrv == 2):
         print(red('Script de déploiement pas encore écrit !!!')) #TODO
     sudo('apachectl restart')
@@ -275,7 +280,7 @@ def apache_vhost():
 
 
 def environnement():
-    print(yellow('Environnements virtuels et dossier projects...'))
+    print(yellow('Environnement virtuel et dossier "projects"...'))
     icanhaz.python.package('virtualenv',use_sudo=True)
     icanhaz.python.package('virtualenvwrapper',use_sudo=True)
     #icanhaz.python.package('virtualenvwrapper.django',use_sudo=True)

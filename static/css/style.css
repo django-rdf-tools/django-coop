@@ -722,21 +722,28 @@ ul.relations li{
 	width: 52px;
 	float: left;
 	height: 52px;
-	margin-right: 5px;
+	margin-right: 8px;
+	margin-bottom: 8px;
 }
 
 .org_icon{
 	display: inline-block;
-	width: 52px;
-	height: 52px;
+	width: 54px;
+	height: 54px;
 	border: 1px solid #eaeaea;
 	position: relative;
 }
 
+.org_icon > a > img{
+	position: relative;
+	top: 2px;
+	left: 2px;
+}
+
 .org_icon div {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 2px;
+  left: 2px;
   display: none;
 }
 
