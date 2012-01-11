@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.views.generic.simple import direct_to_template
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
+from django.views.generic.base import TemplateView, RedirectView
 import sys
 
 import oembed
@@ -16,7 +17,14 @@ if not model_cache.loaded:
     
 admin.autodiscover()
 
+class TextPlainView(TemplateView):
+  def render_to_response(self, context, **kwargs):
+    return super(TextPlainView, self).render_to_response(
+      context, content_type='text/plain', **kwargs)
+
 urlpatterns = patterns('',
+    url(r'^robots\.txt$', TextPlainView.as_view(template_name='robots.txt')),
+    url(r'^favicon\.ico$', RedirectView.as_view(url='/media/img/favicon.ico')),
 
     url(r'^admin_tools/', include('admin_tools.urls')),
     url(r'^taggit_autocomplete_modified/', include('taggit_autocomplete_modified.urls')),
