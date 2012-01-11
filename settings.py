@@ -93,7 +93,7 @@ SECRET_KEY = 'ibhc$tpzg&!8f3l-o@$c5y809j9)i=$v6dg6v@fzf^0ufmj8)q'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',cd
+#     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = [
@@ -108,6 +108,7 @@ ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     os.path.abspath(PROJECT_PATH+'/templates/'),
+    'coop_bar/templates',
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -177,7 +178,7 @@ INSTALLED_APPS = [
     #'genericm2m',
     
     'coop_agenda',
-    #'coop_bar',
+    'coop_bar',
     'taggit',
     'taggit_templatetags',
     'taggit_autocomplete_modified',

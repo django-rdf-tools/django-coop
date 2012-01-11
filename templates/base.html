@@ -1,4 +1,4 @@
-{% load i18n static coop_navigation %}
+{% load i18n static coop_bar_tags coop_navigation %}
 <!DOCYTPE HTML>
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 <!--[if lt IE 7 ]> <html class="ie6" lang="en"> <![endif]-->
@@ -40,11 +40,11 @@
     
     <script src="{{ STATIC_URL }}js/libs/modernizr.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.pageslide.min.js"></script>
-    {#{% coop_bar_headers %}#}
+    {% coop_bar_headers %}
     {% block extra_head %}{% endblock %}
 </head>
 <body id="{% block body_id %}{% endblock %}">
-
+{% coop_bar %}
 <div id="container">
 
 <header class="container_12">
