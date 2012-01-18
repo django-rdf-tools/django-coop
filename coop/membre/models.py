@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse
+from django.template.defaultfilters import slugify
 from coop_geo.models import Location
 from django.contrib.sites.models import Site
 
@@ -18,6 +20,8 @@ class BaseMemberCategory(models.Model):
 
 class BaseMembre(models.Model):
     user = models.OneToOneField(User, blank=True, null=True, unique=True,verbose_name=_(u'django user'),editable=False)
+        
+    username = models.CharField(blank=True, max_length=100, unique=True)    #pour D2RQ et poura voir des URI clean meme pour des non-users
     
     category = models.ManyToManyField('coop_local.MemberCategory', blank=True, null=True, verbose_name=_(u'category'))
 
@@ -56,9 +60,12 @@ class BaseMembre(models.Model):
         verbose_name_plural = _(u'Members')
     def __unicode__(self):
         return self.prenom+u' '+self.nom
+        
     @models.permalink
     def get_absolute_url(self):
-        return ('profiles_profile_detail', (), { 'username': self.user.username })
+        #return reverse('profiles_profile_detail', args=[self.username])
+        return ('profiles_profile_detail', (), {'username': self.username })
+        
     def has_user_account(self):
         return (self.user != None)
     has_user_account.boolean = True    
@@ -76,23 +83,14 @@ class BaseMembre(models.Model):
     #         eng.append({'initiative':e.initiative,'role':e.role})
     #     return eng
     def init_uri(self):
-        if self.user is None:
-            return 'http://' + Site.objects.get_current().domain + '/id/membre/' + self.user.username + '/'
-        else:
-            return ''    
+        return 'http://' + Site.objects.get_current().domain + '/id/membre/' + self.username + '/'
     def save(self, *args, **kwargs):
-        if self.uri is None:
-            print 'uri vide'
+        if self.username == '':
+            if self.user is None:
+                self.username = slugify(self.prenom[:1]+self.nom).replace('-','_')
+            else:    
+                self.username = self.user.username
+        if self.uri =='':
             self.uri = self.init_uri()
         super(BaseMembre, self).save(*args, **kwargs)    
-    '''
-    def save(self):
-        if(self.uri == None):
-            set_uri
-            linked_notification(self, creation)
-        else:
-            if(not uri.is_local()):
-                linked_notification(self, haschanged ?)
-            
-            
-    '''
+        

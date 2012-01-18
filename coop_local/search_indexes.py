@@ -2,7 +2,7 @@ import datetime
 from haystack import indexes, site
 from coop_local.models import Initiative
 
-class InitiativeIndex(indexes.SearchIndex):
+class InitiativeIndex(indexes.RealTimeSearchIndex):
     text = indexes.CharField(document=True, use_template=True)
     title = indexes.CharField(model_attr='title')
     acronym = indexes.CharField(model_attr='acronym')

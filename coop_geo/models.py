@@ -88,11 +88,11 @@ class Located(models.Model):
 
 AREA_DEFAULT_LOCATION_LBL = _(u"%s (center)")
 
-AREA_TYPES = (('TW', u'commune'),
-              ('DP', u"département"),
-              ('CC', u"communauté de commune"),
-              ('RG', u"région"),
-              ('PY', u"pays"),
+AREA_TYPES = (('TW', _(u'town')),
+              ('DP', _(u"departement")),
+              ('CC', _(u"town group")),
+              ('RG', _(u"region")),
+              ('PY', _(u"country")),
              )
 
 class Area(models.Model):
@@ -250,10 +250,10 @@ class AreaLink(models.Model):
         return unicode(self.content_object) + _(u" has area : ") + \
                unicode(self.location)
 
-RELATION_TYPES = (('PY', u"pays"),
-                  ('RG', u'région'),
-                  ('DP', u"département"),
-                  ('CC', u"communauté de commune"),
+RELATION_TYPES = (('PY', _(u"country")),
+                  ('RG', _(u'region')),
+                  ('DP', _(u"departement")),
+                  ('CC', _(u"towns grouping")),
                   )
 
 class AreaRelations(models.Model):

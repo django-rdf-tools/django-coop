@@ -39,8 +39,8 @@ class ProfileForm(forms.ModelForm):
         self.fields.keyOrder = ['last_name','username','email', 'adresse','code_postal','ville','telephone_fixe','telephone_portable']
             
     class Meta:
-      model = Membre
-      exclude = ('user',)
+        model = Membre
+        exclude = ('user',)
     def save(self, *args, **kwargs):
         """
         Update the primary email address on the related User object as well.

@@ -44,7 +44,7 @@ class CustomIndexDashboard(Dashboard):
         self.children.append(modules.AppList(
             _(u"Navigation and articles"),
             models=('coop_cms.models.NavTree',
-                    'coop_cms.models.Article',
+                    'coop_local.models.Article',
                     'rss_sync.models.RssItem',
                     'django.contrib.comments.Comment',
                     ),

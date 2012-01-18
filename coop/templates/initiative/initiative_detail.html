@@ -39,10 +39,10 @@
             {% for engagement in engagements %}
                 <li><img src="{{STATIC_URL}}img/blank_avatar.png">
                     <p>
-                    {% if membre.user %}
-                    <a href="{{engagement.membre.get_absolute_url}}">{{ engagement.membre }}</a>
+                    {% if engagement.membre.user %}
+                        <a href="{{engagement.membre.get_absolute_url}}">{{ engagement.membre }}</a>
                     {% else %}
-                    {{ engagement.membre }}
+                        {{ engagement.membre }}
                     {% endif %}
                     ,<br/>
                     <a class="role" href="{{engagement.role.get_absolute_url}}">{{engagement.role}}</a>

@@ -1,9 +1,23 @@
-#!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
-from coop.place.forms import BaseSiteForm
-import models
+# from coop.place.forms import BaseSiteForm
+# import models
+# 
+# class SiteForm(BaseSiteForm):
+#     class Meta:
+#         model = models.Site
+# 
 
-class SiteForm(BaseSiteForm):
+import floppyforms as forms
+from coop_cms.forms import ArticleForm as CmsArticleForm
+from coop_cms.settings import get_article_class
+from djaloha.widgets import AlohaInput
+
+class ArticleForm(CmsArticleForm):
     class Meta:
-        model = models.Site
+        model = get_article_class()
+        fields = ('title', 'content', 'logo', 'author')
+        widgets = {
+            'title': AlohaInput(),
+            'content': AlohaInput(),
+        }

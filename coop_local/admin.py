@@ -1,16 +1,12 @@
 # -*- coding:utf-8 -*-
 from django.contrib import admin
 from coop_local.models import Membre,MemberCategory, Role,Engagement, \
-    OrganizationCategory, Initiative, Site, SeeAlsoLink, SameAsLink, Relation
-from coop_local.forms import SiteForm
-from coop.place.admin import BaseSiteAdmin
+    OrganizationCategory, Initiative, SeeAlsoLink, SameAsLink, Relation
 from coop.admin import LocatedInline, AreaInline, BaseEngagementInline, \
     BaseInitiativeAdminForm, BaseInitiativeAdmin, BaseMembreAdmin, \
-    BaseRelationInline
-from django import forms
-from django.contrib.admin.widgets import FilteredSelectMultiple
+    BaseRelationInline, BaseEngInitInline
 
-from coop.autocomplete_admin import FkAutocompleteAdmin,InlineAutocompleteAdmin
+from coop.utils.autocomplete_admin import FkAutocompleteAdmin,InlineAutocompleteAdmin
 
 admin.site.register(Role)
 admin.site.register(MemberCategory)
@@ -54,14 +50,28 @@ admin.site.register(Initiative, InitiativeAdmin)
 
 class MembreAdmin(BaseMembreAdmin):
     inlines = [
-            SeeAlsoInline,SameAsInline
+           BaseEngInitInline, SeeAlsoInline,SameAsInline
         ]
 
 admin.site.register(Membre, MembreAdmin)
 
-class SiteAdmin(BaseSiteAdmin):
-     form = SiteForm
+# class SiteAdmin(BaseSiteAdmin):
+#      form = SiteForm
+# 
+# admin.site.register(Site, SiteAdmin)
 
-admin.site.register(Site, SiteAdmin)
+
+from coop_cms.admin import ArticleAdmin as CmsArticleAdmin
+
+class ArticleAdmin(CmsArticleAdmin):
+    fieldsets = CmsArticleAdmin.fieldsets + (
+        ('Misc', {'fields': ('author',)}),
+    )
+
+from coop_cms.settings import get_article_class
+admin.site.unregister(get_article_class())
+admin.site.register(get_article_class(), ArticleAdmin)
+
+
 
 

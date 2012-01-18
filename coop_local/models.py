@@ -9,6 +9,11 @@ from coop.exchange.models import BaseExchange, BaseTransaction
 from coop.initiative.models import BaseOrganizationCategory,BaseInitiative,BaseRelation,BaseEngagement,BaseRole
 from coop.link.models import BaseSemLink
 
+# CREDIS uses taggit+skosxl but this is not mandatory
+from skosxl.models import LabelledItem
+from taggit_autocomplete_modified.managers \
+    import TaggableManagerAutocomplete as TaggableManager
+
 # Personnaliser vos modèle ici en ajoutant les champs nécessaires
 # exemple : personnalisation CREDIS
 
@@ -70,12 +75,16 @@ class Initiative(BaseInitiative):
     siret = models.CharField('Numero SIRET',blank=True, null=True, max_length=20)
     naf = models.CharField('Code d’activité NAF',blank=True, null=True, max_length=10)
     presage = models.CharField('Numero PRESAGE',blank=True, null=True, max_length=10)
+    
+    tags = TaggableManager(through=LabelledItem, blank=True)
+    
     statut = models.PositiveSmallIntegerField('Statut juridique',
                                                 choices=STATUTS.CHOICES, 
                                                   default=STATUTS.ASSO)
     secteur_fse = models.PositiveSmallIntegerField('Secteur d’activité FSE',
                                                     choices=SECTEURS_FSE.CHOICES, 
                                                     default=SECTEURS_FSE.TOUS)
+                                                    
 
 class SeeAlsoLink(BaseSemLink):
     pass
@@ -84,9 +93,23 @@ class SameAsLink(BaseSemLink):
     pass
 
 
-#Patch de coop_cms.Article pour lui adjoindre une relation retour avec events (pour les templates)
+from coop_cms.models import BaseArticle
+from django.contrib.auth.models import User
+
+class Article(BaseArticle):
+    author = models.ForeignKey(User, blank=True, default=None, null=True)
+    
+    def can_publish_article(self, user):
+        return (self.author == user)
+        
+    #def can_edit_article(self, user):
+    #    return True
+    #
+
+
+#Patching our custom Article to add a backward generic relation with events (use in templates)
 from django.contrib.contenttypes import generic
-from coop_cms.models import Article
+from coop_local.models import Article
 from coop_local.models import Initiative
 from coop_agenda.models import Event
 
@@ -97,6 +120,5 @@ if not hasattr(Article, "events"):
 if not hasattr(Initiative, "events"):
     e = generic.GenericRelation(Event)
     e.contribute_to_class(Initiative, "events")
-
 
 

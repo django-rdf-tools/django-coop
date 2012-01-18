@@ -11,8 +11,8 @@ urlpatterns = patterns('',
     
     # interception de la page edition de profil pour injecter notre formulaire
     (r'^edit/$', 'profiles.views.edit_profile', {'form_class': ProfileForm,}),
-    # pourquoi ça marche plus si on elnlève url devant ?
-    url(r'^(?P<username>[a-z.]+)/$', 'profiles.views.profile_detail', name='profiles_profile_detail'),
+    
+    url(r'^(?P<username>[_a-z]+)/$', 'profiles.views.profile_detail', name='profiles_profile_detail'),
 
     url(r'^password/change/$',auth_views.password_change,name='auth_password_change'),
     url(r'^password/change/done/$',auth_views.password_change_done,name='auth_password_change_done'),

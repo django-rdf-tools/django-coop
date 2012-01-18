@@ -5,24 +5,22 @@
  * 
  */ 
 
- /** 
-  * theming styles
-  * 
-  */
 
 
 #header {
-    background: url(/static/img/coop_admin_header.png) 0 0 repeat-x;
+      background: url(/static/admin_tools/images/admin-tools.png) 0 0 repeat-x;
 }
 
-#header #branding h1 {
-    margin: 0;
-    padding: 5px 10px;
-    text-indent: -9999px;
-    background: transparent url(/static/admin_tools/images/django.png) 10px 5px no-repeat;
-    height: 31px;
-    width: 93px;
-}
+  #header #branding h1 {
+      margin: 0;
+      padding: 5px 10px;
+      text-indent: -9999px;
+      background: transparent url(/static/img/django-coop.png) 10px 5px no-repeat;
+      height: 31px;
+      width: 125px;
+  }
+
+
 
 div.breadcrumbs {
     display: block;
@@ -37,14 +35,13 @@ div.breadcrumbs a {
 }
 
 #container{
-	background-color: #1e5f76;
-	background-image: none;
+	background-color: #d9e6f2;
 }
 
 h1.dashboard-title, h1{
 		font-size: 24px;
 	font-family: "PT Sans Narrow", "Trebuchet MS", Trebuchet, Tahoma, Arial;
-	color: white;
+	color: #424242;
 }
 
 .dashboard-module{
@@ -62,3 +59,71 @@ h1.dashboard-title, h1{
 	cursor: pointer;
 	background-color: #fef9a0;
 }
+
+#dashboard-panel h3 a {
+	background-color: white;
+}
+
+/* special widgets */
+
+
+
+input#id_tags.ac_input{
+    width: 600px;
+    font-size: 12px;
+}
+
+ul.object-tools{
+	top: -8px;
+	position: relative;
+}
+
+ul.object-tools li{
+	border: 4px solid white;
+	border-radius:12px;
+	margin-left: 10px;
+}
+
+.row1{
+	background-color: #fefdd4;
+}
+
+span#id_point_span_control{
+	height: 150px;
+	x-overflow: scroll;
+}
+
+span#id_point_span_map{
+	padding-left: 107px;
+}
+
+div.form-row.category{
+	overflow: visible;
+	position: relative;
+}
+
+div.form-row.category > div{
+	position: relative;
+}
+
+div.chzn-container.chzn-container-multi#id_category_chzn{
+	position: relative;
+	display: inline-block;
+}
+
+div.chzn-container ul.chzn-choices{
+	width: 616px;
+}
+
+
+
+div.chzn-container div.chzn-drop ul.chzn-results{
+	width: 616px;
+}
+
+div.chzn-container div.chzn-drop ul.chzn-results li{
+	width: 616px;
+}
+
+
+

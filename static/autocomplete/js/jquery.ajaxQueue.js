@@ -113,4 +113,4 @@ $(function(){
 		return ajax.apply(this, arguments);
 	};
 	
-})(jQuery);
+})(django.jQuery);

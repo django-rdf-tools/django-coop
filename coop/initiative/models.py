@@ -1,15 +1,12 @@
 # -*- coding:utf-8 -*-
 from django.db import models
 from extended_choices import Choices
-
 from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from coop_geo.models import AreaLink,Located
-from skosxl.models import LabelledItem
 from django.contrib.contenttypes import generic
-from taggit_autocomplete_modified.managers \
-    import TaggableManagerAutocomplete as TaggableManager
+
 import sorl
 
 class BaseRole(models.Model):
@@ -94,8 +91,6 @@ class BaseInitiative(models.Model):
     
     logo = sorl.thumbnail.ImageField(upload_to='logos/',null=True,blank=True)
     
-    tags = TaggableManager(through=LabelledItem, blank=True)
-
     relations = models.ManyToManyField('coop_local.Initiative',symmetrical=False,through='coop_local.Relation',verbose_name=_(u'relations'))
 
     category = models.ManyToManyField('coop_local.OrganizationCategory', blank=True, null=True, verbose_name=_(u'category'))
@@ -129,19 +124,21 @@ class BaseInitiative(models.Model):
             return unicode(self.acronym)
         else:
             return unicode(self.title)
+            
     def has_location(self):
         return self.located.all().count()>0
     has_location.boolean = True    
     has_location.short_description = _(u'geo')
+    
     def has_description(self):
-        return self.description is not None
+        return len(self.description) > 20
     has_description.boolean = True    
     has_description.short_description = _(u'desc.')
+    
     #@models.permalink
     def get_absolute_url(self):
         return reverse('initiative_detail', args=[self.slug])
         
-       # return ('/initiative/'+self.slug+'.html')
     def get_tags(self):
         return self.tags.all()
         

@@ -29,19 +29,22 @@
     
     <!-- CSS: implied media="all" -->
     <link rel="stylesheet" href="{{ STATIC_URL }}css/html5.css?v=2">
-    
     <link rel="stylesheet" href="{{ STATIC_URL }}css/normalize.css" type="text/css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/960.css" type="text/css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" type="text/css" />
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/admin_bar.css" type="text/css" />
 
     <link href='http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow:700|Nobile:400,400italic,700' rel='stylesheet' type='text/css'>
     
     <script src="{{ STATIC_URL }}js/libs/modernizr.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.pageslide.min.js"></script>
+   <!-- <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.pageslide.min.js"></script>-->
+    
     {% coop_bar_headers %}
     {% block extra_head %}{% endblock %}
+    
+    
+    
+    
 </head>
 <body id="{% block body_id %}{% endblock %}">
 {% coop_bar %}

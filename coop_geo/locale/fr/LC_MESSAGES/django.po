@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop_geo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-09 21:20+0000\n"
-"PO-Revision-Date: 2012-01-09 22:27+0100\n"
+"POT-Creation-Date: 2012-01-14 11:09+0000\n"
+"PO-Revision-Date: 2012-01-14 12:09+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
 "Language: \n"
@@ -36,7 +36,7 @@ msgid "Inside areas"
 msgstr "zones englobantes"
 
 #: models.py:16
-#: models.py:101
+#: models.py:100
 msgid "label"
 msgstr "libellé"
 
@@ -107,62 +107,89 @@ msgstr "type de lieu"
 msgid "%s (center)"
 msgstr "%s (centre)"
 
-#: models.py:102
+#: models.py:91
+msgid "town"
+msgstr "commune"
+
+#: models.py:92
+#: models.py:255
+msgid "departement"
+msgstr "département"
+
+#: models.py:93
+msgid "town group"
+msgstr "intercommunalité"
+
+#: models.py:94
+#: models.py:254
+msgid "region"
+msgstr "région"
+
+#: models.py:95
+#: models.py:253
+msgid "country"
+msgstr "pays"
+
+#: models.py:101
 msgid "reference"
 msgstr "référence"
 
-#: models.py:104
+#: models.py:103
 msgid "polygon"
 msgstr "polygone"
 
-#: models.py:107
+#: models.py:106
 msgid "default location"
 msgstr "lieu par défaut"
 
-#: models.py:109
+#: models.py:108
 msgid "related area"
 msgstr "zone liée"
 
-#: models.py:110
-#: models.py:266
+#: models.py:109
+#: models.py:263
 msgid "type"
 msgstr "type"
 
-#: models.py:114
+#: models.py:113
 msgid "update automatically?"
 msgstr "mise à jour automatique ?"
 
-#: models.py:118
+#: models.py:117
 msgid "Area"
 msgstr "Zone"
 
-#: models.py:119
+#: models.py:118
 #: templates/gis/openlayers_location.html:44
 #: templates/gis/openlayers_point.html:44
 msgid "Areas"
 msgstr "Zones"
 
-#: models.py:251
+#: models.py:250
 msgid " has area : "
 msgstr " a pour zone :"
 
-#: models.py:268
+#: models.py:256
+msgid "towns grouping"
+msgstr "intercommunalité"
+
+#: models.py:265
 msgid "inside"
 msgstr "englobe"
 
-#: models.py:270
+#: models.py:267
 msgid "included"
 msgstr "inclus"
 
-#: models.py:273
+#: models.py:270
 msgid "Area relation"
 msgstr "relation de zone"
 
-#: models.py:274
+#: models.py:271
 msgid "Area relations"
 msgstr "relationds de zone"
 
-#: models.py:281
+#: models.py:278
 msgid "Child and Parent have to be different."
 msgstr "Les zones parent et enfants doivent être différente."
 

@@ -23,10 +23,12 @@ class TextPlainView(TemplateView):
       context, content_type='text/plain', **kwargs)
 
 urlpatterns = patterns('',
-    url(r'^robots\.txt$', TextPlainView.as_view(template_name='robots.txt')),
-    url(r'^favicon\.ico$', RedirectView.as_view(url='/media/img/favicon.ico')),
 
     url(r'^admin_tools/', include('admin_tools.urls')),
+    
+    url(r'^robots\.txt$', TextPlainView.as_view(template_name='robots.txt')),
+    url(r'^favicon\.ico$', RedirectView.as_view(url='/media/img/favicon.ico')),
+    
     url(r'^taggit_autocomplete_modified/', include('taggit_autocomplete_modified.urls')),
     (r'^search/', include('haystack.urls')),
     
@@ -43,7 +45,9 @@ urlpatterns = patterns('',
     (r'^perso/$', 'coop.membre.views.perso'),
     (r'^initiative/', include('coop.initiative.urls')),
     (r'^lieu/', include('coop.place.urls')),
-    (r'^tag/', include('skosxl.urls')),
+    
+    url(r'^tag/(?P<slug>[\w-]+)/$', 'coop_local.views.tag_detail', name="tag_detail"),
+    
     (r'^rss-sync/', include('rss_sync.urls')),
     (r'^coop_bar/', include('coop_bar.urls')),
     (r'^membre/', include('coop.membre.urls')),
@@ -58,4 +62,6 @@ if settings.DEBUG or ('test' in sys.argv):
 urlpatterns += patterns('',
     (r'^', include('coop_geo.urls', app_name='coop_geo')),
     (r'^', include('coop_cms.urls')),
+    #(r'^', include('uriresolve.urls')),
+    
 )

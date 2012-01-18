@@ -102,6 +102,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'coop.utils.cors.CORSMiddleware'
 ]
 
 ROOT_URLCONF = 'urls'
@@ -160,7 +161,7 @@ INSTALLED_APPS = [
     'livesettings',
     'sorl.thumbnail',
     'floppyforms',
-    'haystack',
+    #'haystack',
     'html_field',
     'oembed',
     #'chosen',
@@ -173,9 +174,7 @@ INSTALLED_APPS = [
     'coop_cms',
     'skosxl',
     'rss_sync',
-    #geo
     'coop_geo',
-    #'genericm2m',
     
     'coop_agenda',
     'coop_bar',
@@ -203,7 +202,16 @@ for app in OPTIONAL_APPS:
             MIDDLEWARE_CLASSES += app.get("middleware", ())
 
 
-DJALOHA_LINK_MODELS = ('coop_cms.Article',)
+DJALOHA_LINK_MODELS = ('coop_local.Article',)
+
+DJALOHA_LINK_MODELS = ('coop_local.Article','coop_local.Initiative')
+COOP_CMS_ARTICLE_CLASS = 'coop_local.models.Article'
+COOP_CMS_ARTICLE_FORM = 'coop_local.forms.ArticleForm'
+COOP_CMS_ARTICLE_TEMPLATES = 'coop_local.get_article_templates'
+COOP_CMS_ARTICLE_LOGO_SIZE = '600'
+
+
+
 D2RQ_ROOT = 'http://demo.django.coop:2020/'
 
 HAYSTACK_SITECONF = 'coop_local.search_sites'
@@ -224,7 +232,6 @@ LIVESETTINGS_OPTIONS = \
     1: {
     'DB': True,
        'SETTINGS': {
-            u'd2rq': {u'MAPPED_APPS': u'["coop_local", "skosxl"]'},
             u'coop_cms': {u'CONTENT_APPS': u'["coop_cms"]'}
         }
     }

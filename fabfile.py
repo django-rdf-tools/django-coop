@@ -132,8 +132,8 @@ def setup():
         print(yellow('Installation des paquets de base...'))
         pretty_apt(['git-core','mercurial','gcc','curl','build-essential',
                     'libfreetype6', 'libfreetype6-dev','liblcms1-dev','libpng12-dev',
-                    'libjpeg-devel','python-imaging','python-setuptools',
-                    'nano','python-dev',
+                    'libjpeg8-dev','libjpeg-devel','python-imaging',
+                    'python-setuptools','nano','python-dev',
                     'memcached','python-memcache'])
     
         # pip special case

@@ -6,13 +6,14 @@
 
 <div id="title" class="grid_12 grid">
 {% block title %}<h3>Tag : {{object}}</h3>{% endblock %}
-    <p>Ajouté le {{object.created|date:'l t F Y'}} par {{object.auteur}}</p>
+    <p>Ajouté le {{object.created|date:'l t F Y'}} par {{object.user}}</p>
     <br/>
 </div>
 
 {% block content %}
 <div id="content">
     <div class="grid_4 grid">
+        
         
     {% if initiatives %}
         <h4>Initiatives</h4>

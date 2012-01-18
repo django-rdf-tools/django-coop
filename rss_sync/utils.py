@@ -2,7 +2,7 @@
 
 from django.core.exceptions import PermissionDenied
 from rss_sync.models import RssSource, RssItem
-from coop_cms.models import Article
+from coop_local.models import Article
 import feedparser
 from datetime import datetime
 from time import mktime
