@@ -2,6 +2,7 @@
 from django.contrib import admin
 from coop.initiative.models import BaseEngagement,BaseInitiative,\
     BaseOrganizationCategory,BaseRelation
+from coop.membre.models import BaseMembre
 from coop_geo.models import AreaLink,Located
 from django.db import models
 from django import forms
