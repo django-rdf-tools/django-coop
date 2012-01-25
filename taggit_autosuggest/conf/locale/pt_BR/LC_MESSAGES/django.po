@@ -1,0 +1,35 @@
+# Copyright (C) 2011 Fabian Topfstedt
+# This file is distributed under the same license as the PACKAGE package.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-05-03 16:56+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Rodrigo Abreu <rodrigo@ilostmyself.org>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: managers.py:11
+msgid "Tags"
+msgstr "Tags"
+
+#: managers.py:12
+msgid "A comma-separated list of tags."
+msgstr "As tags são separadas por vírgulas."
+
+#: widgets.py:67
+msgid "Enter Tag Here"
+msgstr "Entre com a tag aqui"
+
+#: widgets.py:68
+msgid "No Results"
+msgstr "Sem Resultados"
+
+#: widgets.py:69
+msgid "No More Selections Are Allowed"
+msgstr "Mais Seleções Não São Permitidas"

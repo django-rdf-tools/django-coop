@@ -84,8 +84,8 @@ class BaseOrganizationCategory(models.Model):
         return self.label
 
 class BaseInitiative(models.Model):
-    title       = models.CharField(_('title'),max_length=250)
-    acronym     = models.CharField(_('acronym'),blank=True,null=True,max_length=250)
+    title       = models.CharField(_(u'title'),max_length=250)
+    acronym     = models.CharField(_(u'tagline'),blank=True,null=True,max_length=250)
     description = models.TextField(_(u'description'),blank=True,null=True)
     uri         = models.CharField(_(u'main URI'),blank=True,null=True, max_length=250, editable=False)
     
@@ -104,18 +104,17 @@ class BaseInitiative(models.Model):
     
     #action_area = models.ForeignKey(Area, verbose_name=_(u'impact Area'), blank=True, null=True)
     
-    birth = models.DateField(null=True, blank=True)
+    birth = models.DateField(_(u'creation date'),null=True, blank=True)
     email   = models.EmailField(_(u'global email'),blank=True,null=True)
     web     = models.URLField(_(u'web site'),blank=True,null=True, verify_exists=False)
     rss     = models.URLField(_(u'RSS feed'),blank=True,null=True, verify_exists=False)
-    
-    vcal    = models.URLField(_(u'vCal'),blank=True,null=True, verify_exists=True)
+    vcal    = models.URLField(_(u'vCalendar'),blank=True,null=True, verify_exists=True)
     
     slug    = exfields.AutoSlugField(populate_from='title',blank=True)
     created = exfields.CreationDateTimeField(_(u'created'),null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)
-    active  = models.BooleanField(default=True, verbose_name=_(u'active'))
-    notes   = models.TextField(blank=True, verbose_name=_(u'notes'))
+    active  = models.BooleanField(_(u'active'),default=True,)
+    notes   = models.TextField(_(u'notes'),blank=True)
     class Meta:
         abstract = True
         ordering = ['title']

@@ -44,13 +44,17 @@ class InitiativeAdmin(BaseInitiativeAdmin,FkAutocompleteAdmin):
     inlines = [
         EngagementInline,LocatedInline,AreaInline,SeeAlsoInline,RelationInline
         ]
-    fieldsets = BaseInitiativeAdmin.fieldsets + (('CREDIS', {'fields': (('statut','secteur_fse'),('siret','naf'))}),)    
+    fieldsets = BaseInitiativeAdmin.fieldsets + (
+    ('CREDIS', {'fields': (('statut','secteur_fse'),('siret','naf'))}),
+    )    
     
 admin.site.register(Initiative, InitiativeAdmin)
 
 class MembreAdmin(BaseMembreAdmin):
     inlines = [
-           BaseEngInitInline, SeeAlsoInline,SameAsInline
+           LocatedInline, 
+           #BaseEngInitInline,
+           #SeeAlsoInline,SameAsInline
         ]
 
 admin.site.register(Membre, MembreAdmin)

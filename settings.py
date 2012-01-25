@@ -180,7 +180,9 @@ INSTALLED_APPS = [
     'coop_bar',
     'taggit',
     'taggit_templatetags',
-    'taggit_autocomplete_modified',
+    #'taggit_autocomplete_modified',
+    'taggit_autosuggest',
+    
 ]
 
 THUMBNAIL_FORMAT = 'PNG'

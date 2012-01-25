@@ -29,7 +29,8 @@ urlpatterns = patterns('',
     url(r'^robots\.txt$', TextPlainView.as_view(template_name='robots.txt')),
     url(r'^favicon\.ico$', RedirectView.as_view(url='/media/img/favicon.ico')),
     
-    url(r'^taggit_autocomplete_modified/', include('taggit_autocomplete_modified.urls')),
+    url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
+    #url(r'^taggit_autocomplete_modified/', include('taggit_autocomplete_modified.urls')),
     (r'^search/', include('haystack.urls')),
     
     url(r'^$', 'coop.views.home', name="home"),

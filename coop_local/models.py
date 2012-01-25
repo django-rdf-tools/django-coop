@@ -9,10 +9,13 @@ from coop.exchange.models import BaseExchange, BaseTransaction
 from coop.initiative.models import BaseOrganizationCategory,BaseInitiative,BaseRelation,BaseEngagement,BaseRole
 from coop.link.models import BaseSemLink
 
-# CREDIS uses taggit+skosxl but this is not mandatory
+# CREDIS uses taggit+skosxl for tags
 from skosxl.models import LabelledItem
-from taggit_autocomplete_modified.managers \
-    import TaggableManagerAutocomplete as TaggableManager
+#from taggit_autocomplete_modified.managers import TaggableManagerAutocomplete as TaggableManager
+
+from taggit_autosuggest.managers import TaggableManager
+
+
 
 # Personnaliser vos modèle ici en ajoutant les champs nécessaires
 # exemple : personnalisation CREDIS
@@ -76,7 +79,9 @@ class Initiative(BaseInitiative):
     naf = models.CharField('Code d’activité NAF',blank=True, null=True, max_length=10)
     presage = models.CharField('Numero PRESAGE',blank=True, null=True, max_length=10)
     
-    tags = TaggableManager(through=LabelledItem, blank=True)
+    tags = TaggableManager( through=LabelledItem, 
+                            help_text="Une liste de mots-clés séparés par des virgules",
+                            blank=True, verbose_name='Mots-clés')
     
     statut = models.PositiveSmallIntegerField('Statut juridique',
                                                 choices=STATUTS.CHOICES, 

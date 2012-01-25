@@ -144,12 +144,15 @@ class BaseInitiativeAdmin(AdminImageMixin, FkAutocompleteAdmin):
         URLField: {'widget': URLFieldWidget},
     }
     inlines = [
-            BaseEngagementInline,LocatedInline,AreaInline,BaseRelationInline
+            BaseEngagementInline,
+            LocatedInline,
+            #AreaInline,
+            BaseRelationInline
         ]
     fieldsets = (
         (None, {
-            'fields' : ('logo','title','acronym',('active','birth'),
-                        'tags',('email','web'),('rss','vcal'),'description','category',
+            'fields' : ('logo','title','acronym',('birth','active',),
+                        ('email','web'),('rss','vcal'),'description','category','tags',
                         ('telephone_fixe','mobile')
                         )
                         
