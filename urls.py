@@ -49,8 +49,9 @@ urlpatterns = patterns('',
     url(r'^tag/(?P<slug>[\w-]+)/$', 'coop_local.views.tag_detail', name="tag_detail"),
     
     (r'^rss-sync/', include('rss_sync.urls')),
-    (r'^coop_bar/', include('coop_bar.urls')),
     (r'^membre/', include('coop.membre.urls')),
+    (r'^djaloha/', include('djaloha.urls')),
+    
 )
 
 if settings.DEBUG or ('test' in sys.argv):

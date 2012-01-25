@@ -1,0 +1,318 @@
+/3.0
+(ODB.1
+	FirstRootClassName:	"Legend"
+	Roots:	2
+	Version:	30
+)
+
+(Legend.2
+	SymType:	0x01
+	LegType:	0x08
+	ClassType:	0x03
+	FieldNames:	3
+	Symbols:	4
+	Class:	24
+	Class:	25
+	Class:	26
+	Class:	27
+	Class:	28
+	StdDevs:	1.00000000000000
+	NullSym:	29
+	NullValues:	31
+	StatValues:	32
+	Precision:	-3
+)
+
+(AVStr.3
+	S:	"Nature"
+)
+
+(SymList.4
+	Child:	5
+	Child:	16
+	Child:	18
+	Child:	20
+	Child:	22
+)
+
+(CLnSym.5
+	Color:	6
+	Size:	3.00000000000000
+	Symbols:	7
+)
+
+(TClr.6
+	Red:	0xffff
+	Green:	0xffff
+	Blue:	0xffff
+)
+
+(SymList.7
+	Child:	8
+	Child:	10
+	Child:	12
+)
+
+(BLnSym.8
+	Color:	9
+	Width:	3.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+)
+
+(TClr.9
+	Red:	0xffff
+	Green:	0xffff
+	Blue:	0xffff
+)
+
+(BLnSym.10
+	Color:	11
+	ColorLock:	1
+	Width:	3.00000000000000
+	Pattern:	8.16000000000000
+	Pattern:	8.16000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+)
+
+(TClr.11
+)
+
+(VLnHlw.12
+	Color:	13
+	ColorLock:	1
+	Size:	3.00000000000000
+	AltSize:	2.40000000000000
+	BasicLine:	14
+)
+
+(TClr.13
+)
+
+(BLnSym.14
+	Color:	15
+	Width:	0.30000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+)
+
+(TClr.15
+)
+
+(BLnSym.16
+	Color:	17
+	Width:	0.10000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+)
+
+(TClr.17
+	Red:	0xeb00
+	Green:	0x3367
+	Blue:	0xa35b
+)
+
+(BLnSym.18
+	Color:	19
+	Width:	2.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+)
+
+(TClr.19
+	Red:	0xeb00
+	Green:	0x3367
+	Blue:	0xa35b
+)
+
+(BLnSym.20
+	Color:	21
+	Width:	1.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+)
+
+(TClr.21
+	Red:	0xeb00
+	Green:	0x3367
+	Blue:	0xa35b
+)
+
+(BLnSym.22
+	Color:	23
+	Width:	0.10000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+)
+
+(TClr.23
+	Name:	"Transparent"
+)
+
+(LClass.24
+	IsText:	1
+	Label:	"Frontière internationale"
+	MinStr:	"Frontière internationale"
+	MaxStr:	"Frontière internationale"
+	Precision:	-3
+)
+
+(LClass.25
+	IsText:	1
+	Label:	"Limite côtière"
+	MinStr:	"Limite côtière"
+	MaxStr:	"Limite côtière"
+	Precision:	-3
+)
+
+(LClass.26
+	IsText:	1
+	Label:	"Limite de région"
+	MinStr:	"Limite de région"
+	MaxStr:	"Limite de région"
+	Precision:	-3
+)
+
+(LClass.27
+	IsText:	1
+	Label:	"Limite de département"
+	MinStr:	"Limite de département"
+	MaxStr:	"Limite de département"
+	Precision:	-3
+)
+
+(LClass.28
+	IsNoData:	1
+	IsText:	1
+	Label:	"Pas de données"
+	Precision:	-3
+)
+
+(BLnSym.29
+	Color:	30
+	Width:	0.10000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+	Pattern:	0.00000000000000
+)
+
+(TClr.30
+	Name:	"Transparent"
+)
+
+(NameDict.31
+)
+
+(NameDict.32
+)
+

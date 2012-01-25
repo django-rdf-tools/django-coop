@@ -84,13 +84,13 @@ class BaseMembre(models.Model):
     #     return eng
     def init_uri(self):
         return 'http://' + Site.objects.get_current().domain + '/id/membre/' + self.username + '/'
-    def save(self, *args, **kwargs):
-        if self.username == '':
-            if self.user is None:
-                self.username = slugify(self.prenom[:1]+self.nom).replace('-','_')
-            else:    
-                self.username = self.user.username
-        if self.uri =='':
-            self.uri = self.init_uri()
-        super(BaseMembre, self).save(*args, **kwargs)    
-        
+    # def save(self, *args, **kwargs):
+    #     if self.username == '':
+    #         if self.user is None:
+    #             self.username = slugify(self.prenom+self.nom).replace('-','_')
+    #         else:    
+    #             self.username = self.user.username
+    #     if self.uri =='':
+    #         self.uri = self.init_uri()
+    #     super(BaseMembre, self).save(*args, **kwargs)    
+    #     

@@ -102,10 +102,18 @@ from chosen import forms as chosenforms
    
 class BaseInitiativeAdminForm(forms.ModelForm):
     category = chosenforms.ChosenModelMultipleChoiceField(
-            overlay="Indiquez une ou plusieurs catégories",
+            overlay=_(u"Choose one or more categories"),
             queryset=get_model('coop_local','OrganizationCategory').objects.all())    
     class Meta:
         model = BaseInitiative
+
+
+class BaseMemberAdminForm(forms.ModelForm):
+    category = chosenforms.ChosenModelMultipleChoiceField(
+            overlay=_(u"Choose one or more categories"),
+            queryset=get_model('coop_local','MemberCategory').objects.all())    
+    class Meta:
+        model = BaseMembre
 
 
 def create_action(category):
@@ -164,18 +172,21 @@ class BaseInitiativeAdmin(AdminImageMixin, FkAutocompleteAdmin):
     logo_thumb.short_description = _(u"logo")
     logo_thumb.allow_tags = True
     
-    
-    
       
         
 class BaseMembreAdmin(admin.ModelAdmin):
     # model is not given because the coop_local "true" model will override this
+    form = BaseMemberAdminForm
     list_display = ('nom','prenom','email','structure','has_user_account','has_role')
     list_filter = ('category',)
     list_display_links =('nom','prenom')
     search_fields = ('nom','prenom','email','structure')
     ordering = ('nom',)
     #inlines = [BaseEngInitInline,]
+    def get_actions(self, request):
+        myactions = dict(create_action(s) for s in get_model('coop_local','MemberCategory').objects.all())
+        return dict(myactions, **super(BaseMembreAdmin, self).get_actions(request))#merging two dicts
+    
     fieldsets = (
         (None, {
             'fields' : ('prenom',('nom','pub_name'),
