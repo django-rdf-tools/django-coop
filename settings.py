@@ -72,9 +72,9 @@ STATICFILES_DIRS = (
     os.path.abspath(PROJECT_PATH+'/static/'),
     #os.path.abspath(PROJECT_PATH+'/djaloha/static/'),
     #os.path.abspath(PROJECT_PATH+'/coop_cms/static/'),
-    os.path.abspath(PROJECT_PATH+'/coop_geo/static/'),
-    os.path.abspath(PROJECT_PATH+'/coop/static/'),
-    os.path.abspath(PROJECT_PATH+'/rss_sync/static/'),
+    # os.path.abspath(PROJECT_PATH+'/coop_geo/static/'),
+    # os.path.abspath(PROJECT_PATH+'/coop/static/'),
+    # os.path.abspath(PROJECT_PATH+'/rss_sync/static/'),
     os.path.abspath(ADMIN_TOOLS_PATH+'/media/'),
 )
 

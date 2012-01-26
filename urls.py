@@ -53,6 +53,9 @@ urlpatterns = patterns('',
     (r'^membre/', include('coop.membre.urls')),
     (r'^djaloha/', include('djaloha.urls')),
     
+    (r'^skosxl/', include('skosxl.urls')),
+    
+    
 )
 
 if settings.DEBUG or ('test' in sys.argv):

@@ -146,11 +146,13 @@ ul.as-selections{
   -ms-border-radius: 3px;
   -khtml-border-radius: 3px;
 	list-style-type: none;
-	padding: 2px;
+	padding: 4px;
 }
 
 ul.as-selections li{
 	list-style-type: none;
+	font-size: 1.1em;
+	font-weight: bold;
 }
 
 input.as-input{

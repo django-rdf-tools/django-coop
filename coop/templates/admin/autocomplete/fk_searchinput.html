@@ -4,8 +4,8 @@
   <img src="{{ admin_media_prefix }}img/admin/selector-search.gif" width="16" height="16" alt="{% trans "Lookup" %}" />
 </a>
 <script type="text/javascript">
-$(document).ready(function() {
-    // Show lookup input
+//$(document).ready(function() {  
+(function($){ 
     $("#lookup_{{ name }}").show();
     function reset() {
         $('#id_{{ name }}').val('');
