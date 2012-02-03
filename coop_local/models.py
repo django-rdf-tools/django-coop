@@ -10,10 +10,8 @@ from coop.initiative.models import BaseOrganizationCategory,BaseInitiative,BaseR
 from coop.link.models import BaseSemLink
 
 # CREDIS uses taggit+skosxl for tags
-from skosxl.models import LabelledItem
 #from taggit_autocomplete_modified.managers import TaggableManagerAutocomplete as TaggableManager
 
-from taggit_autosuggest.managers import TaggableManager
 
 
 
@@ -74,12 +72,16 @@ class Site(BaseSite):
 class OrganizationCategory(BaseOrganizationCategory):
     pass
 
+#from skosxl.models import LabelledItem
+from coop_tag.models import CtaggedItem
+from taggit_autosuggest.managers import TaggableManager
+
 class Initiative(BaseInitiative):
     siret = models.CharField('Numero SIRET',blank=True, null=True, max_length=20)
     naf = models.CharField('Code d’activité NAF',blank=True, null=True, max_length=10)
     presage = models.CharField('Numero PRESAGE',blank=True, null=True, max_length=10)
     
-    tags = TaggableManager( through=LabelledItem, 
+    tags = TaggableManager( through=CtaggedItem, 
                             help_text="Une liste de mots-clés séparés par des virgules",
                             blank=True, verbose_name='Mots-clés')
     

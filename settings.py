@@ -167,9 +167,9 @@ INSTALLED_APPS = [
     'chosen',
 
     #apps
-    'coop_local',
     'coop',
-    'coop.place',
+    'coop_local',
+    'coop_tag',
     'djaloha',
     'coop_cms',
     'skosxl',

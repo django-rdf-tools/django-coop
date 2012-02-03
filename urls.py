@@ -55,7 +55,6 @@ urlpatterns = patterns('',
     
     (r'^skosxl/', include('skosxl.urls')),
     
-    
 )
 
 if settings.DEBUG or ('test' in sys.argv):
