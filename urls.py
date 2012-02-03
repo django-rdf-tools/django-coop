@@ -37,7 +37,7 @@ urlpatterns = patterns('',
 
     (r'^comments/', include('django.contrib.comments.urls')),
 
-    (r'^chaining/', include('smart_selects.urls')),
+    #(r'^chaining/', include('smart_selects.urls')),
     
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
@@ -45,15 +45,14 @@ urlpatterns = patterns('',
     
     (r'^perso/$', 'coop.membre.views.perso'),
     (r'^initiative/', include('coop.initiative.urls')),
-    (r'^lieu/', include('coop.place.urls')),
+    #(r'^lieu/', include('coop.place.urls')),
     
-    url(r'^tag/(?P<slug>[\w-]+)/$', 'coop_local.views.tag_detail', name="tag_detail"),
+    url(r'^tag/(?P<slug>[\w-]+)/$', 'coop_tag.views.tag_detail', name="tag_detail"),
     
     (r'^rss-sync/', include('rss_sync.urls')),
     (r'^membre/', include('coop.membre.urls')),
     (r'^djaloha/', include('djaloha.urls')),
     
-    (r'^skosxl/', include('skosxl.urls')),
     
 )
 
