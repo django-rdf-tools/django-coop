@@ -29,5 +29,3 @@ python-dateutil==1.5
 -e git+git://github.com/quinode/django-chosen.git#egg=django-chosen
 
 django-tinymce==1.5.1a2
-
-git://github.com/limist/py-moneyed.git
