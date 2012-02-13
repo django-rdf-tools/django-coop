@@ -1,10 +1,12 @@
 # -*- coding:utf-8 -*-
 from django.contrib import admin
 from coop_local.models import Membre,MemberCategory, Role,Engagement, \
-    OrganizationCategory, Initiative, SeeAlsoLink, SameAsLink, Relation
+    OrganizationCategory, Initiative, SeeAlsoLink, SameAsLink, Relation,\
+    Exchange, PaymentModality
 from coop.admin import LocatedInline, AreaInline, BaseEngagementInline, \
     BaseInitiativeAdminForm, BaseInitiativeAdmin, BaseMembreAdmin, \
-    BaseRelationInline, BaseEngInitInline
+    BaseRelationInline, BaseEngInitInline, BaseExchangeInline, \
+    BaseExchangeAdmin, BasePaymentInline
 
 from coop.utils.autocomplete_admin import FkAutocompleteAdmin,InlineAutocompleteAdmin
 
@@ -24,15 +26,19 @@ class SameAsInline(GenericTabularInline):
     model = SameAsLink
     extra=1    
 
+class PaymentInline(BasePaymentInline):
+    model = PaymentModality
+    extra = 0
+
+class ExchangeInline(BaseExchangeInline):
+    model = Exchange
+    extra=1    
+
 class EngagementInline(BaseEngagementInline,InlineAutocompleteAdmin):
     model = Engagement
 
 class RelationInline(BaseRelationInline,InlineAutocompleteAdmin):
     model = Relation
-
-# class SiteInline(BaseSiteInline,InlineAutocompleteAdmin):
-#     model = Site
-
 
 class InitiativeAdminForm(BaseInitiativeAdminForm):
     class Meta:
@@ -42,7 +48,12 @@ class InitiativeAdminForm(BaseInitiativeAdminForm):
 class InitiativeAdmin(BaseInitiativeAdmin,FkAutocompleteAdmin):
     form = InitiativeAdminForm
     inlines = [
-        EngagementInline,LocatedInline,AreaInline,SeeAlsoInline,RelationInline
+        EngagementInline,
+        ExchangeInline,
+        LocatedInline,
+        AreaInline,
+        SeeAlsoInline,
+        RelationInline
         ]
     fieldsets = BaseInitiativeAdmin.fieldsets + (
     ('CREDIS', {'fields': (('statut','secteur_fse'),('siret','naf'))}),
@@ -58,6 +69,24 @@ class MembreAdmin(BaseMembreAdmin):
         ]
 
 admin.site.register(Membre, MembreAdmin)
+
+
+class ExchangeAdmin(BaseExchangeAdmin):
+    fieldsets = ((None, {
+            'fields' : ('etype',('permanent','expiration',),'title','description',
+                        #'tags',
+                        'org'
+                       )
+            }),)
+    inlines = [
+            PaymentInline,
+            LocatedInline, 
+        ]
+
+admin.site.register(Exchange, ExchangeAdmin)
+
+#admin.site.register(PaymentModality)
+
 
 # class SiteAdmin(BaseSiteAdmin):
 #      form = SiteForm

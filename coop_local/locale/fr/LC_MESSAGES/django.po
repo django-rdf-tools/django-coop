@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop_local\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-24 14:35+0000\n"
-"PO-Revision-Date: 2011-12-24 15:40+0100\n"
+"POT-Creation-Date: 2012-02-13 09:37+0000\n"
+"PO-Revision-Date: 2012-02-13 10:37+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
 "Language: \n"
@@ -43,44 +43,59 @@ msgstr "Articles et navigation"
 msgid "My network"
 msgstr "Mon réseau"
 
-#: dashboard.py:71
-#: menu.py:25
-msgid "Applications"
-msgstr ""
-
-#: dashboard.py:77
+#: dashboard.py:70
 #: menu.py:29
 msgid "Administration"
 msgstr ""
 
-#: dashboard.py:82
-#: dashboard.py:129
+#: dashboard.py:76
+#: dashboard.py:123
 msgid "Recent Actions"
 msgstr ""
 
-#: dashboard.py:86
+#: dashboard.py:80
 msgid "Latest Django News"
 msgstr ""
 
-#: dashboard.py:93
+#: dashboard.py:87
 msgid "Support"
 msgstr ""
 
-#: dashboard.py:96
+#: dashboard.py:90
 msgid "Django documentation"
 msgstr ""
 
-#: dashboard.py:101
+#: dashboard.py:95
 msgid "Django \"django-users\" mailing list"
 msgstr ""
 
-#: dashboard.py:106
+#: dashboard.py:100
 msgid "Django irc channel"
 msgstr ""
 
 #: menu.py:22
 msgid "Dashboard"
 msgstr ""
+
+#: menu.py:25
+msgid "Applications"
+msgstr ""
+
+#: models.py:106
+msgid "SeeAlso link"
+msgstr "Lien \"SeeAlso\""
+
+#: models.py:107
+msgid "SeeAlso links"
+msgstr "Liens \"SeeAlso\""
+
+#: models.py:111
+msgid "SameAs link"
+msgstr "Lien \"SameAs\""
+
+#: models.py:112
+msgid "SameAs links"
+msgstr "Liens \"SameAs\""
 
 #: templates/coop_dashboard.html:55
 msgid "Modules"

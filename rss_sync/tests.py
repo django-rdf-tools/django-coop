@@ -4,7 +4,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User, Permission
 from django.core.urlresolvers import reverse
 from django.template import Template, Context
-from coop_cms.models import Article
+from coop_local.models import Article
 from django.core.exceptions import ValidationError
 from rss_sync.models import RssItem, RssSource
 

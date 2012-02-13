@@ -44,7 +44,7 @@ $(function(){
  */
 
 
-(function($) {
+;(function($) {
 	
 	var ajax = $.ajax;
 	
@@ -55,7 +55,7 @@ $(function(){
 	
 	$.ajax = function(settings) {
 		// create settings for compatibility with ajaxSetup
-		settings = jQuery.extend(settings, jQuery.extend({}, jQuery.ajaxSettings, settings));
+		settings = django.jQuery.extend(settings, django.jQuery.extend({}, django.jQuery.ajaxSettings, settings));
 		
 		var port = settings.port;
 		
@@ -70,10 +70,10 @@ $(function(){
 			settings.complete = function(){
 				if ( _old )
 					_old.apply( this, arguments );
-				jQuery([ajax]).dequeue("ajax" + port );;
+				django.jQuery([ajax]).dequeue("ajax" + port );;
 			};
 		
-			jQuery([ ajax ]).queue("ajax" + port, function(){
+			django.jQuery([ ajax ]).queue("ajax" + port, function(){
 				ajax( settings );
 			});
 			return;
@@ -101,9 +101,9 @@ $(function(){
 		
 				if ( pos == 0 || !synced[ pos-1 ] )
 					for ( var i = pos; i < synced.length && synced[i].done; i++ ) {
-						if ( synced[i].error ) synced[i].error.apply( jQuery, syncedData[i].error );
-						if ( synced[i].success ) synced[i].success.apply( jQuery, syncedData[i].success );
-						if ( synced[i].complete ) synced[i].complete.apply( jQuery, syncedData[i].complete );
+						if ( synced[i].error ) synced[i].error.apply( django.jQuery, syncedData[i].error );
+						if ( synced[i].success ) synced[i].success.apply( django.jQuery, syncedData[i].success );
+						if ( synced[i].complete ) synced[i].complete.apply( django.jQuery, syncedData[i].complete );
 		
 						synced[i] = null;
 						syncedData[i] = null;

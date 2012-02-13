@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rss_sync\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-24 14:58+0000\n"
+"POT-Creation-Date: 2012-02-13 08:54+0000\n"
 "PO-Revision-Date: 2011-12-24 16:16+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
@@ -47,8 +47,7 @@ msgstr ""
 msgid "url"
 msgstr "url"
 
-#: models.py:9
-#: models.py:28
+#: models.py:9 models.py:28
 msgid "title"
 msgstr "titre"
 
@@ -107,4 +106,3 @@ msgstr "Collecter"
 #: widgets.py:52
 msgid "Create CMS article"
 msgstr "Créer un article sur le site"
-

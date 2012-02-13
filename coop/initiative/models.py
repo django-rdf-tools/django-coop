@@ -32,7 +32,7 @@ RELATIONS = Choices(
 class BaseRelation(models.Model):
     source = models.ForeignKey('coop_local.Initiative', verbose_name=_(u'source organization'),related_name='source')
     target = models.ForeignKey('coop_local.Initiative', verbose_name=_(u'target organization'),related_name='target')
-    reltype = models.PositiveSmallIntegerField('Type de relation', choices=RELATIONS.CHOICES)
+    reltype = models.PositiveSmallIntegerField(_(u'Relation type'), choices=RELATIONS.CHOICES)
     created = exfields.CreationDateTimeField(_(u'created'),null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)
     confirmed = models.BooleanField(default=False,verbose_name=_(u'confirmed by the target organization'))
@@ -68,6 +68,8 @@ class BaseEngagement(models.Model):
     uuid = exfields.UUIDField() #nécessaire pour URI de l'engagement
     class Meta:
         abstract = True
+        verbose_name = _('Engagement')
+        verbose_name_plural = _('Engagements')
     '''
     def save(self):
         ramener URI du membre / mais D2R peut bien linker le champ de membre ?

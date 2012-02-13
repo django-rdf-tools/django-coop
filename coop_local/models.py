@@ -5,7 +5,7 @@ from extended_choices import Choices
 from coop.membre.models import BaseMembre,BaseMemberCategory
 from coop.place.models import BaseSite
 #from coop.agenda.models import BaseCalendar, BaseEvent
-from coop.exchange.models import BaseExchange, BaseTransaction
+from coop.exchange.models import BaseExchange, BaseTransaction, BasePaymentModality
 from coop.initiative.models import BaseOrganizationCategory,BaseInitiative,BaseRelation,BaseEngagement,BaseRole
 from coop.link.models import BaseSemLink
 
@@ -59,7 +59,17 @@ STATUTS = Choices(
 # class Event(BaseEvent):
 #     pass
 
+#from skosxl.models import LabelledItem
+from coop_tag.models import CtaggedItem
+from taggit_autosuggest.managers import TaggableManager
+
 class Exchange(BaseExchange):
+    tags = TaggableManager( through=CtaggedItem, 
+                            help_text="Une liste de mots-clés séparés par des virgules",
+                            blank=True, verbose_name='Mots-clés')
+    
+
+class PaymentModality(BasePaymentModality):
     pass
 
 class Transaction(BaseTransaction):
@@ -72,9 +82,6 @@ class Site(BaseSite):
 class OrganizationCategory(BaseOrganizationCategory):
     pass
 
-#from skosxl.models import LabelledItem
-from coop_tag.models import CtaggedItem
-from taggit_autosuggest.managers import TaggableManager
 
 class Initiative(BaseInitiative):
     siret = models.CharField('Numero SIRET',blank=True, null=True, max_length=20)
@@ -93,11 +100,16 @@ class Initiative(BaseInitiative):
                                                     default=SECTEURS_FSE.TOUS)
                                                     
 
+
 class SeeAlsoLink(BaseSemLink):
-    pass
+    class Meta:
+        verbose_name = _(u'SeeAlso link')
+        verbose_name_plural = _(u'SeeAlso links')
     
 class SameAsLink(BaseSemLink):
-    pass
+    class Meta:
+        verbose_name = _(u'SameAs link')
+        verbose_name_plural = _(u'SameAs links')
 
 
 from coop_cms.models import BaseArticle

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop.Contact\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-25 19:23+0100\n"
-"PO-Revision-Date: 2011-12-24 16:05+0100\n"
+"POT-Creation-Date: 2012-02-12 17:27+0000\n"
+"PO-Revision-Date: 2012-02-12 18:29+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
 "Language: \n"
@@ -29,11 +29,11 @@ msgstr ""
 
 #: forms.py:21
 msgid "This value must contain only letters, numbers and underscores."
-msgstr ""
+msgstr "Ce champ ne doit comporter que des lettres, chiffres ou \"_\""
 
 #: forms.py:26
 msgid "Email address"
-msgstr ""
+msgstr "Adresse e-mail"
 
 #: models.py:16
 msgid "Member category"
@@ -63,70 +63,75 @@ msgstr "prénom"
 msgid "publicize name"
 msgstr "afficher nom"
 
-#: models.py:37
+#: models.py:35
+msgid "location"
+msgstr "lieu"
+
+#: models.py:36
 msgid "publicize location"
 msgstr "afficher adresse"
 
-#: models.py:39
+#: models.py:38
 msgid "address"
 msgstr "adresse"
 
-#: models.py:40
+#: models.py:39
 msgid "city"
 msgstr "ville"
 
-#: models.py:41
+#: models.py:40
 msgid "zip code"
 msgstr "code postal"
 
-#: models.py:43
+#: models.py:42
 msgid "land line"
 msgstr "ligne fixe personnelle"
 
-#: models.py:44
+#: models.py:43
 msgid "publicize phone"
 msgstr "afficher la ligne fixe"
 
-#: models.py:46
+#: models.py:45
 msgid "mobile phone"
 msgstr "mobile"
 
-#: models.py:47
+#: models.py:46
 msgid "publicize mobile"
 msgstr "afficher le mobile"
 
-#: models.py:49
+#: models.py:48
 msgid "personal email"
 msgstr "email personnel"
 
-#: models.py:52
+#: models.py:51
 msgid "created"
 msgstr "création"
 
-#: models.py:53
+#: models.py:52
 msgid "modified"
 msgstr "modification"
 
-#: models.py:55
+#: models.py:54
 msgid "main URI"
 msgstr "URI"
 
-#: models.py:57
+#: models.py:56
 msgid "notes"
-msgstr ""
+msgstr "notes"
 
-#: models.py:62
+#: models.py:61
 msgid "Member"
 msgstr "membre"
 
-#: models.py:63
+#: models.py:62
 msgid "Members"
 msgstr "membres"
 
-#: models.py:75
+#: models.py:74
 msgid "django account"
 msgstr "compte utilisateur django"
 
-#: models.py:80
+#: models.py:79
 msgid "has organization"
 msgstr "membre collectif"
+

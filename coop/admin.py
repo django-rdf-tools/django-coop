@@ -2,6 +2,7 @@
 from django.contrib import admin
 from coop.initiative.models import BaseEngagement,BaseInitiative,\
     BaseOrganizationCategory,BaseRelation
+from coop.exchange.models import BaseExchange,BasePaymentModality
 from coop.membre.models import BaseMembre
 from coop_geo.models import AreaLink,Located
 from django.db import models
@@ -22,15 +23,40 @@ from sorl.thumbnail.admin import AdminImageMixin
 from sorl.thumbnail import default
 ADMIN_THUMBS_SIZE = '60x60'
 
-class LinkWidget(forms.Widget):
+
+class SimpleLinkWidget(forms.Widget):
+    def __init__(self, obj, attrs=None):
+        self.object = obj
+        super(SimpleLinkWidget, self).__init__(attrs)
+    def render(self, name, value, attrs=None):
+        if self.object.pk:
+            return mark_safe(
+                u'<a target="_blank" href="../../../%s/%s/%s/">%s</a>' %\
+                      (
+                       self.object._meta.app_label,
+                       self.object._meta.object_name.lower(),
+                       self.object.pk, 
+                       u'<b>Compléter la fiche détaillée</b>'
+                       )
+            )
+        else:
+            return mark_safe(u'')
+
+
+class M2MLinkWidget(forms.Widget):
     def __init__(self, obj, fkey_name, attrs=None,):
         self.object = obj
         self.fkey = fkey_name
-        super(LinkWidget, self).__init__(attrs)
+        super(M2MLinkWidget, self).__init__(attrs)
     def render(self, name, value, attrs=None):
         if self.object.pk:
-            return mark_safe(u'<a href="../../../%s/%s/%s/" target="_blank">%s</a>' % (self.object._meta.app_label,
-                    getattr(self.object,self.fkey)._meta.object_name.lower(), getattr(self.object,self.fkey).pk, u'Fiche détaillée'))
+            return mark_safe(u'<a href="../../../%s/%s/%s/" target="_blank">%s</a>' % \
+                (   self.object._meta.app_label,
+                    getattr(self.object,self.fkey)._meta.object_name.lower(), 
+                    getattr(self.object,self.fkey).pk, 
+                    u'Fiche détaillée'
+                    )
+            )
         else:
             return mark_safe(u'')
 
@@ -39,21 +65,29 @@ class ContactInlineLinkForm(forms.ModelForm):
     link = forms.CharField(label='link', required=False)
     def __init__(self, *args, **kwargs):
         super(ContactInlineLinkForm, self).__init__(*args, **kwargs)
-        self.fields['link'].widget = LinkWidget(self.instance,fkey_name='membre')
+        self.fields['link'].widget = M2MLinkWidget(self.instance,fkey_name='membre')
+
+class ExchangeInlineLinkForm(forms.ModelForm):
+    class Meta:
+        model = BaseExchange
+    link = forms.CharField(label='link', required=False)
+    def __init__(self, *args, **kwargs):
+        super(ExchangeInlineLinkForm, self).__init__(*args, **kwargs)
+        self.fields['link'].widget = SimpleLinkWidget(self.instance)        
 
 
 class IntiativeInlineLinkForm(forms.ModelForm):
     link = forms.CharField(label='link', required=False)
     def __init__(self, *args, **kwargs):
         super(ContactInlineLinkForm, self).__init__(*args, **kwargs)
-        self.fields['link'].widget = LinkWidget(self.instance,fkey_name='initiative')
+        self.fields['link'].widget = M2MLinkWidget(self.instance,fkey_name='initiative')
 
 
 class LocatedInlineLinkForm(forms.ModelForm):
     link = forms.CharField(label='link', required=False)
     def __init__(self, *args, **kwargs):
         super(LocatedInlineLinkForm, self).__init__(*args, **kwargs)
-        self.fields['link'].widget = LinkWidget(self.instance,fkey_name='location')
+        self.fields['link'].widget = M2MLinkWidget(self.instance,fkey_name='location')
 
 
 class URLFieldWidget(AdminURLFieldWidget):
@@ -74,6 +108,21 @@ class BaseEngInitInline(InlineAutocompleteAdmin):
     model = BaseEngagement
     related_search_fields = {'initiative': ('title','acronym','description'), }
     extra=1
+
+
+class BasePaymentInline(admin.TabularInline):
+    model = BasePaymentModality
+    extra=1
+
+class BaseExchangeInline(admin.StackedInline):
+    form = ExchangeInlineLinkForm
+    model = BaseExchange
+    extra=1
+    fieldsets = ((None, {
+            'fields' : ('etype',('permanent','expiration',),'title','description',
+                       'link'
+                       )
+            }),)
 
 class BaseRelationInline(InlineAutocompleteAdmin):
     model = BaseRelation
@@ -117,6 +166,15 @@ class BaseMemberAdminForm(forms.ModelForm):
         model = BaseMembre
 
 
+class BaseExchangeAdmin(admin.ModelAdmin): # AdminImageMixin,FkAutocompleteAdmin):
+    fieldsets = ((None, {
+            'fields' : ('etype',('permanent','expiration',),'title','description',
+                       'org'
+                       )
+            }),)
+    #related_search_fields = {'org': ('title','acronym','description'), }
+
+
 def create_action(category):
     def add_cat(modeladmin, request, queryset):
         for obj in queryset:obj.category.add(category)
@@ -143,7 +201,7 @@ class BaseInitiativeAdmin(AdminImageMixin, FkAutocompleteAdmin):
     formfield_overrides = {
         URLField: {'widget': URLFieldWidget},
     }
-    inlines = [
+    inlines = [ # can be overriden in coop_local
             BaseEngagementInline,
             LocatedInline,
             #AreaInline,
@@ -152,7 +210,8 @@ class BaseInitiativeAdmin(AdminImageMixin, FkAutocompleteAdmin):
     fieldsets = (
         (None, {
             'fields' : ('logo','title','acronym',('birth','active',),
-                        ('email','web'),('rss','vcal'),'description','category','tags',
+                        ('email','web'),('rss','vcal'),'description','category',
+                        'tags', #mais tags est passé dans coop_local non ?
                         ('telephone_fixe','mobile')
                         )
                         
@@ -175,7 +234,7 @@ class BaseInitiativeAdmin(AdminImageMixin, FkAutocompleteAdmin):
             return _(u"No Image") 
     logo_thumb.short_description = _(u"logo")
     logo_thumb.allow_tags = True
-    
+ 
       
         
 class BaseMembreAdmin(admin.ModelAdmin):
