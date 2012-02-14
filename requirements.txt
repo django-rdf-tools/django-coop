@@ -26,5 +26,5 @@ django-taggit-autocomplete-modified==0.1.0b4
 django-haystack==1.2.6
 httplib2==0.7.2
 python-dateutil==1.5
--e git+git://github.com/quinode/django-chosen.git#egg=django-chosen
+-e git+git://github.com/theatlantic/django-chosen.git
 django-tinymce==1.5.1a2
