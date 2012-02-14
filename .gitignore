@@ -25,6 +25,7 @@ media
 /deactivate_env.bat
 /local_settings.py
 /d2rq/vocab/catalog-v001.xml
+static/django_extensions
 
 # OS generated files #
 ######################

@@ -27,11 +27,13 @@ COMM_MEANS = Choices(
     ('FAX',     3,  _(u'Fax')),
     ('SKYPE',   4,  _(u'Skype')),
     ('TWITTER', 5,  _(u'Twitter')),
+    ('RSS',     6,  _(u'RSS Feed')),
+    ('VCAL',    7,  _(u'vCalendar')),
 )
 
 class BaseContact(models.Model):
     category        = models.PositiveSmallIntegerField(_(u'Category'), choices=COMM_MEANS.CHOICES)
-    content         = models.CharField(_(u'content'),max_length=100)
+    content         = models.CharField(_(u'content'),max_length=250)
     details         = models.CharField(_(u'details'),blank=True, max_length=100)
     display         = models.PositiveSmallIntegerField(_(u'Display'), choices=DISPLAY.CHOICES, default=DISPLAY.PUBLIC)
     created         = exfields.CreationDateTimeField(_(u'created'),null=True)
