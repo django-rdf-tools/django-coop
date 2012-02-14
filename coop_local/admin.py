@@ -2,10 +2,10 @@
 from django.contrib import admin
 from coop_local.models import Membre,MemberCategory, Role,Engagement, \
     OrganizationCategory, Initiative, SeeAlsoLink, SameAsLink, Relation,\
-    Exchange, PaymentModality
+    Exchange, PaymentModality, Contact
 from coop.admin import LocatedInline, AreaInline, BaseEngagementInline, \
     BaseInitiativeAdminForm, BaseInitiativeAdmin, BaseMembreAdmin, \
-    BaseRelationInline, BaseEngInitInline, BaseExchangeInline, \
+    BaseRelationInline, BaseOrgInline, BaseExchangeInline, \
     BaseExchangeAdmin, BasePaymentInline
 
 from coop.utils.autocomplete_admin import FkAutocompleteAdmin,InlineAutocompleteAdmin
@@ -17,6 +17,9 @@ admin.site.register(OrganizationCategory)
 #from genericadmin.admin import GenericAdminModelAdmin,GenericTabularInline
 from django.contrib.contenttypes.generic import GenericTabularInline
 
+class ContactInline(GenericTabularInline):
+    model = Contact
+    extra=1
 
 class SeeAlsoInline(GenericTabularInline):
     model = SeeAlsoLink
@@ -37,17 +40,22 @@ class ExchangeInline(BaseExchangeInline):
 class EngagementInline(BaseEngagementInline,InlineAutocompleteAdmin):
     model = Engagement
 
+class OrgInline(BaseOrgInline,InlineAutocompleteAdmin):
+    model = Engagement
+
+
 class RelationInline(BaseRelationInline,InlineAutocompleteAdmin):
     model = Relation
 
-class InitiativeAdminForm(BaseInitiativeAdminForm):
-    class Meta:
-        model = Initiative
-
+# class InitiativeAdminForm(BaseInitiativeAdminForm):
+#     class Meta:
+#         model = Initiative
+# cool pas besoin de ça
 
 class InitiativeAdmin(BaseInitiativeAdmin,FkAutocompleteAdmin):
-    form = InitiativeAdminForm
+    #form = InitiativeAdminForm
     inlines = [
+        ContactInline,
         EngagementInline,
         ExchangeInline,
         LocatedInline,
@@ -61,11 +69,12 @@ class InitiativeAdmin(BaseInitiativeAdmin,FkAutocompleteAdmin):
     
 admin.site.register(Initiative, InitiativeAdmin)
 
+
 class MembreAdmin(BaseMembreAdmin):
     inlines = [
-           LocatedInline, 
-           #BaseEngInitInline,
-           #SeeAlsoInline,SameAsInline
+            ContactInline,
+            OrgInline,
+            # SeeAlsoInline,
         ]
 
 admin.site.register(Membre, MembreAdmin)
@@ -86,7 +95,6 @@ class ExchangeAdmin(BaseExchangeAdmin):
 admin.site.register(Exchange, ExchangeAdmin)
 
 #admin.site.register(PaymentModality)
-
 
 # class SiteAdmin(BaseSiteAdmin):
 #      form = SiteForm

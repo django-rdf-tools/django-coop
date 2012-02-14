@@ -105,6 +105,13 @@ MIDDLEWARE_CLASSES = [
     'coop.utils.cors.CORSMiddleware'
 ]
 
+LOCALE_PATHS = (
+    os.path.abspath(PROJECT_PATH+'/coop/exchange/locale'),
+    os.path.abspath(PROJECT_PATH+'/coop/initiative/locale'),
+    os.path.abspath(PROJECT_PATH+'/coop/link/locale'),
+    os.path.abspath(PROJECT_PATH+'/coop/membre/locale'),
+)
+
 ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (

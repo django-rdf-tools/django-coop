@@ -16,7 +16,7 @@ MODALITIES = Choices(
 UNITS = Choices(
     ('EURO',    1,  _(u'€')),
     ('SELH',    2,  _(u'Hours')),
-    
+    ('PEZ',     3,  _(u'PEZ')),    
 )
 
 class BasePaymentModality(models.Model):

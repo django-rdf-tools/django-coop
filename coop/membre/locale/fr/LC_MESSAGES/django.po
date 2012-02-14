@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop.Contact\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-12 17:27+0000\n"
-"PO-Revision-Date: 2012-02-12 18:29+0100\n"
+"POT-Creation-Date: 2012-02-13 16:14+0000\n"
+"PO-Revision-Date: 2012-02-13 17:14+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
 "Language: \n"
@@ -20,20 +20,24 @@ msgstr ""
 "X-Poedit-Country: FRANCE\n"
 
 #: forms.py:15
-msgid "Nom ou raison sociale"
-msgstr ""
+msgid "name"
+msgstr "nom"
 
 #: forms.py:20
-msgid "Nom d'utilisateur"
-msgstr ""
+msgid "username"
+msgstr "nom d'utilisateur"
 
 #: forms.py:21
 msgid "This value must contain only letters, numbers and underscores."
 msgstr "Ce champ ne doit comporter que des lettres, chiffres ou \"_\""
 
 #: forms.py:26
-msgid "Email address"
+msgid "email address"
 msgstr "Adresse e-mail"
+
+#: forms.py:27
+msgid "your personal email"
+msgstr "email personnel"
 
 #: models.py:16
 msgid "Member category"
@@ -120,12 +124,12 @@ msgid "notes"
 msgstr "notes"
 
 #: models.py:61
-msgid "Member"
-msgstr "membre"
+msgid "Contact"
+msgstr "Contact"
 
 #: models.py:62
-msgid "Members"
-msgstr "membres"
+msgid "Contacts"
+msgstr "Contacts"
 
 #: models.py:74
 msgid "django account"
@@ -135,3 +139,8 @@ msgstr "compte utilisateur django"
 msgid "has organization"
 msgstr "membre collectif"
 
+#~ msgid "Member"
+#~ msgstr "membre"
+
+#~ msgid "Members"
+#~ msgstr "membres"

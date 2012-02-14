@@ -6,17 +6,11 @@ from coop.membre.models import BaseMembre,BaseMemberCategory
 from coop.place.models import BaseSite
 #from coop.agenda.models import BaseCalendar, BaseEvent
 from coop.exchange.models import BaseExchange, BaseTransaction, BasePaymentModality
-from coop.initiative.models import BaseOrganizationCategory,BaseInitiative,BaseRelation,BaseEngagement,BaseRole
+from coop.initiative.models import BaseOrganizationCategory,BaseInitiative,BaseRelation,BaseEngagement,BaseRole, BaseContact
 from coop.link.models import BaseSemLink
-
-# CREDIS uses taggit+skosxl for tags
-#from taggit_autocomplete_modified.managers import TaggableManagerAutocomplete as TaggableManager
-
-
 
 
 # Personnaliser vos modèle ici en ajoutant les champs nécessaires
-# exemple : personnalisation CREDIS
 
 class Engagement(BaseEngagement):
     pass
@@ -59,7 +53,7 @@ STATUTS = Choices(
 # class Event(BaseEvent):
 #     pass
 
-#from skosxl.models import LabelledItem
+
 from coop_tag.models import CtaggedItem
 from taggit_autosuggest.managers import TaggableManager
 
@@ -110,6 +104,9 @@ class SameAsLink(BaseSemLink):
     class Meta:
         verbose_name = _(u'SameAs link')
         verbose_name_plural = _(u'SameAs links')
+
+class Contact(BaseContact):
+    pass
 
 
 from coop_cms.models import BaseArticle

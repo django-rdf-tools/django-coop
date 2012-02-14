@@ -12,19 +12,19 @@ class ProfileForm(forms.ModelForm):
   
     last_name = forms.CharField(max_length=30,
                                 widget=forms.TextInput(attrs=attrs_dict),
-                                label=_(u'Nom ou raison sociale'),
+                                label=_(u'name'),
                                 )
     username = forms.RegexField(regex=r'^\w+$',
                                 max_length=30,
                                 widget=forms.TextInput(attrs=attrs_dict),
-                                label=_("Nom d'utilisateur"),
+                                label=_("username"),
                                 error_messages={ 'invalid': _("This value must contain only letters, numbers and underscores.") },
                                 help_text=u"Ce nom d'utilisateur sera public, affiché à la place du nom pour les visiteurs anonymes du site (Google par exemple)"
                                 )
     email = forms.EmailField(widget=forms.TextInput(attrs=dict(attrs_dict,
                                                                maxlength=75)),
-                             label=_("Email address"),
-                             help_text= u"Votre e-mail personnel."
+                             label=_("email address"),
+                             help_text= _(u"your personal email")
                              )
                              
     def __init__(self, *args, **kwargs):

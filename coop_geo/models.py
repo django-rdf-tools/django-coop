@@ -246,7 +246,7 @@ def area_post_save(sender, **kwargs):
 post_save.connect(area_post_save, sender=Area)
 
 class AreaLink(models.Model):
-    location = models.ForeignKey(Area,null=True,blank=True, verbose_name=_(u'location'))
+    location = models.ForeignKey(Area,null=True,blank=True, verbose_name=_(u'location'))#TODO : location ?
     # things which are in an area
     content_type = models.ForeignKey(ContentType,blank=True,null=True)
     object_id = models.PositiveIntegerField()

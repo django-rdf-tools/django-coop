@@ -5,8 +5,9 @@ from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
-from coop_geo.models import Location
 from django.contrib.contenttypes import generic
+from coop_geo.models import Location
+from django.contrib.sites.models import Site
 
 class BaseMemberCategory(models.Model):
     label = models.CharField(blank=True, max_length=100)
@@ -20,7 +21,6 @@ class BaseMemberCategory(models.Model):
 
 class BaseMembre(models.Model):
     user = models.OneToOneField(User, blank=True, null=True, unique=True,verbose_name=_(u'django user'),editable=False)
-        
     username = models.CharField(blank=True, max_length=100, unique=True)    #pour D2RQ et poura voir des URI clean meme pour des non-users
     
     category = models.ManyToManyField('coop_local.MemberCategory', blank=True, null=True, verbose_name=_(u'category'))
@@ -29,15 +29,11 @@ class BaseMembre(models.Model):
     prenom = models.CharField(_(u'first name'),max_length=100,null=True,blank=True)
     
     pub_name = models.BooleanField(default=False, verbose_name=_(u'publicize name'))
-    
-    #located = generic.GenericRelation(Located)
-    
+        
     location = models.ForeignKey(Location,null=True,blank=True,verbose_name=_(u'location'))    
     pub_location = models.BooleanField(default=False, verbose_name=_(u'publicize location'))
     
-    adresse = models.TextField(_(u'address'),null=True,blank=True)
-    ville = models.CharField(_(u'city'),null=True,blank=True, max_length=100)
-    code_postal = models.CharField(_(u'zip code'),null=True,blank=True, max_length=5)
+    contact = generic.GenericRelation('coop_local.Contact')
     
     telephone_fixe = models.CharField(_(u'land line'),null=True,blank=True, max_length=14)
     pub_phone = models.BooleanField(default=False, verbose_name=_(u'publicize phone'))
@@ -58,8 +54,8 @@ class BaseMembre(models.Model):
 
     class Meta:
         abstract = True
-        verbose_name = _(u'Member')
-        verbose_name_plural = _(u'Members')
+        verbose_name = _(u'Personne')
+        verbose_name_plural = _(u'Personnes')
     def __unicode__(self):
         return self.prenom+u' '+self.nom
         
@@ -79,20 +75,20 @@ class BaseMembre(models.Model):
     has_role.short_description = _(u'has organization')
     
         
-    # def engagements(self):
-    #     eng = []
-    #     for e in self.engagement_set.all():
-    #         eng.append({'initiative':e.initiative,'role':e.role})
-    #     return eng
+    def engagements(self):
+        eng = []
+        for e in self.engagement_set.all():
+            eng.append({'initiative':e.initiative,'role':e.role})
+        return eng
     def init_uri(self):
         return 'http://' + Site.objects.get_current().domain + '/id/membre/' + self.username + '/'
-    # def save(self, *args, **kwargs):
-    #     if self.username == '':
-    #         if self.user is None:
-    #             self.username = slugify(self.prenom+self.nom).replace('-','_')
-    #         else:    
-    #             self.username = self.user.username
-    #     if self.uri =='':
-    #         self.uri = self.init_uri()
-    #     super(BaseMembre, self).save(*args, **kwargs)    
-    #     
+    def save(self, *args, **kwargs):
+        if self.username == '':
+            if self.user is None:
+                self.username = slugify(self.prenom+self.nom).replace('-','_')
+            else:    
+                self.username = self.user.username
+        if self.uri =='':
+            self.uri = self.init_uri()
+        super(BaseMembre, self).save(*args, **kwargs)    
+        

@@ -12,11 +12,11 @@ class BaseSemLink(models.Model):
     slug            = exfields.AutoSlugField(populate_from=('label'))
     created         = exfields.CreationDateTimeField(_(u'created'),null=True)
     modified        = exfields.ModificationDateTimeField(_(u'modified'),null=True)
-    content_type    = models.ForeignKey(ContentType,verbose_name=_(u'model@'),blank=True,null=True)
+    content_type    = models.ForeignKey(ContentType, blank=True, null=True)
     object_id       = models.PositiveIntegerField()
     content_object  = generic.GenericForeignKey('content_type', 'object_id')
     
-    # et author uri etc ?
+    # TODO et author uri etc ?
     
     def __unicode__(self):
         return self.label

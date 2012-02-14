@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.contrib import admin
-from coop.initiative.models import BaseEngagement,BaseInitiative,\
-    BaseOrganizationCategory,BaseRelation
+from coop.initiative.models import BaseEngagement,BaseInitiative,BaseRelation
 from coop.exchange.models import BaseExchange,BasePaymentModality
 from coop.membre.models import BaseMembre
 from coop_geo.models import AreaLink,Located
@@ -11,8 +10,10 @@ from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.db.models.loading import get_model
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.contenttypes.generic import GenericStackedInline,GenericTabularInline
+from django.contrib.contenttypes.generic import GenericTabularInline
 from coop.utils.autocomplete_admin import FkAutocompleteAdmin,InlineAutocompleteAdmin
+from django_extensions.admin import ForeignKeyAutocompleteAdmin
+
 
 from django.contrib.admin.widgets import AdminURLFieldWidget
 from django.db.models import URLField
@@ -50,44 +51,42 @@ class M2MLinkWidget(forms.Widget):
         super(M2MLinkWidget, self).__init__(attrs)
     def render(self, name, value, attrs=None):
         if self.object.pk:
-            return mark_safe(u'<a href="../../../%s/%s/%s/" target="_blank">%s</a>' % \
+            return mark_safe(u'<a href="../../../%s/%s/%s/">%s</a>' % \
                 (   self.object._meta.app_label,
                     getattr(self.object,self.fkey)._meta.object_name.lower(), 
                     getattr(self.object,self.fkey).pk, 
-                    u'Fiche détaillée'
+                    u' '.join((u'Fiche',unicode(self.fkey))) # TODO how to get translated app name ?
                     )
             )
         else:
             return mark_safe(u'')
 
-
-class ContactInlineLinkForm(forms.ModelForm):
-    link = forms.CharField(label='link', required=False)
-    def __init__(self, *args, **kwargs):
-        super(ContactInlineLinkForm, self).__init__(*args, **kwargs)
-        self.fields['link'].widget = M2MLinkWidget(self.instance,fkey_name='membre')
-
 class ExchangeInlineLinkForm(forms.ModelForm):
     class Meta:
         model = BaseExchange
-    link = forms.CharField(label='link', required=False)
+    lien = forms.CharField(label='lien', required=False)
     def __init__(self, *args, **kwargs):
         super(ExchangeInlineLinkForm, self).__init__(*args, **kwargs)
-        self.fields['link'].widget = SimpleLinkWidget(self.instance)        
+        self.fields['lien'].widget = SimpleLinkWidget(self.instance)        
 
-
-class IntiativeInlineLinkForm(forms.ModelForm):
-    link = forms.CharField(label='link', required=False)
+class ContactInlineLinkForm(forms.ModelForm):
+    lien = forms.CharField(label='lien', required=False)
     def __init__(self, *args, **kwargs):
         super(ContactInlineLinkForm, self).__init__(*args, **kwargs)
-        self.fields['link'].widget = M2MLinkWidget(self.instance,fkey_name='initiative')
+        self.fields['lien'].widget = M2MLinkWidget(self.instance,fkey_name='membre')
+
+class OrgInlineLinkForm(forms.ModelForm):
+    lien = forms.CharField(label='lien', required=False)
+    def __init__(self, *args, **kwargs):
+        super(OrgInlineLinkForm, self).__init__(*args, **kwargs)
+        self.fields['lien'].widget = M2MLinkWidget(self.instance,fkey_name='initiative')
 
 
 class LocatedInlineLinkForm(forms.ModelForm):
-    link = forms.CharField(label='link', required=False)
+    lien = forms.CharField(label='lien', required=False)
     def __init__(self, *args, **kwargs):
         super(LocatedInlineLinkForm, self).__init__(*args, **kwargs)
-        self.fields['link'].widget = M2MLinkWidget(self.instance,fkey_name='location')
+        self.fields['lien'].widget = M2MLinkWidget(self.instance,fkey_name='location')
 
 
 class URLFieldWidget(AdminURLFieldWidget):
@@ -103,12 +102,11 @@ class BaseEngagementInline(InlineAutocompleteAdmin):
     related_search_fields = {'membre': ('nom','prenom','email','structure','user__username'), }
     extra=2
 
-class BaseEngInitInline(InlineAutocompleteAdmin):
-    form = IntiativeInlineLinkForm
+class BaseOrgInline(InlineAutocompleteAdmin):
+    form = OrgInlineLinkForm
     model = BaseEngagement
     related_search_fields = {'initiative': ('title','acronym','description'), }
     extra=1
-
 
 class BasePaymentInline(admin.TabularInline):
     model = BasePaymentModality
@@ -120,7 +118,7 @@ class BaseExchangeInline(admin.StackedInline):
     extra=1
     fieldsets = ((None, {
             'fields' : ('etype',('permanent','expiration',),'title','description',
-                       'link'
+                       'lien'
                        )
             }),)
 
@@ -131,48 +129,42 @@ class BaseRelationInline(InlineAutocompleteAdmin):
     fields = ('reltype','target','confirmed','created')
     related_search_fields = {'target': ('title','acronym','description'), }
     extra=1
-
-# class BaseSiteInline(admin.StackedInline,InlineAutocompleteAdmin):
-#     model = BaseSite
-#     related_search_fields = {'location': ('location__label','location__adr1','location__adr2','location__zipcode','location_city'), }
-#     extra=0
-# 
-#         
+       
 class LocatedInline(GenericTabularInline,InlineAutocompleteAdmin):
     form = LocatedInlineLinkForm
     model = Located
     related_search_fields = {'location': ('label','adr1','adr2','zipcode','city'), }
     extra=1
 
-class AreaInline(GenericTabularInline):
+class AreaInline(GenericTabularInline,InlineAutocompleteAdmin):
     model = AreaLink
+    related_search_fields = {'location': ('label','reference'), }
     extra=1
  
 from chosen import forms as chosenforms
+from chosen import widgets as chosenwidgets
    
-class BaseInitiativeAdminForm(forms.ModelForm):
-    category = chosenforms.ChosenModelMultipleChoiceField(
-            overlay=_(u"Choose one or more categories"),
-            queryset=get_model('coop_local','OrganizationCategory').objects.all())    
+class BaseInitiativeAdminForm(forms.ModelForm): 
     class Meta:
-        model = BaseInitiative
+        widgets = {'category': chosenwidgets.ChosenSelectMultiple()}
 
 
 class BaseMemberAdminForm(forms.ModelForm):
-    category = chosenforms.ChosenModelMultipleChoiceField(
-            overlay=_(u"Choose one or more categories"),
-            queryset=get_model('coop_local','MemberCategory').objects.all())    
+    # category = chosenforms.ChosenModelMultipleChoiceField(
+    #         required=False,
+    #         overlay=_(u"Choose one or more categories"),
+    #         queryset=get_model('coop_local','MemberCategory').objects.all())    
     class Meta:
-        model = BaseMembre
+        widgets = {'category': chosenwidgets.ChosenSelectMultiple()}
 
 
-class BaseExchangeAdmin(admin.ModelAdmin): # AdminImageMixin,FkAutocompleteAdmin):
+class BaseExchangeAdmin(ForeignKeyAutocompleteAdmin): #AdminImageMixin, 
     fieldsets = ((None, {
             'fields' : ('etype',('permanent','expiration',),'title','description',
                        'org'
                        )
             }),)
-    #related_search_fields = {'org': ('title','acronym','description'), }
+    related_search_fields = {'org': ('title','acronym','description'), }
 
 
 def create_action(category):
@@ -183,7 +175,6 @@ def create_action(category):
 
 
 class BaseInitiativeAdmin(AdminImageMixin, FkAutocompleteAdmin):
-    # model is not given because the coop_local "true" model will override this
     form = BaseInitiativeAdminForm
     list_display = ('logo_thumb','title','active','has_location','has_description')
     list_display_links =('title',)
@@ -236,14 +227,17 @@ class BaseInitiativeAdmin(AdminImageMixin, FkAutocompleteAdmin):
     logo_thumb.allow_tags = True
  
       
+from django_extensions.admin import ForeignKeyAutocompleteAdmin
         
-class BaseMembreAdmin(admin.ModelAdmin):
+class BaseMembreAdmin(ForeignKeyAutocompleteAdmin):
     # model is not given because the coop_local "true" model will override this
     form = BaseMemberAdminForm
     list_display = ('nom','prenom','email','structure','has_user_account','has_role')
     list_filter = ('category',)
     list_display_links =('nom','prenom')
     search_fields = ('nom','prenom','email','structure')
+    related_search_fields = {'location': ('label','adr1','adr2','zipcode','city'), }
+    
     ordering = ('nom',)
     #inlines = [BaseEngInitInline,]
     def get_actions(self, request):
@@ -255,6 +249,7 @@ class BaseMembreAdmin(admin.ModelAdmin):
             'fields' : ('prenom',('nom','pub_name'),
                         ('telephone_fixe','pub_phone'),
                         ('telephone_portable','pub_mobile'),
+                        ('location','pub_location'),
                         'email','category'),
             }),
         ('Notes', {
