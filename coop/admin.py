@@ -246,10 +246,8 @@ class BaseMembreAdmin(ForeignKeyAutocompleteAdmin):
     
     fieldsets = (
         (None, {
-            'fields' : ('first_name',('last_name','pub_name'),
-                        ('telephone_fixe','pub_phone'),
-                        ('telephone_portable','pub_mobile'),
-                        ('location','pub_location'),
+            'fields' : (('first_name','last_name'),
+                        ('location','location_display'),
                         'email','category'),
             }),
         ('Notes', {

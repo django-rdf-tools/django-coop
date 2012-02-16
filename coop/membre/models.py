@@ -19,6 +19,8 @@ class BaseMemberCategory(models.Model):
     def __unicode__(self):
         return self.label    
 
+from coop.initiative.models import DISPLAY
+
 class BaseMembre(models.Model):
     user = models.OneToOneField(User, blank=True, null=True, unique=True,verbose_name=_(u'django user'),editable=False)
     username = models.CharField(blank=True, max_length=100, unique=True)    
@@ -28,6 +30,7 @@ class BaseMembre(models.Model):
     last_name = models.CharField(_(u'last name'),max_length=100)
     first_name = models.CharField(_(u'first name'),max_length=100,null=True,blank=True)
     location = models.ForeignKey(Location,null=True,blank=True,verbose_name=_(u'location'))    
+    location_display = models.PositiveSmallIntegerField(_(u'Display'), choices=DISPLAY.CHOICES, default=DISPLAY.PUBLIC)
     contact = generic.GenericRelation('coop_local.Contact')
     email = models.EmailField(_(u'personal email'),blank=True)
     email_sha1 = models.CharField(blank=True, max_length=250)
