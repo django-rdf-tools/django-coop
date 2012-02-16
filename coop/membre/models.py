@@ -27,19 +27,13 @@ class BaseMembre(models.Model):
     category = models.ManyToManyField('coop_local.MemberCategory', blank=True, null=True, verbose_name=_(u'category'))
     last_name = models.CharField(_(u'last name'),max_length=100)
     first_name = models.CharField(_(u'first name'),max_length=100,null=True,blank=True)
-            
     location = models.ForeignKey(Location,null=True,blank=True,verbose_name=_(u'location'))    
-    
     contact = generic.GenericRelation('coop_local.Contact')
-
     email = models.EmailField(_(u'personal email'),blank=True)
     email_sha1 = models.CharField(blank=True, max_length=250)
-    
     created = exfields.CreationDateTimeField(_(u'created'),null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)
-    
     uri = models.CharField(blank=True,max_length=250,verbose_name=_(u'main URI'))    
-    
     notes   = models.TextField(blank=True, verbose_name=_(u'notes'))
     structure = models.CharField(blank=True, max_length=100)
 
@@ -48,7 +42,7 @@ class BaseMembre(models.Model):
         verbose_name = _(u'Personne')
         verbose_name_plural = _(u'Personnes')
     def __unicode__(self):
-        return self.prenom+u' '+self.nom
+        return self.first_name+u' '+self.last_name
         
     @models.permalink
     def get_absolute_url(self):
@@ -77,14 +71,14 @@ class BaseMembre(models.Model):
     def save(self, *args, **kwargs):
         # create username slug if not set
         if self.username == '':
-            newname = slugify(self.prenom).replace('-','_')+'.'+\
-                        slugify(self.nom).replace('-','_')
+            newname = slugify(self.first_name).replace('-','_')+'.'+\
+                        slugify(self.last_name).replace('-','_')
             self.username = newname
         # synchronize fields with django User model
-        # if not self.user is None:
-        #     for field in ('username','first_name','last_name','email'):
-        #         getattr(self.user,field) = getattr(self,field)
-        #     self.user.save()
+        if self.user:
+            for field in ('username','first_name','last_name','email'):
+                getattr(self.user,field) = getattr(self,field)
+            self.user.save()
         # create / update URI           
         if self.uri != self.init_uri():
             self.uri = self.init_uri()

@@ -99,13 +99,13 @@ class URLFieldWidget(AdminURLFieldWidget):
 class BaseEngagementInline(InlineAutocompleteAdmin):
     form = ContactInlineLinkForm
     model = BaseEngagement
-    related_search_fields = {'membre': ('nom','prenom','email','structure','user__username'), }
+    related_search_fields = {'membre': ('last_name','first_name','email','structure','user__username'), }
     extra=2
 
 class BaseOrgInline(InlineAutocompleteAdmin):
     form = OrgInlineLinkForm
     model = BaseEngagement
-    related_search_fields = {'initiative': ('title','acronym','description'), }
+    related_search_fields = {'initiative': ('title','subtitle','description'), }
     extra=1
 
 class BasePaymentInline(admin.TabularInline):
@@ -127,7 +127,7 @@ class BaseRelationInline(InlineAutocompleteAdmin):
     fk_name = 'source'
     readonly_fields = ('created',)
     fields = ('reltype','target','confirmed','created')
-    related_search_fields = {'target': ('title','acronym','description'), }
+    related_search_fields = {'target': ('title','subtitle','description'), }
     extra=1
        
 class LocatedInline(GenericTabularInline,InlineAutocompleteAdmin):
@@ -164,7 +164,7 @@ class BaseExchangeAdmin(ForeignKeyAutocompleteAdmin): #AdminImageMixin,
                        'org'
                        )
             }),)
-    related_search_fields = {'org': ('title','acronym','description'), }
+    related_search_fields = {'org': ('title','subtitle','description'), }
 
 
 def create_action(category):
@@ -178,7 +178,7 @@ class BaseInitiativeAdmin(AdminImageMixin, FkAutocompleteAdmin):
     form = BaseInitiativeAdminForm
     list_display = ('logo_thumb','title','active','has_location','has_description')
     list_display_links =('title',)
-    search_fields = ['title','acronym','description']
+    search_fields = ['title','subtitle','description']
     list_filter = ('active','category')
     actions_on_top = True
     actions_on_bottom = True
@@ -200,7 +200,7 @@ class BaseInitiativeAdmin(AdminImageMixin, FkAutocompleteAdmin):
         ]
     fieldsets = (
         (None, {
-            'fields' : ('logo','title','acronym',('birth','active',),
+            'fields' : ('logo','title','subtitle',('birth','active',),
                         ('email','web'),('rss','vcal'),'description','category',
                         'tags', #mais tags est passé dans coop_local non ?
                         ('telephone_fixe','mobile')
@@ -232,13 +232,13 @@ from django_extensions.admin import ForeignKeyAutocompleteAdmin
 class BaseMembreAdmin(ForeignKeyAutocompleteAdmin):
     # model is not given because the coop_local "true" model will override this
     form = BaseMemberAdminForm
-    list_display = ('nom','prenom','email','structure','has_user_account','has_role')
+    list_display = ('last_name','first_name','email','structure','has_user_account','has_role')
     list_filter = ('category',)
-    list_display_links =('nom','prenom')
-    search_fields = ('nom','prenom','email','structure')
+    list_display_links =('last_name','first_name')
+    search_fields = ('last_name','first_name','email','structure')
     related_search_fields = {'location': ('label','adr1','adr2','zipcode','city'), }
     
-    ordering = ('nom',)
+    ordering = ('last_name',)
     #inlines = [BaseEngInitInline,]
     def get_actions(self, request):
         myactions = dict(create_action(s) for s in get_model('coop_local','MemberCategory').objects.all())
@@ -246,7 +246,7 @@ class BaseMembreAdmin(ForeignKeyAutocompleteAdmin):
     
     fieldsets = (
         (None, {
-            'fields' : ('prenom',('nom','pub_name'),
+            'fields' : ('first_name',('last_name','pub_name'),
                         ('telephone_fixe','pub_phone'),
                         ('telephone_portable','pub_mobile'),
                         ('location','pub_location'),

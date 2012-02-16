@@ -175,10 +175,7 @@ class BaseInitiative(models.Model): # TODO => BaseOrganization
         abstract = True
         ordering = ['title']
     def __unicode__(self):
-        if(self.acronym != None and len(self.title) > 40):
-            return unicode(self.acronym)
-        else:
-            return unicode(self.title)
+        return unicode(self.title)
             
     def has_location(self):
         return self.located.all().count()>0
