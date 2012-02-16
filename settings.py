@@ -212,7 +212,7 @@ for app in OPTIONAL_APPS:
 
 DJALOHA_LINK_MODELS = ('coop_local.Article',)
 
-DJALOHA_LINK_MODELS = ('coop_local.Article','coop_local.Initiative')
+DJALOHA_LINK_MODELS = ('coop_local.Article','coop_local.Organization')
 COOP_CMS_ARTICLE_CLASS = 'coop_local.models.Article'
 COOP_CMS_ARTICLE_FORM = 'coop_local.forms.ArticleForm'
 COOP_CMS_ARTICLE_TEMPLATES = 'coop_local.get_article_templates'

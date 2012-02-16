@@ -72,7 +72,7 @@ class Transaction(BaseTransaction):
 class OrganizationCategory(BaseOrganizationCategory):
     pass
 
-class Initiative(BaseOrganization):
+class Organization(BaseOrganization):
     siret = models.CharField('Numero SIRET',blank=True, null=True, max_length=20)
     naf = models.CharField('Code d’activité NAF',blank=True, null=True, max_length=10)
     presage = models.CharField('Numero PRESAGE',blank=True, null=True, max_length=10)
@@ -121,15 +121,14 @@ class Article(BaseArticle):
 #Patching our custom Article to add a backward generic relation with events (use in templates)
 from django.contrib.contenttypes import generic
 from coop_local.models import Article
-from coop_local.models import Initiative
 from coop_agenda.models import Event
 
 if not hasattr(Article, "events"):
     e = generic.GenericRelation(Event)
     e.contribute_to_class(Article, "events")
 
-if not hasattr(Initiative, "events"):
+if not hasattr(Organization, "events"):
     e = generic.GenericRelation(Event)
-    e.contribute_to_class(Initiative, "events")
+    e.contribute_to_class(Organization, "events")
 
 

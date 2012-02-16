@@ -1,14 +1,14 @@
 # # -*- coding:utf-8 -*-
         
 from django.shortcuts import render_to_response, redirect
-from coop_local.models import Initiative, Person, Engagement, Role
+from coop_local.models import Organization, Person, Engagement, Role
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 
 def org_detail_view(request,slug):
     context = {}
-    org = get_object_or_404(Initiative,slug=slug)    
+    org = get_object_or_404(Organization,slug=slug)    
     context['object'] = org
     #context['rss'] = org.contact.get(category=6)
     context['adresses'] = org.located.all()
@@ -18,7 +18,7 @@ def org_detail_view(request,slug):
 
 def list(request):
     context = {}
-    context['liste_initiatives'] = Initiative.objects.filter(active=True).order_by('secteur_fse','title')#FIXME ah là il faut surclasser
+    context['liste_initiatives'] = Organization.objects.filter(active=True).order_by('secteur_fse','title')#FIXME ah là il faut surclasser
     return render_to_response('org/org_list.html',context,RequestContext(request))
         
     
@@ -31,6 +31,6 @@ def role_detail(request,slug):
 
 def global_map(request):
     context = {}
-    context['initiatives'] = Initiative.objects.filter(active=True)
+    context['initiatives'] = Organization.objects.filter(active=True)
     return render_to_response('org/org_global_map.html',
                               context, RequestContext(request))

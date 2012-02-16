@@ -247,7 +247,9 @@ class BasePersonAdmin(ForeignKeyAutocompleteAdmin):
         (None, {
             'fields' : (('first_name','last_name'),
                         ('location','location_display'),
-                        'email','category'),
+                        'email',
+                        'category'
+                        ),
             }),
         ('Notes', {
             'classes': ('collapse',),

@@ -87,8 +87,8 @@ RELATIONS = Choices(
 )
 
 class BaseRelation(models.Model):
-    source = models.ForeignKey('coop_local.Initiative', verbose_name=_(u'source organization'),related_name='source')
-    target = models.ForeignKey('coop_local.Initiative', verbose_name=_(u'target organization'),related_name='target')
+    source = models.ForeignKey('coop_local.Organization', verbose_name=_(u'source organization'),related_name='source')
+    target = models.ForeignKey('coop_local.Organization', verbose_name=_(u'target organization'),related_name='target')
     reltype = models.PositiveSmallIntegerField(_(u'Relation type'), choices=RELATIONS.CHOICES)
     created = exfields.CreationDateTimeField(_(u'created'),null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)
@@ -116,7 +116,7 @@ class BaseRelation(models.Model):
 
 class BaseEngagement(models.Model):
     membre = models.ForeignKey('coop_local.Person', verbose_name=_(u'member'),related_name='engagements')   #TODO name
-    initiative = models.ForeignKey('coop_local.Initiative',verbose_name=_(u'organization'))                 #TODO name
+    initiative = models.ForeignKey('coop_local.Organization',verbose_name=_(u'organization'))                 #TODO name
     role = models.ForeignKey('coop_local.Role',verbose_name=_(u'role'))
     fonction = models.CharField(blank=True, max_length=100, verbose_name=_(u'detailed role'))               #TODO name
     created = exfields.CreationDateTimeField(_(u'created'),null=True)
@@ -152,7 +152,7 @@ class BaseOrganization(models.Model):
     
     logo = sorl.thumbnail.ImageField(upload_to='logos/',null=True,blank=True)
     
-    relations = models.ManyToManyField('coop_local.Initiative',symmetrical=False,through='coop_local.Relation',verbose_name=_(u'relations'))
+    relations = models.ManyToManyField('coop_local.Organization',symmetrical=False,through='coop_local.Relation',verbose_name=_(u'relations'))
 
     category = models.ManyToManyField('coop_local.OrganizationCategory', blank=True, null=True, verbose_name=_(u'category'))
 

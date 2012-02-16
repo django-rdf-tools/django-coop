@@ -57,7 +57,7 @@ class CustomIndexDashboard(Dashboard):
                     'coop_agenda.models.EventType',
                     'coop_local.models.Person',
                     'coop_local.models.PersonCategory',
-                    'coop_local.models.Initiative',
+                    'coop_local.models.Organization',
                     'coop_local.models.OrganizationCategory',
                     
                     ),

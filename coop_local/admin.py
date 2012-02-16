@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from django.contrib import admin
 from coop_local.models import Person,PersonCategory, Role,Engagement, \
-    OrganizationCategory, Initiative, SeeAlsoLink, SameAsLink, Relation,\
+    OrganizationCategory, Organization, SeeAlsoLink, SameAsLink, Relation,\
     Exchange, PaymentModality, Contact
 from coop.admin import LocatedInline, AreaInline, BaseEngagementInline, \
     BaseOrganizationAdmin, BasePersonAdmin, \
@@ -47,13 +47,13 @@ class OrgInline(BaseOrgInline,InlineAutocompleteAdmin):
 class RelationInline(BaseRelationInline,InlineAutocompleteAdmin):
     model = Relation
 
-# class InitiativeAdminForm(BaseOrganizationAdminForm):
+# class OrganizationAdminForm(BaseOrganizationAdminForm):
 #     class Meta:
-#         model = Initiative
+#         model = Organization
 # cool pas besoin de ça
 
-class InitiativeAdmin(BaseOrganizationAdmin,FkAutocompleteAdmin):
-    #form = InitiativeAdminForm
+class OrganizationAdmin(BaseOrganizationAdmin,FkAutocompleteAdmin):
+    #form = OrganizationAdminForm
     inlines = [
         ContactInline,
         EngagementInline,
@@ -67,7 +67,7 @@ class InitiativeAdmin(BaseOrganizationAdmin,FkAutocompleteAdmin):
     ('CREDIS', {'fields': (('statut','secteur_fse'),('siret','naf'))}),
     )    
     
-admin.site.register(Initiative, InitiativeAdmin)
+admin.site.register(Organization, OrganizationAdmin)
 
 
 class PersonAdmin(BasePersonAdmin):
