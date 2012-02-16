@@ -12,7 +12,7 @@ def org_detail_view(request,slug):
     context['object'] = org
     #context['rss'] = org.contact.get(category=6)
     context['adresses'] = org.located.all()
-    context['engagements'] = Engagement.objects.filter(initiative=context['object'])
+    context['engagements'] = Engagement.objects.filter(organization=context['object'])
     return render_to_response('org/org_detail.html',context,RequestContext(request))
     
 

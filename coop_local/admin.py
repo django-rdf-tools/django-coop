@@ -83,8 +83,8 @@ admin.site.register(Person, PersonAdmin)
 class ExchangeAdmin(BaseExchangeAdmin):
     fieldsets = ((None, {
             'fields' : ('etype',('permanent','expiration',),'title','description',
-                        #'tags',
-                        'org'
+                        'tags',
+                        'organization'
                        )
             }),)
     inlines = [

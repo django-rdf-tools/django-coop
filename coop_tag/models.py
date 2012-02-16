@@ -23,3 +23,8 @@ class Ctag(TagBase):
 class CtaggedItem(GenericTaggedItemBase):
     tag = models.ForeignKey(Ctag, related_name="ctagged_items")
 
+
+from django.contrib import admin
+admin.site.register(Ctag)
+
+# TODO better admin for tags

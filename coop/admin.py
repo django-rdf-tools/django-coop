@@ -73,13 +73,13 @@ class ContactInlineLinkForm(forms.ModelForm):
     lien = forms.CharField(label='lien', required=False)
     def __init__(self, *args, **kwargs):
         super(ContactInlineLinkForm, self).__init__(*args, **kwargs)
-        self.fields['lien'].widget = M2MLinkWidget(self.instance,fkey_name='membre')
+        self.fields['lien'].widget = M2MLinkWidget(self.instance,fkey_name='person')
 
 class OrgInlineLinkForm(forms.ModelForm):
     lien = forms.CharField(label='lien', required=False)
     def __init__(self, *args, **kwargs):
         super(OrgInlineLinkForm, self).__init__(*args, **kwargs)
-        self.fields['lien'].widget = M2MLinkWidget(self.instance,fkey_name='initiative')
+        self.fields['lien'].widget = M2MLinkWidget(self.instance,fkey_name='organization')
 
 
 class LocatedInlineLinkForm(forms.ModelForm):
@@ -161,7 +161,7 @@ class BaseMemberAdminForm(forms.ModelForm):
 class BaseExchangeAdmin(ForeignKeyAutocompleteAdmin): #AdminImageMixin, 
     fieldsets = ((None, {
             'fields' : ('etype',('permanent','expiration',),'title','description',
-                       'org'
+                       'organization'
                        )
             }),)
     related_search_fields = {'organization': ('title','subtitle','description'), }
