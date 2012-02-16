@@ -2,7 +2,7 @@
 from django.contrib.auth.models import User
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from coop_local.models import Membre
+from coop_local.models import Person
 
 # Repiquage carrément du modèle
 attrs_dict = { 'class': 'required' }
@@ -39,7 +39,7 @@ class ProfileForm(forms.ModelForm):
         self.fields.keyOrder = ['last_name','username','email', 'adresse','code_postal','ville','telephone_fixe','telephone_portable']
             
     class Meta:
-        model = Membre
+        model = Person
         exclude = ('user',)
     def save(self, *args, **kwargs):
         """

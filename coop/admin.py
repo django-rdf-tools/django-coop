@@ -153,7 +153,7 @@ class BaseMemberAdminForm(forms.ModelForm):
     # category = chosenforms.ChosenModelMultipleChoiceField(
     #         required=False,
     #         overlay=_(u"Choose one or more categories"),
-    #         queryset=get_model('coop_local','MemberCategory').objects.all())    
+    #         queryset=get_model('coop_local','PersonCategory').objects.all())    
     class Meta:
         widgets = {'category': chosenwidgets.ChosenSelectMultiple()}
 
@@ -201,9 +201,8 @@ class BaseInitiativeAdmin(AdminImageMixin, FkAutocompleteAdmin):
     fieldsets = (
         (None, {
             'fields' : ('logo','title','subtitle',('birth','active',),
-                        ('email','web'),('rss','vcal'),'description','category',
+                        ('email','web'),'description','category',
                         'tags', #mais tags est passé dans coop_local non ?
-                        ('telephone_fixe','mobile')
                         )
                         
             }),
@@ -241,7 +240,7 @@ class BasePersonAdmin(ForeignKeyAutocompleteAdmin):
     ordering = ('last_name',)
     #inlines = [BaseEngInitInline,]
     def get_actions(self, request):
-        myactions = dict(create_action(s) for s in get_model('coop_local','MemberCategory').objects.all())
+        myactions = dict(create_action(s) for s in get_model('coop_local','PersonCategory').objects.all())
         return dict(myactions, **super(BasePersonAdmin, self).get_actions(request))#merging two dicts
     
     fieldsets = (

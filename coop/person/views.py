@@ -1,6 +1,6 @@
 # # -*- coding:utf-8 -*-
 from django.shortcuts import render_to_response, redirect
-from coop_local.models import Site, Initiative, Membre
+from coop_local.models import Initiative, Person
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 

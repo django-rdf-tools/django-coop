@@ -2,7 +2,7 @@
 
 
 # from django.views.generic import DetailView
-# from coop_local.models import Initiative, Membre, Engagement
+# from coop_local.models import Initiative, Person, Engagement
 # 
 # class ISDetailView(DetailView):
 #     
@@ -15,7 +15,7 @@
 #         return context
         
 from django.shortcuts import render_to_response, redirect
-from coop_local.models import Initiative, Membre, Engagement, Role, Site
+from coop_local.models import Initiative, Person, Engagement, Role
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
@@ -24,7 +24,7 @@ def ISDetailView(request,slug):
     context = {}
     initiative = get_object_or_404(Initiative,slug=slug)    
     context['object'] = initiative
-    context['rss'] = initiative.rss
+    #context['rss'] = initiative.contact.get(category=6)
     context['adresses'] = initiative.located.all()
     context['engagements'] = Engagement.objects.filter(initiative=context['object'])
     return render_to_response('initiative/initiative_detail.html',context,RequestContext(request))

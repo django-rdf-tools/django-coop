@@ -55,8 +55,8 @@ class CustomIndexDashboard(Dashboard):
             _(u"My network"),
             models=('coop_agenda.models.Event',
                     'coop_agenda.models.EventType',
-                    'coop_local.models.Membre',
-                    'coop_local.models.MemberCategory',
+                    'coop_local.models.Person',
+                    'coop_local.models.PersonCategory',
                     'coop_local.models.Initiative',
                     'coop_local.models.OrganizationCategory',
                     

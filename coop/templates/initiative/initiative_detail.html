@@ -148,8 +148,13 @@
               
        <h4>Coordonnées</h4>
        <p class="coordonnees">
-       {% if object.telephone_fixe %}<div class="tel">Tel. : {{object.telephone_fixe}}</div>{%endif%}
-       {% if object.telephone_portable %}<div class="tel">Mobile : {{object.telephone_portable}}</div>{%endif%}
+           {% for contact in object.contact.all %} 
+
+            {% if contact.category == 1 %}<div class="tel">Tel. : {{contact.content}}</div>{%endif%}
+            {% if contact.category == 2 %}<div class="tel">Mobile : {{contact.content}}</div>{%endif%}
+            {% if contact.category == 3 %}<div class="tel">Fax : {{contact.content}}</div>{%endif%}
+            
+           {% endfor %}
        {% if object.web %}
        <div class="url"><a target="_blank" href="{{object.web}}">{{object.web}}</a></div>
         {% endif %}

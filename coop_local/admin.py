@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.contrib import admin
-from coop_local.models import Membre,MemberCategory, Role,Engagement, \
+from coop_local.models import Person,PersonCategory, Role,Engagement, \
     OrganizationCategory, Initiative, SeeAlsoLink, SameAsLink, Relation,\
     Exchange, PaymentModality, Contact
 from coop.admin import LocatedInline, AreaInline, BaseEngagementInline, \
@@ -11,7 +11,7 @@ from coop.admin import LocatedInline, AreaInline, BaseEngagementInline, \
 from coop.utils.autocomplete_admin import FkAutocompleteAdmin,InlineAutocompleteAdmin
 
 admin.site.register(Role)
-admin.site.register(MemberCategory)
+admin.site.register(PersonCategory)
 admin.site.register(OrganizationCategory)
 
 #from genericadmin.admin import GenericAdminModelAdmin,GenericTabularInline
@@ -70,14 +70,14 @@ class InitiativeAdmin(BaseInitiativeAdmin,FkAutocompleteAdmin):
 admin.site.register(Initiative, InitiativeAdmin)
 
 
-class MembreAdmin(BasePersonAdmin):
+class PersonAdmin(BasePersonAdmin):
     inlines = [
             ContactInline,
             OrgInline,
             # SeeAlsoInline,
         ]
 
-admin.site.register(Membre, MembreAdmin)
+admin.site.register(Person, PersonAdmin)
 
 
 class ExchangeAdmin(BaseExchangeAdmin):
@@ -95,11 +95,6 @@ class ExchangeAdmin(BaseExchangeAdmin):
 admin.site.register(Exchange, ExchangeAdmin)
 
 #admin.site.register(PaymentModality)
-
-# class SiteAdmin(BaseSiteAdmin):
-#      form = SiteForm
-# 
-# admin.site.register(Site, SiteAdmin)
 
 
 from coop_cms.admin import ArticleAdmin as CmsArticleAdmin
