@@ -2,7 +2,7 @@
 from django.contrib import admin
 from coop.initiative.models import BaseEngagement,BaseInitiative,BaseRelation
 from coop.exchange.models import BaseExchange,BasePaymentModality
-from coop.membre.models import BaseMembre
+from coop.membre.models import BasePerson
 from coop_geo.models import AreaLink,Located
 from django.db import models
 from django import forms
@@ -229,7 +229,7 @@ class BaseInitiativeAdmin(AdminImageMixin, FkAutocompleteAdmin):
       
 from django_extensions.admin import ForeignKeyAutocompleteAdmin
         
-class BaseMembreAdmin(ForeignKeyAutocompleteAdmin):
+class BasePersonAdmin(ForeignKeyAutocompleteAdmin):
     # model is not given because the coop_local "true" model will override this
     form = BaseMemberAdminForm
     list_display = ('last_name','first_name','email','structure','has_user_account','has_role')
@@ -242,7 +242,7 @@ class BaseMembreAdmin(ForeignKeyAutocompleteAdmin):
     #inlines = [BaseEngInitInline,]
     def get_actions(self, request):
         myactions = dict(create_action(s) for s in get_model('coop_local','MemberCategory').objects.all())
-        return dict(myactions, **super(BaseMembreAdmin, self).get_actions(request))#merging two dicts
+        return dict(myactions, **super(BasePersonAdmin, self).get_actions(request))#merging two dicts
     
     fieldsets = (
         (None, {

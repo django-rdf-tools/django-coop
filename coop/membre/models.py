@@ -9,7 +9,7 @@ from django.contrib.contenttypes import generic
 from coop_geo.models import Location
 from django.contrib.sites.models import Site
 
-class BaseMemberCategory(models.Model):
+class BasePersonCategory(models.Model):
     label = models.CharField(blank=True, max_length=100)
     slug = exfields.AutoSlugField(populate_from=('label'))
     class Meta:
@@ -21,7 +21,7 @@ class BaseMemberCategory(models.Model):
 
 from coop.initiative.models import DISPLAY
 
-class BaseMembre(models.Model):
+class BasePerson(models.Model):
     user = models.OneToOneField(User, blank=True, null=True, unique=True,verbose_name=_(u'django user'),editable=False)
     username = models.CharField(blank=True, max_length=100, unique=True)    
     #pour D2RQ et poura voir des URI clean meme pour des non-users
@@ -88,5 +88,5 @@ class BaseMembre(models.Model):
         # create / update URI           
         if self.uri != self.init_uri():
             self.uri = self.init_uri()
-        super(BaseMembre, self).save(*args, **kwargs)    
+        super(BasePerson, self).save(*args, **kwargs)    
         

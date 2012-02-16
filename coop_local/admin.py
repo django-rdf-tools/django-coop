@@ -4,7 +4,7 @@ from coop_local.models import Membre,MemberCategory, Role,Engagement, \
     OrganizationCategory, Initiative, SeeAlsoLink, SameAsLink, Relation,\
     Exchange, PaymentModality, Contact
 from coop.admin import LocatedInline, AreaInline, BaseEngagementInline, \
-    BaseInitiativeAdminForm, BaseInitiativeAdmin, BaseMembreAdmin, \
+    BaseInitiativeAdminForm, BaseInitiativeAdmin, BasePersonAdmin, \
     BaseRelationInline, BaseOrgInline, BaseExchangeInline, \
     BaseExchangeAdmin, BasePaymentInline
 
@@ -70,7 +70,7 @@ class InitiativeAdmin(BaseInitiativeAdmin,FkAutocompleteAdmin):
 admin.site.register(Initiative, InitiativeAdmin)
 
 
-class MembreAdmin(BaseMembreAdmin):
+class MembreAdmin(BasePersonAdmin):
     inlines = [
             ContactInline,
             OrgInline,
