@@ -5,7 +5,8 @@ from extended_choices import Choices
 from coop.person.models import BasePerson,BasePersonCategory
 #from coop.agenda.models import BaseCalendar, BaseEvent
 from coop.exchange.models import BaseExchange, BaseTransaction, BasePaymentModality
-from coop.initiative.models import BaseOrganizationCategory,BaseInitiative,BaseRelation,BaseEngagement,BaseRole, BaseContact
+from coop.org.models import BaseOrganizationCategory,BaseOrganization,\
+                        BaseRelation,BaseEngagement,BaseRole, BaseContact
 from coop.link.models import BaseSemLink
 
 
@@ -71,8 +72,7 @@ class Transaction(BaseTransaction):
 class OrganizationCategory(BaseOrganizationCategory):
     pass
 
-
-class Initiative(BaseInitiative):
+class Initiative(BaseOrganization):
     siret = models.CharField('Numero SIRET',blank=True, null=True, max_length=20)
     naf = models.CharField('Code d’activité NAF',blank=True, null=True, max_length=10)
     presage = models.CharField('Numero PRESAGE',blank=True, null=True, max_length=10)

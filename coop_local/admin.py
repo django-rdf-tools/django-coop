@@ -4,7 +4,7 @@ from coop_local.models import Person,PersonCategory, Role,Engagement, \
     OrganizationCategory, Initiative, SeeAlsoLink, SameAsLink, Relation,\
     Exchange, PaymentModality, Contact
 from coop.admin import LocatedInline, AreaInline, BaseEngagementInline, \
-    BaseInitiativeAdminForm, BaseInitiativeAdmin, BasePersonAdmin, \
+    BaseOrganizationAdminFormBaseOrganizationveAdmin, BasePersonAdmin, \
     BaseRelationInline, BaseOrgInline, BaseExchangeInline, \
     BaseExchangeAdmin, BasePaymentInline
 
@@ -47,12 +47,12 @@ class OrgInline(BaseOrgInline,InlineAutocompleteAdmin):
 class RelationInline(BaseRelationInline,InlineAutocompleteAdmin):
     model = Relation
 
-# class InitiativeAdminForm(BaseInitiativeAdminForm):
+# class InitiativeAdminForm(BaseOrganizationAdminForm):
 #     class Meta:
 #         model = Initiative
 # cool pas besoin de ça
 
-class InitiativeAdmin(BaseInitiativeAdmin,FkAutocompleteAdmin):
+class InitiativeAdmin(BaseOrganizationAdmin,FkAutocompleteAdmin):
     #form = InitiativeAdminForm
     inlines = [
         ContactInline,
@@ -63,7 +63,7 @@ class InitiativeAdmin(BaseInitiativeAdmin,FkAutocompleteAdmin):
         SeeAlsoInline,
         RelationInline
         ]
-    fieldsets = BaseInitiativeAdmin.fieldsets + (
+    fieldsets = BaseOrganizationAdmin.fieldsets + (
     ('CREDIS', {'fields': (('statut','secteur_fse'),('siret','naf'))}),
     )    
     

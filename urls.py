@@ -43,7 +43,7 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^settings/', include('livesettings.urls')),
     (r'^perso/$', 'coop.person.views.perso'),
-    (r'^initiative/', include('coop.initiative.urls')),
+    (r'^initiative/', include('coop.org.urls')),
     url(r'^tag/(?P<slug>[\w-]+)/$', 'coop_tag.views.tag_detail', name="tag_detail"),
     
     (r'^rss-sync/', include('rss_sync.urls')),

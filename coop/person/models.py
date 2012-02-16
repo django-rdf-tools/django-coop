@@ -19,7 +19,7 @@ class BasePersonCategory(models.Model):
     def __unicode__(self):
         return self.label    
 
-from coop.initiative.models import DISPLAY
+from coop.org.models import DISPLAY
 
 class BasePerson(models.Model):
     user = models.OneToOneField(User, blank=True, null=True, unique=True,verbose_name=_(u'django user'),editable=False)

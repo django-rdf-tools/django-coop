@@ -142,7 +142,7 @@ class BaseOrganizationCategory(models.Model):
     def __unicode__(self):
         return self.label
 
-class BaseInitiative(models.Model): # TODO => BaseOrganization
+class BaseOrganization(models.Model):
     title       = models.CharField(_(u'title'),max_length=250)
     subtitle     = models.CharField(_(u'subtitle'),blank=True,null=True,max_length=250,
                                     help_text=_(u'another name people know your organization by, or a tagline'))

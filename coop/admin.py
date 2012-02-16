@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.contrib import admin
-from coop.initiative.models import BaseEngagement,BaseInitiative,BaseRelation
+from coop.org.models import BaseEngagement,BaseOrganization,BaseRelation
 from coop.exchange.models import BaseExchange,BasePaymentModality
 from coop.person.models import BasePerson
 from coop_geo.models import AreaLink,Located
@@ -144,7 +144,7 @@ class AreaInline(GenericTabularInline,InlineAutocompleteAdmin):
 from chosen import forms as chosenforms
 from chosen import widgets as chosenwidgets
    
-class BaseInitiativeAdminForm(forms.ModelForm): 
+class BaseOrganizationAdminForm(forms.ModelForm): 
     class Meta:
         widgets = {'category': chosenwidgets.ChosenSelectMultiple()}
 
@@ -174,8 +174,8 @@ def create_action(category):
     return (name, (add_cat, name, _(u'Add to the "%s" category') % (category,)))
 
 
-class BaseInitiativeAdmin(AdminImageMixin, FkAutocompleteAdmin):
-    form = BaseInitiativeAdminForm
+class BaseOrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
+    form = BaseOrganizationAdminForm
     list_display = ('logo_thumb','title','active','has_location','has_description')
     list_display_links =('title',)
     search_fields = ['title','subtitle','description']
@@ -213,7 +213,7 @@ class BaseInitiativeAdmin(AdminImageMixin, FkAutocompleteAdmin):
     )    
     def get_actions(self, request):
         myactions = dict(create_action(s) for s in get_model('coop_local','OrganizationCategory').objects.all())
-        return dict(myactions, **super(BaseInitiativeAdmin, self).get_actions(request))#merging two dicts
+        return dict(myactions, **super(BaseOrganizationAdmin, self).get_actions(request))#merging two dicts
         #list_display = ['my_image_thumb', 'my_other_field1', 'my_other_field2', ] ???
 
     def logo_thumb(self, obj):
