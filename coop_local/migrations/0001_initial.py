@@ -11,10 +11,10 @@ class Migration(SchemaMigration):
         # Adding model 'Engagement'
         db.create_table('coop_local_engagement', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('membre', self.gf('django.db.models.fields.related.ForeignKey')(related_name='engagements', to=orm['coop_local.Membre'])),
-            ('initiative', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['coop_local.Initiative'])),
+            ('person', self.gf('django.db.models.fields.related.ForeignKey')(related_name='engagements', to=orm['coop_local.Person'])),
+            ('organization', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['coop_local.Organization'])),
             ('role', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['coop_local.Role'])),
-            ('fonction', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
+            ('role_detail', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
             ('created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, null=True, blank=True)),
             ('modified', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, null=True, blank=True)),
             ('uri', self.gf('django.db.models.fields.CharField')(max_length=250, blank=True)),
@@ -25,8 +25,8 @@ class Migration(SchemaMigration):
         # Adding model 'Relation'
         db.create_table('coop_local_relation', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('source', self.gf('django.db.models.fields.related.ForeignKey')(related_name='source', to=orm['coop_local.Initiative'])),
-            ('target', self.gf('django.db.models.fields.related.ForeignKey')(related_name='target', to=orm['coop_local.Initiative'])),
+            ('source', self.gf('django.db.models.fields.related.ForeignKey')(related_name='source', to=orm['coop_local.Organization'])),
+            ('target', self.gf('django.db.models.fields.related.ForeignKey')(related_name='target', to=orm['coop_local.Organization'])),
             ('reltype', self.gf('django.db.models.fields.PositiveSmallIntegerField')()),
             ('created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, null=True, blank=True)),
             ('modified', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, null=True, blank=True)),
@@ -34,16 +34,16 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('coop_local', ['Relation'])
 
-        # Adding model 'MemberCategory'
-        db.create_table('coop_local_membercategory', (
+        # Adding model 'PersonCategory'
+        db.create_table('coop_local_personcategory', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('label', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
             ('slug', self.gf('django.db.models.fields.SlugField')(db_index=True, max_length=50, blank=True)),
         ))
-        db.send_create_signal('coop_local', ['MemberCategory'])
+        db.send_create_signal('coop_local', ['PersonCategory'])
 
-        # Adding model 'Membre'
-        db.create_table('coop_local_membre', (
+        # Adding model 'Person'
+        db.create_table('coop_local_person', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True, null=True, blank=True)),
             ('username', self.gf('django.db.models.fields.CharField')(unique=True, max_length=100, blank=True)),
@@ -59,15 +59,15 @@ class Migration(SchemaMigration):
             ('notes', self.gf('django.db.models.fields.TextField')(blank=True)),
             ('structure', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
         ))
-        db.send_create_signal('coop_local', ['Membre'])
+        db.send_create_signal('coop_local', ['Person'])
 
-        # Adding M2M table for field category on 'Membre'
-        db.create_table('coop_local_membre_category', (
+        # Adding M2M table for field category on 'Person'
+        db.create_table('coop_local_person_category', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('membre', models.ForeignKey(orm['coop_local.membre'], null=False)),
-            ('membercategory', models.ForeignKey(orm['coop_local.membercategory'], null=False))
+            ('person', models.ForeignKey(orm['coop_local.person'], null=False)),
+            ('personcategory', models.ForeignKey(orm['coop_local.personcategory'], null=False))
         ))
-        db.create_unique('coop_local_membre_category', ['membre_id', 'membercategory_id'])
+        db.create_unique('coop_local_person_category', ['person_id', 'personcategory_id'])
 
         # Adding model 'Role'
         db.create_table('coop_local_role', (
@@ -82,11 +82,11 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=250, blank=True)),
             ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('org', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='exchange', null=True, to=orm['coop_local.Initiative'])),
-            ('member', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['coop_local.Membre'], null=True, blank=True)),
+            ('organization', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='exchange', null=True, to=orm['coop_local.Organization'])),
+            ('person', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['coop_local.Person'], null=True, blank=True)),
             ('etype', self.gf('django.db.models.fields.PositiveSmallIntegerField')(default=1)),
             ('permanent', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('expiration', self.gf('django.db.models.fields.DateField')(default=datetime.datetime(2012, 2, 16, 16, 19, 39, 542231), null=True, blank=True)),
+            ('expiration', self.gf('django.db.models.fields.DateField')(default=datetime.datetime(2012, 2, 17, 0, 36, 58, 434857), null=True, blank=True)),
             ('slug', self.gf('django.db.models.fields.SlugField')(db_index=True, max_length=50, blank=True)),
             ('created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, null=True, blank=True)),
             ('modified', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, null=True, blank=True)),
@@ -130,8 +130,8 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('coop_local', ['OrganizationCategory'])
 
-        # Adding model 'Initiative'
-        db.create_table('coop_local_initiative', (
+        # Adding model 'Organization'
+        db.create_table('coop_local_organization', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=250)),
             ('subtitle', self.gf('django.db.models.fields.CharField')(max_length=250, null=True, blank=True)),
@@ -152,15 +152,15 @@ class Migration(SchemaMigration):
             ('statut', self.gf('django.db.models.fields.PositiveSmallIntegerField')(default=1)),
             ('secteur_fse', self.gf('django.db.models.fields.PositiveSmallIntegerField')(default=0)),
         ))
-        db.send_create_signal('coop_local', ['Initiative'])
+        db.send_create_signal('coop_local', ['Organization'])
 
-        # Adding M2M table for field category on 'Initiative'
-        db.create_table('coop_local_initiative_category', (
+        # Adding M2M table for field category on 'Organization'
+        db.create_table('coop_local_organization_category', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('initiative', models.ForeignKey(orm['coop_local.initiative'], null=False)),
+            ('organization', models.ForeignKey(orm['coop_local.organization'], null=False)),
             ('organizationcategory', models.ForeignKey(orm['coop_local.organizationcategory'], null=False))
         ))
-        db.create_unique('coop_local_initiative_category', ['initiative_id', 'organizationcategory_id'])
+        db.create_unique('coop_local_organization_category', ['organization_id', 'organizationcategory_id'])
 
         # Adding model 'SeeAlsoLink'
         db.create_table('coop_local_seealsolink', (
@@ -229,14 +229,14 @@ class Migration(SchemaMigration):
         # Deleting model 'Relation'
         db.delete_table('coop_local_relation')
 
-        # Deleting model 'MemberCategory'
-        db.delete_table('coop_local_membercategory')
+        # Deleting model 'PersonCategory'
+        db.delete_table('coop_local_personcategory')
 
-        # Deleting model 'Membre'
-        db.delete_table('coop_local_membre')
+        # Deleting model 'Person'
+        db.delete_table('coop_local_person')
 
-        # Removing M2M table for field category on 'Membre'
-        db.delete_table('coop_local_membre_category')
+        # Removing M2M table for field category on 'Person'
+        db.delete_table('coop_local_person_category')
 
         # Deleting model 'Role'
         db.delete_table('coop_local_role')
@@ -253,11 +253,11 @@ class Migration(SchemaMigration):
         # Deleting model 'OrganizationCategory'
         db.delete_table('coop_local_organizationcategory')
 
-        # Deleting model 'Initiative'
-        db.delete_table('coop_local_initiative')
+        # Deleting model 'Organization'
+        db.delete_table('coop_local_organization')
 
-        # Removing M2M table for field category on 'Initiative'
-        db.delete_table('coop_local_initiative_category')
+        # Removing M2M table for field category on 'Organization'
+        db.delete_table('coop_local_organization_category')
 
         # Deleting model 'SeeAlsoLink'
         db.delete_table('coop_local_seealsolink')
@@ -425,12 +425,12 @@ class Migration(SchemaMigration):
         'coop_local.engagement': {
             'Meta': {'object_name': 'Engagement'},
             'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'null': 'True', 'blank': 'True'}),
-            'fonction': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'initiative': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['coop_local.Initiative']"}),
-            'membre': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'engagements'", 'to': "orm['coop_local.Membre']"}),
             'modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'null': 'True', 'blank': 'True'}),
+            'organization': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['coop_local.Organization']"}),
+            'person': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'engagements'", 'to': "orm['coop_local.Person']"}),
             'role': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['coop_local.Role']"}),
+            'role_detail': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
             'uri': ('django.db.models.fields.CharField', [], {'max_length': '250', 'blank': 'True'}),
             'uuid': ('django.db.models.fields.CharField', [], {'max_length': '36', 'blank': 'True'})
         },
@@ -441,21 +441,21 @@ class Migration(SchemaMigration):
             'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'null': 'True', 'blank': 'True'}),
             'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'etype': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '1'}),
-            'expiration': ('django.db.models.fields.DateField', [], {'default': 'datetime.datetime(2012, 2, 16, 16, 19, 39, 568647)', 'null': 'True', 'blank': 'True'}),
+            'expiration': ('django.db.models.fields.DateField', [], {'default': 'datetime.datetime(2012, 2, 17, 0, 36, 58, 466657)', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'location': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['coop_geo.Location']", 'null': 'True', 'blank': 'True'}),
-            'member': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['coop_local.Membre']", 'null': 'True', 'blank': 'True'}),
             'modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'null': 'True', 'blank': 'True'}),
-            'org': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'exchange'", 'null': 'True', 'to': "orm['coop_local.Initiative']"}),
+            'organization': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'exchange'", 'null': 'True', 'to': "orm['coop_local.Organization']"}),
             'permanent': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'person': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['coop_local.Person']", 'null': 'True', 'blank': 'True'}),
             'publisher_uri': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'db_index': 'True', 'max_length': '50', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '250', 'blank': 'True'}),
             'uri': ('django.db.models.fields.CharField', [], {'max_length': '250', 'blank': 'True'}),
             'uuid': ('django.db.models.fields.CharField', [], {'max_length': '36', 'blank': 'True'})
         },
-        'coop_local.initiative': {
-            'Meta': {'ordering': "['title']", 'object_name': 'Initiative'},
+        'coop_local.organization': {
+            'Meta': {'object_name': 'Organization'},
             'active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'birth': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             'category': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': "orm['coop_local.OrganizationCategory']", 'null': 'True', 'blank': 'True'}),
@@ -464,12 +464,12 @@ class Migration(SchemaMigration):
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'logo': ('sorl.thumbnail.fields.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'members': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['coop_local.Membre']", 'through': "orm['coop_local.Engagement']", 'symmetrical': 'False'}),
+            'members': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['coop_local.Person']", 'through': "orm['coop_local.Engagement']", 'symmetrical': 'False'}),
             'modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'null': 'True', 'blank': 'True'}),
             'naf': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True', 'blank': 'True'}),
             'notes': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'presage': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True', 'blank': 'True'}),
-            'relations': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['coop_local.Initiative']", 'through': "orm['coop_local.Relation']", 'symmetrical': 'False'}),
+            'relations': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['coop_local.Organization']", 'through': "orm['coop_local.Relation']", 'symmetrical': 'False'}),
             'secteur_fse': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '0'}),
             'siret': ('django.db.models.fields.CharField', [], {'max_length': '20', 'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'db_index': 'True', 'max_length': '50', 'blank': 'True'}),
@@ -478,30 +478,6 @@ class Migration(SchemaMigration):
             'title': ('django.db.models.fields.CharField', [], {'max_length': '250'}),
             'uri': ('django.db.models.fields.CharField', [], {'max_length': '250', 'null': 'True', 'blank': 'True'}),
             'web': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
-        },
-        'coop_local.membercategory': {
-            'Meta': {'object_name': 'MemberCategory'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'label': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'db_index': 'True', 'max_length': '50', 'blank': 'True'})
-        },
-        'coop_local.membre': {
-            'Meta': {'object_name': 'Membre'},
-            'category': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': "orm['coop_local.MemberCategory']", 'null': 'True', 'blank': 'True'}),
-            'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'null': 'True', 'blank': 'True'}),
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
-            'email_sha1': ('django.db.models.fields.CharField', [], {'max_length': '250', 'blank': 'True'}),
-            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'location': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['coop_geo.Location']", 'null': 'True', 'blank': 'True'}),
-            'location_display': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '1'}),
-            'modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'null': 'True', 'blank': 'True'}),
-            'notes': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'structure': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
-            'uri': ('django.db.models.fields.CharField', [], {'max_length': '250', 'blank': 'True'}),
-            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True', 'null': 'True', 'blank': 'True'}),
-            'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100', 'blank': 'True'})
         },
         'coop_local.organizationcategory': {
             'Meta': {'object_name': 'OrganizationCategory'},
@@ -517,6 +493,30 @@ class Migration(SchemaMigration):
             'modality': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '3', 'blank': 'True'}),
             'unit': ('django.db.models.fields.PositiveSmallIntegerField', [], {'blank': 'True'})
         },
+        'coop_local.person': {
+            'Meta': {'object_name': 'Person'},
+            'category': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': "orm['coop_local.PersonCategory']", 'null': 'True', 'blank': 'True'}),
+            'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'null': 'True', 'blank': 'True'}),
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
+            'email_sha1': ('django.db.models.fields.CharField', [], {'max_length': '250', 'blank': 'True'}),
+            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'location': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['coop_geo.Location']", 'null': 'True', 'blank': 'True'}),
+            'location_display': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '1'}),
+            'modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'null': 'True', 'blank': 'True'}),
+            'notes': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
+            'structure': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
+            'uri': ('django.db.models.fields.CharField', [], {'max_length': '250', 'blank': 'True'}),
+            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True', 'null': 'True', 'blank': 'True'}),
+            'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100', 'blank': 'True'})
+        },
+        'coop_local.personcategory': {
+            'Meta': {'object_name': 'PersonCategory'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'label': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'db_index': 'True', 'max_length': '50', 'blank': 'True'})
+        },
         'coop_local.relation': {
             'Meta': {'object_name': 'Relation'},
             'confirmed': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
@@ -524,8 +524,8 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'null': 'True', 'blank': 'True'}),
             'reltype': ('django.db.models.fields.PositiveSmallIntegerField', [], {}),
-            'source': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'source'", 'to': "orm['coop_local.Initiative']"}),
-            'target': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'target'", 'to': "orm['coop_local.Initiative']"})
+            'source': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'source'", 'to': "orm['coop_local.Organization']"}),
+            'target': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'target'", 'to': "orm['coop_local.Organization']"})
         },
         'coop_local.role': {
             'Meta': {'ordering': "['label']", 'object_name': 'Role'},
