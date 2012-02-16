@@ -70,7 +70,9 @@ class Transaction(BaseTransaction):
     pass
 
 class OrganizationCategory(BaseOrganizationCategory):
-    pass
+    class Meta:
+        verbose_name = "catégorie d'intiative"
+        verbose_name_plural = "catégories d'initiatives"
 
 class Organization(BaseOrganization):
     siret = models.CharField('Numero SIRET',blank=True, null=True, max_length=20)
@@ -87,8 +89,9 @@ class Organization(BaseOrganization):
     secteur_fse = models.PositiveSmallIntegerField('Secteur d’activité FSE',
                                                     choices=SECTEURS_FSE.CHOICES, 
                                                     default=SECTEURS_FSE.TOUS)
-                                                    
-
+    class Meta:
+        verbose_name = 'Initiative'
+        verbose_name_plural = 'Initiatives'
 
 class SeeAlsoLink(BaseSemLink):
     class Meta:

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop.organization\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-16 22:37+0000\n"
-"PO-Revision-Date: 2012-02-16 23:40+0100\n"
+"POT-Creation-Date: 2012-02-16 22:53+0000\n"
+"PO-Revision-Date: 2012-02-16 23:54+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
 "Language: \n"
@@ -238,11 +238,19 @@ msgstr "actif"
 msgid "notes"
 msgstr "notes"
 
-#: models.py:183
+#: models.py:177
+msgid "Organization"
+msgstr "Organisation"
+
+#: models.py:178
+msgid "Organizations"
+msgstr "Organisations"
+
+#: models.py:185
 msgid "geo"
 msgstr "geo"
 
-#: models.py:188
+#: models.py:190
 msgid "desc."
 msgstr "desc."
 

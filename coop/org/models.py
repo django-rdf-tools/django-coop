@@ -115,10 +115,10 @@ class BaseRelation(models.Model):
     
 
 class BaseEngagement(models.Model):
-    membre = models.ForeignKey('coop_local.Person', verbose_name=_(u'member'),related_name='engagements')   #TODO name
-    initiative = models.ForeignKey('coop_local.Organization',verbose_name=_(u'organization'))                 #TODO name
+    membre = models.ForeignKey('coop_local.Person', verbose_name=_(u'person'),related_name='engagements') 
+    initiative = models.ForeignKey('coop_local.Organization',verbose_name=_(u'organization')) 
     role = models.ForeignKey('coop_local.Role',verbose_name=_(u'role'))
-    fonction = models.CharField(blank=True, max_length=100, verbose_name=_(u'detailed role'))               #TODO name
+    fonction = models.CharField(blank=True, max_length=100, verbose_name=_(u'detailed role'))
     created = exfields.CreationDateTimeField(_(u'created'),null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)
     uri = models.CharField(_(u'main URI'),blank=True, max_length=250, editable=False)
@@ -174,6 +174,8 @@ class BaseOrganization(models.Model):
     class Meta:
         abstract = True
         ordering = ['title']
+        verbose_name = _(u'Organization')
+        verbose_name_plural = _(u'Organizations')
     def __unicode__(self):
         return unicode(self.title)
             

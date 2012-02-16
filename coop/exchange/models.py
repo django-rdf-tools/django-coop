@@ -90,6 +90,8 @@ class BaseExchange(models.Model):
         return unicode(self.title)
     def get_absolute_url(self):
         return reverse('annonce_detail', args=[self.uuid])
+        
+    #TODO assign the record to the person editing it (form public) and provide an A-C choice in admin
 
     class Meta:
         abstract = True

@@ -55,7 +55,7 @@ class M2MLinkWidget(forms.Widget):
                 (   self.object._meta.app_label,
                     getattr(self.object,self.fkey)._meta.object_name.lower(), 
                     getattr(self.object,self.fkey).pk, 
-                    u' '.join((u'Fiche',unicode(self.fkey))) # TODO how to get translated app name ?
+                    u' '.join((u'Fiche',unicode(self.fkey))) # TODO how to get the translated app name ?
                     )
             )
         else:
@@ -105,7 +105,7 @@ class BaseEngagementInline(InlineAutocompleteAdmin):
 class BaseOrgInline(InlineAutocompleteAdmin):
     form = OrgInlineLinkForm
     model = BaseEngagement
-    related_search_fields = {'initiative': ('title','subtitle','description'), }
+    related_search_fields = {'organization': ('title','subtitle','description'), }
     extra=1
 
 class BasePaymentInline(admin.TabularInline):
@@ -164,7 +164,7 @@ class BaseExchangeAdmin(ForeignKeyAutocompleteAdmin): #AdminImageMixin,
                        'org'
                        )
             }),)
-    related_search_fields = {'org': ('title','subtitle','description'), }
+    related_search_fields = {'organization': ('title','subtitle','description'), }
 
 
 def create_action(category):
