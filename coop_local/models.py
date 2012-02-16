@@ -17,10 +17,10 @@ class Engagement(BaseEngagement):
 class Relation(BaseRelation):
     pass
 
-class MemberCategory(BasePersonCategory):
+class PersonCategory(BasePersonCategory):
     pass
 
-class Membre(BasePerson):
+class Person(BasePerson):
     pass
 
 class Role(BaseRole):

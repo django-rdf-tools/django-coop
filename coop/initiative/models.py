@@ -115,7 +115,7 @@ class BaseRelation(models.Model):
     
 
 class BaseEngagement(models.Model):
-    membre = models.ForeignKey('coop_local.Membre', verbose_name=_(u'member'),related_name='engagements')   #TODO name
+    membre = models.ForeignKey('coop_local.Person', verbose_name=_(u'member'),related_name='engagements')   #TODO name
     initiative = models.ForeignKey('coop_local.Initiative',verbose_name=_(u'organization'))                 #TODO name
     role = models.ForeignKey('coop_local.Role',verbose_name=_(u'role'))
     fonction = models.CharField(blank=True, max_length=100, verbose_name=_(u'detailed role'))               #TODO name
@@ -156,7 +156,7 @@ class BaseInitiative(models.Model): # TODO => BaseOrganization
 
     category = models.ManyToManyField('coop_local.OrganizationCategory', blank=True, null=True, verbose_name=_(u'category'))
 
-    members = models.ManyToManyField('coop_local.Membre',through='coop_local.Engagement',verbose_name=_(u'members'))
+    members = models.ManyToManyField('coop_local.Person',through='coop_local.Engagement',verbose_name=_(u'members'))
 
     located = generic.GenericRelation(Located)
     area    = generic.GenericRelation(AreaLink)
