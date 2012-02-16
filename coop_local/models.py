@@ -3,7 +3,6 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
 from coop.membre.models import BaseMembre,BaseMemberCategory
-from coop.place.models import BaseSite
 #from coop.agenda.models import BaseCalendar, BaseEvent
 from coop.exchange.models import BaseExchange, BaseTransaction, BasePaymentModality
 from coop.initiative.models import BaseOrganizationCategory,BaseInitiative,BaseRelation,BaseEngagement,BaseRole, BaseContact
@@ -68,10 +67,6 @@ class PaymentModality(BasePaymentModality):
 
 class Transaction(BaseTransaction):
     pass
-
-class Site(BaseSite):
-    pass
-
 
 class OrganizationCategory(BaseOrganizationCategory):
     pass

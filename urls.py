@@ -42,11 +42,8 @@ urlpatterns = patterns('',
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
     (r'^settings/', include('livesettings.urls')),
-    
     (r'^perso/$', 'coop.membre.views.perso'),
     (r'^initiative/', include('coop.initiative.urls')),
-    #(r'^lieu/', include('coop.place.urls')),
-    
     url(r'^tag/(?P<slug>[\w-]+)/$', 'coop_tag.views.tag_detail', name="tag_detail"),
     
     (r'^rss-sync/', include('rss_sync.urls')),

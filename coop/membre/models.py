@@ -76,9 +76,12 @@ class BaseMembre(models.Model):
             self.username = newname
         # synchronize fields with django User model
         if self.user:
+            chg = False
             for field in ('username','first_name','last_name','email'):
-                getattr(self.user,field) = getattr(self,field)
-            self.user.save()
+                if(getattr(self.user,field) != getattr(self,field)):
+                    setattr(self.user, field, getattr(self,field))
+                    chg = True
+            if(chg) : self.user.save()
         # create / update URI           
         if self.uri != self.init_uri():
             self.uri = self.init_uri()
