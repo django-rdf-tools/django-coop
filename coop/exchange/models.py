@@ -66,8 +66,8 @@ EXCHANGE = Choices(
 class BaseExchange(models.Model):
     title = models.CharField(_('title'),blank=True,max_length=250)
     description = models.TextField(_(u'description'),blank=True)
-    org = models.ForeignKey('coop_local.Organization',blank=True,null=True,verbose_name='publisher', related_name='exchange')
-    member = models.ForeignKey('coop_local.Person',blank=True,null=True,editable=False,verbose_name=_(u'person'))
+    organization = models.ForeignKey('coop_local.Organization',blank=True,null=True,verbose_name='publisher', related_name='exchange')
+    person = models.ForeignKey('coop_local.Person',blank=True,null=True,editable=False,verbose_name=_(u'person'))
     etype = models.PositiveSmallIntegerField( _(u'exchange type'),
                                                     choices=EXCHANGE.CHOICES, 
                                                     default=EXCHANGE.OFFER)

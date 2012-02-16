@@ -115,10 +115,10 @@ class BaseRelation(models.Model):
     
 
 class BaseEngagement(models.Model):
-    membre = models.ForeignKey('coop_local.Person', verbose_name=_(u'person'),related_name='engagements') 
-    initiative = models.ForeignKey('coop_local.Organization',verbose_name=_(u'organization')) 
+    person = models.ForeignKey('coop_local.Person', verbose_name=_(u'person'),related_name='engagements') 
+    organization = models.ForeignKey('coop_local.Organization',verbose_name=_(u'organization')) 
     role = models.ForeignKey('coop_local.Role',verbose_name=_(u'role'))
-    fonction = models.CharField(blank=True, max_length=100, verbose_name=_(u'detailed role'))
+    role_detail = models.CharField(blank=True, max_length=100, verbose_name=_(u'detailed role'))
     created = exfields.CreationDateTimeField(_(u'created'),null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)
     uri = models.CharField(_(u'main URI'),blank=True, max_length=250, editable=False)
