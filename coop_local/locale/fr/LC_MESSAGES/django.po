@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop_local\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-13 09:37+0000\n"
+"POT-Creation-Date: 2012-02-16 22:38+0000\n"
 "PO-Revision-Date: 2012-02-13 10:37+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
@@ -43,13 +43,11 @@ msgstr "Articles et navigation"
 msgid "My network"
 msgstr "Mon réseau"
 
-#: dashboard.py:70
-#: menu.py:29
+#: dashboard.py:70 menu.py:29
 msgid "Administration"
 msgstr ""
 
-#: dashboard.py:76
-#: dashboard.py:123
+#: dashboard.py:76 dashboard.py:123
 msgid "Recent Actions"
 msgstr ""
 
@@ -81,19 +79,19 @@ msgstr ""
 msgid "Applications"
 msgstr ""
 
-#: models.py:106
+#: models.py:95
 msgid "SeeAlso link"
 msgstr "Lien \"SeeAlso\""
 
-#: models.py:107
+#: models.py:96
 msgid "SeeAlso links"
 msgstr "Liens \"SeeAlso\""
 
-#: models.py:111
+#: models.py:100
 msgid "SameAs link"
 msgstr "Lien \"SameAs\""
 
-#: models.py:112
+#: models.py:101
 msgid "SameAs links"
 msgstr "Liens \"SameAs\""
 
@@ -108,4 +106,3 @@ msgstr ""
 #: templates/my_applist.html:14
 msgid "Change"
 msgstr ""
-

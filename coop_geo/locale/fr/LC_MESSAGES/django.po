@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop_geo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-13 09:24+0000\n"
+"POT-Creation-Date: 2012-02-16 22:38+0000\n"
 "PO-Revision-Date: 2012-02-13 10:24+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
@@ -35,8 +35,7 @@ msgstr "zone englobante"
 msgid "Inside areas"
 msgstr "zones englobantes"
 
-#: models.py:16
-#: models.py:105
+#: models.py:16 models.py:105
 msgid "label"
 msgstr "libellé"
 
@@ -76,8 +75,7 @@ msgstr "création"
 msgid "modified"
 msgstr "modification"
 
-#: models.py:41
-#: templates/gis/openlayers_location.html:43
+#: models.py:41 templates/gis/openlayers_location.html:43
 #: templates/gis/openlayers_point.html:43
 msgid "Location"
 msgstr "Lieu"
@@ -90,7 +88,7 @@ msgstr "Lieux"
 msgid "You must at least set a point or choose an area."
 msgstr "Vous devez au moins définir un point ou sélectionner une zone."
 
-#: models.py:78
+#: models.py:78 models.py:249
 msgid "location"
 msgstr "lieu"
 
@@ -119,8 +117,7 @@ msgstr "%s (centre)"
 msgid "town"
 msgstr "commune"
 
-#: models.py:97
-#: models.py:263
+#: models.py:97 models.py:263
 msgid "departement"
 msgstr "département"
 
@@ -128,13 +125,11 @@ msgstr "département"
 msgid "town group"
 msgstr "intercommunalité"
 
-#: models.py:99
-#: models.py:262
+#: models.py:99 models.py:262
 msgid "region"
 msgstr "région"
 
-#: models.py:100
-#: models.py:261
+#: models.py:100 models.py:261
 msgid "country"
 msgstr "pays"
 
@@ -154,8 +149,7 @@ msgstr "lieu par défaut"
 msgid "related area"
 msgstr "zone liée"
 
-#: models.py:114
-#: models.py:271
+#: models.py:114 models.py:271
 msgid "type"
 msgstr "type"
 
@@ -167,8 +161,7 @@ msgstr "mise à jour automatique ?"
 msgid "Area"
 msgstr "Zone"
 
-#: models.py:123
-#: templates/gis/openlayers_location.html:44
+#: models.py:123 templates/gis/openlayers_location.html:44
 #: templates/gis/openlayers_point.html:44
 msgid "Areas"
 msgstr "Zones"
@@ -260,4 +253,3 @@ msgstr "Ajouter un autre lieu"
 #: templates/gis/openlayers_location.html:47
 msgid "Search by address"
 msgstr "Localiser l'adresse"
-
