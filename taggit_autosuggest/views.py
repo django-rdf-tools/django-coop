@@ -2,9 +2,8 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.utils import simplejson as json
 
-from skosxl.models import Label as Tag
-#from taggit.models import Tag
-
+#from skosxl.models import Label as Tag
+from coop_tag.models import Ctag as Tag
 
 MAX_SUGGESTIONS = getattr(settings, 'TAGGIT_AUTOSUGGEST_MAX_SUGGESTIONS', 20)
 

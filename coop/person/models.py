@@ -14,8 +14,8 @@ class BasePersonCategory(models.Model):
     slug = exfields.AutoSlugField(populate_from=('label'))
     class Meta:
         abstract = True
-        verbose_name = _(u'Member category')
-        verbose_name_plural = _(u'Member categories')
+        verbose_name = _(u'Person category')
+        verbose_name_plural = _(u'Person categories')
     def __unicode__(self):
         return self.label    
 
@@ -42,8 +42,8 @@ class BasePerson(models.Model):
 
     class Meta:
         abstract = True
-        verbose_name = _(u'Personne')
-        verbose_name_plural = _(u'Personnes')
+        verbose_name = _(u'Person')
+        verbose_name_plural = _(u'Persons')
     def __unicode__(self):
         return self.first_name+u' '+self.last_name
         

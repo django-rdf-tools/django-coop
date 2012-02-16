@@ -257,9 +257,14 @@ COOP_GEO_EPSG_PROJECTION = 4326 # WGS84
 COOP_GEO_BOUNDING_BOX = []
 COOP_GEO_REGION = LANGUAGE_CODE[:2]
 
-TAGGIT_TAG_MODEL           = ('skosxl','Label')
-TAGGIT_TAGGED_ITEM_MODEL   = ('skosxl','LabelledItem')
-TAGGIT_AUTOCOMPLETE_TAG_MODEL = 'skosxl.Label'
+# TAGGIT_TAG_MODEL           = ('skosxl','Label')
+# TAGGIT_TAGGED_ITEM_MODEL   = ('skosxl','LabelledItem')
+# TAGGIT_AUTOCOMPLETE_TAG_MODEL = 'skosxl.Label'
+
+TAGGIT_TAG_MODEL           = ('coop_tag','Ctag')
+TAGGIT_TAGGED_ITEM_MODEL   = ('coop_tag','CtaggedItem')
+TAGGIT_AUTOCOMPLETE_TAG_MODEL = 'coop_tag.Ctag'
+
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
