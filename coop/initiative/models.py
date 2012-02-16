@@ -156,9 +156,7 @@ class BaseInitiative(models.Model): # TODO => BaseOrganization
     category = models.ManyToManyField('coop_local.OrganizationCategory', blank=True, null=True, verbose_name=_(u'category'))
 
     members = models.ManyToManyField('coop_local.Membre',through='coop_local.Engagement',verbose_name=_(u'members'))
-    telephone_fixe = models.CharField(_(u'land line'),blank=True,null=True, max_length=14) 
-    mobile = models.CharField(_(u'mobile phone'),blank=True,null=True, max_length=14)
-    
+
     located = generic.GenericRelation(Located)
     area    = generic.GenericRelation(AreaLink)
     contact = generic.GenericRelation('coop_local.Contact')
@@ -166,9 +164,7 @@ class BaseInitiative(models.Model): # TODO => BaseOrganization
     birth = models.DateField(_(u'creation date'),null=True, blank=True)
     email   = models.EmailField(_(u'global email'),blank=True,null=True)
     web     = models.URLField(_(u'web site'),blank=True,null=True, verify_exists=False)
-    rss     = models.URLField(_(u'RSS feed'),blank=True,null=True, verify_exists=False)
-    vcal    = models.URLField(_(u'vCalendar'),blank=True,null=True, verify_exists=True)
-    
+   
     slug    = exfields.AutoSlugField(populate_from='title',blank=True)
     created = exfields.CreationDateTimeField(_(u'created'),null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)

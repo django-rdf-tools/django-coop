@@ -21,26 +21,17 @@ class BaseMemberCategory(models.Model):
 
 class BaseMembre(models.Model):
     user = models.OneToOneField(User, blank=True, null=True, unique=True,verbose_name=_(u'django user'),editable=False)
-    username = models.CharField(blank=True, max_length=100, unique=True)    #pour D2RQ et poura voir des URI clean meme pour des non-users
+    username = models.CharField(blank=True, max_length=100, unique=True)    
+    #pour D2RQ et poura voir des URI clean meme pour des non-users
     
     category = models.ManyToManyField('coop_local.MemberCategory', blank=True, null=True, verbose_name=_(u'category'))
-
     nom = models.CharField(_(u'last name'),max_length=100)
     prenom = models.CharField(_(u'first name'),max_length=100,null=True,blank=True)
-    
-    pub_name = models.BooleanField(default=False, verbose_name=_(u'publicize name'))
-        
+            
     location = models.ForeignKey(Location,null=True,blank=True,verbose_name=_(u'location'))    
-    pub_location = models.BooleanField(default=False, verbose_name=_(u'publicize location'))
     
     contact = generic.GenericRelation('coop_local.Contact')
-    
-    telephone_fixe = models.CharField(_(u'land line'),null=True,blank=True, max_length=14)
-    pub_phone = models.BooleanField(default=False, verbose_name=_(u'publicize phone'))
-    
-    telephone_portable = models.CharField(_(u'mobile phone'),null=True,blank=True, max_length=14)
-    pub_mobile = models.BooleanField(default=False, verbose_name=_(u'publicize mobile'))
-    
+
     email = models.EmailField(_(u'personal email'),blank=True)
     email_sha1 = models.CharField(blank=True, max_length=250)
     
@@ -81,14 +72,21 @@ class BaseMembre(models.Model):
             eng.append({'initiative':e.initiative,'role':e.role})
         return eng
     def init_uri(self):
-        return 'http://' + Site.objects.get_current().domain + '/id/membre/' + self.username + '/'
+        return 'http://' + Site.objects.get_current().domain + '/webid/' + self.username + '/'
+    
     def save(self, *args, **kwargs):
+        # create username slug if not set
         if self.username == '':
-            if self.user is None:
-                self.username = slugify(self.prenom+self.nom).replace('-','_')
-            else:    
-                self.username = self.user.username
-        if self.uri =='':
+            newname = slugify(self.prenom).replace('-','_')+'.'+\
+                        slugify(self.nom).replace('-','_')
+            self.username = newname
+        # synchronize fields with django User model
+        # if not self.user is None:
+        #     for field in ('username','first_name','last_name','email'):
+        #         getattr(self.user,field) = getattr(self,field)
+        #     self.user.save()
+        # create / update URI           
+        if self.uri != self.init_uri():
             self.uri = self.init_uri()
         super(BaseMembre, self).save(*args, **kwargs)    
         
