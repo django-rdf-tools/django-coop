@@ -4,7 +4,7 @@ from coop_local.models import Person,PersonCategory, Role,Engagement, \
     OrganizationCategory, Initiative, SeeAlsoLink, SameAsLink, Relation,\
     Exchange, PaymentModality, Contact
 from coop.admin import LocatedInline, AreaInline, BaseEngagementInline, \
-    BaseOrganizationAdminFormBaseOrganizationveAdmin, BasePersonAdmin, \
+    BaseOrganizationAdmin, BasePersonAdmin, \
     BaseRelationInline, BaseOrgInline, BaseExchangeInline, \
     BaseExchangeAdmin, BasePaymentInline
 
