@@ -25,8 +25,8 @@ class BaseMembre(models.Model):
     #pour D2RQ et poura voir des URI clean meme pour des non-users
     
     category = models.ManyToManyField('coop_local.MemberCategory', blank=True, null=True, verbose_name=_(u'category'))
-    nom = models.CharField(_(u'last name'),max_length=100)
-    prenom = models.CharField(_(u'first name'),max_length=100,null=True,blank=True)
+    last_name = models.CharField(_(u'last name'),max_length=100)
+    first_name = models.CharField(_(u'first name'),max_length=100,null=True,blank=True)
             
     location = models.ForeignKey(Location,null=True,blank=True,verbose_name=_(u'location'))    
     

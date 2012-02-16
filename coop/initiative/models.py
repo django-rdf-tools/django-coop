@@ -144,7 +144,8 @@ class BaseOrganizationCategory(models.Model):
 
 class BaseInitiative(models.Model): # TODO => BaseOrganization
     title       = models.CharField(_(u'title'),max_length=250)
-    acronym     = models.CharField(_(u'tagline'),blank=True,null=True,max_length=250) #TODO => tagline
+    subtitle     = models.CharField(_(u'subtitle'),blank=True,null=True,max_length=250,
+                                    help_text=_(u'another name people know your organization by, or a tagline'))
     
     description = models.TextField(_(u'description'),blank=True,null=True)
     uri         = models.CharField(_(u'main URI'),blank=True,null=True, max_length=250, editable=False)
