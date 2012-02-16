@@ -14,7 +14,6 @@ class Migration(SchemaMigration):
         db.rename_table('coop_local_personcategory', 'coop_local_membercategory')
         db.rename_table('coop_local_person', 'coop_local_membre')
 
-
     models = {
         'auth.group': {
             'Meta': {'object_name': 'Group'},

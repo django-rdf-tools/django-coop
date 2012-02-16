@@ -27,7 +27,7 @@
             $('#comment_form form input.submit-preview').remove();
             $('#comment_form input#id_name').val(user).parent().hide();
             $('#comment_form input#id_email').val('{{user.email}}').parent().hide();
-            $('#comment_form input#id_url').val('{{ user.membre.uri }}').parent().hide();
+            $('#comment_form input#id_url').val('{{ user.person.uri }}').parent().hide();
             $('label[for=id_comment]').html('<span>Vous êtes identifié en tant que "<b>{{ user.username }}</b>", ou "<b>'+ user +'</b>" pour les membres du site.</span>');
             $('#comment_form .submit-post').val('Postez votre commentaire')
             $('#comment_form form').submit(function() {

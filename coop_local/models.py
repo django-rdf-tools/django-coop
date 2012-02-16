@@ -2,7 +2,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
-from coop.membre.models import BasePerson,BasePersonCategory
+from coop.person.models import BasePerson,BasePersonCategory
 #from coop.agenda.models import BaseCalendar, BaseEvent
 from coop.exchange.models import BaseExchange, BaseTransaction, BasePaymentModality
 from coop.initiative.models import BaseOrganizationCategory,BaseInitiative,BaseRelation,BaseEngagement,BaseRole, BaseContact
@@ -17,10 +17,10 @@ class Engagement(BaseEngagement):
 class Relation(BaseRelation):
     pass
 
-class MemberCategory(BasePersonCategory):
+class PersonCategory(BasePersonCategory):
     pass
 
-class Membre(BasePerson):
+class Person(BasePerson):
     pass
 
 class Role(BaseRole):

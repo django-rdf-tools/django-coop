@@ -247,7 +247,7 @@ LIVESETTINGS_OPTIONS = \
 }
 
 
-AUTH_PROFILE_MODULE = 'coop_local.membre'
+AUTH_PROFILE_MODULE = 'coop_local.person'
 
 SITE_AUTHOR = 'CREDIS'
 SITE_TITLE = 'CREDIS : Collectif Régional des Initiatives Solidaires en Auvergne'
