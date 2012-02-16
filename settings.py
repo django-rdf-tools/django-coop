@@ -179,7 +179,6 @@ INSTALLED_APPS = [
     'coop_tag',
     'djaloha',
     'coop_cms',
-    'skosxl',
     'rss_sync',
     'coop_geo',
     

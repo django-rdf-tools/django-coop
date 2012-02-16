@@ -156,7 +156,7 @@
             
            {% endfor %}
        {% if object.web %}
-       <div class="url"><a target="_blank" href="{{object.web}}">{{object.web}}</a></div>
+       <div class="url"><a target="_blank" href="{{object.web}}">{{object.web|truncatechars:25}}</a></div>
         {% endif %}
         </p>
           
