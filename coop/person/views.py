@@ -7,4 +7,4 @@ from django.core.urlresolvers import reverse
 def perso(request):
     context = {}
     context['user'] = request.user
-    return render_to_response('membre/perso_panel.html',context,RequestContext(request))
+    return render_to_response('person/panel.html',context,RequestContext(request))

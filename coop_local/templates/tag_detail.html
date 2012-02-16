@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load thumbnail %}
 {% block meta_title %}Tag : {{object}}{% endblock %}
 
 {% block document %}
@@ -16,21 +16,28 @@
         
     {% if initiatives %}
         <h4>Initiatives</h4>
-        <ul>
-        {% for i in initiatives %}
-        <li><a href="{{i.get_absolute_url}}">{{ i.title }}</a></li>
-        {%endfor%} 
-        </ul>
+            <ul class="tag_icon_list">{% for org in initiatives %}
+                <li title="{{org}}">
+                    {% thumbnail org.logo "50x50" crop="left" as im_color %}
+                        <div class="org_icon">
+                            <a href="{{org.get_absolute_url}}">
+                                <img src="{{ im_color.url }}" width="{{ im_color.width }}" height="{{ im_color.height }}">
+                            </a></div>
+                    {% endthumbnail %}
+                    <a href="{{org.get_absolute_url}}">{{ org.title }}</a>
+                </li>{% endfor %}
+            </ul>
         <br/>
     {% endif %}
     </div>
     
     <div id="grid-right" class="grid_4 grid">       
        <h4>Événements</h4>
-       
-        
     </div>
     
+    <div id="grid-right" class="grid_4 grid">       
+       <h4>Annonces</h4>       
+    </div>
     
 </div>
 {% endblock %}    

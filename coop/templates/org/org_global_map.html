@@ -53,7 +53,7 @@ jQuery(function(){
     <div id='map'></div>
 <script type='text/javascript'><!--
 jQuery(function(){
-{% for initiative in initiatives %}{% for site in initiative.sites.all %}msg = "<div class='cloud-title'>{{initiative.title}}</div><div class='cloud-desc'>"
+{% for initiative in initiatives %}{% for site in initiative.located.all %}msg = "<div class='cloud-title'>{{initiative.title}}</div><div class='cloud-desc'>"
 msg += "{{initiative.description|escapejs}}".replace('\n', '<br/>');
 msg += "<br/><a href='{{initiative.get_absolute_url}}'>Voir la fiche de cette initiative.</a>"
 msg += "</div>";

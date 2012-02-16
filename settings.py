@@ -107,9 +107,9 @@ MIDDLEWARE_CLASSES = [
 
 LOCALE_PATHS = (
     os.path.abspath(PROJECT_PATH+'/coop/exchange/locale'),
-    os.path.abspath(PROJECT_PATH+'/coop/initiative/locale'),
+    os.path.abspath(PROJECT_PATH+'/coop/org/locale'),
     os.path.abspath(PROJECT_PATH+'/coop/link/locale'),
-    os.path.abspath(PROJECT_PATH+'/coop/membre/locale'),
+    os.path.abspath(PROJECT_PATH+'/coop/person/locale'),
 )
 
 ROOT_URLCONF = 'urls'

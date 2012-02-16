@@ -189,7 +189,7 @@ class BaseOrganization(models.Model):
     
     #@models.permalink
     def get_absolute_url(self):
-        return reverse('initiative_detail', args=[self.slug])
+        return reverse('org_detail', args=[self.slug])
         
     def get_tags(self):
         return self.tags.all()
@@ -212,7 +212,7 @@ class BaseOrganization(models.Model):
         return relations
         
     def local_uri(self):
-        return ('http://dev.credis.org:8000/initiative/'+self.slug+'/')
+        return ('http://dev.credis.org:8000/org/'+self.slug+'/')
 
 
 
