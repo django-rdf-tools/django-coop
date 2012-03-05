@@ -95,6 +95,7 @@ AREA_DEFAULT_LOCATION_LBL = _(u"%s (center)")
 
 AREA_TYPES = (('TW', _(u'town')),
               ('DP', _(u"departement")),
+              #('CT', _(u"district")), #canton
               ('CC', _(u"town group")),
               ('RG', _(u"region")),
               ('PY', _(u"country")),
@@ -260,6 +261,7 @@ class AreaLink(models.Model):
 
 RELATION_TYPES = (('PY', _(u"country")),
                   ('RG', _(u'region')),
+                  #('CT', _(u"district")),#canton
                   ('DP', _(u"departement")),
                   ('CC', _(u"towns grouping")),
                   )

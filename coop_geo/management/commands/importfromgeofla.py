@@ -6,7 +6,7 @@ from optparse import make_option
 
 from django.core.management.base import BaseCommand, CommandError
 
-from geodjangofla.models import Commune, Departement
+from geodjangofla.models import Commune, Departement, Canton
 from coop_geo import models
 
 class Command(BaseCommand):
@@ -60,7 +60,33 @@ class Command(BaseCommand):
                     for k in def_loc:
                         setattr(ref_dpt.default_location, k, def_loc[k])
                     ref_dpt.default_location.save()
-            for idx, commune in enumerate(Commune.objects.filter(
+                    
+            # for idx,canton in enumerate(Canton.objects.filter(code_dept=dpt)):
+            #     code_canton = str(canton.code_dept + canton.code_cant)
+            #     ref = models.Area.objects.filter(reference=code_canton,
+            #                                                 area_type='CT')
+            #     def_loc = {'city':canton.nom_chf,
+            #                'label':u"Chef-lieu de canton",
+            #                'point':canton.chf_lieu}
+            #     if ref.count():
+            #         if not update:
+            #             continue
+            #         ref = ref.all()[0]
+            #         ref.polygon = canton.limite
+            #         ref.save()
+            #         for k in def_loc:
+            #             setattr(ref.default_location, k, def_loc[k])
+            #         ref.default_location.save()
+            #     else:
+            #         loc = models.Location.objects.create(**def_loc)
+            #         ref = models.Area.objects.create(**{
+            #                           'label':str('CANTON DE '+canton.nom_chf),
+            #                           'reference':code_canton,
+            #                           'polygon':canton.limite,
+            #                           'default_location':loc,
+            #                           'area_type':'CT'})            
+                                               
+            for idx,commune in enumerate(Commune.objects.filter(
                                           insee_com__startswith=dpt)):
                 ref = models.Area.objects.filter(reference=commune.insee_com,
                                                  area_type='TW')
@@ -84,6 +110,8 @@ class Command(BaseCommand):
                                                   'polygon':commune.limite,
                                                   'default_location':loc,
                                                   'area_type':'TW'})
+                #ref_canton = Canton.objects.get(id_geofla=commune.canton_id)
+                #ref_canton.add_child(ref, 'CT')
                 ref_dpt.add_child(ref, 'DP')
                 self.stdout.write('\t- Commune : %d\r' % idx)
             self.stdout.write('\n\n')
