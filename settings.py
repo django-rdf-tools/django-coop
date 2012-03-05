@@ -102,7 +102,8 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'coop.utils.cors.CORSMiddleware'
+    'coop.utils.cors.CORSMiddleware',
+    'pagination.middleware.PaginationMiddleware',
 ]
 
 LOCALE_PATHS = (
@@ -164,26 +165,30 @@ INSTALLED_APPS = [
     'south',
     'django_extensions',
     'extended_choices',
-    'smart_selects',
-    'livesettings',
-    'sorl.thumbnail',
     'floppyforms',
     #'haystack',
     'html_field',
     'oembed',
     'chosen',
 
-    #apps
+
+    #core
     'coop',
     'coop_local',
-    'coop_tag',
+    'coop_geo',
+    'coop_agenda',
+    
+    #coop_cms
+    'sorl.thumbnail',    
     'djaloha',
     'coop_cms',
     'rss_sync',
-    'coop_geo',
-    
-    'coop_agenda',
+    'colorbox',
     'coop_bar',
+    'pagination',
+    
+    #custom
+    'coop_tag',
     'taggit',
     'taggit_templatetags',
     #'taggit_autocomplete_modified',
@@ -210,14 +215,19 @@ for app in OPTIONAL_APPS:
             MIDDLEWARE_CLASSES += app.get("middleware", ())
 
 
-DJALOHA_LINK_MODELS = ('coop_local.Article',)
-
 DJALOHA_LINK_MODELS = ('coop_local.Article','coop_local.Organization')
 COOP_CMS_ARTICLE_CLASS = 'coop_local.models.Article'
 COOP_CMS_ARTICLE_FORM = 'coop_local.forms.ArticleForm'
-COOP_CMS_ARTICLE_TEMPLATES = 'coop_local.get_article_templates'
 COOP_CMS_ARTICLE_LOGO_SIZE = '600'
+COOP_CMS_CONTENT_APPS = ('coop_local','coop_tag','coop_geo')
 
+# COOP_CMS_ARTICLE_TEMPLATES = 'coop_local.get_article_templates' # marche plus ?
+
+COOP_CMS_ARTICLE_TEMPLATES = (
+   ('coop_cms/article_standard.html', 'Standard'),
+)
+
+COOPBAR_MODULES = ('coop_cms.coop_bar_cfg','coop.coop_bar_cfg')
 
 
 D2RQ_ROOT = 'http://demo.django.coop:2020/'
@@ -245,6 +255,10 @@ LIVESETTINGS_OPTIONS = \
     }
 }
 
+AUTHENTICATION_BACKENDS = (
+    'coop_cms.perms_backends.ArticlePermissionBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 AUTH_PROFILE_MODULE = 'coop_local.person'
 

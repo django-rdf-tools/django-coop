@@ -1,0 +1,20 @@
+{% extends "coop_cms/article.html" %}
+
+{% load i18n coop_edition %}
+
+{% block document %}
+    {% block article %}
+    {% cms_edit article logo_size=150 %}
+        <div class="article">
+            <h2 id="title">{{ article.title }}</h2>
+            <div class="article-content">
+                <span class="the-logo">{{ article.logo }}</span>
+                {{ article.content }}
+            </div>
+            <div class="article-content-after"></div>
+            <div id="author">{% trans "Author" %}: {{ article.author }}</div>
+        </div>
+        
+    {% end_cms_edit %}
+    {% endblock %}
+{% endblock %}

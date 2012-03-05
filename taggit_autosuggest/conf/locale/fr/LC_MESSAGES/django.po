@@ -1,0 +1,40 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: taggit_autosuggest\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-25 18:31+0000\n"
+"PO-Revision-Date: 2012-02-25 19:34+0100\n"
+"Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
+"Language-Team: Quinode <contact@quinode.fr>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+
+#: managers.py:11
+msgid "Tags"
+msgstr "Tags"
+
+#: managers.py:12
+msgid "A comma-separated list of tags."
+msgstr "Une liste de mots-clés séparés par des virgules"
+
+#: widgets.py:67
+msgid "Enter Tag Here"
+msgstr "Tapez un tag ici"
+
+#: widgets.py:68
+msgid "No Results"
+msgstr "Aucun résultat"
+
+#: widgets.py:69
+msgid "No More Selections Are Allowed"
+msgstr "Vous ne pouvez plus ajouter de tags"
+

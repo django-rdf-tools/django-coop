@@ -99,7 +99,7 @@ class URLFieldWidget(AdminURLFieldWidget):
 class BaseEngagementInline(InlineAutocompleteAdmin):
     form = ContactInlineLinkForm
     model = BaseEngagement
-    related_search_fields = {'membre': ('last_name','first_name','email','structure','user__username'), }
+    related_search_fields = {'person': ('last_name','first_name','email','structure','username'), }
     extra=2
 
 class BaseOrgInline(InlineAutocompleteAdmin):
@@ -110,17 +110,16 @@ class BaseOrgInline(InlineAutocompleteAdmin):
 
 class BasePaymentInline(admin.TabularInline):
     model = BasePaymentModality
-    extra=1
+    extra=0
 
 class BaseExchangeInline(admin.StackedInline):
-    form = ExchangeInlineLinkForm
+    #form = ExchangeInlineLinkForm #needed to include a link to the change_form / only because nested inlines are not possible
     model = BaseExchange
-    extra=1
-    fieldsets = ((None, {
-            'fields' : ('etype',('permanent','expiration',),'title','description',
-                       'lien'
-                       )
-            }),)
+    fieldsets = ((None, {'fields' : ('title',
+                                    ('etype','permanent','expiration'),
+                                    'description','lien')}),)
+    extra = 1
+    class Media: js = ('js/expiration.js',)
 
 class BaseRelationInline(InlineAutocompleteAdmin):
     model = BaseRelation
@@ -160,7 +159,7 @@ class BaseMemberAdminForm(forms.ModelForm):
 
 class BaseExchangeAdmin(ForeignKeyAutocompleteAdmin): #AdminImageMixin, 
     fieldsets = ((None, {
-            'fields' : ('etype',('permanent','expiration',),'title','description',
+            'fields' : (('etype','permanent','expiration',),'title','description',
                        'organization'
                        )
             }),)
@@ -188,16 +187,16 @@ class BaseOrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
     list_select_related = True
     #read_only_fields = ['created','modified']
     ordering = ('title',)
-
     formfield_overrides = {
         URLField: {'widget': URLFieldWidget},
     }
-    inlines = [ # can be overriden in coop_local
-            BaseEngagementInline,
-            LocatedInline,
-            #AreaInline,
-            BaseRelationInline
-        ]
+    inlines = [ # overriden in coop_local
+                        BaseEngagementInline,
+                        LocatedInline,
+                        AreaInline,
+                        BaseRelationInline,
+                        BaseExchangeInline,
+                        ]
     fieldsets = (
         (None, {
             'fields' : ('logo','title','subtitle',('birth','active',),

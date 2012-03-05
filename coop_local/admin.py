@@ -31,11 +31,12 @@ class SameAsInline(GenericTabularInline):
 
 class PaymentInline(BasePaymentInline):
     model = PaymentModality
-    extra = 0
 
 class ExchangeInline(BaseExchangeInline):
     model = Exchange
-    extra=1    
+    fieldsets = ((None, {'fields' : ('title',
+                                    ('etype','permanent','expiration'),
+                                    'description','tags')}),)
 
 class EngagementInline(BaseEngagementInline,InlineAutocompleteAdmin):
     model = Engagement
@@ -43,38 +44,31 @@ class EngagementInline(BaseEngagementInline,InlineAutocompleteAdmin):
 class OrgInline(BaseOrgInline,InlineAutocompleteAdmin):
     model = Engagement
 
-
 class RelationInline(BaseRelationInline,InlineAutocompleteAdmin):
     model = Relation
 
-# class OrganizationAdminForm(BaseOrganizationAdminForm):
-#     class Meta:
-#         model = Organization
-# cool pas besoin de ça
-
 class OrganizationAdmin(BaseOrganizationAdmin,FkAutocompleteAdmin):
-    #form = OrganizationAdminForm
     inlines = [
         ContactInline,
         EngagementInline,
-        ExchangeInline,
         LocatedInline,
         AreaInline,
+        RelationInline,
         SeeAlsoInline,
-        RelationInline
+        ExchangeInline,
         ]
     fieldsets = BaseOrganizationAdmin.fieldsets + (
     ('CREDIS', {'fields': (('statut','secteur_fse'),('siret','naf'))}),
     )    
     
-admin.site.register(Organization, OrganizationAdmin)
+admin.site.register(Organization, OrganizationAdmin) # BaseOrganization overridden here by Organization
 
 
 class PersonAdmin(BasePersonAdmin):
     inlines = [
             ContactInline,
             OrgInline,
-            # SeeAlsoInline,
+            SeeAlsoInline,
         ]
 
 admin.site.register(Person, PersonAdmin)

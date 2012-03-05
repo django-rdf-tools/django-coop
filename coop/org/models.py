@@ -123,6 +123,7 @@ class BaseEngagement(models.Model):
     modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)
     uri = models.CharField(_(u'main URI'),blank=True, max_length=250, editable=False)
     uuid = exfields.UUIDField() #nécessaire pour URI de l'engagement
+    org_admin = models.BooleanField(default=True)
     class Meta:
         abstract = True
         verbose_name = _('Engagement')
@@ -178,7 +179,10 @@ class BaseOrganization(models.Model):
         verbose_name_plural = _(u'Organizations')
     def __unicode__(self):
         return unicode(self.title)
-            
+        
+    def can_edit_organization(self,user):
+        return True
+               
     def has_location(self):
         return self.located.all().count()>0
     has_location.boolean = True    

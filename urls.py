@@ -41,7 +41,6 @@ urlpatterns = patterns('',
     
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
-    (r'^settings/', include('livesettings.urls')),
     (r'^perso/$', 'coop.person.views.perso'),
     (r'^initiative/', include('coop.org.urls')),
     url(r'^tag/(?P<slug>[\w-]+)/$', 'coop_tag.views.tag_detail', name="tag_detail"),

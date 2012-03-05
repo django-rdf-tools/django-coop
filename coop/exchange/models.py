@@ -54,25 +54,14 @@ EXCHANGE = Choices(
     ('QA',      6,  _(u'Question')),
 )
 
-
-
-# produit / service : via les mots-clés
-# RH : compétence , stage, emploi
-# 
-# L'association APROMER vous propose un diagnostic gratuit de votre chauffage et de votre isolation.
-# Nous pouvons intervenir avant une construction ou une rénovation de maison.
-# Nous pouvons notamment vous conseiller sur l'utilisation des énergies renouvelables comme le solaire thermique ou les chaudières à bois ou à granulés.
-
 class BaseExchange(models.Model):
     title = models.CharField(_('title'),blank=True,max_length=250)
     description = models.TextField(_(u'description'),blank=True)
     organization = models.ForeignKey('coop_local.Organization',blank=True,null=True,verbose_name='publisher', related_name='exchange')
     person = models.ForeignKey('coop_local.Person',blank=True,null=True,editable=False,verbose_name=_(u'person'))
-    etype = models.PositiveSmallIntegerField( _(u'exchange type'),
-                                                    choices=EXCHANGE.CHOICES, 
-                                                    default=EXCHANGE.OFFER)
+    etype = models.PositiveSmallIntegerField( _(u'exchange type'),choices=EXCHANGE.CHOICES)
     permanent = models.BooleanField(_(u'permanent'),default=True)
-    expiration = models.DateField(_(u'expiration'),default=datetime.datetime.today,blank=True,null=True)
+    expiration = models.DateField(_(u'expiration'),blank=True,null=True)
     slug = exfields.AutoSlugField(populate_from='title')
     created = exfields.CreationDateTimeField(_(u'created'),null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)
