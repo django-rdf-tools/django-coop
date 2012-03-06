@@ -10,6 +10,9 @@ ADMINS = (
     ('Dom', 'contact@quinode.fr'),
 )
 
+SITE_AUTHOR = 'Quinode'
+SITE_TITLE = 'Django-coop démo'
+
 MANAGERS = ADMINS
 
 DATABASES = {
@@ -217,7 +220,7 @@ for app in OPTIONAL_APPS:
 
 DJALOHA_LINK_MODELS = ('coop_local.Article','coop_local.Organization')
 COOP_CMS_ARTICLE_CLASS = 'coop_local.models.Article'
-COOP_CMS_ARTICLE_FORM = 'coop_local.forms.ArticleForm'
+COOP_CMS_ARTICLE_FORM = 'coop.forms.ArticleForm'
 COOP_CMS_ARTICLE_LOGO_SIZE = '600'
 COOP_CMS_CONTENT_APPS = ('coop_local','coop_tag','coop_geo')
 
@@ -240,9 +243,9 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
-ADMIN_TOOLS_MENU = 'coop_local.menu.CustomMenu'
-ADMIN_TOOLS_INDEX_DASHBOARD = 'coop_local.dashboard.CustomIndexDashboard'
-ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'coop_local.dashboard.CustomAppIndexDashboard'
+ADMIN_TOOLS_MENU = 'coop.menu.CustomMenu'
+ADMIN_TOOLS_INDEX_DASHBOARD = 'coop.dashboard.CustomIndexDashboard'
+ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'coop.dashboard.CustomAppIndexDashboard'
 ADMIN_TOOLS_THEMING_CSS = 'css/coop_theming.css'
 
 LIVESETTINGS_OPTIONS = \
@@ -260,10 +263,8 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-AUTH_PROFILE_MODULE = 'coop_local.person'
+AUTH_PROFILE_MODULE = 'coop_local.Person'
 
-SITE_AUTHOR = 'CREDIS'
-SITE_TITLE = 'CREDIS : Collectif Régional des Initiatives Solidaires en Auvergne'
 
 # projection used in database
 COOP_GEO_EPSG_PROJECTION = 4326 # WGS84

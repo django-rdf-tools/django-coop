@@ -25,7 +25,7 @@ class BasePaymentModality(models.Model):
                                                     choices=MODALITIES.CHOICES,
                                                     default=MODALITIES.CURR)
     amount = models.DecimalField(_(u'amount'),max_digits=12, decimal_places=2, default=Decimal(0.00),blank=True)
-    unit = models.PositiveSmallIntegerField(_(u'unit'), blank=True, choices=UNITS.CHOICES)
+    unit = models.PositiveSmallIntegerField(_(u'unit'), blank=True, null=True, choices=UNITS.CHOICES)
     
     def __unicode__(self):
         if(self.modality in [1,2]):

@@ -7,18 +7,27 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 
 def org_detail_view(request,slug):
-    context = {}
+    context = {'editable':True}
     org = get_object_or_404(Organization,slug=slug)    
+    context['organization'] = org
     context['object'] = org
     #context['rss'] = org.contact.get(category=6)
     context['adresses'] = org.located.all()
+    context['engagements'] = Engagement.objects.filter(organization=org)
+    return render_to_response('org/org_detail.html',context,RequestContext(request))
+
+def org_edit(request,slug):
+    context = {}
+    org = get_object_or_404(Organization,slug=slug)    
+    context['object'] = org
+    context['adresses'] = org.located.all()
     context['engagements'] = Engagement.objects.filter(organization=context['object'])
     return render_to_response('org/org_detail.html',context,RequestContext(request))
-    
+   
 
-def list(request):
+def org_list(request):
     context = {}
-    context['liste_initiatives'] = Organization.objects.filter(active=True).order_by('secteur_fse','title')#FIXME ah là il faut surclasser
+    context['org_list'] = Organization.objects.filter(active=True)
     return render_to_response('org/org_list.html',context,RequestContext(request))
         
     

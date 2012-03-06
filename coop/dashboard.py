@@ -23,7 +23,7 @@ class CustomIndexDashboard(Dashboard):
     """
     columns = 2
     title = ''
-    template = 'coop_dashboard.html'
+    template = 'admin_tools/coop_dashboard.html'
     def init_with_context(self, context):
         site_name = get_admin_site_name(context)
         # append a link list module for "quick links"
@@ -48,7 +48,7 @@ class CustomIndexDashboard(Dashboard):
                     'rss_sync.models.RssItem',
                     'django.contrib.comments.Comment',
                     ),
-            template='my_applist.html'
+            template='admin_tools/coop_applist.html'
         ))
         
         self.children.append(modules.AppList(
@@ -61,7 +61,7 @@ class CustomIndexDashboard(Dashboard):
                     'coop_local.models.OrganizationCategory',
                     
                     ),
-            template='my_applist.html',
+            template='admin_tools/coop_applist.html',
         ))
         
 
@@ -69,7 +69,7 @@ class CustomIndexDashboard(Dashboard):
         self.children.append(modules.AppList(
             _('Administration'),
             models=('django.contrib.*',),
-            template='my_applist.html',
+            template='admin_tools/coop_applist.html',
         ))
 
         # append a recent actions module
@@ -87,8 +87,8 @@ class CustomIndexDashboard(Dashboard):
             _('Support'),
             children=[
                 {
-                    'title': _('Django documentation'),
-                    'url': 'http://docs.djangoproject.com/',
+                    'title': _('Blog PES'),
+                    'url': 'http://blog.credis.org/',
                     'external': True,
                 },
                 {
@@ -96,11 +96,7 @@ class CustomIndexDashboard(Dashboard):
                     'url': 'http://groups.google.com/group/django-users',
                     'external': True,
                 },
-                {
-                    'title': _('Django irc channel'),
-                    'url': 'irc://irc.freenode.net/django',
-                    'external': True,
-                },
+
             ]
         ))
 

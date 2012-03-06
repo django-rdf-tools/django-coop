@@ -4,7 +4,7 @@
 
 
 
-{% block meta_title %}{{object.title}}{% endblock %}
+{% block meta_title %}{{organization.title}}{% endblock %}
 
 {% block extra_head %}
 <script type="text/javascript" src="{{ STATIC_URL }}js/libs/jquery.tipsy.js"></script>
@@ -15,21 +15,21 @@
 <div id="title" class="grid_12 grid">
 {% block title %}
 
-<h3>{{object.title}}</h3>{% endblock %}
+<h3>{{organization.title}}</h3>{% endblock %}
 </div>
 
 {% block content %}
 <div id="content">
     <div class="grid_8 grid">
     
-        <p class="statut">{{object.subtitle}}</p>
+        <p class="statut">{{organization.subtitle}}</p>
         
-        <p>{{object.get_statut_display}}
-        {% if object.get_secteur_display %}</br>{{object.get_secteur_display}}{% endif %}
-        {% if object.birth %}</br>Année de création : {{object.birth|date:"Y"}}{% endif %}
+        <p>{{organization.get_statut_display}}
+        {% if organization.get_secteur_display %}</br>{{organization.get_secteur_display}}{% endif %}
+        {% if organization.birth %}</br>Année de création : {{organization.birth|date:"Y"}}{% endif %}
         </p>
     
-        <p>{{object.description|linebreaks|oembed}}</p>
+        <p>{{organization.description|linebreaks|oembed}}</p>
     
         <br/>
 
@@ -53,10 +53,10 @@
             {% for engagement in engagements %}
                 <li><img src="{{STATIC_URL}}img/blank_avatar.png">
                     <p>
-                    {% if engagement.membre.user %}
-                        <a href="{{engagement.membre.get_absolute_url}}">{{ engagement.membre }}</a>
+                    {% if engagement.person.user %}
+                        <a href="{{engagement.person.get_absolute_url}}">{{ engagement.person }}</a>
                     {% else %}
-                        {{ engagement.membre }}
+                        {{ engagement.person }}
                     {% endif %}
                     ,<br/>
                     <a class="role" href="{{engagement.role.get_absolute_url}}">{{engagement.role}}</a>
@@ -79,18 +79,18 @@
     
     <div id="grid-right" class="grid_4 grid"> 
         
-    {% if object.logo %}    
+    {% if organization.logo %}    
        <div class="logo"> 
-        {% thumbnail object.logo "200" as im %}
+        {% thumbnail organization.logo "200" as im %}
             <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
         {% endthumbnail %}
        </div> 
     {% endif %}
         
-    {% if object.get_relations %}
+    {% if organization.get_relations %}
         <h4>Relations</h4>
-        {% if 'IN_MEMBER' in object.get_relations %}<div class="rel_type">Membre(s) de {{object.title}}</div>
-            <ul class="relations">{% for org in object.get_relations.IN_MEMBER %}
+        {% if 'IN_MEMBER' in organization.get_relations %}<div class="rel_type">Membre(s) de {{organization.title}}</div>
+            <ul class="relations">{% for org in organization.get_relations.IN_MEMBER %}
                 <li title="{{org}}">
                     {% thumbnail org.logo "50x50" colorspace="GRAY" crop="left" as im_nb %}
                     {% thumbnail org.logo "50x50" crop="left" as im_color %}
@@ -109,8 +109,8 @@
                 </li>
             {% endfor %}</ul>    
         {% endif %}
-        {% if 'OUT_MEMBER' in object.get_relations %}<div class="rel_type">Affiliations</div>
-            <ul class="relations">{% for org in object.get_relations.OUT_MEMBER %}
+        {% if 'OUT_MEMBER' in organization.get_relations %}<div class="rel_type">Affiliations</div>
+            <ul class="relations">{% for org in organization.get_relations.OUT_MEMBER %}
                 <li title="{{org}}">
                     {% thumbnail org.logo "50x50" colorspace="GRAY" crop="left" as im_nb %}
                     {% thumbnail org.logo "50x50" crop="left" as im_color %}
@@ -135,10 +135,10 @@
         
         
         
-        {% if object.get_tags %}
+        {% if organization.get_tags %}
         <h4>Mots-clés</h4>
         <div id="tags">
-        {% for tag in object.get_tags %}
+        {% for tag in organization.get_tags %}
         
             <a href="{{tag.get_absolute_url}}">{{tag}}</a>
         
@@ -148,15 +148,15 @@
               
        <h4>Coordonnées</h4>
        <p class="coordonnees">
-           {% for contact in object.contact.all %} 
+           {% for contact in organization.contact.all %} 
 
             {% if contact.category == 1 %}<div class="tel">Tel. : {{contact.content}}</div>{%endif%}
             {% if contact.category == 2 %}<div class="tel">Mobile : {{contact.content}}</div>{%endif%}
             {% if contact.category == 3 %}<div class="tel">Fax : {{contact.content}}</div>{%endif%}
             
            {% endfor %}
-       {% if object.web %}
-       <div class="url"><a target="_blank" href="{{object.web}}">{{object.web}}</a></div>
+       {% if organization.web %}
+       <div class="url"><a target="_blank" href="{{organization.web}}">{{organization.web}}</a></div>
         {% endif %}
         </p>
           
@@ -181,7 +181,7 @@
 {% endblock %}
 
 {% block footer%}        
-<a href="{{D2RQ_ROOT}}page/org/{{object.slug}}">
+<a href="{{D2RQ_ROOT}}page/org/{{organization.slug}}">
     <img border="0" align="left" src="{{STATIC_URL}}img/semweb.png"></a>
     <br/>
 {% endblock %}

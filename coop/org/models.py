@@ -118,20 +118,20 @@ class BaseEngagement(models.Model):
     person = models.ForeignKey('coop_local.Person', verbose_name=_(u'person'),related_name='engagements') 
     organization = models.ForeignKey('coop_local.Organization',verbose_name=_(u'organization')) 
     role = models.ForeignKey('coop_local.Role',verbose_name=_(u'role'))
-    role_detail = models.CharField(blank=True, max_length=100, verbose_name=_(u'detailed role'))
+    role_detail = models.CharField(_(u'detailed role'), blank=True, max_length=100)
     created = exfields.CreationDateTimeField(_(u'created'),null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)
-    uri = models.CharField(_(u'main URI'),blank=True, max_length=250, editable=False)
-    uuid = exfields.UUIDField() #nécessaire pour URI de l'engagement
+    uri = models.CharField( _(u'main URI'),blank=True, null=True, 
+                            max_length=250, editable=False) #FIXME : null=True incompatible with unique=True
+    uuid = exfields.UUIDField(blank=True,null=True) #FIXME : NULL=True for easier SQL import / equivalent in PGSQL default UUID ?
     org_admin = models.BooleanField(default=True)
+    engagement_display = models.PositiveSmallIntegerField(_(u'Display'), choices=DISPLAY.CHOICES, default=DISPLAY.PUBLIC)
+    
     class Meta:
         abstract = True
         verbose_name = _('Engagement')
         verbose_name_plural = _('Engagements')
-    '''
-    def save(self):
-        ramener URI du membre / mais D2R peut bien linker le champ de membre ?
-    '''    
+
 
 class BaseOrganizationCategory(models.Model):
     label = models.CharField(blank=True, max_length=100)

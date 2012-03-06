@@ -30,14 +30,15 @@ class BasePerson(models.Model):
     last_name = models.CharField(_(u'last name'),max_length=100)
     first_name = models.CharField(_(u'first name'),max_length=100,null=True,blank=True)
     location = models.ForeignKey(Location,null=True,blank=True,verbose_name=_(u'location'))    
-    location_display = models.PositiveSmallIntegerField(_(u'Display'), choices=DISPLAY.CHOICES, default=DISPLAY.PUBLIC)
+    location_display = models.PositiveSmallIntegerField(_(u'Display'), choices=DISPLAY.CHOICES, default=DISPLAY.USERS)
     contact = generic.GenericRelation('coop_local.Contact')
     email = models.EmailField(_(u'personal email'),blank=True)
-    email_sha1 = models.CharField(blank=True, max_length=250)
+    email_sha1 = models.CharField(_(u'email checksum'),max_length=250, blank=True, null=True) # lambda function ?
     created = exfields.CreationDateTimeField(_(u'created'),null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)
-    uri = models.CharField(blank=True,max_length=250,verbose_name=_(u'main URI'))    
-    notes   = models.TextField(blank=True, verbose_name=_(u'notes'))
+    uri = models.CharField(_(u'main URI'), blank=True, max_length=250, null=True)   # FIXME : NULL just for easier importing of data
+                                                                                    # could be a lambda function property ?
+    notes   = models.TextField(_(u'notes'), blank=True, null=True)
     structure = models.CharField(blank=True, max_length=100)
 
     class Meta:
