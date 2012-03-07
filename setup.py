@@ -34,7 +34,7 @@ setup(
     install_requires = ['south==0.7.3',
                         'sorl-thumbnail==11.09',
                         'django-extensions==0.6',
-                        #'django-admin-tools==0.4.1',
+                        'django-admin-tools==0.4.1',
                         #'django-haystack==1.2.6',
                         #'djangoembed==0.1.1',
                         ],
