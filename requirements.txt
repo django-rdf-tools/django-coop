@@ -1,0 +1,4 @@
+git+git://github.com/Nimn/geo-django-fla.git#egg=geo-django-fla
+git+git://github.com/twidi/django-extended-choices.git#egg=extended_choices
+hg+https://bitbucket.org/ubernostrum/django-profiles#egg=profiles
+git+git://github.com/quinode/django-chosen.git#egg=chosen

@@ -1,0 +1,7 @@
+{% load i18n %}
+{% load rssplug %}
+<li><a target="_blank" href="{{ item.link }}">{{ item.title|safe|truncatewords_html:15 }}</a><br/>
+<!--<span class="date">
+    il  y a {% blocktrans with item.date_parsed|todatetime|timesince as when %}{{ when }}
+    {% endblocktrans %}</span>-->
+    </li>

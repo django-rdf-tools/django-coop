@@ -1,0 +1,61 @@
+{% load comments %}
+
+    <h4>Commentaires
+    {% get_comment_count for object as nbcomm %}    
+        {% if nbcomm > 0 %}
+            ({{ nbcomm }})
+        {% endif %}</h4>
+    {% get_comment_list for object as comm_list %}
+   
+    {% for comment in comm_list %}
+    <div class="comment">
+        <p><a href="{{ comment.user_url }}">{{ comment.user_name }}</a> -
+        <span class="comm_date">{{ comment.submit_date }}</span></p>
+            {{ comment.comment|urlize|linebreaksbr }}
+    </div>
+    {% endfor %}
+
+    {% if user.is_authenticated %}
+
+        <div id="comment_form">
+            {% render_comment_form for object %}
+        </div>
+        
+        <script type="text/javascript" charset="utf-8">
+        function bindPostCommentHandler() {
+            var user = '{{user.first_name}} {{ user.last_name }}';
+            $('#comment_form form input.submit-preview').remove();
+            $('#comment_form input#id_name').val(user).parent().hide();
+            $('#comment_form input#id_email').val('{{user.email}}').parent().hide();
+            $('#comment_form input#id_url').val('{{ user.person.uri }}').parent().hide();
+            $('label[for=id_comment]').html('<span>Vous êtes identifié en tant que "<b>{{ user.username }}</b>", ou "<b>'+ user +'</b>" pour les membres du site.</span>');
+            $('#comment_form .submit-post').val('Postez votre commentaire')
+            $('#comment_form form').submit(function() {
+                $.ajax({
+                    type: "POST",
+                    data: $('#comment_form form').serialize(),
+                    url: "{% comment_form_target %}",
+                    cache: false,
+                    dataType: "html",
+                    success: function(html, textStatus) {
+                        $('#comment_form form').replaceWith(html);
+                        bindPostCommentHandler();
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        $('#comment_form form').replaceWith('Impossible de poster votre commentaire. Désolé pour ce dysfonctionnement.');
+                    }
+                });
+                return false;
+            });
+        }
+
+        $(function(){
+            bindPostCommentHandler();
+        });
+        </script>
+ 
+        {% else %}
+        
+        <p> Vous devez <a href="/accounts/login/"> vous identifier</a> pour pouvoir poster des commentaires</p>
+        
+        {% endif %}

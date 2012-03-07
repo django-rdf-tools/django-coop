@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block meta_title %}Identification{% endblock %}
+{% block title %}Identification{% endblock %}
+
+{% block main %}
+
+<form method="post" action="{% url django.contrib.auth.views.login %}" class="reg">
+    
+    {% if form.errors %}
+        <p class="warn_errors">Votre identifiant et votre mot de passe ne correspondent pas.<br/>
+            Vérifiez votre mot de passe SVP.</p>
+    {% endif %}
+    
+<fieldset class="client">
+    {{ form.as_p }} 
+    <p><label></label><input class="bouton" id="ajouter" type="submit" value="Valider" /></p>
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}" />
+</fieldset>
+</form>
+
+<p>Vous avez <a href="/client/password/reset/">oublié votre mot de passe</a> ? </p>
+
+
+{% endblock %}
+
