@@ -1,12 +1,18 @@
 # -*- coding:utf-8 -*-
 from django.contrib import admin
-from coop_local.models import Person,PersonCategory, Role,Engagement, \
+from django.conf import settings
+
+from coop_local.models import Person,PersonCategory, Role, Engagement, \
     OrganizationCategory, Organization, SeeAlsoLink, SameAsLink, Relation,\
     Exchange, PaymentModality, Contact
-from coop.admin import LocatedInline, AreaInline, BaseEngagementInline, \
+from coop.admin import BaseEngagementInline, \
     BaseOrganizationAdmin, BasePersonAdmin, \
     BaseRelationInline, BaseOrgInline, BaseExchangeInline, \
     BaseExchangeAdmin, BasePaymentInline
+
+if "coop_geo" in settings.INSTALLED_APPS :
+    from coop.admin import LocatedInline, AreaInline
+
 
 from coop.utils.autocomplete_admin import FkAutocompleteAdmin,InlineAutocompleteAdmin
 
@@ -47,19 +53,33 @@ class OrgInline(BaseOrgInline,InlineAutocompleteAdmin):
 class RelationInline(BaseRelationInline,InlineAutocompleteAdmin):
     model = Relation
 
+
 class OrganizationAdmin(BaseOrganizationAdmin,FkAutocompleteAdmin):
     inlines = [
         ContactInline,
         EngagementInline,
-        LocatedInline,
-        AreaInline,
+        LocatedInline,  # CREDIS utilise coop-geo
+        AreaInline,     # CREDIS utilise coop-geo
         RelationInline,
         SeeAlsoInline,
         ExchangeInline,
         ]
+    list_display = ('logo_thumb','title','active','has_description','has_location') # has_location : CREDIS utilise coop-geo
     fieldsets = BaseOrganizationAdmin.fieldsets + (
     ('CREDIS', {'fields': (('statut','secteur_fse'),('siret','naf'))}),
-    )    
+    )
+    fieldsets = (
+        (None, {
+            'fields' : ('logo','title','subtitle',('birth','active',),
+                        ('email','web'),'description','category',
+                        'tags', # CREDIS utilise les tags
+                        )
+            }),
+        ('Notes', {
+            'classes': ('collapse',),
+            'fields': ('notes',)
+        })
+    )  
     
 admin.site.register(Organization, OrganizationAdmin) # BaseOrganization overridden here by Organization
 
@@ -70,6 +90,21 @@ class PersonAdmin(BasePersonAdmin):
             OrgInline,
             SeeAlsoInline,
         ]
+    fieldsets = (
+        (None, {
+            'fields' : (('first_name','last_name'),
+                        ('location','location_display'), # CREDIS utilise coop-geo
+                        'email',
+                        'category'
+                        ),
+            }),
+        ('Notes', {
+            'classes': ('collapse',),
+            'fields': ('structure','notes',)
+        })
+    )
+    related_search_fields = {'location': ('label','adr1','adr2','zipcode','city'), }
+    
 
 admin.site.register(Person, PersonAdmin)
 
@@ -83,7 +118,7 @@ class ExchangeAdmin(BaseExchangeAdmin):
             }),)
     inlines = [
             PaymentInline,
-            LocatedInline, 
+            # LocatedInline, 
         ]
 
 admin.site.register(Exchange, ExchangeAdmin)

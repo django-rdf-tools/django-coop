@@ -73,11 +73,6 @@ STATICFILES_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.abspath(PROJECT_PATH+'/static/'),
-    #os.path.abspath(PROJECT_PATH+'/djaloha/static/'),
-    #os.path.abspath(PROJECT_PATH+'/coop_cms/static/'),
-    # os.path.abspath(PROJECT_PATH+'/coop_geo/static/'),
-    # os.path.abspath(PROJECT_PATH+'/coop/static/'),
-    # os.path.abspath(PROJECT_PATH+'/rss_sync/static/'),
     os.path.abspath(ADMIN_TOOLS_PATH+'/media/'),
 )
 
@@ -108,13 +103,6 @@ MIDDLEWARE_CLASSES = [
     'coop.utils.cors.CORSMiddleware',
     'pagination.middleware.PaginationMiddleware',
 ]
-
-LOCALE_PATHS = (
-    os.path.abspath(PROJECT_PATH+'/coop/exchange/locale'),
-    os.path.abspath(PROJECT_PATH+'/coop/org/locale'),
-    os.path.abspath(PROJECT_PATH+'/coop/link/locale'),
-    os.path.abspath(PROJECT_PATH+'/coop/person/locale'),
-)
 
 ROOT_URLCONF = 'urls'
 
@@ -173,24 +161,26 @@ INSTALLED_APPS = [
     'html_field',
     'oembed',
     'chosen',
+    'sorl.thumbnail',    
 
-
-    #core
+    # coop 
     'coop',
+    'coop.exchange',
+    'coop.link',
+    'coop.org',
+    'coop.person',
     'coop_local',
     'coop_geo',
     'coop_agenda',
     
-    #coop_cms
-    'sorl.thumbnail',    
+    # coop_cms
     'djaloha',
     'coop_cms',
-    'rss_sync',
     'colorbox',
     'coop_bar',
     'pagination',
     
-    #custom
+    # custom tags
     'coop_tag',
     'taggit',
     'taggit_templatetags',
@@ -248,15 +238,6 @@ ADMIN_TOOLS_INDEX_DASHBOARD = 'coop.dashboard.CustomIndexDashboard'
 ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'coop.dashboard.CustomAppIndexDashboard'
 ADMIN_TOOLS_THEMING_CSS = 'css/coop_theming.css'
 
-LIVESETTINGS_OPTIONS = \
-{
-    1: {
-    'DB': True,
-       'SETTINGS': {
-            u'coop_cms': {u'CONTENT_APPS': u'["coop_cms"]'}
-        }
-    }
-}
 
 AUTHENTICATION_BACKENDS = (
     'coop_cms.perms_backends.ArticlePermissionBackend',
@@ -265,21 +246,19 @@ AUTHENTICATION_BACKENDS = (
 
 AUTH_PROFILE_MODULE = 'coop_local.Person'
 
-
 # projection used in database
 COOP_GEO_EPSG_PROJECTION = 4326 # WGS84
 
 COOP_GEO_BOUNDING_BOX = []
 COOP_GEO_REGION = LANGUAGE_CODE[:2]
 
-# TAGGIT_TAG_MODEL           = ('skosxl','Label')
-# TAGGIT_TAGGED_ITEM_MODEL   = ('skosxl','LabelledItem')
-# TAGGIT_AUTOCOMPLETE_TAG_MODEL = 'skosxl.Label'
-
 TAGGIT_TAG_MODEL           = ('coop_tag','Ctag')
 TAGGIT_TAGGED_ITEM_MODEL   = ('coop_tag','CtaggedItem')
-TAGGIT_AUTOCOMPLETE_TAG_MODEL = 'coop_tag.Ctag'
+TAGGIT_TAG_FIELD_RELATED_NAME = 'ctagged_items'
 
+
+TAGGIT_AUTOCOMPLETE_TAG_MODEL = 'coop_tag.Ctag'
+TAGGIT_AUTOSUGGEST_MODEL = ('coop_tag','Ctag')
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

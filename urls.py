@@ -1,12 +1,9 @@
 # -*- coding:utf-8 -*-
 from django.conf.urls.defaults import patterns, include, url
 from django.contrib import admin
-from django.views.generic.simple import direct_to_template
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
-from django.views.generic.base import TemplateView, RedirectView
 import sys
-
 
 # https://code.djangoproject.com/ticket/10405#comment:11
 from django.db.models.loading import cache as model_cache
@@ -15,48 +12,14 @@ if not model_cache.loaded:
     
 admin.autodiscover()
 
-import oembed
-oembed.autodiscover()
-
-
-class TextPlainView(TemplateView):
-  def render_to_response(self, context, **kwargs):
-    return super(TextPlainView, self).render_to_response(
-      context, content_type='text/plain', **kwargs)
-
+if "oembed" in settings.INSTALLED_APPS :
+    import oembed
+    oembed.autodiscover()
 
 urlpatterns = patterns('',
-
-    url(r'^$', 'coop.views.home', name="home"),
-    
-    url(r'^initiative/$', 'coop_local.views.org_list', name="org_list"), #view coop surchargée --> voir plutot les CBV
-    (r'^initiative/', include('coop.org.urls')),
-    
-    
     url(r'^admin_tools/', include('admin_tools.urls')),
-    
-    url(r'^robots\.txt$', TextPlainView.as_view(template_name='robots.txt')),
-    url(r'^favicon\.ico$', RedirectView.as_view(url='/media/img/favicon.ico')),
-    
-    url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
-    #url(r'^taggit_autocomplete_modified/', include('taggit_autocomplete_modified.urls')),
-    (r'^search/', include('haystack.urls')),
-    
-
-    (r'^comments/', include('django.contrib.comments.urls')),
-    
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
-    (r'^perso/$', 'coop.person.views.perso'),
-
-    
-    
-    url(r'^tag/(?P<slug>[\w-]+)/$', 'coop_tag.views.tag_detail', name="tag_detail"),
-    
-    (r'^rss-sync/', include('rss_sync.urls')),
-    (r'^membre/', include('coop.person.urls')),
-    (r'^djaloha/', include('djaloha.urls')),
-    
     
 )
 
@@ -66,10 +29,11 @@ if settings.DEBUG or ('test' in sys.argv):
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes':True}),
     )
 
-
-
 urlpatterns += patterns('',
     (r'^', include('coop_geo.urls', app_name='coop_geo')),
+    (r'^djaloha/', include('djaloha.urls')),    
+    (r'^', include('coop_tag.urls')),
+    (r'^', include('coop.urls')),
     (r'^', include('coop_cms.urls')),
     #(r'^', include('uriresolve.urls')),
     
