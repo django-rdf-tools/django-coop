@@ -1,0 +1,49 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: coop.link\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-13 09:34+0000\n"
+"PO-Revision-Date: 2012-02-13 10:35+0100\n"
+"Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
+"Language-Team: Quinode <contact@quinode.Fr>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+
+#: models.py:10
+msgid "URL"
+msgstr "URL"
+
+#: models.py:11
+msgid "Label"
+msgstr "Libellé"
+
+#: models.py:13
+msgid "created"
+msgstr "création"
+
+#: models.py:14
+msgid "modified"
+msgstr "modification"
+
+#: models.py:15
+msgid "model@"
+msgstr ""
+
+#: models.py:25
+msgid "Semantic Link"
+msgstr "Lien sémantique"
+
+#: models.py:26
+msgid "Semantic Links"
+msgstr "Liens sémantiques"
+

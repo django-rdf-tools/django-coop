@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Modifier votre Profil{% endblock %}
+{% block meta_title %}Modifier votre Profil{% endblock %}
+ 
+{% block main %}
+
+<form method="POST" action="" class="reg">
+    <fieldset class="client">  
+        {% include "forms/p_with_help.html" %} 
+        <p><label> </label><input type="submit" class="bouton" value="Mettre à jour"/></p>
+    </fieldset>
+        {% csrf_token %}
+</form>
+ 
+ 
+<script type="text/javascript" charset="utf-8" src="{{STATIC_URL}}js/jquery.capitalise.js"></script>
+<script type="text/javascript" charset="utf-8" src="{{STATIC_URL}}js/jquery.alphanumeric.js"></script>
+{% endblock %}
+
+
+<script type="text/javascript">
+$(function() {
+
+    $("#id_last_name").capitalise();
+    $("#id_username").alphanumeric({ichars:" ,;:/=+%*+°()!{}[]§\"\'°^#€$£&@`"}); //le lowercase passe par le CSS
+    $("#id_email").alphanumeric({ichars:"&§!?+*/:=#%$€£éèàçù,;"});
+        
+        
+    $(".client input[type=text],.client input[type=password]").each(function(e){
+        var helptxt = $(this).next("span.help_text");
+        if(helptxt.html()!=''){
+            $(this).attr("title", helptxt.html()).addClass("with_help");
+            helptxt.remove();
+        }
+    })
+   /* 
+    $(".client input[type=text],.client input[type=password]").tipTip({
+        defaultPosition:"right", maxWidth:"250px"
+        });*/
+});
+
+
+</script>

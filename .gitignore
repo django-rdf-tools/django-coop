@@ -21,8 +21,7 @@ fixtures
 
 # Specific files #
 ##################
-#/.gitignore
-#/settings.py
+/.gitignore
 /base.db
 /activate_env.bat
 /deactivate_env.bat

@@ -1,0 +1,182 @@
+/* @override http://localhost:8000/static/css/coop_theming.css */
+
+/** 
+ * theming styles
+ * 
+ */ 
+
+
+
+#header {
+      background: url(/static/admin_tools/images/admin-tools.png) 0 0 repeat-x;
+}
+
+  #header #branding h1 {
+      margin: 0;
+      padding: 5px 10px;
+      text-indent: -9999px;
+      background: transparent url(/static/img/django-coop.png) 10px 5px no-repeat;
+      height: 31px;
+      width: 125px;
+  }
+
+
+
+div.breadcrumbs {
+    display: block;
+    padding: 10px 15px;
+    border: 0;
+    background-position: 0 -8px;
+    border-bottom: 1px solid #ededed;
+}
+
+div.breadcrumbs a {
+    display: inline;
+}
+
+#container{
+	background-color: #d9e6f2;
+}
+
+h1.dashboard-title, h1{
+	font-size: 24px;
+	font-family: "PT Sans Narrow", "Trebuchet MS", Trebuchet, Tahoma, Arial;
+	color: #424242;
+}
+
+.dashboard-module{
+	background-color: white;
+}
+
+.dashboard-module-content ul li{
+	
+	font-size: 16px;
+	font-family: "PT Sans Narrow", "Trebuchet MS", Trebuchet, Tahoma, Arial;
+	padding-left: 25px;
+}
+
+.dashboard-module-content ul li:hover{
+	cursor: pointer;
+	background-color: #fef9a0;
+}
+
+#dashboard-panel h3 a {
+	background-color: white;
+}
+
+/* special widgets */
+
+
+
+input#id_tags.ac_input{
+    width: 600px;
+    font-size: 12px;
+}
+
+ul.object-tools{
+	top: -8px;
+	position: relative;
+}
+
+ul.object-tools li{
+	border: 4px solid white;
+	border-radius:12px;
+	margin-left: 10px;
+}
+
+.row1{
+	background-color: #fefdd4;
+}
+
+span#id_point_span_control{
+	height: 150px;
+	x-overflow: scroll;
+}
+
+span#id_point_span_map{
+	padding-left: 107px;
+}
+
+div.form-row.category{
+	overflow: visible;
+	position: relative;
+}
+
+div.form-row.category > div{
+	position: relative;
+}
+
+div.chzn-container.chzn-container-multi#id_category_chzn{
+	position: relative;
+	display: inline-block;
+}
+
+
+
+div.chzn-container ul.chzn-choices{
+	width: 616px;
+}
+
+div.chzn-container ul.chzn-choices div.chzn-drop{
+	width: 616px;
+}
+
+
+div.chzn-container div.chzn-drop ul.chzn-results{
+	width: 616px;
+}
+
+div.chzn-container div.chzn-drop ul.chzn-results li{
+	width: 616px;
+}
+
+
+ul.as-selections{
+	width: 582px;
+
+  background: #fff;
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(0.85, white), color-stop(0.99, #eeeeee));
+  background: -moz-linear-gradient(center bottom, white 85%, #eeeeee 99%);
+  background: -o-linear-gradient(bottom, white 85%, #eeeeee 99%);
+  background: -ms-linear-gradient(top, #ffffff 85%,#eeeeee 99%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 );
+  background: linear-gradient(top, #ffffff 85%,#eeeeee 99%);
+  border: 1px solid #aaa;
+  font-family: sans-serif;
+  font-size: 1em;
+  outline: none;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -o-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -khtml-border-radius: 3px;
+	list-style-type: none;
+	padding: 4px;
+}
+
+ul.as-selections li{
+	list-style-type: none;
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+input.as-input{
+	border-style: none;
+	float: left;
+	width: 150px;
+}
+
+div.as-results{
+	margin-left: 30px;
+	padding-left: 0;
+}
+
+ul.as-list{
+	padding: 0;
+}
+
+ul.as-list li{
+	list-style-type: none;
+	font-size: 12px;
+	padding: 2px;
+}

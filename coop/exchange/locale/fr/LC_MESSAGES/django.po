@@ -1,0 +1,170 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: coop.exchange\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-16 22:36+0000\n"
+"PO-Revision-Date: 2012-03-06 23:15+0100\n"
+"Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
+"Language-Team: Quinode <contact@quinode.fr>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+
+#: models.py:12
+msgid "Gift"
+msgstr "Don"
+
+#: models.py:13
+msgid "Free exchange"
+msgstr "Troc"
+
+#: models.py:14
+msgid "Monetary exchange"
+msgstr "Monnaie"
+
+#: models.py:17
+msgid "€"
+msgstr "€"
+
+#: models.py:18
+msgid "Hours"
+msgstr "Heures"
+
+#: models.py:19
+msgid "PEZ"
+msgstr ""
+
+#: models.py:23
+msgid "exchange"
+msgstr "échange"
+
+#: models.py:24
+#: models.py:71
+msgid "exchange type"
+msgstr "type d'échange"
+
+#: models.py:27
+msgid "amount"
+msgstr "montant"
+
+#: models.py:28
+msgid "unit"
+msgstr "unité"
+
+#: models.py:36
+msgid "Price unknown"
+msgstr "Prix inconnu"
+
+#: models.py:45
+msgid "Payment modality"
+msgstr "Modalité de paiement"
+
+#: models.py:46
+msgid "Payment modalities"
+msgstr "Modalités de paiement"
+
+#: models.py:50
+msgid "Product or Service Offer"
+msgstr "Offre de produit ou service"
+
+#: models.py:51
+msgid "Product or Service Need"
+msgstr "Demande de produit ou service"
+
+#: models.py:52
+msgid "Mutualization"
+msgstr "Mutualisation"
+
+#: models.py:53
+msgid "Cooperation, partnership"
+msgstr "Coopération, partenariat"
+
+#: models.py:54
+msgid "Question"
+msgstr "Question"
+
+#: models.py:67
+#: models.py:104
+msgid "title"
+msgstr "intitulé"
+
+#: models.py:68
+#: models.py:105
+msgid "description"
+msgstr "description"
+
+#: models.py:70
+msgid "person"
+msgstr "personne"
+
+#: models.py:74
+msgid "permanent"
+msgstr "permanent"
+
+#: models.py:75
+msgid "expiration"
+msgstr "expiration"
+
+#: models.py:77
+#: models.py:106
+msgid "created"
+msgstr "création"
+
+#: models.py:78
+#: models.py:107
+msgid "modified"
+msgstr "modification"
+
+#: models.py:80
+msgid "main URI"
+msgstr "URI principale"
+
+#: models.py:81
+msgid "author URI"
+msgstr "URI auteur"
+
+#: models.py:82
+msgid "publisher URI"
+msgstr "URI organisme"
+
+#: models.py:84
+msgid "location"
+msgstr "lieu"
+
+#: models.py:86
+msgid "area"
+msgstr "zone"
+
+#: models.py:96
+msgid "Exchange"
+msgstr "Échange"
+
+#: models.py:97
+msgid "Exchanges"
+msgstr "Échanges"
+
+#: models.py:102
+msgid "origin"
+msgstr "origine"
+
+#: models.py:103
+msgid "destination"
+msgstr "destination"
+
+#: models.py:112
+msgid "Transaction"
+msgstr "Transaction"
+
+#: models.py:113
+msgid "Transactions"
+msgstr "Transactions"
+
