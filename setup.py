@@ -15,7 +15,7 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(
-    name='coop',
+    name='django-coop',
     version = VERSION,
     description='A basis for a cooperative organization directory, with people, organization, offers.',
     packages=[  'coop',
@@ -31,11 +31,10 @@ setup(
     author_email='contact@quinode.fr',
     license='BSD',
     zip_safe=False,
-    install_requires = ['Django==1.3.1',
-                        'django-admin-tools==0.4.1',
+    install_requires = ['django-admin-tools==0.4.1',
                         'django-floppyforms==0.4.7',
                         'sorl-thumbnail==11.09',
-                        'coop-cms==0.4.2',
+                        'coop-cms==0.4.4',
                         'django-extensions==0.6',
                         'django-haystack==1.2.6',
                         'south==0.7.3',

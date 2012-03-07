@@ -18,10 +18,12 @@ test_app
 media
 GEOFLA
 fixtures
+dist
+django_coop.egg-info
 
 # Specific files #
 ##################
-/.gitignore
+.gitignore
 /base.db
 /activate_env.bat
 /deactivate_env.bat
