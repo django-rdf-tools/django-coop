@@ -1,0 +1,37 @@
+# File types #
+##############
+*.pyc
+*.tmproj
+*.komodoproject
+#*.json
+*.db
+*.swp
+*.bak
+@@*
+*.wsgi
+
+# Directories #
+###############
+logs
+static_collected
+test_app
+media
+GEOFLA
+fixtures
+
+# Specific files #
+##################
+#/.gitignore
+/base.db
+/activate_env.bat
+/deactivate_env.bat
+/local_settings.py
+/d2rq/vocab/catalog-v001.xml
+static/django_extensions
+
+# OS generated files #
+######################
+.DS_Store
+Icon?
+Thumbs.db
+
