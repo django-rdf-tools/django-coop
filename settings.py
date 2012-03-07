@@ -158,7 +158,6 @@ INSTALLED_APPS = [
     'extended_choices',
     'floppyforms',
     #'haystack',
-    'html_field',
     'oembed',
     'chosen',
     'sorl.thumbnail',    
