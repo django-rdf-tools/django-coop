@@ -35,7 +35,7 @@ def role_detail(request,slug):
     context = {}
     role = Role.objects.get(slug=slug)
     context['object'] = role
-    context['engagements'] = Engagement.objects.filter(role=role).select_related('membre').order_by('membre__last_name')
+    context['engagements'] = Engagement.objects.filter(role=role).select_related('person').order_by('person__last_name')
     return render_to_response('org/role_detail.html',context,RequestContext(request))
 
 def global_map(request):
