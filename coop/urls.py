@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from django.conf.urls.defaults import patterns, include, url
 from django.views.generic.base import TemplateView, RedirectView
-
+from django.conf import settings
 
 class TextPlainView(TemplateView):
   def render_to_response(self, context, **kwargs):
@@ -11,13 +11,10 @@ class TextPlainView(TemplateView):
 urlpatterns = patterns('',
 
     url(r'^$', 'coop.views.home', name="home"),
-    url(r'^initiative/$', 'coop_local.views.org_list', name="org_list"), #view coop surchargée --> voir plutot les CBV
-    (r'^initiative/', include('coop.org.urls')),
-    url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
-    #url(r'^taggit_autocomplete_modified/', include('taggit_autocomplete_modified.urls')),
-    (r'^search/', include('haystack.urls')),    
+    url(r'^org/$', 'coop.org.views.org_list', name="org_list"), #view coop à surcharger --> voir plutot les CBV
+    (r'^org/', include('coop.org.urls')),
     (r'^comments/', include('django.contrib.comments.urls')),
-    
+
     # a revoir
     (r'^perso/$', 'coop.person.views.perso'),
     (r'^membre/', include('coop.person.urls')),
@@ -27,3 +24,7 @@ urlpatterns = patterns('',
     
 )
 
+if 'coop_tag' in settings.INSTALLED_APPS:
+    urlpatterns += patterns('',
+        url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
+        )

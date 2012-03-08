@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-VERSION = (0, 1, 3)
+VERSION = (0, 1, 4)
 
 def get_version():
     return '%s.%s.%s' % (VERSION[0], VERSION[1], VERSION[2])
