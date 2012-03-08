@@ -177,7 +177,7 @@ class BaseOrganization(models.Model):
     created = exfields.CreationDateTimeField(_(u'created'),null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)
     active  = models.BooleanField(_(u'active'),default=True,)
-    notes   = models.TextField(_(u'notes'),blank=True)
+    notes   = models.TextField(_(u'notes'),blank=True, null=True)
     class Meta:
         abstract = True
         ordering = ['title']
