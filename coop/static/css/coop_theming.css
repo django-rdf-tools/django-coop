@@ -170,8 +170,6 @@ a#add_id_category {
 
 /* Make chosen look like Autosuggest */
 
-
-
 div.chzn-container.chzn-container-multi .chzn-choices .search-choice{
 	color: #2b3840;
 	text-shadow: 0 1px 1px #fff;
