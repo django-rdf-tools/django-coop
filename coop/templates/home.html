@@ -30,16 +30,14 @@
           
           <div id="inscrits">
               <h4>Tags: </h4>
-              
               <ul id="tags" class="indextags">
-              {% get_taglist asvar all_tags count 25 %}
+              {% get_taglist asvar all_tags for_obj coop_local count 25 %}
               {% for tag in all_tags %}
                   <li class="tag">
                       <a href="{{ tag.get_absolute_url }}">{{tag}} ({{tag.num_times}})</a>
                   </li>
               {% endfor %}
               </ul>
-              
           </div>
     </div>
 
