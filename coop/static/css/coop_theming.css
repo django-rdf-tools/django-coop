@@ -106,6 +106,25 @@ div.form-row.category > div{
 	position: relative;
 }
 
+.ac_input{
+	width: 160px;
+}
+
+td.location .ac_input{
+	width: 300px;
+}
+
+td.target .ac_input{
+	width: 200px;
+}
+td.content .vTextField{
+	width: 150px;
+}
+
+.vForeignKeyRawIdAdminField{
+	display: none;
+}
+
 /* Chosen customization */
 
 div.chzn-container{
