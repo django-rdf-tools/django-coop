@@ -51,11 +51,11 @@ class BasePaymentModality(models.Model):
 
 
 EXCHANGE = Choices(
-    ('OFFER',   1,  _(u'Product Offer')),
-    ('OFFER',   2,  _(u'Service Offer')),
+    ('P_OFFER',   1,  _(u'Product Offer')),
+    ('S_OFFER',   2,  _(u'Service Offer')),
     
-    ('NEED',    3,  _(u'Product Need')),
-    ('NEED',    4,  _(u'Service Need')),
+    ('P_NEED',    3,  _(u'Product Need')),
+    ('S_NEED',    4,  _(u'Service Need')),
     
     ('MUTU',    7,  _(u'Mutualization')),#3
     ('COOP',    8,  _(u'Cooperation, partnership')),#5
