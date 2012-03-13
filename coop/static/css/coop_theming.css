@@ -88,6 +88,8 @@ ul.object-tools li{
 	background-color: #fefdd4;
 }
 
+/* Geo widgets */
+
 span#id_point_span_control{
 	height: 150px;
 	x-overflow: scroll;
@@ -97,6 +99,8 @@ span#id_point_span_map{
 	padding-left: 107px;
 }
 
+/* category widget */
+
 div.form-row.category{
 	overflow: visible;
 	position: relative;
@@ -105,6 +109,60 @@ div.form-row.category{
 div.form-row.category > div{
 	position: relative;
 }
+
+form#organization_form a#add_id_category img,
+form#person_form a#add_id_category img
+{
+	width: 16px;
+	height: 16px;
+}
+
+/* Nomenclature */
+
+.groupbox{
+	display: block;
+	position: relative;
+	border-style: solid;
+	border-width: 1px;
+	width: 616px;
+    height: 160px;
+    overflow: auto;
+    border: 1px solid #ccc;
+}
+
+.groupbox-header{
+    margin: 0;
+    padding: 2px 5px 3px 5px;
+    font-size: 11px;
+    text-align: left;
+    font-weight: bold;
+    background: #7CA0C7 url(../admin/img/admin/default-bg.gif) top left repeat-x;
+    color: white;
+}
+
+.module .groupbox-list {
+	position: relative;
+	display: inline-block;
+	left: 0;
+	margin: 0;
+	padding: 5px;
+	width: 585px;
+}
+
+.groupbox-list li{
+	list-style-type: none;
+}
+
+.groupbox-list li input{
+	font-size: 10px;
+	vertical-align: 1px;
+}
+
+.groupbox-list li label{
+	font-size: 10px;
+}
+
+/* Tag autosuggest */
 
 .ac_input{
 	width: 160px;
@@ -172,12 +230,6 @@ div.chzn-container div.chzn-drop ul.chzn-results{
 
 div.chzn-container div.chzn-drop ul.chzn-results li{
 	width: 616px;
-}
-
-
-a#add_id_category img{
-	width: 16px;
-	height: 16px;
 }
 
 
