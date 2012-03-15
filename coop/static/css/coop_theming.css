@@ -88,6 +88,15 @@ ul.object-tools li{
 	background-color: #fefdd4;
 }
 
+td.original p {
+  visibility: hidden
+}
+
+.inline-group .tabular tr.has_original td {
+    padding-top: 7px;
+}
+
+
 /* Geo widgets */
 
 span#id_point_span_control{
@@ -162,10 +171,18 @@ form#person_form a#add_id_category img
 	font-size: 10px;
 }
 
-/* Tag autosuggest */
+/* Fields width */
 
-.ac_input{
-	width: 160px;
+td.person .ac_input{
+	width: 130px;
+}
+
+td.role select{
+	width: 180px;
+}
+
+td.role_detail .vTextField{
+	width: 120px;
 }
 
 td.location .ac_input{

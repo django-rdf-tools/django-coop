@@ -219,7 +219,7 @@ class BaseOrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
             'classes': ('collapse',),
             'fields': ('notes',)
         })
-    )    
+    )
     def get_actions(self, request):
         myactions = dict(create_action(s) for s in get_model('coop_local','OrganizationCategory').objects.all())
         return dict(myactions, **super(BaseOrganizationAdmin, self).get_actions(request))#merging two dicts
@@ -233,6 +233,8 @@ class BaseOrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
             return _(u"No Image") 
     logo_thumb.short_description = _(u"logo")
     logo_thumb.allow_tags = True
+    class Media:
+        js = ('/static/js/admin_customize.js',)
 
 
 from django_extensions.admin import ForeignKeyAutocompleteAdmin
@@ -269,9 +271,11 @@ from django.contrib.admin.util import get_model_from_relation
 from django.db.models import Count
 
 
-if "taggit" in settings.INSTALLED_APPS :
+if "coop_tag" in settings.INSTALLED_APPS :
 
-    from taggit.managers import TaggableManager
+    #from taggit.managers import TaggableManager
+    from taggit_autosuggest.managers import TaggableManager
+    from coop_tag.models import Ctag
 
     class TaggitFilterSpec(RelatedFilterSpec):
         """
@@ -301,14 +305,15 @@ if "taggit" in settings.INSTALLED_APPS :
             self.lookup_val_isnull = request.GET.get(
                                           self.lookup_kwarg_isnull, None)
             # Get tags and their count
-            through_opts = f.through._meta
-            count_field = ("%s_%s_items" % (through_opts.app_label,
-                    through_opts.object_name)).lower()
+            # through_opts = f.through._meta
+            # count_field = ("%s_%s_items" % (through_opts.app_label,
+            #         through_opts.object_name)).lower()
+            
             queryset = getattr(f.model, f.name).all()
-            queryset = queryset.annotate(num_times=Count(count_field))
+            queryset = queryset.annotate(num_times=Count('ctagged_items'))
             queryset = queryset.order_by("-num_times")
             self.lookup_choices = [(t.pk, "%s (%s)" % (t.name, t.num_times)) 
-                    for t in queryset]
+                    for t in queryset[:20]]
 
 
     # HACK: we insert the filter at the beginning of the list to avoid the manager

@@ -1,8 +1,10 @@
-/* collapsed_stacked_inlines.js */
-/* Created in May 2009 by Hannes Rydén */
-/* Use, distribute and modify freely */
-
 (function($) {
+    
+    if($('ul.groupbox-list').length > 0 && typeof django.jQuery.fn.columnize == 'function'){
+        $('.groupbox ul').columnize({columns:3});
+    }
+
+    
     // Only for stacked inlines
     $('div.inline-group div.inline-related:not(.tabular):not(.empty-form)').each(function() {
         fs = $(this).find('fieldset')

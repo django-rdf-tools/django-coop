@@ -128,7 +128,7 @@ class BaseEngagement(models.Model):
     uri = models.CharField( _(u'main URI'),blank=True, null=True, 
                             max_length=250, editable=False) #FIXME : null=True incompatible with unique=True
     uuid = exfields.UUIDField(blank=True,null=True) #FIXME : NULL=True for easier SQL import / equivalent in PGSQL default UUID ?
-    org_admin = models.BooleanField(default=True)
+    org_admin = models.BooleanField(_(u'admin'),default=True)
     engagement_display = models.PositiveSmallIntegerField(_(u'Display'), choices=DISPLAY.CHOICES, default=DISPLAY.PUBLIC)
     
     class Meta:
@@ -147,8 +147,17 @@ class BaseOrganizationCategory(models.Model):
     def __unicode__(self):
         return self.label
 
+PREFLABEL = Choices(
+    ('TITLE',   1,  _(u'Title')),
+    ('ACRO',   2,  _(u'Acronym')),
+)
+
 class BaseOrganization(models.Model):
     title       = models.CharField(_(u'title'),max_length=250)
+
+    # acronym     = models.CharField(_(u'acronym'),max_length=100)
+    # pref_label = models.PositiveSmallIntegerField(_(u'Preferred label'), choices=PREFLABEL.CHOICES, default=PREFLABEL.TITLE)
+    
     subtitle     = models.CharField(_(u'subtitle'),blank=True,null=True,max_length=250,
                                     help_text=_(u'another name people know your organization by, or a tagline'))
     
@@ -177,7 +186,7 @@ class BaseOrganization(models.Model):
     created = exfields.CreationDateTimeField(_(u'created'),null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)
     active  = models.BooleanField(_(u'active'),default=True,)
-    notes   = models.TextField(_(u'notes'),blank=True, null=True)
+    notes   = models.TextField(_(u'notes'),blank=True)
     class Meta:
         abstract = True
         ordering = ['title']
@@ -195,7 +204,7 @@ class BaseOrganization(models.Model):
         has_location.short_description = _(u'geo')
     
     def has_description(self):
-        return len(self.description) > 20
+        return self.description != None and len(self.description) > 20
     has_description.boolean = True    
     has_description.short_description = _(u'desc.')
     
