@@ -185,6 +185,14 @@ td.role_detail .vTextField{
 	width: 120px;
 }
 
+.origin .ac_input{
+	width: 500px;
+}
+.origin p.help{
+	display: none;
+}
+
+
 td.location .ac_input{
 	width: 300px;
 }
