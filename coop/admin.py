@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from django.contrib import admin
 from coop.org.models import BaseEngagement,BaseOrganization,BaseRelation
-from coop.exchange.models import BaseExchange,BasePaymentModality
+from coop.exchange.models import BaseExchange,BasePaymentModality,BaseTransaction
 from coop.person.models import BasePerson
 from django.db import models
 from django import forms
@@ -140,7 +140,16 @@ class BaseExchangeInline(admin.StackedInline):
                                     #'lien'
                                     )}),)
     extra = 1
-    class Media: js = ('js/expiration.js',)
+    #class Media: js = ('js/expiration.js',)
+
+
+class BaseTransactionInline(admin.StackedInline):
+    model = BaseTransaction
+    fk_name = 'destination_org'
+    fieldsets = ((None, {'fields': ('title','origin','description')}),)
+    related_search_fields = {'origin': ('title','description','organization__title'), }
+    extra = 1
+
 
 class BaseRelationInline(InlineAutocompleteAdmin):
     model = BaseRelation

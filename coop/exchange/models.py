@@ -99,12 +99,17 @@ class BaseExchange(models.Model):
 class BaseTransaction(models.Model):
     origin = models.ForeignKey('coop_local.Exchange',related_name='origin', verbose_name=_(u'origin'))
     destination = models.ForeignKey('coop_local.Exchange',related_name='destination', verbose_name=_(u'destination'))
+    origin_org = models.ForeignKey('coop_local.Organization',related_name='origin_org', verbose_name=_(u'vendor'), blank=True, null=True)
+    destination_org = models.ForeignKey('coop_local.Organization',related_name='destination_org', verbose_name=_(u'buyer'), blank=True, null=True)
     title = models.CharField(_('title'),blank=True,max_length=250)
     description = models.TextField(_(u'description'),blank=True)
     created = exfields.CreationDateTimeField(_(u'created'),null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'),null=True)
     uuid = exfields.UUIDField() #nécessaire pour URI ?
     
+    def __unicode__(self):
+        return self.title
+        
     class Meta:
         abstract = True
         verbose_name = _(u'Transaction')
