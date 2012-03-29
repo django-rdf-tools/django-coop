@@ -80,7 +80,7 @@ class BasePerson(models.Model):
         return eng
 
     def init_uri(self):
-        return 'http://' + Site.objects.get_current().domain + '/webid/' + self.username + '/'
+        return 'http://' + Site.objects.get_current().domain + '/id/person/' + self.username + '/'
     
     def save(self, *args, **kwargs):
         if self.email != '':
