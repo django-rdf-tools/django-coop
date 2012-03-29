@@ -24,6 +24,7 @@ class CustomIndexDashboard(Dashboard):
     columns = 2
     title = ''
     template = 'admin_tools/coop_dashboard.html'
+
     def init_with_context(self, context):
         site_name = get_admin_site_name(context)
         # append a link list module for "quick links"
@@ -59,7 +60,7 @@ class CustomIndexDashboard(Dashboard):
                     'coop_local.models.PersonCategory',
                     'coop_local.models.Organization',
                     'coop_local.models.OrganizationCategory',
-                    
+                    'coop_local.models.Ctag'
                     ),
             template='admin_tools/coop_applist.html',
         ))

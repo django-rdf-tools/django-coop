@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     #     context_object_name='liste_initiatives',
     #     template_name='initiative/initiative_list.html'
     #     )),
-    
+
     url(r'^$', 'coop.org.views.org_list', name="org_list"),
     url(r'^global_map$', 'coop.org.views.global_map', name="org_global_map"),
     url(r'^(?P<slug>[\w-]+)/$', 'coop.org.views.org_detail_view', name="org_detail"),

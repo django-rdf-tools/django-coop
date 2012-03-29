@@ -11,7 +11,6 @@ class TextPlainView(TemplateView):
 urlpatterns = patterns('',
 
     url(r'^$', 'coop.views.home', name="home"),
-    url(r'^org/$', 'coop.org.views.org_list', name="org_list"), #view coop à surcharger --> voir plutot les CBV
     (r'^org/', include('coop.org.urls')),
     (r'^comments/', include('django.contrib.comments.urls')),
 
