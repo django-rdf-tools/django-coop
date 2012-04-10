@@ -8,6 +8,9 @@ from django.template.defaultfilters import slugify
 from django.contrib.contenttypes import generic
 from django.contrib.sites.models import Site
 from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
+
 
 if "coop_geo" in settings.INSTALLED_APPS:
     from coop_geo.models import Location
@@ -46,6 +49,8 @@ class BasePerson(models.Model):
     notes = models.TextField(_(u'notes'), blank=True, null=True)
     structure = models.CharField(blank=True, max_length=100)
 
+    subs = generic.GenericRelation('coop_local.ListSubscription')
+
     if "coop_geo" in settings.INSTALLED_APPS:
         location = models.ForeignKey(Location, null=True, blank=True, verbose_name=_(u'location'))
         location_display = models.PositiveSmallIntegerField(_(u'Display'), choices=DISPLAY.CHOICES, default=DISPLAY.USERS)
@@ -79,8 +84,12 @@ class BasePerson(models.Model):
             eng.append({'initiative': e.initiative, 'role': e.role})
         return eng
 
+    @property
+    def uri_id(self):
+        return self.username
+
     def init_uri(self):
-        return 'http://' + Site.objects.get_current().domain + '/id/person/' + self.username + '/'
+        return 'http://' + Site.objects.get_current().domain + '/id/person/' + self.uri_@id + '/'
     
     def save(self, *args, **kwargs):
         if self.email != '':

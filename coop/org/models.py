@@ -10,9 +10,6 @@ import sorl
 from django.core.exceptions import ValidationError
 from django.conf import settings
 
-if "coop_geo" in settings.INSTALLED_APPS:
-    from coop_geo.models import AreaLink, Located
-
 DISPLAY = Choices(
     ('PUBLIC',  1,  _(u'public information')),
     ('USERS',   2,  _(u'registered users')),
@@ -22,12 +19,15 @@ DISPLAY = Choices(
     ('ADMIN',   6,  _(u'administrators of this site')),
 )
 
-# will apply to contact numbers and
+# will apply to contact numbers and other things
+# TODO simplify it, see PPO Ontology
 
 COMM_MEANS = Choices(
+    ('MAIL',    8,  _(u'E-mail')),
     ('LAND',    1,  _(u'Landline phone')),
     ('GSM',     2,  _(u'Mobile phone')),
     ('FAX',     3,  _(u'Fax')),
+    ('WEB',     9,  _(u'Secondary web site')),
     ('SKYPE',   4,  _(u'Skype')),
     ('TWITTER', 5,  _(u'Twitter')),
     ('RSS',     6,  _(u'RSS Feed')),
@@ -36,10 +36,12 @@ COMM_MEANS = Choices(
 
 
 class BaseContact(models.Model):
-    category = models.PositiveSmallIntegerField(_(u'Category'), choices=COMM_MEANS.CHOICES)
+    category = models.PositiveSmallIntegerField(_(u'Category'), 
+                    choices=COMM_MEANS.CHOICES)
     content = models.CharField(_(u'content'), max_length=250)
     details = models.CharField(_(u'details'), blank=True, max_length=100)
-    display = models.PositiveSmallIntegerField(_(u'Display'), choices=DISPLAY.CHOICES, default=DISPLAY.PUBLIC)
+    display = models.PositiveSmallIntegerField(_(u'Display'), 
+                    choices=DISPLAY.CHOICES, default=DISPLAY.PUBLIC)
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
     content_type = models.ForeignKey(ContentType, blank=True, null=True)
@@ -53,7 +55,10 @@ class BaseContact(models.Model):
         verbose_name_plural = _(u'Contacts')
 
     def __unicode__(self):
-        return self.content
+        if self.content_object != None:
+            return self.content + u' (' + self.content_object.__unicode__() + u')'
+        else:    
+            return self.content
 
     def clean(self):
         if self.category in [1, 2, 3]:
@@ -143,6 +148,9 @@ class BaseEngagement(models.Model):
         verbose_name = _('Engagement')
         verbose_name_plural = _('Engagements')
 
+    def __unicode__(self):
+        return self.person.__unicode__()
+
 
 class BaseOrganizationCategory(models.Model):
     label = models.CharField(blank=True, max_length=100)
@@ -168,29 +176,48 @@ class BaseOrganization(models.Model):
     # acronym     = models.CharField(_(u'acronym'),max_length=100)
     # pref_label = models.PositiveSmallIntegerField(_(u'Preferred label'), choices=PREFLABEL.CHOICES, default=PREFLABEL.TITLE)
     
-    subtitle = models.CharField(_(u'subtitle'), blank=True, null=True, max_length=250,
-                                    help_text=_(u'another name people know your organization by, or a tagline'))
+    subtitle = models.CharField(_(u'subtitle'), blank=True, null=True, 
+                max_length=250,
+                help_text=_(u'another name your organization is known by, or a tagline'))
     
     description = models.TextField(_(u'description'), blank=True, null=True)
-    uri = models.CharField(_(u'main URI'), blank=True, null=True, max_length=250, editable=False)
+    uri = models.CharField(_(u'main URI'), blank=True, null=True, 
+                max_length=250, editable=False)
     logo = sorl.thumbnail.ImageField(upload_to='logos/', null=True, blank=True)
-    relations = models.ManyToManyField('coop_local.Organization', symmetrical=False, 
-                                    through='coop_local.Relation', verbose_name=_(u'relations'))
+    relations = models.ManyToManyField('coop_local.Organization', 
+                symmetrical=False, through='coop_local.Relation', 
+                verbose_name=_(u'relations'))
 
-    category = models.ManyToManyField('coop_local.OrganizationCategory', blank=True, null=True, verbose_name=_(u'category'))
+    category = models.ManyToManyField('coop_local.OrganizationCategory', 
+                blank=True, null=True, verbose_name=_(u'category'))
 
-    members = models.ManyToManyField('coop_local.Person', through='coop_local.Engagement', verbose_name=_(u'members'))
+    members = models.ManyToManyField('coop_local.Person', 
+                through='coop_local.Engagement', verbose_name=_(u'members'))
     
-    contact = generic.GenericRelation('coop_local.Contact')
-    
+    contacts = generic.GenericRelation('coop_local.Contact')
+    subs = generic.GenericRelation('coop_local.ListSubscription')
+
+    # coop_geo must be loaded BEFORE coop_local
     if "coop_geo" in settings.INSTALLED_APPS:
-        located = generic.GenericRelation(Located)
-        area = generic.GenericRelation(AreaLink)
+        located = generic.GenericRelation('coop_geo.Located')
+        area = generic.GenericRelation('coop_geo.AreaLink')
         
     birth = models.DateField(_(u'creation date'), null=True, blank=True)
     email = models.EmailField(_(u'global email'), blank=True, null=True)
-    email_sha1 = models.CharField(_(u'email checksum'), max_length=250, blank=True, null=True)
-    web = models.URLField(_(u'web site'), blank=True, null=True, verify_exists=False)
+    email_sha1 = models.CharField(_(u'email checksum'), 
+            max_length=250, blank=True, null=True)  # TODO : do this in Postgre
+    web = models.URLField(_(u'web site'), blank=True, null=True)
+
+    pref_email = models.ForeignKey('coop_local.Contact', 
+                verbose_name=_(u'preferred email'), 
+                related_name="pref_email", null=True, blank=True)
+    pref_phone = models.ForeignKey('coop_local.Contact', 
+                verbose_name=_(u'preferred phone'), 
+                related_name='pref_phone', null=True, blank=True)
+    pref_address = models.ForeignKey('coop_geo.Location', 
+                verbose_name=_(u'preferred postal address'), 
+                related_name='pref_adress', null=True, blank=True)
+
     slug = exfields.AutoSlugField(populate_from='title', blank=True)
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
@@ -232,22 +259,36 @@ class BaseOrganization(models.Model):
         relmap = RELATIONS.REVERTED_CHOICES_CONST_DICT
         
         for rel in self.source.all():
-            reltype = str('OUT_' + relmap[rel.reltype])  # les relations de moi vers les autres
-            if reltype not in relations:
-                relations[reltype] = []
+            reltype = str('OUT_' + relmap[rel.reltype])  # me => others
+            relations[reltype] = []
             relations[reltype].append(rel.target)
         for rel in self.target.all():
-            reltype = str('IN_' + relmap[rel.reltype])  # les relations déclarées par les autres
+            reltype = str('IN_' + relmap[rel.reltype])  # others said this
             if reltype not in relations:
                 relations[reltype] = []
-            if rel.confirmed:  # et confirmées
+            if rel.confirmed:  # which one are confirmed by both parts
                 relations[reltype].append(rel.source)
         return relations
         
     def local_uri(self):
         return ('http://dev.credis.org:8000/org/' + self.slug + '/')
-    
+
     def save(self, *args, **kwargs):
+        # Set default values for preferred email, phone and postal address
+        if self.pref_phone == None:
+            fixes = self.contacts.filter(category=1)
+            if fixes.count() == 1:
+                self.pref_phone = fixes[0]
+        if self.pref_email == None:
+            orgmails = self.contacts.filter(category=8)
+            if orgmails.count() == 1:
+                self.pref_email = orgmails[0]
+        if 'coop_geo' in settings.INSTALLED_APPS:
+            if self.pref_address == None:
+                locations = self.located.all()  # should we have a "main venue" ?
+                if locations.count() == 1:
+                    self.pref_address = locations[0].location
+
         if self.email != '':
             import hashlib
             m = hashlib.sha1()

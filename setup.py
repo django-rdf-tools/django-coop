@@ -36,7 +36,7 @@ setup(
                         'django-extensions==0.6',
                         'django-admin-tools==0.4.1',
                         #'django-haystack==1.2.6',
-                        #'djangoembed==0.1.1',
+                        #'djangoembed==0.1.1', # plutot via github
                         ],
     long_description = open('README.rst').read(),
     url = 'https://github.com/quinode/django-coop/',
