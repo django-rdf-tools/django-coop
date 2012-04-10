@@ -2,7 +2,6 @@
 from django.db import models
 from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
-from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
@@ -21,12 +20,13 @@ class BaseMailingList(models.Model):
         return u'%s' % (self.name)
 
 
-class BaseListSubscription(models.Model):
-    mailing_list = models.ForeignKey('coop_local.MailingList', related_name='subs')
+class BaseSubscription(models.Model):
+    mailing_list = models.ForeignKey('coop_local.MailingList',
+                                        related_name='subs')
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
     # subscription options (HTML, text ...)
-    email = models.EmailField(_('subscribed email'))
+    email = models.EmailField(_('subscribed email'), default='')
 
     # things which are suscribed
     content_type = models.ForeignKey(ContentType, blank=True, null=True)

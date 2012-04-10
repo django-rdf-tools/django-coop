@@ -10,7 +10,7 @@ from django.contrib.sites.models import Site
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
-
+from coop.models import URIModel
 
 if "coop_geo" in settings.INSTALLED_APPS:
     from coop_geo.models import Location
@@ -31,7 +31,7 @@ class BasePersonCategory(models.Model):
 from coop.org.models import DISPLAY
 
 
-class BasePerson(models.Model):
+class BasePerson(URIModel):
     user = models.OneToOneField(User, blank=True, null=True, unique=True, verbose_name=_(u'django user'), editable=False)
     username = models.CharField(blank=True, max_length=100, unique=True)    
     #pour D2RQ et poura voir des URI clean meme pour des non-users
@@ -49,7 +49,7 @@ class BasePerson(models.Model):
     notes = models.TextField(_(u'notes'), blank=True, null=True)
     structure = models.CharField(blank=True, max_length=100)
 
-    subs = generic.GenericRelation('coop_local.ListSubscription')
+    subs = generic.GenericRelation('coop_local.Subscription')
 
     if "coop_geo" in settings.INSTALLED_APPS:
         location = models.ForeignKey(Location, null=True, blank=True, verbose_name=_(u'location'))
@@ -87,10 +87,9 @@ class BasePerson(models.Model):
     @property
     def uri_id(self):
         return self.username
+   
+    uri_fragment = 'person'
 
-    def init_uri(self):
-        return 'http://' + Site.objects.get_current().domain + '/id/person/' + self.uri_id + '/'
-    
     def save(self, *args, **kwargs):
         if self.email != '':
             import hashlib
@@ -112,8 +111,5 @@ class BasePerson(models.Model):
                     chg = True
             if(chg):
                 self.user.save()
-        # create / update URI           
-        if self.uri != self.init_uri():
-            self.uri = self.init_uri()
         super(BasePerson, self).save(*args, **kwargs)    
 

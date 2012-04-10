@@ -9,6 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 import sorl
 from django.core.exceptions import ValidationError
 from django.conf import settings
+from coop.models import URIModel
 
 DISPLAY = Choices(
     ('PUBLIC',  1,  _(u'public information')),
@@ -170,7 +171,7 @@ PREFLABEL = Choices(
 )
 
 
-class BaseOrganization(models.Model):
+class BaseOrganization(URIModel):
     title = models.CharField(_(u'title'), max_length=250)
 
     # acronym     = models.CharField(_(u'acronym'),max_length=100)
@@ -195,7 +196,7 @@ class BaseOrganization(models.Model):
                 through='coop_local.Engagement', verbose_name=_(u'members'))
     
     contacts = generic.GenericRelation('coop_local.Contact')
-    subs = generic.GenericRelation('coop_local.ListSubscription')
+    subs = generic.GenericRelation('coop_local.Subscription')
 
     # coop_geo must be loaded BEFORE coop_local
     if "coop_geo" in settings.INSTALLED_APPS:
@@ -232,6 +233,12 @@ class BaseOrganization(models.Model):
 
     def __unicode__(self):
         return unicode(self.title)
+
+    @property
+    def uri_id(self):
+        return self.slug
+
+    uri_fragment = 'org'
 
     def can_edit_organization(self, user):
         return True
