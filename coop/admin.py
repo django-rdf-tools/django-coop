@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from django.contrib import admin
 from coop.org.models import BaseEngagement, BaseRelation
-from coop.exchange.models import BaseExchange, BasePaymentModality, BaseTransaction
+from coop.exchange.models import BaseExchange, BasePaymentModality, BaseTransaction, BaseProduct
 from django.db import models
 from django import forms
 from django.conf import settings
@@ -156,6 +156,14 @@ class BaseExchangeInline(admin.StackedInline):
                                     )}),)
     extra = 1
     #class Media: js = ('js/expiration.js',)
+
+
+class BaseProductInline(admin.StackedInline):
+    model = BaseProduct
+    fieldsets = ((None, {'fields': ('title',
+                                    'description',
+                                    )}),)
+    extra = 1
 
 
 class BaseTransactionInline(admin.StackedInline):
