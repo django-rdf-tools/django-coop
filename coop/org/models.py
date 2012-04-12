@@ -111,15 +111,6 @@ class BaseRelation(models.Model):
     
     class Meta:
         abstract = True
-    # def rel_label(self):
-    #     rel_labels = {
-    #         RELATIONS.MEMBER : _(u' is member of '),
-    #         RELATIONS.REG_SUPPLIER : _(u' has for regular supplier '),
-    #         RELATIONS.OCC_SUPPLIER : _(u' has for casual supplier '),
-    #         RELATIONS.SUPPORT : _(u' received technical support from '),
-    #         RELATIONS.FUNDING : _(u' received financial support from '),
-    #     }
-    #     return  unicode(rel_labels[self.reltype])
 
     def __unicode__(self):    
         return u'"' + self.source.__unicode__() + u'"' + \

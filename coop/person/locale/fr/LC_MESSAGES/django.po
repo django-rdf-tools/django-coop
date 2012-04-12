@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop.Contact\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-16 22:37+0000\n"
+"POT-Creation-Date: 2012-04-11 18:45+0200\n"
 "PO-Revision-Date: 2012-02-16 23:41+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
@@ -39,71 +39,75 @@ msgstr "Adresse e-mail"
 msgid "your personal email"
 msgstr "email personnel"
 
-#: models.py:17
+#: models.py:25
 msgid "Person category"
 msgstr "Catégorie de personnes"
 
-#: models.py:18
+#: models.py:26
 msgid "Person categories"
 msgstr "Catégories de personnes"
 
-#: models.py:25
+#: models.py:35
 msgid "django user"
 msgstr "compte utilisateur"
 
-#: models.py:29
+#: models.py:39
 msgid "category"
 msgstr "catégorie"
 
-#: models.py:30
+#: models.py:40
 msgid "last name"
 msgstr "nom"
 
-#: models.py:31
+#: models.py:41
 msgid "first name"
 msgstr "prénom"
 
-#: models.py:32
-msgid "location"
-msgstr "lieu"
-
-#: models.py:33
-msgid "Display"
-msgstr "Affichage"
-
-#: models.py:35
+#: models.py:43
 msgid "personal email"
 msgstr "email personnel"
 
-#: models.py:37
+#: models.py:44
+msgid "email checksum"
+msgstr ""
+
+#: models.py:45
 msgid "created"
 msgstr "création"
 
-#: models.py:38
+#: models.py:46
 msgid "modified"
 msgstr "modification"
 
-#: models.py:39
+#: models.py:47
 msgid "main URI"
 msgstr "URI"
 
-#: models.py:40
+#: models.py:49
 msgid "notes"
 msgstr "notes"
 
-#: models.py:45
+#: models.py:55
+msgid "location"
+msgstr "lieu"
+
+#: models.py:56
+msgid "Display"
+msgstr "Affichage"
+
+#: models.py:60
 msgid "Person"
 msgstr "Personne"
 
-#: models.py:46
+#: models.py:61
 msgid "Persons"
 msgstr "Personnes"
 
-#: models.py:58
+#: models.py:74
 msgid "django account"
 msgstr "compte utilisateur django"
 
-#: models.py:63
+#: models.py:79
 msgid "has organization"
 msgstr "membre collectif"
 

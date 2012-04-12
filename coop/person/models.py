@@ -87,7 +87,6 @@ class BasePerson(URIModel):
     @property
     def uri_id(self):
         return self.username
-   
     uri_fragment = 'person'
 
     def save(self, *args, **kwargs):

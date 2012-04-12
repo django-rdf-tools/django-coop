@@ -1,0 +1,65 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: coop.mailing\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-04-11 18:46+0200\n"
+"PO-Revision-Date: 2012-04-11 19:24+0100\n"
+"Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
+"Language-Team: Quinode <contact@quinode.fr>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+
+#: models.py:10
+msgid "name"
+msgstr "nom"
+
+#: models.py:11
+msgid "Newsletter email"
+msgstr "Courriel de la liste"
+
+#: models.py:12
+msgid "List URL"
+msgstr "URL de la liste"
+
+#: models.py:15
+msgid "mailing list"
+msgstr "liste de diffusion"
+
+#: models.py:16
+msgid "mailing lists"
+msgstr "listes de diffusion"
+
+#: models.py:26
+msgid "created"
+msgstr "création"
+
+#: models.py:27
+msgid "modified"
+msgstr "modification"
+
+#: models.py:29
+msgid "subscribed email"
+msgstr "courriel inscrit"
+
+#: models.py:37
+msgid "mailing list subscription"
+msgstr "inscription à une liste"
+
+#: models.py:38
+msgid "mailing list subscriptions"
+msgstr "inscriptions à une liste"
+
+#: models.py:42
+msgid "subscription to "
+msgstr "inscription à"
+

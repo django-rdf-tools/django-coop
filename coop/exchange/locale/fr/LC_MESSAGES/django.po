@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop.exchange\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-13 09:38+0100\n"
-"PO-Revision-Date: 2012-03-13 09:38+0100\n"
+"POT-Creation-Date: 2012-04-12 09:27+0200\n"
+"PO-Revision-Date: 2012-04-12 09:28+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
 "Language: \n"
@@ -19,160 +19,190 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 
-#: models.py:16
+#: models.py:17
 msgid "Gift"
 msgstr "Don"
 
-#: models.py:17
+#: models.py:18
 msgid "Free exchange"
 msgstr "Troc"
 
-#: models.py:18
+#: models.py:19
 msgid "Monetary exchange"
 msgstr "Monnaie"
 
-#: models.py:21
+#: models.py:22
 msgid "€"
 msgstr "€"
 
-#: models.py:22
+#: models.py:23
 msgid "Hours"
 msgstr "Heures"
 
-#: models.py:23
+#: models.py:24
 msgid "PEZ"
 msgstr ""
 
-#: models.py:27
+#: models.py:29
 msgid "exchange"
 msgstr "échange"
 
-#: models.py:28
-#: models.py:70
+#: models.py:30
+#: models.py:98
 msgid "exchange type"
 msgstr "type d'échange"
 
-#: models.py:31
+#: models.py:33
 msgid "amount"
 msgstr "montant"
 
-#: models.py:32
+#: models.py:34
 msgid "unit"
 msgstr "unité"
 
-#: models.py:40
+#: models.py:42
 msgid "Price unknown"
 msgstr "Prix inconnu"
 
-#: models.py:49
+#: models.py:52
 msgid "Payment modality"
 msgstr "Modalité de paiement"
 
-#: models.py:50
+#: models.py:53
 msgid "Payment modalities"
 msgstr "Modalités de paiement"
 
-#: models.py:54
+#: models.py:57
 msgid "Product Offer"
 msgstr "Offre de produit"
 
-#: models.py:55
+#: models.py:58
 msgid "Service Offer"
 msgstr "Offre de service"
 
-#: models.py:57
+#: models.py:59
 msgid "Product Need"
 msgstr "Demande de produit"
 
-#: models.py:58
+#: models.py:60
 msgid "Service Need"
 msgstr "Demande de service"
 
-#: models.py:60
+#: models.py:61
 msgid "Mutualization"
 msgstr "Mutualisation"
 
-#: models.py:61
+#: models.py:62
 msgid "Cooperation, partnership"
 msgstr "Coopération, partenariat"
 
-#: models.py:62
+#: models.py:63
 msgid "Question"
 msgstr "Question"
 
-#: models.py:66
-#: models.py:104
+#: models.py:68
+#: models.py:93
+#: models.py:140
 msgid "title"
 msgstr "intitulé"
 
-#: models.py:67
-#: models.py:105
+#: models.py:70
+#: models.py:94
+#: models.py:141
 msgid "description"
 msgstr "description"
 
-#: models.py:69
-msgid "person"
-msgstr "personne"
-
-#: models.py:71
-msgid "permanent"
-msgstr "permanent"
-
-#: models.py:72
-msgid "expiration"
-msgstr "expiration"
-
-#: models.py:74
-#: models.py:106
+#: models.py:73
+#: models.py:102
+#: models.py:142
 msgid "created"
 msgstr "création"
 
-#: models.py:75
-#: models.py:107
+#: models.py:74
+#: models.py:103
+#: models.py:143
 msgid "modified"
 msgstr "modification"
 
-#: models.py:77
+#: models.py:75
+#: models.py:106
 msgid "main URI"
 msgstr "URI principale"
 
-#: models.py:78
-msgid "author URI"
-msgstr "URI auteur"
-
-#: models.py:79
+#: models.py:76
+#: models.py:108
 msgid "publisher URI"
 msgstr "URI organisme"
 
-#: models.py:84
+#: models.py:88
+msgid "Product"
+msgstr "produit"
+
+#: models.py:89
+msgid "Products"
+msgstr "produits"
+
+#: models.py:96
+msgid "publisher"
+msgstr "organisation"
+
+#: models.py:97
+msgid "person"
+msgstr "personne"
+
+#: models.py:99
+msgid "permanent"
+msgstr "permanent"
+
+#: models.py:100
+msgid "expiration"
+msgstr "expiration"
+
+#: models.py:104
+msgid "linked products"
+msgstr "produits"
+
+#: models.py:107
+msgid "author URI"
+msgstr "URI auteur"
+
+#: models.py:113
 msgid "location"
 msgstr "lieu"
 
-#: models.py:85
+#: models.py:114
 msgid "area"
 msgstr "zone"
 
-#: models.py:96
+#: models.py:131
 msgid "Exchange"
 msgstr "Échange"
 
-#: models.py:97
+#: models.py:132
 msgid "Exchanges"
 msgstr "Échanges"
 
-#: models.py:102
+#: models.py:136
 msgid "origin"
 msgstr "origine"
 
-#: models.py:103
+#: models.py:137
 msgid "destination"
 msgstr "destination"
 
-#: models.py:112
+#: models.py:138
+msgid "vendor"
+msgstr "vendeur"
+
+#: models.py:139
+msgid "buyer"
+msgstr "acheteur"
+
+#: models.py:151
 msgid "Transaction"
 msgstr "Transaction"
 
-#: models.py:113
+#: models.py:152
 msgid "Transactions"
 msgstr "Transactions"
 

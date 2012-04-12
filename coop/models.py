@@ -14,16 +14,16 @@ class URIModel(models.Model):
 
     uri_fragment = 'org'    
 
-    the uri_repr can then be overriden in a real model derived from your abstract model
+    the uri_fragment can then be overriden in a real model derived from your abstract model
 
     """
     class Meta:
         abstract = True
 
     def init_uri(self):
-        return 'http://' + Site.objects.get_current().domain + \
-                    '/id/'+ self.uri_fragment + \
-                    '/' + getattr(self, 'uri_id') + '/'
+        return 'http://' + str(Site.objects.get_current().domain) + \
+                    '/id/'+ str(self.uri_fragment) + \
+                    '/' + str(getattr(self, 'uri_id')) + '/'
 
     def save(self, *args, **kwargs):
         # create / update URI

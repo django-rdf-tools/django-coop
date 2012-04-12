@@ -7,6 +7,7 @@ import datetime
 from django.core.urlresolvers import reverse
 from decimal import Decimal
 from django.conf import settings
+from coop.models import URIModel
 
 if "coop_geo" in settings.INSTALLED_APPS:
     from coop_geo.models import Area, Location
@@ -63,10 +64,36 @@ EXCHANGE = Choices(
 )
 
 
-class BaseExchange(models.Model):
+class BaseProduct(URIModel):
     title = models.CharField(_('title'), blank=True, max_length=250)
+    slug = exfields.AutoSlugField(populate_from='title')
     description = models.TextField(_(u'description'), blank=True)
-    organization = models.ForeignKey('coop_local.Organization', blank=True, null=True, verbose_name='publisher', related_name='exchange')
+    organization = models.ForeignKey('coop_local.Organization', blank=True, null=True, 
+                                        verbose_name='publisher', related_name='products')
+    created = exfields.CreationDateTimeField(_(u'created'), null=True)
+    modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
+    uri = models.CharField(_(u'main URI'), blank=True, max_length=250, editable=False)
+    publisher_uri = models.CharField(_(u'publisher URI'), blank=True, max_length=200, editable=False)
+    
+    @property
+    def uri_id(self):
+        return self.id
+    uri_fragment = 'product'
+
+    def __unicode__(self):
+        return self.title
+
+    class Meta:
+        abstract = True
+        verbose_name = _(u'Product')
+        verbose_name_plural = _(u'Products')
+
+
+class BaseExchange(URIModel):
+    title = models.CharField(_('title'), max_length=250)
+    description = models.TextField(_(u'description'), blank=True)
+    organization = models.ForeignKey('coop_local.Organization', blank=True, null=True, 
+                            verbose_name=_('publisher'), related_name='exchanges')
     person = models.ForeignKey('coop_local.Person', blank=True, null=True, editable=False, verbose_name=_(u'person'))
     etype = models.PositiveSmallIntegerField(_(u'exchange type'), choices=EXCHANGE.CHOICES)
     permanent = models.BooleanField(_(u'permanent'), default=True)
@@ -74,6 +101,7 @@ class BaseExchange(models.Model):
     slug = exfields.AutoSlugField(populate_from='title')
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
+    products = models.ManyToManyField('coop_local.Product', verbose_name=_('linked products'))
     
     uri = models.CharField(_(u'main URI'), blank=True, max_length=250, editable=False)
     author_uri = models.CharField(_(u'author URI'), blank=True, max_length=200, editable=False)
@@ -93,6 +121,11 @@ class BaseExchange(models.Model):
         
     #TODO assign the record to the person editing it (form public) and provide an A-C choice in admin
 
+    @property
+    def uri_id(self):
+        return self.uuid
+    uri_fragment = 'exchange'
+
     class Meta:
         abstract = True
         verbose_name = _(u'Exchange')
@@ -102,8 +135,8 @@ class BaseExchange(models.Model):
 class BaseTransaction(models.Model):
     origin = models.ForeignKey('coop_local.Exchange', related_name='origin', verbose_name=_(u'origin'))
     destination = models.ForeignKey('coop_local.Exchange', related_name='destination', verbose_name=_(u'destination'))
-    origin_org = models.ForeignKey('coop_local.Organization', related_name='origin_org', verbose_name=_(u'vendor'), blank=True, null=True)
-    destination_org = models.ForeignKey('coop_local.Organization', related_name='destination_org', verbose_name=_(u'buyer'), blank=True, null=True)
+    origin_org = models.ForeignKey('coop_local.Organization', related_name='contrats_vente', verbose_name=_(u'vendor'), blank=True, null=True)
+    destination_org = models.ForeignKey('coop_local.Organization', related_name='contrats_achat', verbose_name=_(u'buyer'), blank=True, null=True)
     title = models.CharField(_('title'), blank=True, max_length=250)
     description = models.TextField(_(u'description'), blank=True)
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
