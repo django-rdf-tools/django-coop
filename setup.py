@@ -22,6 +22,7 @@ setup(
                 'coop.exchange',
                 'coop.link',
                 'coop.org',
+                'coop.mailing',
                 'coop.person',
                 'coop.templatetags',
                 'coop.utils',
