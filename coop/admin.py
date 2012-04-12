@@ -96,6 +96,7 @@ class OrgInlineLinkForm(forms.ModelForm):
 # ---------- if coop-geo is installed --------------
 
 if "coop_geo" in settings.INSTALLED_APPS:
+    from coop_geo.forms import AreaFormForInline
     from coop_geo.models import AreaLink, Located
 
     class LocatedInlineLinkForm(forms.ModelForm):
@@ -111,10 +112,22 @@ if "coop_geo" in settings.INSTALLED_APPS:
         related_search_fields = {'location': ('label', 'adr1', 'adr2', 'zipcode', 'city'), }
         extra = 1
 
-    class AreaInline(GenericTabularInline, InlineAutocompleteAdmin):
-        model = AreaLink
+    class AreaInline(GenericTabularInline):
+        form = AreaFormForInline
         related_search_fields = {'location': ('label', 'reference'), }
+        model = AreaLink
         extra = 1
+
+        def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
+            associated_obj = None
+            if db_field.name == "location":
+                if request._obj_ is not None:
+                    associated_obj = request._obj_
+            r = super(AreaInline, self).formfield_for_foreignkey(db_field,
+                                                          request, **kwargs)
+            # decorate the modelform in order to use it in the area widget
+            r._associated_obj = request._obj_
+            return r
 
 # ----------------------------------------------------
 
@@ -211,7 +224,6 @@ class BaseOrganizationAdminForm(forms.ModelForm):
           | Q(id__in=member_locations_id)
             )
 
-
 class BaseMemberAdminForm(forms.ModelForm):
     # category = chosenforms.ChosenModelMultipleChoiceField(
     #         required=False,
@@ -236,7 +248,6 @@ def create_action(category):
             obj.category.add(category)
     name = "cat_%s" % (category.slug,)
     return (name, (add_cat, name, _(u'Add to the "%s" category') % (category,)))
-
 
 class BaseOrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
     form = BaseOrganizationAdminForm
@@ -282,6 +293,11 @@ class BaseOrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
         myactions = dict(create_action(s) for s in get_model('coop_local', 'OrganizationCategory').objects.all())
         return dict(myactions, **super(BaseOrganizationAdmin, self).get_actions(request))  # merging two dicts
         #list_display = ['my_image_thumb', 'my_other_field1', 'my_other_field2', ] ???
+
+    def get_form(self, request, obj=None, **kwargs):
+        # just save obj reference for future processing in Inline
+        request._obj_ = obj
+        return super(BaseOrganizationAdmin, self).get_form(request, obj, **kwargs)
 
     def logo_thumb(self, obj):
         if obj.logo:
