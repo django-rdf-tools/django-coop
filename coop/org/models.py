@@ -287,10 +287,12 @@ class BaseOrganization(URIModel):
                 if locations.count() == 1:
                     self.pref_address = locations[0].location
 
-        if self.email != '':
-            import hashlib
-            m = hashlib.sha1()
-            m.update(self.email)
-            self.email_sha1 = m.hexdigest()
+        # TODO move this to Contact model or do it in SQL
+
+        # if self.email and self.email != '': 
+        #     import hashlib
+        #     m = hashlib.sha1()
+        #     m.update(self.email)
+        #     self.email_sha1 = m.hexdigest()
         super(BaseOrganization, self).save(*args, **kwargs)  
 
