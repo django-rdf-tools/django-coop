@@ -55,7 +55,7 @@ class M2MLinkWidget(forms.Widget):
         super(M2MLinkWidget, self).__init__(attrs)
 
     def render(self, name, value, attrs=None):
-        if self.object.pk:
+        if self.object.pk and self.fkey:
             return mark_safe(u'<a href="../../../%s/%s/%s/">%s</a>' % \
                 (self.object._meta.app_label,
                     getattr(self.object, self.fkey)._meta.object_name.lower(), 
