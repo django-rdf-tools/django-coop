@@ -93,19 +93,24 @@
             {% if 'IN_MEMBER' in organization.get_relations %}<div class="rel_type">Membre(s) de {{organization.title}}</div>
                 <ul class="relations">{% for org in organization.get_relations.IN_MEMBER %}
                     <li title="{{org}}">
-                        {% thumbnail org.logo "50x50" colorspace="GRAY" crop="left" as im_nb %}
-                        {% thumbnail org.logo "50x50" crop="left" as im_color %}
-                            <div class="org_icon">
-                                <a href="{{org.get_absolute_url}}">
+                        <div class="org_icon">
+                            <a href="{{org.get_absolute_url}}">
+
+                            {% thumbnail org.logo "50x50" colorspace="GRAY" crop="left" as im_nb %}
                                 <img src="{{ im_nb.url }}" width="{{ im_nb.width }}" height="{{ im_nb.height }}"></a>
-                                <div class="fade">
-                                    <a href="{{org.get_absolute_url}}">
+                            {% empty %}
+                                <img src="{{STATIC_URL}}img/groupe_light.jpg" height="50" widh="50"/>
+                            {% endthumbnail %}
+                            <div class="fade">
+                                <a href="{{org.get_absolute_url}}">
+                                {% thumbnail org.logo "50x50" crop="left" as im_color %}  
                                     <img src="{{ im_color.url }}" width="{{ im_color.width }}" height="{{ im_color.height }}">
-                                    </a>
-                                </div>
+                                {% empty %}
+                                    <img src="{{STATIC_URL}}img/groupe.jpg" height="50" widh="50"/>
+                                {% endthumbnail %}
+                                </a>
                             </div>
-                        {% endthumbnail %}
-                        {% endthumbnail %}
+                        </div>
                         </a>
                     </li>
                 {% endfor %}</ul>    
@@ -113,19 +118,25 @@
             {% if 'OUT_MEMBER' in organization.get_relations %}<div class="rel_type">Affiliations</div>
                 <ul class="relations">{% for org in organization.get_relations.OUT_MEMBER %}
                     <li title="{{org}}">
-                        {% thumbnail org.logo "50x50" colorspace="GRAY" crop="left" as im_nb %}
-                        {% thumbnail org.logo "50x50" crop="left" as im_color %}
-                            <div class="org_icon">
-                                <a href="{{org.get_absolute_url}}">
+
+                        <div class="org_icon">
+                            <a href="{{org.get_absolute_url}}">
+
+                            {% thumbnail org.logo "50x50" colorspace="GRAY" crop="left" as im_nb %}
                                 <img src="{{ im_nb.url }}" width="{{ im_nb.width }}" height="{{ im_nb.height }}"></a>
-                                <div class="fade">
-                                    <a href="{{org.get_absolute_url}}">
+                            {% empty %}
+                                <img src="{{STATIC_URL}}img/groupe_light.jpg" height="50" widh="50"/>
+                            {% endthumbnail %}
+                            <div class="fade">
+                                <a href="{{org.get_absolute_url}}">
+                                {% thumbnail org.logo "50x50" crop="left" as im_color %}  
                                     <img src="{{ im_color.url }}" width="{{ im_color.width }}" height="{{ im_color.height }}">
-                                    </a>
-                                </div>
+                                {% empty %}
+                                    <img src="{{STATIC_URL}}img/groupe.jpg" height="50" widh="50"/>
+                                {% endthumbnail %}
+                                </a>
                             </div>
-                        {% endthumbnail %}
-                        {% endthumbnail %}
+                        </div>
                         </a>
                     </li>
                 {% endfor %}</ul>    
