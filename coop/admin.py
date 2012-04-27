@@ -137,7 +137,7 @@ class URLFieldWidget(AdminURLFieldWidget):
         widget = super(URLFieldWidget, self).render(name, value, attrs)
         return mark_safe(u'%s&nbsp;&nbsp;<a href="#" onclick="window.'
                          u'open(document.getElementById(\'%s\')'
-                         u'.value);return false;" />Ì†ºÌºè</a>' % (widget, attrs['id']))
+                         u'.value);return false;" />Afficher</a>' % (widget, attrs['id']))
 
 
 class BaseEngagementInline(InlineAutocompleteAdmin):
@@ -249,6 +249,7 @@ def create_action(category):
     name = "cat_%s" % (category.slug,)
     return (name, (add_cat, name, _(u'Add to the "%s" category') % (category,)))
 
+
 class BaseOrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
     form = BaseOrganizationAdminForm
     list_display = ('logo_thumb', 'title', 'active', 'has_description',)
@@ -318,26 +319,27 @@ from django_extensions.admin import ForeignKeyAutocompleteAdmin
 class BasePersonAdmin(ForeignKeyAutocompleteAdmin):
     # model is not given because the coop_local "true" model will override this
     form = BaseMemberAdminForm
-    list_display = ('last_name','first_name','email','structure','has_user_account','has_role')
+    list_display = ('last_name', 'first_name', 'email', 'structure', 'has_user_account', 'has_role')
     list_filter = ('category',)
-    list_display_links =('last_name','first_name')
-    search_fields = ('last_name','first_name','email','structure')    
+    list_display_links = ('last_name', 'first_name')
+    search_fields = ('last_name', 'first_name', 'email', 'structure')    
     ordering = ('last_name',)
     #inlines = [BaseEngInitInline,]
+
     def get_actions(self, request):
-        myactions = dict(create_action(s) for s in get_model('coop_local','PersonCategory').objects.all())
-        return dict(myactions, **super(BasePersonAdmin, self).get_actions(request))#merging two dicts
+        myactions = dict(create_action(s) for s in get_model('coop_local', 'PersonCategory').objects.all())
+        return dict(myactions, **super(BasePersonAdmin, self).get_actions(request))  # merging two dicts
     
     fieldsets = (
         (None, {
-            'fields' : (('first_name','last_name'),
+            'fields': (('first_name', 'last_name'),
                         'email',
                         'category'
                         ),
             }),
         ('Notes', {
             'classes': ('collapse',),
-            'fields': ('structure','notes',)
+            'fields': ('structure', 'notes',)
         })
     )
 
@@ -347,11 +349,10 @@ from django.contrib.admin.util import get_model_from_relation
 from django.db.models import Count
 
 
-if "coop_tag" in settings.INSTALLED_APPS :
+if "coop_tag" in settings.INSTALLED_APPS:
 
     #from taggit.managers import TaggableManager
     from taggit_autosuggest.managers import TaggableManager
-    from coop_tag.models import Ctag
 
     class TaggitFilterSpec(RelatedFilterSpec):
         """
@@ -373,7 +374,7 @@ if "coop_tag" in settings.INSTALLED_APPS :
                 # no direct field on this model, get name from other model
                 self.lookup_title = other_model._meta.verbose_name
             else:
-                self.lookup_title = f.verbose_name # use field name
+                self.lookup_title = f.verbose_name  # use field name
             rel_name = other_model._meta.pk.name
             self.lookup_kwarg = '%s__%s__exact' % (self.field_path, rel_name)
             self.lookup_kwarg_isnull = '%s__isnull' % (self.field_path)
@@ -396,7 +397,3 @@ if "coop_tag" in settings.INSTALLED_APPS :
     # to be picked as a RelatedFilterSpec
     FilterSpec.filter_specs.insert(0, (lambda f: isinstance(f, TaggableManager),
         TaggitFilterSpec))
-    
-    
-
-
