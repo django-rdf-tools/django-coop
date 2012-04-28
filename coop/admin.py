@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from django.contrib import admin
 from coop.org.models import BaseEngagement, BaseRelation
+from coop.person.models import BasePerson
 from coop.exchange.models import BaseExchange, BasePaymentModality, BaseTransaction, BaseProduct
 from django.db import models
 from django import forms
@@ -224,14 +225,6 @@ class BaseOrganizationAdminForm(forms.ModelForm):
           | Q(id__in=member_locations_id)
             )
 
-class BaseMemberAdminForm(forms.ModelForm):
-    # category = chosenforms.ChosenModelMultipleChoiceField(
-    #         required=False,
-    #         overlay=_(u"Choose one or more categories"),
-    #         queryset=get_model('coop_local','PersonCategory').objects.all())    
-    class Meta:
-        widgets = {'category': chosenwidgets.ChosenSelectMultiple()}
-
 
 class BaseExchangeAdmin(ForeignKeyAutocompleteAdmin):  # AdminImageMixin, 
     fieldsets = ((None, {
@@ -311,20 +304,29 @@ class BaseOrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
 
     class Media:
         js = ('/static/js/admin_customize.js',)
+ 
+
+class BasePersonAdminForm(forms.ModelForm):
+    # model = BasePerson
+    # category = chosenforms.ChosenModelMultipleChoiceField(
+    #         required=False,
+    #         overlay=_(u"Choose one or more categories"),
+    #         queryset=get_model('coop_local', 'PersonCategory').objects.all())    
+    class Meta:
+        widgets = {'category': chosenwidgets.ChosenSelectMultiple()}
 
 
-from django_extensions.admin import ForeignKeyAutocompleteAdmin
-        
-
-class BasePersonAdmin(ForeignKeyAutocompleteAdmin):
-    # model is not given because the coop_local "true" model will override this
-    form = BaseMemberAdminForm
+class BasePersonAdmin(ForeignKeyAutocompleteAdmin):  # FkAutocompleteAdmin too but...
+    form = BasePersonAdminForm
     list_display = ('last_name', 'first_name', 'email', 'structure', 'has_user_account', 'has_role')
     list_filter = ('category',)
     list_display_links = ('last_name', 'first_name')
     search_fields = ('last_name', 'first_name', 'email', 'structure')    
     ordering = ('last_name',)
-    #inlines = [BaseEngInitInline,]
+    # inlines = [ContactInline,
+    #             OrgInline,
+    #             SeeAlsoInline,
+    #             ]
 
     def get_actions(self, request):
         myactions = dict(create_action(s) for s in get_model('coop_local', 'PersonCategory').objects.all())

@@ -6,7 +6,7 @@
 <script type="text/javascript">
 //$(document).ready(function() {
 (function($){ 
-    // Show lookup input
+    // Show lookup input (nolookups)
     $("#lookup_{{ name }}").show();
     function reset() {
         $('#id_{{ name }}').val('');
@@ -57,5 +57,6 @@
         }
     }
     timeout = window.setInterval(check, 300);
-});
+})(django.jQuery);
+//}); // domguard : use django admin jQuery version
 </script>
