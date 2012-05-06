@@ -34,10 +34,10 @@ setup(
     zip_safe=False,
     install_requires = ['south==0.7.3',
                         'sorl-thumbnail==11.09',
-                        'django-extensions==0.6',
-                        'django-admin-tools==0.4.1',
+                        #'django-extensions==0.8',  # waiting for pull request, git://github.com/quinode/django-extensions.git@use_admin.jquery
+                        #'django-admin-tools==0.4.1', # for 1.4 : https://bitbucket.org/psyton/django-admin-tools
                         #'django-haystack==1.2.6',
-                        #'djangoembed==0.1.1', # plutot via github
+                        #'djangoembed==0.1.1', # plutot via github: https://github.com/ericflo/django-oembed
                         ],
     long_description = open('README.rst').read(),
     url = 'https://github.com/quinode/django-coop/',

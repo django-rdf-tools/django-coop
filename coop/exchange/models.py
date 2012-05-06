@@ -3,7 +3,6 @@ from django.db import models
 from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
-import datetime
 from django.core.urlresolvers import reverse
 from decimal import Decimal
 from django.conf import settings
@@ -32,7 +31,7 @@ class BasePaymentModality(models.Model):
                                                 default=MODALITIES.CURR)
     amount = models.DecimalField(_(u'amount'), max_digits=12, decimal_places=2, default=Decimal(0.00), blank=True)
     unit = models.PositiveSmallIntegerField(_(u'unit'), blank=True, null=True, choices=UNITS.CHOICES)
-    
+
     def __unicode__(self):
         if(self.modality in [1, 2]):
             return unicode(MODALITIES.CHOICES_DICT[self.modality])
@@ -46,7 +45,7 @@ class BasePaymentModality(models.Model):
             self.amount = Decimal(0.00)
             self.unit = None
         super(BasePaymentModality, self).save(*args, **kwargs) 
-                
+
     class Meta:
         abstract = True
         verbose_name = _(u'Payment modality')
@@ -74,7 +73,7 @@ class BaseProduct(URIModel):
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
     uri = models.CharField(_(u'main URI'), blank=True, max_length=250, editable=False)
     publisher_uri = models.CharField(_(u'publisher URI'), blank=True, max_length=200, editable=False)
-    
+
     @property
     def uri_id(self):
         return self.id
@@ -102,7 +101,6 @@ class BaseExchange(URIModel):
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
     products = models.ManyToManyField('coop_local.Product', verbose_name=_('linked products'))
-    
     uri = models.CharField(_(u'main URI'), blank=True, max_length=250, editable=False)
     author_uri = models.CharField(_(u'author URI'), blank=True, max_length=200, editable=False)
     publisher_uri = models.CharField(_(u'publisher URI'), blank=True, max_length=200, editable=False)
@@ -112,13 +110,13 @@ class BaseExchange(URIModel):
     if "coop_geo" in settings.INSTALLED_APPS:
         location = models.ForeignKey(Location, null=True, blank=True, verbose_name=_(u'location'))
         area = models.ForeignKey(Area, null=True, blank=True, verbose_name=_(u'area'))    
-    
+
     def __unicode__(self):
         return unicode(self.title)
 
     def get_absolute_url(self):
         return reverse('annonce_detail', args=[self.uuid])
-        
+
     #TODO assign the record to the person editing it (form public) and provide an A-C choice in admin
 
     @property
@@ -130,7 +128,7 @@ class BaseExchange(URIModel):
         abstract = True
         verbose_name = _(u'Exchange')
         verbose_name_plural = _(u'Exchanges')
-       
+
 
 class BaseTransaction(models.Model):
     origin = models.ForeignKey('coop_local.Exchange', related_name='origin', verbose_name=_(u'origin'))
@@ -142,10 +140,10 @@ class BaseTransaction(models.Model):
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
     uuid = exfields.UUIDField()  # nécessaire pour URI ?
-    
+
     def __unicode__(self):
         return self.title
-        
+
     class Meta:
         abstract = True
         verbose_name = _(u'Transaction')

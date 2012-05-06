@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<p>people!</p>
+<p>username: {{ username }}</p>
+<p>user: {{ webiduser.username }}</p>
+<p>person_id: {{ person_id }}</p>
+<p>profile uri: <a href="{{ profileuri }}">{{ n3uri }}</a></p>
+<pre>
+{{ rdfgraph|safe }}</pre>
+
+{% endblock %}

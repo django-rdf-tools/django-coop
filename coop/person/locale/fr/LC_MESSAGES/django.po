@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop.Contact\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-11 18:45+0200\n"
-"PO-Revision-Date: 2012-02-16 23:41+0100\n"
+"POT-Creation-Date: 2012-05-02 09:18+0000\n"
+"PO-Revision-Date: 2012-05-02 18:48+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
 "Language: \n"
@@ -49,7 +49,7 @@ msgstr "Catégories de personnes"
 
 #: models.py:35
 msgid "django user"
-msgstr "compte utilisateur"
+msgstr "compte actif"
 
 #: models.py:39
 msgid "category"
@@ -105,7 +105,7 @@ msgstr "Personnes"
 
 #: models.py:74
 msgid "django account"
-msgstr "compte utilisateur django"
+msgstr "compte django"
 
 #: models.py:79
 msgid "has organization"

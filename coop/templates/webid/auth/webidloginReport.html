@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+{% comment %}
+See:
+
+http://www.w3.org/2005/Incubator/webid/wiki/Test_Suite
+http://www.w3.org/TR/EARL10-Guide/
+http://infomesh.net/2001/05/earl/model/primer/
+{% endcomment %}
+
+<rdf:RDF
+	xmlns:earl="http://www.w3.org/ns/earl#"
+	xmlns:foaf="http://xmlns.com/foaf/0.1/"
+	xmlns:dct="http://purl.org/dc/terms/"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+	xmlns:rsa="http://www.w3.org/ns/auth/rsa#" 
+	xmlns:cert="http://www.w3.org/ns/auth/cert#" 
+	xmlns:owl="http://www.w3.org/2002/07/owl#" 
+	xmlns:webid="http://www.w3.org/2005/Incubator/webid/earl/RelyingParty#" 
+	xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!-- Assertor -->
+{% comment %}
+Should be earl:Software???
+{% endcomment %}
+
+<rdf:Description rdf:nodeID="python-webid-validator">
+    <rdf:type rdf:resource="http://www.w3.org/ns/earl#Assertor"/>
+    <dct:title xml:lang="en">Python WebID validator</dct:title>
+    <dct:description xml:lang="en">Python WebID validator.</dct:description>
+    {% comment %}
+    is it more correct if the assertor is the service???
+    -- USE DOAP http://www.w3.org/TR/EARL10-Schema/#Software
+    {% endcomment %}
+    <dct:hasVersion>0.1</dct:hasVersion>
+ </rdf:Description>
+
+{% comment %}
+MISSING:
+verificationTimestamp
+Loop over all possible subjects/pointers before describing assertions about tests
+{% endcomment %}
+
+ <!-- Certificate -->
+ <rdf:Description rdf:nodeID="{{ webidinfo.cert.id_uuid }}">
+  <rdf:type rdf:resource="http://www.w3.org/ns/auth/cert#Certificate"/>
+  <cert:principal_key rdf:nodeID="{{ webidinfo.cert.pubkey.id_uuid }}"/>
+  <cert:base64der>{{ webidinfo.cert.b64der }}</cert:base64der>
+ </rdf:Description>
+
+ <!-- RSAPublic Key -->
+ <rdf:Description rdf:nodeID="{{ webidinfo.cert.pubkey.id_uuid }}">
+  <rdf:type rdf:resource="http://www.w3.org/ns/auth/rsa#RSAPublicKey"/>
+  {% comment %}missing cert:identity???{% endcomment %}
+  <rsa:modulus rdf:datatype="http://www.w3.org/ns/auth/cert#hex">{{ webidinfo.cert.get_mod }}</rsa:modulus>
+  <rsa:public_exponent rdf:datatype="http://www.w3.org/ns/auth/cert#int">{{ webidinfo.cert.get_exp }}</rsa:public_exponent>
+ </rdf:Description>
+
+
+ <!-- RSAPublic Key(s) in WebID profile -->
+ {% for pubkey in webidinfo.all_webidkeys %}
+ <rdf:Description rdf:nodeID="{{ pubkey.id_uuid }}">
+  <rdf:type rdf:resource="http://www.w3.org/ns/auth/rsa#RSAPublicKey"/>
+  <rsa:modulus rdf:datatype="http://www.w3.org/ns/auth/cert#hex">{{ pubkey.mod }}</rsa:modulus>
+  <rsa:public_exponent rdf:datatype="http://www.w3.org/ns/auth/cert#int">{{ pubkey.exp }}</rsa:public_exponent>
+  {% ifequal webidinfo.cert.pubkey pubkey %}<owl:sameas rdf:nodeID="{{ webidinfo.cert.pubkey.id_uuid }}"/>{% endifequal %}
+ </rdf:Description>
+
+ <rdf:Description rdf:nodeID="{{ pubkey.id_uuid }}-serialized-xml">
+  <owl:sameAs rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">{{ pubkey.to_rdf }}</owl:sameAs>
+ </rdf:Description>
+
+ {% endfor %}
+
+  {% comment %}
+ 1) We SHOULD include ONLY the relevant portions of the WebIDProfile document 
+ 2) we should link to a resource dscription using rdf http voc. 
+ {% endcomment %}
+
+ {% for profile in webidinfo.all_profiles %}
+ <!-- profile: escaped rdf+xml XMLLiteral -->
+ <rdf:Description rdf:nodeID="{{ profile.rawprofile.id_uuid }}">
+ {% comment %} should we include the URI here somehow??? {% endcomment %}
+  <owl:sameAs rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">{{ profile.rawprofile.dump }}</owl:sameAs>
+ </rdf:Description>
+ {% endfor %}
+
+ {% for webidclaim in webidinfo.all_webidclaims %}
+
+ <!--WebIDClaimedIdentity -->
+ <rdf:Description rdf:nodeID="{{ webidclaim.id_uuid }}">
+  <rdf:type rdf:resource="http://www.w3.org/2005/Incubator/webid/earl/RelyingParty#WebIDClaim"/>
+  {% comment %}
+  XXX WE ARE MISSING earl:subject
+  {% endcomment %}
+  <webid:claimedKey rdf:nodeID="{{ webidclaim.pubkey.id_uuid }}"/>
+  {% comment %}
+  XXX FIXME ##!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  XXX FIXME if the claimed key matches the cert rsa key, we should point there (to that uuid)
+  XXX FIXME !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  if not, we should add a RSAPubKey block here. Hmm or can we say something like owl:sameAs
+  {% endcomment %}
+  <webid:claimedIdentity rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">{{ webidclaim.claimedURI }}</webid:claimedIdentity>
+ </rdf:Description>
+ {% endfor %}
+
+ <!-- Test RESULTS (Assertion-Result Pairs)  -->
+
+{% for test in webidinfo.testbed.tests %}
+ {% for result in test.results %}
+ <!-- Test: {{ test.name }} -->
+ <rdf:Description rdf:nodeID="{{ test.id_uuid }}">
+  <rdf:type rdf:resource="http://www.w3.org/ns/earl#Assertion"/>
+  {% if result.subject %}<earl:subject rdf:nodeID="{{ result.subject.id_uuid }}{% if result.xmlserialized %}-serialized-xml{% endif %}"/>{% endif %}
+  <earl:test rdf:resource="http://www.w3.org/2005/Incubator/webid/earl/RelyingParty#{{ test.name }}"/>
+  <earl:result rdf:nodeID="{{ result.id_uuid }}"/>
+  <earl:assertedBy rdf:nodeID="python-webid-validator"/>
+ </rdf:Description>
+ <rdf:Description rdf:nodeID="{{ result.id_uuid }}">
+  <rdf:type rdf:resource="http://www.w3.org/ns/earl#TestResult"/>
+  <dc:description>{{ test.description }}</dc:description>
+  {% if result.details %}<earl:info rdf:parseType="Literal" xml:lang="en">"{{ result.details }}"</earl:info>{% endif %}
+  {% comment %}Info in Human-Readable form!!!{% endcomment %}
+  <earl:outcome rdf:resource="http://www.w3.org/ns/earl#{% if result.passed %}passed{% else %}failed{% endif %}"/>
+  {% comment %}
+  add other things: testMode (auto); outcome: notTested / cantTell
+  missing: TIMESTAMPS
+  {% endcomment %}{% if result.pointer %}{% if result.pointer.id_uuid %}<earl:pointer rdf:nodeID="{{ result.pointer.id_uuid }}{% if result.xmlserialized %}-serialized-xml{% endif %}"/>{% else %}<earl:pointer rdf:parseType="Literal">{{ result.pointer }}</earl:pointer>{% endif %}{% endif %}
+ </rdf:Description>
+ {% endfor %}
+{% endfor %}
+
+</rdf:RDF>

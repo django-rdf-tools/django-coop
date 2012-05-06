@@ -19,8 +19,8 @@ class CustomMenu(Menu):
     def __init__(self, **kwargs):
         Menu.__init__(self, **kwargs)
         self.children += [
-            items.MenuItem(_('Dashboard'), reverse('admin:index')),
-            items.Bookmarks(),
+            #items.MenuItem(_('Dashboard'), reverse('admin:index')),
+            items.Bookmarks('Favoris'),
             items.AppList(
                 _('Applications'),
                 exclude=('django.contrib.*', 'oembed.*', 'taggit.*')

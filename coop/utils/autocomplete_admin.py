@@ -100,7 +100,8 @@ class FkSearchInput(ForeignKeyRawIdWidget):
         obj = self.rel.to._default_manager.get(**{key: value})
         return truncate_words(obj, 14)
 
-    def __init__(self, rel, search_fields, attrs=None):
+    def __init__(self, rel, admin_site, search_fields, attrs=None):  # ajout 1.4
+    #def __init__(self, rel, search_fields, attrs=None):
         self.search_fields = search_fields
         super(FkSearchInput, self).__init__(rel, attrs)
 
@@ -178,7 +179,9 @@ class NoLookupsForeignKeySearchInput(ForeignKeyRawIdWidget):
         obj = self.rel.to._default_manager.get(**{key: value})
         return truncate_words(obj, 14)
 
-    def __init__(self, rel, search_fields, attrs=None):
+
+    #def __init__(self, rel, search_fields, attrs=None):
+    def __init__(self, rel, admin_site, search_fields, attrs=None):  # ajout 1.4
         self.search_fields = search_fields
         super(NoLookupsForeignKeySearchInput, self).__init__(rel, attrs)
 
@@ -243,7 +246,7 @@ class InlineSearchInput(ForeignKeyRawIdWidget):
             'all': ('autocomplete/css/jquery.autocomplete.css',)
         }
         js = (
-            #'autocomplete/js/jquery.js',
+            #'autocomplete/js/jquery.js', # plus besoin avec 1.3 et django.jQuery
             'autocomplete/js/jquery.bgiframe.min.js',
             'autocomplete/js/jquery.ajaxQueue.js',
             'autocomplete/js/jquery.autocomplete.js',
@@ -254,9 +257,11 @@ class InlineSearchInput(ForeignKeyRawIdWidget):
         obj = self.rel.to._default_manager.get(**{key: value})
         return truncate_words(obj, 14)
 
-    def __init__(self, rel, search_fields, attrs=None):
+    #def __init__(self, rel, admin_site, attrs=None, using=None):
+    def __init__(self, rel, admin_site, search_fields, attrs=None, using=None):  # ajout 1.4
         self.search_fields = search_fields
-        super(InlineSearchInput, self).__init__(rel, attrs)
+        super(InlineSearchInput, self).__init__(rel, admin_site, attrs)  # ajout 1.4
+
 
     def render(self, name, value, attrs=None):
         if attrs is None:
@@ -663,7 +668,7 @@ class InlineAutocompleteAdmin(admin.TabularInline):
             help_text = self.get_help_text(db_field.name, model_name)
             if kwargs.get('help_text'):
                 help_text = u'%s %s' % (kwargs['help_text'], help_text)
-            kwargs['widget'] = InlineSearchInput(db_field.rel,
+            kwargs['widget'] = InlineSearchInput(db_field.rel, self.admin_site,  # ajout 1.4
                                     self.related_search_fields[db_field.name])
             kwargs['help_text'] = help_text
         return super(InlineAutocompleteAdmin,

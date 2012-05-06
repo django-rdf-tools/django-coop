@@ -1,0 +1,19 @@
+{% extends "django_webid/auth/base_site.html" %}
+
+{% load i18n %}
+
+{% block extra_head_base %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}django_webid/auth/css/site_tabs.css" />
+    {% block extra_head %}{% endblock %}
+{% endblock %}
+
+{% block login %}
+{% include "django_webid/auth/login_header.html" %}
+{% endblock %}
+
+{% block footer %}
+Powered by django. (c) 2012 Cooperative Quinode / RhizoLabs.
+{% endblock %}
+{% block extra_body_base %}
+    {% block extra_body %}{% endblock %}
+{% endblock %}

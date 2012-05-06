@@ -1,0 +1,74 @@
+{% load i18n %}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}" xml:lang="{{ LANGUAGE_CODE }}" lang="{{ LANGUAGE_CODE }}">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>{% if SITE_NAME %}{{ SITE_NAME }} : {% endif %}{% block head_title %}{% endblock %}</title>
+        <!--[if IE]><style>
+            div {
+                zoom: 1; /* trigger hasLayout */
+            }
+        </style><![endif]-->
+        <link rel="stylesheet" href="{{ STATIC_URL }}django_webid/auth/css/base.css" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}django_webid/auth/css/tabs.css" />
+	{% block javascript %}
+	<script src="{{ STATIC_URL }}django_webid/auth/js/jquery-1.7.min.js" type="text/javascript"></script>
+	{% endblock %}
+        {% if LANGUAGE_BIDI %}
+        <style type="text/css" media="screen">
+            div.right_panel {
+                float: left; /* hotfix for sidebar */
+            }
+        </style>
+        {% endif %}
+        {% block extra_head_base %}
+		{% block extra_head %}
+		{% endblock %}
+        {% endblock %}
+    </head>
+    
+    
+    <body>
+        <div class="body_wrapper">
+	{% block tabhead %}
+        <div id="tabhead">
+            <div class="logo" dir="ltr">{% block logo_link_image %}{% endblock %}
+		    {# XXX get site Name #}
+		    <h2><a href="/">Django WebID Auth</a></h2>
+            </div>
+            <div class="login">{% block login %}{% endblock %}{% block locale_switcher %}{% endblock %}<div style="text-align: right;"></div></div>
+            <div class="tabs" {% block tab_id %}{% endblock %}>{% block tabs %}{% endblock %}</div>
+            <div class="right_tab" {% block rtab_id %}{% endblock %}>{% block right_tab %}{% endblock %}</div>
+        </div>
+	{% endblock tabhead %}
+        
+        <div id="body" class="wrapper">
+	<div id="subnav" class="clearfix">{% block subnav %}{% endblock %}</div>
+
+	    {% block content %}
+            {% block body %}
+            {% if messages %}
+                <ul id="messages">
+                    {% for message in messages %}
+                    <li id="message_{{ forloop.counter }}"><a href="#" onclick="$('#message_{{ forloop.counter }}').fadeOut(); return false;"><small>{% trans "clear" %}</small></a> {{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            
+            {% endblock %}
+	    {% endblock %}
+            
+        </div>
+        
+            <div class="disclaimer">{% block disclaimer%}{% endblock %}</div>
+            
+        </div>
+	{% comment %}
+        <div class="footerblock">{% block footerblock %}{% endblock %}</div>
+	{% endcomment %}
+        </div> {# body_wrapper #}
+        {% block extra_body_base %}
+            {% block extra_body %}{% endblock %}
+        {% endblock %}
+        <div class="footer">{% block footer %}{% endblock %}</div>
+    </body>
+</html>
