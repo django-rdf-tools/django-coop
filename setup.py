@@ -11,14 +11,16 @@ except ImportError:
 VERSION = __import__('coop').__version__
 
 import os
+
+
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(
-    name='django-coop',
+    name = 'django-coop',
     version = VERSION,
-    description='A basis for a cooperative organization directory, with people, organization, offers.',
-    packages=[  'coop',
+    description = 'A basis for a cooperative organization directory, with people, organization, offers.',
+    packages = ['coop',
                 'coop.exchange',
                 'coop.link',
                 'coop.org',
@@ -27,11 +29,11 @@ setup(
                 'coop.templatetags',
                 'coop.utils',
                 ],
-    include_package_data=True,
-    author='Cooperative Quinode',
-    author_email='contact@quinode.fr',
-    license='BSD',
-    zip_safe=False,
+    include_package_data = True,
+    author = 'Cooperative Quinode',
+    author_email = 'contact@quinode.fr',
+    license = 'BSD',
+    zip_safe = False,
     install_requires = ['south==0.7.3',
                         'sorl-thumbnail==11.09',
                         #'django-extensions==0.8',  # waiting for pull request, git://github.com/quinode/django-extensions.git@use_admin.jquery
@@ -57,4 +59,3 @@ setup(
     ],
 
 )
-
