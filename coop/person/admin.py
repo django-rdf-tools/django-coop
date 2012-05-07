@@ -1,8 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.contrib import admin
-from coop.exchange.models import BaseExchange, BasePaymentModality, BaseTransaction, BaseProduct
 from django import forms
-from django.conf import settings
 from coop.org.admin import create_action, ContactInline, OrgInline
 from django.db.models.loading import get_model
 
@@ -15,7 +13,8 @@ class BasePersonAdminForm(forms.ModelForm):
     # category = chosenforms.ChosenModelMultipleChoiceField(
     #         required=False,
     #         overlay=_(u"Choose one or more categories"),
-    #         queryset=get_model('coop_local', 'PersonCategory').objects.all())    
+    #         queryset=get_model('coop_local', 'PersonCategory').objects.all())  
+
     class Meta:
         widgets = {'category': chosenwidgets.ChosenSelectMultiple()}
 

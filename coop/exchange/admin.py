@@ -65,5 +65,3 @@ class BaseExchangeAdmin(ForeignKeyAutocompleteAdmin):  # AdminImageMixin,
             PaymentInline,
             LocatedInline,  # Using coop-geo
         ]
-
-
