@@ -109,7 +109,7 @@ class BaseExchange(URIModel):
     description = models.TextField(_(u'description'), blank=True)
     organization = models.ForeignKey('coop_local.Organization', blank=True, null=True, 
                             verbose_name=_('publisher'), related_name='exchanges')
-    person = models.ForeignKey('coop_local.Person', blank=True, null=True, editable=False, verbose_name=_(u'person'))
+    person = models.ForeignKey('coop_local.Person', blank=True, null=True, verbose_name=_(u'person'))
     etype = models.PositiveSmallIntegerField(_(u'exchange type'), choices=EXCHANGE.CHOICES)
     # category = models.ForeignKey(ExchangeCategory, null=True, blank=True,
     #                             verbose_name=_(u"exchange type"))  # TODO rendre obligatoire ensuite

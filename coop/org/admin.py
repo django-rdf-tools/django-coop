@@ -79,7 +79,6 @@ class OrgInline(InlineAutocompleteAdmin):
 
 
 class OrganizationAdminForm(forms.ModelForm):
-    change_form_template = 'admintools_bootstrap/tabbed_change_form.html' 
     description = forms.CharField(widget=AdminTinyMCE(attrs={'cols': 80, 'rows': 60}))
 
     class Meta:
@@ -117,6 +116,7 @@ def create_action(category):
 
 
 class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
+    change_form_template = 'admintools_bootstrap/tabbed_change_form.html' 
     form = OrganizationAdminForm
     list_display = ['logo_thumb', 'title', 'active', 'has_description', 'has_location']
     list_display_links = ['title', ]
