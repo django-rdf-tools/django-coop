@@ -38,7 +38,7 @@ class ExchangeInline(admin.StackedInline):
     #class Media: js = ('js/expiration.js',)
 
 
-class BaseProductInline(admin.StackedInline):
+class ProductInline(admin.StackedInline):
     model = BaseProduct
     fieldsets = ((None, {'fields': ('title',
                                     'description',
@@ -46,7 +46,7 @@ class BaseProductInline(admin.StackedInline):
     extra = 1
 
 
-class BaseTransactionInline(admin.StackedInline):
+class TransactionInline(admin.StackedInline):
     model = BaseTransaction
     fk_name = 'destination_org'
     fieldsets = ((None, {'fields': ('title', 'origin', 'description')}),)
@@ -54,7 +54,7 @@ class BaseTransactionInline(admin.StackedInline):
     extra = 1
 
 
-class BaseExchangeAdmin(ForeignKeyAutocompleteAdmin):  # AdminImageMixin,
+class ExchangeAdmin(ForeignKeyAutocompleteAdmin):  # AdminImageMixin,
     fieldsets = ((None, {
             'fields': (('etype', 'permanent', 'expiration', ), 'title', 'description',
                        'organization'

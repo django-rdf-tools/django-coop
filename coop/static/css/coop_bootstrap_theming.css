@@ -144,6 +144,13 @@ div.controls > input{
 	float: left;
 }
 
+/* WTF ??*/
+input{
+	height: 2em;
+}
+
+
+
 label.control-label.inline{
 	padding-right: 15px;
 }

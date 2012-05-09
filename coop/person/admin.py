@@ -8,7 +8,7 @@ from chosen import widgets as chosenwidgets
 from django_extensions.admin import ForeignKeyAutocompleteAdmin
 
 
-class BasePersonAdminForm(forms.ModelForm):
+class PersonAdminForm(forms.ModelForm):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html' 
     # category = chosenforms.ChosenModelMultipleChoiceField(
     #         required=False,
@@ -19,8 +19,9 @@ class BasePersonAdminForm(forms.ModelForm):
         widgets = {'category': chosenwidgets.ChosenSelectMultiple()}
 
 
-class BasePersonAdmin(ForeignKeyAutocompleteAdmin):  # FkAutocompleteAdmin too but...
-    form = BasePersonAdminForm
+class PersonAdmin(ForeignKeyAutocompleteAdmin):  # FkAutocompleteAdmin too but...
+    form = PersonAdminForm
+    search_fields = ['last_name', 'first_name', 'email']
     list_display = ('last_name', 'first_name', 'email', 'structure', 'has_user_account', 'has_role')
     list_filter = ('category',)
     list_display_links = ('last_name', 'first_name')
@@ -33,7 +34,7 @@ class BasePersonAdmin(ForeignKeyAutocompleteAdmin):  # FkAutocompleteAdmin too b
 
     def get_actions(self, request):
         myactions = dict(create_action(s) for s in get_model('coop_local', 'PersonCategory').objects.all())
-        return dict(myactions, **super(BasePersonAdmin, self).get_actions(request))  # merging two dicts
+        return dict(myactions, **super(PersonAdmin, self).get_actions(request))  # merging two dicts
     
     fieldsets = (
         (None, {

@@ -78,7 +78,7 @@ class OrgInline(InlineAutocompleteAdmin):
     extra = 1
 
 
-class BaseOrganizationAdminForm(forms.ModelForm):
+class OrganizationAdminForm(forms.ModelForm):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html' 
     description = forms.CharField(widget=AdminTinyMCE(attrs={'cols': 80, 'rows': 60}))
 
@@ -87,7 +87,7 @@ class BaseOrganizationAdminForm(forms.ModelForm):
         widgets = {'category': chosenwidgets.ChosenSelectMultiple()}
 
     def __init__(self, *args, **kwargs):
-        super(BaseOrganizationAdminForm, self).__init__(*args, **kwargs)
+        super(OrganizationAdminForm, self).__init__(*args, **kwargs)
         engagements = self.instance.engagement_set.all()
         members_id = engagements.values_list('person_id', flat=True)
         print members_id
@@ -116,8 +116,8 @@ def create_action(category):
     return (name, (add_cat, name, _(u'Add to the "%s" category') % (category,)))
 
 
-class BaseOrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
-    form = BaseOrganizationAdminForm
+class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
+    form = OrganizationAdminForm
     list_display = ['logo_thumb', 'title', 'active', 'has_description', 'has_location']
     list_display_links = ['title', ]
     search_fields = ['title', 'subtitle', 'description']
@@ -158,13 +158,13 @@ class BaseOrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
 
     def get_actions(self, request):
         myactions = dict(create_action(s) for s in get_model('coop_local', 'OrganizationCategory').objects.all())
-        return dict(myactions, **super(BaseOrganizationAdmin, self).get_actions(request))  # merging two dicts
+        return dict(myactions, **super(OrganizationAdmin, self).get_actions(request))  # merging two dicts
         #list_display = ['my_image_thumb', 'my_other_field1', 'my_other_field2', ] ???
 
     def get_form(self, request, obj=None, **kwargs):
         # just save obj reference for future processing in Inline
         request._obj_ = obj
-        return super(BaseOrganizationAdmin, self).get_form(request, obj, **kwargs)
+        return super(OrganizationAdmin, self).get_form(request, obj, **kwargs)
 
     def logo_thumb(self, obj):
         if obj.logo:
