@@ -23,7 +23,7 @@ class CustomMenu(Menu):
             items.Bookmarks('Favoris'),
             items.AppList(
                 _('Applications'),
-                exclude=('django.contrib.*', 'oembed.*', 'taggit.*')
+                exclude=('django.contrib.*', 'oembed.*', 'taggit.*', 'coop_cms.*')
             ),
             items.AppList(
                 _('Administration'),

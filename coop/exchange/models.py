@@ -52,6 +52,22 @@ class BasePaymentModality(models.Model):
         verbose_name_plural = _(u'Payment modalities')
 
 
+class ExchangeCategory(models.Model):
+    label = models.CharField(max_length=60, verbose_name=_(u"label"))
+    slug = exfields.AutoSlugField(populate_from=('label'))
+
+    class Meta:
+        ordering = ['label']
+        verbose_name = _(u'Exchange Category')
+        verbose_name_plural = _(u'Exchange Categories')
+
+    def __unicode__(self):
+        return unicode(self.label)
+
+    # def get_absolute_url(self):
+    #     return reverse('location_category', args=[self.slug])
+
+
 EXCHANGE = Choices(
     ('P_OFFER',   1,  _(u'Product Offer')),
     ('S_OFFER',   2,  _(u'Service Offer')),
@@ -95,6 +111,8 @@ class BaseExchange(URIModel):
                             verbose_name=_('publisher'), related_name='exchanges')
     person = models.ForeignKey('coop_local.Person', blank=True, null=True, editable=False, verbose_name=_(u'person'))
     etype = models.PositiveSmallIntegerField(_(u'exchange type'), choices=EXCHANGE.CHOICES)
+    # category = models.ForeignKey(ExchangeCategory, null=True, blank=True,
+    #                             verbose_name=_(u"exchange type"))  # TODO rendre obligatoire ensuite
     permanent = models.BooleanField(_(u'permanent'), default=True)
     expiration = models.DateField(_(u'expiration'), blank=True, null=True)
     slug = exfields.AutoSlugField(populate_from='title')

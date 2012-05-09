@@ -28,7 +28,8 @@ setup(
                 'coop.person',
                 'coop.templatetags',
                 'coop.utils',
-                'coop.webid'
+                'coop.webid',
+                'coop.ui',
                 ],
     include_package_data = True,
     author = 'Cooperative Quinode',

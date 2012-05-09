@@ -74,6 +74,10 @@ div.inline-group{
 	position: relative;
 }
 
+div.control-group{
+	clear: both;
+}
+
 div.inline-group h3{
 	font-size: 23px;
 	color: #868787;
@@ -163,6 +167,11 @@ div.tab-content{
 
 .accordion{
 	background-color: transparent;
+}
+
+/* coop-cms */
+
+button#add-object{
 }
 
 

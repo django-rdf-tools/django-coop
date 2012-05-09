@@ -1,0 +1,75 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: coop.ui\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-05-09 15:42+0000\n"
+"PO-Revision-Date: 2012-05-09 18:03+0100\n"
+"Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
+"Language-Team: Quinode <contact@quinode.fr>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+
+#: dashboard.py:32
+msgid "Quick links"
+msgstr "Liens rapides"
+
+#: dashboard.py:38
+msgid "Return to site"
+msgstr "Retour au site"
+
+#: dashboard.py:39
+msgid "Change password"
+msgstr "Changez votre mot de passe"
+
+#: dashboard.py:41
+msgid "Log out"
+msgstr "Déconnexion"
+
+#: dashboard.py:46
+msgid "Navigation and articles"
+msgstr "Navigation et articles"
+
+#: dashboard.py:56
+msgid "My network"
+msgstr "Mon réseau"
+
+#: dashboard.py:71
+#: menu.py:29
+msgid "Administration"
+msgstr "Administration"
+
+#: dashboard.py:77
+#: dashboard.py:120
+msgid "Recent Actions"
+msgstr "Actions récentes"
+
+#: dashboard.py:81
+msgid "Latest Django News"
+msgstr ""
+
+#: dashboard.py:88
+msgid "Support"
+msgstr ""
+
+#: dashboard.py:91
+msgid "Blog PES"
+msgstr ""
+
+#: dashboard.py:96
+msgid "Django \"django-users\" mailing list"
+msgstr ""
+
+#: menu.py:25
+msgid "Applications"
+msgstr ""
+
