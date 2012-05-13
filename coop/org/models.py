@@ -132,7 +132,7 @@ class BaseEngagement(models.Model):
     uri = models.CharField(_(u'main URI'), blank=True, null=True,
                             max_length=250, editable=False)  # FIXME : null=True incompatible with unique=True
     uuid = exfields.UUIDField(blank=True, null=True)  # FIXME : NULL=True for easier SQL import / equivalent in PGSQL default UUID ?
-    org_admin = models.BooleanField(_(u'admin'), default=True)
+    org_admin = models.BooleanField(_(u'has editor rights'), default=True)
     engagement_display = models.PositiveSmallIntegerField(_(u'Display'), choices=DISPLAY.CHOICES, default=DISPLAY.PUBLIC)
     
     class Meta:
@@ -213,7 +213,7 @@ class BaseOrganization(URIModel):
     slug = exfields.AutoSlugField(populate_from='title', blank=True)
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
-    active = models.BooleanField(_(u'active'), default=True,)
+    active = models.BooleanField(_(u'show on public site'), default=True,)
     notes = models.TextField(_(u'notes'), blank=True)
 
     class Meta:

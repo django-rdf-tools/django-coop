@@ -148,11 +148,31 @@ div.controls > input{
 	float: left;
 }
 
-/* WTF ??*/
+/* WTF ??
 input{
 	height: 2em;
 }
+*/
 
+#content.flex{
+	position: relative;
+}
+
+#changelist-search{
+	right: 20px;
+	float: right;
+	padding-right: 10px;
+}
+
+span.small.quiet.search-results{
+	font: normal 0.5em sans-serif;
+}
+
+input#searchbar.search-query{
+	color: #000;
+	right: 20px;
+	line-height: 1.1px;
+}
 
 
 label.control-label.inline{
@@ -187,12 +207,6 @@ input#id_tags.ac_input{
 ul.object-tools{
 	top: -8px;
 	position: relative;
-}
-
-ul.object-tools li{
-	border: 4px solid white;
-	border-radius:12px;
-	margin-left: 10px;
 }
 
 

@@ -68,17 +68,6 @@ class ExchangeCategory(models.Model):
     #     return reverse('location_category', args=[self.slug])
 
 
-EXCHANGE = Choices(
-    ('P_OFFER',   1,  _(u'Product Offer')),
-    ('S_OFFER',   2,  _(u'Service Offer')),
-    ('P_NEED',    3,  _(u'Product Need')),
-    ('S_NEED',    4,  _(u'Service Need')),
-    ('MUTU',    7,  _(u'Mutualization')),  # 3
-    ('COOP',    8,  _(u'Cooperation, partnership')),  # 5
-    ('QA',      9,  _(u'Question')),  # 6
-)
-
-
 class BaseProduct(URIModel):
     title = models.CharField(_('title'), blank=True, max_length=250)
     slug = exfields.AutoSlugField(populate_from='title')
@@ -104,13 +93,42 @@ class BaseProduct(URIModel):
         verbose_name_plural = _(u'Products')
 
 
+EXCHANGE = Choices(
+    ('P_OFFER',   1,  _(u'Product Offer')),
+    ('S_OFFER',   2,  _(u'Service Offer')),
+    ('P_NEED',    3,  _(u'Product Need')),
+    ('S_NEED',    4,  _(u'Service Need')),
+    ('MUTU',    7,  _(u'Mutualization')),
+    ('COOP',    8,  _(u'Cooperation, partnership')),
+    ('QA',      9,  _(u'Question')),
+)
+
+EWAY = Choices(
+    ('OFFER',   1,  _(u"I'm offering")),
+    ('NEED',    2,  _(u"I'm looking for"))
+)
+
+ETYPE = Choices(
+    ('PROD',    1,  _(u'Product')),
+    ('SERVE',   2,  _(u'Service')),
+    ('SKILL',   3,  _(u'Skill')),
+    ('COOP',    4,  _(u'Partnership')),
+    ('QA',      5,  _(u'Question')),
+)
+
+
 class BaseExchange(URIModel):
     title = models.CharField(_('title'), max_length=250)
     description = models.TextField(_(u'description'), blank=True)
     organization = models.ForeignKey('coop_local.Organization', blank=True, null=True, 
                             verbose_name=_('publisher'), related_name='exchanges')
     person = models.ForeignKey('coop_local.Person', blank=True, null=True, verbose_name=_(u'person'))
-    etype = models.PositiveSmallIntegerField(_(u'exchange type'), choices=EXCHANGE.CHOICES)
+    
+    #eway = models.PositiveSmallIntegerField(_(u'exchange way'), choices=EWAY.CHOICES)
+    etype = models.PositiveSmallIntegerField(_(u'exchange type'), choices=ETYPE.CHOICES)
+
+
+
     # category = models.ForeignKey(ExchangeCategory, null=True, blank=True,
     #                             verbose_name=_(u"exchange type"))  # TODO rendre obligatoire ensuite
     permanent = models.BooleanField(_(u'permanent'), default=True)

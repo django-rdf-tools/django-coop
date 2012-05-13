@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop.organization\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-02 10:07+0000\n"
-"PO-Revision-Date: 2012-05-02 12:08+0100\n"
+"POT-Creation-Date: 2012-05-13 10:18+0200\n"
+"PO-Revision-Date: 2012-05-13 10:19+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
 "Language: \n"
@@ -19,42 +19,42 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 
-#: admin.py:48
+#: admin.py:50
 msgid "Contact information"
 msgstr "Coordonnée"
 
-#: admin.py:49
+#: admin.py:51
 msgid "Contact informations"
 msgstr "Coordonnées"
 
-#: admin.py:55
+#: admin.py:57
 msgid "Member"
 msgstr "Membre"
 
-#: admin.py:56
+#: admin.py:58
 msgid "Members"
 msgstr "Membres"
 
-#: admin.py:73
+#: admin.py:75
 #: models.py:140
 msgid "Engagement"
 msgstr "Engagement"
 
-#: admin.py:74
+#: admin.py:76
 #: models.py:141
 msgid "Engagements"
 msgstr "Engagements"
 
-#: admin.py:110
+#: admin.py:115
 #, python-format
 msgid "Add to the \"%s\" category"
 msgstr "Classer dans \"%s\""
 
-#: admin.py:169
+#: admin.py:174
 msgid "No Image"
 msgstr "Pas d'image"
 
-#: admin.py:170
+#: admin.py:175
 msgid "logo"
 msgstr "logo"
 
@@ -223,8 +223,8 @@ msgid "main URI"
 msgstr "URI"
 
 #: models.py:135
-msgid "admin"
-msgstr "admin"
+msgid "has editor rights"
+msgstr "éditeur"
 
 #: models.py:153
 msgid "organization category"
@@ -299,8 +299,8 @@ msgid "preferred postal address"
 msgstr "adresse préférée"
 
 #: models.py:216
-msgid "active"
-msgstr "actif"
+msgid "show on public site"
+msgstr "afficher sur le site"
 
 #: models.py:217
 msgid "notes"
@@ -321,6 +321,12 @@ msgstr "geo"
 #: models.py:246
 msgid "desc."
 msgstr "desc."
+
+#~ msgid "admin"
+#~ msgstr "admin"
+
+#~ msgid "active"
+#~ msgstr "actif"
 
 #~ msgid "tagline"
 #~ msgstr "slogan"

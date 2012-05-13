@@ -79,7 +79,7 @@ class OrgInline(InlineAutocompleteAdmin):
 
 
 class OrganizationAdminForm(forms.ModelForm):
-    description = forms.CharField(widget=AdminTinyMCE(attrs={'cols': 80, 'rows': 60}))
+    description = forms.CharField(widget=AdminTinyMCE(attrs={'cols': 80, 'rows': 60}), required=False)
 
     class Meta:
         model = get_model('coop_local', 'Organization')
