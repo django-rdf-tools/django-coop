@@ -107,7 +107,7 @@ class BaseRelation(models.Model):
     reltype = models.PositiveSmallIntegerField(_(u'Relation type'), choices=RELATIONS.CHOICES)
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
-    confirmed = models.BooleanField(default=False, verbose_name=_(u'confirmed by the target organization'))
+    #confirmed = models.BooleanField(default=False, verbose_name=_(u'confirmed by the target organization'))
     
     class Meta:
         abstract = True
@@ -157,20 +157,21 @@ class BaseOrganizationCategory(models.Model):
         return self.label
 
 PREFLABEL = Choices(
-    ('TITLE',   1,  _(u'Title')),
-    ('ACRO',   2,  _(u'Acronym')),
+    ('TITLE',   1,  _(u'title')),
+    ('ACRO',    2,  _(u'acronym')),
 )
 
 
 class BaseOrganization(URIModel):
     title = models.CharField(_(u'title'), max_length=250)
 
-    # acronym     = models.CharField(_(u'acronym'),max_length=100)
-    # pref_label = models.PositiveSmallIntegerField(_(u'Preferred label'), choices=PREFLABEL.CHOICES, default=PREFLABEL.TITLE)
+    acronym = models.CharField(_(u'acronym'), max_length=20, blank=True, null=True)
+    pref_label = models.PositiveSmallIntegerField(_(u'Preferred label'), 
+                        choices=PREFLABEL.CHOICES, default=PREFLABEL.TITLE)
     
-    subtitle = models.CharField(_(u'subtitle'), blank=True, null=True, 
+    subtitle = models.CharField(_(u'tagline'), blank=True, null=True, 
                 max_length=250,
-                help_text=_(u'another name your organization is known by, or a tagline'))
+                help_text=_(u'tell us what your organization do in one line.'))
     
     description = models.TextField(_(u'description'), blank=True, null=True)
     uri = models.CharField(_(u'main URI'), blank=True, null=True, 
@@ -224,6 +225,12 @@ class BaseOrganization(URIModel):
 
     def __unicode__(self):
         return unicode(self.title)
+
+    def label(self):
+        if self.pref_label == PREFLABEL.TITLE:
+            return self.title
+        elif self.pref_label == PREFLABEL.ACRO:
+            return self.acronym
 
     @property
     def uri_id(self):

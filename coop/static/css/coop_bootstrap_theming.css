@@ -35,6 +35,10 @@ ul.breadcrumb,
 	font-size: 16px;
 }
 
+.nav-tabs{
+	font-weight: bold;
+}
+
 .results th{
 	font-weight: normal;
 	font-style: normal;
@@ -144,9 +148,10 @@ i[class^="icon-"]{
 	margin-left: -2px;
 }
 
-div.controls > input{
+div.controls > input {
 	float: left;
 }
+
 
 /* WTF ??
 input{
@@ -316,6 +321,36 @@ form#person_form a#add_id_category img
 
 /* @end */
 
+/* Stacked Inlines */
+
+div.stacked-inline h3 {
+	font-size: 16px;
+	border-bottom: 1px solid #dbdbdb;
+}
+
+div.stacked-inline h3 span.delete{
+	position: absolute;
+	float: left;
+	width: 120px;
+	right: 0;
+}
+
+div.stacked-inline h3 span.delete input{
+	width: 20px;
+	top: 3px;
+	position: relative;
+}
+
+div.stacked-inline h3 span.delete label.vCheckboxLabel.inline{
+	float: left;
+	font-weight: bold;
+}
+
+.stacked_collapse.collapsed{
+	display: none;
+}
+
+
 /* Fields width */
 
 .mceIframeContainer{
@@ -415,14 +450,16 @@ div.chzn-container-multi ul.chzn-choices li.search-field{
 	color: white;
 }
 
-div.chzn-container.chzn-container-multi ul.chzn-choices{
+
+div.chzn-container ul.chzn-choices,
+div.chzn-container.chzn-container-multi ul.chzn-choices,
+div.chzn-container ul.chzn-choices div.chzn-drop,
+div.chzn-container ul.chzn-choices div.chzn-drop ul.chzn-results,
+div.chzn-container ul.chzn-choices div.chzn-drop ul.chzn-results li{
 	width: 616px;
 }
 
 
-div.chzn-container div.chzn-drop ul.chzn-results li{
-	width: 616px;
-}
 
 a#add_id_category {
 	left: 400px;

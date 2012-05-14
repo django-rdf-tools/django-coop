@@ -65,7 +65,7 @@ class RelationInline(InlineAutocompleteAdmin):
     model = get_model('coop_local', 'Relation')
     fk_name = 'source'
     readonly_fields = ('created',)
-    fields = ('reltype', 'target', 'confirmed', 'created')
+    fields = ('reltype', 'target', 'created')
     related_search_fields = {'target': ('title', 'subtitle', 'description'), }
     extra = 1
 
@@ -118,9 +118,9 @@ def create_action(category):
 class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html' 
     form = OrganizationAdminForm
-    list_display = ['logo_thumb', 'title', 'active', 'has_description', 'has_location']
-    list_display_links = ['title', ]
-    search_fields = ['title', 'subtitle', 'description']
+    list_display = ['logo_thumb', 'label', 'active', 'has_description', 'has_location']
+    list_display_links = ['label', ]
+    search_fields = ['title', 'acronym', 'subtitle', 'description']
     list_filter = ['active', 'category']
     #actions_on_top = True
     #actions_on_bottom = True
@@ -143,7 +143,7 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
                 ]
     fieldsets = (
         ('Identité', {
-            'fields': ('logo', 'title', 'subtitle', ('birth', 'active',),
+            'fields': ('logo', 'title', ('acronym', 'pref_label'), 'subtitle', ('birth', 'active',),
                         'statut', 'web')
             }),
         ('Description', {

@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+7# -*- coding:utf-8 -*-
 from django.db import models
 from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
@@ -50,22 +50,6 @@ class BasePaymentModality(models.Model):
         abstract = True
         verbose_name = _(u'Payment modality')
         verbose_name_plural = _(u'Payment modalities')
-
-
-class ExchangeCategory(models.Model):
-    label = models.CharField(max_length=60, verbose_name=_(u"label"))
-    slug = exfields.AutoSlugField(populate_from=('label'))
-
-    class Meta:
-        ordering = ['label']
-        verbose_name = _(u'Exchange Category')
-        verbose_name_plural = _(u'Exchange Categories')
-
-    def __unicode__(self):
-        return unicode(self.label)
-
-    # def get_absolute_url(self):
-    #     return reverse('location_category', args=[self.slug])
 
 
 class BaseProduct(URIModel):
@@ -127,10 +111,6 @@ class BaseExchange(URIModel):
     #eway = models.PositiveSmallIntegerField(_(u'exchange way'), choices=EWAY.CHOICES)
     etype = models.PositiveSmallIntegerField(_(u'exchange type'), choices=ETYPE.CHOICES)
 
-
-
-    # category = models.ForeignKey(ExchangeCategory, null=True, blank=True,
-    #                             verbose_name=_(u"exchange type"))  # TODO rendre obligatoire ensuite
     permanent = models.BooleanField(_(u'permanent'), default=True)
     expiration = models.DateField(_(u'expiration'), blank=True, null=True)
     slug = exfields.AutoSlugField(populate_from='title')
