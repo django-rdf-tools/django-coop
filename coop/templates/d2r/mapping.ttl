@@ -1,0 +1,1 @@
+{% extends "d2r/common-mapping.ttl %}

@@ -45,3 +45,8 @@ def global_map(request):
     context['initiatives'] = Organization.objects.filter(active=True)
     return render_to_response('org/org_global_map.html',
                               context, RequestContext(request))
+
+def leaflet(request):
+    context = {}
+    context['org_list'] = Organization.objects.filter(active=True)
+    return render_to_response('org/org_carto.html', context, RequestContext(request))

@@ -278,6 +278,9 @@ class BaseOrganization(URIModel):
     def local_uri(self):
         return ('http://dev.credis.org:8000/org/' + self.slug + '/')
 
+    def main_location(self):
+        return self.located.all()[0].location
+
     def save(self, *args, **kwargs):
         # Set default values for preferred email, phone and postal address
         if self.pref_phone == None:

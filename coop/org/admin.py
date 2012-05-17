@@ -89,7 +89,6 @@ class OrganizationAdminForm(forms.ModelForm):
         super(OrganizationAdminForm, self).__init__(*args, **kwargs)
         engagements = self.instance.engagement_set.all()
         members_id = engagements.values_list('person_id', flat=True)
-        print members_id
         org_contacts = Contact.objects.filter(
             Q(content_type=ContentType.objects.get(model='organization'), object_id=self.instance.id)
           | Q(content_type=ContentType.objects.get(model='person'), object_id__in=members_id)

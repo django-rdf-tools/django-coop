@@ -1,0 +1,150 @@
+<script type="text/javascript" src="/static/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+
+
+// common : tab functions
+function tabCookie (hash){
+    $.cookie('current_tab', hash);
+}
+function selectPreviousTab (){
+  if($.cookie('current_tab') != null ){
+      var hash = $.cookie('current_tab')
+      //console.log(hash)
+      $("ul.nav li a[href=" + hash + "]").trigger("click");
+  }
+}
+
+// common : title/acronym pref_label selection
+function hide_pref_label_select(){
+    $('label[for=id_pref_label]').css('visibility', 'hidden')
+    $('select#id_pref_label').css('visibility', 'hidden')
+}
+
+function show_pref_label_select() {
+    $('label[for=id_pref_label]').css('visibility', 'visible')
+    $('select#id_pref_label').css('visibility', 'visible')
+}
+
+// function moved to coop_tag/static/js/groupbox.js
+
+
+(function($){
+
+
+  $('ul.nav li a').bind('click', function (e) {
+      //console.log($(this).attr('href'))
+      tabCookie($(this).attr('href'))
+  });
+
+    $(document).ready(function(){
+        // call cookie tab
+        selectPreviousTab();
+
+        // decorate inline add buttons
+        $('.add-row a').addClass('btn').addClass('btn-primary'); 
+        $('.add-row a').prepend('<i class="icon-plus icon-white"></i> ');
+
+        // resize TinyMCE Editor
+        $("table#id_description_tbl.mceLayout").width('617px');
+
+        //hide select pref_label if no acronym
+        if($("input#id_acronym").length > 0 && $("input#id_acronym").val().length < 1){
+        hide_pref_label_select()};
+    });
+
+  // messages
+  $(".alert .close").click(function(){
+      $(this).parent().fadeOut('slow');
+  });
+
+  // complément au widget groupbox de coop-tag
+
+  if($('ul.groupbox-list').length > 0 && typeof django.jQuery.fn.columnize === 'function'){
+    // en-tetes deroulants  
+    $('div.groupbox-header').click(function(e){
+        $(this).next("ul.groupbox-list").slideToggle();
+    });
+    // cases en colonnes
+    $('.groupbox ul').columnize({columns:3}).hide();
+    // clic = mise à jour compteur en en-tete
+    $('.groupbox-list input[type=checkbox]').bind('change',function(e){
+        var parent_list = $(this).parents('ul');
+        //console.log(parent_list);
+        updateCounter(parent_list);
+    });
+    // si un secteur coché au démarrage, afficher la rubrique
+    $('.groupbox-list').each(function(){
+        var init = updateCounter($(this));
+        if(init){
+            $(this).show();
+        }
+    });
+  }
+
+
+
+  // adding edit link for FKeys
+  // adapted from http://djangosnippets.org/snippets/431/
+
+  empty_values = ['','---------']
+  
+  $("a.add-another").each(function(){
+  if($.inArray($(this).prev().val(), empty_values)=='-1'){
+      $(this).after("&nbsp;<a class='changelink' href='#' title='Modifier cet objet'></a>");
+      $(this).next().click(function(){
+          if($(this).prev().prev().attr('value')=='')return false;
+          var link = ($(this).prev().attr('href')+'../'+$(this).prev().prev().attr('value'));
+          window.location.href = link
+          // popup version :
+          // var win = window.open(link + '?_popup=1', link, 'height=600,width=1000,resizable=yes,scrollbars=yes');
+          // win.focus();
+          return false;
+      });
+  }
+  });
+
+
+$('input#id_acronym').bind('keyup',function(){
+    if($(this).val().length > 0)
+        show_pref_label_select()
+    else
+        hide_pref_label_select()
+});
+
+    // http://djangosnippets.org/snippets/1492    
+    // Only for stacked inlines
+    
+    $('div.stacked-inline').each(function() {
+
+        fs = $(this).find('fieldset')
+        h3 = $(this).find('h3:first')
+
+        // Don't collapse if fieldset contains errors
+        if (fs.find('div').hasClass('errors'))
+            fs.addClass('stacked_collapse');
+        else
+            fs.addClass('stacked_collapse collapsed');
+        
+        // Add toggle link
+        h3.prepend('<a class="stacked_collapse-toggle" href="#">(' + gettext('Show') + ')</a> ');
+        h3.find('a.stacked_collapse-toggle').bind("click", function(){
+            fs = $(this).parent('h3').next('fieldset');
+            if (!fs.hasClass('collapsed'))
+            {
+                fs.addClass('collapsed');
+                $(this).html('(' + gettext('Show') + ')');
+            }
+            else
+            {
+                fs.removeClass('collapsed');
+                $(this).html('(' + gettext('Hide') + ')');
+            }
+        }).removeAttr('href').css('cursor', 'pointer');
+    });
+
+
+
+
+})(django.jQuery);
+
+</script>

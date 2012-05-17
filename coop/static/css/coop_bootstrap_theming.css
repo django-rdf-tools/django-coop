@@ -148,9 +148,14 @@ i[class^="icon-"]{
 	margin-left: -2px;
 }
 
-div.controls > input {
+div.controls input {
 	float: left;
 }
+
+div.controls > input[type=checkbox]{
+	width: 12px;
+}
+
 
 
 /* WTF ??
@@ -181,7 +186,25 @@ input#searchbar.search-query{
 
 
 label.control-label.inline{
-	padding-right: 15px;
+	padding-right: 5px;
+}
+
+
+div.controls > input[type=checkbox]{
+	width: 12px;
+	display: block;
+}
+
+
+/* admintools-bootstrap enhancements */
+
+.field-error{
+	padding-left: 20px;
+}
+
+.field-error ul {
+	padding-left: 20px;
+	list-style-position: outside;
 }
 
 /* Bootstrap */
@@ -342,8 +365,8 @@ div.stacked-inline h3 span.delete input{
 }
 
 div.stacked-inline h3 span.delete label.vCheckboxLabel.inline{
-	float: left;
 	font-weight: bold;
+	float: left;
 }
 
 .stacked_collapse.collapsed{
