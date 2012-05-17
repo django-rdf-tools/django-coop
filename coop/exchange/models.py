@@ -1,4 +1,4 @@
-7# -*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 from django.db import models
 from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
@@ -108,7 +108,7 @@ class BaseExchange(URIModel):
                             verbose_name=_('publisher'), related_name='exchanges')
     person = models.ForeignKey('coop_local.Person', blank=True, null=True, verbose_name=_(u'person'))
     
-    #eway = models.PositiveSmallIntegerField(_(u'exchange way'), choices=EWAY.CHOICES)
+    eway = models.PositiveSmallIntegerField(' ', choices=EWAY.CHOICES, default=EWAY.OFFER)  # verbose name void on purpose !
     etype = models.PositiveSmallIntegerField(_(u'exchange type'), choices=ETYPE.CHOICES)
 
     permanent = models.BooleanField(_(u'permanent'), default=True)
@@ -120,6 +120,19 @@ class BaseExchange(URIModel):
     uri = models.CharField(_(u'main URI'), blank=True, max_length=250, editable=False)
     author_uri = models.CharField(_(u'author URI'), blank=True, max_length=200, editable=False)
     publisher_uri = models.CharField(_(u'publisher URI'), blank=True, max_length=200, editable=False)
+
+    mod_euro = models.BooleanField(_(u'Euros'), default=False)
+    mod_free = models.BooleanField(_(u'Gift'), default=False)
+    mod_troc = models.BooleanField(_(u'Barter'), default=False)
+    mod_mutu = models.BooleanField(_(u'Mutualization'), default=False)
+    mod_mc = models.BooleanField(_(u'Alternative currency'), default=False)
+
+    mod_job = models.BooleanField(_(u'Job'), default=False)
+    mod_stage = models.BooleanField(_(u'Training'), default=False)
+    mod_benevolat = models.BooleanField(_(u'Voluntary'), default=False)
+    mod_volontariat = models.BooleanField(_(u'Civic work'), default=False)
+
+
 
     uuid = exfields.UUIDField()  # nécessaire pour URI ?
     # coop_geo must be loaded BEFORE coop_local

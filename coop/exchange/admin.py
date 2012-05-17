@@ -31,8 +31,13 @@ class ExchangeInline(admin.StackedInline):
     # verbose_name_plural = _(u'Exchanges')
     #form = ExchangeInlineLinkForm 
     # needed to include a link to the change_form / only because nested inlines are not possible
-    fieldsets = ((None, {'fields': ('etype', 'title',  # 'permanent','expiration'
-                                    'description', 'tags')}),)  # If you site uses coop-tag
+    fieldsets = ((None, {'fields': ('title',
+                                    ('eway','etype'), 
+                                    ('mod_euro', 'mod_free', 'mod_troc', 
+                                     'mod_mutu', 'mod_mc', 'mod_job', 
+                                     'mod_stage', 'mod_benevolat', 'mod_volontariat'),
+                                    'description', 'tags')
+                        }),)
 
     extra = 1
     #class Media: js = ('js/expiration.js',)
