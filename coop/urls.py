@@ -12,6 +12,7 @@ urlpatterns = patterns('',
 
     url(r'^$', 'coop.views.home', name="home"),
     (r'^org/', include('coop.org.urls')),
+    (r'^annonces/', include('coop.exchange.urls')),
     (r'^comments/', include('django.contrib.comments.urls')),
 
     # a revoir
