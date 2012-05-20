@@ -7,49 +7,10 @@ from django.core.urlresolvers import reverse
 from decimal import Decimal
 from django.conf import settings
 from coop.models import URIModel
+from coop.utils.fields import MultiSelectField
 
 if "coop_geo" in settings.INSTALLED_APPS:
     from coop_geo.models import Area, Location
-
-
-MODALITIES = Choices(
-    ('GIFT',    1,  _(u'Gift')),
-    ('TROC',    2,  _(u'Free exchange')),
-    ('CURR',    3,  _(u'Monetary exchange')),
-)
-UNITS = Choices(
-    ('EURO',    1,  _(u'€')),
-    ('SELH',    2,  _(u'Hours')),
-    ('PEZ',     3,  _(u'PEZ')),    
-)
-
-
-class BasePaymentModality(models.Model):
-    exchange = models.ForeignKey('coop_local.Exchange', verbose_name=_(u'exchange'), related_name='modalities')
-    modality = models.PositiveSmallIntegerField(_(u'exchange type'), blank=True,
-                                                choices=MODALITIES.CHOICES,
-                                                default=MODALITIES.CURR)
-    amount = models.DecimalField(_(u'amount'), max_digits=12, decimal_places=2, default=Decimal(0.00), blank=True)
-    unit = models.PositiveSmallIntegerField(_(u'unit'), blank=True, null=True, choices=UNITS.CHOICES)
-
-    def __unicode__(self):
-        if(self.modality in [1, 2]):
-            return unicode(MODALITIES.CHOICES_DICT[self.modality])
-        elif(self.modality == 3 and self.amount > 0 and not self.unit == None):
-            return unicode("%s %s" % (self.amount, unicode(UNITS.CHOICES_DICT[self.unit])))
-        elif(self.modality == 3):
-            return unicode(_(u'Price unknown'))
-
-    def save(self, *args, **kwargs):
-        if not self.modality == 3:
-            self.amount = Decimal(0.00)
-            self.unit = None
-        super(BasePaymentModality, self).save(*args, **kwargs) 
-
-    class Meta:
-        abstract = True
-        verbose_name = _(u'Payment modality')
-        verbose_name_plural = _(u'Payment modalities')
 
 
 class BaseProduct(URIModel):
@@ -77,28 +38,36 @@ class BaseProduct(URIModel):
         verbose_name_plural = _(u'Products')
 
 
-EXCHANGE = Choices(
-    ('P_OFFER',   1,  _(u'Product Offer')),
-    ('S_OFFER',   2,  _(u'Service Offer')),
-    ('P_NEED',    3,  _(u'Product Need')),
-    ('S_NEED',    4,  _(u'Service Need')),
-    ('MUTU',    7,  _(u'Mutualization')),
-    ('COOP',    8,  _(u'Cooperation, partnership')),
-    ('QA',      9,  _(u'Question')),
-)
-
 EWAY = Choices(
     ('OFFER',   1,  _(u"I'm offering")),
     ('NEED',    2,  _(u"I'm looking for"))
 )
 
 ETYPE = Choices(
-    ('PROD',    1,  _(u'Product')),
+    ('PROD',    1,  _(u'Product or Material')),
     ('SERVE',   2,  _(u'Service')),
     ('SKILL',   3,  _(u'Skill')),
     ('COOP',    4,  _(u'Partnership')),
     ('QA',      5,  _(u'Question')),
 )
+
+
+class BaseExchangeMethod(models.Model):  # this model will be initialized with a fixture
+    label = models.CharField(_(u'label'), max_length=250)
+    uri = models.CharField(_(u'URI'), blank=True, max_length=250)
+    etypes = MultiSelectField(_(u'applicable to'), max_length=250, null=True, blank=True, choices=ETYPE.CHOICES)
+    
+    def applications(self):
+        return u", ".join([ETYPE.CHOICES_DICT[int(e)].__unicode__() for e in self.etypes])
+    applications.short_description = _(u'applications')
+    
+    def __unicode__(self):
+        return self.label
+
+    class Meta:
+        abstract = True
+        verbose_name = _(u'Exchange method')
+        verbose_name_plural = _(u'Exchange methods')
 
 
 class BaseExchange(URIModel):
@@ -108,7 +77,7 @@ class BaseExchange(URIModel):
                             verbose_name=_('publisher'), related_name='exchanges')
     person = models.ForeignKey('coop_local.Person', blank=True, null=True, verbose_name=_(u'person'))
     
-    eway = models.PositiveSmallIntegerField(' ', choices=EWAY.CHOICES, default=EWAY.OFFER)  # verbose name void on purpose !
+    eway = models.PositiveSmallIntegerField(_(u'exchange way'), choices=EWAY.CHOICES, default=EWAY.OFFER)
     etype = models.PositiveSmallIntegerField(_(u'exchange type'), choices=ETYPE.CHOICES)
 
     permanent = models.BooleanField(_(u'permanent'), default=True)
@@ -116,25 +85,15 @@ class BaseExchange(URIModel):
     slug = exfields.AutoSlugField(populate_from='title')
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
-    products = models.ManyToManyField('coop_local.Product', verbose_name=_('linked products'))
+    products = models.ManyToManyField('coop_local.Product', verbose_name=_(u'linked products'))
     uri = models.CharField(_(u'main URI'), blank=True, max_length=250, editable=False)
     author_uri = models.CharField(_(u'author URI'), blank=True, max_length=200, editable=False)
     publisher_uri = models.CharField(_(u'publisher URI'), blank=True, max_length=200, editable=False)
 
-    mod_euro = models.BooleanField(_(u'Euros'), default=False)
-    mod_free = models.BooleanField(_(u'Gift'), default=False)
-    mod_troc = models.BooleanField(_(u'Barter'), default=False)
-    mod_mutu = models.BooleanField(_(u'Mutualization'), default=False)
-    mod_mc = models.BooleanField(_(u'Alternative currency'), default=False)
-
-    mod_job = models.BooleanField(_(u'Job'), default=False)
-    mod_stage = models.BooleanField(_(u'Training'), default=False)
-    mod_benevolat = models.BooleanField(_(u'Voluntary'), default=False)
-    mod_volontariat = models.BooleanField(_(u'Civic work'), default=False)
-
-
+    methods = models.ManyToManyField('coop_local.ExchangeMethod', verbose_name=_(u'exchange methods'))
 
     uuid = exfields.UUIDField()  # nécessaire pour URI ?
+
     # coop_geo must be loaded BEFORE coop_local
     if "coop_geo" in settings.INSTALLED_APPS:
         location = models.ForeignKey(Location, null=True, blank=True, verbose_name=_(u'location'))
@@ -177,3 +136,47 @@ class BaseTransaction(models.Model):
         abstract = True
         verbose_name = _(u'Transaction')
         verbose_name_plural = _(u'Transactions')
+
+
+# MODALITIES = Choices(
+#     ('GIFT',    1,  _(u'Gift')),
+#     ('TROC',    2,  _(u'Free exchange')),
+#     ('CURR',    3,  _(u'Monetary exchange')),
+# )
+# UNITS = Choices(
+#     ('EURO',    1,  _(u'€')),
+#     ('SELH',    2,  _(u'Hours')),
+#     ('PEZ',     3,  _(u'PEZ')),    
+# )
+
+
+# class BasePaymentModality(models.Model):
+#     exchange = models.ForeignKey('coop_local.Exchange', verbose_name=_(u'exchange'), related_name='modalities')
+#     modality = models.PositiveSmallIntegerField(_(u'exchange type'), blank=True,
+#                                                 choices=MODALITIES.CHOICES,
+#                                                 default=MODALITIES.CURR)
+#     amount = models.DecimalField(_(u'amount'), max_digits=12, decimal_places=2, default=Decimal(0.00), blank=True)
+#     unit = models.PositiveSmallIntegerField(_(u'unit'), blank=True, null=True, choices=UNITS.CHOICES)
+
+#     def __unicode__(self):
+#         if(self.modality in [1, 2]):
+#             return unicode(MODALITIES.CHOICES_DICT[self.modality])
+#         elif(self.modality == 3 and self.amount > 0 and not self.unit == None):
+#             return unicode("%s %s" % (self.amount, unicode(UNITS.CHOICES_DICT[self.unit])))
+#         elif(self.modality == 3):
+#             return unicode(_(u'Price unknown'))
+
+#     def save(self, *args, **kwargs):
+#         if not self.modality == 3:
+#             self.amount = Decimal(0.00)
+#             self.unit = None
+#         super(BasePaymentModality, self).save(*args, **kwargs) 
+
+#     class Meta:
+#         abstract = True
+#         verbose_name = _(u'Payment modality')
+#         verbose_name_plural = _(u'Payment modalities')
+
+
+
+

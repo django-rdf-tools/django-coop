@@ -191,7 +191,6 @@ label.control-label.inline{
 
 
 div.controls > input[type=checkbox]{
-	width: 12px;
 	display: block;
 }
 
@@ -384,9 +383,36 @@ td.person .ac_input{
 	width: 130px;
 }
 
-input[id^="id_exchanges-"]{
-	width: 316px;
+input[id^="id_exchanges-"].vTextField{
+	width: 607px;
 }
+
+select[id^="id_exchanges-"]{
+	float: left;
+}
+
+ul.methods{
+	list-style-type: none;
+	width: 700px;
+	margin-top: 7px;
+}
+
+ul.methods li label input {
+	margin-right: 5px;
+	position: relative;
+	bottom: 1px;
+}
+
+a[id$='-methods'].add-another{
+	display: none;
+}
+
+div.controls > ul.methods > li{
+	display: none;
+	float: left;
+	padding-right: 30px;
+}
+
 
 select#id_pref_address{
 	width: 600px;

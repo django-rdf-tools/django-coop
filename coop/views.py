@@ -16,6 +16,7 @@ def home(request):
 
 
 def d2r_mapping(request):
+    print request.META['REMOTE_ADDR']
     if(request.META['REMOTE_ADDR'] in settings.INTERNAL_IPS):
         db = settings.DATABASES['default']
         rdict = {}

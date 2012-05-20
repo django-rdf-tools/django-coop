@@ -50,6 +50,12 @@ function show_pref_label_select() {
         //hide select pref_label if no acronym
         if($("input#id_acronym").length > 0 && $("input#id_acronym").val().length < 1){
         hide_pref_label_select()};
+
+        //exchange modalités
+        //$("input[id$='mod_euro']").parents("div.control-group").css("max-width","700px");
+        //$("select[id^='id_exchanges'][id$='-eway']").css("margin-right","20px").parents("div.control-group").children("label").css("display","none")
+
+
     });
 
   // messages

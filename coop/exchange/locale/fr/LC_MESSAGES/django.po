@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop.exchange\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-14 12:50+0200\n"
-"PO-Revision-Date: 2012-05-14 12:51+0100\n"
+"POT-Creation-Date: 2012-05-20 10:31+0200\n"
+"PO-Revision-Date: 2012-05-18 00:58+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
 "Language: \n"
@@ -19,224 +19,240 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 
-#: models.py:16
-msgid "Gift"
-msgstr "Don"
+#: models.py:17 models.py:74 models.py:126
+msgid "title"
+msgstr "intitulé"
 
-#: models.py:17
-msgid "Free exchange"
-msgstr "Troc"
+#: models.py:19 models.py:75 models.py:127
+msgid "description"
+msgstr "description"
 
-#: models.py:18
-msgid "Monetary exchange"
-msgstr "Monnaie"
+#: models.py:22 models.py:86 models.py:128
+msgid "created"
+msgstr "création"
 
-#: models.py:21
-msgid "€"
-msgstr "€"
+#: models.py:23 models.py:87 models.py:129
+msgid "modified"
+msgstr "modification"
 
-#: models.py:22
-msgid "Hours"
-msgstr "Heures"
+#: models.py:24 models.py:89
+msgid "main URI"
+msgstr "URI principale"
 
-#: models.py:23
-msgid "PEZ"
-msgstr ""
+#: models.py:25 models.py:91
+msgid "publisher URI"
+msgstr "URI organisme"
 
-#: models.py:28
-msgid "exchange"
-msgstr "échange"
+#: models.py:37
+msgid "Product"
+msgstr "Produit"
 
-#: models.py:29
-#: models.py:128
-msgid "exchange type"
-msgstr "type d'échange"
+#: models.py:38
+msgid "Products"
+msgstr "Produits"
 
-#: models.py:32
-msgid "amount"
-msgstr "montant"
+#: models.py:42
+msgid "I'm offering"
+msgstr "Je propose"
 
-#: models.py:33
-msgid "unit"
-msgstr "unité"
+#: models.py:43
+msgid "I'm looking for"
+msgstr "Je recherche"
 
-#: models.py:41
-msgid "Price unknown"
-msgstr "Prix inconnu"
+#: models.py:47
+msgid "Product or Material"
+msgstr "Produit, matériel"
+
+#: models.py:48
+msgid "Service"
+msgstr "Un service"
+
+#: models.py:49
+msgid "Skill"
+msgstr "Une compétence"
+
+#: models.py:50
+msgid "Partnership"
+msgstr "Un partenariat"
 
 #: models.py:51
-msgid "Payment modality"
-msgstr "Modalité de paiement"
-
-#: models.py:52
-msgid "Payment modalities"
-msgstr "Modalités de paiement"
+msgid "Question"
+msgstr "Une question, une réflexion"
 
 #: models.py:56
 msgid "label"
 msgstr "libellé"
 
-#: models.py:61
-msgid "Exchange Category"
-msgstr "type d'échange"
+#: models.py:57
+msgid "URI"
+msgstr "URI"
+
+#: models.py:58
+msgid "applicable to"
+msgstr "applicable à"
 
 #: models.py:62
-msgid "Exchange Categories"
-msgstr "type d'échanges"
+msgid "applications"
+msgstr "applications"
 
-#: models.py:72
-#: models.py:121
-#: models.py:174
-msgid "title"
-msgstr "intitulé"
+#: models.py:69
+msgid "Exchange method"
+msgstr "Modalité d'échange"
 
-#: models.py:74
-#: models.py:122
-#: models.py:175
-msgid "description"
-msgstr "description"
+#: models.py:70
+msgid "Exchange methods"
+msgstr "Modalités d'échanges"
 
 #: models.py:77
-#: models.py:137
-#: models.py:176
-msgid "created"
-msgstr "création"
-
-#: models.py:78
-#: models.py:138
-#: models.py:177
-msgid "modified"
-msgstr "modification"
-
-#: models.py:79
-#: models.py:140
-msgid "main URI"
-msgstr "URI principale"
-
-#: models.py:80
-#: models.py:142
-msgid "publisher URI"
-msgstr "URI organisme"
-
-#: models.py:92
-#: models.py:112
-msgid "Product"
-msgstr "produit"
-
-#: models.py:93
-msgid "Products"
-msgstr "produits"
-
-#: models.py:97
-msgid "Product Offer"
-msgstr "Offre de produit"
-
-#: models.py:98
-msgid "Service Offer"
-msgstr "Offre de service"
-
-#: models.py:99
-msgid "Product Need"
-msgstr "Demande de produit"
-
-#: models.py:100
-msgid "Service Need"
-msgstr "Demande de service"
-
-#: models.py:101
-msgid "Mutualization"
-msgstr "Mutualisation"
-
-#: models.py:102
-msgid "Cooperation, partnership"
-msgstr "Coopération, partenariat"
-
-#: models.py:103
-#: models.py:116
-msgid "Question"
-msgstr "Question"
-
-#: models.py:107
-msgid "I'm offering"
-msgstr "Je propose"
-
-#: models.py:108
-msgid "I'm looking for"
-msgstr "Je recherche"
-
-#: models.py:113
-msgid "Service"
-msgstr "service"
-
-#: models.py:114
-msgid "Skill"
-msgstr "compétence"
-
-#: models.py:115
-msgid "Partnership"
-msgstr "partenariat"
-
-#: models.py:124
 msgid "publisher"
 msgstr "organisation"
 
-#: models.py:125
+#: models.py:78
 msgid "person"
 msgstr "personne"
 
-#: models.py:134
+#: models.py:80
+msgid "exchange way"
+msgstr "sens de l'échange"
+
+#: models.py:81
+msgid "exchange type"
+msgstr "type d'échange"
+
+#: models.py:83
 msgid "permanent"
 msgstr "permanent"
 
-#: models.py:135
+#: models.py:84
 msgid "expiration"
 msgstr "expiration"
 
-#: models.py:139
+#: models.py:88
 msgid "linked products"
 msgstr "produits"
 
-#: models.py:141
+#: models.py:90
 msgid "author URI"
 msgstr "URI auteur"
 
-#: models.py:147
+#: models.py:93
+msgid "exchange methods"
+msgstr "modalités"
+
+#: models.py:99
 msgid "location"
 msgstr "lieu"
 
-#: models.py:148
+#: models.py:100
 msgid "area"
 msgstr "zone"
 
-#: models.py:165
+#: models.py:117
 msgid "Exchange"
 msgstr "Échange"
 
-#: models.py:166
+#: models.py:118
 msgid "Exchanges"
 msgstr "Échanges"
 
-#: models.py:170
+#: models.py:122
 msgid "origin"
 msgstr "origine"
 
-#: models.py:171
+#: models.py:123
 msgid "destination"
 msgstr "destination"
 
-#: models.py:172
+#: models.py:124
 msgid "vendor"
 msgstr "vendeur"
 
-#: models.py:173
+#: models.py:125
 msgid "buyer"
 msgstr "acheteur"
 
-#: models.py:185
+#: models.py:137
 msgid "Transaction"
 msgstr "Transaction"
 
-#: models.py:186
+#: models.py:138
 msgid "Transactions"
 msgstr "Transactions"
 
+#~ msgid "Gift"
+#~ msgstr "Don"
+
+#~ msgid "Free exchange"
+#~ msgstr "Troc"
+
+#~ msgid "Monetary exchange"
+#~ msgstr "Monnaie"
+
+#~ msgid "€"
+#~ msgstr "€"
+
+#~ msgid "Hours"
+#~ msgstr "Heures"
+
+#~ msgid "PEZ"
+#~ msgstr "PEZ"
+
+#~ msgid "exchange"
+#~ msgstr "échange"
+
+#~ msgid "amount"
+#~ msgstr "montant"
+
+#~ msgid "unit"
+#~ msgstr "unité"
+
+#~ msgid "Price unknown"
+#~ msgstr "Prix inconnu"
+
+#~ msgid "Payment modality"
+#~ msgstr "Modalité de paiement"
+
+#~ msgid "Payment modalities"
+#~ msgstr "Modalités de paiement"
+
+#~ msgid "Service Offer"
+#~ msgstr "Offre de service"
+
+#~ msgid "Product Need"
+#~ msgstr "Demande de produit"
+
+#~ msgid "Service Need"
+#~ msgstr "Demande de service"
+
+#~ msgid "Mutualization"
+#~ msgstr "Mutualisation"
+
+#~ msgid "Cooperation, partnership"
+#~ msgstr "Coopération, partenariat"
+
+#~ msgid "Euros"
+#~ msgstr "Euros"
+
+#~ msgid "Barter"
+#~ msgstr "Troc"
+
+#~ msgid "Alternative currency"
+#~ msgstr "Monnaie complémentaire"
+
+#~ msgid "Job"
+#~ msgstr "Emploi"
+
+#~ msgid "Training"
+#~ msgstr "Stage"
+
+#~ msgid "Voluntary"
+#~ msgstr "Bénévolat"
+
+#~ msgid "Civic work"
+#~ msgstr "Volontariat"
+
+#~ msgid "Exchange Category"
+#~ msgstr "type d'échange"
+
+#~ msgid "Exchange Categories"
+#~ msgstr "type d'échanges"
