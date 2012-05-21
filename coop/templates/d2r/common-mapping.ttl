@@ -1,4 +1,3 @@
-{% block namespaces %}
 @prefix map: <file:/d2r/mapping.ttl#> .
 @prefix db: <> .
 @prefix vocab: <{{d2r_niceURI}}/vocab/resource/> .
@@ -21,6 +20,7 @@
 @prefix v: <http://www.w3.org/2006/vcard/ns#> .
 @prefix ctag: <http://commontag.org/ns#> .
 @prefix ess: <http://ns.economie-solidaire.fr/ess#> .
+{% block namespaces %}
 {% endblock %}
 
 <> a d2r:Server;
