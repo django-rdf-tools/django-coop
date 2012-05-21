@@ -271,8 +271,8 @@ class BaseOrganization(URIModel):
             reltype = str('IN_' + relmap[rel.reltype])  # others said this
             if reltype not in relations:
                 relations[reltype] = []
-            if rel.confirmed:  # which one are confirmed by both parts
-                relations[reltype].append(rel.source)
+            #if rel.confirmed:  # which one are confirmed by both parts
+            relations[reltype].append(rel.source)
         return relations
         
     def local_uri(self):
