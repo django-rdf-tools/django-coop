@@ -29,7 +29,7 @@
             {% if organization.birth %}</br>Année de création : {{organization.birth|date:"Y"}}{% endif %}
             </p>
         
-            <p>{{organization.description|linebreaks|oembed}}</p>
+            <p>{{organization.description|safe|oembed}}</p>
         
             <br/>
 
