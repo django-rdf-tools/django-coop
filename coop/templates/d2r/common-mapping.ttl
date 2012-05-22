@@ -8,7 +8,7 @@
 @prefix d2rq: <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#> .
 @prefix jdbc: <http://d2rq.org/terms/jdbc/> .
 @prefix d2r: <http://sites.wiwiss.fu-berlin.de/suhl/bizer/d2r-server/config.rdf#> .
-@prefix geo: <http://rdf.opensahara.com/type/geo/> .
+@prefix geo: <http://www.opengis.net/rdf#> .
 @prefix insee: <http://rdf.insee.fr/geo/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix org:  <http://www.w3.org/ns/org#> .
@@ -20,6 +20,7 @@
 @prefix sioc: <http://rdfs.org/sioc/ns#> .
 @prefix v: <http://www.w3.org/2006/vcard/ns#> .
 @prefix ctag: <http://commontag.org/ns#> .
+@prefix opens: <http://rdf.opensahara.com/type/geo/> .
 @prefix ess: <http://ns.economie-solidaire.fr/ess#> .
 {% endblock %}
 
@@ -309,6 +310,43 @@ map:organization_locations a d2rq:PropertyBridge; # EXAMPLE M2M generic relation
 
 
 
+# Table coop_geo_located
+map:located a d2rq:ClassMap;
+    d2rq:dataStorage map:database;
+    d2rq:uriPattern "coop_geo_located/@@coop_geo_located.id@@";
+    d2rq:class org:Site;
+    d2rq:classDefinitionLabel "coop_geo_located";
+    .
+map:located__label a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:coop_geo_located;
+    d2rq:property rdfs:label;
+    d2rq:pattern "coop_geo_located #@@coop_geo_located.id@@";
+    .
+map:located_id a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:coop_geo_located;
+    d2rq:property vocab:coop_geo_located_id;
+    d2rq:propertyDefinitionLabel "coop_geo_located id";
+    d2rq:column "coop_geo_located.id";
+    d2rq:datatype xsd:int;
+    .
+map:located_object_id a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:coop_geo_located;
+    d2rq:property vocab:coop_geo_located_object_id;
+    d2rq:propertyDefinitionLabel "coop_geo_located object_id";
+    d2rq:column "coop_geo_located.object_id";
+    d2rq:datatype xsd:int;
+    .
+map:located_main_location a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:coop_geo_located;
+    d2rq:property vocab:coop_geo_located_main_location;
+    d2rq:propertyDefinitionLabel "coop_geo_located main_location";
+    d2rq:column "coop_geo_located.main_location";
+    d2rq:valueRegex "^[01]*$";
+    .
+
+
+
+
 # Table coop_local_contact
 map:coop_local_contact a d2rq:ClassMap;
     d2rq:dataStorage map:database;
@@ -537,7 +575,7 @@ map:departement_reference a d2rq:PropertyBridge;
 #   d2rq:property geo:asWKT;
 #   #d2rq:column "coop_geo_area.polygon";
 #   d2rq:sqlExpression "ST_AsText(coop_geo_area.polygon)";
-#   d2rq:datatype geo:wkt;
+#   d2rq:datatype opens:wkt;
 #   .
 #   
 
@@ -569,7 +607,7 @@ map:commune_area_reference a d2rq:PropertyBridge;
 #   d2rq:property geo:asWKT;
 #   #d2rq:column "coop_geo_area.polygon";
 #   d2rq:sqlExpression "ST_AsText(coop_geo_area.polygon)";
-#   d2rq:datatype geo:wkt;
+#   d2rq:datatype opens:wkt;
 #   .
 #   
 
@@ -618,7 +656,7 @@ map:location_city a d2rq:PropertyBridge;
 #   d2rq:property geo:asWKT;
 #   #d2rq:column "coop_geo_location.point";
 #   d2rq:sqlExpression "ST_AsText(coop_geo_location.point)";
-#     d2rq:datatype geo:wkt;
+#     d2rq:datatype opens:wkt;
 #   .
     
 map:location_created a d2rq:PropertyBridge;
