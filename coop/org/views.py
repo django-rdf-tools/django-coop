@@ -1,9 +1,17 @@
 # # -*- coding:utf-8 -*-
         
 from django.shortcuts import render_to_response
-from coop_local.models import Organization, Engagement, Role
+from coop_local.models import Organization, OrganizationCategory, Engagement, Role
 from django.template import RequestContext
 from django.shortcuts import get_object_or_404
+
+
+def org_category_detail(request, slug):
+    cat = get_object_or_404(OrganizationCategory, slug=slug) 
+    org_list = Organization.objects.filter(category=cat)   
+    context = {'category': cat}
+    context['org_list'] = org_list
+    return render_to_response('org/org_category.html', context, RequestContext(request))
 
 
 def org_detail_view(request, slug):

@@ -156,6 +156,12 @@ class BaseOrganizationCategory(models.Model):
     def __unicode__(self):
         return self.label
 
+    #@models.permalink
+    def get_absolute_url(self):
+        return reverse('org_category_detail', args=[self.slug])
+        
+
+
 PREFLABEL = Choices(
     ('TITLE',   1,  _(u'title')),
     ('ACRO',    2,  _(u'acronym')),

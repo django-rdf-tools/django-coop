@@ -19,7 +19,7 @@ urlpatterns = patterns('',
     url(r'^carto/$', 'coop.org.views.leaflet', name="leaflet"),
 
     url(r'^feed/$', OrganizationUpdates()),
-
+    url(r'^categorie/(?P<slug>[\w-]+)/$', 'coop.org.views.org_category_detail', name="org_category_detail"),
 
     url(r'^global_map$', 'coop.org.views.global_map', name="org_global_map"),
     url(r'^(?P<slug>[\w-]+)/$', 'coop.org.views.org_detail_view', name="org_detail"),
