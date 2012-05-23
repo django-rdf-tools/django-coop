@@ -22,7 +22,8 @@ urlpatterns = patterns('',
     url(r'^robots\.txt$', TextPlainView.as_view(template_name='robots.txt')),
     url(r'^favicon\.ico$', RedirectView.as_view(url='/media/img/favicon.ico')),
     
-    url(r'^d2r/mapping.ttl$', 'coop.views.d2r_mapping'),
+
+    url(r'^d2r/(?P<mode>[\w-]+)/mapping.ttl$', 'coop.views.d2r_mapping'),
 
 
 )

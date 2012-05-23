@@ -19,11 +19,12 @@ def home(request):
     return render_to_response('home.html', rdict, RequestContext(request))
 
 
-def d2r_mapping(request):
+def d2r_mapping(request, mode):
     print request.META['REMOTE_ADDR']
-    if(request.META['REMOTE_ADDR'] in settings.INTERNAL_IPS):
+    if(request.META['REMOTE_ADDR'] in settings.INTERNAL_IPS and mode in ['view','export']):
         db = settings.DATABASES['default']
         rdict = {}
+        rdict['mode'] = mode
         rdict['d2r_baseURI'] = settings.D2RQ_ROOT
         rdict['d2r_niceURI'] = settings.D2RQ_NICE_URL
         rdict['d2r_port'] = settings.D2RQ_PORT

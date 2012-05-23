@@ -148,7 +148,11 @@ map:tag_modified a d2rq:PropertyBridge;
 # Table coop_local_organization
 map:organization a d2rq:ClassMap;
     d2rq:dataStorage map:database;
+    {% if mode == 'view' %}
     d2rq:uriPattern "org/@@coop_local_organization.slug@@/";
+    {% else %}
+    d2rq:uriColumn "coop_local_organization.uri"
+    {% endif %}
     d2rq:class org:Organization;
     d2rq:class geo:Feature;
     d2rq:class foaf:Agent;
