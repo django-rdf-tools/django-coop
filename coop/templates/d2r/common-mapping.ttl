@@ -21,6 +21,10 @@
 @prefix ctag: <http://commontag.org/ns#> .
 @prefix opens: <http://rdf.opensahara.com/type/geo/> .
 @prefix ess: <http://ns.economie-solidaire.fr/ess#> .
+@prefix legal: <http://www.w3.org/ns/legal#> .
+@prefix person: <http://www.w3.org/ns/person#> .
+@prefix locn: <http://www.w3.org/ns/locn#> .
+@prefix schema: <http://schema.org/> .
 {% block namespaces %}
 {% endblock %}
 
@@ -29,6 +33,7 @@
     d2r:port {{d2r_port}};
     d2r:baseURI <{{d2r_baseURI}}>;
     d2r:autoReloadMapping true;
+    d2r:limitPerClassMap false;   # to display everything within the interfac, default is 50
     .
     
 map:database a d2rq:Database;
@@ -150,9 +155,8 @@ map:tag_modified a d2rq:PropertyBridge;
 map:organization a d2rq:ClassMap;
     d2rq:dataStorage map:database;
     d2rq:uriPattern "org/@@coop_local_organization.slug@@/";
-    d2rq:class org:Organization;
-    d2rq:class geo:Feature;
-    d2rq:class foaf:Agent;
+#    d2rq:class geo:Feature;         A voir
+    d2rq:class legal:LegalEntity;
     d2rq:class gr:BusinessEntity;
 #   d2rq:condition "coop_local_organization.active = 't'"
     .
@@ -164,6 +168,12 @@ map:organization__label a d2rq:PropertyBridge;
 map:organization_title a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
     d2rq:property dct:title;
+    d2rq:property legal:legalName;
+    d2rq:column "coop_local_organization.title";
+    .
+map:organization_legalName a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property legal:legalName;
     d2rq:column "coop_local_organization.title";
     .
 map:organization_subtitle a d2rq:PropertyBridge;
@@ -178,7 +188,7 @@ map:organization_description a d2rq:PropertyBridge;
     .
 map:organization_mbox_sha1 a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
-    d2rq:property foaf:mbox_sha1;
+    d2rq:property foaf:mbox_sha1sum;
     d2rq:column "coop_local_organization.email_sha1";
     .
 map:organization_web a d2rq:PropertyBridge;
@@ -289,7 +299,7 @@ map:organization_members a d2rq:PropertyBridge;
 
 map:organization_locations a d2rq:PropertyBridge; # EXAMPLE M2M generic relation
     d2rq:belongsToClassMap map:organization;
-    d2rq:property geo:hasGeometry;
+    d2rq:property locn:location;
     d2rq:refersToClassMap map:location;
     d2rq:join "coop_local_organization.id <= coop_geo_located.object_id";
     d2rq:join "django_content_type.id <= coop_geo_located.content_type_id";
@@ -297,6 +307,18 @@ map:organization_locations a d2rq:PropertyBridge; # EXAMPLE M2M generic relation
     d2rq:join "coop_geo_location.id <= coop_geo_located.location_id";
     .
 
+
+# On devrait pour se passer du org:hasSite grace aux propriétés et class de locn et de legal
+#map:organization_site a d2rq:PropertyBridge; # EXAMPLE M2M generic relation
+#    d2rq:belongsToClassMap map:organization;
+#    d2rq:property org:hasSite;
+#    d2rq:refersToClassMap map:located;
+#    d2rq:join "coop_local_organization.id <= coop_geo_located.object_id";
+#    d2rq:join "django_content_type.id <= coop_geo_located.content_type_id";
+#    d2rq:condition "django_content_type.model = 'organization'";
+#    .
+ 
+ 
 # map:organization_pos a d2rq:PropertyBridge; # TODO Point de vente => types de lieux
 #     d2rq:belongsToClassMap map:organization;
 #     d2rq:refersToClassMap map:location;
@@ -310,39 +332,35 @@ map:organization_locations a d2rq:PropertyBridge; # EXAMPLE M2M generic relation
 
 
 
-# Table coop_geo_located
-map:located a d2rq:ClassMap;
-    d2rq:dataStorage map:database;
-    d2rq:uriPattern "coop_geo_located/@@coop_geo_located.id@@";
-    d2rq:class org:Site;
-    d2rq:classDefinitionLabel "coop_geo_located";
-    .
-map:located__label a d2rq:PropertyBridge;
-    d2rq:belongsToClassMap map:coop_geo_located;
-    d2rq:property rdfs:label;
-    d2rq:pattern "coop_geo_located #@@coop_geo_located.id@@";
-    .
-map:located_id a d2rq:PropertyBridge;
-    d2rq:belongsToClassMap map:coop_geo_located;
-    d2rq:property vocab:coop_geo_located_id;
-    d2rq:propertyDefinitionLabel "coop_geo_located id";
-    d2rq:column "coop_geo_located.id";
-    d2rq:datatype xsd:int;
-    .
-map:located_object_id a d2rq:PropertyBridge;
-    d2rq:belongsToClassMap map:coop_geo_located;
-    d2rq:property vocab:coop_geo_located_object_id;
-    d2rq:propertyDefinitionLabel "coop_geo_located object_id";
-    d2rq:column "coop_geo_located.object_id";
-    d2rq:datatype xsd:int;
-    .
-map:located_main_location a d2rq:PropertyBridge;
-    d2rq:belongsToClassMap map:coop_geo_located;
-    d2rq:property vocab:coop_geo_located_main_location;
-    d2rq:propertyDefinitionLabel "coop_geo_located main_location";
-    d2rq:column "coop_geo_located.main_location";
-    d2rq:valueRegex "^[01]*$";
-    .
+# # Table coop_geo_located
+# map:located a d2rq:ClassMap;
+#     d2rq:dataStorage map:database;
+#     d2rq:uriPattern "coop_geo_located/@@coop_geo_located.id@@";
+#     d2rq:class org:Site;
+#     d2rq:classDefinitionLabel "coop_geo_located";
+#     .
+# map:located__label a d2rq:PropertyBridge;
+#     d2rq:belongsToClassMap map:located;
+#     d2rq:property rdfs:label;
+#     d2rq:pattern "coop_geo_located #@@coop_geo_located.id@@";
+#     .
+# map:located_siteOf a d2rq:PropertyBridge;
+#     d2rq:belongsToClassMap map:located;
+#     d2rq:refersToClassMap map:organization;
+#     d2rq:property org:siteOf;
+#     d2rq:join "coop_local_organization.id <= coop_geo_located.object_id";
+#     d2rq:join "django_content_type.id <= coop_geo_located.content_type_id";
+#     d2rq:condition "django_content_type.model = 'organization'"
+#     .
+# map:located_addr a d2rq:PropertyBridge;
+#     d2rq:belongsToClassMap map:located;
+#     d2rq:refersToClassMap map:location;
+#     d2rq:property org:siteAddress;
+#     d2rq:join "coop_local_organization.id <= coop_geo_located.object_id";
+#     d2rq:join "django_content_type.id <= coop_geo_located.content_type_id";
+#     d2rq:join "coop_geo_location.id <= coop_geo_located.location_id";
+#     d2rq:condition "django_content_type.model = 'organization'"
+#    .
 
 
 
@@ -439,23 +457,26 @@ map:role_label a d2rq:PropertyBridge;
 map:person a d2rq:ClassMap;
     d2rq:dataStorage map:database;
     d2rq:uriPattern "person/@@coop_local_person.id@@/"; # URI == ID
-    d2rq:class foaf:Person; # classes RDF
-    d2rq:class org:Member;
+    #d2rq:class foaf:Person;    # redundancy person:Person subclass of foaf:Person and schema:Person
+    d2rq:class person:Person;
     .
 map:person_last_name a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:person;
-    d2rq:property foaf:familyName;  # propriété RDF
+    d2rq:property foaf:familyName;      
+    # d2rq:property schema:familyName;       # useless for our purpose
     d2rq:column "coop_local_person.last_name"; # la valeur est là
     .
-
 map:person_first_name a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:person;
-    d2rq:property foaf:givenName;
-    d2rq:column "coop_local_person.first_name";
+    d2rq:property foaf:givenName;          
+    # d2rq:property schema:givenName;         # useless for our purpose
+   d2rq:column "coop_local_person.first_name";
     .
 map:person__label a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:person;
     d2rq:property rdfs:label;
+    d2rq:property foaf:name;            
+    # d2rq:property schema:name;             # useless for our purpos
     d2rq:pattern "@@coop_local_person.first_name@@ @@coop_local_person.last_name@@";
     .
 # map:person_email a d2rq:PropertyBridge;
@@ -465,7 +486,7 @@ map:person__label a d2rq:PropertyBridge;
 #   .
 map:person_email a d2rq:PropertyBridge;
   d2rq:belongsToClassMap map:person;
-  d2rq:property foaf:mbox_sha1;
+  d2rq:property foaf:mbox_sha1sum;
   d2rq:column "coop_local_person.email_sha1";
   .
 map:person_created a d2rq:PropertyBridge;
@@ -553,7 +574,8 @@ map:departement a d2rq:ClassMap;
     d2rq:uriPattern "area/@@coop_geo_area.reference@@";
     d2rq:class insee:Departement;
     d2rq:class geo:Geometry;
-    d2rq:condition "coop_geo_area.area_type_id = 1";
+    d2rq:condition "coop_geo_area.area_type_id = coop_geo_areatype.id";
+    d2rq:condition "coop_geo_areatype.txt_idx = 'DP'";
     .
 map:departement__label a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:departement;
@@ -570,14 +592,14 @@ map:departement_reference a d2rq:PropertyBridge;
     d2rq:property skos:notation;
     d2rq:column "coop_geo_area.reference";
     .
-# map:departement_polygon a d2rq:PropertyBridge;
-#   d2rq:belongsToClassMap map:departement;
-#   d2rq:property geo:asWKT;
-#   #d2rq:column "coop_geo_area.polygon";
-#   d2rq:sqlExpression "ST_AsText(coop_geo_area.polygon)";
-#   d2rq:datatype opens:wkt;
-#   .
-#   
+ map:departement_polygon a d2rq:PropertyBridge;
+   d2rq:belongsToClassMap map:departement;
+   d2rq:property geo:asWKT;
+   #d2rq:column "coop_geo_area.polygon";
+   d2rq:sqlExpression "ST_AsText(coop_geo_area.polygon)";
+   d2rq:datatype opens:wkt;
+   .
+   
 
 # Table coop_geo_area
 map:commune a d2rq:ClassMap;
@@ -585,7 +607,8 @@ map:commune a d2rq:ClassMap;
     d2rq:uriPattern "area/@@coop_geo_area.reference@@";
     d2rq:class insee:Commune;
     d2rq:class geo:Geometry;
-    d2rq:condition "coop_geo_area.area_type_id = 2";
+    d2rq:condition "coop_geo_area.area_type_id = coop_geo_areatype.id";
+    d2rq:condition "coop_geo_areatype.txt_idx = 'TW'";
     .
 map:commune_area__label a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:commune;
@@ -602,28 +625,20 @@ map:commune_area_reference a d2rq:PropertyBridge;
     d2rq:property skos:notation;
     d2rq:column "coop_geo_area.reference";
     .
-# map:commune_area_polygon a d2rq:PropertyBridge;
-#   d2rq:belongsToClassMap map:commune;
-#   d2rq:property geo:asWKT;
-#   #d2rq:column "coop_geo_area.polygon";
-#   d2rq:sqlExpression "ST_AsText(coop_geo_area.polygon)";
-#   d2rq:datatype opens:wkt;
-#   .
-#   
+ map:commune_area_polygon a d2rq:PropertyBridge;
+   d2rq:belongsToClassMap map:commune;
+   d2rq:property geo:asWKT;
+   #d2rq:column "coop_geo_area.polygon";
+   d2rq:sqlExpression "ST_AsText(coop_geo_area.polygon)";
+   d2rq:datatype opens:wkt;
+   .
+   
 
 # Table coop_geo_location
 map:location a d2rq:ClassMap;
     d2rq:dataStorage map:database;
     d2rq:uriPattern "coop_geo_location/@@coop_geo_location.uuid@@";
-    d2rq:class geo:Geometry;
-    d2rq:class gr:Location;
-    d2rq:class v:Address;
-    d2rq:classDefinitionLabel "coop_geo_location";
-    .
-map:location__label a d2rq:PropertyBridge;
-    d2rq:belongsToClassMap map:location;
-    d2rq:property rdfs:label;
-    d2rq:pattern "@@coop_geo_location.label@@";
+    d2rq:class dct:Location;
     .
 map:location_label a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:location;
@@ -631,34 +646,17 @@ map:location_label a d2rq:PropertyBridge;
     d2rq:propertyDefinitionLabel "coop_geo_location label";
     d2rq:column "coop_geo_location.label";
     .
-map:location_adr1 a d2rq:PropertyBridge;
-    d2rq:belongsToClassMap map:location;
-    d2rq:property vocab:coop_geo_location_adr1;
-    d2rq:column "coop_geo_location.adr1";
-    .
-map:location_adr2 a d2rq:PropertyBridge;
-    d2rq:belongsToClassMap map:location;
-    d2rq:property vocab:coop_geo_location_adr2;
-    d2rq:column "coop_geo_location.adr2";
-    .
-map:location_zipcode a d2rq:PropertyBridge;
-    d2rq:belongsToClassMap map:location;
-    d2rq:property vocab:coop_geo_location_zipcode;
-    d2rq:column "coop_geo_location.zipcode";
-    .
-map:location_city a d2rq:PropertyBridge;
-    d2rq:belongsToClassMap map:location;
-    d2rq:property vocab:coop_geo_location_city;
-    d2rq:column "coop_geo_location.city";
-    .
-# map:location_point a d2rq:PropertyBridge;
-#   d2rq:belongsToClassMap map:location;
-#   d2rq:property geo:asWKT;
-#   #d2rq:column "coop_geo_location.point";
-#   d2rq:sqlExpression "ST_AsText(coop_geo_location.point)";
-#     d2rq:datatype opens:wkt;
-#   .
-    
+ map:location_point a d2rq:PropertyBridge;
+   d2rq:belongsToClassMap map:location;
+   d2rq:property locn:geometry;
+   d2rq:sqlExpression "ST_AsText(coop_geo_location.point)";
+   d2rq:datatype opens:wkt;
+   .
+ map:location_addr a d2rq:PropertyBridge;
+   d2rq:belongsToClassMap map:location;
+   d2rq:property locn:address;
+   d2rq:refersToClassMap  map:addr;
+   .   
 map:location_created a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:location;
     d2rq:property dct:created;
@@ -686,5 +684,35 @@ map:location_modified a d2rq:PropertyBridge;
 #   .
 
 
+
+# Table coop_geo_location is used to build addresses
+map:addr a d2rq:ClassMap;
+    d2rq:dataStorage map:database;
+    d2rq:uriPattern "coop_geo_addr/@@coop_geo_location.uuid@@";
+    d2rq:class locn:Address;
+    .
+
+map:addr_fulladdr a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:addr;
+    d2rq:property locn:fullAddress;
+    d2rq:property rdfs:label;
+    d2rq:pattern "@@coop_geo_location.adr1@@ @@coop_geo_location.adr2@@  @@coop_geo_location.zipcode@@ @@coop_geo_location.city@@";
+    .
+map:addr_adr2 a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:addr;
+    d2rq:property locn:thoroughfare;
+    d2rq:column "coop_geo_location.adr2";
+    d2rq:condition "coop_geo_location.adr2 <> ''"
+    .
+map:addr_zipcode a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:addr;
+    d2rq:property locn:postCode;
+    d2rq:column "coop_geo_location.zipcode";
+    .
+map:addr_city a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:addr;
+    d2rq:property locn:postName;
+    d2rq:column "coop_geo_location.city";
+    .
 {% block mappings %}
 {% endblock %}
