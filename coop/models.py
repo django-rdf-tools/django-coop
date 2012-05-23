@@ -22,7 +22,7 @@ class URIModel(models.Model):
 
     def init_uri(self):
         return 'http://' + str(Site.objects.get_current().domain) + \
-                    '/id/'+ str(self.uri_fragment) + \
+                    '/id/' + str(self.uri_fragment) + \
                     '/' + str(getattr(self, 'uri_id')) + '/'
 
     def save(self, *args, **kwargs):

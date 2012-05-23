@@ -80,8 +80,9 @@ class TransactionInline(admin.StackedInline):
 
 class ExchangeAdmin(ForeignKeyAutocompleteAdmin):  # AdminImageMixin,
     form = ExchangeForm
-    list_display = ('title', 'etype', 'methods')
-    list_editable = ('methods',)
+    list_display = ('title', 'etype') #, 'methods')
+    # TODO to be finished does not work ...
+    # list_editable = ('methods',)
     related_search_fields = {'organization': ('title', 'subtitle', 'description'), }
     fieldsets = ((None, {'fields': (('eway', 'etype'),
                                      'methods',
