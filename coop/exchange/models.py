@@ -21,18 +21,19 @@ class BaseProduct(URIModel):
                                         verbose_name='publisher', related_name='products')
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
-    publisher_uri = models.CharField(_(u'publisher URI'), blank=True, max_length=200, editable=False)
+    organization_uri = models.CharField(_(u'publisher URI'), blank=True, max_length=200, editable=False)
 
-    def get_org_uri(self):
-        if self.organization:
-            return self.organization.uri
-        else:
-            return self.publisher_uri
 
+    # URIModel stufs
     @property
     def uri_id(self):
         return self.id
+
     uri_fragment = 'product'
+
+    # Warning we sould have both fields organization and organization_uri
+    get_uri_org = lambda x: x.get_uri('organization')
+
 
     def __unicode__(self):
         return self.title
@@ -92,8 +93,8 @@ class BaseExchange(URIModel):
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
     products = models.ManyToManyField('coop_local.Product', verbose_name=_(u'linked products'))
-    author_uri = models.CharField(_(u'author URI'), blank=True, max_length=200, editable=False)
-    publisher_uri = models.CharField(_(u'publisher URI'), blank=True, max_length=200, editable=False)
+    person_uri = models.CharField(_(u'person URI'), blank=True, max_length=200, editable=False)
+    organization_uri = models.CharField(_(u'publisher URI'), blank=True, max_length=200, editable=False)
 
     methods = models.ManyToManyField('coop_local.ExchangeMethod', verbose_name=_(u'exchange methods'))
 
@@ -112,23 +113,18 @@ class BaseExchange(URIModel):
 
     #TODO assign the record to the person editing it (form public) and provide an A-C choice in admin
 
-    def get_org_uri(self):
-        if self.organization:
-            return self.organization.uri
-        else:
-            return self.publisher_uri
 
-    def get_person_uri(self):
-        if self.person:
-            return self.person.uri
-        else:
-            return self.author_uri
-
+    # URIModel stufs
     @property
     def uri_id(self):
         return self.slug
 
     uri_fragment = 'exchange'
+
+    # Warning we sould have both fields person and person_uri, idem for organization
+    get_uri_person = lambda x: x.get_uri('person')
+    get_uri_org = lambda x: x.get_uri('organization')
+
 
     class Meta:
         abstract = True
