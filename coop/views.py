@@ -21,7 +21,7 @@ def home(request):
 
 def d2r_mapping(request, mode):
     print request.META['REMOTE_ADDR']
-    if(request.META['REMOTE_ADDR'] in settings.INTERNAL_IPS and mode in ['view','export']):
+    if(request.META['REMOTE_ADDR'] in settings.INTERNAL_IPS and mode in ['view', 'export']):
         db = settings.DATABASES['default']
         rdict = {}
         rdict['mode'] = mode

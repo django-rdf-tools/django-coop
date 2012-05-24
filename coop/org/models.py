@@ -108,7 +108,7 @@ class BaseRelation(models.Model):
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
     #confirmed = models.BooleanField(default=False, verbose_name=_(u'confirmed by the target organization'))
-    
+
     class Meta:
         abstract = True
 
@@ -120,21 +120,18 @@ class BaseRelation(models.Model):
     def save(self):
         vérifier si la relation inverse existe
     '''
-    
 
-class BaseEngagement(models.Model):
+
+class BaseEngagement(URIModel):
     person = models.ForeignKey('coop_local.Person', verbose_name=_(u'person'), related_name='engagements') 
     organization = models.ForeignKey('coop_local.Organization', verbose_name=_(u'organization')) 
     role = models.ForeignKey('coop_local.Role', verbose_name=_(u'role'))
     role_detail = models.CharField(_(u'detailed role'), blank=True, max_length=100)
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
-    uri = models.CharField(_(u'main URI'), blank=True, null=True,
-                            max_length=250, editable=False)  # FIXME : null=True incompatible with unique=True
-    uuid = exfields.UUIDField(blank=True, null=True)  # FIXME : NULL=True for easier SQL import / equivalent in PGSQL default UUID ?
     org_admin = models.BooleanField(_(u'has editor rights'), default=True)
     engagement_display = models.PositiveSmallIntegerField(_(u'Display'), choices=DISPLAY.CHOICES, default=DISPLAY.PUBLIC)
-    
+
     class Meta:
         abstract = True
         verbose_name = _('Engagement')
@@ -142,6 +139,12 @@ class BaseEngagement(models.Model):
 
     def __unicode__(self):
         return self.person.__unicode__()
+
+    uri_fragment = 'eng'
+
+    @property
+    def uri_id(self):
+        return self.id
 
 
 class BaseOrganizationCategory(models.Model):
@@ -159,7 +162,7 @@ class BaseOrganizationCategory(models.Model):
     #@models.permalink
     def get_absolute_url(self):
         return reverse('org_category_detail', args=[self.slug])
-        
+
 
 
 PREFLABEL = Choices(
@@ -174,14 +177,12 @@ class BaseOrganization(URIModel):
     acronym = models.CharField(_(u'acronym'), max_length=20, blank=True, null=True)
     pref_label = models.PositiveSmallIntegerField(_(u'Preferred label'), 
                         choices=PREFLABEL.CHOICES, default=PREFLABEL.TITLE)
-    
+
     subtitle = models.CharField(_(u'tagline'), blank=True, null=True, 
                 max_length=250,
                 help_text=_(u'tell us what your organization do in one line.'))
-    
+
     description = models.TextField(_(u'description'), blank=True, null=True)
-    uri = models.CharField(_(u'main URI'), blank=True, null=True, 
-                max_length=250, editable=False)
     logo = sorl.thumbnail.ImageField(upload_to='logos/', null=True, blank=True)
     relations = models.ManyToManyField('coop_local.Organization', 
                 symmetrical=False, through='coop_local.Relation', 
@@ -192,7 +193,7 @@ class BaseOrganization(URIModel):
 
     members = models.ManyToManyField('coop_local.Person', 
                 through='coop_local.Engagement', verbose_name=_(u'members'))
-    
+
     contacts = generic.GenericRelation('coop_local.Contact')
     subs = generic.GenericRelation('coop_local.Subscription')
 
@@ -200,7 +201,7 @@ class BaseOrganization(URIModel):
     if "coop_geo" in settings.INSTALLED_APPS:
         located = generic.GenericRelation('coop_geo.Located')
         area = generic.GenericRelation('coop_geo.AreaLink')
-        
+
     birth = models.DateField(_(u'creation date'), null=True, blank=True)
     email = models.EmailField(_(u'global email'), blank=True, null=True)
     email_sha1 = models.CharField(_(u'email checksum'), 
@@ -252,23 +253,23 @@ class BaseOrganization(URIModel):
             return self.located.all().count() > 0
         has_location.boolean = True    
         has_location.short_description = _(u'geo')
-    
+
     def has_description(self):
         return self.description != None and len(self.description) > 20
     has_description.boolean = True    
     has_description.short_description = _(u'desc.')
-    
+
     #@models.permalink
     def get_absolute_url(self):
         return reverse('org_detail', args=[self.slug])
-        
+
     def get_tags(self):
         return self.tags.all()
-        
+
     def get_relations(self):
         relations = {}
         relmap = RELATIONS.REVERTED_CHOICES_CONST_DICT
-        
+
         for rel in self.source.all():
             reltype = str('OUT_' + relmap[rel.reltype])  # me => others
             relations[reltype] = []
@@ -280,7 +281,7 @@ class BaseOrganization(URIModel):
             #if rel.confirmed:  # which one are confirmed by both parts
             relations[reltype].append(rel.source)
         return relations
-        
+
     def local_uri(self):
         return ('http://dev.credis.org:8000/org/' + self.slug + '/')
 
@@ -311,4 +312,3 @@ class BaseOrganization(URIModel):
         #     m.update(self.email)
         #     self.email_sha1 = m.hexdigest()
         super(BaseOrganization, self).save(*args, **kwargs)  
-

@@ -21,8 +21,13 @@ class BaseProduct(URIModel):
                                         verbose_name='publisher', related_name='products')
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
-    uri = models.CharField(_(u'main URI'), blank=True, max_length=250, editable=False)
     publisher_uri = models.CharField(_(u'publisher URI'), blank=True, max_length=200, editable=False)
+
+    def get_org_uri(self):
+        if self.organization:
+            return self.organization.uri
+        else:
+            return self.publisher_uri
 
     @property
     def uri_id(self):
@@ -55,13 +60,13 @@ ETYPE = Choices(
 
 class BaseExchangeMethod(models.Model):  # this model will be initialized with a fixture
     label = models.CharField(_(u'label'), max_length=250)
-    uri = models.CharField(_(u'URI'), blank=True, max_length=250)
+    uri = models.CharField(_(u'URI'), blank=True, max_length=250)  
     etypes = MultiSelectField(_(u'applicable to'), max_length=250, null=True, blank=True, choices=ETYPE.CHOICES)
-    
+
     def applications(self):
         return u", ".join([ETYPE.CHOICES_DICT[int(e)].__unicode__() for e in self.etypes])
     applications.short_description = _(u'applications')
-    
+
     def __unicode__(self):
         return self.label
 
@@ -77,7 +82,7 @@ class BaseExchange(URIModel):
     organization = models.ForeignKey('coop_local.Organization', blank=True, null=True, 
                             verbose_name=_('publisher'), related_name='exchanges')
     person = models.ForeignKey('coop_local.Person', blank=True, null=True, verbose_name=_(u'person'))
-    
+
     eway = models.PositiveSmallIntegerField(_(u'exchange way'), choices=EWAY.CHOICES, default=EWAY.OFFER)
     etype = models.PositiveSmallIntegerField(_(u'exchange type'), choices=ETYPE.CHOICES)
 
@@ -87,13 +92,12 @@ class BaseExchange(URIModel):
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
     products = models.ManyToManyField('coop_local.Product', verbose_name=_(u'linked products'))
-    uri = models.CharField(_(u'main URI'), blank=True, max_length=250, editable=False)
     author_uri = models.CharField(_(u'author URI'), blank=True, max_length=200, editable=False)
     publisher_uri = models.CharField(_(u'publisher URI'), blank=True, max_length=200, editable=False)
 
     methods = models.ManyToManyField('coop_local.ExchangeMethod', verbose_name=_(u'exchange methods'))
 
-    uuid = exfields.UUIDField()  # nécessaire pour URI ?
+    # uuid = exfields.UUIDField()  # nécessaire pour URI ?
 
     # coop_geo must be loaded BEFORE coop_local
     if "coop_geo" in settings.INSTALLED_APPS:
@@ -104,13 +108,26 @@ class BaseExchange(URIModel):
         return unicode(self.title)
 
     def get_absolute_url(self):
-        return reverse('exchange_detail', args=[self.uuid])
+        return reverse('exchange_detail', args=[self.id])
 
     #TODO assign the record to the person editing it (form public) and provide an A-C choice in admin
 
+    def get_org_uri(self):
+        if self.organization:
+            return self.organization.uri
+        else:
+            return self.publisher_uri
+
+    def get_person_uri(self):
+        if self.person:
+            return self.person.uri
+        else:
+            return self.author_uri
+
     @property
     def uri_id(self):
-        return self.uuid
+        return self.slug
+
     uri_fragment = 'exchange'
 
     class Meta:

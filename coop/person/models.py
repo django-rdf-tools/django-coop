@@ -24,7 +24,7 @@ class BasePersonCategory(models.Model):
         abstract = True
         verbose_name = _(u'Person category')
         verbose_name_plural = _(u'Person categories')
-        
+
     def __unicode__(self):
         return self.label    
 
@@ -35,7 +35,7 @@ class BasePerson(URIModel):
     user = models.OneToOneField(User, blank=True, null=True, unique=True, verbose_name=_(u'django user'), editable=False)
     username = models.CharField(blank=True, max_length=100, unique=True)    
     #pour D2RQ et poura voir des URI clean meme pour des non-users
-    
+
     category = models.ManyToManyField('coop_local.PersonCategory', blank=True, null=True, verbose_name=_(u'category'))
     last_name = models.CharField(_(u'last name'), max_length=100)
     first_name = models.CharField(_(u'first name'), max_length=100, null=True, blank=True)
@@ -44,8 +44,6 @@ class BasePerson(URIModel):
     email_sha1 = models.CharField(_(u'email checksum'), max_length=250, blank=True, null=True)
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
-    uri = models.CharField(_(u'main URI'), blank=True, max_length=250, null=True)   # FIXME : NULL just for easier importing of data
-                                                                                    # could be a lambda function property ?
     notes = models.TextField(_(u'notes'), blank=True, null=True)
     structure = models.CharField(blank=True, max_length=100)
 
@@ -59,25 +57,25 @@ class BasePerson(URIModel):
         abstract = True
         verbose_name = _(u'Person')
         verbose_name_plural = _(u'Persons')
-        
+
     def __unicode__(self):
         return unicode('%s %s' % (self.first_name, self.last_name))
-        
+
     @models.permalink
     def get_absolute_url(self):
         return reverse('profiles_profile_detail', args=[self.username])
         #return ('profiles_profile_detail', (), {'username': self.username})
-        
+
     def has_user_account(self):
         return (self.user != None)
     has_user_account.boolean = True    
     has_user_account.short_description = _(u'django account')
-    
+
     def has_role(self):
         return (self.engagements.count() > 0)
     has_role.boolean = True    
     has_role.short_description = _(u'has organization')
-    
+
     def engagements(self):
         eng = []
         for e in self.engagement_set.all():
@@ -111,4 +109,3 @@ class BasePerson(URIModel):
             if(chg):
                 self.user.save()
         super(BasePerson, self).save(*args, **kwargs)    
-

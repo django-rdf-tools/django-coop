@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from django.db import models
 from django.contrib.sites.models import Site
+from django.utils.translation import ugettext_lazy as _
 
 
 class URIModel(models.Model):
@@ -19,6 +20,9 @@ class URIModel(models.Model):
     """
     class Meta:
         abstract = True
+
+    uri = models.CharField(_(u'main URI'), blank=True, null=True,
+                            max_length=250, editable=False)  # FIXME : null=True incompatible with unique=True
 
     def init_uri(self):
         return 'http://' + str(Site.objects.get_current().domain) + \

@@ -41,8 +41,7 @@ map:database a d2rq:Database;
     d2rq:jdbcDSN "jdbc:postgresql://{{d2rq_db_host}}:{{d2rq_db_port}}/{{d2rq_db_name}}";
     d2rq:username "{{d2rq_username}}";
     d2rq:password "{{d2rq_password}}";
-    #d2rq:resultSizeLimit 500;
-    .
+   .
 
 # Table coop_cms_navtree
 map:scheme a d2rq:ClassMap; # classe = modèle Django
@@ -458,7 +457,11 @@ map:role_label a d2rq:PropertyBridge;
 # Définition basée sur la table Person
 map:person a d2rq:ClassMap;
     d2rq:dataStorage map:database;
+{% if mode == 'view' %}
     d2rq:uriPattern "person/@@coop_local_person.id@@/"; # URI == ID
+{% else %}
+    d2rq:uriColumn "coop_local_person.uri"
+{% endif %}
     #d2rq:class foaf:Person;    # redundancy person:Person subclass of foaf:Person and schema:Person
     d2rq:class person:Person;
     .
@@ -508,7 +511,11 @@ map:person_modified a d2rq:PropertyBridge;
 # Table coop_local_engagement
 map:engagement a d2rq:ClassMap;
     d2rq:dataStorage map:database;
-    d2rq:uriPattern "engagement/@@coop_local_engagement.uuid@@";
+{% if mode == 'view' %}
+    d2rq:uriPattern "engagement/@@coop_local_engagement.id@@/"; # URI == ID
+{% else %}
+    d2rq:uriColumn "coop_local_engagement.uri"
+{% endif %}
     d2rq:class org:Membership;
     .   
 map:engagement__label a d2rq:PropertyBridge;
