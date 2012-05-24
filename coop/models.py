@@ -29,12 +29,6 @@ class URIModel(models.Model):
                     '/id/' + str(self.uri_fragment) + \
                     '/' + str(getattr(self, 'uri_id')) + '/'
 
-    def get_uri(self, name):
-        if self.__getattribute__(name).uri:
-            return self.__getattribute__(name).uri
-        else:
-            return self.__getattribute__(name + '_uri')
-
     def save(self, *args, **kwargs):
         # create / update URI
         if self.uri != self.init_uri():
