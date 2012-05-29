@@ -2,6 +2,7 @@
 from django.conf.urls.defaults import *
 from django.views.generic.detail import DetailView
 from django.views.generic import ListView
+
 from coop_local.models import Exchange
 
 # urlpatterns = patterns('',
@@ -12,8 +13,6 @@ from coop_local.models import Exchange
 
 urlpatterns = patterns('',
     url(r'^$', ListView.as_view(model=Exchange, template_name="exchange/exchange_list.html")),
-
-
     url(r'^(?P<slug>\d+)/$', 
         DetailView.as_view(
             model=Exchange,

@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load smart_if thumbnail comments oembed_tags mytags %}
 
-
 {% block meta_title %}{{exchange.title}}{% endblock %}
 
 {% block extra_head %}
@@ -23,7 +22,7 @@
             <p>{{exchange.description|safe|oembed}}</p>
         
             <br/>
-            Publié par {% local_or_remote_url exchange "organization" %}
+            Publié par <a href="{% local_or_remote_url exchange organization %}">Nom de l'organisation</a>
         
         </div>
      

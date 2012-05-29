@@ -30,9 +30,10 @@ class LocalRemoteUrlNode(template.Node):
             object._meta.get_field_by_name(self.model_name)
         except(FieldDoesNotExist):
             raise template.TemplateSyntaxError('Unknown attribute for %s' % object)
+
         related = object.__getattribute__(self.model_name)
         if related:
-            return related.get_absolute_url
+            return related.get_absolute_url()
         else:
             try:
                 return object.__getattribute__(self.model_name + '_uri')

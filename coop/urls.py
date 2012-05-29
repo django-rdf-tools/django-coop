@@ -11,24 +11,23 @@ class TextPlainView(TemplateView):
 urlpatterns = patterns('',
 
     url(r'^$', 'coop.views.home', name="home"),
+
     (r'^org/', include('coop.org.urls')),
-    (r'^annonces/', include('coop.exchange.urls')),
     (r'^comments/', include('django.contrib.comments.urls')),
 
     # a revoir
     (r'^perso/$', 'coop.person.views.perso'),
     (r'^membre/', include('coop.person.urls')),
+
     
     url(r'^robots\.txt$', TextPlainView.as_view(template_name='robots.txt')),
-    url(r'^favicon\.ico$', RedirectView.as_view(url='/media/img/favicon.ico')),
-    
-
+    url(r'^favicon\.ico$', RedirectView.as_view(url='/static/img/favicon.ico')),
     url(r'^d2r/(?P<mode>[\w-]+)/mapping.ttl$', 'coop.views.d2r_mapping'),
-
 
 )
 
-if 'coop_tag' in settings.INSTALLED_APPS:
-    urlpatterns += patterns('',
-        url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
-        )
+if 'coop.exchange' in settings.INSTALLED_APPS:
+
+    urlpatterns = urlpatterns + patterns('',
+        (r'^annonces/', include('coop.exchange.urls')),
+    )
