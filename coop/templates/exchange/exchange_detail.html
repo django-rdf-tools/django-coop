@@ -1,6 +1,5 @@
 {% extends "base.html" %}
-{% load smart_if thumbnail comments oembed_tags %}
-
+{% load smart_if thumbnail comments oembed_tags mytags %}
 
 {% block meta_title %}{{exchange.title}}{% endblock %}
 
@@ -19,15 +18,11 @@
     {% block content %}
     <div id="content">
         <div class="grid_8 grid">
-        
-            <p class="statut">{{exchange.organization.title}}</p>
-        
-        
+                
             <p>{{exchange.description|safe|oembed}}</p>
         
             <br/>
-
-
+            Publié par <a href="{% local_or_remote_url exchange organization %}">Nom de l'organisation</a>
         
         </div>
      

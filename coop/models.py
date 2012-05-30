@@ -55,6 +55,7 @@ class URIModel(models.Model):
         return self.uuid
 
 
+
     def uri_registry(self):
         return self.__class__.__name__.lower()
 
@@ -71,6 +72,7 @@ class URIModel(models.Model):
     # attention dans les 2 cas le uuid ne bouge pas.... il faut alors aller le chercher
     #
     # repenser aux commons et aux importés pour voir si tout marche
+
     def save(self, *args, **kwargs):
         # create / update URI
         if self.status != STATES.IMPORTED:

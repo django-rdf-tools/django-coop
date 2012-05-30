@@ -102,6 +102,7 @@ class BaseExchange(URIModel):
 
     class Meta:
         abstract = True
+        ordering = ('-modified',)
         verbose_name = _(u'Exchange')
         verbose_name_plural = _(u'Exchanges')
 
