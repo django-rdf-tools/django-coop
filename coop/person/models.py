@@ -18,7 +18,7 @@ if "coop_geo" in settings.INSTALLED_APPS:
 
 class BasePersonCategory(models.Model):
     label = models.CharField(blank=True, max_length=100)
-    slug = exfields.AutoSlugField(populate_from=('label'))
+    slug = exfields.AutoSlugField(populate_from=('label'), overwrite=True)
 
     class Meta:
         abstract = True
@@ -81,11 +81,6 @@ class BasePerson(URIModel):
         for e in self.engagement_set.all():
             eng.append({'initiative': e.initiative, 'role': e.role})
         return eng
-
-    @property
-    def uri_id(self):
-        return self.username
-    uri_fragment = 'person'
 
     def save(self, *args, **kwargs):
         if self.email != '':

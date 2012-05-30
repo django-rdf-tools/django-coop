@@ -36,7 +36,9 @@ COMM_MEANS = Choices(
 )
 
 
-class BaseContact(models.Model):
+# A model to deal with how contact (an organization, persone,...)
+# mail,fax, ... see COMM_MEANS 
+class BaseContact(URIModel):
     category = models.PositiveSmallIntegerField(_(u'Category'), 
                     choices=COMM_MEANS.CHOICES)
     content = models.CharField(_(u'content'), max_length=250)
@@ -77,9 +79,16 @@ class BaseContact(models.Model):
         super(BaseContact, self).save(*args, **kwargs) 
 
 
-class BaseRole(models.Model):
+class BaseRole(URIModel):
     label = models.CharField(_(u'label'), max_length=60)
-    slug = exfields.AutoSlugField(populate_from=('label'))
+    slug = exfields.AutoSlugField(populate_from=('label'), overwrite=True)
+
+    domain_name = 'data.economie-solidaire.fr/id/'
+
+    @property
+    def uri_id(self):
+        return self.slug
+
 
     class Meta:
         abstract = True
@@ -140,16 +149,10 @@ class BaseEngagement(URIModel):
     def __unicode__(self):
         return self.person.__unicode__()
 
-    uri_fragment = 'eng'
-
-    @property
-    def uri_id(self):
-        return self.id
-
 
 class BaseOrganizationCategory(models.Model):
     label = models.CharField(blank=True, max_length=100)
-    slug = exfields.AutoSlugField(populate_from=('label'))
+    slug = exfields.AutoSlugField(populate_from=('label'), overwrite=True)
 
     class Meta:
         abstract = True
@@ -218,7 +221,7 @@ class BaseOrganization(URIModel):
                 verbose_name=_(u'preferred postal address'), 
                 related_name='pref_adress', null=True, blank=True)
 
-    slug = exfields.AutoSlugField(populate_from='title', blank=True)
+    slug = exfields.AutoSlugField(populate_from='title', blank=True, overwrite=True)
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
     active = models.BooleanField(_(u'show on public site'), default=True,)
@@ -238,12 +241,6 @@ class BaseOrganization(URIModel):
             return self.title
         elif self.pref_label == PREFLABEL.ACRO:
             return self.acronym
-
-    @property
-    def uri_id(self):
-        return self.slug
-
-    uri_fragment = 'org'
 
     def can_edit_organization(self, user):
         return True
@@ -282,8 +279,8 @@ class BaseOrganization(URIModel):
             relations[reltype].append(rel.source)
         return relations
 
-    def local_uri(self):
-        return ('http://dev.credis.org:8000/org/' + self.slug + '/')
+    # def local_uri(self):
+    #     return ('http://dev.credis.org:8000/org/' + self.slug + '/')
 
     def main_location(self):
         return self.located.all()[0].location

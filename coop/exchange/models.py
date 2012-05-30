@@ -15,25 +15,13 @@ if "coop_geo" in settings.INSTALLED_APPS:
 
 class BaseProduct(URIModel):
     title = models.CharField(_('title'), blank=True, max_length=250)
-    slug = exfields.AutoSlugField(populate_from='title')
+    slug = exfields.AutoSlugField(populate_from='title', overwrite=True)
     description = models.TextField(_(u'description'), blank=True)
     organization = models.ForeignKey('coop_local.Organization', blank=True, null=True, 
                                         verbose_name='publisher', related_name='products')
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
     organization_uri = models.CharField(_(u'publisher URI'), blank=True, max_length=200, editable=False)
-
-
-    # URIModel stufs
-    @property
-    def uri_id(self):
-        return self.id
-
-    uri_fragment = 'product'
-
-    # Warning we sould have both fields organization and organization_uri
-    get_uri_org = lambda x: x.get_uri('organization')
-
 
     def __unicode__(self):
         return self.title
@@ -89,7 +77,7 @@ class BaseExchange(URIModel):
 
     permanent = models.BooleanField(_(u'permanent'), default=True)
     expiration = models.DateField(_(u'expiration'), blank=True, null=True)
-    slug = exfields.AutoSlugField(populate_from='title')
+    slug = exfields.AutoSlugField(populate_from='title', overwrite=True)
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
     products = models.ManyToManyField('coop_local.Product', verbose_name=_(u'linked products'))
@@ -98,7 +86,6 @@ class BaseExchange(URIModel):
 
     methods = models.ManyToManyField('coop_local.ExchangeMethod', verbose_name=_(u'exchange methods'))
 
-    # uuid = exfields.UUIDField()  # nécessaire pour URI ?
 
     # coop_geo must be loaded BEFORE coop_local
     if "coop_geo" in settings.INSTALLED_APPS:
@@ -112,19 +99,6 @@ class BaseExchange(URIModel):
         return reverse('exchange_detail', args=[self.id])
 
     #TODO assign the record to the person editing it (form public) and provide an A-C choice in admin
-
-
-    # URIModel stufs
-    @property
-    def uri_id(self):
-        return self.slug
-
-    uri_fragment = 'exchange'
-
-    # Warning we sould have both fields person and person_uri, idem for organization
-    get_uri_person = lambda x: x.get_uri('person')
-    get_uri_org = lambda x: x.get_uri('organization')
-
 
     class Meta:
         abstract = True
