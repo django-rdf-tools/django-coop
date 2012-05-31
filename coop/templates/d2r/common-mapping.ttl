@@ -656,14 +656,14 @@ map:area_departement a d2rq:PropertyBridge;
     d2rq:property rdf:type;
     d2rq:constantValue insee:Departement;
     d2rq:alias "coop_geo_areatype AS areatype_dep";
-    d2rq:condition "areatype_dep.txt_idx = 'DP'";
+    d2rq:condition "areatype_dep.txt_idx = 'DEP'";
     d2rq:join "coop_geo_area.area_type_id => areatype_dep.id";
     .
 map:area_commune a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:area;
     d2rq:property rdf:type;
     d2rq:constantValue insee:Commune;
-    d2rq:condition "coop_geo_areatype.txt_idx = 'TW'";
+    d2rq:condition "coop_geo_areatype.txt_idx = 'COM'";
     d2rq:join "coop_geo_area.area_type_id => coop_geo_areatype.id";
     .    
 map:area_label a d2rq:PropertyBridge;
