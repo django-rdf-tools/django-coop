@@ -148,7 +148,7 @@ i[class^="icon-"]{
 	margin-left: -2px;
 }
 
-div.controls input {
+div.controls input:not([name=logo]){
 	float: left;
 }
 

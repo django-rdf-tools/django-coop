@@ -35,7 +35,7 @@ class ExchangeForm(forms.ModelForm):
     methods = forms.ModelMultipleChoiceField(   queryset=get_model('coop_local', 'ExchangeMethod').objects.all(),
                                                 widget=MethodsCheckboxSelectMultiple(), 
                                                 required=False) 
-    
+
     def __init__(self, *args, **kwargs):
         super(ExchangeForm, self).__init__(*args, **kwargs)
     #   self.fields['methods'].widget = forms.CheckboxSelectMultiple()
@@ -61,10 +61,11 @@ class ExchangeInline(admin.StackedInline):
     extra = 1
 
     def formfield_for_dbfield(self, db_field, **kwargs):
-        if db_field.name == 'location':
-            kwargs['queryset'] = self.parent_object.locations()
-        if db_field.name == 'area':
-            kwargs['queryset'] = self.parent_object.areas()    
+        if self.parent_object != None:
+            if db_field.name == 'location':
+                kwargs['queryset'] = self.parent_object.locations()
+            if db_field.name == 'area':
+                kwargs['queryset'] = self.parent_object.areas()    
         return super(ExchangeInline, self).formfield_for_dbfield(db_field, **kwargs)
 
     def __init__(self, *args, **kwargs):
