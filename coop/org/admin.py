@@ -3,7 +3,6 @@ from django.contrib import admin
 from coop.org.models import BaseEngagement, BaseRelation
 from coop.person.models import BasePerson
 #from coop.exchange.models import BaseExchange, BasePaymentModality, BaseTransaction, BaseProduct
-from coop.exchange.admin import ExchangeInline
 from django import forms
 from django.conf import settings
 
@@ -29,6 +28,8 @@ ADMIN_THUMBS_SIZE = '60x60'
 
 from chosen import widgets as chosenwidgets
 
+if "coop.exchange" in settings.INSTALLED_APPS:
+    from coop.exchange.admin import ExchangeInline
 
 if "coop_geo" in settings.INSTALLED_APPS:
     from coop_geo.admin import LocatedInline, AreaInline
@@ -132,21 +133,35 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
     formfield_overrides = {
         URLField: {'widget': URLFieldWidget},
     }
-    inlines = [  # this list can be overriden in coop_local
+
+    min_inlines = [  # this list can be overriden in coop_local
                 ContactInline,
                 EngagementInline,
-                ExchangeInline,
-                RelationInline,
                 LocatedInline,
-                AreaInline,
                 ]
+
+    if "coop.exchange" in settings.INSTALLED_APPS:
+        ess_inlines = [  # this list can be overriden in coop_local
+                    ContactInline,
+                    EngagementInline,
+                    ExchangeInline,
+                    RelationInline,
+                    LocatedInline,
+                    AreaInline,
+                    ]
  
     # grace au patch 
     # https://code.djangoproject.com/ticket/17856
     # https://github.com/django/django/blob/master/django/contrib/admin/options.py#L346
     def get_inline_instances(self, request, obj):
         inline_instances = []
-        for inline_class in self.inlines:
+        
+        if "coop.exchange" in settings.INSTALLED_APPS:
+            inline_list = self.ess_inlines
+        else: 
+            inline_list = self.min_inlines
+
+        for inline_class in inline_list:
             if inline_class.model == get_model('coop_local', 'Exchange'):
                 inline = inline_class(self.model, self.admin_site, obj=obj)
             else:
