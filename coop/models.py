@@ -30,7 +30,7 @@ class URIModel(models.Model):
         abstract = True
 
 
-    status = models.PositiveSmallIntegerField(_(u'Status'), choices=STATES.CHOICES, default=STATES.LOCAL)
+    status = models.PositiveSmallIntegerField(_(u'Status'), choices=STATES.CHOICES, default=STATES.LOCAL, editable=False)
     uri = models.CharField(_(u'main URI'), blank=True, null=True,
                             max_length=250, editable=False)  # FIXME : null=True incompatible with unique=True
     # Le code suivante ne marche pas avec south et pourtant il correxpond exactement à ce que je voudrais
@@ -44,7 +44,7 @@ class URIModel(models.Model):
 
     # La version simple c'est de passer par le save() et de supprimer le default.... c'est pas 
     # tres beau, car un plus couteux en runtime... mais bon
-    uuid = models.CharField(_(u'uuid'), max_length=50, unique=True, null=True) 
+    uuid = models.CharField(_(u'uuid'), max_length=50, unique=True, null=True, editable=False) 
 
     # the default value, this attribut should be overloaded
     domain_name = str(Site.objects.get_current().domain)
@@ -60,24 +60,24 @@ class URIModel(models.Model):
         return self.__class__.__name__.lower()
 
 
-    def _init_uri(self):
+    def init_uri(self):
         self.uuid = shortuuid.uuid() 
         return 'http://' + self.domain_name + \
                     '/id/' + self.uri_registry() + \
                     '/' + str(getattr(self, 'uri_id')) + '/'
 
-    # self.uri est null ou vide le creer (cad appel _init_uri)
-    # si le domain a changé alors changer l'uri (cad dire appel _init_uri)
+    # self.uri est null ou vide le creer (cad appel init_uri)
+    # si le domain a changé alors changer l'uri (cad dire appel init_uri)
     # si le uri_registery a changer alors changer l'uri
     # attention dans les 2 cas le uuid ne bouge pas.... il faut alors aller le chercher
     #
     # repenser aux commons et aux importés pour voir si tout marche
 
     def save(self, *args, **kwargs):
-        # create / update URI
+         # create / update URI
         if self.status != STATES.IMPORTED:
             if not self.uri or self.uri == '':
-                self.uri = self._init_uri()
+                self.uri = self.init_uri()
             else:
                 # l'uri est déjà en db, mais il n'est peut etre pas à jour...
                 # si le domaine_name a changé.... on va alors transporter les uri
@@ -97,12 +97,12 @@ class URIModel(models.Model):
 # par contre pour les models dénoté par STATES.COMMON c'est peut etre moin rare
 # pour le registry_uri ca ne devrait pas trop bouger en phase de production donc a la fin aussi
                 if sp[3] != self.uri_id:
-                    self.uri = self._init_uri()
+                    self.uri = self.init_uri()
                 else:
                     if sp[0] != self.domain_name:
-                        self.uri = self._init_uri()
+                        self.uri = self.init_uri()
                     else:
                         if  sp[2] != self.uri_registry():
-                            self.uri = self._init_uri()
+                            self.uri = self.init_uri()
 
         super(URIModel, self).save(*args, **kwargs)
