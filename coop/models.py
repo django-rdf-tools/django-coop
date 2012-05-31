@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
 import shortuuid
 
-STATES = Choices(
+URI_MODE = Choices(
     ('LOCAL',  1, _(u'Local')),
     ('COMMON',   2, _(u'Common')),
     ('IMPORTED', 3, _(u'Imported')),
@@ -30,7 +30,7 @@ class URIModel(models.Model):
         abstract = True
 
 
-    status = models.PositiveSmallIntegerField(_(u'Status'), choices=STATES.CHOICES, default=STATES.LOCAL, editable=False)
+    uri_mode = models.PositiveSmallIntegerField(_(u'Mode'), choices=URI_MODE.CHOICES, default=URI_MODE.LOCAL, editable=False)
     uri = models.CharField(_(u'main URI'), blank=True, null=True,
                             max_length=250, editable=False)  # FIXME : null=True incompatible with unique=True
     # Le code suivante ne marche pas avec south et pourtant il correxpond exactement à ce que je voudrais
@@ -75,7 +75,7 @@ class URIModel(models.Model):
 
     def save(self, *args, **kwargs):
          # create / update URI
-        if self.status != STATES.IMPORTED:
+        if self.uri_mode != URI_MODE.IMPORTED:
             if not self.uri or self.uri == '':
                 self.uri = self.init_uri()
             else:
