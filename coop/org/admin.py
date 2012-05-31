@@ -140,6 +140,20 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
                 LocatedInline,
                 AreaInline,
                 ]
+ 
+    # grace au patch 
+    # https://code.djangoproject.com/ticket/17856
+    # https://github.com/django/django/blob/master/django/contrib/admin/options.py#L346
+    def get_inline_instances(self, request, obj):
+        inline_instances = []
+        for inline_class in self.inlines:
+            if inline_class.model == get_model('coop_local', 'Exchange'):
+                inline = inline_class(self.model, self.admin_site, obj=obj)
+            else:
+                inline = inline_class(self.model, self.admin_site)
+            inline_instances.append(inline)
+        return inline_instances
+
     fieldsets = (
         ('Identité', {
             'fields': ('logo', 'title', ('acronym', 'pref_label'), 'subtitle', ('birth', 'active',),

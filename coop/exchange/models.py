@@ -89,8 +89,16 @@ class BaseExchange(URIModel):
 
     # coop_geo must be loaded BEFORE coop_local
     if "coop_geo" in settings.INSTALLED_APPS:
-        location = models.ForeignKey(Location, null=True, blank=True, verbose_name=_(u'location'))
-        area = models.ForeignKey(Area, null=True, blank=True, verbose_name=_(u'area'))    
+
+        location = models.ForeignKey(   Location, 
+                                        verbose_name=_(u'location'), 
+                                        null=True, blank=True, related_name='exchange_location',
+                                        help_text=_("choose a location among your registered locations."))
+        area = models.ForeignKey(Area, 
+                                 verbose_name=_(u'interest area'), 
+                                 null=True, blank=True, related_name='exchange_area',
+                                 help_text=_("choose an area among your registered impact areas."))
+ 
 
     def __unicode__(self):
         return unicode(self.title)

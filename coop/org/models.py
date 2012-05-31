@@ -203,7 +203,7 @@ class BaseOrganization(URIModel):
     # coop_geo must be loaded BEFORE coop_local
     if "coop_geo" in settings.INSTALLED_APPS:
         located = generic.GenericRelation('coop_geo.Located')
-        area = generic.GenericRelation('coop_geo.AreaLink')
+        framed = generic.GenericRelation('coop_geo.AreaLink')
 
     birth = models.DateField(_(u'creation date'), null=True, blank=True)
     email = models.EmailField(_(u'global email'), blank=True, null=True)
@@ -245,11 +245,21 @@ class BaseOrganization(URIModel):
     def can_edit_organization(self, user):
         return True
 
-    if "coop_geo" in settings.INSTALLED_APPS:          
+    if "coop_geo" in settings.INSTALLED_APPS:
+
         def has_location(self):
             return self.located.all().count() > 0
         has_location.boolean = True    
         has_location.short_description = _(u'geo')
+
+        def locations(self):
+            from coop_geo.models import Location
+            return Location.objects.filter(id__in=self.located.all().values_list('location_id', flat=True))
+
+        def areas(self):
+            from coop_geo.models import Area
+            return Area.objects.filter(id__in=self.framed.all().values_list('location_id', flat=True))
+
 
     def has_description(self):
         return self.description != None and len(self.description) > 20
