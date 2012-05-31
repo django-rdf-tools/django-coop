@@ -30,7 +30,7 @@ class URIModel(models.Model):
         abstract = True
 
 
-    status = models.PositiveSmallIntegerField(_(u'Status'), choices=STATES.CHOICES, default=STATES.LOCAL)
+    status = models.PositiveSmallIntegerField(_(u'Status'), choices=STATES.CHOICES, default=STATES.LOCAL, editable=False)
     uri = models.CharField(_(u'main URI'), blank=True, null=True,
                             max_length=250, editable=False)  # FIXME : null=True incompatible with unique=True
     # Le code suivante ne marche pas avec south et pourtant il correxpond exactement à ce que je voudrais
@@ -44,7 +44,7 @@ class URIModel(models.Model):
 
     # La version simple c'est de passer par le save() et de supprimer le default.... c'est pas 
     # tres beau, car un plus couteux en runtime... mais bon
-    uuid = models.CharField(_(u'uuid'), max_length=50, unique=True, null=True) 
+    uuid = models.CharField(_(u'uuid'), max_length=50, unique=True, null=True, editable=False) 
 
     # the default value, this attribut should be overloaded
     domain_name = str(Site.objects.get_current().domain)
