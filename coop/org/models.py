@@ -83,7 +83,7 @@ class BaseRole(URIModel):
     label = models.CharField(_(u'label'), max_length=60)
     slug = exfields.AutoSlugField(populate_from=('label'), overwrite=True)
 
-    domain_name = 'data.economie-solidaire.fr/id/'
+    domain_name = 'data.economie-solidaire.fr'
 
     @property
     def uri_id(self):
