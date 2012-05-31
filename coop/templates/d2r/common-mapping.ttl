@@ -115,7 +115,12 @@ map:xlabel_broader a d2rq:PropertyBridge;
 # Table coop_tag_ctag
 map:tag a d2rq:ClassMap; # classe = modèle Django
     d2rq:dataStorage map:database;
-    d2rq:uriPattern "coop_tag_ctag/@@coop_tag_ctag.slug@@/";
+    {% if mode == 'view' %}
+    d2rq:uriPattern "ctag/@@coop_tag_ctag.slug@@/";
+    {% else %}
+    d2rq:uriColumn "coop_tag_ctag.uri"
+    {% endif %}
+
     d2rq:class ctag:Tag; # classe RDF correspondante
     .
 map:tag__label a d2rq:PropertyBridge;
@@ -131,7 +136,7 @@ map:tag_name a d2rq:PropertyBridge;
 map:tag_author_uri a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:tag;
     d2rq:property foaf:made;
-    d2rq:column "coop_tag_ctag.author_uri";
+    d2rq:column "coop_tag_ctag.person_uri";
     .
 map:tag_created a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:tag;
@@ -511,6 +516,11 @@ map:contact_modified a d2rq:PropertyBridge;
 # Table coop_local_role
 map:role a d2rq:ClassMap;
     d2rq:dataStorage map:database;
+    {% if mode == 'view' %}
+    d2rq:uriPattern "role/@@coop_local_role.slug@@";
+    {% else %}
+    d2rq:uriColumn "coop_local_role.uri"
+    {% endif %}
     d2rq:uriPattern "role/@@coop_local_role.slug@@";
     d2rq:class org:Role;
     d2rq:classDefinitionLabel "coop_local_role";
@@ -623,7 +633,7 @@ map:engagement_role a d2rq:PropertyBridge;
     .
 
 
-# Table django_comments
+# Table django_comments    To be finished
 map:comment a d2rq:ClassMap;
     d2rq:dataStorage map:database;
     d2rq:uriPattern "comment/@@django_comments.id@@";
@@ -648,7 +658,11 @@ map:comment_author a d2rq:PropertyBridge;
 # Table coop_geo_area
 map:area a d2rq:ClassMap;
     d2rq:dataStorage map:database;
+    {% if mode == 'view' %}
     d2rq:uriPattern "area/@@coop_geo_area.reference@@";
+    {% else %}
+    d2rq:uriColumn "coop_geo_area.uri"
+    {% endif %}
     d2rq:class dct:Location;
     .
 map:area_departement a d2rq:PropertyBridge;
@@ -688,7 +702,11 @@ map:area_reference a d2rq:PropertyBridge;
 # Table coop_geo_location
 map:location a d2rq:ClassMap;
     d2rq:dataStorage map:database;
-    d2rq:uriPattern "coop_geo_location/@@coop_geo_location.uuid@@";
+    {% if mode == 'view' %}
+    d2rq:uriPattern "coop_geo_location/@@coop_geo_location.geohash@@";
+    {% else %}
+    d2rq:uriColumn "coop_geo_location.geohash"
+    {% endif %}   
     d2rq:class dct:Location;
     .
 map:location_label a d2rq:PropertyBridge;
@@ -739,7 +757,11 @@ map:location_modified a d2rq:PropertyBridge;
 # Table coop_geo_location is used to build addresses
 map:addr a d2rq:ClassMap;
     d2rq:dataStorage map:database;
+    {% if mode == 'view' %}
     d2rq:uriPattern "coop_geo_addr/@@coop_geo_location.uuid@@";
+    {% else %}
+    d2rq:uriColumn "coop_geo_location.uri"
+    {% endif %}
     d2rq:class locn:Address;
     .
 
