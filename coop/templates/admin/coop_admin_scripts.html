@@ -100,10 +100,11 @@ function show_pref_label_select() {
       $(this).next().click(function(){
           if($(this).prev().prev().attr('value')=='')return false;
           var link = ($(this).prev().attr('href')+'../'+$(this).prev().prev().attr('value'));
-          window.location.href = link
+          
+          //window.location.href = link
           // popup version :
-          // var win = window.open(link + '?_popup=1', link, 'height=600,width=1000,resizable=yes,scrollbars=yes');
-          // win.focus();
+          var win = window.open(link + '?_popup=1', link, 'height=600,width=1000,resizable=yes,scrollbars=yes');
+          win.focus();
           return false;
       });
   }
