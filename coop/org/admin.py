@@ -22,6 +22,7 @@ from django.db.models import URLField
 from django.utils.safestring import mark_safe
 
 from sorl.thumbnail.admin import AdminImageMixin
+from coop.admin import PassObjAdmin
 
 from sorl.thumbnail import default
 ADMIN_THUMBS_SIZE = '60x60'      
@@ -115,7 +116,7 @@ def create_action(category):
     return (name, (add_cat, name, _(u'Add to the "%s" category') % (category,)))
 
 
-class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
+class OrganizationAdmin(AdminImageMixin, PassObjAdmin, FkAutocompleteAdmin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html' 
     form = OrganizationAdminForm
     list_display = ['logo_thumb', 'label', 'active', 'has_description', 'has_location']
@@ -133,41 +134,34 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
     formfield_overrides = {
         URLField: {'widget': URLFieldWidget},
     }
-
-    min_inlines = [  # this list can be overriden in coop_local
-                ContactInline,
-                EngagementInline,
-                LocatedInline,
-                ]
-
+    
     if "coop.exchange" in settings.INSTALLED_APPS:
-        ess_inlines = [  # this list can be overriden in coop_local
-                    ContactInline,
+        inlines = [ ContactInline,
+                        EngagementInline,
+                        ExchangeInline,
+                        RelationInline,
+                        LocatedInline,
+                        AreaInline,
+                        ]
+    else: 
+        inlines = [ ContactInline,
                     EngagementInline,
-                    ExchangeInline,
-                    RelationInline,
                     LocatedInline,
-                    AreaInline,
                     ]
- 
+
     # grace au patch 
     # https://code.djangoproject.com/ticket/17856
     # https://github.com/django/django/blob/master/django/contrib/admin/options.py#L346
-    def get_inline_instances(self, request, obj):
-        inline_instances = []
+    # def get_inline_instances(self, request, obj):
+    #     inline_instances = []
         
-        if "coop.exchange" in settings.INSTALLED_APPS:
-            inline_list = self.ess_inlines
-        else: 
-            inline_list = self.min_inlines
-
-        for inline_class in inline_list:
-            if inline_class.model == get_model('coop_local', 'Exchange'):
-                inline = inline_class(self.model, self.admin_site, obj=obj)
-            else:
-                inline = inline_class(self.model, self.admin_site)
-            inline_instances.append(inline)
-        return inline_instances
+    #     for inline_class in self.inlines:
+    #         if inline_class.model == get_model('coop_local', 'Exchange'):
+    #             inline = inline_class(self.model, self.admin_site, obj=obj)
+    #         else:
+    #             inline = inline_class(self.model, self.admin_site)
+    #         inline_instances.append(inline)
+    #     return inline_instances
 
     fieldsets = (
         ('Identité', {

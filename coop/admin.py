@@ -1,5 +1,28 @@
-# # -*- coding:utf-8 -*-
-# from django.contrib import admin
+# -*- coding:utf-8 -*-
+from django.contrib import admin
+from django.contrib.admin.options import InlineModelAdmin
+
+
+class ObjEnabledInline(InlineModelAdmin):
+    def __init__(self, *args, **kwargs):
+        self.parent_object = kwargs['obj']
+        del kwargs['obj']  # superclass will choke on this
+        super(ObjEnabledInline, self).__init__(*args, **kwargs)
+
+
+class PassObjAdmin(admin.ModelAdmin):
+    def get_inline_instances(self, request, obj):
+        inline_instances = []
+        for inline_class in self.inlines:
+            if inline_class.__mro__.__contains__(ObjEnabledInline):
+                inline = inline_class(self.model, self.admin_site, obj=obj)
+            else:
+                inline = inline_class(self.model, self.admin_site)
+            inline_instances.append(inline)
+        return inline_instances
+
+
+
 # from coop.org.models import BaseEngagement, BaseRelation
 # from coop.person.models import BasePerson
 # from coop.exchange.models import BaseExchange, BasePaymentModality, BaseTransaction, BaseProduct

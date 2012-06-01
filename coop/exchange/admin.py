@@ -12,6 +12,8 @@ from coop.utils.fields import MultiSelectFormField, MethodsCheckboxSelectMultipl
 from coop.exchange.models import ETYPE
 from django.conf import settings
 
+from coop.admin import ObjEnabledInline
+
 # class PaymentInline(admin.TabularInline):
 #     model = get_model('coop_local', 'PaymentModality')
 #     #model = BasePaymentModality
@@ -48,7 +50,7 @@ if 'coop.exchange' in settings.INSTALLED_APPS:
             model = get_model('coop_local', 'Exchange')
 
 
-    class ExchangeInline(admin.StackedInline):
+    class ExchangeInline(admin.StackedInline, ObjEnabledInline):
         form = ExchangeForm
         model = get_model('coop_local', 'Exchange')
         fieldsets = ((None, {'fields': (('eway', 'etype'),
@@ -67,10 +69,10 @@ if 'coop.exchange' in settings.INSTALLED_APPS:
                     kwargs['queryset'] = self.parent_object.areas()    
             return super(ExchangeInline, self).formfield_for_dbfield(db_field, **kwargs)
 
-        def __init__(self, *args, **kwargs):
-            self.parent_object = kwargs['obj']
-            del kwargs['obj']  # superclass will choke on this
-            super(ExchangeInline, self).__init__(*args, **kwargs)
+        # def __init__(self, *args, **kwargs):
+        #     self.parent_object = kwargs['obj']
+        #     del kwargs['obj']  # superclass will choke on this
+        #     super(ExchangeInline, self).__init__(*args, **kwargs)
 
     class ProductInline(admin.StackedInline):
         model = BaseProduct
