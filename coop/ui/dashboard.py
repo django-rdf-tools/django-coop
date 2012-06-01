@@ -15,7 +15,7 @@ from django.core.urlresolvers import reverse
 
 from admin_tools.dashboard import modules, Dashboard, AppIndexDashboard
 from admin_tools.utils import get_admin_site_name
-
+from django.conf import settings
 
 class CustomIndexDashboard(Dashboard):
     """
@@ -52,15 +52,22 @@ class CustomIndexDashboard(Dashboard):
             template='admin_tools/coop_applist.html'
         ))
         
+        if 'coop_agenda' in settings.INSTALLED_APPS:
+            self.children.append(modules.AppList(
+                _(u"Agenda"),
+                models=('coop_agenda.models.Event',
+                        'coop_agenda.models.EventType',
+                        ),
+                template='admin_tools/coop_applist.html',
+            ))
+
+
         self.children.append(modules.AppList(
             _(u"My network"),
-            models=('coop_agenda.models.Event',
-                    'coop_agenda.models.EventType',
-                    'coop_local.models.Person',
+            models=('coop_local.models.Person',
                     'coop_local.models.PersonCategory',
                     'coop_local.models.Organization',
                     'coop_local.models.OrganizationCategory',
-                    'coop_local.models.Ctag'
                     ),
             template='admin_tools/coop_applist.html',
         ))
