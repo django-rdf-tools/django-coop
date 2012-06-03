@@ -22,7 +22,6 @@ from django.db.models import URLField
 from django.utils.safestring import mark_safe
 
 from sorl.thumbnail.admin import AdminImageMixin
-from coop.admin import PassObjAdmin
 
 from sorl.thumbnail import default
 ADMIN_THUMBS_SIZE = '60x60'      
@@ -116,7 +115,7 @@ def create_action(category):
     return (name, (add_cat, name, _(u'Add to the "%s" category') % (category,)))
 
 
-class OrganizationAdmin(AdminImageMixin, PassObjAdmin, FkAutocompleteAdmin):
+class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html' 
     form = OrganizationAdminForm
     list_display = ['logo_thumb', 'label', 'active', 'has_description', 'has_location']

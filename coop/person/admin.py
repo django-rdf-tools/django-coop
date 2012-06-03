@@ -20,6 +20,8 @@ class PersonAdminForm(forms.ModelForm):
 
 class PersonAdmin(ForeignKeyAutocompleteAdmin):  # FkAutocompleteAdmin too but...
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html' 
+    related_search_fields = {'location': ('label', 'adr1', 'adr2', 'zipcode', 'city'), }
+
     form = PersonAdminForm
     search_fields = ['last_name', 'first_name', 'email']
     list_display = ('last_name', 'first_name', 'email', 'structure', 'has_user_account', 'has_role')

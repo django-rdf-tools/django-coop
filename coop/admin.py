@@ -4,22 +4,29 @@ from django.contrib.admin.options import InlineModelAdmin
 
 
 class ObjEnabledInline(InlineModelAdmin):
-    def __init__(self, *args, **kwargs):
-        self.parent_object = kwargs['obj']
-        del kwargs['obj']  # superclass will choke on this
-        super(ObjEnabledInline, self).__init__(*args, **kwargs)
+    # def __init__(self, *args, **kwargs):
+    #     self.parent_object = kwargs['obj']
+    #     del kwargs['obj']  # superclass will choke on this
+    #     super(ObjEnabledInline, self).__init__(*args, **kwargs)
+
+    def get_formset(self, request, obj=None, **kwargs):
+        # Hack! Hook parent obj just in time to use in formfield_for_manytomany
+        self.parent_obj = obj
+        return super(ObjEnabledInline, self).get_formset(
+            request, obj, **kwargs)
 
 
-class PassObjAdmin(admin.ModelAdmin):
-    def get_inline_instances(self, request, obj):
-        inline_instances = []
-        for inline_class in self.inlines:
-            if inline_class.__mro__.__contains__(ObjEnabledInline):
-                inline = inline_class(self.model, self.admin_site, obj=obj)
-            else:
-                inline = inline_class(self.model, self.admin_site)
-            inline_instances.append(inline)
-        return inline_instances
+# class PassObjAdmin(admin.ModelAdmin):  # TODO bring back the permissions code from original method ?
+
+#     def get_inline_instances(self, request, obj):
+#         inline_instances = []
+#         for inline_class in self.inlines:
+#             if inline_class.__mro__.__contains__(ObjEnabledInline):
+#                 inline = inline_class(self.model, self.admin_site, obj=obj)
+#             else:
+#                 inline = inline_class(self.model, self.admin_site)
+#             inline_instances.append(inline)
+#         return inline_instances
 
 
 

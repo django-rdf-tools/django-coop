@@ -49,7 +49,6 @@ if 'coop.exchange' in settings.INSTALLED_APPS:
         class Meta:
             model = get_model('coop_local', 'Exchange')
 
-
     class ExchangeInline(admin.StackedInline, ObjEnabledInline):
         form = ExchangeForm
         model = get_model('coop_local', 'Exchange')
@@ -62,17 +61,14 @@ if 'coop.exchange' in settings.INSTALLED_APPS:
         extra = 1
 
         def formfield_for_dbfield(self, db_field, **kwargs):
-            if self.parent_object != None:
+            if self.parent_obj != None:
                 if db_field.name == 'location':
-                    kwargs['queryset'] = self.parent_object.locations()
+                    kwargs['queryset'] = self.parent_obj.locations()  # default : only org's locations
                 if db_field.name == 'area':
-                    kwargs['queryset'] = self.parent_object.areas()    
+                    kwargs['queryset'] = self.parent_obj.areas()  # default : only org's areas
+                if db_field.name == 'person':
+                    kwargs['queryset'] = self.parent_obj.members.all()  # default : only org's members
             return super(ExchangeInline, self).formfield_for_dbfield(db_field, **kwargs)
-
-        # def __init__(self, *args, **kwargs):
-        #     self.parent_object = kwargs['obj']
-        #     del kwargs['obj']  # superclass will choke on this
-        #     super(ExchangeInline, self).__init__(*args, **kwargs)
 
     class ProductInline(admin.StackedInline):
         model = BaseProduct
@@ -88,7 +84,7 @@ if 'coop.exchange' in settings.INSTALLED_APPS:
         #related_search_fields = {'origin': ('title', 'description', 'organization__title'), }
         extra = 1
 
-    class ExchangeAdmin(ForeignKeyAutocompleteAdmin):  # AdminImageMixin,
+    class ExchangeAdmin(ForeignKeyAutocompleteAdmin, ObjEnabledInline):  # AdminImageMixin,
         form = ExchangeForm
         list_display = ('title', 'etype')  # , 'methods')
         # TODO to be finished does not work ...
