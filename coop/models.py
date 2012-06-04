@@ -55,14 +55,11 @@ class URIModel(models.Model):
     def uri_id(self):
         return self.uuid
 
-
-
     def uri_registry(self):
         return self.__class__.__name__.lower()
 
-
     def init_uri(self):
-        self.uuid = shortuuid.uuid() 
+        #self.uuid = shortuuid.uuid() 
         return 'http://' + self.domain_name + \
                     '/id/' + self.uri_registry() + \
                     '/' + str(getattr(self, 'uri_id')) + '/'
@@ -78,6 +75,7 @@ class URIModel(models.Model):
          # create / update URI
         if self.uri_mode != URI_MODE.IMPORTED:
             if not self.uri or self.uri == '':
+                self.uuid = shortuuid.uuid() 
                 self.uri = self.init_uri()
             else:
                 # l'uri est déjà en db, mais il n'est peut etre pas à jour...
