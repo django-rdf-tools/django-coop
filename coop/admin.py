@@ -16,7 +16,15 @@ class ObjEnabledInline(InlineModelAdmin):
             request, obj, **kwargs)
 
 
-# class PassObjAdmin(admin.ModelAdmin):  # TODO bring back the permissions code from original method ?
+class ObjEnabledAdmin(admin.ModelAdmin):  # TODO bring back the permissions code from original method ?
+
+    def get_formset(self, request, obj=None, **kwargs):
+        # Hack! Hook parent obj just in time to use in formfield_for_manytomany
+        self.parent_obj = obj
+        return super(ObjEnabledInline, self).get_formset(
+            request, obj, **kwargs)
+
+
 
 #     def get_inline_instances(self, request, obj):
 #         inline_instances = []
