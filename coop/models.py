@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.db import models
+from django.conf import settings
 from django.contrib.sites.models import Site
 from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
@@ -46,7 +47,8 @@ class URIModel(models.Model):
     uuid = models.CharField(_(u'uuid'), max_length=50, unique=True, null=True, editable=False) 
 
     # the default value, this attribut should be overloaded
-    domain_name = str(Site.objects.get_current().domain)
+    domain_name = settings.DEFAULT_URI_DOMAIN
+    #str(Site.objects.get_current().domain)
 
     # This metho could be overwritten by subClasses
     @property
