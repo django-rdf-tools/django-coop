@@ -73,7 +73,6 @@ class URIModel(models.Model):
     # repenser aux commons et aux importés pour voir si tout marche
 
     def save(self, *args, **kwargs):
-        super(URIModel, self).save(*args, **kwargs)
          # create / update URI
         if self.uri_mode != URI_MODE.IMPORTED:
             if not self.uri or self.uri == '':
