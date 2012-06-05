@@ -139,7 +139,7 @@ class URIModel(models.Model):
         # The short form of the construct where see 16.2.4 CONSTRUCT WHERE http://www.w3.org/TR/sparql11-query/#constructWhere
         cquery = "construct where { <%s> ?p ?o .} " 
         res = graph.query(cquery % self.uri)
-        filename = "%stmp.rdf" % self.uuid
+        filename = "/tmp/%stmp.rdf" % self.uuid
         tmpfile = open(filename, "w")
         res.serialize().write(tmpfile, encoding='utf-8')
         tmpfile.close()
