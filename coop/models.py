@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
 import shortuuid
 from rdflib import Graph, plugin, store
-
+from django.db import IntegrityError
 
 URI_MODE = Choices(
     ('LOCAL',  1, _(u'Local')),
@@ -90,8 +90,10 @@ class URIModel(models.Model):
             else:
                 without_scheme = str(self.uri[7:])  # forget 'http://'
                 sp = without_scheme.split('/')
-                assert(sp[1] == 'id')  # to assert a minimal coherence...
-                
+                try:
+                    assert(sp[1] == 'id')  # to assert a minimal coherence...
+                except AssertionError:
+                    raise IntegrityError(_(u'Local URI path must starts with "/id/"'))
                 if sp[3] != self.uri_id:
                     self.uri = self.init_uri()  # uri_id est pas pareil
                 else:
