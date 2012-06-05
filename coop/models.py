@@ -1,12 +1,11 @@
 # -*- coding:utf-8 -*-
 from django.db import models
 from django.conf import settings
-from django.contrib.sites.models import Site
 from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
 import shortuuid
 from rdflib import Graph, plugin, store
-from django.conf import settings
+
 
 
 URI_MODE = Choices(
@@ -145,7 +144,7 @@ class URIModel(models.Model):
         res.serialize().write(tmpfile, encoding='utf-8')
         tmpfile.close()
         g = Graph()
-        for p, ns in settings.RDF_NAMESPACES:
+        for p, ns in settings.RDF_NAMESPACES.iteritems():
             g.bind(p, ns)
         g.parse(filename)
         return g.serialize(format=format)
