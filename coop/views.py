@@ -20,15 +20,15 @@ def home(request):
 
 
 def d2r_mapping(request, mode):
-    print request.META['REMOTE_ADDR']
     if(request.META['REMOTE_ADDR'] in settings.INTERNAL_IPS and mode in ['view', 'export']):
         db = settings.DATABASES['default']
         rdict = {}
         rdict['mode'] = mode
+        rdict['namespaces'] = settings.RDF_NAMESPACES
         rdict['d2r_baseURI'] = settings.D2RQ_ROOT
         rdict['d2r_niceURI'] = settings.D2RQ_NICE_URL
         rdict['d2r_port'] = settings.D2RQ_PORT
-        rdict['d2r_site_name'] = settings.SITE_TITLE + u' : RDF mapping'
+        rdict['d2r_site_name'] = unicode(settings.SITE_TITLE) + u' : RDF mapping'
         rdict['d2rq_username'] = db['USER']
         rdict['d2rq_password'] = db['PASSWORD']
         rdict['d2rq_db_name'] = db['NAME']

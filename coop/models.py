@@ -7,7 +7,6 @@ import shortuuid
 from rdflib import Graph, plugin, store
 
 
-
 URI_MODE = Choices(
     ('LOCAL',  1, _(u'Local')),
     ('COMMON',   2, _(u'Common')),
@@ -74,10 +73,7 @@ class URIModel(models.Model):
         return self.__class__.__name__.lower()
 
     def init_uri(self):
-        #self.uuid = shortuuid.uuid() 
-        return 'http://' + self.domain_name + \
-                    '/id/' + self.uri_registry() + \
-                    '/' + str(getattr(self, 'uri_id')) + '/'
+        return 'http://' + self.domain_name + '/id/' + self.uri_registry() + '/' + str(self.uri_id) + '/'
 
     # self.uri est null ou vide le creer (cad appel init_uri)
     # si le domain a changé alors changer l'uri (cad dire appel init_uri)
@@ -90,35 +86,20 @@ class URIModel(models.Model):
          # create / update URI
         if self.uri_mode != URI_MODE.IMPORTED:
             if not self.uri or self.uri == '':
-                #self.uuid = shortuuid.uuid() 
                 self.uri = self.init_uri()
             else:
-                # l'uri est déjà en db, mais il n'est peut etre pas à jour...
-                # si le domaine_name a changé.... on va alors transporter les uri
-                # ou si le uri_registery a changé, on veut un nom plus approprié
-                # il faudrait aussi vérifier que le uri_id n'a pas changé...
                 without_scheme = str(self.uri[7:])  # forget 'http://'
                 sp = without_scheme.split('/')
                 assert(sp[1] == 'id')  # to assert a minimal coherence...
-                # on va recuper la valeur de uri_id qui est stockée en bd
-                # c'est uri_id qui sera perdu, c'est normal ca cela veut dire que 
-                # l'uri stock en db n'est pas a jour (cas du role dont le nom a changé
-                # et donc son slug et donc l'uri aussi doit suivre)
-
-#TODO il faudrait essayer d'imaginer ce qui a le plus de probabilité de changer...
-# le domaine c'est rare 'en tout cas en phase d'exploitation), il doit donc arriver en dernier
-# uri_id ne changera pas pour plein de models (ceux dénotés par STATES.LOCAL)
-# par contre pour les models dénoté par STATES.COMMON c'est peut etre moin rare
-# pour le registry_uri ca ne devrait pas trop bouger en phase de production donc a la fin aussi
+                
                 if sp[3] != self.uri_id:
-                    self.uri = self.init_uri()
+                    self.uri = self.init_uri()  # uri_id est pas pareil
                 else:
                     if sp[0] != self.domain_name:
                         self.uri = self.init_uri()
                     else:
                         if  sp[2] != self.uri_registry():
                             self.uri = self.init_uri()
-
         super(URIModel, self).save(*args, **kwargs)
 
 
