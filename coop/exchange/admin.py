@@ -84,10 +84,10 @@ if 'coop.exchange' in settings.INSTALLED_APPS:
         #related_search_fields = {'origin': ('title', 'description', 'organization__title'), }
         extra = 1
 
-    class ExchangeAdmin(ForeignKeyAutocompleteAdmin, ObjEnabledInline):  # AdminImageMixin,
+    class ExchangeAdmin(ForeignKeyAutocompleteAdmin):  # AdminImageMixin,
         form = ExchangeForm
         list_display = ('title', 'etype')  # , 'methods')
-        # TODO to be finished does not work ...
+        # TODO to be finished ...
         # list_editable = ('methods',)
         related_search_fields = {'organization': ('title', 'subtitle', 'description'), }
         fieldsets = ((None, {'fields': (('eway', 'etype'),

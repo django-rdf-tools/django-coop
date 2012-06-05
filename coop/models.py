@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.db import models
+from django.conf import settings
 from django.contrib.sites.models import Site
 from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
@@ -54,28 +55,27 @@ class URIModel(models.Model):
     # South n'a pas l'air capable de traiter ce cas.
     # D'apres la doc, il est possible de le faire en 3 fois, sans utiliser le default, avec
     # un datamigration (voir la doc Part 3: Advanced Commands and Data Migrations)
-    # uuid = models.CharField(_(u'uuid'), max_length=50, default=shortuuid.uuid, unique=True) 
+    
+    #uuid = models.CharField(_(u'uuid'), max_length=50, default=shortuuid.uuid, unique=True) 
 
     # La version simple c'est de passer par le save() et de supprimer le default.... c'est pas 
     # tres beau, car un plus couteux en runtime... mais bon
-    uuid = models.CharField(_(u'uuid'), max_length=50, unique=True, null=True, editable=False) 
+    uuid = models.CharField(_(u'uuid'), max_length=50, unique=True, null=True, default=shortuuid.uuid, editable=False) 
 
     # the default value, this attribut should be overloaded
-    domain_name = str(Site.objects.get_current().domain)
+    domain_name = settings.DEFAULT_URI_DOMAIN
+    #str(Site.objects.get_current().domain)
 
     # This metho could be overwritten by subClasses
     @property
     def uri_id(self):
         return self.uuid
 
-
-
     def uri_registry(self):
         return self.__class__.__name__.lower()
 
-
     def init_uri(self):
-        self.uuid = shortuuid.uuid() 
+        #self.uuid = shortuuid.uuid() 
         return 'http://' + self.domain_name + \
                     '/id/' + self.uri_registry() + \
                     '/' + str(getattr(self, 'uri_id')) + '/'
@@ -91,6 +91,7 @@ class URIModel(models.Model):
          # create / update URI
         if self.uri_mode != URI_MODE.IMPORTED:
             if not self.uri or self.uri == '':
+                #self.uuid = shortuuid.uuid() 
                 self.uri = self.init_uri()
             else:
                 # l'uri est déjà en db, mais il n'est peut etre pas à jour...
