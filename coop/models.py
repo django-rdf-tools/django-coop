@@ -4,12 +4,27 @@ from django.contrib.sites.models import Site
 from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
 import shortuuid
+from rdflib import Graph, plugin, store
+from django.conf import settings
+
 
 URI_MODE = Choices(
     ('LOCAL',  1, _(u'Local')),
     ('COMMON',   2, _(u'Common')),
     ('IMPORTED', 3, _(u'Imported')),
 )
+
+# Store
+plugin.register('SPARQLStore', store.Store,
+        'rdflib_sparqlstore.SPARQLStore', 'SPARQLStore')
+
+# Serializer
+plugin.register('n3', plugin.Serializer,
+         'rdflib.plugins.serializers.n3', 'N3Serializer')
+plugin.register('pretty-xml', plugin.Serializer,
+         'rdflib.plugins.serializers.rdfxml', 'PrettyXMLSerializer')
+plugin.register('json-ld', plugin.Serializer,
+        'rdflib_jsonld.jsonld_serializer', 'JsonLDSerializer')
 
 
 class URIModel(models.Model):
@@ -105,3 +120,42 @@ class URIModel(models.Model):
                             self.uri = self.init_uri()
 
         super(URIModel, self).save(*args, **kwargs)
+
+
+
+    def toRdf(self, format):
+        """
+           format correspond to the standard rdflib format keyword,
+               'n3' for n3
+               'xml' for xml
+               'json-ld' for json-ld 
+        """
+        # Sparq endPoint
+        uriSparql = 'http://localhost:8080/' + settings.PROJECT_NAME + '/sparql'
+        graph = Graph(store="SPARQLStore")
+        graph.open(uriSparql, False)
+        graph.store.baseURI = str(uriSparql)
+
+        # The short form of the construct where see 16.2.4 CONSTRUCT WHERE http://www.w3.org/TR/sparql11-query/#constructWhere
+        cquery = "construct where { <%s> ?p ?o .} " 
+        res = graph.query(cquery % self.uri)
+        filename = "%stmp.rdf" % self.uuid
+        tmpfile = open(filename, "w")
+        res.serialize().write(tmpfile, encoding='utf-8')
+        tmpfile.close()
+        g = Graph()
+        for p, ns in settings.RDF_NAMESPACES:
+            g.bind(p, ns)
+        g.parse(filename)
+        return g.serialize(format=format)
+
+    def toN3(self):
+        return self.toRdf("n3")
+
+    def toXml(self):
+        return self.toRdf("xml")
+
+    def toJson(self):
+        return self.toRdf("json-ld")
+
+

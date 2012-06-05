@@ -28,6 +28,8 @@
 {% block namespaces %}
 {% endblock %}
 
+
+
 <> a d2r:Server;
     rdfs:label "{{d2r_site_name}}";
     d2r:port {{d2r_port}};
@@ -35,7 +37,8 @@
     d2r:autoReloadMapping true;
     d2r:limitPerClassMap false;   # to display everything within the interfac, default is 50
     .
-    
+
+
 map:database a d2rq:Database;
     d2rq:jdbcDriver "org.postgresql.Driver";
     d2rq:jdbcDSN "jdbc:postgresql://{{d2rq_db_host}}:{{d2rq_db_port}}/{{d2rq_db_name}}";
@@ -118,9 +121,8 @@ map:tag a d2rq:ClassMap; # classe = modèle Django
     {% if mode == 'view' %}
     d2rq:uriPattern "ctag/@@coop_tag_ctag.slug@@/";
     {% else %}
-    d2rq:uriColumn "coop_tag_ctag.uri"
+    d2rq:uriColumn "coop_tag_ctag.uri";
     {% endif %}
-
     d2rq:class ctag:Tag; # classe RDF correspondante
     .
 map:tag__label a d2rq:PropertyBridge;
@@ -152,16 +154,15 @@ map:tag_modified a d2rq:PropertyBridge;
     .
 
 
-    
 
 
 # Table coop_local_organization
 map:organization a d2rq:ClassMap;
     d2rq:dataStorage map:database;
 {% if mode == 'view' %}
-    d2rq:uriPattern "organization/@@coop_local_organization.slug@@/";
+    d2rq:uriPattern "organization/@@coop_local_organization.id@@/";
 {% else %}
-    d2rq:uriColumn "coop_local_organization.uri"
+    d2rq:uriColumn "coop_local_organization.uri";
 {% endif %}
     d2rq:class ess:Organization;
 #   d2rq:condition "coop_local_organization.active = 't'"
@@ -176,16 +177,19 @@ map:organization_title a d2rq:PropertyBridge;
     d2rq:property dct:title;
     d2rq:property legal:legalName;
     d2rq:column "coop_local_organization.title";
+    d2rq:condition "coop_local_organization.title <> ''";
     .
 map:organization_legalName a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
     d2rq:property legal:legalName;
     d2rq:column "coop_local_organization.title";
+    d2rq:condition "coop_local_organization.title <> ''";
     .
 map:organization_subtitle a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
-    d2rq:property dct:abstract;
+    d2rq:property skos:note;                # shoulf be dct:abstract, but incompatible with rdfalchemy
     d2rq:column "coop_local_organization.subtitle";
+    d2rq:condition "coop_local_organization.subtitle <> ''";
     .
 map:organization_description a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
@@ -201,6 +205,7 @@ map:organization_web a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
     d2rq:property foaf:homepage;
     d2rq:uriColumn "coop_local_organization.web";
+    d2rq:condition "coop_local_organization.web <> ''";
     .
 map:organization_created a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
@@ -272,7 +277,7 @@ map:organization_phone a d2rq:PropertyBridge;  # EXAMPLE Direct generic relation
 map:organization_email a d2rq:PropertyBridge;  # EXAMPLE Direct generic relation
     d2rq:belongsToClassMap map:organization;
     d2rq:property v:email;
-    d2rq:refersToClassMap map:contact;
+    d2rq:refersToClassMap map:email;
     # d2rq:join "coop_local_organization.id = coop_local_contact.object_id";  # il existe un contact lié
     d2rq:join "coop_local_organization.pref_email_id = coop_local_contact.id ";
     d2rq:condition "coop_local_contact.category = 8";
@@ -334,7 +339,7 @@ map:tel a d2rq:ClassMap;                    # Intermediary table, to be able to 
     {% if mode == 'view' %}
     d2rq:uriPattern "contact/@@coop_local_contact.id@@/";
     {% else %}
-    d2rq:uriColumn "coop_local_contact.uri"
+    d2rq:uriColumn "coop_local_contact.uri";
     {% endif %}
     d2rq:condition "coop_local_contact.category = '1'";
     .
@@ -350,7 +355,7 @@ map:gsm a d2rq:ClassMap;
     {% if mode == 'view' %}
     d2rq:uriPattern "contact/@@coop_local_contact.id@@/";
     {% else %}
-    d2rq:uriColumn "coop_local_contact.uri"
+    d2rq:uriColumn "coop_local_contact.uri";
     {% endif %}
     d2rq:condition "coop_local_contact.category = '2'";
     .
@@ -366,7 +371,7 @@ map:fax a d2rq:ClassMap;
     {% if mode == 'view' %}
     d2rq:uriPattern "contact/@@coop_local_contact.id@@/";
     {% else %}
-    d2rq:uriColumn "coop_local_contact.uri"
+    d2rq:uriColumn "coop_local_contact.uri";
     {% endif %}
     d2rq:condition "coop_local_contact.category = '3'";
     .
@@ -382,7 +387,7 @@ map:skype a d2rq:ClassMap;
     {% if mode == 'view' %}
     d2rq:uriPattern "contact/@@coop_local_contact.id@@/";
     {% else %}
-    d2rq:uriColumn "coop_local_contact.uri"
+    d2rq:uriColumn "coop_local_contact.uri";
     {% endif %}
     d2rq:condition "coop_local_contact.category = '4'";
     .
@@ -398,7 +403,7 @@ map:twitter a d2rq:ClassMap;
     {% if mode == 'view' %}
     d2rq:uriPattern "contact/@@coop_local_contact.id@@/";
     {% else %}
-    d2rq:uriColumn "coop_local_contact.uri"
+    d2rq:uriColumn "coop_local_contact.uri";
     {% endif %}
     d2rq:condition "coop_local_contact.category = '5'";
     .
@@ -414,7 +419,7 @@ map:rss a d2rq:ClassMap;
     {% if mode == 'view' %}
     d2rq:uriPattern "contact/@@coop_local_contact.id@@/";
     {% else %}
-    d2rq:uriColumn "coop_local_contact.uri"
+    d2rq:uriColumn "coop_local_contact.uri";
     {% endif %}
     d2rq:condition "coop_local_contact.category = '6'";
     .
@@ -430,7 +435,7 @@ map:cal a d2rq:ClassMap;
     {% if mode == 'view' %}
     d2rq:uriPattern "contact/@@coop_local_contact.id@@/";
     {% else %}
-    d2rq:uriColumn "coop_local_contact.uri"
+    d2rq:uriColumn "coop_local_contact.uri";
     {% endif %}
     d2rq:condition "coop_local_contact.category = '7'";
     .
@@ -446,7 +451,7 @@ map:email a d2rq:ClassMap;
     {% if mode == 'view' %}
     d2rq:uriPattern "contact/@@coop_local_contact.id@@/";
     {% else %}
-    d2rq:uriColumn "coop_local_contact.uri"
+    d2rq:uriColumn "coop_local_contact.uri";
     {% endif %}
     d2rq:condition "coop_local_contact.category = '8'";
     .
@@ -462,7 +467,7 @@ map:web a d2rq:ClassMap;
     {% if mode == 'view' %}
     d2rq:uriPattern "contact/@@coop_local_contact.id@@/";
     {% else %}
-    d2rq:uriColumn "coop_local_contact.uri"
+    d2rq:uriColumn "coop_local_contact.uri";
     {% endif %}
     d2rq:condition "coop_local_contact.category = '9'";
     .
@@ -479,7 +484,7 @@ map:contact a d2rq:ClassMap;
     {% if mode == 'view' %}
     d2rq:uriPattern "contact/@@coop_local_contact.id@@/";
     {% else %}
-    d2rq:uriColumn "coop_local_contact.uri"
+    d2rq:uriColumn "coop_local_contact.uri";
     {% endif %}
     .
 map:contact__label a d2rq:PropertyBridge;
@@ -519,9 +524,8 @@ map:role a d2rq:ClassMap;
     {% if mode == 'view' %}
     d2rq:uriPattern "role/@@coop_local_role.slug@@";
     {% else %}
-    d2rq:uriColumn "coop_local_role.uri"
+    d2rq:uriColumn "coop_local_role.uri";
     {% endif %}
-    d2rq:uriPattern "role/@@coop_local_role.slug@@";
     d2rq:class org:Role;
     d2rq:classDefinitionLabel "coop_local_role";
     .
@@ -538,7 +542,7 @@ map:person a d2rq:ClassMap;
 {% if mode == 'view' %}
     d2rq:uriPattern "person/@@coop_local_person.id@@/"; # URI == ID
 {% else %}
-    d2rq:uriColumn "coop_local_person.uri"
+    d2rq:uriColumn "coop_local_person.uri";
 {% endif %}
     #d2rq:class foaf:Person;    # redundancy person:Person subclass of foaf:Person and schema:Person
     d2rq:class person:Person;
@@ -592,7 +596,7 @@ map:engagement a d2rq:ClassMap;
 {% if mode == 'view' %}
     d2rq:uriPattern "engagement/@@coop_local_engagement.id@@/"; # URI == ID
 {% else %}
-    d2rq:uriColumn "coop_local_engagement.uri"
+    d2rq:uriColumn "coop_local_engagement.uri";
 {% endif %}
     d2rq:class org:Membership;
     .   
@@ -661,7 +665,7 @@ map:area a d2rq:ClassMap;
     {% if mode == 'view' %}
     d2rq:uriPattern "area/@@coop_geo_area.reference@@";
     {% else %}
-    d2rq:uriColumn "coop_geo_area.uri"
+    d2rq:uriColumn "coop_geo_area.uri";
     {% endif %}
     d2rq:class dct:Location;
     .
@@ -703,9 +707,10 @@ map:area_reference a d2rq:PropertyBridge;
 map:location a d2rq:ClassMap;
     d2rq:dataStorage map:database;
     {% if mode == 'view' %}
-    d2rq:uriPattern "coop_geo_location/@@coop_geo_location.geohash@@";
+    d2rq:uriPattern "location/@@coop_geo_location.geohash@@";
     {% else %}
-    d2rq:uriColumn "coop_geo_location.geohash"
+    d2rq:uriSqlExpression "'http://data.economie-solidaire.fr/id/location/' || coop_geo_location.geohash";
+    # d2rq:uriPattern "location/@@coop_geo_location.geohash@@";   # Wainting for an anwers
     {% endif %}   
     d2rq:class dct:Location;
     .
@@ -760,7 +765,7 @@ map:addr a d2rq:ClassMap;
     {% if mode == 'view' %}
     d2rq:uriPattern "coop_geo_addr/@@coop_geo_location.uuid@@";
     {% else %}
-    d2rq:uriColumn "coop_geo_location.uri"
+    d2rq:uriColumn "coop_geo_location.uri";
     {% endif %}
     d2rq:class locn:Address;
     .
@@ -775,13 +780,13 @@ map:addr_adr1 a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:addr;
     d2rq:property locn:thoroughfare;
     d2rq:column "coop_geo_location.adr1";
-    d2rq:condition "coop_geo_location.adr1 <> ''"
+    d2rq:condition "coop_geo_location.adr1 <> ''";
     .
 map:addr_adr2 a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:addr;
     d2rq:property locn:locatorName;
     d2rq:column "coop_geo_location.adr2";
-    d2rq:condition "coop_geo_location.adr2 <> ''"
+    d2rq:condition "coop_geo_location.adr2 <> ''";
     .
 map:addr_zipcode a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:addr;

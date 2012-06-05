@@ -3,6 +3,7 @@ from django.db import models
 from extended_choices import Choices
 from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
@@ -10,6 +11,8 @@ import sorl
 from django.core.exceptions import ValidationError
 from django.conf import settings
 from coop.models import URIModel
+from django_push.publisher import ping_hub
+
 
 DISPLAY = Choices(
     ('PUBLIC',  1,  _(u'public information')),
@@ -311,6 +314,9 @@ class BaseOrganization(URIModel):
                 if locations.count() == 1:
                     self.pref_address = locations[0].location
 
+        # pour plus tard .... a mettre ailleurs peut etre. 
+        # ping_hub('http://%s%s%s' % (Site.objects.get_current(), reverse('org_detail', args=[]), 'feeds'))
+
         # TODO move this to Contact model or do it in SQL
 
         # if self.email and self.email != '': 
@@ -319,3 +325,4 @@ class BaseOrganization(URIModel):
         #     m.update(self.email)
         #     self.email_sha1 = m.hexdigest()
         super(BaseOrganization, self).save(*args, **kwargs)  
+
