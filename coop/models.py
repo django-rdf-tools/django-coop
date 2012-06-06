@@ -9,8 +9,7 @@ from rdflib import Graph, plugin, store
 from django_push.publisher import ping_hub
 from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
-
-
+from django.db import IntegrityError
 
 URI_MODE = Choices(
     ('LOCAL',  1, _(u'Local')),
@@ -106,6 +105,10 @@ class URIModel(models.Model):
                 without_scheme = str(self.uri[7:])  # forget 'http://'
                 sp = without_scheme.split('/')
                 assert(sp[1] == 'id')  # to assert a minimal coherence...
+                try:
+                    assert(sp[1] == 'id')  # to assert a minimal coherence...
+                except AssertionError:
+                    raise IntegrityError(_(u'Local URI path must starts with "/id/"'))
                 if sp[3] != self.uri_id:
                     self.uri = self.init_uri()  # uri_id est pas pareil
                 else:
