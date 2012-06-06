@@ -1,4 +1,4 @@
-recursive-include coop/templates *.html
+recursive-include coop/templates *.html *.ttl
 recursive-include coop/static *.js *.css *.png *.jpg *.gif
 recursive-include coop/exchange/locale *.mo *.po
 recursive-include coop/link/locale *.mo *.po
