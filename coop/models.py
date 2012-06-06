@@ -117,8 +117,8 @@ class URIModel(models.Model):
                     else:
                         if  sp[2] != self.uri_registry():
                             self.uri = self.init_uri()
-        ping_hub('http://%s%s' % (Site.objects.get_current(),
-               reverse('feed', args=[self.__class__.__name__.lower()])))
+        # ping_hub('http://%s%s' % (Site.objects.get_current(),
+        #        reverse('feed', args=[self.__class__.__name__.lower()])))
         super(URIModel, self).save(*args, **kwargs)
 
 
