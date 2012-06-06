@@ -42,8 +42,6 @@ class BasePerson(URIModel):
     contact = generic.GenericRelation('coop_local.Contact')
     email = models.EmailField(_(u'personal email'), blank=True)
     email_sha1 = models.CharField(_(u'email checksum'), max_length=250, blank=True, null=True)
-    created = exfields.CreationDateTimeField(_(u'created'), null=True)
-    modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
     notes = models.TextField(_(u'notes'), blank=True, null=True)
     structure = models.CharField(blank=True, max_length=100)
 

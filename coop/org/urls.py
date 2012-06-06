@@ -4,7 +4,7 @@ from django.conf.urls.defaults import *
 #from django.views.generic import ListView
 #from coop.org.views import ISDetailView
 #from coop_local.models import Organization
-from coop.feeds import OrganizationUpdates
+
 
 
 urlpatterns = patterns('',
@@ -18,7 +18,6 @@ urlpatterns = patterns('',
     url(r'^$', 'coop.org.views.org_list', name="org_list"),
     url(r'^carto/$', 'coop.org.views.leaflet', name="leaflet"),
 
-    url(r'^feed/$', OrganizationUpdates()),
     url(r'^categorie/(?P<slug>[\w-]+)/$', 'coop.org.views.org_category_detail', name="org_category_detail"),
 
     url(r'^global_map$', 'coop.org.views.global_map', name="org_global_map"),

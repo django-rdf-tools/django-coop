@@ -1,47 +1,42 @@
 # -*- coding:utf-8 -*-
-
 from django.utils.translation import ugettext_lazy as _
-#from django.contrib.syndication.views import Feed
-from coop_local.models import Organization
 from django.contrib.sites.models import Site
 from django_push.publisher.feeds import Feed
-
-from django.conf import settings
-
-# sparql endPoint....served by jetty in localhost
-# This config is yet a little bit hard coded.... To be generalized in the futur
+#from django.contrib.syndication.views import Feed
+from django.db.models.loading import get_model
+from django.contrib.contenttypes.models import ContentType
 
 
 
-uriSparql = 'http://localhost:8080/' + settings.PROJECT_NAME + '/sparql'
+class UpdateFeed(Feed):
+    title = _(u"Updates for %s." % Site.objects.get_current().name)
+    link = "/feed/"
+    description = _(u"All records updates listed on the %s website." % Site.objects.get_current().name)
 
 
-
-
-class OrganizationUpdates(Feed):
-    title = _(u"Organization updates for %s." % Site.objects.get_current().name)
-    link = "/organizations/"
-    description = _(u"All records updates for organizations listed on the %s website." % Site.objects.get_current().name)
-
-    # description_template = "feeds/rdf_payload.html"
-
-    # Only local organization can be in the feed. Imported organization are
-    # updated by their owners site.
     def items(self):
-        return Organization.objects.order_by('-modified')[:5]
+        # Call content type pour trouver les models ....
+        # ajouter les champs created 
+        # ping dans save de model uri
+        return get_model(self._mType.app_label, self._model).objects.order_by('-modified')[:5]
 
+    # to deal with overwriting ...
     def item_title(self, item):
-        return item.label()
-
-    # def item_extra_kwargs
+        try:
+            return item.label()
+        except:
+            return item.label
 
 
     def item_description(self, item):
-        # return item.description
-        return item.toJson()
         # return item.uri + 'sparql endpoint' + uriSparql
+        return item.toJson()
 
-
+    # def item_extra_kwargs
+    def get_object(self, request, *args, **kwargs):
+        self._model = kwargs['model']
+        self._mType = ContentType.objects.get(model=self._model)
+        return None
 
 
 

@@ -3,7 +3,6 @@ from django.db import models
 from extended_choices import Choices
 from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
@@ -11,7 +10,7 @@ import sorl
 from django.core.exceptions import ValidationError
 from django.conf import settings
 from coop.models import URIModel
-from django_push.publisher import ping_hub
+
 
 
 DISPLAY = Choices(
@@ -48,8 +47,6 @@ class BaseContact(URIModel):
     details = models.CharField(_(u'details'), blank=True, max_length=100)
     display = models.PositiveSmallIntegerField(_(u'Display'), 
                     choices=DISPLAY.CHOICES, default=DISPLAY.PUBLIC)
-    created = exfields.CreationDateTimeField(_(u'created'), null=True)
-    modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
     content_type = models.ForeignKey(ContentType, blank=True, null=True)
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
@@ -139,8 +136,6 @@ class BaseEngagement(URIModel):
     organization = models.ForeignKey('coop_local.Organization', verbose_name=_(u'organization')) 
     role = models.ForeignKey('coop_local.Role', verbose_name=_(u'role'))
     role_detail = models.CharField(_(u'detailed role'), blank=True, max_length=100)
-    created = exfields.CreationDateTimeField(_(u'created'), null=True)
-    modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
     org_admin = models.BooleanField(_(u'has editor rights'), default=True)
     engagement_display = models.PositiveSmallIntegerField(_(u'Display'), choices=DISPLAY.CHOICES, default=DISPLAY.PUBLIC)
 
@@ -225,8 +220,6 @@ class BaseOrganization(URIModel):
                 related_name='pref_adress', null=True, blank=True)
 
     slug = exfields.AutoSlugField(populate_from='title', blank=True, overwrite=True)
-    created = exfields.CreationDateTimeField(_(u'created'), null=True)
-    modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
     active = models.BooleanField(_(u'show on public site'), default=True,)
     notes = models.TextField(_(u'notes'), blank=True)
 
@@ -314,8 +307,6 @@ class BaseOrganization(URIModel):
                 if locations.count() == 1:
                     self.pref_address = locations[0].location
 
-        # pour plus tard .... a mettre ailleurs peut etre. 
-        # ping_hub('http://%s%s%s' % (Site.objects.get_current(), reverse('org_detail', args=[]), 'feeds'))
 
         # TODO move this to Contact model or do it in SQL
 

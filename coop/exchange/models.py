@@ -19,8 +19,6 @@ class BaseProduct(URIModel):
     description = models.TextField(_(u'description'), blank=True)
     organization = models.ForeignKey('coop_local.Organization', blank=True, null=True, 
                                         verbose_name='publisher', related_name='products')
-    created = exfields.CreationDateTimeField(_(u'created'), null=True)
-    modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
     organization_uri = models.CharField(_(u'publisher URI'), blank=True, max_length=200, editable=False)
 
     def __unicode__(self):
@@ -78,8 +76,6 @@ class BaseExchange(URIModel):
     permanent = models.BooleanField(_(u'permanent'), default=True)
     expiration = models.DateField(_(u'expiration'), blank=True, null=True)
     slug = exfields.AutoSlugField(populate_from='title', overwrite=True)
-    created = exfields.CreationDateTimeField(_(u'created'), null=True)
-    modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
     products = models.ManyToManyField('coop_local.Product', verbose_name=_(u'linked products'))
     person_uri = models.CharField(_(u'person URI'), blank=True, max_length=200, editable=False)
     organization_uri = models.CharField(_(u'publisher URI'), blank=True, max_length=200, editable=False)
