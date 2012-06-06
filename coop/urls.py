@@ -22,7 +22,7 @@ urlpatterns = patterns('',
     (r'^perso/$', 'coop.person.views.perso'),
     (r'^membre/', include('coop.person.urls')),
 
-    url(r'^feed/(?P<model>[\w-]+)$', UpdateFeed()),
+    url(r'^feed/(?P<model>[\w-]+)/$', UpdateFeed()),
 
     url(r'^robots\.txt$', TextPlainView.as_view(template_name='robots.txt')),
     url(r'^favicon\.ico$', RedirectView.as_view(url='/static/img/favicon.ico')),
