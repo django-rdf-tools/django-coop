@@ -1,0 +1,26 @@
+{% extends "coop_cms/article.html" %}
+{% load i18n coop_edition coop_navigation %}
+
+{% block meta_title %}{{article.title}}{% endblock %}
+
+{% block document %}
+
+    {% block article %}
+    {% navigation_breadcrumb article %}
+    {% cms_edit article %}
+        {% block title %}
+            <h2 id="title-article">{{article.title}}</h2>
+        {% endblock %}
+        <div class="content">
+
+            {% navigation_children article %}
+
+            <div class="article-content">
+                {{ article.content }}
+            </div>
+        
+        </div>
+        
+    {% end_cms_edit %}
+    {% endblock %}
+{% endblock %}
