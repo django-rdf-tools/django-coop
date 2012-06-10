@@ -6,12 +6,10 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
-import sorl
 from django.core.exceptions import ValidationError
 from django.conf import settings
 from coop.models import URIModel
-
-
+from sorl.thumbnail import ImageField
 
 DISPLAY = Choices(
     ('PUBLIC',  1,  _(u'public information')),
@@ -184,7 +182,9 @@ class BaseOrganization(URIModel):
                 help_text=_(u'tell us what your organization do in one line.'))
 
     description = models.TextField(_(u'description'), blank=True, null=True)
-    logo = sorl.thumbnail.ImageField(upload_to='logos/', null=True, blank=True)
+
+    logo = ImageField(upload_to='logos/', null=True, blank=True)
+
     relations = models.ManyToManyField('coop_local.Organization', 
                 symmetrical=False, through='coop_local.Relation', 
                 verbose_name=_(u'relations'))
