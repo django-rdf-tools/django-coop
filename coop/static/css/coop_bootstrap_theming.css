@@ -375,6 +375,11 @@ div.stacked-inline h3 span.delete label.vCheckboxLabel.inline{
 
 /* Fields width */
 
+
+select[id$=-publication]{
+	width: 100px;
+}
+
 .mceIframeContainer{
 	width: 600px;
 }
@@ -442,7 +447,7 @@ td.role_detail .vTextField{
 	width: 140px;
 }
 
-input#id_title.vTextField,
+input#id_title,
 input#id_web,
 input#id_subtitle{
 	width: 400px;

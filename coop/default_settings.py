@@ -38,27 +38,27 @@ import admin_tools
 ADMIN_TOOLS_PATH = os.path.dirname(os.path.abspath(admin_tools.__file__))
 
 
-STATICFILES_DIRS = (
+STATICFILES_DIRS = [
     os.path.abspath(ADMIN_TOOLS_PATH + '/media/'),
-)
+]
 
-STATICFILES_FINDERS = (
+STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
-)
+]
 
-TEMPLATE_DIRS = (
+TEMPLATE_DIRS = [
     os.path.abspath(PROJECT_PATH + '/coop_local/templates/')
-)
+]
 
-TEMPLATE_LOADERS = (
+TEMPLATE_LOADERS = [
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
-)
+]
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE_CLASSES = [
     #'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.gzip.GZipMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -71,9 +71,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'coop.utils.middleware.CORSMiddleware',
     'pagination.middleware.PaginationMiddleware',
-)
+]
 
-TEMPLATE_CONTEXT_PROCESSORS = (
+TEMPLATE_CONTEXT_PROCESSORS = [
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
@@ -84,7 +84,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
     'coop.context_processors.current_site',
     'coop.context_processors.d2rq_settings',
-)
+]
 
 ROOT_URLCONF = 'coop_local.urls'  
 
@@ -188,12 +188,15 @@ COOP_CMS_CONTENT_APPS = ('coop_local', 'coop_tag', 'coop_geo')
 
 # COOP_CMS_ARTICLE_TEMPLATES = 'coop_local.get_article_templates' # marche plus ?
 
-COOP_CMS_ARTICLE_TEMPLATES = (
+COOP_CMS_ARTICLE_TEMPLATES = [
     ('coop_cms/article_standard.html', 'Standard'),
     ('coop_cms/article_rubrique.html', 'Rubrique'),
-)
+]
 
-COOPBAR_MODULES = ('coop_cms.coop_bar_cfg', 'coop.coop_bar_cfg')
+COOPBAR_MODULES = [
+    'coop_cms.coop_bar_cfg', 
+    'coop.coop_bar_cfg'
+    ]
 
 
 HAYSTACK_SITECONF = 'coop_local.search_sites'
@@ -210,11 +213,11 @@ ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'coop.ui.dashboard.CustomAppIndexDashboard'
 ADMIN_TOOLS_THEMING_CSS = 'css/coop_bootstrap_theming.css'
 
 
-AUTHENTICATION_BACKENDS = (
+AUTHENTICATION_BACKENDS = [
     'django_webid.auth.backends.WEBIDAuthBackend',
     'coop_cms.perms_backends.ArticlePermissionBackend',
     'django.contrib.auth.backends.ModelBackend',
-)
+]
 
 AUTH_PROFILE_MODULE = 'coop_local.Person'
 

@@ -1,6 +1,7 @@
-recursive-include coop/templates *.html *.ttl
-recursive-include coop/static *.js *.css *.png *.jpg *.gif
+recursive-include coop/templates *
+recursive-include coop/static *
 recursive-include coop/exchange/locale *.mo *.po
 recursive-include coop/link/locale *.mo *.po
 recursive-include coop/org/locale *.mo *.po
 recursive-include coop/person/locale *.mo *.po
+recursive-include coop/ui/locale *.mo *.po
