@@ -10,6 +10,9 @@ from django.core.exceptions import ValidationError
 from django.conf import settings
 from coop.models import URIModel
 from sorl.thumbnail import ImageField
+from sorl.thumbnail import default
+ADMIN_THUMBS_SIZE = '60x60' 
+
 
 DISPLAY = Choices(
     ('PUBLIC',  1,  _(u'public information')),
@@ -256,11 +259,19 @@ class BaseOrganization(URIModel):
             from coop_geo.models import Area
             return Area.objects.filter(id__in=self.framed.all().values_list('location_id', flat=True))
 
-
     def has_description(self):
         return self.description != None and len(self.description) > 20
     has_description.boolean = True    
     has_description.short_description = _(u'desc.')
+
+    def logo_list_display(self):
+        if self.logo:
+            thumb = default.backend.get_thumbnail(self.logo.file, ADMIN_THUMBS_SIZE)
+            return '<img width="%s" src="%s" />' % (thumb.width, thumb.url)
+        else:
+            return _(u"No Image") 
+    logo_list_display.short_description = _(u"logo")
+    logo_list_display.allow_tags = True   
 
     #@models.permalink
     def get_absolute_url(self):

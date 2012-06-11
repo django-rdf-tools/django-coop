@@ -35,9 +35,7 @@ if "coop_cms" in settings.INSTALLED_APPS:
     from coop_cms.admin import NavTreeAdmin, ArticleAdmin
     from coop_cms.models import NavTree
     from coop_cms.settings import get_article_class
-    from coop_cms.forms import ArticleAdminForm
-    from sorl.thumbnail import default
-    ADMIN_THUMBS_SIZE = '60x60'    
+    from coop_cms.forms import ArticleAdminForm   
 
     # -- We need to customize coop-cms NavtreeAdmin
 
@@ -57,7 +55,7 @@ if "coop_cms" in settings.INSTALLED_APPS:
         change_form_template = 'admintools_bootstrap/tabbed_change_form.html' 
         change_list_template = 'admin/article_change_list.html'
 
-        list_display = ['logo_thumb', 'title', 'publication', 'section', 'modified', 'in_newsletter']
+        list_display = ['logo_list_display', 'title', 'publication', 'section', 'modified', 'in_newsletter']
         list_editable = ['publication', 'in_newsletter', 'section']
         list_display_links = ['title']
 
@@ -72,15 +70,6 @@ if "coop_cms" in settings.INSTALLED_APPS:
             form = super(ArticleAdmin, self).get_form(request, obj, **kwargs)
             form.current_user = request.user
             return form
-
-        def logo_thumb(self, obj):
-            if obj.logo:
-                thumb = default.backend.get_thumbnail(obj.logo.file, ADMIN_THUMBS_SIZE)
-                return '<img width="%s" src="%s" />' % (thumb.width, thumb.url)
-            else:
-                return _(u"No Image") 
-        logo_thumb.short_description = _(u"logo")
-        logo_thumb.allow_tags = True   
 
     admin.site.unregister(get_article_class())
     admin.site.register(get_article_class(), CoopArticleAdmin)
