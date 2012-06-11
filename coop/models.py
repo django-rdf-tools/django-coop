@@ -124,7 +124,7 @@ class StaticURIModel(models.Model):
                         if  sp[2] != self.uri_registry():
                             self.uri = self.init_uri()
         ping_hub('http://%s/%s/%s' % (Site.objects.get_current(), 'feed', self.__class__.__name__.lower()))
-        super(URIModel, self).save(*args, **kwargs)
+        super(StaticURIModel, self).save(*args, **kwargs)
 
 
 
