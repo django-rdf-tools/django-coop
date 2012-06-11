@@ -30,7 +30,15 @@ plugin.register('json-ld', plugin.Serializer,
         'rdflib_jsonld.jsonld_serializer', 'JsonLDSerializer')
 
 
-class URIModel(models.Model):
+class UptadedModel(models.Model):
+    created = exfields.CreationDateTimeField(_(u'created'), null=True)
+    modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
+
+    class Meta:
+        abstract = True
+
+
+class StaticURIModel(models.Model):
     """
     To use this model as a basis for your own abstract model, you need to have
     a 'uri_id' property set and a string for the model type URL representation :
@@ -50,8 +58,6 @@ class URIModel(models.Model):
     uri_mode = models.PositiveSmallIntegerField(_(u'Mode'), choices=URI_MODE.CHOICES, default=URI_MODE.LOCAL, editable=False)
     uri = models.CharField(_(u'main URI'), blank=True, null=True,
                             max_length=250, editable=False)  # FIXME : null=True incompatible with unique=True
-    created = exfields.CreationDateTimeField(_(u'created'), null=True)
-    modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
 
     # Le code suivante ne marche pas avec south et pourtant il correxpond exactement à ce que je voudrais
     # faire. Si on supprime unique=True, alors la migration se passe bien, mais toutes les
@@ -158,3 +164,10 @@ class URIModel(models.Model):
         return self.toRdf("json-ld")
 
 
+
+
+class URIModel(StaticURIModel, UptadedModel):
+    class Meta:
+        abstract = True
+
+ 

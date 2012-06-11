@@ -10,7 +10,7 @@ from django.contrib.contenttypes.models import ContentType
 
 class UpdateFeed(Feed):
     title = _(u"Updates for %s." % Site.objects.get_current().name)
-    link = "/feed/"
+    link = "%s/feed/" % Site.objects.get_current().domain
     description = _(u"All records updates listed on the %s website." % Site.objects.get_current().name)
 
 
