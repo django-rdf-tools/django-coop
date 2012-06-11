@@ -22,6 +22,7 @@ from django.db.models import URLField
 from django.utils.safestring import mark_safe
 
 from sorl.thumbnail.admin import AdminImageMixin
+from tinymce.widgets import AdminTinyMCE
 
 from sorl.thumbnail import default
 ADMIN_THUMBS_SIZE = '60x60'      
@@ -35,7 +36,6 @@ if "coop_geo" in settings.INSTALLED_APPS:
     from coop_geo.admin import LocatedInline, AreaInline
 
 from django.contrib.contenttypes.generic import GenericTabularInline
-from tinymce.widgets import AdminTinyMCE
 
 
 class URLFieldWidget(AdminURLFieldWidget):
