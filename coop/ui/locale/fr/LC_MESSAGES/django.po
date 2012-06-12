@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: coop.ui\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-05-09 15:42+0000\n"
-"PO-Revision-Date: 2012-05-09 18:03+0100\n"
+"PO-Revision-Date: 2012-06-11 11:23+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
 "Language: \n"
@@ -55,15 +55,15 @@ msgstr "Actions récentes"
 
 #: dashboard.py:81
 msgid "Latest Django News"
-msgstr ""
+msgstr "Dernières nouvelles de Django"
 
 #: dashboard.py:88
 msgid "Support"
-msgstr ""
+msgstr "Support"
 
 #: dashboard.py:91
 msgid "Blog PES"
-msgstr ""
+msgstr "Blog PES"
 
 #: dashboard.py:96
 msgid "Django \"django-users\" mailing list"
@@ -71,5 +71,5 @@ msgstr ""
 
 #: menu.py:25
 msgid "Applications"
-msgstr ""
+msgstr "Applications"
 

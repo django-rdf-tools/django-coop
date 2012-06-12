@@ -1,0 +1,155 @@
+# Table coop_local_organization
+map:organization a d2rq:ClassMap;
+    d2rq:dataStorage map:database;
+  #  d2rq:uriPattern "organization/@@coop_local_organization.id@@/";
+    d2rq:uriColumn "coop_local_organization.uri";
+    d2rq:class ess:Organization;
+#   d2rq:condition "coop_local_organization.active = 't'"
+    .
+map:organization__label a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property rdfs:label;
+    d2rq:pattern "@@coop_local_organization.title@@";
+    .
+map:organization_title a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property dct:title;
+    d2rq:property legal:legalName;
+    d2rq:column "coop_local_organization.title";
+    d2rq:condition "coop_local_organization.title <> ''";
+    .
+map:organization_legalName a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property legal:legalName;
+    d2rq:column "coop_local_organization.title";
+    d2rq:condition "coop_local_organization.title <> ''";
+    .
+map:organization_subtitle a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property skos:note;                # shoulf be dct:abstract, but incompatible with rdfalchemy
+    d2rq:column "coop_local_organization.subtitle";
+    d2rq:condition "coop_local_organization.subtitle <> ''";
+    .
+map:organization_description a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property dct:description;
+    d2rq:column "coop_local_organization.description";
+    .
+map:organization_mbox_sha1 a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property foaf:mbox_sha1sum;
+    d2rq:column "coop_local_organization.email_sha1";
+    .
+map:organization_web a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property foaf:homepage;
+    d2rq:uriColumn "coop_local_organization.web";
+    d2rq:condition "coop_local_organization.web <> ''";
+    .
+map:organization_created a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property dct:created;
+    d2rq:column "coop_local_organization.created";
+    d2rq:datatype xsd:dateTime;
+    .
+map:organization_modified a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property dct:modified;
+    d2rq:column "coop_local_organization.modified";
+    d2rq:datatype xsd:dateTime;
+    .
+map:organization_birth a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property foaf:birthday;
+    d2rq:column "coop_local_organization.birth";
+    d2rq:datatype xsd:date;
+    .
+map:organization_logo a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property foaf:logo;
+    d2rq:uriSqlExpression "('http://localhost:8000/media/'||coop_local_organization.logo)";
+    .
+    
+# map:organization_siret a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:organization;
+#   d2rq:property vocab:coop_local_organization_siret;
+#   d2rq:propertyDefinitionLabel "coop_local_organization siret";
+#   d2rq:column "coop_local_organization.siret";
+#   .
+# map:organization_naf a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:organization;
+#   d2rq:property vocab:coop_local_organization_naf;
+#   d2rq:propertyDefinitionLabel "coop_local_organization naf";
+#   d2rq:column "coop_local_organization.naf";
+#   .
+# map:organization_statut a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:organization;
+#   d2rq:property vocab:coop_local_organization_statut;
+#   d2rq:propertyDefinitionLabel "coop_local_organization statut";
+#   d2rq:column "coop_local_organization.statut";
+#   d2rq:datatype xsd:short;
+#   .
+# map:organization_secteur_fse a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:organization;
+#   d2rq:property vocab:coop_local_organization_secteur_fse;
+#   d2rq:propertyDefinitionLabel "coop_local_organization secteur_fse";
+#   d2rq:column "coop_local_organization.secteur_fse";
+#   d2rq:datatype xsd:short;
+#   .
+
+map:organization_contacts a d2rq:PropertyBridge;  # EXAMPLE Direct generic relation
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property ess:contact;
+    d2rq:refersToClassMap map:contact;
+    d2rq:join "coop_local_organization.id <= coop_local_contact.object_id";  # il existe un contact lié
+    d2rq:join "django_content_type.id <= coop_local_contact.content_type_id";
+    d2rq:condition "django_content_type.model = 'organization'";
+    .   
+map:organization_phone a d2rq:PropertyBridge;  # EXAMPLE Direct generic relation
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property v:tel;
+    d2rq:refersToClassMap map:tel;
+    # d2rq:join "coop_local_organization.id = coop_local_contact.object_id";  # il existe un contact lié
+    d2rq:join "coop_local_organization.pref_phone_id = coop_local_contact.id ";
+    d2rq:condition "coop_local_contact.category = 1";
+   .   
+map:organization_email a d2rq:PropertyBridge;  # EXAMPLE Direct generic relation
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property v:email;
+    d2rq:refersToClassMap map:email;
+    # d2rq:join "coop_local_organization.id = coop_local_contact.object_id";  # il existe un contact lié
+    d2rq:join "coop_local_organization.pref_email_id = coop_local_contact.id ";
+    d2rq:condition "coop_local_contact.category = 8";
+   .  
+  map:organization_addr a d2rq:PropertyBridge;  # EXAMPLE Direct generic relation
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property legal:registeredAddress;
+    d2rq:refersToClassMap map:location;
+    d2rq:join "coop_local_organization.pref_address_id = coop_geo_location.id ";
+    .  
+map:organization_tags a d2rq:PropertyBridge; # EXAMPLE M2M generic relation
+    d2rq:belongsToClassMap map:organization;
+    d2rq:refersToClassMap map:tag;
+    d2rq:property ctag:tagged;
+    d2rq:join "coop_tag_ctag.id <= coop_tag_ctaggeditem.tag_id";
+    d2rq:join "coop_local_organization.id <= coop_tag_ctaggeditem.object_id";
+    d2rq:join "django_content_type.id <= coop_tag_ctaggeditem.content_type_id";
+    d2rq:condition "django_content_type.model = 'organization'";
+    .
+map:organization_members a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:organization;
+    d2rq:refersToClassMap map:person;
+    d2rq:property org:hasMember;
+    d2rq:join "coop_local_organization.id => coop_local_engagement.organization_id";
+    d2rq:join "coop_local_engagement.person_id => coop_local_person.id";
+    .
+map:organization_locations a d2rq:PropertyBridge; # EXAMPLE M2M generic relation
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property locn:location;
+    d2rq:refersToClassMap map:location;
+    d2rq:join "coop_local_organization.id <= coop_geo_located.object_id";
+    d2rq:join "django_content_type.id <= coop_geo_located.content_type_id";
+    d2rq:condition "django_content_type.model = 'organization'";
+    d2rq:join "coop_geo_location.id <= coop_geo_located.location_id";
+    .
+

@@ -24,9 +24,6 @@ from django.utils.safestring import mark_safe
 from sorl.thumbnail.admin import AdminImageMixin
 from tinymce.widgets import AdminTinyMCE
 
-from sorl.thumbnail import default
-ADMIN_THUMBS_SIZE = '60x60'      
-
 from chosen import widgets as chosenwidgets
 
 if "coop.exchange" in settings.INSTALLED_APPS:
@@ -118,7 +115,7 @@ def create_action(category):
 class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html' 
     form = OrganizationAdminForm
-    list_display = ['logo_thumb', 'label', 'active', 'has_description', 'has_location']
+    list_display = ['logo_list_display', 'label', 'active', 'has_description', 'has_location']
     list_display_links = ['label', ]
     search_fields = ['title', 'acronym', 'subtitle', 'description']
     list_filter = ['active', 'category']
@@ -186,15 +183,6 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
         # just save obj reference for future processing in Inline
         request._obj_ = obj
         return super(OrganizationAdmin, self).get_form(request, obj, **kwargs)
-
-    def logo_thumb(self, obj):
-        if obj.logo:
-            thumb = default.backend.get_thumbnail(obj.logo.file, ADMIN_THUMBS_SIZE)
-            return '<img width="%s" src="%s" />' % (thumb.width, thumb.url)
-        else:
-            return _(u"No Image") 
-    logo_thumb.short_description = _(u"logo")
-    logo_thumb.allow_tags = True
 
     class Media:
         js = ('/static/js/admin_customize.js',)

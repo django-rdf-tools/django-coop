@@ -3,7 +3,6 @@
 import os
 from coop_local.settings import PROJECT_PATH, PROJECT_NAME
 
-
 D2RQ_PORT = 8080
 D2RQ_ROOT = 'http://localhost:8080/' + PROJECT_NAME + '/'
 
