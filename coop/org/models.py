@@ -317,3 +317,10 @@ class BaseOrganization(URIModel):
         #     self.email_sha1 = m.hexdigest()
         super(BaseOrganization, self).save(*args, **kwargs)  
 
+    # The "reverse mapping is done here"
+    # def updateFromRdf(self, graph):
+    #     desc = graph.objects(self.uri, )
+    #     raise Exception("UpdateFromRdf method cannot be abstract, define it for class %s." % self.__class_.__name__)
+
+
+

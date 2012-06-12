@@ -163,6 +163,23 @@ class StaticURIModel(models.Model):
     def toJson(self):
         return self.toRdf("json-ld")
 
+    def updateFromFeeds(self):       
+        feed_url = PES_HOST + 'feed' + self.__class__.__name__.lower()
+        parsedFeed = feedparser.parse(feed_url)
+        print "Parse feed %s" % feed_url
+        for entry in parsedFeed.entries:
+            fd, fname = tempfile.mkstemp()
+            os.write(fd, entry.summary)
+            os.close(fd)
+            g = Graph()
+            g.parse(fname, format="json-ld")
+            self.updateFromRdf(g)
+
+    def updateFromRdf(self, graph):
+        raise Exception("UpdateFromRdf method cannot be abstract, define it for class %s." % self.__class_.__name__)
+
+
+
 
 
 
