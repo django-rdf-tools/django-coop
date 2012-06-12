@@ -5,11 +5,14 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
 import shortuuid
-from rdflib import Graph, plugin, store
+from rdflib import Graph, plugin, store, Namespace, Literal
 from django_push.publisher import ping_hub
 from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
+import feedparser
+import os
+import tempfile
 
 URI_MODE = Choices(
     ('LOCAL',  1, _(u'Local')),
@@ -163,8 +166,11 @@ class StaticURIModel(models.Model):
     def toJson(self):
         return self.toRdf("json-ld")
 
-    def updateFromFeeds(self):       
-        feed_url = PES_HOST + 'feed' + self.__class__.__name__.lower()
+
+    @classmethod
+    def updateFromFeeds(cls):    
+        print "Update feed for class name %s" % cls.__name__
+        feed_url = settings.PES_HOST + 'feed/' + cls.__name__.lower() + '/'
         parsedFeed = feedparser.parse(feed_url)
         print "Parse feed %s" % feed_url
         for entry in parsedFeed.entries:
@@ -173,18 +179,57 @@ class StaticURIModel(models.Model):
             os.close(fd)
             g = Graph()
             g.parse(fname, format="json-ld")
-            self.updateFromRdf(g)
+            done = set()
+            for subj in g.subjects(None, None):
+                if not (subj in done):
+                    import pdb; pdb.set_trace()   
+                    instance = cls.objects.get(uri=str(subj))
+                    if not instance:
+                        print "Nothing to do with uri %s. Not found in database" % subj
+                    else:
+                        instance.updateFromRdf(g)
+                    done.add(subj)
 
     def updateFromRdf(self, graph):
         raise Exception("UpdateFromRdf method cannot be abstract, define it for class %s." % self.__class_.__name__)
-
-
-
-
 
 
 class URIModel(StaticURIModel, UptadedModel):
     class Meta:
         abstract = True
 
- 
+
+
+
+
+# Useful stuffs
+D2RQ = Namespace('http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#')
+
+
+def setD2rqGraph():
+    uri = 'http://' + str(Site.objects.get_current().domain) + '/d2r/export/mapping.ttl'
+    d2rGraph = Graph()
+    d2rGraph.parse(uri)
+    return d2rGraph
+
+_d2rGraph = setD2rqGraph()
+
+
+def checkDirectMap(dbfieldName):
+    lit = Literal(dbfieldName)
+    subj = list(_d2rGraph.subjects(D2RQ.column, lit))
+    if len(subj) != 1:
+        return None
+    else:
+        subj = subj[0]
+        prop = list(_d2rGraph.objects(subj, D2RQ.property))
+        if len(prop) != 1:
+            return None
+        else:
+            return prop[0]
+
+
+
+
+
+

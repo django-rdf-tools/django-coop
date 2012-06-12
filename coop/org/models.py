@@ -8,9 +8,10 @@ from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.conf import settings
-from coop.models import URIModel
+from coop.models import URIModel, checkDirectMap
 from sorl.thumbnail import ImageField
 from sorl.thumbnail import default
+import rdflib
 ADMIN_THUMBS_SIZE = '60x60' 
 
 
@@ -329,9 +330,26 @@ class BaseOrganization(URIModel):
         super(BaseOrganization, self).save(*args, **kwargs)  
 
 
+
+
     # The "reverse mapping is done here"
-    # def updateFromRdf(self, graph):
-    #     desc = graph.objects(self.uri, )
-    #     raise Exception("UpdateFromRdf method cannot be abstract, define it for class %s." % self.__class_.__name__)
+    def updateFromRdf(self, graph):
+        db_table = self.__class__._meta.db_table
+        for field in self.__class__._meta.fields:
+            dbfieldname = db_table + '+' + field.name
+            pred = checkDirectMap(dbfieldname)
+            if pred:
+                # I don't know what to do yet
+                print "The field %s cannot be updated." % dbfieldname
+                pass
+            else:
+                update = list(graph.objects(rdflib.term.URIRes(self.uri), pred))
+                if len(update) != 1:
+                    print "The field %s cannot be updated. Too many values" % dbfieldname
+                else:
+                    update = update[0]
+                    setattr(self, field.name, update.n3())
+        self.save()
+
 
 
