@@ -1,0 +1,11 @@
+@prefix map: <file:/d2r/mapping.ttl#> .
+@prefix db: <> .
+@prefix vocab: <{{d2r_niceURI}}/vocab/resource/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix d2rq: <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#> .
+@prefix jdbc: <http://d2rq.org/terms/jdbc/> .
+@prefix d2r: <http://sites.wiwiss.fu-berlin.de/suhl/bizer/d2r-server/config.rdf#> .
+{% for prefix,uri in namespaces.items %}@prefix {{prefix}}: <{{uri}}> .
+{% endfor %}
