@@ -1,5 +1,6 @@
 {% include "d2r/prefix.ttl"%}
 
+
 <> a d2r:Server;
     rdfs:label "{{d2r_site_name}}";
     d2r:port {{d2r_port}};
