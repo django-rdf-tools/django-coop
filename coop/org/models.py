@@ -328,3 +328,5 @@ class BaseOrganization(URIModel):
         #     self.email_sha1 = m.hexdigest()
         super(BaseOrganization, self).save(*args, **kwargs)  
 
+    
+
