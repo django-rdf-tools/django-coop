@@ -14,13 +14,6 @@ map:organization_label a d2rq:PropertyBridge;
     .
 map:organization_title a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
-    d2rq:property dct:title;
-    d2rq:property legal:legalName;
-    d2rq:column "coop_local_organization.title";
-    d2rq:condition "coop_local_organization.title <> ''";
-    .
-map:organization_legalName a d2rq:PropertyBridge;
-    d2rq:belongsToClassMap map:organization;
     d2rq:property legal:legalName;
     d2rq:column "coop_local_organization.title";
     d2rq:condition "coop_local_organization.title <> ''";
@@ -173,3 +166,19 @@ map:organization_locations a d2rq:PropertyBridge; # EXAMPLE M2M generic relation
     d2rq:join "coop_geo_location.id <= coop_geo_located.location_id";
     .
 
+
+map:organization_offers a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property gr:offers;
+    d2rq:refersToClassMap map:exchange;
+    d2rq:join "coop_local_exchange.organization_id => coop_local_organization.id";
+    d2rq:condition "coop_local_exchange.eway = 1"
+    .
+
+map:organization_offers a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property gr:seeks;
+    d2rq:refersToClassMap map:exchange;
+    d2rq:join "coop_local_exchange.organization_id => coop_local_organization.id";
+    d2rq:condition "coop_local_exchange.eway = 2"
+    .

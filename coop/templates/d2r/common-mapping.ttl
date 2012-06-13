@@ -126,6 +126,8 @@ map:tag_modified a d2rq:PropertyBridge;
 
 {% include "d2r/organization.ttl" %}
 
+{% include "d2r/exchange.ttl" %}
+
 
 
 # As for Area, the Table has to be split
