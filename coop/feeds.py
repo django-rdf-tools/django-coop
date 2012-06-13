@@ -27,6 +27,9 @@ class UpdateFeed(Feed):
         except:
             return item.label
 
+    def item_link(self, item):
+        return item.uri
+
 
     def item_description(self, item):
         # return item.uri + 'sparql endpoint' + uriSparql
