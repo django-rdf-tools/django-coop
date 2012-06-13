@@ -7,7 +7,7 @@ map:organization a d2rq:ClassMap;
     d2rq:class ess:Organization;
 #   d2rq:condition "coop_local_organization.active = 't'"
     .
-map:organization__label a d2rq:PropertyBridge;
+map:organization_label a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
     d2rq:property rdfs:label;
     d2rq:pattern "@@coop_local_organization.title@@";
@@ -25,6 +25,25 @@ map:organization_legalName a d2rq:PropertyBridge;
     d2rq:column "coop_local_organization.title";
     d2rq:condition "coop_local_organization.title <> ''";
     .
+map:organization_acronym a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property ov:prefAcronym;
+    d2rq:column "coop_local_organization.acronym";
+    d2rq:condition "coop_local_organization.acronym <> ''";
+    .
+map:organization_prefLabelTitle a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property skos:prefLabel;
+    d2rq:column "coop_local_organization.title";
+    d2rq:condition "coop_local_organization.pref_label = 1";
+    .
+ map:organization_prefLabelAcronym a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property skos:prefLabel;
+    d2rq:column "coop_local_organization.acronym";
+    d2rq:condition "coop_local_organization.pref_label <> 1";
+    .
+   
 map:organization_subtitle a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
     d2rq:property skos:note;                # shoulf be dct:abstract, but incompatible with rdfalchemy
@@ -102,7 +121,7 @@ map:organization_contacts a d2rq:PropertyBridge;  # EXAMPLE Direct generic relat
     d2rq:belongsToClassMap map:organization;
     d2rq:property ess:contact;
     d2rq:refersToClassMap map:contact;
-    d2rq:join "coop_local_organization.id <= coop_local_contact.object_id";  # il existe un contact lié
+    d2rq:join "coop_local_organization.id <= coop_local_contact.object_id";  # linked contact exists
     d2rq:join "django_content_type.id <= coop_local_contact.content_type_id";
     d2rq:condition "django_content_type.model = 'organization'";
     .   
@@ -110,7 +129,7 @@ map:organization_phone a d2rq:PropertyBridge;  # EXAMPLE Direct generic relation
     d2rq:belongsToClassMap map:organization;
     d2rq:property v:tel;
     d2rq:refersToClassMap map:tel;
-    # d2rq:join "coop_local_organization.id = coop_local_contact.object_id";  # il existe un contact lié
+    # d2rq:join "coop_local_organization.id = coop_local_contact.object_id";  # linked contact exists
     d2rq:join "coop_local_organization.pref_phone_id = coop_local_contact.id ";
     d2rq:condition "coop_local_contact.category = 1";
    .   
@@ -118,7 +137,7 @@ map:organization_email a d2rq:PropertyBridge;  # EXAMPLE Direct generic relation
     d2rq:belongsToClassMap map:organization;
     d2rq:property v:email;
     d2rq:refersToClassMap map:email;
-    # d2rq:join "coop_local_organization.id = coop_local_contact.object_id";  # il existe un contact lié
+    # d2rq:join "coop_local_organization.id = coop_local_contact.object_id"; # linked contact exists
     d2rq:join "coop_local_organization.pref_email_id = coop_local_contact.id ";
     d2rq:condition "coop_local_contact.category = 8";
    .  

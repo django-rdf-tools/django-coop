@@ -10,9 +10,11 @@ from django_push.publisher import ping_hub
 from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
+from django.template import Template, Context
 import feedparser
 import os
 import tempfile
+import coop
 
 URI_MODE = Choices(
     ('LOCAL',  1, _(u'Local')),
@@ -168,12 +170,35 @@ class StaticURIModel(models.Model):
 
 
     @classmethod
+    def getD2rqGraph(cls):
+        context = {}
+        context['mapping_template'] = 'd2r/' + cls.__name__.lower() + '.ttl'
+        context['namespaces'] = settings.RDF_NAMESPACES
+
+        tmpfile = os.path.dirname(os.path.abspath(coop.__file__)) + '/templates/d2r/model.ttl'
+        f = open(tmpfile, 'r')
+        t = Template(f.read())
+        f.close()
+        res = t.render(Context(context))
+        (fd, fname) = tempfile.mkstemp()
+        f = open(fname, 'w')
+        f.write(res)
+        f.close()
+        graph = Graph()
+        graph.parse('file:' + fname, format='n3')
+        return graph
+
+
+
+
+    @classmethod
     def updateFromFeeds(cls):    
         print "Update feed for class name %s" % cls.__name__
         feed_url = settings.PES_HOST + 'feed/' + cls.__name__.lower() + '/'
         parsedFeed = feedparser.parse(feed_url)
         print "Parse feed %s" % feed_url
         for entry in parsedFeed.entries:
+            print "Entry summary is %s " % entry.summary
             fd, fname = tempfile.mkstemp()
             os.write(fd, entry.summary)
             os.close(fd)
@@ -182,7 +207,6 @@ class StaticURIModel(models.Model):
             done = set()
             for subj in g.subjects(None, None):
                 if not (subj in done):
-                    import pdb; pdb.set_trace()   
                     instance = cls.objects.get(uri=str(subj))
                     if not instance:
                         print "Nothing to do with uri %s. Not found in database" % subj
@@ -206,27 +230,19 @@ class URIModel(StaticURIModel, UptadedModel):
 D2RQ = Namespace('http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#')
 
 
-def setD2rqGraph():
-    uri = 'http://' + str(Site.objects.get_current().domain) + '/d2r/export/mapping.ttl'
-    d2rGraph = Graph()
-    d2rGraph.parse(uri)
-    return d2rGraph
-
-_d2rGraph = setD2rqGraph()
-
-
-def checkDirectMap(dbfieldName):
+def checkDirectMap(dbfieldName, d2rqGraph):
     lit = Literal(dbfieldName)
-    subj = list(_d2rGraph.subjects(D2RQ.column, lit))
+    subj = list(d2rqGraph.subjects(D2RQ.column, lit))
     if len(subj) != 1:
+        subj = list(d2rqGraph.subjects(D2RQ.uriColumn, lit))
+        if len(subj) != 1:
+            return None
+    subj = subj[0]
+    prop = list(d2rqGraph.objects(subj, D2RQ.property))
+    if len(prop) != 1:
         return None
     else:
-        subj = subj[0]
-        prop = list(_d2rGraph.objects(subj, D2RQ.property))
-        if len(prop) != 1:
-            return None
-        else:
-            return prop[0]
+        return prop[0]
 
 
 

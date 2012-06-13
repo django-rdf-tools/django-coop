@@ -335,20 +335,24 @@ class BaseOrganization(URIModel):
     # The "reverse mapping is done here"
     def updateFromRdf(self, graph):
         db_table = self.__class__._meta.db_table
+        d2rqGraph = self.__class__.getD2rqGraph()
         for field in self.__class__._meta.fields:
-            dbfieldname = db_table + '+' + field.name
-            pred = checkDirectMap(dbfieldname)
+            dbfieldname = db_table + '.' + field.name
+            pred = checkDirectMap(dbfieldname, d2rqGraph)
             if pred:
-                # I don't know what to do yet
-                print "The field %s cannot be updated." % dbfieldname
-                pass
-            else:
-                update = list(graph.objects(rdflib.term.URIRes(self.uri), pred))
-                if len(update) != 1:
-                    print "The field %s cannot be updated. Too many values" % dbfieldname
+                update = list(graph.objects(rdflib.term.URIRef(self.uri), pred))
+                if len(update) > 1:
+                    print "    The field %s cannot be updated. Too many values" % dbfieldname
+                elif len(update) == 0:
+                    print "Nothing to update for field %s" % dbfieldname
                 else:
+                    print "For %s update the field %s" % (self.title, dbfieldname)
                     update = update[0]
-                    setattr(self, field.name, update.n3())
+                    setattr(self, field.name, update)
+            else:
+                 # I don't know what to do yet
+                print "    The field %s cannot be updated." % dbfieldname
+                pass
         self.save()
 
 

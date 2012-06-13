@@ -17,5 +17,6 @@ DEFAULT_RDF_NAMESPACES = {
  'opens': u'http://rdf.opensahara.com/type/geo/',
  'person': u'http://www.w3.org/ns/person#',
  'schema': u'http://schema.org/',
- 'rss': u'http://purl.org/net/rss1.1#'
+ 'rss': u'http://purl.org/net/rss1.1#',
+ 'ov': u'http://open.vocab.org/terms/'
  }
