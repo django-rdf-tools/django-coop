@@ -165,20 +165,22 @@ map:organization_locations a d2rq:PropertyBridge; # EXAMPLE M2M generic relation
     d2rq:condition "django_content_type.model = 'organization'";
     d2rq:join "coop_geo_location.id <= coop_geo_located.location_id";
     .
-
-
 map:organization_offers a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
     d2rq:property gr:offers;
     d2rq:refersToClassMap map:exchange;
-    d2rq:join "coop_local_exchange.organization_id => coop_local_organization.id";
-    d2rq:condition "coop_local_exchange.eway = 1"
+    d2rq:alias "coop_local_exchange AS coop_local_exchangeOffers";
+    # d2rq:alias "coop_local_organization AS  organizationOfferer";
+    d2rq:join "coop_local_exchangeOffers.organization_id = coop_local_organization.id";
+    d2rq:condition "coop_local_exchangeOffers.eway = 1"
     .
-
-map:organization_offers a d2rq:PropertyBridge;
+map:organization_seeks a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
     d2rq:property gr:seeks;
     d2rq:refersToClassMap map:exchange;
-    d2rq:join "coop_local_exchange.organization_id => coop_local_organization.id";
-    d2rq:condition "coop_local_exchange.eway = 2"
+    d2rq:alias "coop_local_exchange AS coop_local_exchangeSeeks";
+    # d2rq:alias "coop_local_organization AS  organizationSeeker";
+    d2rq:join "coop_local_exchangeSeeks.organization_id = coop_local_organization.id";
+    d2rq:condition "coop_local_exchangeSeeks.eway = 2"
     .
+
