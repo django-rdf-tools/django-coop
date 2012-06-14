@@ -62,8 +62,6 @@ if "coop_cms" in settings.INSTALLED_APPS:
         #list_editable = ['publication', 'in_newsletter', 'section']
         list_display_links = ['title']
 
-
-
         readonly_fields = ['created', 'modified']
         fieldsets = (
             #(_('Navigation'), {'fields': ('navigation_parent',)}),
