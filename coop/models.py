@@ -82,7 +82,7 @@ class StaticURIModel(models.Model):
     #str(Site.objects.get_current().domain)
 
     def label(self):
-        return "NYI labl method"
+        return "NYI label method"
 
     # This metho could be overwritten by subClasses
     @property
