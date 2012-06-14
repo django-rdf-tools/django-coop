@@ -8,7 +8,7 @@ from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.conf import settings
-from coop.models import URIModel, checkDirectMap
+from coop.models import URIModel
 from sorl.thumbnail import ImageField
 from sorl.thumbnail import default
 import rdflib
@@ -323,7 +323,6 @@ class BaseOrganization(URIModel):
                 if locations.count() == 1:
                     self.pref_address = locations[0].location
 
-
         # TODO move this to Contact model or do it in SQL
 
         # if self.email and self.email != '': 
@@ -334,30 +333,48 @@ class BaseOrganization(URIModel):
         super(BaseOrganization, self).save(*args, **kwargs)  
 
 
-
-
-    # The "reverse mapping is done here"
-    def updateFromRdf(self, graph):
-        db_table = self.__class__._meta.db_table
-        d2rqGraph = self.__class__.getD2rqGraph()
-        for field in self.__class__._meta.fields:
-            dbfieldname = db_table + '.' + field.name
-            pred = checkDirectMap(dbfieldname, d2rqGraph)
-            if pred:
-                update = list(graph.objects(rdflib.term.URIRef(self.uri), pred))
-                if len(update) > 1:
-                    print "    The field %s cannot be updated. Too many values" % dbfieldname
-                elif len(update) == 0:
-                    print "Nothing to update for field %s" % dbfieldname
+    # title field needs a special handling. checkDirectMap does not work
+    # because two rdf property use the coop_local_organization.title field
+    # Thus we have to decide which one to use
+    def updateField_title(self, dbfieldname, graph):
+            title = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS_LEGAL.legalName))
+            if len(title) == 1:
+                self.title = title[0]
+                print "For id %s update the field %s" % (self.id, dbfieldname)
+            elif len(title) == 0:
+                title = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS_RDFS.label))
+                if len(title) == 1:
+                    self.title = title[0]
+                    print "For id %s update the field %s" % (self.id, dbfieldname)
                 else:
-                    print "For %s update the field %s" % (self.title, dbfieldname)
-                    update = update[0]
-                    setattr(self, field.name, update)
+                    print "    The field %s cannot be updated." % dbfieldname
             else:
-                 # I don't know what to do yet
                 print "    The field %s cannot be updated." % dbfieldname
-                pass
-        self.save()
+
+
+    def updateField_pref_label(self, dbfieldname, graph):
+        prefLabel = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS_SKOS.prefLabel))
+        if len(prefLabel) == 1: 
+            legalName = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS_LEGAL.legalName))
+            if len(legalName) == 1:
+                if prefLabel[0] == legalName[0]:
+                    self.pref_label = PREFLABEL.TITLE
+                    print "For id %s update the field %s" % (self.id, dbfieldname)
+ 
+            else:
+                acronym = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS_OV.acronym))
+                if len(acronym) == 1:
+                    if prefLabel[0] == acronym[0]:
+                        self.pref_label = PREFLABEL.ACRO
+                        print "For id %s update the field %s" % (self.id, dbfieldname)
+ 
+                    else:
+                        print "    The field %s cannot be updated." % dbfieldname
+                else:
+                    print "    The field %s cannot be updated." % dbfieldname
+        else:
+            print "    The field %s cannot be updated." % dbfieldname
+
 
 
 

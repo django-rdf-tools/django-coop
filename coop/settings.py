@@ -1,3 +1,5 @@
+from rdflib import Namespace
+
 DEFAULT_RDF_NAMESPACES = {
  'ess':  u'http://ns.economie-solidaire.fr/ess#',
  'dct': u'http://purl.org/dc/terms/',
@@ -20,3 +22,11 @@ DEFAULT_RDF_NAMESPACES = {
  'rss': u'http://purl.org/net/rss1.1#',
  'ov': u'http://open.vocab.org/terms/'
  }
+
+
+ # Useful stuffs
+NS_D2RQ = Namespace('http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#')
+NS_LEGAL = Namespace(DEFAULT_RDF_NAMESPACES['legal'])
+NS_ESS = Namespace(DEFAULT_RDF_NAMESPACES['ess'])
+NS_SKOS = Namespace(DEFAULT_RDF_NAMESPACES['skos'])
+NS_OV = Namespace(DEFAULT_RDF_NAMESPACES['ov'])

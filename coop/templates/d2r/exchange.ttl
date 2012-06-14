@@ -16,12 +16,12 @@ map:exchange_description a d2rq:PropertyBridge;
 	d2rq:property dct:description;
 	d2rq:column "coop_local_exchange.description";
 	.
+# fill to gr:availabilityEnd to an arbitrairy value ...
 map:exchange_permanent a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:exchange;
-	d2rq:property vocab:coop_local_exchange_permanent;
-	d2rq:propertyDefinitionLabel "coop_local_exchange permanent";
-	d2rq:column "coop_local_exchange.permanent";
-	d2rq:valueRegex "^[01]*$";
+	d2rq:property gr:availabilityEnd;
+    d2rq:constantValue "2050-05-20T12:56:07.402747"^^xsd:dateTime;
+	d2rq:condition  "coop_local_exchange.permanent = TRUE";
 	.
 map:exchange_expiration a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:exchange;
@@ -55,7 +55,7 @@ map:exchange_location a d2rq:PropertyBridge;
 	.
 map:exchange_person a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:exchange;
-	d2rq:property vocab:coop_local_exchange_person;
+	d2rq:property dct:publisher;
 	d2rq:refersToClassMap map:person;
 	d2rq:join "coop_local_exchange.person_id => coop_local_person.id";
 	.

@@ -112,7 +112,7 @@ map:organization_logo a d2rq:PropertyBridge;
 
 map:organization_contacts a d2rq:PropertyBridge;  # EXAMPLE Direct generic relation
     d2rq:belongsToClassMap map:organization;
-    d2rq:property ess:contact;
+    d2rq:property ess:hasContactMedium;
     d2rq:refersToClassMap map:contact;
     d2rq:join "coop_local_organization.id <= coop_local_contact.object_id";  # linked contact exists
     d2rq:join "django_content_type.id <= coop_local_contact.content_type_id";
