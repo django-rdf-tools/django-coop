@@ -74,6 +74,9 @@ class BasePerson(URIModel):
     has_role.boolean = True    
     has_role.short_description = _(u'has organization')
 
+    def label(self):
+        return "%s %s" % (self.first_name, self.last_name)
+
     def engagements(self):
         eng = []
         for e in self.engagement_set.all():

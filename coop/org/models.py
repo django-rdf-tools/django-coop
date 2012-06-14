@@ -65,6 +65,10 @@ class BaseContact(URIModel):
         else:    
             return self.content
 
+    def label(self):
+        return _(u'Contact number %s' % self.id)
+
+
     def clean(self):
         if self.category in [1, 2, 3]:
             import re

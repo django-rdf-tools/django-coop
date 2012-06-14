@@ -102,6 +102,9 @@ class BaseExchange(URIModel):
     def get_absolute_url(self):
         return reverse('exchange_detail', args=[self.id])
 
+    def label(self):
+        return self.title
+
     #TODO assign the record to the person editing it (form public) and provide an A-C choice in admin
 
     class Meta:
