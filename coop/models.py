@@ -5,7 +5,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
 import shortuuid
-from rdflib import Graph, plugin, store, Namespace, Literal
+from rdflib import Graph, plugin, store, Literal, URIRef
 from django_push.publisher import ping_hub
 from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
@@ -214,8 +214,32 @@ class StaticURIModel(models.Model):
                         instance.updateFromRdf(g)
                     done.add(subj)
 
+    # The "reverse mapping is done here"
     def updateFromRdf(self, graph):
-        raise Exception("UpdateFromRdf method cannot be abstract, define it for class %s." % self.__class_.__name__)
+        db_table = self.__class__._meta.db_table
+        d2rqGraph = self.__class__.getD2rqGraph()
+        for field in self.__class__._meta.fields:
+            dbfieldname = db_table + '.' + field.name
+            pred = checkDirectMap(dbfieldname, d2rqGraph)
+            if pred:
+                update = list(graph.objects(URIRef(self.uri), pred))
+                if len(update) > 1:
+                    print "    The field %s cannot be updated. Too many values" % dbfieldname
+                elif len(update) == 0:
+                    print "Nothing to update for field %s" % dbfieldname
+                else:
+                    print "For id %s update the field %s" % (self.id, dbfieldname)
+                    update = update[0]
+                    setattr(self, field.name, update)
+            else:
+                 # See org/models file to have example of "special" fiels handling
+                if hasattr(self, 'updateField_' + field.name):
+                    getattr(self, 'updateField_' + field.name)(dbfieldname, graph)
+                else:
+                    print "    The field %s cannot be updated." % dbfieldname
+        self.save()
+
+
 
 
 class URIModel(StaticURIModel, UptadedModel):
@@ -226,19 +250,16 @@ class URIModel(StaticURIModel, UptadedModel):
 
 
 
-# Useful stuffs
-D2RQ = Namespace('http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#')
-
 
 def checkDirectMap(dbfieldName, d2rqGraph):
     lit = Literal(dbfieldName)
-    subj = list(d2rqGraph.subjects(D2RQ.column, lit))
+    subj = list(d2rqGraph.subjects(settings.NS_D2RQ.column, lit))
     if len(subj) != 1:
-        subj = list(d2rqGraph.subjects(D2RQ.uriColumn, lit))
+        subj = list(d2rqGraph.subjects(settings.NS_D2RQ.uriColumn, lit))
         if len(subj) != 1:
             return None
     subj = subj[0]
-    prop = list(d2rqGraph.objects(subj, D2RQ.property))
+    prop = list(d2rqGraph.objects(subj, settings.NS_D2RQ.property))
     if len(prop) != 1:
         return None
     else:
