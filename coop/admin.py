@@ -50,14 +50,19 @@ if "coop_cms" in settings.INSTALLED_APPS:
     class CoopArticleForm(ArticleAdminForm):
         content = forms.CharField(widget=AdminTinyMCE(attrs={'cols': 80, 'rows': 60}), required=False)
 
+
     class CoopArticleAdmin(ArticleAdmin, AdminImageMixin):
         form = CoopArticleForm
         change_form_template = 'admintools_bootstrap/tabbed_change_form.html' 
         change_list_template = 'admin/article_change_list.html'
 
-        list_display = ['logo_list_display', 'title', 'publication', 'section', 'modified', 'in_newsletter']
-        list_editable = ['publication', 'in_newsletter', 'section']
+        list_display = ['logo_list_display', 'title', 'publication', 'headline', 'in_newsletter']
+        list_editable = ['publication', 'in_newsletter', 'headline']
+        #list_display = ['logo_list_display', 'title', 'publication', 'section', 'modified', 'in_newsletter']
+        #list_editable = ['publication', 'in_newsletter', 'section']
         list_display_links = ['title']
+
+
 
         readonly_fields = ['created', 'modified']
         fieldsets = (
@@ -75,9 +80,26 @@ if "coop_cms" in settings.INSTALLED_APPS:
     admin.site.register(get_article_class(), CoopArticleAdmin)
 
 
+if 'forms_builder.forms' in settings.INSTALLED_APPS:
 
+    from forms_builder.forms.admin import FormAdmin
+    from forms_builder.forms.models import Form
 
-
+    class MyFormAdmin(FormAdmin):
+        change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
+        fieldsets = [
+            (_("Settings"), {"fields": ( "title", 
+                                    #("status", "login_required",),
+                                    #("publish_date", "expiry_date",), 
+                                     "intro", "button_text", "response")}),
+            (_("Email"), {"fields": ("send_email", "email_from", "email_copies",
+                                     "email_subject", "email_message")}),
+            ]       
+        list_display = ("title", "total_entries", "admin_links")
+        list_display_links = ("title",)
+        list_editable = []
+    admin.site.unregister(Form)
+    admin.site.register(Form, MyFormAdmin)
 
 
 
