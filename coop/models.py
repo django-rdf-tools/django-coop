@@ -8,13 +8,14 @@ import shortuuid
 from rdflib import Graph, plugin, store, Literal, URIRef
 from django_push.publisher import ping_hub
 from django.contrib.sites.models import Site
-from django.core.urlresolvers import reverse
 from django.db import IntegrityError
 from django.template import Template, Context
 import feedparser
 import os
 import tempfile
 import coop
+import time
+
 
 URI_MODE = Choices(
     ('LOCAL',  1, _(u'Local')),
@@ -229,6 +230,11 @@ class StaticURIModel(models.Model):
                 else:
                     print "For id %s update the field %s" % (self.id, dbfieldname)
                     update = update[0]
+                    # Well some field have to be prepared
+                    if isinstance(field, models.fields.DateField):
+                        update = update.split('.')[0]
+                        tt = time.strptime(update, "%Y-%m-%dT%H:%M:%S")
+                        update = "%d-%d-%d" % (tt.tm_year, tt.tm_mon, tt.tm_mday)
                     setattr(self, field.name, update)
             else:
                  # See org/models file to have example of "special" fiels handling

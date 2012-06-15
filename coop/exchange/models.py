@@ -8,6 +8,7 @@ from decimal import Decimal
 from django.conf import settings
 from coop.models import URIModel
 from coop.utils.fields import MultiSelectField
+import rdflib
 
 if "coop_geo" in settings.INSTALLED_APPS:
     from coop_geo.models import Area, Location
@@ -112,6 +113,18 @@ class BaseExchange(URIModel):
         ordering = ('-modified',)
         verbose_name = _(u'Exchange')
         verbose_name_plural = _(u'Exchanges')
+
+    # title field needs a special handling. checkDirectMap does not work
+    # because two rdf property use the coop_local_organization.title field
+    # Thus we have to decide which one to use
+    def updateField_title(self, dbfieldname, graph):
+            title = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS_RDFS.label))
+            if len(title) == 1:
+                self.title = title[0]
+                print "For id %s update the field %s" % (self.id, dbfieldname)
+            else:
+                print "    The field %s cannot be updated." % dbfieldname
+
 
 
 class BaseTransaction(models.Model):
