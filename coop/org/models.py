@@ -153,6 +153,9 @@ class BaseEngagement(URIModel):
     def __unicode__(self):
         return self.person.__unicode__()
 
+    def label(self):
+        return _(u'Engagement number %s' % self.id)
+
 
 class BaseOrganizationCategory(models.Model):
     label = models.CharField(blank=True, max_length=100)
