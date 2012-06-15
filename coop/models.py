@@ -115,7 +115,6 @@ class StaticURIModel(models.Model):
             else:
                 without_scheme = str(self.uri[7:])  # forget 'http://'
                 sp = without_scheme.split('/')
-                assert(sp[1] == 'id')  # to assert a minimal coherence...
                 try:
                     assert(sp[1] == 'id')  # to assert a minimal coherence...
                 except AssertionError:
