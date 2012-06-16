@@ -52,11 +52,12 @@ map:organization_mbox_sha1 a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
     d2rq:property foaf:mbox_sha1sum;
     d2rq:column "coop_local_organization.email_sha1";
+    d2rq:condition "coop_local_organization.email_sha1 <> ''";
     .
 map:organization_web a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
     d2rq:property foaf:homepage;
-    d2rq:uriColumn "coop_local_organization.web";
+    d2rq:column "coop_local_organization.web";
     d2rq:condition "coop_local_organization.web <> ''";
     .
 map:organization_created a d2rq:PropertyBridge;
@@ -64,18 +65,21 @@ map:organization_created a d2rq:PropertyBridge;
     d2rq:property dct:created;
     d2rq:column "coop_local_organization.created";
     d2rq:datatype xsd:dateTime;
+    d2rq:condition "coop_local_organization.created <> ''"
     .
 map:organization_modified a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
     d2rq:property dct:modified;
     d2rq:column "coop_local_organization.modified";
     d2rq:datatype xsd:dateTime;
+    d2rq:condition "coop_local_organization.modified <> ''"
     .
 map:organization_birth a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
     d2rq:property foaf:birthday;
     d2rq:column "coop_local_organization.birth";
     d2rq:datatype xsd:date;
+    d2rq:condition "coop_local_organization.birth <> ''"
     .
 map:organization_logo a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
