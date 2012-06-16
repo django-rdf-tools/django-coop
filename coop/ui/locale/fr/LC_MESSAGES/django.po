@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop.ui\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-09 15:42+0000\n"
-"PO-Revision-Date: 2012-06-11 11:23+0100\n"
+"POT-Creation-Date: 2012-06-16 22:19+0200\n"
+"PO-Revision-Date: 2012-06-16 22:20+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
 "Language: \n"
@@ -39,37 +39,51 @@ msgstr "Déconnexion"
 msgid "Navigation and articles"
 msgstr "Navigation et articles"
 
-#: dashboard.py:56
+#: dashboard.py:57
+msgid "Agenda"
+msgstr ""
+
+#: dashboard.py:66
 msgid "My network"
 msgstr "Mon réseau"
 
-#: dashboard.py:71
-#: menu.py:29
+#: dashboard.py:78
+#: menu.py:39
 msgid "Administration"
 msgstr "Administration"
 
-#: dashboard.py:77
-#: dashboard.py:120
+#: dashboard.py:84
+#: dashboard.py:127
 msgid "Recent Actions"
 msgstr "Actions récentes"
 
-#: dashboard.py:81
+#: dashboard.py:88
 msgid "Latest Django News"
 msgstr "Dernières nouvelles de Django"
 
-#: dashboard.py:88
+#: dashboard.py:95
 msgid "Support"
 msgstr "Support"
 
-#: dashboard.py:91
+#: dashboard.py:98
 msgid "Blog PES"
 msgstr "Blog PES"
 
-#: dashboard.py:96
+#: dashboard.py:103
 msgid "Django \"django-users\" mailing list"
-msgstr ""
+msgstr "Liste de diffusion django"
 
 #: menu.py:25
-msgid "Applications"
-msgstr "Applications"
+msgid "Database"
+msgstr "Base de données"
 
+#: menu.py:30
+msgid "Site"
+msgstr "Site"
+
+#: menu.py:35
+msgid "RDF"
+msgstr "RDF"
+
+#~ msgid "Applications"
+#~ msgstr "Applications"
