@@ -80,7 +80,8 @@ map:organization_birth a d2rq:PropertyBridge;
 map:organization_logo a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
     d2rq:property foaf:logo;
-    d2rq:uriSqlExpression "('http://localhost:8000/media/'||coop_local_organization.logo)";
+    d2rq:uriSqlExpression "('{{ d2r_niceURI }}'||coop_local_organization.logo)";
+    d2rq:condition "coop_local_organization.logo <> ''";
     .
     
 # map:organization_siret a d2rq:PropertyBridge;
