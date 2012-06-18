@@ -76,7 +76,7 @@ class StaticURIModel(models.Model):
 
     # La version simple c'est de passer par le save() et de supprimer le default.... c'est pas 
     # tres beau, car un plus couteux en runtime... mais bon
-    uuid = models.CharField(_(u'uuid'), max_length=50, unique=True, null=True, default=shortuuid.uuid(), editable=False) 
+    uuid = models.CharField(_(u'uuid'), max_length=50, unique=True, null=True, default=shortuuid.uuid, editable=False) 
 
     # the default value, this attribut should be overloaded
     domain_name = settings.DEFAULT_URI_DOMAIN
