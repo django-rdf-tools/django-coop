@@ -22,8 +22,18 @@ class CustomMenu(Menu):
             #items.MenuItem(_('Dashboard'), reverse('admin:index')),
             items.Bookmarks('Favoris'),
             items.AppList(
-                _('Applications'),
-                exclude=('django.contrib.*', 'oembed.*', 'taggit.*', 'coop_cms.*')
+            _(u'Database'),
+                models=('coop_local.*','coop_geo.*','coop_tag.*')
+                #exclude=('django.contrib.*', 'oembed.*', 'taggit.*', 'coop_cms.*')
+            ),
+            items.AppList(
+            _(u'Site'),
+                models=('coop_cms.*', 'oembed.*',)
+                #exclude=('django.contrib.*', 'oembed.*', 'taggit.*', 'coop_cms.*')
+            ),
+            items.AppList(
+            _(u'RDF'),
+                models=('webid.*','uriredirect.*')
             ),
             items.AppList(
                 _('Administration'),
