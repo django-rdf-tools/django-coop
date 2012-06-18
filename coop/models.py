@@ -17,6 +17,8 @@ import coop
 import time
 
 
+
+
 URI_MODE = Choices(
     ('LOCAL',  1, _(u'Local')),
     ('COMMON',   2, _(u'Common')),
@@ -129,7 +131,6 @@ class StaticURIModel(models.Model):
                     else:
                         if  sp[2] != self.uri_registry():
                             self.uri = self.init_uri()
-        ping_hub('http://%s/%s/%s' % (Site.objects.get_current(), 'feed', self.__class__.__name__.lower()))
         super(StaticURIModel, self).save(*args, **kwargs)
 
 
@@ -270,7 +271,6 @@ def checkDirectMap(dbfieldName, d2rqGraph):
         return None
     else:
         return prop[0]
-
 
 
 
