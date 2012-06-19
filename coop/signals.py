@@ -17,10 +17,10 @@ q = Queue()
 @receiver(post_save)
 def post_save_callback(sender, **kwargs):
     if StaticURIModel in sender.__mro__:
-        print "before ping"
+        print "before ping for sender %s" % sender
         try:
             # to be able to work offline
-            q.enqueue(ping_hub, 'http://%s/%s/%s' % (Site.objects.get_current(), 'feed', sender.__name__.lower()))
+            q.enqueue(ping_hub, 'http://%s/%s/%s/' % (Site.objects.get_current(), 'feed', sender.__name__.lower()))
         except:
             pass
 
