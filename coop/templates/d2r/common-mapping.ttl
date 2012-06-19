@@ -34,7 +34,11 @@ map:scheme_name a d2rq:PropertyBridge;
 # Table coop_tag_ctag
 map:xlabel a d2rq:ClassMap;
     d2rq:dataStorage map:database;
-    d2rq:uriPattern "label/@@coop_tag_ctag.slug@@/";
+    {% if mode == 'view' %}
+    d2rq:uriPattern "ctag/@@coop_tag_ctag.slug@@/";
+    {% else %}
+    d2rq:uriColumn "coop_tag_ctag.uri";
+    {% endif %}
     d2rq:class skosxl:Label;
     .
 map:xlabel_name a d2rq:PropertyBridge;
@@ -44,11 +48,11 @@ map:xlabel_name a d2rq:PropertyBridge;
     d2rq:column "coop_tag_ctag.name";
     d2rq:lang "fr"
     .
-# map:tag_author_uri a d2rq:PropertyBridge;
-#   d2rq:belongsToClassMap map:tag;
-#   d2rq:property foaf:made;
-#   d2rq:column "coop_tag_ctag.author_uri";
-#   .
+map:xlabel_author_uri a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:xlabel;
+    d2rq:property foaf:made;
+    d2rq:column "coop_tag_ctag.person_uri";
+    .
 map:xlabel_created a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:xlabel;
     d2rq:property dct:created;
@@ -85,43 +89,6 @@ map:xlabel_broader a d2rq:PropertyBridge;
     d2rq:join "subject_node.tree_id = coop_cms_navnode.tree_id"; 
     .
 
-# Table coop_tag_ctag
-map:tag a d2rq:ClassMap; # classe = modèle Django
-    d2rq:dataStorage map:database;
-    {% if mode == 'view' %}
-    d2rq:uriPattern "ctag/@@coop_tag_ctag.slug@@/";
-    {% else %}
-    d2rq:uriColumn "coop_tag_ctag.uri";
-    {% endif %}
-    d2rq:class ctag:Tag; # classe RDF correspondante
-    .
-map:tag__label a d2rq:PropertyBridge;
-    d2rq:belongsToClassMap map:tag;
-    d2rq:property rdfs:label; # propriété
-    d2rq:pattern "Tag: @@coop_tag_ctag.name@@";
-    .
-map:tag_name a d2rq:PropertyBridge;
-    d2rq:belongsToClassMap map:tag;
-    d2rq:property ctag:label;
-    d2rq:column "coop_tag_ctag.name";
-    .
-map:tag_author_uri a d2rq:PropertyBridge;
-    d2rq:belongsToClassMap map:tag;
-    d2rq:property foaf:made;
-    d2rq:column "coop_tag_ctag.person_uri";
-    .
-map:tag_created a d2rq:PropertyBridge;
-    d2rq:belongsToClassMap map:tag;
-    d2rq:property ctag:taggingDate;
-    d2rq:column "coop_tag_ctag.created";
-    d2rq:datatype xsd:dateTime;
-    .
-map:tag_modified a d2rq:PropertyBridge;
-    d2rq:belongsToClassMap map:tag;
-    d2rq:property dct:modified;
-    d2rq:column "coop_tag_ctag.modified";
-    d2rq:datatype xsd:dateTime;
-    .
 
 
 {% include "d2r/organization.ttl" %}
