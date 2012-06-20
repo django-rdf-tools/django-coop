@@ -1,0 +1,45 @@
+# Table coop_local_engagement
+map:engagement a d2rq:ClassMap;
+    d2rq:dataStorage map:database;
+{% if mode == 'view' %}
+    d2rq:uriPattern "engagement/@@coop_local_engagement.id@@/"; # URI == ID
+{% else %}
+    d2rq:uriColumn "coop_local_engagement.uri";
+{% endif %}
+    d2rq:class org:Membership;
+    .   
+map:engagement__label a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:engagement;
+    d2rq:property rdfs:label;
+    d2rq:pattern "Engagement n°@@coop_local_engagement.id@@";
+    .
+map:engagement_created a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:engagement;
+    d2rq:property dct:created;
+    d2rq:column "coop_local_engagement.created";
+    d2rq:datatype xsd:dateTime;
+    .
+map:engagement_modified a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:engagement;
+    d2rq:property dct:modified;
+    d2rq:column "coop_local_engagement.modified";
+    d2rq:datatype xsd:dateTime;
+    .
+map:engagement_membre a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:engagement;
+    d2rq:property org:member;
+    d2rq:refersToClassMap map:person;
+    d2rq:join "coop_local_engagement.person_id => coop_local_person.id";
+    .
+map:engagement_organization a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:engagement;
+    d2rq:property org:organization;
+    d2rq:refersToClassMap map:organization;
+    d2rq:join "coop_local_engagement.organization_id => coop_local_organization.id";
+    .
+map:engagement_role a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:engagement;
+    d2rq:property org:role;
+    d2rq:refersToClassMap map:role;
+    d2rq:join "coop_local_engagement.role_id => coop_local_role.id";
+    .
