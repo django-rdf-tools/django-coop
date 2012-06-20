@@ -20,7 +20,7 @@ DEFAULT_CHARSET = 'utf-8'
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 
-PUSH_HUB = 'http://quinode.superfeedr.com/'
+PUSH_HUB = 'http://quinode.superfeedr.com'
 USE_TZ = False
 
 # Upload directory
