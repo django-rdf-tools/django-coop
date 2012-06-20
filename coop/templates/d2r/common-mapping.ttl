@@ -157,7 +157,7 @@ map:area_region a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:area;
     d2rq:property rdf:type;
     d2rq:constantValue geofr:Region;
-    #d2rq:alias "coop_geo_areatype AS areatype_reg";
+    d2rq:alias "coop_geo_areatype AS areatype_reg";
     d2rq:condition "areatype_reg.txt_idx = 'REG'";
     d2rq:join "coop_geo_area.area_type_id => areatype_reg.id";
     . 
@@ -165,7 +165,7 @@ map:area_epci a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:area;
     d2rq:property rdf:type;
     d2rq:constantValue geofr:EPCI;
-   # d2rq:alias "coop_geo_areatype AS areatype_epci";
+    d2rq:alias "coop_geo_areatype AS areatype_epci";
     d2rq:condition "areatype_epci.txt_idx = 'EPCI'";
     d2rq:join "coop_geo_area.area_type_id => areatype_epci.id";
     . 

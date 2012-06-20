@@ -59,7 +59,7 @@ map:skype_type a d2rq:PropertyBridge;
 map:twitter_type a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:contact;
     d2rq:property rdf:type;
-    d2rq:constantValue ovcard:OnlineAccount;
+    d2rq:constantValue foaf:OnlineAccount;
     d2rq:alias "coop_local_contact AS contactTwitter";
     d2rq:condition "contactTwitter.category = 5";
     .
