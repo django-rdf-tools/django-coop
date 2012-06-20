@@ -23,21 +23,18 @@ map:organization_acronym a d2rq:PropertyBridge;
     d2rq:column "coop_local_organization.acronym";
     d2rq:condition "coop_local_organization.acronym <> ''";
     .
-map:organization_prefLabelTitle a d2rq:PropertyBridge;
+map:organization_prefLabelAcronym a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
-    d2rq:property skos:prefLabel;
-    d2rq:property rdfs:label;
-    d2rq:column "coop_local_organization.title";
-    d2rq:condition "coop_local_organization.pref_label = 1";
-    .
- map:organization_prefLabelAcronym a d2rq:PropertyBridge;
-    d2rq:belongsToClassMap map:organization;
-    d2rq:property skos:prefLabel;
     d2rq:property rdfs:label;
     d2rq:column "coop_local_organization.acronym";
     d2rq:condition "coop_local_organization.pref_label = 2";
     .
-   
+map:organization_prefLabelTitle a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property rdfs:label;
+    d2rq:column "coop_local_organization.title";
+    d2rq:condition "coop_local_organization.pref_label = 1";
+    .
 map:organization_subtitle a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
     d2rq:property rdfs:comment;                # should be dct:abstract, but clashes with a rdfalchemy method name !
