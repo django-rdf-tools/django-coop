@@ -21,7 +21,7 @@ map:exchange_permanent a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:exchange;
 	d2rq:property gr:availabilityEnd;
     d2rq:constantValue "2050-05-20T12:56:07.402747"^^xsd:dateTime;
-	d2rq:condition  "coop_local_exchange.permanent = TRUE";
+	d2rq:condition  "coop_local_exchange.permanent = 't'";
 	.
 map:exchange_expiration a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:exchange;
@@ -70,7 +70,6 @@ map:exchange_method_offCurrency a d2rq:PropertyBridge;
     d2rq:condition "exchange_method_offCurrency.exchangemethod_id = 1";
     d2rq:join "coop_local_exchange.id = exchange_method_offCurrency.exchange_id";
     .
-
 map:exchange_method_gift a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:exchange;
     d2rq:property rdf:type;
@@ -79,7 +78,6 @@ map:exchange_method_gift a d2rq:PropertyBridge;
     d2rq:condition "exchange_method_Gift.exchangemethod_id = 2";
     d2rq:join "coop_local_exchange.id = exchange_method_Gift.exchange_id";
     .
-
 map:exchange_method_swap a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:exchange;
     d2rq:property rdf:type;
@@ -88,7 +86,6 @@ map:exchange_method_swap a d2rq:PropertyBridge;
     d2rq:condition "exchange_method_Swap.exchangemethod_id = 3";
     d2rq:join "coop_local_exchange.id = exchange_method_Swap.exchange_id";
     .
-
 map:exchange_method_shareCost a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:exchange;
     d2rq:property rdf:type;
@@ -97,7 +94,6 @@ map:exchange_method_shareCost a d2rq:PropertyBridge;
     d2rq:condition "exchange_method_SharedCost.exchangemethod_id = 4";
     d2rq:join "coop_local_exchange.id = exchange_method_SharedCost.exchange_id";
     .
-
 map:exchange_method_voluntaryWork a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:exchange;
     d2rq:property rdf:type;
@@ -106,7 +102,6 @@ map:exchange_method_voluntaryWork a d2rq:PropertyBridge;
     d2rq:condition "exchange_method_VoluntaryWork.exchangemethod_id = 5";
     d2rq:join "coop_local_exchange.id = exchange_method_VoluntaryWork.exchange_id";
     .
-
 map:exchange_method_alternativeCurrency a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:exchange;
     d2rq:property rdf:type;
@@ -115,7 +110,6 @@ map:exchange_method_alternativeCurrency a d2rq:PropertyBridge;
     d2rq:condition "exchange_method_AlternativeCurrency.exchangemethod_id = 6";
     d2rq:join "coop_local_exchange.id = exchange_method_AlternativeCurrency.exchange_id";
     .
-
 map:exchange_method_employment a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:exchange;
     d2rq:property rdf:type;
@@ -124,7 +118,6 @@ map:exchange_method_employment a d2rq:PropertyBridge;
     d2rq:condition "exchange_method_Employment.exchangemethod_id = 7";
     d2rq:join "coop_local_exchange.id = exchange_method_Employment.exchange_id";
     .
-
 map:exchange_method_civicEngagement a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:exchange;
     d2rq:property rdf:type;
@@ -133,7 +126,6 @@ map:exchange_method_civicEngagement a d2rq:PropertyBridge;
     d2rq:condition "exchange_method_CivicEngagement.exchangemethod_id = 8";
     d2rq:join "coop_local_exchange.id = exchange_method_CivicEngagement.exchange_id";
     .
-
 map:exchange_method_practicalTraining a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:exchange;
     d2rq:property rdf:type;
@@ -142,7 +134,6 @@ map:exchange_method_practicalTraining a d2rq:PropertyBridge;
     d2rq:condition "exchange_method_PracticalTraining.exchangemethod_id = 9";
     d2rq:join "coop_local_exchange.id = exchange_method_PracticalTraining.exchange_id";
     .
-
 map:exchange_method_lending a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:exchange;
     d2rq:property rdf:type;
@@ -151,4 +142,11 @@ map:exchange_method_lending a d2rq:PropertyBridge;
     d2rq:condition "exchange_method_Lending.exchangemethod_id = 10";
     d2rq:join "coop_local_exchange.id = exchange_method_Lending.exchange_id";
     .
-
+map:exchange_method_renting a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:exchange;
+    d2rq:property rdf:type;
+    d2rq:constantValue ess:Renting;
+    d2rq:alias "coop_local_exchange_methods AS exchange_method_Renting";
+    d2rq:condition "exchange_method_Renting.exchangemethod_id = 11";
+    d2rq:join "coop_local_exchange.id = exchange_method_Renting.exchange_id";
+    .

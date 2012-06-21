@@ -2,16 +2,15 @@
 # Table coop_local_organization
 map:organization a d2rq:ClassMap;
     d2rq:dataStorage map:database;
-  #  d2rq:uriPattern "organization/@@coop_local_organization.id@@/";
+    {% if mode == 'view' %}
+    d2rq:uriPattern "organization/@@coop_local_organization.id@@/";
+    {% else %}
     d2rq:uriColumn "coop_local_organization.uri";
-    d2rq:class ess:Organization;
-#   d2rq:condition "coop_local_organization.active = 't'"
+    {% endif %}
+    d2rq:class org:Organization;
+    d2rq:condition "coop_local_organization.active = 't'"
     .
-map:organization_label a d2rq:PropertyBridge;
-    d2rq:belongsToClassMap map:organization;
-    d2rq:property rdfs:label;
-    d2rq:pattern "@@coop_local_organization.title@@";
-    .
+
 map:organization_title a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
     d2rq:property legal:legalName;
@@ -24,22 +23,21 @@ map:organization_acronym a d2rq:PropertyBridge;
     d2rq:column "coop_local_organization.acronym";
     d2rq:condition "coop_local_organization.acronym <> ''";
     .
+map:organization_prefLabelAcronym a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property rdfs:label;
+    d2rq:column "coop_local_organization.acronym";
+    d2rq:condition "coop_local_organization.pref_label = 2";
+    .
 map:organization_prefLabelTitle a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
-    d2rq:property skos:prefLabel;
+    d2rq:property rdfs:label;
     d2rq:column "coop_local_organization.title";
     d2rq:condition "coop_local_organization.pref_label = 1";
     .
- map:organization_prefLabelAcronym a d2rq:PropertyBridge;
-    d2rq:belongsToClassMap map:organization;
-    d2rq:property skos:prefLabel;
-    d2rq:column "coop_local_organization.acronym";
-    d2rq:condition "coop_local_organization.pref_label <> 1";
-    .
-   
 map:organization_subtitle a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
-    d2rq:property skos:note;                # shoulf be dct:abstract, but incompatible with rdfalchemy
+    d2rq:property rdfs:comment;                # should be dct:abstract, but clashes with a rdfalchemy method name !
     d2rq:column "coop_local_organization.subtitle";
     d2rq:condition "coop_local_organization.subtitle <> ''";
     .
@@ -84,7 +82,7 @@ map:organization_birth a d2rq:PropertyBridge;
 map:organization_logo a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
     d2rq:property foaf:logo;
-    d2rq:uriSqlExpression "('{{ d2r_niceURI }}'||coop_local_organization.logo)";
+    d2rq:uriSqlExpression "('{{ d2r_niceURI }}/media/'||coop_local_organization.logo)";
     d2rq:condition "coop_local_organization.logo <> ''";
     .
     
@@ -115,7 +113,7 @@ map:organization_logo a d2rq:PropertyBridge;
 #   d2rq:datatype xsd:short;
 #   .
 
-map:organization_contacts a d2rq:PropertyBridge;  # EXAMPLE Direct generic relation
+map:organization_contacts a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
     d2rq:property ess:hasContactMedium;
     d2rq:refersToClassMap map:contact;
@@ -123,18 +121,18 @@ map:organization_contacts a d2rq:PropertyBridge;  # EXAMPLE Direct generic relat
     d2rq:join "django_content_type.id <= coop_local_contact.content_type_id";
     d2rq:condition "django_content_type.model = 'organization'";
     .   
-map:organization_phone a d2rq:PropertyBridge;  # EXAMPLE Direct generic relation
+map:organization_phone a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
-    d2rq:property v:tel;
-    d2rq:refersToClassMap map:tel;
+    d2rq:property vcard:tel;
+    d2rq:refersToClassMap map:contact;
     # d2rq:join "coop_local_organization.id = coop_local_contact.object_id";  # linked contact exists
     d2rq:join "coop_local_organization.pref_phone_id = coop_local_contact.id ";
     d2rq:condition "coop_local_contact.category = 1";
    .   
-map:organization_email a d2rq:PropertyBridge;  # EXAMPLE Direct generic relation
+map:organization_email a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
-    d2rq:property v:email;
-    d2rq:refersToClassMap map:email;
+    d2rq:property vcard:email;
+    d2rq:refersToClassMap map:contact;
     # d2rq:join "coop_local_organization.id = coop_local_contact.object_id"; # linked contact exists
     d2rq:join "coop_local_organization.pref_email_id = coop_local_contact.id ";
     d2rq:condition "coop_local_contact.category = 8";
