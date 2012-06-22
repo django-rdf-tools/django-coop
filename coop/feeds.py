@@ -5,7 +5,7 @@ from django_push.publisher.feeds import Feed
 #from django.contrib.syndication.views import Feed
 from django.db.models.loading import get_model
 from django.contrib.contenttypes.models import ContentType
-
+import datetime
 
 
 class UpdateFeed(Feed):
@@ -30,6 +30,8 @@ class UpdateFeed(Feed):
     def item_link(self, item):
         return item.uri
 
+    def item_pubdate(self, item):
+        return datetime.datetime.now()
 
     def item_description(self, item):
         # return item.uri + 'sparql endpoint' + uriSparql
