@@ -6,8 +6,6 @@ from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
 import shortuuid
 from rdflib import Graph, plugin, store, Literal, URIRef
-from django_push.publisher import ping_hub
-from django.contrib.sites.models import Site
 from django.db import IntegrityError
 from django.template import Template, Context
 import feedparser
@@ -278,4 +276,8 @@ def checkDirectMap(dbfieldName, d2rqGraph):
 
 
 
-
+#It seems to be the best place to do the connection
+# see http://stackoverflow.com/questions/7115097/the-right-place-to-keep-my-signals-py-files-in-django
+from django.core.signals import  request_finished
+from coop.signals import post_save_callback
+request_finished.connect(post_save_callback, sender=StaticURIModel)
