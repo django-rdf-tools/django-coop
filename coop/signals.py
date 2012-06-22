@@ -21,8 +21,8 @@ def post_save_callback(sender, instance, **kwargs):
         try:
             feed_url = 'http://%s/%s/%s/' % (Site.objects.get_current(), 'feed', sender.__name__.lower())
             print "ping hub for %s " % feed_url
-            ping_hub(feed_url)
-            # q.enqueue(ping_hub, feed_url)
+            # ping_hub(feed_url)
+            q.enqueue(ping_hub, feed_url)
         except:
             pass
 
