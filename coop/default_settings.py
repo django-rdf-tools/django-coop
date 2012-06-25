@@ -164,9 +164,11 @@ INSTALLED_APPS = [
     'django_push.publisher',
     'uriredirect',
 
-
+    # Logging errors (needed until we go "stable")
+    'raven.contrib.django',
 
 ]
+
 
 
 from coop.settings import DEFAULT_RDF_NAMESPACES, NS_D2RQ, NS_LEGAL, NS_SKOS, NS_OV
