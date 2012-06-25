@@ -30,6 +30,9 @@ class UpdateFeed(Feed):
     def item_link(self, item):
         return item.uri
 
+    def item_guid(self, item):
+        return "%s_%s" % (item.uuid, item.modified)
+
     def item_pubdate(self, item):
         return datetime.datetime.now()
 
