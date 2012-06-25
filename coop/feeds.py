@@ -5,12 +5,12 @@ from django_push.publisher.feeds import Feed
 #from django.contrib.syndication.views import Feed
 from django.db.models.loading import get_model
 from django.contrib.contenttypes.models import ContentType
-
+import datetime
 
 
 class UpdateFeed(Feed):
     title = _(u"Updates for %s." % Site.objects.get_current().name)
-    link = "%s/feed/" % Site.objects.get_current().domain
+    link = "/feed/" 
     description = _(u"All records updates listed on the %s website." % Site.objects.get_current().name)
 
 
@@ -30,6 +30,11 @@ class UpdateFeed(Feed):
     def item_link(self, item):
         return item.uri
 
+    def item_guid(self, item):
+        return "%s_%s" % (item.uuid, item.modified)
+
+    def item_pubdate(self, item):
+        return datetime.datetime.now()
 
     def item_description(self, item):
         # return item.uri + 'sparql endpoint' + uriSparql
@@ -40,7 +45,7 @@ class UpdateFeed(Feed):
         self._model = kwargs['model']
         self._mType = ContentType.objects.get(model=self._model)
         self.title = _(u"Updates for %s on %s." % (self._model, Site.objects.get_current().name))
-        self.link = "%s/feed/%s/" % (Site.objects.get_current().domain, self._model)
+        self.link = "/feed/%s/" % self._model
         return None
 
 

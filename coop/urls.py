@@ -4,7 +4,6 @@ from django.conf.urls.defaults import patterns, include, url
 from django.views.generic.base import TemplateView, RedirectView
 from django.conf import settings
 from coop.feeds import UpdateFeed
-import coop.signals
 
 
 class TextPlainView(TemplateView):
