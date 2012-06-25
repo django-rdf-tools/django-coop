@@ -72,6 +72,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'coop.utils.middleware.CORSMiddleware',
     'pagination.middleware.PaginationMiddleware',
+    'raven.contrib.django.middleware.Sentry404CatchMiddleware',
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = [
