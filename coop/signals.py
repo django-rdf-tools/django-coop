@@ -8,9 +8,14 @@ from django_push.publisher import ping_hub
 from django.contrib.sites.models import Site
 
 
-from rq import Queue, use_connection
-use_connection()
-q = Queue()
+# from rq import Queue, use_connection
+# use_connection()
+# q = Queue()
+
+
+import django_rq
+redis_conn = django_rq.get_connection('high')
+q = django_rq.get_queue('high')
 
 
 # Listener tool
@@ -26,10 +31,7 @@ def post_save_callback(sender, instance, **kwargs):
         except:
             pass
 
-# request_finished.connect(post_save_callback)
-# request_started.connect(post_save_callback)
 
 
 
 
-#

@@ -135,6 +135,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'extended_choices',
     'floppyforms',
+    'django_rq',
     #'haystack',
     'oembed',
     'chosen',
@@ -162,6 +163,8 @@ INSTALLED_APPS = [
     'django_push.subscriber',
     'django_push.publisher',
     'uriredirect',
+
+
 
 ]
 
@@ -299,5 +302,26 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
+    }
+}
+
+
+
+# For RQ
+RQ_QUEUES = {
+    'default': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+    },
+    'high': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+    },
+    'low': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
     }
 }
