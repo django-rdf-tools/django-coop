@@ -36,13 +36,3 @@ if 'coop.exchange' in settings.INSTALLED_APPS:
         (r'^annonces/', include('coop.exchange.urls')),
     )
 
-
-def SentryHandler500(request):
-    from django.template import Context, loader
-    from django.http import HttpResponseServerError
-
-    t = loader.get_template('500.html')  # You need to create a 500.html template.
-    return HttpResponseServerError(t.render(Context({
-        'request': request,
-    })))
-
