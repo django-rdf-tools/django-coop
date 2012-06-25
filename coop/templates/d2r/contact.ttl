@@ -15,11 +15,11 @@
 
 map:contact a d2rq:ClassMap;
     d2rq:dataStorage map:database;
-    {% if mode == 'view' %}
+{% if mode == 'view' %}
     d2rq:uriPattern "contact/@@coop_local_contact.id@@/";
-    {% else %}
+{% else %}
     d2rq:uriColumn "coop_local_contact.uri";
-    {% endif %}
+{% endif %}
     d2rq:condition "coop_local_contact.content <> ''"
     .
 

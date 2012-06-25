@@ -1,11 +1,11 @@
 # Table coop_local_role
 map:role a d2rq:ClassMap;
     d2rq:dataStorage map:database;
-    {% if mode == 'view' %}
+{% if mode == 'view' %}
     d2rq:uriPattern "role/@@coop_local_role.slug@@";
-    {% else %}
+{% else %}
     d2rq:uriColumn "coop_local_role.uri";
-    {% endif %}
+{% endif %}
     d2rq:class org:Role;
     d2rq:classDefinitionLabel "coop_local_role";
     .
