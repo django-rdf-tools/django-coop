@@ -192,7 +192,7 @@ DJALOHA_LINK_MODELS = ('coop_local.Article', 'coop_local.Organization', 'coop_lo
 COOP_CMS_ARTICLE_CLASS = 'coop_local.models.Article'
 COOP_CMS_ARTICLE_FORM = 'coop.forms.ArticleForm'
 COOP_CMS_ARTICLE_LOGO_SIZE = '600'
-COOP_CMS_CONTENT_APPS = ('coop_local', 'coop_tag', 'coop_geo')
+COOP_CMS_CONTENT_APPS = ('coop_local', 'coop_tag', 'coop_geo', 'coop_cms')
 
 # COOP_CMS_ARTICLE_TEMPLATES = 'coop_local.get_article_templates' # marche plus ?
 
