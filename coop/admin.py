@@ -35,12 +35,12 @@ if "coop_cms" in settings.INSTALLED_APPS:
     from coop_cms.admin import NavTreeAdmin, ArticleAdmin
     from coop_cms.models import NavTree
     from coop_cms.settings import get_article_class
-    from coop_cms.forms import ArticleAdminForm   
+    from coop_cms.forms import ArticleAdminForm
 
     # -- We need to customize coop-cms NavtreeAdmin
 
     class MyNavTreeAdmin(NavTreeAdmin):
-        change_form_template = 'admin/navtree_change_form.html' 
+        change_form_template = 'admin/navtree_change_form.html'
 
     admin.site.unregister(NavTree)
     admin.site.register(NavTree, MyNavTreeAdmin)
@@ -53,22 +53,22 @@ if "coop_cms" in settings.INSTALLED_APPS:
 
     class CoopArticleAdmin(ArticleAdmin, AdminImageMixin):
         form = CoopArticleForm
-        change_form_template = 'admintools_bootstrap/tabbed_change_form.html' 
+        change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
         change_list_template = 'admin/article_change_list.html'
 
         list_display = ['logo_list_display', 'title', 'publication', 'headline', 'in_newsletter']
         list_editable = ['publication', 'in_newsletter', 'headline']
-        #list_display = ['logo_list_display', 'title', 'publication', 'section', 'modified', 'in_newsletter']
-        #list_editable = ['publication', 'in_newsletter', 'section']
+        #list_display = ['logo_list_display', 'title', 'publication', 'category', 'modified', 'in_newsletter']
+        #list_editable = ['publication', 'in_newsletter', 'category']
         list_display_links = ['title']
 
         readonly_fields = ['created', 'modified']
         fieldsets = (
             #(_('Navigation'), {'fields': ('navigation_parent',)}),
             ('Edition', {'fields': ('title', 'logo', 'content', 'template')}),
-            ('Options', {'fields': ('summary', 'section', 'is_homepage', 'in_newsletter')}),
+            ('Options', {'fields': ('summary', 'category', 'is_homepage', 'in_newsletter')}),
         )
-        
+
         def get_form(self, request, obj=None, **kwargs):
             form = super(ArticleAdmin, self).get_form(request, obj, **kwargs)
             form.current_user = request.user
@@ -86,13 +86,13 @@ if 'forms_builder.forms' in settings.INSTALLED_APPS:
     class MyFormAdmin(FormAdmin):
         change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
         fieldsets = [
-            (_("Settings"), {"fields": ( "title", 
+            (_("Settings"), {"fields": ( "title",
                                     #("status", "login_required",),
-                                    #("publish_date", "expiry_date",), 
+                                    #("publish_date", "expiry_date",),
                                      "intro", "button_text", "response")}),
             (_("Email"), {"fields": ("send_email", "email_from", "email_copies",
                                      "email_subject", "email_message")}),
-            ]       
+            ]
         list_display = ("title", "total_entries", "admin_links")
         list_display_links = ("title",)
         list_editable = []
@@ -152,7 +152,7 @@ if 'forms_builder.forms' in settings.INSTALLED_APPS:
 #                       (
 #                        self.object._meta.app_label,
 #                        self.object._meta.object_name.lower(),
-#                        self.object.pk, 
+#                        self.object.pk,
 #                        u'<b>Compléter la fiche détaillée</b>'
 #                        )
 #             )
@@ -170,8 +170,8 @@ if 'forms_builder.forms' in settings.INSTALLED_APPS:
 #         if self.object.pk and self.fkey and getattr(self.object, self.fkey) != None:
 #             return mark_safe(u'<a href="../../../%s/%s/%s/">%s</a>' % \
 #                 (self.object._meta.app_label,
-#                     getattr(self.object, self.fkey)._meta.object_name.lower(), 
-#                     getattr(self.object, self.fkey).pk, 
+#                     getattr(self.object, self.fkey)._meta.object_name.lower(),
+#                     getattr(self.object, self.fkey).pk,
 #                     u' '.join((u'Fiche', unicode(self.fkey)))  # TODO how to get the translated app name ?
 #                     )
 #             )
@@ -186,7 +186,7 @@ if 'forms_builder.forms' in settings.INSTALLED_APPS:
 
 #     def __init__(self, *args, **kwargs):
 #         super(ExchangeInlineLinkForm, self).__init__(*args, **kwargs)
-#         self.fields['lien'].widget = SimpleLinkWidget(self.instance)        
+#         self.fields['lien'].widget = SimpleLinkWidget(self.instance)
 
 
 # class ContactInlineLinkForm(forms.ModelForm):
@@ -217,7 +217,7 @@ if 'forms_builder.forms' in settings.INSTALLED_APPS:
 
 
 
- 
+
 
 # # from django.contrib.admin.filterspecs import FilterSpec, RelatedFilterSpec
 # # from django.contrib.admin.util import get_model_from_relation
@@ -260,11 +260,11 @@ if 'forms_builder.forms' in settings.INSTALLED_APPS:
 # #             # through_opts = f.through._meta
 # #             # count_field = ("%s_%s_items" % (through_opts.app_label,
 # #             #         through_opts.object_name)).lower()
-            
+
 # #             queryset = getattr(f.model, f.name).all()
 # #             queryset = queryset.annotate(num_times=Count('ctagged_items'))
 # #             queryset = queryset.order_by("-num_times")
-# #             self.lookup_choices = [(t.pk, "%s (%s)" % (t.name, t.num_times)) 
+# #             self.lookup_choices = [(t.pk, "%s (%s)" % (t.name, t.num_times))
 # #                     for t in queryset[:20]]
 
 
