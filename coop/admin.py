@@ -50,7 +50,6 @@ if "coop_cms" in settings.INSTALLED_APPS:
     class CoopArticleForm(ArticleAdminForm):
         content = forms.CharField(widget=AdminTinyMCE(attrs={'cols': 80, 'rows': 60}), required=False)
 
-
     class CoopArticleAdmin(ArticleAdmin, AdminImageMixin):
         form = CoopArticleForm
         change_form_template = 'admintools_bootstrap/tabbed_change_form.html'

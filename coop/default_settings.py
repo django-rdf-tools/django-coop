@@ -187,12 +187,21 @@ TINYMCE_DEFAULT_CONFIG = {
     'theme_advanced_buttons2': '', 'theme_advanced_buttons3': ''
     }
 
-
-DJALOHA_LINK_MODELS = ('coop_local.Article', 'coop_local.Organization', 'coop_local.OrganizationCategory')
 COOP_CMS_ARTICLE_CLASS = 'coop_local.models.Article'
 COOP_CMS_ARTICLE_FORM = 'coop.forms.ArticleForm'
 COOP_CMS_ARTICLE_LOGO_SIZE = '600'
+
+# You need to declare the app here to be able to select models from navigable types in coop-cms
 COOP_CMS_CONTENT_APPS = ('coop_local', 'coop_tag', 'coop_geo', 'coop_cms')
+
+DJALOHA_LINK_MODELS = (
+        'coop_local.Article',
+        'coop_cms.ArticleCategory',
+        'coop_local.Organization',
+        'coop_local.OrganizationCategory'
+        )
+
+
 
 # COOP_CMS_ARTICLE_TEMPLATES = 'coop_local.get_article_templates' # marche plus ?
 
