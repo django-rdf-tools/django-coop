@@ -46,12 +46,14 @@ class CustomIndexDashboard(Dashboard):
             _(u"Navigation and articles"),
             models=('coop_cms.models.NavTree',
                     'coop_local.models.Article',
+                    'coop_cms.models.ArticleCategory',
                     #'coop_cms.rss_sync.models.RssItem',
                     'django.contrib.comments.Comment',
+                    'forms_builder.forms.models.Form',
                     ),
             template='admin_tools/coop_applist.html'
         ))
-        
+
         if 'coop_agenda' in settings.INSTALLED_APPS:
             self.children.append(modules.AppList(
                 _(u"Agenda"),
@@ -71,7 +73,7 @@ class CustomIndexDashboard(Dashboard):
                     ),
             template='admin_tools/coop_applist.html',
         ))
-        
+
 
         # append an app list module for "Administration"
         self.children.append(modules.AppList(

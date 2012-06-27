@@ -55,9 +55,10 @@ if "coop_cms" in settings.INSTALLED_APPS:
         form = CoopArticleForm
         change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
         change_list_template = 'admin/article_change_list.html'
+        list_filter = ['category']
 
-        list_display = ['logo_list_display', 'title', 'publication', 'headline', 'in_newsletter']
-        list_editable = ['publication', 'in_newsletter', 'headline']
+        list_display = ['logo_list_display', 'title', 'publication', 'headline', 'in_newsletter', 'category']
+        list_editable = ['publication', 'in_newsletter', 'headline', 'category']
         #list_display = ['logo_list_display', 'title', 'publication', 'category', 'modified', 'in_newsletter']
         #list_editable = ['publication', 'in_newsletter', 'category']
         list_display_links = ['title']

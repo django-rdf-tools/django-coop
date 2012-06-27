@@ -67,8 +67,7 @@ class BaseContact(URIModel):
             return self.content
 
     def label(self):
-        return _(u'Contact number %s' % self.id)
-
+        return self.__unicode__()
 
     def clean(self):
         if self.category in [1, 2, 3]:
@@ -87,7 +86,6 @@ class BaseContact(URIModel):
         super(BaseContact, self).save(*args, **kwargs)
 
 
-
 class BaseRole(URIModel):
     label = models.CharField(_(u'label'), max_length=60)
     slug = exfields.AutoSlugField(populate_from=('label'), overwrite=True)
@@ -97,7 +95,6 @@ class BaseRole(URIModel):
     @property
     def uri_id(self):
         return self.slug
-
 
     class Meta:
         abstract = True
@@ -154,10 +151,14 @@ class BaseEngagement(URIModel):
         verbose_name_plural = _('Engagements')
 
     def __unicode__(self):
-        return self.person.__unicode__()
+        return _(u'%(person), %(role) at %(org)' % {
+                    'person': self.person.__unicode__(),
+                    'role': self.role.__unicode__(),
+                    'org': self.organization.__unicode__()
+                    })
 
     def label(self):
-        return _(u'Engagement number %s' % self.id)
+        return self.__unicode__()
 
 
 class BaseOrganizationCategory(models.Model):
