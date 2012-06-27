@@ -138,7 +138,7 @@ INSTALLED_APPS = [
     'floppyforms',
     'django_rq',
     #'haystack',
-    'oembed',
+    #'oembed',
     'chosen',
     'sorl.thumbnail',
     'tinymce',
