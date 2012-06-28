@@ -151,11 +151,11 @@ class BaseEngagement(URIModel):
         verbose_name_plural = _('Engagements')
 
     def __unicode__(self):
-        return _(u'%(person), %(role) at %(org)' % {
+        return '%(person)s, %(role)s @ %(org)s' % {
                     'person': self.person.__unicode__(),
                     'role': self.role.__unicode__(),
                     'org': self.organization.__unicode__()
-                    })
+                    }
 
     def label(self):
         return self.__unicode__()
