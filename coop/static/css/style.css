@@ -117,6 +117,12 @@ h4 {
 	margin: 20px;
 }
 
+.the-logo{
+	float: left;
+	margin-bottom: 10px;
+	margin-right: 10px;
+}
+
 nav {
 	position: relative;
 }
