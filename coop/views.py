@@ -69,5 +69,6 @@ def SentryHandler500(request):
     t = loader.get_template('500.html')  # You need to create a 500.html template.
     return HttpResponseServerError(t.render(Context({
         'request': request,
+        'STATIC_URL': settings.STATIC_URL,
     })))
 
