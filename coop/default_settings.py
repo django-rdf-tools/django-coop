@@ -352,15 +352,15 @@ LOGGING = {
             'handlers': ['console'],
             'propagate': False,
         },
-        'subhub.maintenance': {
-            'handlers': ['file_subhub'],
-            'level': 'DEBUG'
-        },
-        'subhub.distribution.process': {
-            'handlers': ['file_subhub'],
-            'level': 'DEBUG'
+        # 'subhub.maintenance': {
+        #     'handlers': ['file_subhub'],
+        #     'level': 'DEBUG'
+        # },
+        # 'subhub.distribution.process': {
+        #     'handlers': ['file_subhub'],
+        #     'level': 'DEBUG'
 
-        },
+        # },
         'raven': {
             'level': 'DEBUG',
             'handlers': ['console'],
