@@ -8,6 +8,7 @@ import shortuuid
 from rdflib import Graph, plugin, store, Literal, URIRef
 from django.db import IntegrityError
 from django.template import Template, Context
+from urlparse import urlsplit
 import feedparser
 import os
 import tempfile
@@ -114,8 +115,8 @@ class StaticURIModel(models.Model):
             if not self.uri or self.uri == '':
                 self.uri = self.init_uri()
             else:
-                without_scheme = str(self.uri[7:])  # forget 'http://'
-                sp = without_scheme.split('/')
+                scheme, host, path, query, fragment = urlsplit(self.uri)
+                sp = path.split('/')
                 try:
                     assert(sp[1] == 'id')  # to assert a minimal coherence...
                 except AssertionError:
@@ -123,7 +124,7 @@ class StaticURIModel(models.Model):
                 if sp[3] != self.uri_id:
                     self.uri = self.init_uri()  # uri_id est pas pareil
                 else:
-                    if sp[0] != self.domain_name:
+                    if host != self.domain_name:
                         self.uri = self.init_uri()
                     else:
                         if  sp[2] != self.uri_registry():
@@ -274,9 +275,7 @@ def checkDirectMap(dbfieldName, d2rqGraph):
         return prop[0]
 
 
-
-
-#It seems to be the best place to do the connection
+# It seems to be the best place to do the connection
 # see http://stackoverflow.com/questions/7115097/the-right-place-to-keep-my-signals-py-files-in-django
 from django.core.signals import  request_finished
 from coop.signals import post_save_callback

@@ -20,7 +20,9 @@ DEFAULT_CHARSET = 'utf-8'
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 
-PUSH_HUB = 'http://quinode.superfeedr.com'
+# Not used: to set this variable here, weneed to import Site
+PUSH_HUB = ''
+
 USE_TZ = False
 
 # Upload directory
@@ -136,6 +138,7 @@ INSTALLED_APPS = [
     'extended_choices',
     'floppyforms',
     'django_rq',
+    'subhub',
     #'haystack',
     'oembed',
     'chosen',
@@ -160,8 +163,7 @@ INSTALLED_APPS = [
     'taggit_autosuggest',
 
     # PUSH
-    'django_push.subscriber',
-    'django_push.publisher',
+    # 'django_push.subscriber',
     'uriredirect',
 
 
@@ -294,7 +296,13 @@ LOGGING = {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'file_subhub': {  # define and name a handler
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',  # set the logging class to log to a file
+            'filename': os.path.abspath(PROJECT_PATH + '/logs/subhub.log')  # log file
         }
+
     },
     'loggers': {
         'django.request': {
@@ -302,6 +310,15 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
+        'subhub.maintenance': {
+            'handlers': ['file_subhub'],
+            'level': 'DEBUG'
+        },
+        'subhub.distribution.process': {
+            'handlers': ['file_subhub'],
+            'level': 'DEBUG'
+
+        }
     }
 }
 

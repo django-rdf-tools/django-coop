@@ -2,7 +2,6 @@
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.sites.models import Site
 from django_push.publisher.feeds import Feed
-#from django.contrib.syndication.views import Feed
 from django.db.models.loading import get_model
 from django.contrib.contenttypes.models import ContentType
 import datetime
@@ -12,6 +11,7 @@ class UpdateFeed(Feed):
     title = _(u"Updates for %s." % Site.objects.get_current().name)
     link = "/feed/" 
     description = _(u"All records updates listed on the %s website." % Site.objects.get_current().name)
+    hub = "http://%s/hub/" % Site.objects.get_current()
 
 
     def items(self):
