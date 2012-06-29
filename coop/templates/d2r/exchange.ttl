@@ -2,7 +2,11 @@
 # Table coop_local_exchange
 map:exchange a d2rq:ClassMap;
 	d2rq:dataStorage map:database;
-	d2rq:uriColumn "coop_local_exchange.uri";
+{% if mode == 'view' %}
+    d2rq:uriPattern "annonces/@@coop_local_exchange.slug@@/";
+{% else %}
+    d2rq:uriColumn "coop_local_exchange.uri";
+{% endif %}
 	d2rq:class ess:Exchange;
 	.
 map:exchange_label a d2rq:PropertyBridge;

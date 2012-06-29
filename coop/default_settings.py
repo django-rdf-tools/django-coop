@@ -67,13 +67,14 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     #'django.middleware.cache.FetchFromCacheMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware', 
-    'django.contrib.auth.middleware.AuthenticationMiddleware', 
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django_webid.auth.middleware.WEBIDAuthMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'coop.utils.middleware.CORSMiddleware',
     'pagination.middleware.PaginationMiddleware',
+    'raven.contrib.django.middleware.Sentry404CatchMiddleware',
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = [
@@ -83,13 +84,13 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     'django.core.context_processors.request',
     'django.core.context_processors.media',
     'django.core.context_processors.static',
-    'django.core.context_processors.tz', 
+    'django.core.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
     'coop.context_processors.current_site',
     'coop.context_processors.d2rq_settings',
 ]
 
-ROOT_URLCONF = 'coop_local.urls'  
+ROOT_URLCONF = 'coop_local.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'coop_local.wsgi.application'
@@ -140,7 +141,7 @@ INSTALLED_APPS = [
     'django_rq',
     'subhub',
     #'haystack',
-    'oembed',
+    #'oembed',
     'chosen',
     'sorl.thumbnail',
     'tinymce',
@@ -151,11 +152,11 @@ INSTALLED_APPS = [
     'colorbox',
     'coop_bar',
     'pagination',
-    
+
     # WebID
     'django_webid.provider',
     'django_webid.auth',
-    
+
     # tags
     'coop_tag',
     'taggit',
@@ -166,9 +167,11 @@ INSTALLED_APPS = [
     # 'django_push.subscriber',
     'uriredirect',
 
-
+    # Logging errors (needed until we go "stable")
+    'raven.contrib.django',
 
 ]
+
 
 
 from coop.settings import DEFAULT_RDF_NAMESPACES, NS_D2RQ, NS_LEGAL, NS_SKOS, NS_OV
@@ -178,7 +181,7 @@ RDF_NAMESPACES = DEFAULT_RDF_NAMESPACES
 THUMBNAIL_FORMAT = 'PNG'
 
 TINYMCE_DEFAULT_CONFIG = {
-    'theme': "advanced", 
+    'theme': "advanced",
     'relative_urls': False,
     'width': '617px', 'height': '220px',
     'theme_advanced_toolbar_location': 'top',
@@ -186,12 +189,21 @@ TINYMCE_DEFAULT_CONFIG = {
     'theme_advanced_buttons2': '', 'theme_advanced_buttons3': ''
     }
 
-
-DJALOHA_LINK_MODELS = ('coop_local.Article', 'coop_local.Organization', 'coop_local.OrganizationCategory')
 COOP_CMS_ARTICLE_CLASS = 'coop_local.models.Article'
 COOP_CMS_ARTICLE_FORM = 'coop.forms.ArticleForm'
 COOP_CMS_ARTICLE_LOGO_SIZE = '600'
-COOP_CMS_CONTENT_APPS = ('coop_local', 'coop_tag', 'coop_geo')
+
+# You need to declare the app here to be able to select models from navigable types in coop-cms
+COOP_CMS_CONTENT_APPS = ('coop_local', 'coop_tag', 'coop_geo', 'coop_cms')
+
+DJALOHA_LINK_MODELS = (
+        'coop_local.Article',
+        'coop_cms.ArticleCategory',
+        'coop_local.Organization',
+        'coop_local.OrganizationCategory'
+        )
+
+
 
 # COOP_CMS_ARTICLE_TEMPLATES = 'coop_local.get_article_templates' # marche plus ?
 
@@ -201,7 +213,7 @@ COOP_CMS_ARTICLE_TEMPLATES = [
 ]
 
 COOPBAR_MODULES = [
-    'coop_cms.coop_bar_cfg', 
+    'coop_cms.coop_bar_cfg',
     'coop.coop_bar_cfg'
     ]
 
@@ -240,7 +252,7 @@ TAGGIT_TAG_FIELD_RELATED_NAME = 'ctagged_items'
 
 
 TAGGIT_AUTOCOMPLETE_TAG_MODEL = 'coop_tag.Ctag'
-# DEFAULT_TAGGIT_AUTOCOMPLETE_MEDIA_URL = 
+# DEFAULT_TAGGIT_AUTOCOMPLETE_MEDIA_URL =
 
 
 TAGGIT_AUTOSUGGEST_MODEL = ('coop_tag', 'Ctag')
@@ -278,37 +290,61 @@ WEBIDPROVIDER_SKIP_PROFILE_INIT = True
 #    return custom_webid_uri(webiduser)
 #WEBIDPROVIDER_WEBIDURI_CALLBACK = webidcb
 
-# A sample logging configuration. The only tangible logging
-# performed by this configuration is to send an email to
-# the site admins on every HTTP 500 error when DEBUG=False.
-# See http://docs.djangoproject.com/en/dev/topics/logging for
-# more details on how to customize your logging configuration.
+
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'filters': {
+#         'require_debug_false': {
+#             '()': 'django.utils.log.RequireDebugFalse'
+#         }
+#     },
+#     'handlers': {
+#         'mail_admins': {
+#             'level': 'ERROR',
+#             'filters': ['require_debug_false'],
+#             'class': 'django.utils.log.AdminEmailHandler'
+#         }
+#     },
+#     'loggers': {
+#         'django.request': {
+#             'handlers': ['mail_admins'],
+#             'level': 'ERROR',
+#             'propagate': True,
+#         },
+#     }
+# }
+
+
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
+    'disable_existing_loggers': True,
+    'root': {
+        'level': 'WARNING',
+        'handlers': ['sentry'],
+    },
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
     },
     'handlers': {
-        'mail_admins': {
+        'sentry': {
             'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
-        },
-        'file_subhub': {  # define and name a handler
+       },
+        'console': {
             'level': 'DEBUG',
-            'class': 'logging.FileHandler',  # set the logging class to log to a file
-            'filename': os.path.abspath(PROJECT_PATH + '/logs/subhub.log')  # log file
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
         }
 
     },
     'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
+        'django.db.backends': {
             'level': 'ERROR',
-            'propagate': True,
+            'handlers': ['console'],
+            'propagate': False,
         },
         'subhub.maintenance': {
             'handlers': ['file_subhub'],
@@ -318,8 +354,19 @@ LOGGING = {
             'handlers': ['file_subhub'],
             'level': 'DEBUG'
 
-        }
-    }
+        },
+        'raven': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+        'sentry.errors': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+    },
+
 }
 
 

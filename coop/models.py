@@ -37,7 +37,7 @@ plugin.register('json-ld', plugin.Serializer,
         'rdflib_jsonld.jsonld_serializer', 'JsonLDSerializer')
 
 
-class UptadedModel(models.Model):
+class TimestampedModel(models.Model):
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
 
@@ -54,7 +54,7 @@ class StaticURIModel(models.Model):
     def uri_id(self):
         return self.username # example with username
 
-    uri_registry = 'org'    
+    uri_registry = 'org'
 
     the uri_fragment can then be overriden in a real model derived from your abstract model
 
@@ -68,16 +68,16 @@ class StaticURIModel(models.Model):
 
     # Le code suivante ne marche pas avec south et pourtant il correxpond exactement à ce que je voudrais
     # faire. Si on supprime unique=True, alors la migration se passe bien, mais toutes les
-    # du model ont la meme valeur.... Et bien sur, si on met uniaue=True, south rale car 
+    # du model ont la meme valeur.... Et bien sur, si on met uniaue=True, south rale car
     # le champs n'est pas unique.
     # South n'a pas l'air capable de traiter ce cas.
     # D'apres la doc, il est possible de le faire en 3 fois, sans utiliser le default, avec
     # un datamigration (voir la doc Part 3: Advanced Commands and Data Migrations)
-    #uuid = models.CharField(_(u'uuid'), max_length=50, default=shortuuid.uuid, unique=True) 
+    #uuid = models.CharField(_(u'uuid'), max_length=50, default=shortuuid.uuid, unique=True)
 
-    # La version simple c'est de passer par le save() et de supprimer le default.... c'est pas 
+    # La version simple c'est de passer par le save() et de supprimer le default.... c'est pas
     # tres beau, car un plus couteux en runtime... mais bon
-    uuid = models.CharField(_(u'uuid'), max_length=50, unique=True, null=True, default=shortuuid.uuid, editable=False) 
+    uuid = models.CharField(_(u'uuid'), max_length=50, unique=True, null=True, default=shortuuid.uuid, editable=False)
 
     # the default value, this attribut should be overloaded
     domain_name = settings.DEFAULT_URI_DOMAIN
@@ -138,7 +138,7 @@ class StaticURIModel(models.Model):
            format correspond to the standard rdflib format keyword,
                'n3' for n3
                'xml' for xml
-               'json-ld' for json-ld 
+               'json-ld' for json-ld
         """
         # Sparq endPoint
         uriSparql = 'http://localhost:8080/' + settings.PROJECT_NAME + '/sparql'
@@ -147,7 +147,7 @@ class StaticURIModel(models.Model):
         graph.store.baseURI = str(uriSparql)
 
         # The short form of the construct where see 16.2.4 CONSTRUCT WHERE http://www.w3.org/TR/sparql11-query/#constructWhere
-        cquery = "construct where { <%s> ?p ?o .} " 
+        cquery = "construct where { <%s> ?p ?o .} "
         res = graph.query(cquery % self.uri)
         filename = "/tmp/%stmp.rdf" % self.uuid
         tmpfile = open(filename, "w")
@@ -196,7 +196,7 @@ class StaticURIModel(models.Model):
 
 
     @classmethod
-    def updateFromFeeds(cls):    
+    def updateFromFeeds(cls):
         print "Update feed for class name %s" % cls.__name__
         feed_url = settings.PES_HOST + 'feed/' + cls.__name__.lower() + '/'
         parsedFeed = feedparser.parse(feed_url)
@@ -251,7 +251,7 @@ class StaticURIModel(models.Model):
 
 
 
-class URIModel(StaticURIModel, UptadedModel):
+class URIModel(StaticURIModel, TimestampedModel):
     class Meta:
         abstract = True
 

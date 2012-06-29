@@ -15,7 +15,7 @@ if('coop.exchange' in settings.INSTALLED_APPS):
 
 def home(request):
     rdict = {}
-    rdict['dernieres_initiatives'] = Organization.objects.filter(active=True)[:10]    
+    rdict['dernieres_initiatives'] = Organization.objects.filter(active=True)[:10]
     if('coop.exchange' in settings.INSTALLED_APPS):
         rdict['dernieres_annonces'] = Exchange.objects.all()[:10]
     return render_to_response('home.html', rdict, RequestContext(request))
@@ -37,7 +37,7 @@ def d2r_mapping(request, mode):
         rdict['d2rq_db_port'] = db['PORT'] if db['PORT'] != '' else 5432
         rdict['d2rq_db_host'] = db['HOST'] if db['HOST'] != '' else 'localhost'
     else:
-        raise Http404    
+        raise Http404
     return render_to_response('d2r/mapping.ttl', rdict, RequestContext(request))
 
 
@@ -49,8 +49,8 @@ urimodels = dict((m.__name__.lower(), m.__module__.split('.')[0]) for m in model
 
 RDF_SERIALIZATIONS = {
     'nt': 'text/plain',
-    'n3': 'text/n3', 
-    'ttl': 'text/turtle', 
+    'n3': 'text/n3',
+    'ttl': 'text/turtle',
     'xml': 'application/rdf+xml',
     'json': 'application/json'
 }
@@ -58,7 +58,17 @@ RDF_SERIALIZATIONS = {
 
 def get_rdf(request, model, uuid, format):
     req_model = get_model(urimodels[model], model)
-    object = get_object_or_404(req_model, uuid=uuid)  
+    object = get_object_or_404(req_model, uuid=uuid)
     return HttpResponse(object.toRdf(format), mimetype=RDF_SERIALIZATIONS[format])
 
+
+def SentryHandler500(request):
+    from django.template import Context, loader
+    from django.http import HttpResponseServerError
+
+    t = loader.get_template('500.html')  # You need to create a 500.html template.
+    return HttpResponseServerError(t.render(Context({
+        'request': request,
+        'STATIC_URL': settings.STATIC_URL,
+    })))
 

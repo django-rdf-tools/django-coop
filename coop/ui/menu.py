@@ -24,12 +24,12 @@ class CustomMenu(Menu):
             items.AppList(
             _(u'Database'),
                 models=('coop_local.*','coop_geo.*','coop_tag.*')
-                #exclude=('django.contrib.*', 'oembed.*', 'taggit.*', 'coop_cms.*')
+                #exclude=('django.contrib.*', 'taggit.*', 'coop_cms.*')
             ),
             items.AppList(
             _(u'Site'),
-                models=('coop_cms.*', 'oembed.*',)
-                #exclude=('django.contrib.*', 'oembed.*', 'taggit.*', 'coop_cms.*')
+                models=('coop_cms.*', )
+                #exclude=('django.contrib.*',  'taggit.*', 'coop_cms.*')
             ),
             items.AppList(
             _(u'RDF'),

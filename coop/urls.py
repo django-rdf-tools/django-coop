@@ -36,3 +36,4 @@ if 'coop.exchange' in settings.INSTALLED_APPS:
     urlpatterns = urlpatterns + patterns('',
         (r'^annonces/', include('coop.exchange.urls')),
     )
+

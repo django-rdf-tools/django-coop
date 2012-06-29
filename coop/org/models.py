@@ -12,7 +12,8 @@ from coop.models import URIModel
 from sorl.thumbnail import ImageField
 from sorl.thumbnail import default
 import rdflib
-ADMIN_THUMBS_SIZE = '60x60' 
+import logging
+ADMIN_THUMBS_SIZE = '60x60'
 
 
 DISPLAY = Choices(
@@ -41,13 +42,13 @@ COMM_MEANS = Choices(
 
 
 # A model to deal with how contact (an organization, persone,...)
-# mail,fax, ... see COMM_MEANS 
+# mail,fax, ... see COMM_MEANS
 class BaseContact(URIModel):
-    category = models.PositiveSmallIntegerField(_(u'Category'), 
+    category = models.PositiveSmallIntegerField(_(u'Category'),
                     choices=COMM_MEANS.CHOICES)
     content = models.CharField(_(u'content'), max_length=250)
     details = models.CharField(_(u'details'), blank=True, max_length=100)
-    display = models.PositiveSmallIntegerField(_(u'Display'), 
+    display = models.PositiveSmallIntegerField(_(u'Display'),
                     choices=DISPLAY.CHOICES, default=DISPLAY.PUBLIC)
     content_type = models.ForeignKey(ContentType, blank=True, null=True)
     object_id = models.PositiveIntegerField()
@@ -62,17 +63,16 @@ class BaseContact(URIModel):
     def __unicode__(self):
         if self.content_object != None:
             return self.content + u' (' + self.content_object.__unicode__() + u')'
-        else:    
+        else:
             return self.content
 
     def label(self):
-        return _(u'Contact number %s' % self.id)
-
+        return self.__unicode__()
 
     def clean(self):
         if self.category in [1, 2, 3]:
             import re
-            phoneSplitRegex = re.compile(r"[\-\(\) \.\,]")         
+            phoneSplitRegex = re.compile(r"[\-\(\) \.\,]")
             parts = phoneSplitRegex.split(self.content)
             num = ''.join(parts)
             if len(num) == 10:
@@ -82,7 +82,8 @@ class BaseContact(URIModel):
 
     def save(self, *args, **kwargs):
         self.clean()
-        super(BaseContact, self).save(*args, **kwargs) 
+        #logging.error(u'A contact has been created or modified', exc_info=True, extra={'request': request})
+        super(BaseContact, self).save(*args, **kwargs)
 
 
 class BaseRole(URIModel):
@@ -94,7 +95,6 @@ class BaseRole(URIModel):
     @property
     def uri_id(self):
         return self.slug
-
 
     class Meta:
         abstract = True
@@ -127,7 +127,7 @@ class BaseRelation(models.Model):
     class Meta:
         abstract = True
 
-    def __unicode__(self):    
+    def __unicode__(self):
         return u'"' + self.source.__unicode__() + u'"' + \
             unicode(RELATIONS.CHOICES_DICT[self.reltype]) + \
             u'"' + self.target.__unicode__() + u'".'
@@ -138,8 +138,8 @@ class BaseRelation(models.Model):
 
 
 class BaseEngagement(URIModel):
-    person = models.ForeignKey('coop_local.Person', verbose_name=_(u'person'), related_name='engagements') 
-    organization = models.ForeignKey('coop_local.Organization', verbose_name=_(u'organization')) 
+    person = models.ForeignKey('coop_local.Person', verbose_name=_(u'person'), related_name='engagements')
+    organization = models.ForeignKey('coop_local.Organization', verbose_name=_(u'organization'))
     role = models.ForeignKey('coop_local.Role', verbose_name=_(u'role'))
     role_detail = models.CharField(_(u'detailed role'), blank=True, max_length=100)
     org_admin = models.BooleanField(_(u'has editor rights'), default=True)
@@ -151,10 +151,14 @@ class BaseEngagement(URIModel):
         verbose_name_plural = _('Engagements')
 
     def __unicode__(self):
-        return self.person.__unicode__()
+        return '%(person)s, %(role)s @ %(org)s' % {
+                    'person': self.person.__unicode__(),
+                    'role': self.role.__unicode__(),
+                    'org': self.organization.__unicode__()
+                    }
 
     def label(self):
-        return _(u'Engagement number %s' % self.id)
+        return self.__unicode__()
 
 
 class BaseOrganizationCategory(models.Model):
@@ -185,10 +189,10 @@ class BaseOrganization(URIModel):
     title = models.CharField(_(u'title'), max_length=250)
 
     acronym = models.CharField(_(u'acronym'), max_length=20, blank=True, null=True)
-    pref_label = models.PositiveSmallIntegerField(_(u'Preferred label'), 
+    pref_label = models.PositiveSmallIntegerField(_(u'Preferred label'),
                         choices=PREFLABEL.CHOICES, default=PREFLABEL.TITLE)
 
-    subtitle = models.CharField(_(u'tagline'), blank=True, null=True, 
+    subtitle = models.CharField(_(u'tagline'), blank=True, null=True,
                 max_length=250,
                 help_text=_(u'tell us what your organization do in one line.'))
 
@@ -196,14 +200,14 @@ class BaseOrganization(URIModel):
 
     logo = ImageField(upload_to='logos/', null=True, blank=True)
 
-    relations = models.ManyToManyField('coop_local.Organization', 
-                symmetrical=False, through='coop_local.Relation', 
+    relations = models.ManyToManyField('coop_local.Organization',
+                symmetrical=False, through='coop_local.Relation',
                 verbose_name=_(u'relations'))
 
-    category = models.ManyToManyField('coop_local.OrganizationCategory', 
+    category = models.ManyToManyField('coop_local.OrganizationCategory',
                 blank=True, null=True, verbose_name=_(u'category'))
 
-    members = models.ManyToManyField('coop_local.Person', 
+    members = models.ManyToManyField('coop_local.Person',
                 through='coop_local.Engagement', verbose_name=_(u'members'))
 
     contacts = generic.GenericRelation('coop_local.Contact')
@@ -216,18 +220,18 @@ class BaseOrganization(URIModel):
 
     birth = models.DateField(_(u'creation date'), null=True, blank=True)
     email = models.EmailField(_(u'global email'), blank=True, null=True)
-    email_sha1 = models.CharField(_(u'email checksum'), 
+    email_sha1 = models.CharField(_(u'email checksum'),
             max_length=250, blank=True, null=True)  # TODO : do this in Postgre
     web = models.URLField(_(u'web site'), blank=True, null=True)
 
-    pref_email = models.ForeignKey('coop_local.Contact', 
-                verbose_name=_(u'preferred email'), 
+    pref_email = models.ForeignKey('coop_local.Contact',
+                verbose_name=_(u'preferred email'),
                 related_name="pref_email", null=True, blank=True)
-    pref_phone = models.ForeignKey('coop_local.Contact', 
-                verbose_name=_(u'preferred phone'), 
+    pref_phone = models.ForeignKey('coop_local.Contact',
+                verbose_name=_(u'preferred phone'),
                 related_name='pref_phone', null=True, blank=True)
-    pref_address = models.ForeignKey('coop_geo.Location', 
-                verbose_name=_(u'preferred postal address'), 
+    pref_address = models.ForeignKey('coop_geo.Location',
+                verbose_name=_(u'preferred postal address'),
                 related_name='pref_adress', null=True, blank=True)
 
     slug = exfields.AutoSlugField(populate_from='title', blank=True, overwrite=True)
@@ -256,7 +260,7 @@ class BaseOrganization(URIModel):
 
         def has_location(self):
             return self.located.all().count() > 0
-        has_location.boolean = True    
+        has_location.boolean = True
         has_location.short_description = _(u'geo')
 
         def locations(self):
@@ -269,7 +273,7 @@ class BaseOrganization(URIModel):
 
     def has_description(self):
         return self.description != None and len(self.description) > 20
-    has_description.boolean = True    
+    has_description.boolean = True
     has_description.short_description = _(u'desc.')
 
     def logo_list_display(self):
@@ -277,9 +281,9 @@ class BaseOrganization(URIModel):
             thumb = default.backend.get_thumbnail(self.logo.file, ADMIN_THUMBS_SIZE)
             return '<img width="%s" src="%s" />' % (thumb.width, thumb.url)
         else:
-            return _(u"No Image") 
+            return _(u"No Image")
     logo_list_display.short_description = _(u"logo")
-    logo_list_display.allow_tags = True   
+    logo_list_display.allow_tags = True
 
     #@models.permalink
     def get_absolute_url(self):
@@ -328,12 +332,12 @@ class BaseOrganization(URIModel):
 
         # TODO move this to Contact model or do it in SQL
 
-        # if self.email and self.email != '': 
+        # if self.email and self.email != '':
         #     import hashlib
         #     m = hashlib.sha1()
         #     m.update(self.email)
         #     self.email_sha1 = m.hexdigest()
-        super(BaseOrganization, self).save(*args, **kwargs)  
+        super(BaseOrganization, self).save(*args, **kwargs)
 
 
     # title field needs a special handling. checkDirectMap does not work
@@ -357,20 +361,20 @@ class BaseOrganization(URIModel):
 
     def updateField_pref_label(self, dbfieldname, graph):
         prefLabel = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS_SKOS.prefLabel))
-        if len(prefLabel) == 1: 
+        if len(prefLabel) == 1:
             legalName = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS_LEGAL.legalName))
             if len(legalName) == 1:
                 if prefLabel[0] == legalName[0]:
                     self.pref_label = PREFLABEL.TITLE
                     print "For id %s update the field %s" % (self.id, dbfieldname)
- 
+
             else:
                 acronym = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS_OV.acronym))
                 if len(acronym) == 1:
                     if prefLabel[0] == acronym[0]:
                         self.pref_label = PREFLABEL.ACRO
                         print "For id %s update the field %s" % (self.id, dbfieldname)
- 
+
                     else:
                         print "    The field %s cannot be updated." % dbfieldname
                 else:

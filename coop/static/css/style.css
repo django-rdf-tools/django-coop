@@ -1,4 +1,7 @@
-/* @override http://localhost:8000/static/css/style.css */
+/* @override 
+	http://localhost:8000/static/css/style.css
+	http://www.extramarche.net/static/css/style.css
+*/
 
 body {
 	background-color: #f3ece6;
@@ -72,7 +75,10 @@ header h1 a:active {
 
 h2 {
 	font-size: 2.7em;
+	margin-bottom: 20px;
 }
+
+
 
 h3 {
 	font-size: 2.3em;
@@ -105,6 +111,16 @@ h4 {
 #content {
 	font-size: 1.1em;
 	position: relative;
+}
+
+.article{
+	margin: 20px;
+}
+
+.the-logo{
+	float: left;
+	margin-bottom: 10px;
+	margin-right: 10px;
 }
 
 nav {
@@ -255,7 +271,7 @@ Laisser tranquille , surclasser ailleurs
 	background-color: #f5524a;
 	border: 1px solid #bc717f;
 	width: 100%;
-	height: 3.2em;
+	height: 2.8em;
 	background-color: #f7797c;
 	border-right-style: none;
 	border-left-style: none;
@@ -267,7 +283,7 @@ Laisser tranquille , surclasser ailleurs
 	color: #feffff;
 	padding-left: 0.5em;
 	font-weight: bold;
-	font-size: 1.6em;
+	font-size: 1.4em;
 }
 
 #nav, #nav ul {
@@ -291,11 +307,11 @@ Laisser tranquille , surclasser ailleurs
 }
 
 #nav ul > li a {
-	font-size: 1.2em;
+	font-size: 1em;
 }
 
 #nav ul ul > li a {
-	font-size: 1.1em;
+	font-size: 0.9em;
 }
 
 #nav li ul li:hover {
