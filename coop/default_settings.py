@@ -339,11 +339,11 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
         },
-         'file_subhub': {  # define and name a handler
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',  # set the logging class to log to a file
-            'filename': os.path.abspath(PROJECT_PATH + '/logs/subhub.log')  # log file
-        }
+        #  'file_subhub': {  # define and name a handler
+        #     'level': 'DEBUG',
+        #     'class': 'logging.FileHandler',  # set the logging class to log to a file
+        #     'filename': os.path.abspath(PROJECT_PATH + '/logs/subhub.log')  # log file
+        # }
 
     },
     'loggers': {
