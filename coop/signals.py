@@ -8,9 +8,9 @@ from django.contrib.sites.models import Site
 import subhub
 import logging
 
-import django_rq
-redis_conn = django_rq.get_connection('high')
-q = django_rq.get_queue('high')
+# import django_rq
+# redis_conn = django_rq.get_connection('high')
+# q = django_rq.get_queue('high')
 
 
 
