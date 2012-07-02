@@ -36,7 +36,8 @@ def post_save_callback(sender, instance, **kwargs):
         try:
             subhub.publish([feed_url], instance.get_absolute_url(), False)
         except Exception, e:
-            log.warning('Unable to publish %s for feed %s : %s' % (instance, feed_url, e))
+            # print 'Unable to publish %s for feed %s : %s' % (instance, feed_url, e)
+            log.warning('Unable to publish feed %s' % feed_url)
         if settings.SUBHUB_MAINTENANCE_AUTO:
             try:
                 q.enqueue(letsCallDistributionTaskProcess)
