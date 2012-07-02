@@ -22,6 +22,7 @@ LOGIN_REDIRECT_URL = '/'
 
 # Not used: to set this variable here, weneed to import Site
 PUSH_HUB = ''
+SUBHUB_MAINTENANCE_AUTO = False
 
 USE_TZ = False
 
@@ -341,7 +342,7 @@ LOGGING = {
         },
         #  'file_subhub': {  # define and name a handler
         #     'level': 'DEBUG',
-        #     'class': 'logging.FileHandler',  # set the logging class to log to a file
+        #     'class': 'logging.handlers.WatchedFileHandler',  # set the logging class to log to a file
         #     'filename': os.path.abspath(PROJECT_PATH + '/logs/subhub.log')  # log file
         # }
 
@@ -352,15 +353,15 @@ LOGGING = {
             'handlers': ['console'],
             'propagate': False,
         },
-        # 'subhub.maintenance': {
-        #     'handlers': ['file_subhub'],
-        #     'level': 'DEBUG'
-        # },
-        # 'subhub.distribution.process': {
-        #     'handlers': ['file_subhub'],
-        #     'level': 'DEBUG'
+        'subhub.maintenance': {
+            'handlers': ['console'],
+            'level': 'DEBUG'
+        },
+        'subhub.distribution.process': {
+            'handlers': ['console'],
+            'level': 'DEBUG'
 
-        # },
+        },
         'raven': {
             'level': 'DEBUG',
             'handlers': ['console'],
