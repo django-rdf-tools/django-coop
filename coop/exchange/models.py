@@ -18,12 +18,12 @@ class BaseProduct(URIModel):
     title = models.CharField(_('title'), blank=True, max_length=250)
     slug = exfields.AutoSlugField(populate_from='title', overwrite=True)
     description = models.TextField(_(u'description'), blank=True)
-    organization = models.ForeignKey('coop_local.Organization', blank=True, null=True, 
+    organization = models.ForeignKey('coop_local.Organization', blank=True, null=True,
                                         verbose_name='publisher', related_name='products')
     organization_uri = models.CharField(_(u'publisher URI'), blank=True, max_length=200, editable=False)
 
     def __unicode__(self):
-        return self.title
+        return self.title + u' (' + self.organization.__unicode__() + u')'
 
     class Meta:
         abstract = True
@@ -48,7 +48,7 @@ ETYPE = Choices(
 
 class BaseExchangeMethod(models.Model):  # this model will be initialized with a fixture
     label = models.CharField(_(u'label'), max_length=250)
-    uri = models.CharField(_(u'URI'), blank=True, max_length=250)  
+    uri = models.CharField(_(u'URI'), blank=True, max_length=250)
     etypes = MultiSelectField(_(u'applicable to'), max_length=250, null=True, blank=True, choices=ETYPE.CHOICES)
 
     def applications(self):
@@ -67,7 +67,7 @@ class BaseExchangeMethod(models.Model):  # this model will be initialized with a
 class BaseExchange(URIModel):
     title = models.CharField(_('title'), max_length=250)
     description = models.TextField(_(u'description'), blank=True)
-    organization = models.ForeignKey('coop_local.Organization', blank=True, null=True, 
+    organization = models.ForeignKey('coop_local.Organization', blank=True, null=True,
                             verbose_name=_('publisher'), related_name='exchanges')
     person = models.ForeignKey('coop_local.Person', blank=True, null=True, verbose_name=_(u'person'))
 
@@ -87,15 +87,15 @@ class BaseExchange(URIModel):
     # coop_geo must be loaded BEFORE coop_local
     if "coop_geo" in settings.INSTALLED_APPS:
 
-        location = models.ForeignKey(   Location, 
-                                        verbose_name=_(u'location'), 
+        location = models.ForeignKey(   Location,
+                                        verbose_name=_(u'location'),
                                         null=True, blank=True, related_name='exchange_location',
                                         help_text=_("choose a location among your registered locations."))
-        area = models.ForeignKey(Area, 
-                                 verbose_name=_(u'interest area'), 
+        area = models.ForeignKey(Area,
+                                 verbose_name=_(u'interest area'),
                                  null=True, blank=True, related_name='exchange_area',
                                  help_text=_("choose an area among your registered impact areas."))
- 
+
 
     def __unicode__(self):
         return unicode(self.title)
@@ -155,7 +155,7 @@ class BaseTransaction(models.Model):
 # UNITS = Choices(
 #     ('EURO',    1,  _(u'€')),
 #     ('SELH',    2,  _(u'Hours')),
-#     ('PEZ',     3,  _(u'PEZ')),    
+#     ('PEZ',     3,  _(u'PEZ')),
 # )
 
 
@@ -179,7 +179,7 @@ class BaseTransaction(models.Model):
 #         if not self.modality == 3:
 #             self.amount = Decimal(0.00)
 #             self.unit = None
-#         super(BasePaymentModality, self).save(*args, **kwargs) 
+#         super(BasePaymentModality, self).save(*args, **kwargs)
 
 #     class Meta:
 #         abstract = True
