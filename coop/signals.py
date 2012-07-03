@@ -36,20 +36,19 @@ def post_save_callback(sender, instance, **kwargs):
         try:
             subhub.publish([feed_url], instance.get_absolute_url(), False)
         except Exception, e:
-            # print 'Unable to publish %s for feed %s : %s' % (instance, feed_url, e)
-            log.warning('Unable to publish feed %s' % feed_url)
+            log.warning(u'Unable to publish %s for feed %s : %s' % (instance, feed_url, e))
         if settings.SUBHUB_MAINTENANCE_AUTO:
             try:
                 q.enqueue(letsCallDistributionTaskProcess)
             except ConnectionError, e:
-                log.warning(e)
+                log.warning(u"%s" % e)
     elif isinstance(instance, subhub.models.SubscriptionTask) and settings.SUBHUB_MAINTENANCE_AUTO:
         # call the maintenance
             print "Call the maintenance"
             try:
-                log.info('Processing verification queue...')
+                log.info(u'Processing verification queue...')
                 subhub.models.SubscriptionTask.objects.process(log=log)
             except subhub.utils.LockError, e:
-                log.warning(str(e))
+                log.warning(u"%s" % e)
     else:
         pass
