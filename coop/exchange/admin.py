@@ -34,18 +34,19 @@ if 'coop.exchange' in settings.INSTALLED_APPS:
     class ExchangeForm(forms.ModelForm):
         description = forms.CharField(widget=AdminTinyMCE(attrs={'cols': 80, 'rows': 60}), required=False)
         methods = forms.ModelMultipleChoiceField(   queryset=get_model('coop_local', 'ExchangeMethod').objects.all(),
-                                                    widget=MethodsCheckboxSelectMultiple(), 
-                                                    required=False) 
+                                                    widget=MethodsCheckboxSelectMultiple(),
+                                                    required=False)
 
         def __init__(self, *args, **kwargs):
             super(ExchangeForm, self).__init__(*args, **kwargs)
         #   self.fields['methods'].widget = forms.CheckboxSelectMultiple()
             self.fields['methods'].help_text = ''
+            self.fields['methods'].label = _(u'exchange methods')
             self.fields['tags'].label = 'Tags'
 
         class Media:
             js = ('js/select_exchange_methods.js',)
-            
+
         class Meta:
             model = get_model('coop_local', 'Exchange')
 
