@@ -30,27 +30,24 @@ def letsCallDistributionTaskProcess():
 # Listener tool
 @receiver(post_save)
 def post_save_callback(sender, instance, **kwargs):
-    print "Post save callback with sender %s and instance %s" % (sender, instance)
+    log.debug(u"Post save callback with sender %s and instance %s" % (sender, instance))
     if StaticURIModel in sender.__mro__:
         feed_url = 'http://%s/feed/%s/' % (Site.objects.get_current().domain, sender.__name__.lower())
-        # print "publish for topic with feed %s  and instance %s" % (feed_url, instance)
         try:
             subhub.publish([feed_url], instance.uri, False)
         except Exception, e:
-            # print 'Unable to publish %s for feed %s : %s' % (instance, feed_url, e)
-            log.warning('Unable to publish feed %s, error is : %s' % (feed_url, e))
+            log.warning(u'Unable to publish %s for feed %s : %s' % (instance, feed_url, e))
         if settings.SUBHUB_MAINTENANCE_AUTO:
             try:
                 q.enqueue(letsCallDistributionTaskProcess)
             except ConnectionError, e:
-                log.warning(e)
+                log.warning(u"%s" % e)
     elif isinstance(instance, subhub.models.SubscriptionTask) and settings.SUBHUB_MAINTENANCE_AUTO:
         # call the maintenance
-            print "Call the maintenance"
             try:
-                log.info('Processing verification queue...')
+                log.info(u'Processing verification queue...')
                 subhub.models.SubscriptionTask.objects.process(log=log)
             except subhub.utils.LockError, e:
-                log.warning(str(e))
+                log.warning(u"%s" % e)
     else:
         pass
