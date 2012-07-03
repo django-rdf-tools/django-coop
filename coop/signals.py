@@ -30,10 +30,9 @@ def letsCallDistributionTaskProcess():
 # Listener tool
 @receiver(post_save)
 def post_save_callback(sender, instance, **kwargs):
-    print "Post save callback with sender %s and instance %s" % (sender, instance)
+    log.debug(u"Post save callback with sender %s and instance %s" % (sender, instance))
     if StaticURIModel in sender.__mro__:
         feed_url = 'http://%s/feed/%s/' % (Site.objects.get_current().domain, sender.__name__.lower())
-        # print "publish for topic with feed %s  and instance %s" % (feed_url, instance)
         try:
             subhub.publish([feed_url], instance.uri, False)
         except Exception, e:
@@ -45,7 +44,6 @@ def post_save_callback(sender, instance, **kwargs):
                 log.warning(u"%s" % e)
     elif isinstance(instance, subhub.models.SubscriptionTask) and settings.SUBHUB_MAINTENANCE_AUTO:
         # call the maintenance
-            print "Call the maintenance"
             try:
                 log.info(u'Processing verification queue...')
                 subhub.models.SubscriptionTask.objects.process(log=log)

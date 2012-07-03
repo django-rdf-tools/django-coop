@@ -38,7 +38,7 @@ class UpdateFeed(Feed):
 
     def item_description(self, item):
         # return item.uri + 'sparql endpoint' + uriSparql
-        return item.toJson()
+        return item.uri
 
     # def item_extra_kwargs
     def get_object(self, request, *args, **kwargs):
