@@ -127,12 +127,6 @@ div.inline-group h3{
 	background-color: white;
 }
 
-
-a.changelink {
-    padding-left: 12px;
-    background: url(/static/admin/img/icon_changelink.gif) 0 .2em no-repeat;
-}
-
 div.add-row a{
 	margin-bottom: 15px;
 	font-size: 1.2em;
@@ -161,21 +155,24 @@ div.controls > input[type=checkbox]{
 
 
 
-div.controls > a.related-lookup{
+div.controls > a.related-lookup,
+div.controls > a.add-another,
+div.controls > a.changelink{
 	top: 6px;
-	position: relative;
-	padding-left: 6px;
 	display: inline-block;
+	position: relative;
+	padding-left: 7px;
+}
+
+
+#identification div.controls > a.related-lookup,
+#identification div.controls > a.add-another,
+#identification div.controls > a.changelink{
 	float: left;
 }
 
-div.controls > a.add-another{
-	top: 6px;
-	display: inline-block;
-	position: relative;
-	float: left;
-	padding-left: 6px;
-}
+
+
 
 a#add_id_category{
 	display: none;
@@ -511,6 +508,14 @@ input.vForeignKeyRawIdAdminField{
 
 
 
+a#add_id_category {
+	left: 400px;
+	position: relative;
+	top: -18px;
+}
+
+
+
 /* Chosen-Multi customization */
 
 div.chzn-container-multi ul.chzn-choices{
@@ -538,13 +543,6 @@ div.chzn-container ul.chzn-choices div.chzn-drop ul.chzn-results li{
 	width: 616px;
 }
 
-
-
-a#add_id_category {
-	left: 400px;
-	position: relative;
-	top: -18px;
-}
 
 
 /* Make chosen look like Autosuggest */
@@ -591,9 +589,9 @@ div.chzn-container.chzn-container-multi .chzn-choices .search-choice a.search-ch
 	right: 6px;
 }
 
+
+
 /* Autosuggest  */
-
-
 
 
 ul.as-selections{
