@@ -10,20 +10,21 @@ import subhub
 import logging
 from redis.exceptions import ConnectionError
 
-import django_rq
-redis_conn = django_rq.get_connection('high')
-q = django_rq.get_queue('high')
 
+log = logging.getLogger('subhub.maintenance')
 
-
+try:
+    import django_rq
+    redis_conn = django_rq.get_connection('high')
+    q = django_rq.get_queue('high')
+except:
+    log.warning('Redis is not enabled')
+    pass
 
 
 # Workaround for rqworker limitation
 def letsCallDistributionTaskProcess():
     subhub.models.DistributionTask.objects.process()
-
-
-log = logging.getLogger('subhub.maintenance')
 
 
 # Listener tool
@@ -37,7 +38,7 @@ def post_save_callback(sender, instance, **kwargs):
             subhub.publish([feed_url], instance.get_absolute_url(), False)
         except Exception, e:
             # print 'Unable to publish %s for feed %s : %s' % (instance, feed_url, e)
-            log.warning('Unable to publish feed %s' % feed_url)
+            log.warning('Unable to publish feed %s, error is : %s' % (feed_url, e))
         if settings.SUBHUB_MAINTENANCE_AUTO:
             try:
                 q.enqueue(letsCallDistributionTaskProcess)

@@ -30,6 +30,10 @@ function show_pref_label_select() {
 
 $(function(){
 
+  $('.vDateField').datepicker({dateFormat: 'yy-mm-dd'});
+
+  //  $('select').chosen();
+  //  $("a[rel=popover].top-icon").twipsy({offset: 20});
 
   $('ul.nav li a').bind('click', function (e) {
       //console.log($(this).attr('href'))
