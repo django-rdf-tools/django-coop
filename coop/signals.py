@@ -35,7 +35,7 @@ def post_save_callback(sender, instance, **kwargs):
         feed_url = 'http://%s/feed/%s/' % (Site.objects.get_current().domain, sender.__name__.lower())
         # print "publish for topic with feed %s  and instance %s" % (feed_url, instance)
         try:
-            subhub.publish([feed_url], instance.get_absolute_url(), False)
+            subhub.publish([feed_url], instance.uri, False)
         except Exception, e:
             # print 'Unable to publish %s for feed %s : %s' % (instance, feed_url, e)
             log.warning('Unable to publish feed %s, error is : %s' % (feed_url, e))
