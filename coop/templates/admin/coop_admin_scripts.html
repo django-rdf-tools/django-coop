@@ -28,8 +28,12 @@ function show_pref_label_select() {
 // function moved to coop_tag/static/js/groupbox.js
 
 
-(function($){
+$(function(){
 
+  $('.vDateField').datepicker({dateFormat: 'yy-mm-dd'});
+
+  //  $('select').chosen();
+  //  $("a[rel=popover].top-icon").twipsy({offset: 20});
 
   $('ul.nav li a').bind('click', function (e) {
       //console.log($(this).attr('href'))
@@ -41,7 +45,7 @@ function show_pref_label_select() {
         selectPreviousTab();
 
         // decorate inline add buttons
-        $('.add-row a').addClass('btn').addClass('btn-primary'); 
+        $('.add-row a').addClass('btn').addClass('btn-primary');
         $('.add-row a').prepend('<i class="icon-plus icon-white"></i> ');
 
         // resize TinyMCE Editor
@@ -66,7 +70,7 @@ function show_pref_label_select() {
   // complément au widget groupbox de coop-tag
 
   if($('ul.groupbox-list').length > 0 && typeof django.jQuery.fn.columnize === 'function'){
-    // en-tetes deroulants  
+    // en-tetes deroulants
     $('div.groupbox-header').click(function(e){
         $(this).next("ul.groupbox-list").slideToggle();
     });
@@ -93,14 +97,14 @@ function show_pref_label_select() {
   // adapted from http://djangosnippets.org/snippets/431/
 
   empty_values = ['','---------']
-  
+
   $("a.add-another").each(function(){
   if($.inArray($(this).prev().val(), empty_values)=='-1'){
       $(this).after("&nbsp;<a class='changelink' href='#' title='Modifier cet objet'></a>");
       $(this).next().click(function(){
           if($(this).prev().prev().attr('value')=='')return false;
           var link = ($(this).prev().attr('href')+'../'+$(this).prev().prev().attr('value'));
-          
+
           //window.location.href = link
           // popup version :
           var win = window.open(link + '?_popup=1', link, 'height=600,width=1000,resizable=yes,scrollbars=yes');
@@ -111,16 +115,16 @@ function show_pref_label_select() {
   });
 
 
-$('input#id_acronym').bind('keyup',function(){
-    if($(this).val().length > 0)
-        show_pref_label_select()
-    else
-        hide_pref_label_select()
-});
+  $('input#id_acronym').bind('keyup',function(){
+      if($(this).val().length > 0)
+          show_pref_label_select()
+      else
+          hide_pref_label_select()
+  });
 
-    // http://djangosnippets.org/snippets/1492    
+    // http://djangosnippets.org/snippets/1492
     // Only for stacked inlines
-    
+
     $('div.stacked-inline').each(function() {
 
         fs = $(this).find('fieldset')
@@ -131,7 +135,7 @@ $('input#id_acronym').bind('keyup',function(){
             fs.addClass('stacked_collapse');
         else
             fs.addClass('stacked_collapse collapsed');
-        
+
         // Add toggle link
         h3.prepend('<a class="stacked_collapse-toggle" href="#">(' + gettext('Show') + ')</a> ');
         h3.find('a.stacked_collapse-toggle').bind("click", function(){
@@ -152,6 +156,6 @@ $('input#id_acronym').bind('keyup',function(){
 
 
 
-})(django.jQuery);
+});
 
 </script>

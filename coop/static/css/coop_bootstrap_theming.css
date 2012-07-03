@@ -82,6 +82,8 @@ div.control-group{
 	clear: both;
 }
 
+
+
 div.inline-group h3{
 	font-size: 23px;
 	color: #868787;
@@ -108,6 +110,7 @@ div.inline-group h3{
 
 .dashboard-module{
 	background-color: white;
+	border-radius: 6px;
 }
 
 .dashboard-module-content ul li{	
@@ -156,6 +159,27 @@ div.controls > input[type=checkbox]{
 	width: 12px;
 }
 
+
+
+div.controls > a.related-lookup{
+	top: 6px;
+	position: relative;
+	padding-left: 6px;
+	display: inline-block;
+	float: left;
+}
+
+div.controls > a.add-another{
+	top: 6px;
+	display: inline-block;
+	position: relative;
+	float: left;
+	padding-left: 6px;
+}
+
+a#add_id_category{
+	display: none;
+}
 
 
 /* WTF ??
@@ -484,6 +508,7 @@ input.vForeignKeyRawIdAdminField{
 
 .controls > div > a.thumbnail > img{
 }
+
 
 
 /* Chosen-Multi customization */

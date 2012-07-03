@@ -13,7 +13,7 @@
 
         <div id="content">
             <div class="grid_12 grid">
-                <ul>
+                <ul class="org_list">
                     {% for item in org_list %}
                     <li><a href="{{item.get_absolute_url}}">{{ item.title }}</a>
                         {% if item.get_tags %}
@@ -24,14 +24,14 @@
                 </ul>
 
             </div>
-    
-    
-        </div>    
+
+
+        </div>
     {% endblock %}
 
 {% endblock %}
 
-{% block footer%}        
+{% block footer%}
 <a href="{{D2RQ_ROOT}}directory/organization">
     <img border="0" align="left" src="{{STATIC_URL}}img/semweb.png"></a>
     <br/>

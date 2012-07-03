@@ -26,21 +26,21 @@ class BasePersonCategory(models.Model):
         verbose_name_plural = _(u'Person categories')
 
     def __unicode__(self):
-        return self.label    
+        return self.label
 
 from coop.org.models import DISPLAY
 
 
 class BasePerson(URIModel):
     user = models.OneToOneField(User, blank=True, null=True, unique=True, verbose_name=_(u'django user'), editable=False)
-    username = models.CharField(blank=True, max_length=100, unique=True)    
+    username = models.CharField(blank=True, max_length=100, unique=True)
     #pour D2RQ et poura voir des URI clean meme pour des non-users
 
     category = models.ManyToManyField('coop_local.PersonCategory', blank=True, null=True, verbose_name=_(u'category'))
     last_name = models.CharField(_(u'last name'), max_length=100)
     first_name = models.CharField(_(u'first name'), max_length=100, null=True, blank=True)
     contact = generic.GenericRelation('coop_local.Contact')
-    email = models.EmailField(_(u'personal email'), blank=True)
+    email = models.EmailField(_(u'personal email'), blank=True, help_text=_(u'will not be displayed on the website'))
     email_sha1 = models.CharField(_(u'email checksum'), max_length=250, blank=True, null=True)
     notes = models.TextField(_(u'notes'), blank=True, null=True)
     structure = models.CharField(blank=True, max_length=100)
@@ -66,12 +66,12 @@ class BasePerson(URIModel):
 
     def has_user_account(self):
         return (self.user != None)
-    has_user_account.boolean = True    
+    has_user_account.boolean = True
     has_user_account.short_description = _(u'django account')
 
     def has_role(self):
         return (self.engagements.count() > 0)
-    has_role.boolean = True    
+    has_role.boolean = True
     has_role.short_description = _(u'has organization')
 
     def label(self):
@@ -104,4 +104,4 @@ class BasePerson(URIModel):
                     chg = True
             if(chg):
                 self.user.save()
-        super(BasePerson, self).save(*args, **kwargs)    
+        super(BasePerson, self).save(*args, **kwargs)

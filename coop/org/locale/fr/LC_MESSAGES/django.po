@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop.organization\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-28 09:31+0200\n"
+"POT-Creation-Date: 2012-07-03 10:09+0200\n"
 "PO-Revision-Date: 2012-06-28 09:27+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
@@ -200,113 +200,112 @@ msgstr "rôle détaillé"
 msgid "has editor rights"
 msgstr "éditeur"
 
-#: models.py:154
-msgid "at"
-msgstr "chez"
-
-#: models.py:172
+#: models.py:170
 msgid "organization category"
 msgstr "catégorie d'organisation"
 
-#: models.py:173
+#: models.py:171
 msgid "organization categories"
 msgstr "catégories d'organisations"
 
-#: models.py:185 models.py:191
+#: models.py:183 models.py:189
 msgid "title"
 msgstr "titre"
 
-#: models.py:186 models.py:193
+#: models.py:184 models.py:191
 msgid "acronym"
 msgstr "sigle"
 
-#: models.py:194
+#: models.py:192
 msgid "Preferred label"
 msgstr "nom préféré"
 
-#: models.py:197
+#: models.py:195
 msgid "tagline"
 msgstr "slogan"
 
-#: models.py:199
+#: models.py:197
 msgid "tell us what your organization do in one line."
 msgstr "indiquez en une ligne ce que fait votre organisation (ou un slogan)"
 
-#: models.py:201
+#: models.py:199
 msgid "description"
 msgstr "description"
 
-#: models.py:207
+#: models.py:205
 msgid "relations"
 msgstr "relations"
 
-#: models.py:210
+#: models.py:208
 msgid "category"
 msgstr "catégorie"
 
-#: models.py:213
+#: models.py:211
 msgid "members"
 msgstr "membres"
 
-#: models.py:223
+#: models.py:221
 msgid "creation date"
 msgstr "date de création"
 
-#: models.py:224
+#: models.py:222
 msgid "global email"
 msgstr "email général"
 
-#: models.py:225
+#: models.py:223
 msgid "email checksum"
 msgstr "checksum e-mail"
 
-#: models.py:227
+#: models.py:225
 msgid "web site"
 msgstr "site web"
 
-#: models.py:230
+#: models.py:228
 msgid "preferred email"
 msgstr "courriel préféré"
 
-#: models.py:233
+#: models.py:231
 msgid "preferred phone"
 msgstr "téléphone préféré"
 
-#: models.py:236
+#: models.py:234
 msgid "preferred postal address"
 msgstr "adresse postale préférée"
 
-#: models.py:240
+#: models.py:238
 msgid "show on public site"
 msgstr "afficher sur le site"
 
-#: models.py:241
+#: models.py:239
 msgid "notes"
 msgstr "notes"
 
-#: models.py:246
+#: models.py:244
 msgid "Organization"
 msgstr "Organisation"
 
-#: models.py:247
+#: models.py:245
 msgid "Organizations"
 msgstr "Organisations"
 
-#: models.py:266
+#: models.py:264
 msgid "geo"
 msgstr "geo"
 
-#: models.py:279
+#: models.py:277
 msgid "desc."
 msgstr "desc."
 
-#: models.py:286
+#: models.py:284
 msgid "No Image"
 msgstr "Pas d'image"
 
-#: models.py:287
+#: models.py:285
 msgid "logo"
 msgstr "logo"
+
+#~ msgid "at"
+#~ msgstr "chez"
 
 #~ msgid "%(person), %(role) at %(org)"
 #~ msgstr "%(person), %(role) chez %(org)"
