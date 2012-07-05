@@ -10,7 +10,6 @@ from django.conf import settings
 from django.db.models.loading import get_model
 from django.utils.translation import ugettext_lazy as _
 from coop.utils.autocomplete_admin import FkAutocompleteAdmin, InlineAutocompleteAdmin
-from django_extensions.admin import ForeignKeyAutocompleteAdmin
 
 from coop_local.models import Contact, Person
 from coop_geo.models import Location
@@ -95,7 +94,7 @@ class OrganizationAdminForm(forms.ModelForm):
         self.fields['pref_phone'].queryset = org_contacts.filter(category=1)
         self.fields['category'].help_text = None
 
-        member_locations_id = [m.location.id for m in 
+        member_locations_id = [m.location.id for m in
             Person.objects.filter(id__in=members_id).exclude(location=None)]  # limit SQL to location field
 
         self.fields['pref_address'].queryset = Location.objects.filter(
@@ -113,7 +112,7 @@ def create_action(category):
 
 
 class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
-    change_form_template = 'admintools_bootstrap/tabbed_change_form.html' 
+    change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
     form = OrganizationAdminForm
     list_display = ['logo_list_display', 'label', 'active', 'has_description', 'has_location']
     list_display_links = ['label', ]
@@ -130,7 +129,7 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
     formfield_overrides = {
         URLField: {'widget': URLFieldWidget},
     }
-    
+
     if "coop.exchange" in settings.INSTALLED_APPS:
         inlines = [ ContactInline,
                         EngagementInline,
@@ -139,18 +138,18 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
                         LocatedInline,
                         AreaInline,
                         ]
-    else: 
+    else:
         inlines = [ ContactInline,
                     EngagementInline,
                     LocatedInline,
                     ]
 
-    # grace au patch 
+    # grace au patch
     # https://code.djangoproject.com/ticket/17856
     # https://github.com/django/django/blob/master/django/contrib/admin/options.py#L346
     # def get_inline_instances(self, request, obj):
     #     inline_instances = []
-        
+
     #     for inline_class in self.inlines:
     #         if inline_class.model == get_model('coop_local', 'Exchange'):
     #             inline = inline_class(self.model, self.admin_site, obj=obj)
@@ -186,4 +185,4 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
 
     class Media:
         js = ('/static/js/admin_customize.js',)
- 
+
