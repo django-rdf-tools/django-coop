@@ -54,11 +54,11 @@ class CustomIndexDashboard(Dashboard):
             template='admin_tools/coop_applist.html'
         ))
 
-        if 'coop_agenda' in settings.INSTALLED_APPS:
+        if 'coop.agenda' in settings.INSTALLED_APPS:
             self.children.append(modules.AppList(
                 _(u"Agenda"),
-                models=('coop_agenda.models.Event',
-                        'coop_agenda.models.EventType',
+                models=('coop.agenda.models.Event',
+                        'coop.agenda.models.EventType',
                         ),
                 template='admin_tools/coop_applist.html',
             ))

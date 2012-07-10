@@ -1,0 +1,27 @@
+
+
+<span class="date">
+<span class="day">{{ event.next_occurrence.start_time|date:"j" }}</span>
+<span class="month">{{ event.next_occurrence.start_time|date:"F" }}</span>
+</span>
+
+<h3>{{ event.title }}</h3>
+
+<p>{{ event.description|linebreaks }}</p>
+
+
+    {% if event.occurrence_set.count %}
+    <ul>
+        {% for o in event.occurrence_set.all %}
+        <li>
+            {{ o.start_time|date:"j F Y à H\hi" }} → {{ o.end_time|date:"j F Y à H\hi" }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    {% endif %}
+
+
+{% if event.organization %}
+    <div class="event_org">Organisateur : <a href="{{ event.organization.get_absolute_url }}">{{ event.organization }}</a></div>
+{% endif %}
