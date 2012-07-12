@@ -6,7 +6,6 @@ from coop_local.settings import PROJECT_PATH, PROJECT_NAME
 D2RQ_PORT = 8080
 D2RQ_ROOT = 'http://localhost:8080/' + PROJECT_NAME + '/'
 
-PES_HOST = 'http://localhost:8040/'
 
 TIME_ZONE = 'Europe/Paris'
 LANGUAGE_CODE = 'fr-FR'
@@ -329,6 +328,10 @@ LOGGING = {
         'verbose': {
             'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
         },
+        'simple': {
+            'format': '%(levelname)s %(asctime)s %(message)s'
+        },
+
     },
     'handlers': {
         'sentry': {
@@ -340,11 +343,20 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
         },
+        # access denied problem on prod env.... to be check
         #  'file_subhub': {  # define and name a handler
         #     'level': 'DEBUG',
+        #     'formatter': 'simple',
         #     'class': 'logging.handlers.WatchedFileHandler',  # set the logging class to log to a file
         #     'filename': os.path.abspath(PROJECT_PATH + '/logs/subhub.log')  # log file
-        # }
+        # },
+        #  'file_rqworker': {  # define and name a handler
+        #     'level': 'DEBUG',
+        #     'formatter': 'simple',
+        #     'class': 'logging.handlers.WatchedFileHandler',  # set the logging class to log to a file
+        #     'filename': os.path.abspath(PROJECT_PATH + '/logs/rq.log')  # log file
+        # },
+
 
     },
     'loggers': {
@@ -362,6 +374,12 @@ LOGGING = {
             'level': 'DEBUG'
 
         },
+        'worker': {
+            'handlers': ['console'],
+            'level': 'DEBUG'
+
+        },
+
         'raven': {
             'level': 'DEBUG',
             'handlers': ['console'],
@@ -378,21 +396,3 @@ LOGGING = {
 
 
 
-# For RQ
-RQ_QUEUES = {
-    'default': {
-        'HOST': 'localhost',
-        'PORT': 6379,
-        'DB': 0,
-    },
-    'high': {
-        'HOST': 'localhost',
-        'PORT': 6379,
-        'DB': 0,
-    },
-    'low': {
-        'HOST': 'localhost',
-        'PORT': 6379,
-        'DB': 0,
-    }
-}

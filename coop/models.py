@@ -2,6 +2,7 @@
 from django.db import models
 from django_extensions.db import fields as exfields
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
 import shortuuid
@@ -9,6 +10,7 @@ from rdflib import Graph, plugin, store, Literal, URIRef
 from django.db import IntegrityError
 from django.template import Template, Context
 from urlparse import urlsplit
+from django_push.subscriber.models import Subscription
 import feedparser
 import os
 import tempfile
@@ -89,7 +91,12 @@ class StaticURIModel(models.Model):
     # This metho could be overwritten by subClasses
     @property
     def uri_id(self):
-        return self.uuid
+        if self.uri_mode == URI_MODE.IMPORTED:
+            scheme, host, path, query, fragment = urlsplit(self.uri)
+            sp = path.split('/')
+            return sp[len(sp) - 2]
+        else:
+            return self.uuid
 
     def uri_registry(self):
         return self.__class__.__name__.lower()
@@ -149,19 +156,22 @@ class StaticURIModel(models.Model):
         # The short form of the construct where see 16.2.4 CONSTRUCT WHERE http://www.w3.org/TR/sparql11-query/#constructWhere
         cquery = "construct where { <%s> ?p ?o .} "
         res = graph.query(cquery % self.uri)
-        filename = "/tmp/%stmp.rdf" % self.uuid
-        tmpfile = open(filename, "w")
-        res.serialize().write(tmpfile, encoding='utf-8')
-        tmpfile.close()
+
+        (fd, fname) = tempfile.mkstemp(suffix="%s.rdf" % self.uuid)
+        # filename = "/tmp/%stmp.rdf" % self.uuid
+        open(fname, "w")
+        res.serialize().write(fname, encoding='utf-8')
+        os.close(fd)
         g = Graph()
         for p, ns in settings.RDF_NAMESPACES.iteritems():
             g.bind(p, ns)
-        g.parse(filename)
+        g.parse(fname)
 
         if format == 'ttl': format = 'n3'
         if format == 'json': format = 'json-ld'
-
-        return g.serialize(format=format)
+        res = g.serialize(format=format)
+        os.remove(fname)
+        return res
 
     def toN3(self):
         return self.toRdf("n3")
@@ -194,7 +204,6 @@ class StaticURIModel(models.Model):
 
 
 
-
     @classmethod
     def updateFromFeeds(cls):
         print "Update feed for class name %s" % cls.__name__
@@ -222,7 +231,7 @@ class StaticURIModel(models.Model):
     def updateFromRdf(self, graph):
         db_table = self.__class__._meta.db_table
         d2rqGraph = self.__class__.getD2rqGraph()
-        for field in self.__class__._meta.fields:
+        for field in self._meta.fields:
             dbfieldname = db_table + '.' + field.name
             pred = checkDirectMap(dbfieldname, d2rqGraph)
             if pred:
@@ -237,16 +246,66 @@ class StaticURIModel(models.Model):
                     # Well some field have to be prepared
                     if isinstance(field, models.fields.DateField):
                         update = update.split('.')[0]
-                        tt = time.strptime(update, "%Y-%m-%dT%H:%M:%S")
+                        try:
+                            tt = time.strptime(update, "%Y-%m-%dT%H:%M:%S")
+                        except ValueError:
+                            tt = time.strptime(update, "%Y-%m-%d")
                         update = "%d-%d-%d" % (tt.tm_year, tt.tm_mon, tt.tm_mday)
                     setattr(self, field.name, update)
+            elif isinstance(field, models.ForeignKey):
+                print "try an FKEY"
+                pred = checkDirectMapFK(dbfieldname, d2rqGraph)
+                if pred:
+                    self.updateFKfromRdf(field, dbfieldname, pred, graph)
+                else:
+                    print "    The field %s cannot be updated." % dbfieldname
+
             else:
                  # See org/models file to have example of "special" fiels handling
                 if hasattr(self, 'updateField_' + field.name):
                     getattr(self, 'updateField_' + field.name)(dbfieldname, graph)
                 else:
                     print "    The field %s cannot be updated." % dbfieldname
+        print "UpdateFromRdf all fields have been handled"
         self.save()
+        print "save done"
+
+
+    def updateFKfromRdf(self, field, dbfieldname, pred, graph):
+        rdfObj = list(graph.objects(URIRef(self.uri), pred))
+        if len(rdfObj) == 1:
+            rdfObj = rdfObj[0]
+            print "FK object found %s" % rdfObj
+            if isinstance(rdfObj, URIRef):
+                try:
+                    obj = field.related.parent_model.objects.get(uri=str(rdfObj))
+                except ObjectDoesNotExist:
+                    # Object not found in db.... here we have to check il it
+                    # has to be imported or not.
+                    print "Obj not in bd : %s" % obj
+                    print u"    The field %s cannot be updated. %s" % (dbfieldname)
+                setattr(self, field.name + '_id', obj.id)
+                print "For id %s update the field %s" % (self.id, dbfieldname)
+            else:
+                print "    The field %s cannot be updated." % dbfieldname
+        else:
+            print "    The field %s cannot be updated." % dbfieldname
+
+        pass
+
+    # Only instance of StaticURIModel with uri_mode == URI_MODE.IMPORTED
+    # Could subscribe to update
+    # TODO et que fait-on pour les common.....????
+    def subscribeToUpdades(self):
+        if self.uri_mode == URI_MODE.IMPORTED:
+            feed_url = "%sfeed/%s/%s/" % (settings.PES_HOST, self.__class__.__name__.lower(), self.uri_id)
+            print u"Try to subscribe to feed %s" % feed_url
+            Subscription.objects.subscribe(feed_url, hub=settings.PES_HUB)
+
+    def unubscribeToUpdades(self):
+        if self.uri_mode == URI_MODE.IMPORTED:
+            feed_url = "%sfeed/%s/%s/" % (settings.PES_HOST, self.__class__.__name__.lower(), self.uri_id)
+            Subscription.objects.unsubscribe(feed_url, hub=settings.PES_HUB)
 
 
 
@@ -275,8 +334,44 @@ def checkDirectMap(dbfieldName, d2rqGraph):
         return prop[0]
 
 
+def checkDirectMapFK(dbfieldName, d2rqGraph):
+    # on commence par chercher tous les triples de la forme 
+    # select * where { ?s d2rq:join ?l. filter(?l contains dbfieldname) }
+    # mais comme le d2rqGraph n'est pas un SpaqlGraph on le fait à la main
+
+    # Well it is not possible to use settings.NS_D2RQ.join because 
+    # there is a conflict of names with the join function of the Namespace
+    # class.... 
+    tr = list(d2rqGraph.triples((None, URIRef(str(settings.NS_D2RQ) + 'join'), None)))
+
+    def useField((s, p, o)):
+        if isinstance(o, Literal):
+            return dbfieldName in o
+        else:
+            return False
+    candidate = filter(useField, tr)
+    if len(candidate) == 1:
+        print "Found candidate"
+        subj = candidate[0][0]
+        prop = list(d2rqGraph.objects(subj, settings.NS_D2RQ.property))
+        if len(prop) == 1:
+            return prop[0]
+        else:
+            return None
+    else:
+        return None
+
+
+
+
+
 # It seems to be the best place to do the connection
 # see http://stackoverflow.com/questions/7115097/the-right-place-to-keep-my-signals-py-files-in-django
 from django.core.signals import  request_finished
-from coop.signals import post_save_callback
+from coop.signals import post_save_callback, post_delete_callback, listener
+from django_push.subscriber.signals import updated
+
 request_finished.connect(post_save_callback, sender=StaticURIModel)
+request_finished.connect(post_delete_callback, sender=StaticURIModel)
+updated.connect(listener)
+

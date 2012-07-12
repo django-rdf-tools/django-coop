@@ -24,6 +24,7 @@ urlpatterns = patterns('',
 
     url(r'^feed/(?P<model>[\w-]+)/$', UpdateFeed()),
     url(r'^hub/', include('subhub.urls')),
+    url(r'^subscriber/', include('django_push.subscriber.urls')),  # Callback 
 
     url(r'^robots\.txt$', TextPlainView.as_view(template_name='robots.txt')),
     url(r'^favicon\.ico$', RedirectView.as_view(url='/static/img/favicon.ico')),
