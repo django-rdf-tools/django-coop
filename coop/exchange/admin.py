@@ -5,7 +5,6 @@ from coop.exchange.models import BaseTransaction, BaseProduct
 from django.db.models.loading import get_model
 from django.utils.translation import ugettext_lazy as _
 from coop.utils.autocomplete_admin import FkAutocompleteAdmin, InlineAutocompleteAdmin
-from django_extensions.admin import ForeignKeyAutocompleteAdmin
 from coop_geo.admin import LocatedInline
 from tinymce.widgets import AdminTinyMCE
 from coop.utils.fields import MultiSelectFormField, MethodsCheckboxSelectMultiple, DomainCheckboxSelectMultiple
@@ -34,18 +33,19 @@ if 'coop.exchange' in settings.INSTALLED_APPS:
     class ExchangeForm(forms.ModelForm):
         description = forms.CharField(widget=AdminTinyMCE(attrs={'cols': 80, 'rows': 60}), required=False)
         methods = forms.ModelMultipleChoiceField(   queryset=get_model('coop_local', 'ExchangeMethod').objects.all(),
-                                                    widget=MethodsCheckboxSelectMultiple(), 
-                                                    required=False) 
+                                                    widget=MethodsCheckboxSelectMultiple(),
+                                                    required=False)
 
         def __init__(self, *args, **kwargs):
             super(ExchangeForm, self).__init__(*args, **kwargs)
         #   self.fields['methods'].widget = forms.CheckboxSelectMultiple()
             self.fields['methods'].help_text = ''
+            self.fields['methods'].label = _(u'exchange methods')
             self.fields['tags'].label = 'Tags'
 
         class Media:
             js = ('js/select_exchange_methods.js',)
-            
+
         class Meta:
             model = get_model('coop_local', 'Exchange')
 
@@ -84,7 +84,7 @@ if 'coop.exchange' in settings.INSTALLED_APPS:
         #related_search_fields = {'origin': ('title', 'description', 'organization__title'), }
         extra = 1
 
-    class ExchangeAdmin(ForeignKeyAutocompleteAdmin):  # AdminImageMixin,
+    class ExchangeAdmin(FkAutocompleteAdmin):  # AdminImageMixin,
         form = ExchangeForm
         list_display = ('title', 'etype')  # , 'methods')
         # TODO to be finished ...

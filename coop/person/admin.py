@@ -5,7 +5,7 @@ from coop.org.admin import create_action, ContactInline, OrgInline
 from django.db.models.loading import get_model
 
 from chosen import widgets as chosenwidgets
-from django_extensions.admin import ForeignKeyAutocompleteAdmin
+from coop.utils.autocomplete_admin import FkAutocompleteAdmin
 
 
 class PersonAdminForm(forms.ModelForm):
@@ -23,7 +23,7 @@ class PersonAdminForm(forms.ModelForm):
         self.fields['location'].help_text = None
 
 
-class PersonAdmin(ForeignKeyAutocompleteAdmin):  # FkAutocompleteAdmin too but...
+class PersonAdmin(FkAutocompleteAdmin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
     related_search_fields = {'location': ('label', 'adr1', 'adr2', 'zipcode', 'city'), }
 

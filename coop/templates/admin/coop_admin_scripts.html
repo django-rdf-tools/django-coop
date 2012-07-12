@@ -8,9 +8,9 @@ function tabCookie (hash){
 }
 function selectPreviousTab (){
   if($.cookie('current_tab') != null ){
-      var hash = $.cookie('current_tab')
+      var hash = jQuery.cookie('current_tab')
       //console.log(hash)
-      $("ul.nav li a[href=" + hash + "]").trigger("click");
+      $("ul.nav li a[href='" + hash + "']").trigger("click");
   }
 }
 
@@ -27,11 +27,9 @@ function show_pref_label_select() {
 
 // function moved to coop_tag/static/js/groupbox.js
 
-
 $(function(){
 
   $('.vDateField').datepicker({dateFormat: 'yy-mm-dd'});
-
   //  $('select').chosen();
   //  $("a[rel=popover].top-icon").twipsy({offset: 20});
 
@@ -91,16 +89,16 @@ $(function(){
     });
   }
 
-
-
   // adding edit link for FKeys
   // adapted from http://djangosnippets.org/snippets/431/
 
   empty_values = ['','---------']
 
   $("a.add-another").each(function(){
-  if($.inArray($(this).prev().val(), empty_values)=='-1'){
-      $(this).after("&nbsp;<a class='changelink' href='#' title='Modifier cet objet'></a>");
+  if($.inArray($(this).prev().val(), empty_values)=='-1' &&       // si selection pas vide
+      $(this).siblings('select').attr('multiple') != 'multiple'   // et qu'on est pas sur un select multiple
+      ){
+      $(this).after("&nbsp;<a class='changelink' href='#' title='Modifier cet objet'><img src='/static/admin/img/icon_changelink.gif'></a>");
       $(this).next().click(function(){
           if($(this).prev().prev().attr('value')=='')return false;
           var link = ($(this).prev().attr('href')+'../'+$(this).prev().prev().attr('value'));
@@ -152,8 +150,6 @@ $(function(){
             }
         }).removeAttr('href').css('cursor', 'pointer');
     });
-
-
 
 
 });

@@ -123,7 +123,6 @@ if 'forms_builder.forms' in settings.INSTALLED_APPS:
 # from django.db.models.loading import get_model
 # from django.utils.translation import ugettext_lazy as _
 # from coop.utils.autocomplete_admin import FkAutocompleteAdmin, InlineAutocompleteAdmin
-# from django_extensions.admin import ForeignKeyAutocompleteAdmin
 
 # from coop_local.models import Contact, Person
 # from coop_geo.models import Location
