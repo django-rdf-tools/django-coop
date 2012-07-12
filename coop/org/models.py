@@ -360,7 +360,7 @@ class BaseOrganization(URIModel):
 
 
     def updateField_pref_label(self, dbfieldname, graph):
-        prefLabel = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS_SKOS.prefLabel))
+        prefLabel = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS_RDFS.label))
         if len(prefLabel) == 1:
             legalName = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS_LEGAL.legalName))
             if len(legalName) == 1:
@@ -381,7 +381,3 @@ class BaseOrganization(URIModel):
                     print "    The field %s cannot be updated." % dbfieldname
         else:
             print "    The field %s cannot be updated." % dbfieldname
-
-
-
-
