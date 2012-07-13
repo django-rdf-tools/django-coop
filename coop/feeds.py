@@ -16,8 +16,8 @@ class UpdateFeed(Feed):
 
     def items(self):
         # Call content type pour trouver les models ....
-        # ajouter les champs created 
-        # ping dans save de model uri
+        # TODO : object such as uri_mode = 'common' or 'imported' are also published.
+        # Is it the good feature?
         return get_model(self._mType.app_label, self._model).objects.order_by('-modified')[:5]
 
     # to deal with overwriting ...
