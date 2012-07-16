@@ -20,7 +20,7 @@ log = logging.getLogger('subhub.maintenance')
 from redis import Redis
 from rq import Queue, use_connection, get_current_connection
 if not get_current_connection():
-    conn = Redis('localhost', settings.REDIS_PORT)
+    conn = Redis('localhost', getattr(settings, 'REDIS_PORT', 6379))
     use_connection(conn)
 if not get_current_connection():
     log.error(u'Unable to create redis connection')
@@ -44,7 +44,8 @@ def letsCallDistributionTaskProcess():
 # as instance.
 @receiver(post_save)
 def post_save_callback(sender, instance, **kwargs):
-    log.debug(u"Post save callback with sender %s and instance %s and AUTO %s" % (sender, instance, settings.SUBHUB_MAINTENANCE_AUTO))
+    maintenance = getattr(settings, 'SUBHUB_MAINTENANCE_AUTO', False)
+    log.debug(u"Post save callback with sender %s and instance %s and AUTO %s" % (sender, instance, maintenance))
     if isinstance(instance, StaticURIModel):
         if instance.uri_mode == URI_MODE.IMPORTED:
             log.debug(u"%s is imported. Nothing to publish, but subscription renew" % instance)
@@ -57,7 +58,7 @@ def post_save_callback(sender, instance, **kwargs):
                 log.debug('publish done; Number of Dist task %s' % len(subhub.models.DistributionTask.objects.all()))
             except Exception, e:
                 log.debug(u'Unable to publish %s for feed %s : %s' % (instance, feed_url, e))
-    elif isinstance(instance, subhub.models.DistributionTask) and settings.SUBHUB_MAINTENANCE_AUTO:
+    elif isinstance(instance, subhub.models.DistributionTask) and maintenance:
         try:
             log.debug("before call ENQUEUE, tasks %s" % len(subhub.models.DistributionTask.objects.all()))
             q.enqueue(letsCallDistributionTaskProcess)
@@ -65,7 +66,7 @@ def post_save_callback(sender, instance, **kwargs):
             log.debug('after call ENQUEUE')
         except Exception, e:
             log.warning(u"%s" % e)
-    elif isinstance(instance, subhub.models.SubscriptionTask) and settings.SUBHUB_MAINTENANCE_AUTO:
+    elif isinstance(instance, subhub.models.SubscriptionTask) and maintenance:
         # call the maintenance
             try:
                 log.info(u'Processing verification queue...')
