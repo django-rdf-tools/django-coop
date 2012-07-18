@@ -21,12 +21,12 @@
     <!-- Place favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    
+
 
     {% block jquery_declaration %}
     <script type="text/javascript" charset="utf-8" src="{{ STATIC_URL }}js/jquery-1.6.2.min.js"></script>
     {% endblock %}
-    
+
     <!-- CSS: implied media="all" -->
     <link rel="stylesheet" href="{{ STATIC_URL }}css/html5.css?v=2">
     <link rel="stylesheet" href="{{ STATIC_URL }}css/normalize.css" type="text/css" />
@@ -35,17 +35,17 @@
 
     <link href='http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow:700|Nobile:400,400italic,700' rel='stylesheet' type='text/css'>
-    
+
     <script type="text/javascript" src="{{ STATIC_URL }}js/modernizr.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/colorbox.coop.js"></script>
    <!-- <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.pageslide.min.js"></script>-->
-    
+
     {% coop_bar_headers %}
     {% block extra_head %}{% endblock %}
-    
-    
-    
-    
+
+
+
+
 </head>
 <body id="{% block body_id %}{% endblock %}">
 {% coop_bar %}
@@ -59,7 +59,7 @@
       </a>
     </div>
     <h1><a href="/" title="Accueil">{{site_title}}</a></h1>
-    
+
 </header>
 
 <div id="main" role="main" class="container_12 clearfix">
@@ -68,10 +68,10 @@
       <ul id="nav">{% navigation_as_nested_ul %}</ul>
   </nav>
   {% endblock %}
-    
+
       {% block document %}
         {% block title %}{% endblock %}
-        {% block content %}{% endblock %}        
+        {% block content %}{% endblock %}
       {% endblock %}
 
 
@@ -79,7 +79,7 @@
 
 <footer class="container_12 clearfix">
     <div>
-        {% block footer %}        
+        {% block footer %}
 
 
         {% endblock %}
@@ -100,7 +100,7 @@
 
 <script type="text/javascript">
 $(function(){
-    
+
     //$("#perso").pageSlide({width:'350px', direction:'right'});
     {% block jquery %}{% endblock %}
 });
