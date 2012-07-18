@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
 import shortuuid
-from rdflib import Graph, plugin, store, Literal, URIRef
+from rdflib import Graph, plugin, Literal, URIRef, ConjunctiveGraph
 from django.db import IntegrityError
 from django.template import Template, Context
 from urlparse import urlsplit
@@ -26,9 +26,6 @@ URI_MODE = Choices(
     ('IMPORTED', 3, _(u'Imported')),
 )
 
-# Store
-plugin.register('SPARQLStore', store.Store,
-        'rdflib_sparqlstore.SPARQLStore', 'SPARQLStore')
 
 # Serializer
 plugin.register('n3', plugin.Serializer,
@@ -149,7 +146,7 @@ class StaticURIModel(models.Model):
         """
         # Sparq endPoint
         uriSparql = 'http://localhost:8080/' + settings.PROJECT_NAME + '/sparql'
-        graph = Graph(store="SPARQLStore")
+        graph = ConjunctiveGraph('SPARQLStore')
         graph.open(uriSparql, False)
         graph.store.baseURI = str(uriSparql)
 
@@ -157,21 +154,9 @@ class StaticURIModel(models.Model):
         cquery = "construct where { <%s> ?p ?o .} "
         res = graph.query(cquery % self.uri)
 
-        (fd, fname) = tempfile.mkstemp(suffix="%s.rdf" % self.uuid)
-        # filename = "/tmp/%stmp.rdf" % self.uuid
-        open(fname, "w")
-        res.serialize().write(fname, encoding='utf-8')
-        os.close(fd)
-        g = Graph()
-        for p, ns in settings.RDF_NAMESPACES.iteritems():
-            g.bind(p, ns)
-        g.parse(fname)
-
         if format == 'ttl': format = 'n3'
         if format == 'json': format = 'json-ld'
-        res = g.serialize(format=format)
-        os.remove(fname)
-        return res
+        return res.graph.serialize(format=format)
 
     def toN3(self):
         return self.toRdf("n3")
