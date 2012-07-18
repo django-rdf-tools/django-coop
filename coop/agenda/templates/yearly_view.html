@@ -1,0 +1,46 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% blocktrans %}Yearly View {{ year }}{% endblocktrans %}{% endblock %}
+{% block document %}
+    <h3>
+        <a href="{% url agenda-yearly-view last_year %}" 
+           title="{% trans "Last Month" %}">&larr;</a>
+        {% blocktrans %}Yearly View {{ year }}{% endblocktrans %}
+        <a href="{% url agenda-yearly-view next_year %}" 
+           title="{% trans "Next Month" %}">&rarr;</a>
+    </h3>
+    
+    {% if by_month %}
+    <table>
+        <thead>
+            <tr>
+                <th>{% trans "Month" %}</th>
+                <th>{% trans "Title" %}</th>
+                <th>{% trans "Day" %}</th>
+                <th>{% trans "Start" %}</th>
+                <th>{% trans "End" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for dt,occurrences in by_month %}
+        <tr class="month-divider">
+            <th rowspan="{{ occurrences|length }}">
+                <a href="{% url agenda-monthly-view dt.year dt.month %}">
+                    {{ dt|date:"F" }}</a>
+            </th>
+            {% for o in occurrences %}
+            <td><a href="{{ o.get_absolute_url }}">{{ o.title }}</a></td>
+            <td>{{ o.start_time|date:"DATE_FORMAT" }}</td>
+            <td>{{ o.start_time|date:"H:i" }}</td>
+            <td>{{ o.end_time|date:"H:i" }}</td>
+        </tr>
+            {% if not forloop.last %}
+        <tr>
+            {% endif %}
+            {% endfor %}
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    {% blocktrans %}<p>No events occurring in {{ year }}</p>{% endblocktrans %}
+    {% endif %}
+{% endblock %}

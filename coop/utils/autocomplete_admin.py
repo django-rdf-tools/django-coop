@@ -410,14 +410,15 @@ class FkAutocompleteAdmin(admin.ModelAdmin):
         return HttpResponseNotFound()
 
     def get_help_text(self, field_name, model_name):
-        searchable_fields = self.related_search_fields.get(field_name, None)
-        if searchable_fields:
-            help_kwargs = {
-                'model_name': model_name,
-                'field_list': get_text_list(searchable_fields, _('and')),
-            }
-            return _('Use the left field to do %(model_name)s lookups in the fields %(field_list)s.') % help_kwargs
-        return ''
+        return None
+    #     searchable_fields = self.related_search_fields.get(field_name, None)
+    #     if searchable_fields:
+    #         help_kwargs = {
+    #             'model_name': model_name,
+    #             'field_list': get_text_list(searchable_fields, _('and')),
+    #         }
+    #         return _('Use the left field to do %(model_name)s lookups in the fields %(field_list)s.') % help_kwargs
+    #     return ''
 
 
 # this method gets called when creating the formfields - probably this is what you need to extend

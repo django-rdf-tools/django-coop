@@ -1,0 +1,11 @@
+<li class="widget-item">
+
+    <span class="date">
+    <span class="day">{{ o.start_time|date:"j" }}</span>
+    <span class="month">{{ o.start_time|date:"F" }}</span>
+    </span>
+
+    <b>{{ o.event.title }}:</b><br/>
+    {{ o.event.description|truncatewords:10 }}
+    - <a href="{{ o.event.get_absolute_url }}">En savoir plus</a>
+    </li>

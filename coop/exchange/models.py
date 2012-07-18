@@ -67,6 +67,8 @@ class BaseExchangeMethod(models.Model):  # this model will be initialized with a
 class BaseExchange(URIModel):
     title = models.CharField(_('title'), max_length=250)
     description = models.TextField(_(u'description'), blank=True)
+    organization_alt_label = models.CharField(_(u'label optionnel organisation'), max_length=250, blank=True, null=True)
+
     organization = models.ForeignKey('coop_local.Organization', blank=True, null=True,
                             verbose_name=_('publisher'), related_name='exchanges')
     person = models.ForeignKey('coop_local.Person', blank=True, null=True, verbose_name=_(u'person'))
@@ -78,6 +80,7 @@ class BaseExchange(URIModel):
     expiration = models.DateField(_(u'expiration'), blank=True, null=True)
     slug = exfields.AutoSlugField(populate_from='title', overwrite=True)
     products = models.ManyToManyField('coop_local.Product', verbose_name=_(u'linked products'))
+
     person_uri = models.CharField(_(u'person URI'), blank=True, max_length=200, editable=False)
     organization_uri = models.CharField(_(u'publisher URI'), blank=True, max_length=200, editable=False)
 

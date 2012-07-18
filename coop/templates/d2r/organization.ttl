@@ -85,7 +85,7 @@ map:organization_logo a d2rq:PropertyBridge;
     d2rq:uriSqlExpression "('{{ d2r_niceURI }}/media/'||coop_local_organization.logo)";
     d2rq:condition "coop_local_organization.logo <> ''";
     .
-    
+
 # map:organization_siret a d2rq:PropertyBridge;
 #   d2rq:belongsToClassMap map:organization;
 #   d2rq:property vocab:coop_local_organization_siret;
@@ -120,7 +120,7 @@ map:organization_contacts a d2rq:PropertyBridge;
     d2rq:join "coop_local_organization.id <= coop_local_contact.object_id";  # linked contact exists
     d2rq:join "django_content_type.id <= coop_local_contact.content_type_id";
     d2rq:condition "django_content_type.model = 'organization'";
-    .   
+    .
 map:organization_phone a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
     d2rq:property vcard:tel;
@@ -128,7 +128,7 @@ map:organization_phone a d2rq:PropertyBridge;
     # d2rq:join "coop_local_organization.id = coop_local_contact.object_id";  # linked contact exists
     d2rq:join "coop_local_organization.pref_phone_id = coop_local_contact.id ";
     d2rq:condition "coop_local_contact.category = 1";
-   .   
+   .
 map:organization_email a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
     d2rq:property vcard:email;
@@ -136,13 +136,13 @@ map:organization_email a d2rq:PropertyBridge;
     # d2rq:join "coop_local_organization.id = coop_local_contact.object_id"; # linked contact exists
     d2rq:join "coop_local_organization.pref_email_id = coop_local_contact.id ";
     d2rq:condition "coop_local_contact.category = 8";
-   .  
+   .
   map:organization_addr a d2rq:PropertyBridge;  # EXAMPLE Direct generic relation
     d2rq:belongsToClassMap map:organization;
     d2rq:property legal:registeredAddress;
     d2rq:refersToClassMap map:location;
     d2rq:join "coop_local_organization.pref_address_id = coop_geo_location.id ";
-    .  
+    .
 map:organization_tags a d2rq:PropertyBridge; # EXAMPLE M2M generic relation
     d2rq:belongsToClassMap map:organization;
     d2rq:refersToClassMap map:xlabel;
@@ -168,6 +168,17 @@ map:organization_locations a d2rq:PropertyBridge; # EXAMPLE M2M generic relation
     d2rq:condition "django_content_type.model = 'organization'";
     d2rq:join "coop_geo_location.id <= coop_geo_located.location_id";
     .
+
+map:organization_areas a d2rq:PropertyBridge; # EXAMPLE M2M generic relation
+    d2rq:belongsToClassMap map:organization;
+    d2rq:property locn:location;
+    d2rq:refersToClassMap map:area;
+    d2rq:join "coop_local_organization.id <= coop_geo_arealink.object_id";
+    d2rq:join "django_content_type.id <= coop_geo_arealink.content_type_id";
+    d2rq:condition "django_content_type.model = 'organization'";
+    d2rq:join "coop_geo_area.id <= coop_geo_arealink.location_id";
+    .
+
 map:organization_offers a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
     d2rq:property gr:offers;

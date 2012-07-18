@@ -63,7 +63,7 @@ class RelationInline(InlineAutocompleteAdmin):
     fk_name = 'source'
     readonly_fields = ('created',)
     fields = ('reltype', 'target', 'created')
-    related_search_fields = {'target': ('title', 'subtitle', 'description'), }
+    related_search_fields = {'target': ('title', 'subtitle', 'acronym', 'description'), }
     extra = 1
 
 
@@ -71,7 +71,7 @@ class OrgInline(InlineAutocompleteAdmin):
     model = get_model('coop_local', 'Engagement')
     verbose_name = _(u'Engagement')
     verbose_name_plural = _(u'Engagements')
-    related_search_fields = {'organization': ('title', 'subtitle', 'description'), }
+    related_search_fields = {'organization': ('title', 'subtitle', 'acronym', 'description'), }
     extra = 1
 
 
@@ -116,7 +116,7 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
     form = OrganizationAdminForm
     list_display = ['logo_list_display', 'label', 'active', 'has_description', 'has_location']
     list_display_links = ['label', ]
-    search_fields = ['title', 'acronym', 'subtitle', 'description']
+    search_fields = ['title', 'acronym', 'subtitle', 'acronym', 'description']
     list_filter = ['active', 'category']
     #actions_on_top = True
     #actions_on_bottom = True

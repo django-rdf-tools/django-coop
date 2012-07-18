@@ -21,7 +21,7 @@ class CustomIndexDashboard(Dashboard):
     """
     Custom index dashboard for devcoop.
     """
-    columns = 2
+    columns = 3
     title = ''
     template = 'admin_tools/coop_dashboard.html'
 
@@ -35,7 +35,7 @@ class CustomIndexDashboard(Dashboard):
             deletable=False,
             collapsible=False,
             children=[
-                [_('Return to site'), '/'],
+                #[_('Return to site'), '/'],
                 [_('Change password'),
                  reverse('%s:password_change' % site_name)],
                 [_('Log out'), reverse('%s:logout' % site_name)],
@@ -54,11 +54,11 @@ class CustomIndexDashboard(Dashboard):
             template='admin_tools/coop_applist.html'
         ))
 
-        if 'coop_agenda' in settings.INSTALLED_APPS:
+        if 'coop.agenda' in settings.INSTALLED_APPS:
             self.children.append(modules.AppList(
                 _(u"Agenda"),
-                models=('coop_agenda.models.Event',
-                        'coop_agenda.models.EventType',
+                models=('coop_local.models.Event',
+                        'coop_local.models.EventCategory',
                         ),
                 template='admin_tools/coop_applist.html',
             ))

@@ -25,100 +25,113 @@ function show_pref_label_select() {
     $('select#id_pref_label').css('visibility', 'visible')
 }
 
-// function moved to coop_tag/static/js/groupbox.js
 
-$(function(){
+//(function($){
+//$(document).ready(function(){
+jQuery(document).ready(function($) {
 
-  $('.vDateField').datepicker({dateFormat: 'yy-mm-dd'});
-  //  $('select').chosen();
-  //  $("a[rel=popover].top-icon").twipsy({offset: 20});
+  $.datepicker.regional['fr'] = {
+    closeText: 'Fermer',
+    prevText: '&#x3c;Préc',
+    nextText: 'Suiv&#x3e;',
+    currentText: 'Courant',
+    monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin',
+    'Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+    monthNamesShort: ['Jan','Fév','Mar','Avr','Mai','Jun',
+    'Jul','Aoû','Sep','Oct','Nov','Déc'],
+    dayNames: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+    dayNamesShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],
+    dayNamesMin: ['Di','Lu','Ma','Me','Je','Ve','Sa'],
+    weekHeader: 'Sm',
+    dateFormat: 'dd/mm/yy',
+    firstDay: 1,
+    isRTL: false,
+    showMonthAfterYear: false,
+    yearSuffix: ''};
+  $.datepicker.setDefaults($.datepicker.regional['fr']);
 
-  $('ul.nav li a').bind('click', function (e) {
-      //console.log($(this).attr('href'))
-      tabCookie($(this).attr('href'))
-  });
-
-    $(document).ready(function(){
-        // call cookie tab
-        selectPreviousTab();
-
-        // decorate inline add buttons
-        $('.add-row a').addClass('btn').addClass('btn-primary');
-        $('.add-row a').prepend('<i class="icon-plus icon-white"></i> ');
-
-        // resize TinyMCE Editor
-        $("table#id_description_tbl.mceLayout").width('617px');
-
-        //hide select pref_label if no acronym
-        if($("input#id_acronym").length > 0 && $("input#id_acronym").val().length < 1){
-        hide_pref_label_select()};
-
-        //exchange modalités
-        //$("input[id$='mod_euro']").parents("div.control-group").css("max-width","700px");
-        //$("select[id^='id_exchanges'][id$='-eway']").css("margin-right","20px").parents("div.control-group").children("label").css("display","none")
+  $.timepicker.regional['fr'] = {
+    timeOnlyTitle : 'Sélectionnez l’horaire',
+    timeText : 'Horaire',
+    hourText : 'Heure',
+    minuteText : 'Minute',
+    secondText : 'Seconde',
+    currentText : 'Maintenant',
+    closeText : 'Terminé',
+    ampm : false
+  };
+  $.timepicker.setDefaults($.timepicker.regional['fr']);
 
 
+    // messages
+    $(".alert .close").click(function(){
+        $(this).parent().fadeOut('slow');
     });
 
-  // messages
-  $(".alert .close").click(function(){
-      $(this).parent().fadeOut('slow');
-  });
 
-  // complément au widget groupbox de coop-tag
+  // call cookie tab
+  selectPreviousTab()
 
-  if($('ul.groupbox-list').length > 0 && typeof django.jQuery.fn.columnize === 'function'){
-    // en-tetes deroulants
-    $('div.groupbox-header').click(function(e){
-        $(this).next("ul.groupbox-list").slideToggle();
+
+    // AdminDate widgets
+
+    $('.vDateField').datepicker({dateFormat: 'yy-mm-dd'});
+    $('.vTimeField').timepicker({ timeFormat: 'hh:mm', separator:' h ',  stepMinute: 15,  hour: 9, minute: 00});
+    $('span.datetimeshortcuts').siblings('br').remove();
+
+    //  $("a[rel=popover].top-icon").twipsy({offset: 20});
+
+
+    $('ul.nav li a').bind('click', function (e) {
+        //console.log($(this).attr('href'))
+        tabCookie($(this).attr('href'))
     });
-    // cases en colonnes
-    $('.groupbox ul').columnize({columns:3}).hide();
-    // clic = mise à jour compteur en en-tete
-    $('.groupbox-list input[type=checkbox]').bind('change',function(e){
-        var parent_list = $(this).parents('ul');
-        //console.log(parent_list);
-        updateCounter(parent_list);
+
+
+    // resize TinyMCE Editor
+    $("table#id_description_tbl.mceLayout").width('617px');
+
+    //exchange modalités
+    //$("input[id$='mod_euro']").parents("div.control-group").css("max-width","700px");
+    //$("select[id^='id_exchanges'][id$='-eway']").css("margin-right","20px").parents("div.control-group").chil"label")css("display","none")
+
+
+    // adding edit link for FKeys
+    // adapted from http://djangosnippets.org/snippets/431/
+
+    empty_values = ['','---------']
+
+    $("a.add-another").each(function(){
+      if($.inArray($(this).prev().val(), empty_values)=='-1' &&       // si selection pas vide
+          $(this).siblings('select').attr('multiple') != 'multiple'   // et qu'on est pas sur un select multiple
+          ){
+          $(this).after("&nbsp;<a class='changelink' href='#' title='Modifier cet objet'><img src='/static/admin/img/icon_changelink.gif'></a>");
+          $(this).next().click(function(){
+              if($(this).prev().prev().attr('value')=='')return false;
+              var link = ($(this).prev().attr('href')+'../'+$(this).prev().prev().attr('value'));
+
+              //window.location.href = link
+              // popup version :
+              var win = window.open(link + '?_popup=1', link, 'height=600,width=1000,resizable=yes,scrollbars=yes');
+              win.focus();
+              return false;
+            });
+          }
     });
-    // si un secteur coché au démarrage, afficher la rubrique
-    $('.groupbox-list').each(function(){
-        var init = updateCounter($(this));
-        if(init){
-            $(this).show();
-        }
+
+
+    // specific to organization admin
+    // hide select pref_label if no acronym
+
+    if($("input#id_acronym").length > 0 && $("input#id_acronym").val().length < 1){
+    hide_pref_label_select()};
+
+    $('input#id_acronym').bind('keyup',function(){
+        if($(this).val().length > 0)
+            show_pref_label_select()
+        else
+            hide_pref_label_select()
     });
-  }
-
-  // adding edit link for FKeys
-  // adapted from http://djangosnippets.org/snippets/431/
-
-  empty_values = ['','---------']
-
-  $("a.add-another").each(function(){
-  if($.inArray($(this).prev().val(), empty_values)=='-1' &&       // si selection pas vide
-      $(this).siblings('select').attr('multiple') != 'multiple'   // et qu'on est pas sur un select multiple
-      ){
-      $(this).after("&nbsp;<a class='changelink' href='#' title='Modifier cet objet'><img src='/static/admin/img/icon_changelink.gif'></a>");
-      $(this).next().click(function(){
-          if($(this).prev().prev().attr('value')=='')return false;
-          var link = ($(this).prev().attr('href')+'../'+$(this).prev().prev().attr('value'));
-
-          //window.location.href = link
-          // popup version :
-          var win = window.open(link + '?_popup=1', link, 'height=600,width=1000,resizable=yes,scrollbars=yes');
-          win.focus();
-          return false;
-      });
-  }
-  });
-
-
-  $('input#id_acronym').bind('keyup',function(){
-      if($(this).val().length > 0)
-          show_pref_label_select()
-      else
-          hide_pref_label_select()
-  });
 
     // http://djangosnippets.org/snippets/1492
     // Only for stacked inlines
@@ -152,6 +165,44 @@ $(function(){
     });
 
 
+  // decorate inline add buttons
+    $('.add-row a').addClass('btn').addClass('btn-primary');
+    $('.add-row a').prepend('<i class="icon-plus icon-white"></i> ');
+
+
 });
+
+
+  // complément au widget groupbox de coop-tag
+  // doit être dans le namespace django.jQuery car il est loadé avant le custom jquery
+
+(function($){
+
+  if($('ul.groupbox-list').length > 0 && typeof django.jQuery.fn.columnize === 'function'){
+
+    // en-tetes deroulants
+    $('div.groupbox-header').click(function(e){
+        $(this).next("ul.groupbox-list").slideToggle();
+    });
+    // cases en colonnes
+    $('.groupbox ul').columnize({columns:3}).hide();
+    // clic = mise à jour compteur en en-tete
+    $('.groupbox-list input[type=checkbox]').bind('change',function(e){
+        var parent_list = $(this).parents('ul');
+        //console.log(parent_list);
+        updateCounter(parent_list);
+    });
+    // si un secteur coché au démarrage, afficher la rubrique
+    $('.groupbox-list').each(function(){
+        var init = updateCounter($(this));
+        if(init){
+            $(this).show();
+        }
+    });
+  }
+
+})(django.jQuery);
+
+
 
 </script>

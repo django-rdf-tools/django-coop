@@ -114,7 +114,7 @@ div.inline-group h3{
 }
 
 .dashboard-module-content ul li{	
-	font-size: 16px;
+	font-size: 15px;
 	font-family: "PT Sans Narrow", "Trebuchet MS", Trebuchet, Tahoma, Arial;
 }
 
@@ -149,27 +149,42 @@ div.controls input:not([name=logo]){
 	float: left;
 }
 
+
+div.controls{
+	position: relative;
+}
+div.controls select {
+	float: left;
+}
+
 div.controls > input[type=checkbox]{
 	width: 12px;
 }
 
+div.controls > a.related-lookup,
+div.controls > a.add-another,
+div.controls > a.changelink{
+	display: inline-block;
+	position: absolute;
+	padding-left: 7px;
+	top: 6px;
+}
 
 
 div.controls > a.related-lookup,
 div.controls > a.add-another,
 div.controls > a.changelink{
-	top: 6px;
-	display: inline-block;
-	position: relative;
-	padding-left: 7px;
-}
-
-
-#identification div.controls > a.related-lookup,
-#identification div.controls > a.add-another,
-#identification div.controls > a.changelink{
 	float: left;
 }
+
+div.controls > a.related-lookup{	
+	margin-left: 12px;
+}
+
+div.controls > a.changelink{
+	margin-left: 24px;
+}
+
 
 
 
@@ -208,6 +223,7 @@ input#searchbar.search-query{
 
 label.control-label.inline{
 	padding-right: 5px;
+	float: left;
 }
 
 
@@ -307,6 +323,7 @@ form#person_form a#add_id_category img
 	font-style: italic;
 	color: gray;
 	margin-top: 5px;
+	margin-left: 24px;
 }
 
 /* @group Groupbox */
@@ -491,6 +508,18 @@ td.target .ac_input{
 }
 td.content .vTextField{
 	width: 150px;
+}
+
+td .vTimeField{
+	width: 60px;
+}
+
+span.datetimeshortcuts {
+	color: #f9f9f9;
+}
+
+span.datetimeshortcuts img{
+	display: none;
 }
 
 input.vForeignKeyRawIdAdminField{
