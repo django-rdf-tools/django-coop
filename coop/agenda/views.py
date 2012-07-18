@@ -8,7 +8,7 @@ from django.db import models
 from django.template.context import RequestContext
 from django.shortcuts import get_object_or_404, render_to_response
 
-from coop.agenda.models import Event, Occurrence
+from coop_local.models import Event, Occurrence
 from coop.agenda import utils, forms
 from coop.agenda.conf import settings as agenda_settings
 

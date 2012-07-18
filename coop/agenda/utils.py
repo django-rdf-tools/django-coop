@@ -43,16 +43,16 @@ def month_boundaries(dt=None):
 
 def css_class_cycler():
     """
-    Return a dictionary keyed by ``EventType`` abbreviations, whose values are an
+    Return a dictionary keyed by ``EventCategory`` abbreviations, whose values are an
     iterable or cycle of CSS class names.
     """
-    from coop.agenda.models import EventType
+    from coop_local.models import EventCategory
     return defaultdict(
         lambda: itertools.cycle(('evt-even', 'evt-odd')).next,
-        ((e.abbr, itertools.cycle((
-             'evt-%s-even' % e.abbr,
-             'evt-%s-odd' % e.abbr
-             )).next) for e in EventType.objects.all()
+        ((e.slug, itertools.cycle((
+             'evt-%s-even' % e.slug,
+             'evt-%s-odd' % e.slug
+             )).next) for e in EventCategory.objects.all()
         )
     )
 
@@ -115,13 +115,13 @@ def create_timeslot_table(dt=None, items=None,
     * ``time_delta`` - a ``datetime.timedelta`` instance
     * ``min_column`` - the minimum number of columns to show in the table
     * ``css_class_cycles`` - if not ``None``, a callable returning a dictionary
-      keyed by desired ``EventType`` abbreviations with values that iterate over
+      keyed by desired ``EventCategory`` abbreviations with values that iterate over
       progressive CSS class names for the particular abbreviation.
     * ``proxy_class`` - a wrapper class for accessing an ``Occurrence`` object.
       This class should also expose ``event_type`` and ``event_type`` attrs, and
       handle the custom output via its __unicode__ method.
     """
-    from coop.agenda.models import Occurrence
+    from coop_local.models import Occurrence
     dt = dt or datetime.now()
     dtstart = datetime.combine(dt.date(), start_time)
     dtend = dtstart + end_time_delta

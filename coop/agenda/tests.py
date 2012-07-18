@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.core.management import call_command
 
 from coop.agenda import utils
-from coop.agenda.models import *
+from coop_local.models import Event, Occurrence
 
 expected_table_1 = """\
 | 15:00 |          |          |          |          |          |
@@ -153,10 +153,10 @@ def doc_tests():
     """
         >>> from dateutil import rrule
         >>> from datetime import datetime
-        >>> from coop.agenda.models import *
-        >>> evt_types = [EventType.objects.create(abbr=l.lower(),label=l) for l in ['Foo', 'Bar', 'Baz']]
+        >>> from coop_local.models import EventCategory
+        >>> evt_types = [EventCategory.objects.create(abbr=l.lower(),label=l) for l in ['Foo', 'Bar', 'Baz']]
         >>> evt_types
-        [<EventType: Foo>, <EventType: Bar>, <EventType: Baz>]
+        [<EventCategory: Foo>, <EventCategory: Bar>, <EventCategory: Baz>]
         >>> e = Event.objects.create(title='Hello, world', description='Happy New Year', event_type=evt_types[0])
         >>> e
         <Event: Hello, world>

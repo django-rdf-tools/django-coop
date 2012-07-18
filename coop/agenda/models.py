@@ -4,72 +4,70 @@ from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django_extensions.db import fields as exfields
 from dateutil import rrule
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
-from django.contrib.auth.models import User
-from django.conf import settings
+from django.db.models.loading import get_model
+from coop.models import URIModel
 
 
-class Calendar(models.Model):
+class BaseCalendar(models.Model):
     title = models.CharField(_('title'), blank=True, max_length=250)
     description = models.TextField(_(u'description'), blank=True)
     slug = exfields.AutoSlugField(populate_from='title')
-    created = exfields.CreationDateTimeField(_(u'created'), null=True)
-    modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
 
     class Meta:
         verbose_name = _('calendar')
         verbose_name_plural = _('calendars')
-    #     abstract = True
+        abstract = True
 
     def __unicode__(self):
         return self.title
 
 
-class EventType(models.Model):
+class BaseEventCategory(models.Model):
     """
     Simple ``Event`` classification.
     """
-    abbr = models.CharField(_('abbreviation'), max_length=4, unique=True)
+    # abbr = models.CharField(_('abbreviation'), max_length=4, unique=True)  #varennes
     label = models.CharField(_('label'), max_length=50)
     slug = exfields.AutoSlugField(populate_from='label')
 
-    # class Meta:
-    #     abstract = True
     class Meta:
-        verbose_name = _('event type')
-        verbose_name_plural = _('event types')
+        verbose_name = _('event category')
+        verbose_name_plural = _('event categories')
+        abstract = True
 
     def __unicode__(self):
         return self.label
 
 
-class Event(models.Model):
+class BaseEvent(URIModel):
     """
     Container model for general metadata and associated ``Occurrence`` entries.
     """
     title = models.CharField(_('title'), max_length=32)
     description = models.TextField(_(u'description'), blank=True)
     slug = exfields.AutoSlugField(populate_from='title')
-    created = exfields.CreationDateTimeField(_(u'created'), null=True)
-    modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
-    event_type = models.ForeignKey(EventType, verbose_name=_('event type'))
-    calendar = models.ForeignKey(Calendar, verbose_name=_('calendar'))
+    event_type = models.ForeignKey('coop_local.EventCategory', verbose_name=_('event type'))
+    calendar = models.ForeignKey('coop_local.Calendar', verbose_name=_('calendar'))
 
     # Linking to local objects
     organization = models.ForeignKey('coop_local.Organization', null=True, blank=True, verbose_name=_('organization'))
     person = models.ForeignKey('coop_local.Person', null=True, blank=True, verbose_name=_('author'))
     # Linking to local or remote objects
-    publisher_uri = models.CharField(_('organization URI'), blank=True, max_length=255, editable=False)
-    author_uri = models.CharField(_('author URI'), blank=True, max_length=255, editable=False)
+    organization_uri = models.CharField(_('organization URI'), blank=True, max_length=255, editable=False)
+    person_uri = models.CharField(_('author URI'), blank=True, max_length=255, editable=False)
 
-    uuid = exfields.UUIDField()  # Needed ?
+    organization_alt_label = models.CharField(_(u'other organization'),
+                                                max_length=250, blank=True, null=True,
+                                                help_text=_(u'fill this only if the organization record is not available locally'))
 
     class Meta:
         verbose_name = _('event')
         verbose_name_plural = _('events')
         ordering = ('title', )
-        # abstract = True
+        abstract = True
+
+    def label(self):
+        return self.title
 
     def __unicode__(self):
         return self.title
@@ -122,7 +120,7 @@ class Event(models.Model):
         """
         Convenience method wrapping ``Occurrence.objects.daily_occurrences``.
         """
-        return Occurrence.objects.daily_occurrences(dt=dt, event=self)
+        return get_model('coop_local', 'Occurrence').objects.daily_occurrences(dt=dt, event=self)
 
 
 class OccurrenceManager(models.Manager):
@@ -161,16 +159,14 @@ class OccurrenceManager(models.Manager):
             return qs
 
 
-class Occurrence(models.Model):
+class BaseOccurrence(models.Model):
     """
     Represents the start end time for a specific occurrence of a master ``Event``
     object.
     """
     start_time = models.DateTimeField(_('start time'))
     end_time = models.DateTimeField(_('end time'))
-    event = models.ForeignKey(Event, verbose_name=_('event'), editable=False)
-    created = exfields.CreationDateTimeField(_(u'created'), null=True)
-    modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
+    event = models.ForeignKey('coop_local.Event', verbose_name=_('event'), editable=False)
 
     objects = OccurrenceManager()
 
@@ -178,7 +174,7 @@ class Occurrence(models.Model):
         verbose_name = _('occurrence')
         verbose_name_plural = _('occurrences')
         ordering = ('start_time', 'end_time')
-        # abstract = True
+        abstract = True
 
     def __unicode__(self):
         return u'%s: %s' % (self.title, self.start_time.isoformat())
@@ -203,7 +199,7 @@ def create_event(title, event_type, description='', start_time=None,
         end_time=None, note=None, **rrule_params):
     """
     Convenience function to create an ``Event``, optionally create an
-    ``EventType``, and associated ``Occurrence``s. ``Occurrence`` creation
+    ``EventCategory``, and associated ``Occurrence``s. ``Occurrence`` creation
     rules match those for ``Event.add_occurrences``.
 
     Returns the newly created ``Event`` instance.
@@ -211,8 +207,8 @@ def create_event(title, event_type, description='', start_time=None,
     Parameters
 
     ``event_type``
-        can be either an ``EventType`` object or 2-tuple of ``(abbreviation,label)``,
-        from which an ``EventType`` is either created or retrieved.
+        can be either an ``EventCategory`` object or 2-tuple of ``(abbreviation,label)``,
+        from which an ``EventCategory`` is either created or retrieved.
 
     ``start_time``
         will default to the current hour if ``None``
@@ -227,14 +223,14 @@ def create_event(title, event_type, description='', start_time=None,
     from coop.agenda.conf import settings as agenda_settings
 
     if isinstance(event_type, tuple):
-        event_type, created = EventType.objects.get_or_create(
+        event_type, created = get_model('coop_local', 'EventCategory').objects.get_or_create(
             abbr=event_type[0],
         )
         if created:
             event_type.label = event_type[1]
             event_type.save()
 
-    event = Event.objects.create(
+    event = get_model('coop_local', 'Event').objects.create(
         title=title,
         description=description,
         event_type=event_type

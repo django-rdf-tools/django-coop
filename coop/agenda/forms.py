@@ -10,7 +10,8 @@ from django.forms.extras.widgets import SelectDateWidget
 from dateutil import rrule
 from coop.agenda.conf import settings as agenda_settings
 from coop.agenda import utils
-from coop.agenda.models import *
+from coop_local.models import Occurrence
+from django.db.models.loading import get_model
 
 WEEKDAY_SHORT = (
     (7, _(u'Sun')),
@@ -155,7 +156,7 @@ class MultipleIntegerField(forms.MultipleChoiceField):
 
     def __init__(self, choices, size=None, label=None, widget=None):
         if widget is None:
-            widget = forms.SelectMultiple(attrs={'size' : size or len(choices)})
+            widget = forms.SelectMultiple(attrs={'size': size or len(choices)})
         super(MultipleIntegerField, self).__init__(
             required=False,
             choices=choices,
@@ -179,7 +180,6 @@ class SplitDateTimeWidget(forms.MultiWidget):
             forms.Select(choices=default_timeslot_options, attrs=attrs)
         )
         super(SplitDateTimeWidget, self).__init__(widgets, attrs)
-
 
     def decompress(self, value):
         if value:
@@ -250,7 +250,7 @@ class MultipleOccurrenceForm(forms.Form):
 
     # monthly  options
     month_option = forms.ChoiceField(
-        choices=(('on',_(u'On the')), ('each',_(u'Each:'))),
+        choices=(('on', _(u'On the')), ('each', _(u'Each:'))),
         initial='each',
         widget=forms.RadioSelect(),
         label=_(u'Monthly options'),
@@ -260,7 +260,7 @@ class MultipleOccurrenceForm(forms.Form):
     month_ordinal = forms.IntegerField(widget=forms.Select(choices=ORDINAL))
     month_ordinal_day = forms.IntegerField(widget=forms.Select(choices=WEEKDAY_LONG))
     each_month_day = MultipleIntegerField(
-        [(i,i) for i in range(1,32)],
+        [(i, i) for i in range(1, 32)],
         widget=forms.CheckboxSelectMultiple
     )
 
@@ -301,7 +301,6 @@ class MultipleOccurrenceForm(forms.Form):
             self.initial.setdefault('start_time_delta', u'%d' % offset)
             self.initial.setdefault('end_time_delta', u'%d' % (offset + SECONDS_INTERVAL,))
 
-
     def clean(self):
         day = datetime.combine(self.cleaned_data['day'], time(0))
         self.cleaned_data['start_time'] = day + timedelta(
@@ -313,7 +312,6 @@ class MultipleOccurrenceForm(forms.Form):
         )
 
         return self.cleaned_data
-
 
     def save(self, event):
         if self.cleaned_data['repeats'] == 'no':
@@ -328,7 +326,6 @@ class MultipleOccurrenceForm(forms.Form):
         )
 
         return event
-
 
     def _build_rrule_params(self):
         iso = ISO_WEEKDAYS_MAP
@@ -367,14 +364,13 @@ class MultipleOccurrenceForm(forms.Form):
         return params
 
 
-
 class EventForm(forms.ModelForm):
     """
     A simple form for adding and updating Event attributes
     """
 
     class Meta:
-        model = Event
+        model = get_model('coop_local', 'Event')
 
     def __init__(self, *args, **kws):
         super(EventForm, self).__init__(*args, **kws)
