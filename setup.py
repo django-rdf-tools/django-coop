@@ -26,6 +26,7 @@ setup(
                 'coop.org',
                 'coop.mailing',
                 'coop.agenda',
+                'coop.agenda.conf',
                 'coop.person',
                 'coop.templatetags',
                 'coop.utils',
