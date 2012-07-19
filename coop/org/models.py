@@ -66,7 +66,6 @@ class BaseContact(URIModel):
         else:
             return self.content
 
-    @property
     def label(self):
         return self.__unicode__()
 
@@ -113,7 +112,7 @@ class BaseRole(URIModel):
 
     class Meta:
         abstract = True
-        ordering = ['label']
+        #ordering = ['label']
 
     def __unicode__(self):
         return unicode(self.label)
@@ -175,7 +174,6 @@ class BaseEngagement(URIModel):
                     'org': self.organization.__unicode__()
                     }
 
-    @property
     def label(self):
         return self.__unicode__()
 
@@ -266,7 +264,6 @@ class BaseOrganization(URIModel):
     def __unicode__(self):
         return unicode(self.title)
 
-    @property
     def label(self):
         if self.pref_label == PREFLABEL.TITLE:
             return self.title

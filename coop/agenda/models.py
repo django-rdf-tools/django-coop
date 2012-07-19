@@ -69,7 +69,6 @@ class BaseEvent(URIModel):
         ordering = ('title', )
         abstract = True
 
-    @property
     def label(self):
         return self.title
 

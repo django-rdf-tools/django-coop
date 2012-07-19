@@ -76,8 +76,9 @@ class OrgInline(InlineAutocompleteAdmin):
 
 
 class RoleAdmin(admin.ModelAdmin):
-    list_display = ('label', 'category')
-    list_editable = ('category',)
+    pass
+    list_display = ('label', )#'category')
+    #list_editable = ('category',)
 
 
 class OrganizationAdminForm(forms.ModelForm):

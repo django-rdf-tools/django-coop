@@ -22,7 +22,10 @@ class UpdateFeed(Feed):
 
     # to deal with overwriting ...
     def item_title(self, item):
-        return item.label  # calls a Field or a @property method that must exists on the object
+        try:
+            return item.label()
+        except:
+            return item.label
 
     def item_link(self, item):
         return item.uri

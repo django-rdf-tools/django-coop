@@ -82,7 +82,6 @@ class StaticURIModel(models.Model):
     domain_name = settings.DEFAULT_URI_DOMAIN
     #str(Site.objects.get_current().domain)
 
-    @property
     def label(self):
         return "Not Yet Implemented label method"
 

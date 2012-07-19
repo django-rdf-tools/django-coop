@@ -112,7 +112,6 @@ class BaseExchange(URIModel):
     def get_absolute_url(self):
         return reverse('exchange_detail', args=[self.id])
 
-    @property
     def label(self):
         return self.title
 
