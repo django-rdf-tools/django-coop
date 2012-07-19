@@ -1,4 +1,5 @@
 recursive-include coop/templates *
+recursive-include coop/agenda/templates *
 recursive-include coop/static *
 recursive-include coop/exchange/locale *.mo *.po
 recursive-include coop/link/locale *.mo *.po
