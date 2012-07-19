@@ -31,7 +31,7 @@ class EventAdmin(FkAutocompleteAdmin):
         'title', 'description',
         ('event_type', 'calendar'),
         ('organization', 'person'),
-        'organization_alt_label'
+        #'remote_organization_label'
       )
                             }),)
 
