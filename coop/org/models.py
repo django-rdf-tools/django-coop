@@ -86,9 +86,23 @@ class BaseContact(URIModel):
         super(BaseContact, self).save(*args, **kwargs)
 
 
+class BaseRoleCategory(models.Model):
+    label = models.CharField(_(u'label'), max_length=60)
+    slug = exfields.AutoSlugField(populate_from=('label'), overwrite=True)
+    uri = models.CharField(_(u'URI'), blank=True, max_length=250)
+
+    class Meta:
+        abstract = True
+        ordering = ['label']
+
+    def __unicode__(self):
+        return unicode(self.label)
+
+
 class BaseRole(URIModel):
     label = models.CharField(_(u'label'), max_length=60)
     slug = exfields.AutoSlugField(populate_from=('label'), overwrite=True)
+    category = models.ForeignKey('coop_local.RoleCategory', null=True, blank=True, verbose_name=_(u'category'))
 
     domain_name = 'data.economie-solidaire.fr'
 
