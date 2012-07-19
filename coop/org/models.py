@@ -66,6 +66,7 @@ class BaseContact(URIModel):
         else:
             return self.content
 
+    @property
     def label(self):
         return self.__unicode__()
 
@@ -154,10 +155,13 @@ class BaseRelation(models.Model):
 class BaseEngagement(URIModel):
     person = models.ForeignKey('coop_local.Person', verbose_name=_(u'person'), related_name='engagements')
     organization = models.ForeignKey('coop_local.Organization', verbose_name=_(u'organization'))
-    role = models.ForeignKey('coop_local.Role', verbose_name=_(u'role'))
+    role = models.ForeignKey('coop_local.Role', verbose_name=_(u'role'), null=True, blank=True)
     role_detail = models.CharField(_(u'detailed role'), blank=True, max_length=100)
     org_admin = models.BooleanField(_(u'has editor rights'), default=True)
     engagement_display = models.PositiveSmallIntegerField(_(u'Display'), choices=DISPLAY.CHOICES, default=DISPLAY.PUBLIC)
+
+    remote_role_uri = models.CharField(_(u'URI'), blank=True, max_length=250)
+    remote_role_label = models.CharField(blank=True, max_length=100)
 
     class Meta:
         abstract = True
@@ -171,6 +175,7 @@ class BaseEngagement(URIModel):
                     'org': self.organization.__unicode__()
                     }
 
+    @property
     def label(self):
         return self.__unicode__()
 
@@ -261,6 +266,7 @@ class BaseOrganization(URIModel):
     def __unicode__(self):
         return unicode(self.title)
 
+    @property
     def label(self):
         if self.pref_label == PREFLABEL.TITLE:
             return self.title

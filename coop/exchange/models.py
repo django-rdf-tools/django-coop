@@ -20,7 +20,9 @@ class BaseProduct(URIModel):
     description = models.TextField(_(u'description'), blank=True)
     organization = models.ForeignKey('coop_local.Organization', blank=True, null=True,
                                         verbose_name='publisher', related_name='products')
-    organization_uri = models.CharField(_(u'publisher URI'), blank=True, max_length=200, editable=False)
+
+    remote_organization_uri = models.CharField(_(u'publisher URI'), blank=True, max_length=200, editable=False)
+    remote_organization_label = models.CharField(_('organization'), blank=True, max_length=250)
 
     def __unicode__(self):
         return self.title + u' (' + self.organization.__unicode__() + u')'
@@ -81,8 +83,12 @@ class BaseExchange(URIModel):
     slug = exfields.AutoSlugField(populate_from='title', overwrite=True)
     products = models.ManyToManyField('coop_local.Product', verbose_name=_(u'linked products'))
 
-    person_uri = models.CharField(_(u'person URI'), blank=True, max_length=200, editable=False)
-    organization_uri = models.CharField(_(u'publisher URI'), blank=True, max_length=200, editable=False)
+    remote_person_uri = models.CharField(_(u'person URI'), blank=True, max_length=200, editable=False)
+    remote_person_label = models.CharField(_('person'), max_length=250)
+
+    remote_organization_uri = models.CharField(_(u'organization URI'), blank=True, max_length=200, editable=False)
+    remote_organization_label = models.CharField(_('organization'), max_length=250)
+
 
     methods = models.ManyToManyField('coop_local.ExchangeMethod', verbose_name=_(u'exchange methods'))
 
@@ -106,6 +112,7 @@ class BaseExchange(URIModel):
     def get_absolute_url(self):
         return reverse('exchange_detail', args=[self.id])
 
+    @property
     def label(self):
         return self.title
 

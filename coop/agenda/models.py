@@ -52,11 +52,14 @@ class BaseEvent(URIModel):
     # Linking to local objects
     organization = models.ForeignKey('coop_local.Organization', null=True, blank=True, verbose_name=_('organization'))
     person = models.ForeignKey('coop_local.Person', null=True, blank=True, verbose_name=_('author'))
-    # Linking to local or remote objects
-    organization_uri = models.CharField(_('organization URI'), blank=True, max_length=255, editable=False)
-    person_uri = models.CharField(_('author URI'), blank=True, max_length=255, editable=False)
 
-    organization_alt_label = models.CharField(_(u'other organization'),
+    # Linking to remote objects
+    remote_person_uri = models.CharField(_('author URI'), blank=True, max_length=255, editable=False)
+    remote_person_label = models.CharField(_(u'external author'),
+                                                max_length=250, blank=True, null=True,
+                                                help_text=_(u'fill this only if the person record is not available locally'))
+    remote_organization_uri = models.CharField(_('organization URI'), blank=True, max_length=255, editable=False)
+    remote_organization_label = models.CharField(_(u'external organization'),
                                                 max_length=250, blank=True, null=True,
                                                 help_text=_(u'fill this only if the organization record is not available locally'))
 
@@ -66,6 +69,7 @@ class BaseEvent(URIModel):
         ordering = ('title', )
         abstract = True
 
+    @property
     def label(self):
         return self.title
 

@@ -9,7 +9,7 @@ import datetime
 
 class UpdateFeed(Feed):
     title = _(u"Updates for %s." % Site.objects.get_current().name)
-    link = "/feed/" 
+    link = "/feed/"
     description = _(u"All records updates listed on the %s website." % Site.objects.get_current().name)
     hub = "http://%s/hub/" % Site.objects.get_current()
 
@@ -22,10 +22,7 @@ class UpdateFeed(Feed):
 
     # to deal with overwriting ...
     def item_title(self, item):
-        try:
-            return item.label()
-        except:
-            return item.label
+        return item.label  # calls a Field or a @property method that must exists on the object
 
     def item_link(self, item):
         return item.uri

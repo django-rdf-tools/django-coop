@@ -82,8 +82,9 @@ class StaticURIModel(models.Model):
     domain_name = settings.DEFAULT_URI_DOMAIN
     #str(Site.objects.get_current().domain)
 
+    @property
     def label(self):
-        return "NYI label method"
+        return "Not Yet Implemented label method"
 
     # This metho could be overwritten by subClasses
     @property
@@ -320,13 +321,13 @@ def checkDirectMap(dbfieldName, d2rqGraph):
 
 
 def checkDirectMapFK(dbfieldName, d2rqGraph):
-    # on commence par chercher tous les triples de la forme 
+    # on commence par chercher tous les triples de la forme
     # select * where { ?s d2rq:join ?l. filter(?l contains dbfieldname) }
     # mais comme le d2rqGraph n'est pas un SpaqlGraph on le fait à la main
 
-    # Well it is not possible to use settings.NS_D2RQ.join because 
+    # Well it is not possible to use settings.NS_D2RQ.join because
     # there is a conflict of names with the join function of the Namespace
-    # class.... 
+    # class....
     tr = list(d2rqGraph.triples((None, URIRef(str(settings.NS_D2RQ) + 'join'), None)))
 
     def useField((s, p, o)):

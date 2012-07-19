@@ -15,9 +15,10 @@ def favicon(url):
                        parsed_url[4], parsed_url[5]))
 
 
-class LocalRemoteUrlNode(template.Node):
+class LocalRemoteNode(template.Node):
 
-    def __init__(self, obj, model_name):
+    def __init__(self, attr, obj, model_name):
+        self.attr = attr
         self.obj = template.Variable(obj)
         self.model_name = model_name
 
@@ -33,23 +34,26 @@ class LocalRemoteUrlNode(template.Node):
 
         related = object.__getattribute__(self.model_name)
         if related:
-            return related.get_absolute_url()
+            if self.attr == 'uri':
+                return related.get_absolute_url()
+            elif self.attr == 'label':
+                return related.label()
         else:
             try:
-                return object.__getattribute__(self.model_name + '_uri')
+                return object.__getattribute__(self.model_name + '_' + self.attr)
             except AttributeError:
-                raise FieldError('Field %s_uri is not present on %s' % (self.model_name, object))
+                raise FieldError('Field %s_%s is not present on %s' % (self.model_name, self.attr, object))
 
 
 
 @register.tag
-def local_or_remote_url(parser, token):
+def local_or_remote(parser, token):
     try:
         tag_name, obj, model_name = token.split_contents()
     except ValueError:
-        raise template.TemplateSyntaxError, "This tag requires two arguments" 
+        raise template.TemplateSyntaxError, "This tag requires three arguments : object, uri or label, linked model name"
     #TODO verifier ce qu'on a
-    return LocalRemoteUrlNode(obj, model_name)
+    return LocalRemoteNode(obj, model_name)
 
 
 
