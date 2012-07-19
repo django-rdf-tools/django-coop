@@ -22,7 +22,7 @@ if settings.FIRST_DAY_OF_WEEK is not None:
 elif agenda_settings.CALENDAR_FIRST_WEEKDAY is not None:
     calendar.setfirstweekday(agenda_settings.CALENDAR_FIRST_WEEKDAY)
 
-def event_listing(request, template='event_list.html', events=None,
+def event_listing(request, template='agenda/event_list.html', events=None,
     **extra_context):
     """
     View all ``events``.
@@ -44,13 +44,13 @@ def event_listing(request, template='event_list.html', events=None,
         context_instance=RequestContext(request))
 
 
-def event_minimal_view(request, pk, template='event_minimal_view.html'):
+def event_minimal_view(request, pk, template='agenda/event_minimal_view.html'):
     event = get_object_or_404(Event, pk=pk)
     return render_to_response(template, {'event': event},
         context_instance=RequestContext(request))
 
 
-def event_view(request, pk, template='event_detail.html',
+def event_view(request, pk, template='agenda/event_detail.html',
     event_form_class=forms.EventForm,
     recurrence_form_class=forms.MultipleOccurrenceForm):
     """
@@ -96,7 +96,7 @@ def event_view(request, pk, template='event_detail.html',
 
 
 def occurrence_view(request, event_pk, pk,
-    template='occurrence_detail.html',
+    template='agenda/occurrence_detail.html',
     form_class=forms.SingleOccurrenceForm):
     """
     View a specific occurrence and optionally handle any updates.
@@ -123,7 +123,7 @@ def occurrence_view(request, event_pk, pk,
         context_instance=RequestContext(request))
 
 
-def add_event(request, template='add_event.html',
+def add_event(request, template='agenda/add_event.html',
     event_form_class=forms.EventForm,
     recurrence_form_class=forms.MultipleOccurrenceForm):
     """
@@ -202,7 +202,7 @@ def _datetime_view(request, template, dt, timeslot_factory=None,
 
 
 
-def day_view(request, year, month, day, template='daily_view.html', **params):
+def day_view(request, year, month, day, template='agenda/daily_view.html', **params):
     """
     See documentation for function``_datetime_view``.
     """
@@ -210,7 +210,7 @@ def day_view(request, year, month, day, template='daily_view.html', **params):
     return _datetime_view(request, template, dt, **params)
 
 
-def today_view(request, template='daily_view.html', **params):
+def today_view(request, template='agenda/daily_view.html', **params):
     """
     See documentation for function``_datetime_view``.
     """
@@ -218,7 +218,7 @@ def today_view(request, template='daily_view.html', **params):
 
 
 
-def year_view(request, year, template='yearly_view.html', queryset=None):
+def year_view(request, year, template='agenda/yearly_view.html', queryset=None):
     """
     Context parameters:
 
@@ -263,7 +263,7 @@ def year_view(request, year, template='yearly_view.html', queryset=None):
         context_instance=RequestContext(request))
 
 
-def month_view(request, year, month, template='monthly_view.html',
+def month_view(request, year, month, template='agenda/monthly_view.html',
     queryset=None):
     """
     Render a traditional calendar grid view with temporal navigation variables.
