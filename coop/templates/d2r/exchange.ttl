@@ -20,6 +20,12 @@ map:exchange_description a d2rq:PropertyBridge;
 	d2rq:property dct:description;
 	d2rq:column "coop_local_exchange.description";
 	.
+map:exchange_category a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:exchange;
+    d2rq:property ov:category;
+    d2rq:column "coop_local_exchange.etype"; # TODO maps number to skos concepts
+    .
+
 # fill to gr:availabilityEnd to an arbitrairy value ...
 map:exchange_permanent a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:exchange;
