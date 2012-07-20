@@ -217,6 +217,7 @@ COOPBAR_MODULES = [
     'coop.coop_bar_cfg'
     ]
 
+FORMS_BUILDER_USE_SITES = False
 
 HAYSTACK_SITECONF = 'coop_local.search_sites'
 HAYSTACK_SEARCH_ENGINE = 'simple'
