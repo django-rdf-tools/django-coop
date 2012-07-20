@@ -57,13 +57,18 @@ map:exchange_location a d2rq:PropertyBridge;
 	d2rq:refersToClassMap map:location;
 	d2rq:join "coop_local_exchange.location_id => coop_geo_location.id";
 	.
-map:exchange_person a d2rq:PropertyBridge;
+map:exchange_organization a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:exchange;
 	d2rq:property dct:publisher;
-	d2rq:refersToClassMap map:person;
-	d2rq:join "coop_local_exchange.person_id => coop_local_person.id";
+	d2rq:refersToClassMap map:organization;
+	d2rq:join "coop_local_exchange.organization_id => coop_local_organization.id";
 	.
-
+map:exchange_person a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:exchange;
+    d2rq:property dct:creator;
+    d2rq:refersToClassMap map:person;
+    d2rq:join "coop_local_exchange.person_id => coop_local_person.id";
+    .
 
 # According to the etype field the Exchange can link to several Exchange Methods
 # Only problem is that they have to be recorded as individual resources, not as Classes
