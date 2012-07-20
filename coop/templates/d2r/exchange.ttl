@@ -65,10 +65,13 @@ map:exchange_person a d2rq:PropertyBridge;
 	.
 
 
-# According to the etype another the exchange subject has a more precise class
+# According to the etype field the Exchange can link to several Exchange Methods
+# Only problem is that they have to be recorded as individual resources, not as Classes
+
+
 map:exchange_method_offCurrency a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:exchange;
-    d2rq:property rdf:type;
+    d2rq:property ess:hasMethod;
     d2rq:constantValue ess:OfficialCurrency;
     d2rq:alias "coop_local_exchange_methods AS exchange_method_offCurrency";
     d2rq:condition "exchange_method_offCurrency.exchangemethod_id = 1";
@@ -76,7 +79,7 @@ map:exchange_method_offCurrency a d2rq:PropertyBridge;
     .
 map:exchange_method_gift a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:exchange;
-    d2rq:property rdf:type;
+    d2rq:property ess:hasMethod;
     d2rq:constantValue ess:Gift;
     d2rq:alias "coop_local_exchange_methods AS exchange_method_Gift";
     d2rq:condition "exchange_method_Gift.exchangemethod_id = 2";
@@ -84,7 +87,7 @@ map:exchange_method_gift a d2rq:PropertyBridge;
     .
 map:exchange_method_swap a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:exchange;
-    d2rq:property rdf:type;
+    d2rq:property ess:hasMethod;
     d2rq:constantValue ess:Swap;
     d2rq:alias "coop_local_exchange_methods AS exchange_method_Swap";
     d2rq:condition "exchange_method_Swap.exchangemethod_id = 3";
@@ -92,7 +95,7 @@ map:exchange_method_swap a d2rq:PropertyBridge;
     .
 map:exchange_method_shareCost a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:exchange;
-    d2rq:property rdf:type;
+    d2rq:property ess:hasMethod;
     d2rq:constantValue ess:SharedCost;
     d2rq:alias "coop_local_exchange_methods AS exchange_method_SharedCost";
     d2rq:condition "exchange_method_SharedCost.exchangemethod_id = 4";
@@ -100,7 +103,7 @@ map:exchange_method_shareCost a d2rq:PropertyBridge;
     .
 map:exchange_method_voluntaryWork a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:exchange;
-    d2rq:property rdf:type;
+    d2rq:property ess:hasMethod;
     d2rq:constantValue ess:VoluntaryWork;
     d2rq:alias "coop_local_exchange_methods AS exchange_method_VoluntaryWork";
     d2rq:condition "exchange_method_VoluntaryWork.exchangemethod_id = 5";
@@ -108,7 +111,7 @@ map:exchange_method_voluntaryWork a d2rq:PropertyBridge;
     .
 map:exchange_method_alternativeCurrency a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:exchange;
-    d2rq:property rdf:type;
+    d2rq:property ess:hasMethod;
     d2rq:constantValue ess:AlternativeCurrency;
     d2rq:alias "coop_local_exchange_methods AS exchange_method_AlternativeCurrency";
     d2rq:condition "exchange_method_AlternativeCurrency.exchangemethod_id = 6";
@@ -116,7 +119,7 @@ map:exchange_method_alternativeCurrency a d2rq:PropertyBridge;
     .
 map:exchange_method_employment a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:exchange;
-    d2rq:property rdf:type;
+    d2rq:property ess:hasMethod;
     d2rq:constantValue ess:Employment;
     d2rq:alias "coop_local_exchange_methods AS exchange_method_Employment";
     d2rq:condition "exchange_method_Employment.exchangemethod_id = 7";
@@ -124,7 +127,7 @@ map:exchange_method_employment a d2rq:PropertyBridge;
     .
 map:exchange_method_civicEngagement a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:exchange;
-    d2rq:property rdf:type;
+    d2rq:property ess:hasMethod;
     d2rq:constantValue ess:CivicEngagement;
     d2rq:alias "coop_local_exchange_methods AS exchange_method_CivicEngagement";
     d2rq:condition "exchange_method_CivicEngagement.exchangemethod_id = 8";
@@ -132,7 +135,7 @@ map:exchange_method_civicEngagement a d2rq:PropertyBridge;
     .
 map:exchange_method_practicalTraining a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:exchange;
-    d2rq:property rdf:type;
+    d2rq:property ess:hasMethod;
     d2rq:constantValue ess:PracticalTraining;
     d2rq:alias "coop_local_exchange_methods AS exchange_method_PracticalTraining";
     d2rq:condition "exchange_method_PracticalTraining.exchangemethod_id = 9";
@@ -140,7 +143,7 @@ map:exchange_method_practicalTraining a d2rq:PropertyBridge;
     .
 map:exchange_method_lending a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:exchange;
-    d2rq:property rdf:type;
+    d2rq:property ess:hasMethod;
     d2rq:constantValue ess:Lending;
     d2rq:alias "coop_local_exchange_methods AS exchange_method_Lending";
     d2rq:condition "exchange_method_Lending.exchangemethod_id = 10";
@@ -148,7 +151,7 @@ map:exchange_method_lending a d2rq:PropertyBridge;
     .
 map:exchange_method_renting a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:exchange;
-    d2rq:property rdf:type;
+    d2rq:property ess:hasMethod;
     d2rq:constantValue ess:Renting;
     d2rq:alias "coop_local_exchange_methods AS exchange_method_Renting";
     d2rq:condition "exchange_method_Renting.exchangemethod_id = 11";
