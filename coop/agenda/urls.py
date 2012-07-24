@@ -24,6 +24,10 @@ urlpatterns = patterns('',
         view=views.event_listing,
         name='agenda-events'),
 
+    url(r'^calendar/(?P<slug>[\w-]+)/$',
+        view=views.calendar_listing,
+        name='agenda-calendar'),
+
     url(r'^events/add/$',
         view=views.add_event,
         name='agenda-add-event'),

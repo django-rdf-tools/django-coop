@@ -6,6 +6,7 @@ from tinymce.widgets import AdminTinyMCE
 from django import forms
 from sorl.thumbnail.admin import AdminImageMixin
 from django.utils.translation import ugettext_lazy as _
+from coop.utils.autocomplete_admin import FkAutocompleteAdmin
 
 
 class ObjEnabledInline(InlineModelAdmin):
@@ -50,7 +51,7 @@ if "coop_cms" in settings.INSTALLED_APPS:
     class CoopArticleForm(ArticleAdminForm):
         content = forms.CharField(widget=AdminTinyMCE(attrs={'cols': 80, 'rows': 60}), required=False)
 
-    class CoopArticleAdmin(ArticleAdmin, AdminImageMixin):
+    class CoopArticleAdmin(ArticleAdmin, FkAutocompleteAdmin, AdminImageMixin):
         form = CoopArticleForm
         change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
         change_list_template = 'admin/article_change_list.html'
@@ -63,9 +64,11 @@ if "coop_cms" in settings.INSTALLED_APPS:
         readonly_fields = []
         fieldsets = (
             #(_('Navigation'), {'fields': ('navigation_parent',)}),
-            ('Edition', {'fields': ('title', 'logo', 'content', 'template')}),
+            ('Edition', {'fields': ('title', 'logo', 'content', 'template', 'organization')}),
             ('Options', {'fields': ('summary', 'category', 'is_homepage', 'in_newsletter')}),
         )
+        related_search_fields = {'organization': ('title', 'subtitle', 'description'), }
+
 
     article_model = get_article_class()
     admin.site.unregister(article_model)
