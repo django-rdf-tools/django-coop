@@ -58,8 +58,6 @@ if "coop_cms" in settings.INSTALLED_APPS:
 
         list_display = ['logo_list_display', 'title', 'publication', 'headline', 'in_newsletter', 'category']
         list_editable = ['publication', 'in_newsletter', 'headline', 'category']
-        #list_display = ['logo_list_display', 'title', 'publication', 'category', 'modified', 'in_newsletter']
-        #list_editable = ['publication', 'in_newsletter', 'category']
         list_display_links = ['title']
 
         readonly_fields = ['created', 'modified']
@@ -74,8 +72,9 @@ if "coop_cms" in settings.INSTALLED_APPS:
             form.current_user = request.user
             return form
 
-    admin.site.unregister(get_article_class())
-    admin.site.register(get_article_class(), CoopArticleAdmin)
+    article_model = get_article_class()
+    admin.site.unregister(article_model)
+    admin.site.register(article_model, CoopArticleAdmin)
 
 
 if 'forms_builder.forms' in settings.INSTALLED_APPS:
