@@ -60,17 +60,12 @@ if "coop_cms" in settings.INSTALLED_APPS:
         list_editable = ['publication', 'in_newsletter', 'headline', 'category']
         list_display_links = ['title']
 
-        readonly_fields = ['created', 'modified']
+        readonly_fields = []
         fieldsets = (
             #(_('Navigation'), {'fields': ('navigation_parent',)}),
             ('Edition', {'fields': ('title', 'logo', 'content', 'template')}),
             ('Options', {'fields': ('summary', 'category', 'is_homepage', 'in_newsletter')}),
         )
-
-        def get_form(self, request, obj=None, **kwargs):
-            form = super(ArticleAdmin, self).get_form(request, obj, **kwargs)
-            form.current_user = request.user
-            return form
 
     article_model = get_article_class()
     admin.site.unregister(article_model)
