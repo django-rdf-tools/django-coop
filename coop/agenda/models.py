@@ -6,6 +6,7 @@ from django_extensions.db import fields as exfields
 from dateutil import rrule
 from django.db.models.loading import get_model
 from coop.models import URIModel
+from django.core.urlresolvers import reverse
 
 
 class BaseCalendar(models.Model):
@@ -21,9 +22,8 @@ class BaseCalendar(models.Model):
     def __unicode__(self):
         return self.title
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('agenda-calendar', [str(self.slug)])
+        return reverse('agenda-calendar', args=[self.slug])
 
 
 class BaseEventCategory(models.Model):
