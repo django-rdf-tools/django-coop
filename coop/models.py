@@ -360,3 +360,40 @@ request_finished.connect(post_save_callback, sender=StaticURIModel)
 request_finished.connect(post_delete_callback, sender=StaticURIModel)
 updated.connect(listener)
 
+
+# ----------- Customizing coop-cms Article for more coop intergration
+
+if "coop_cms" in settings.INSTALLED_APPS:
+
+    from coop_cms.models import BaseArticle
+
+    class CoopArticle(BaseArticle, StaticURIModel):
+
+        organization = models.ForeignKey('coop_local.Organization', blank=True, null=True,
+                                verbose_name=_('publisher'), related_name='articles')
+        person = models.ForeignKey('coop_local.Person', blank=True, null=True,
+                                    verbose_name=_(u'person'), related_name='articles')
+
+        remote_person_uri = models.CharField(_(u'person URI'), blank=True, max_length=200, editable=False)
+        remote_person_label = models.CharField(_('person'), max_length=250)
+
+        remote_organization_uri = models.CharField(_(u'organization URI'), blank=True, max_length=200, editable=False)
+        remote_organization_label = models.CharField(_('organization'), max_length=250)
+
+        def label(self):
+            return self.title
+
+        # def can_publish_article(self, user):
+        #     return (self.author == user)
+
+        #def can_edit_article(self, user):
+        #   return True
+        #   test on URI, not on django user
+
+        class Meta:
+            verbose_name = _(u"article")
+            verbose_name_plural = _(u"articles")
+            abstract = True
+
+
+
