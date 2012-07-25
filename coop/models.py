@@ -375,10 +375,10 @@ if "coop_cms" in settings.INSTALLED_APPS:
                                     verbose_name=_(u'person'), related_name='articles')
 
         remote_person_uri = models.CharField(_(u'person URI'), blank=True, max_length=200, editable=False)
-        remote_person_label = models.CharField(_('person'), max_length=250)
+        remote_person_label = models.CharField(_('person'), blank=True, max_length=250)
 
         remote_organization_uri = models.CharField(_(u'organization URI'), blank=True, max_length=200, editable=False)
-        remote_organization_label = models.CharField(_('organization'), max_length=250)
+        remote_organization_label = models.CharField(_('organization'), blank=True, max_length=250)
 
         def label(self):
             return self.title
