@@ -21,7 +21,7 @@ class CustomIndexDashboard(Dashboard):
     """
     Custom index dashboard for devcoop.
     """
-    columns = 3
+    columns = 2
     title = ''
     template = 'admin_tools/coop_dashboard.html'
 
