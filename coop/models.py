@@ -76,7 +76,7 @@ class StaticURIModel(models.Model):
 
     # La version simple c'est de passer par le save() et de supprimer le default.... c'est pas
     # tres beau, car un plus couteux en runtime... mais bon
-    uuid = models.CharField(_(u'uuid'), max_length=50, unique=True, null=True, default=shortuuid.uuid, editable=False)
+    uuid = models.CharField(_(u'uuid'), max_length=50, null=True, editable=False, unique=True, default=shortuuid.uuid)
 
     # the default value, this attribut should be overloaded
     domain_name = settings.DEFAULT_URI_DOMAIN
@@ -359,4 +359,41 @@ from django_push.subscriber.signals import updated
 request_finished.connect(post_save_callback, sender=StaticURIModel)
 request_finished.connect(post_delete_callback, sender=StaticURIModel)
 updated.connect(listener)
+
+
+# ----------- Customizing coop-cms Article for more coop intergration
+
+if "coop_cms" in settings.INSTALLED_APPS:
+
+    from coop_cms.models import BaseArticle
+
+    class CoopArticle(BaseArticle, StaticURIModel):
+
+        organization = models.ForeignKey('coop_local.Organization', blank=True, null=True,
+                                verbose_name=_('publisher'), related_name='articles')
+        person = models.ForeignKey('coop_local.Person', blank=True, null=True,
+                                    verbose_name=_(u'person'), related_name='articles')
+
+        remote_person_uri = models.CharField(_(u'person URI'), blank=True, max_length=200, editable=False)
+        remote_person_label = models.CharField(_('person'), blank=True, max_length=250)
+
+        remote_organization_uri = models.CharField(_(u'organization URI'), blank=True, max_length=200, editable=False)
+        remote_organization_label = models.CharField(_('organization'), blank=True, max_length=250)
+
+        def label(self):
+            return self.title
+
+        # def can_publish_article(self, user):
+        #     return (self.author == user)
+
+        #def can_edit_article(self, user):
+        #   return True
+        #   test on URI, not on django user
+
+        class Meta:
+            verbose_name = _(u"article")
+            verbose_name_plural = _(u"articles")
+            abstract = True
+
+
 

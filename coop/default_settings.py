@@ -200,7 +200,8 @@ DJALOHA_LINK_MODELS = (
         'coop_local.Article',
         'coop_cms.ArticleCategory',
         'coop_local.Organization',
-        'coop_local.OrganizationCategory'
+        'coop_local.OrganizationCategory',
+        'coop_local.Event',
         )
 
 

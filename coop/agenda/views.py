@@ -8,7 +8,7 @@ from django.db import models
 from django.template.context import RequestContext
 from django.shortcuts import get_object_or_404, render_to_response
 
-from coop_local.models import Event, Occurrence
+from coop_local.models import Event, Occurrence, Calendar
 from coop.agenda import utils, forms
 from coop.agenda.conf import settings as agenda_settings
 
@@ -38,6 +38,15 @@ def event_listing(request, template='agenda/event_list.html', events=None,
         events = Event.objects.all()
     elif hasattr(events, '_clone'):
         events = events._clone()
+
+    return render_to_response(template,
+        dict(extra_context, events=events),
+        context_instance=RequestContext(request))
+
+
+def calendar_listing(request, slug, template='agenda/event_list.html', **extra_context):
+    cal = get_object_or_404(Calendar, slug=slug)
+    events = Event.objects.filter(calendar=cal)
 
     return render_to_response(template,
         dict(extra_context, events=events),

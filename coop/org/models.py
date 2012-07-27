@@ -159,7 +159,7 @@ class BaseEngagement(URIModel):
     org_admin = models.BooleanField(_(u'has editor rights'), default=True)
     engagement_display = models.PositiveSmallIntegerField(_(u'Display'), choices=DISPLAY.CHOICES, default=DISPLAY.PUBLIC)
 
-    remote_role_uri = models.CharField(_(u'URI'), blank=True, max_length=250)
+    remote_role_uri = models.CharField(_(u'URI'), blank=True, null=True, max_length=250)
     remote_role_label = models.CharField(blank=True, max_length=100)
 
     class Meta:

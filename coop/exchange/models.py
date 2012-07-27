@@ -69,7 +69,6 @@ class BaseExchangeMethod(models.Model):  # this model will be initialized with a
 class BaseExchange(URIModel):
     title = models.CharField(_('title'), max_length=250)
     description = models.TextField(_(u'description'), blank=True)
-    organization_alt_label = models.CharField(_(u'label optionnel organisation'), max_length=250, blank=True, null=True)
 
     organization = models.ForeignKey('coop_local.Organization', blank=True, null=True,
                             verbose_name=_('publisher'), related_name='exchanges')
@@ -84,10 +83,10 @@ class BaseExchange(URIModel):
     products = models.ManyToManyField('coop_local.Product', verbose_name=_(u'linked products'))
 
     remote_person_uri = models.CharField(_(u'person URI'), blank=True, max_length=200, editable=False)
-    remote_person_label = models.CharField(_('person'), max_length=250)
+    remote_person_label = models.CharField(_('person'), blank=True, max_length=250)
 
     remote_organization_uri = models.CharField(_(u'organization URI'), blank=True, max_length=200, editable=False)
-    remote_organization_label = models.CharField(_('organization'), max_length=250)
+    remote_organization_label = models.CharField(_('organization'), blank=True, max_length=250)
 
 
     methods = models.ManyToManyField('coop_local.ExchangeMethod', verbose_name=_(u'exchange methods'))

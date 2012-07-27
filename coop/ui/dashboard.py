@@ -21,26 +21,27 @@ class CustomIndexDashboard(Dashboard):
     """
     Custom index dashboard for devcoop.
     """
-    columns = 3
+    columns = 2
     title = ''
     template = 'admin_tools/coop_dashboard.html'
 
     def init_with_context(self, context):
         site_name = get_admin_site_name(context)
+
         # append a link list module for "quick links"
-        self.children.append(modules.LinkList(
-            _('Quick links'),
-            layout='inline',
-            draggable=False,
-            deletable=False,
-            collapsible=False,
-            children=[
-                #[_('Return to site'), '/'],
-                [_('Change password'),
-                 reverse('%s:password_change' % site_name)],
-                [_('Log out'), reverse('%s:logout' % site_name)],
-            ]
-        ))
+        # self.children.append(modules.LinkList(
+        #     _('Quick links'),
+        #     layout='inline',
+        #     draggable=False,
+        #     deletable=False,
+        #     collapsible=False,
+        #     children=[
+        #         #[_('Return to site'), '/'],
+        #         [_('Change password'),
+        #          reverse('%s:password_change' % site_name)],
+        #         [_('Log out'), reverse('%s:logout' % site_name)],
+        #     ]
+        # ))
 
         self.children.append(modules.AppList(
             _(u"Navigation and articles"),
@@ -86,29 +87,29 @@ class CustomIndexDashboard(Dashboard):
         self.children.append(modules.RecentActions(_('Recent Actions'), 5))
 
         # append a feed module
-        self.children.append(modules.Feed(
-            _('Latest Django News'),
-            feed_url='http://www.djangoproject.com/rss/weblog/',
-            limit=5
-        ))
+        # self.children.append(modules.Feed(
+        #     _('Latest Django News'),
+        #     feed_url='http://www.djangoproject.com/rss/weblog/',
+        #     limit=5
+        # ))
 
         # append another link list module for "support".
-        self.children.append(modules.LinkList(
-            _('Support'),
-            children=[
-                {
-                    'title': _('Blog PES'),
-                    'url': 'http://blog.credis.org/',
-                    'external': True,
-                },
-                {
-                    'title': _('Django "django-users" mailing list'),
-                    'url': 'http://groups.google.com/group/django-users',
-                    'external': True,
-                },
+        # self.children.append(modules.LinkList(
+        #     _('Support'),
+        #     children=[
+        #         {
+        #             'title': _('Blog PES'),
+        #             'url': 'http://blog.credis.org/',
+        #             'external': True,
+        #         },
+        #         {
+        #             'title': _('Django "django-users" mailing list'),
+        #             'url': 'http://groups.google.com/group/django-users',
+        #             'external': True,
+        #         },
 
-            ]
-        ))
+        #     ]
+        # ))
 
 
 class CustomAppIndexDashboard(AppIndexDashboard):
