@@ -1,3 +1,4 @@
+/* @override http://localhost:8000/static/css/coop_bootstrap_theming.css */
 
 .navbar{
 	font: 85% "Lucida Grande", Lucida, Verdana, sans-serif;
@@ -32,9 +33,81 @@ ul.breadcrumb,
 	font-size: 16px;
 }
 
+/* @group navbar */
+
 .nav-tabs{
 	font-weight: bold;
 }
+
+.dropdown-menu a:hover{
+	 text-shadow: 0 1px 0 #333;
+}
+
+
+li.bsmenuitem > a{
+	position: relative;
+}
+li.bsmenuitem > i,
+li.bsmenuitem > a > i{
+	position: relative;
+	top: -1px;
+	opacity: 0.5;
+}
+
+li.bsmenuitem > a:hover > i,
+li.bsmenuitem.active > a > i{
+	opacity: 1;
+}
+
+
+li.bsmenuitem > a > i{
+	
+}
+
+/* @end */
+
+/* @group new BS icons */
+
+.icon-coop{
+	 background-image: url(../img/admintools_bootstrap/coop_icons.png);
+}
+
+.icon-rdf {
+  background-position: 0 0;
+}
+.icon-white.icon-rdf {
+  background-position: -24px 0;
+}
+.icon-rss {
+  background-position: 0 -24px;
+}
+.icon-white.icon-rss {
+  background-position: -24px -24px;
+}
+
+.icon-django {
+  background-position: 0 -48px;
+}
+.icon-white.icon-django {
+  background-position: -24 -48px;
+}
+
+.icon-group {
+  background-position: 0 -48px;
+}
+.icon-white.icon-group {
+  background-position: -24px -72px;
+}
+
+
+
+
+/* @end */
+
+
+
+
+
 
 .results th{
 	font-weight: normal;

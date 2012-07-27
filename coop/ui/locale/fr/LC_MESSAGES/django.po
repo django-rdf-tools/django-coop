@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop.ui\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-16 22:19+0200\n"
-"PO-Revision-Date: 2012-06-16 22:20+0100\n"
+"POT-Creation-Date: 2012-07-26 19:11+0200\n"
+"PO-Revision-Date: 2012-07-26 19:16+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
 "Language: \n"
@@ -19,71 +19,197 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 
-#: dashboard.py:32
-msgid "Quick links"
-msgstr "Liens rapides"
+#: dashboard.py:47
+#: menu.py:27
+msgid "Articles"
+msgstr "Articles"
 
-#: dashboard.py:38
-msgid "Return to site"
-msgstr "Retour au site"
-
-#: dashboard.py:39
-msgid "Change password"
-msgstr "Changez votre mot de passe"
-
-#: dashboard.py:41
-msgid "Log out"
-msgstr "Déconnexion"
-
-#: dashboard.py:46
-msgid "Navigation and articles"
-msgstr "Navigation et articles"
-
-#: dashboard.py:57
+#: dashboard.py:59
+#: menu.py:59
 msgid "Agenda"
-msgstr ""
+msgstr "Agenda"
 
-#: dashboard.py:66
+#: dashboard.py:68
 msgid "My network"
 msgstr "Mon réseau"
 
-#: dashboard.py:78
-#: menu.py:39
+#: dashboard.py:80
 msgid "Administration"
 msgstr "Administration"
 
-#: dashboard.py:84
-#: dashboard.py:127
+#: dashboard.py:86
+#: dashboard.py:129
 msgid "Recent Actions"
 msgstr "Actions récentes"
 
-#: dashboard.py:88
-msgid "Latest Django News"
-msgstr "Dernières nouvelles de Django"
-
-#: dashboard.py:95
-msgid "Support"
-msgstr "Support"
-
-#: dashboard.py:98
-msgid "Blog PES"
-msgstr "Blog PES"
-
-#: dashboard.py:103
-msgid "Django \"django-users\" mailing list"
-msgstr "Liste de diffusion django"
-
 #: menu.py:25
-msgid "Database"
-msgstr "Base de données"
+msgid "Navigation tree"
+msgstr "Menu de navigation"
 
-#: menu.py:30
-msgid "Site"
-msgstr "Site"
+#: menu.py:29
+msgid "CMS"
+msgstr "CMS"
+
+#: menu.py:32
+msgid "Content"
+msgstr "Contenus"
+
+#: menu.py:33
+msgid "Article categories"
+msgstr "Catégories d'articles"
+
+#: menu.py:34
+msgid "Documents"
+msgstr "Documents"
 
 #: menu.py:35
-msgid "RDF"
-msgstr "RDF"
+msgid "Images"
+msgstr "Images"
 
-#~ msgid "Applications"
-#~ msgstr "Applications"
+#: menu.py:36
+msgid "Newsletters"
+msgstr "Lettres d'information"
+
+#: menu.py:37
+msgid "Comments"
+msgstr "Commentaires"
+
+#: menu.py:40
+msgid "RSS"
+msgstr "RSS"
+
+#: menu.py:41
+msgid "RSS items"
+msgstr "Articles à importer"
+
+#: menu.py:42
+msgid "RSS sources"
+msgstr "Sources d'articles"
+
+#: menu.py:45
+#: menu.py:46
+msgid "Tags"
+msgstr "Tags"
+
+#: menu.py:47
+msgid "Tag categories"
+msgstr "Catégories de tags"
+
+#: menu.py:48
+msgid "Tag trees"
+msgstr "Taxonomie"
+
+#: menu.py:51
+msgid "Django"
+msgstr "Django"
+
+#: menu.py:52
+msgid "Users"
+msgstr "Comptes utilisateurs"
+
+#: menu.py:53
+msgid "Sites"
+msgstr "Configuration du site"
+
+#: menu.py:61
+msgid "Events"
+msgstr "Événements"
+
+#: menu.py:62
+msgid "Calendar"
+msgstr "Calendrier"
+
+#: menu.py:63
+msgid "Event categories"
+msgstr "Catégories d'événements"
+
+#: menu.py:67
+msgid "Network"
+msgstr "Réseau"
+
+#: menu.py:70
+msgid "Directory"
+msgstr "Annuaire"
+
+#: menu.py:71
+msgid "Organizations"
+msgstr "Organisations"
+
+#: menu.py:72
+msgid "Persons"
+msgstr "Personnes"
+
+#: menu.py:73
+msgid "Organization categories"
+msgstr "Catégories d'organisations"
+
+#: menu.py:74
+msgid "Person categories"
+msgstr "Catégories de personnes"
+
+#: menu.py:75
+msgid "Roles"
+msgstr "Rôles"
+
+#: menu.py:78
+#: menu.py:79
+msgid "Exchanges"
+msgstr "Échanges"
+
+#: menu.py:80
+msgid "Exchange methods"
+msgstr "Modalités d'échange"
+
+#: menu.py:83
+msgid "Cartography"
+msgstr "Cartographie"
+
+#: menu.py:84
+msgid "Locations"
+msgstr "Lieux"
+
+#: menu.py:85
+msgid "Areas"
+msgstr "Zones"
+
+#: menu.py:86
+msgid "Location categories"
+msgstr "Catégories de lieux"
+
+#: menu.py:90
+msgid "RDF settings"
+msgstr "Réglages RDF"
+
+#: menu.py:91
+msgid "URI redirection"
+msgstr "Redirection d'URI"
+
+#~ msgid "Quick links"
+#~ msgstr "Liens rapides"
+
+#~ msgid "Return to site"
+#~ msgstr "Retour au site"
+
+#~ msgid "Change password"
+#~ msgstr "Changez votre mot de passe"
+
+#~ msgid "Log out"
+#~ msgstr "Déconnexion"
+
+#~ msgid "Latest Django News"
+#~ msgstr "Dernières nouvelles de Django"
+
+#~ msgid "Support"
+#~ msgstr "Support"
+
+#~ msgid "Blog PES"
+#~ msgstr "Blog PES"
+
+#~ msgid "Django \"django-users\" mailing list"
+#~ msgstr "Liste de diffusion django"
+
+#~ msgid "Database"
+#~ msgstr "Base de données"
+
+#~ msgid "RDF"
+#~ msgstr "RDF"

@@ -44,12 +44,11 @@ class CustomIndexDashboard(Dashboard):
         # ))
 
         self.children.append(modules.AppList(
-            _(u"Navigation and articles"),
-            models=('coop_cms.models.NavTree',
-                    'coop_local.models.Article',
+            _(u"Articles"),
+            models=('coop_local.models.Article',
                     'coop_cms.models.ArticleCategory',
-                    #'coop_cms.rss_sync.models.RssItem',
-                    'django.contrib.comments.Comment',
+                    'coop_cms.apps.rss_sync.models.RssItem',
+                    #'django.contrib.comments.Comment',
                     'forms_builder.forms.models.Form',
                     ),
             template='admin_tools/coop_applist.html'

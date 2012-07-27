@@ -7,6 +7,8 @@ from dateutil import rrule
 from django.db.models.loading import get_model
 from coop.models import URIModel
 from django.core.urlresolvers import reverse
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
 
 
 class BaseCalendar(models.Model):
@@ -128,6 +130,23 @@ class BaseEvent(URIModel):
         Convenience method wrapping ``Occurrence.objects.daily_occurrences``.
         """
         return get_model('coop_local', 'Occurrence').objects.daily_occurrences(dt=dt, event=self)
+
+
+class Dated(models.Model):
+    # things which are linked to an event
+    event = models.ForeignKey('coop_local.Event', null=True, blank=True,
+                                 verbose_name=_(u"event"))
+    # generic key to other objects
+    content_type = models.ForeignKey(ContentType, blank=True, null=True, default=None)
+    object_id = models.PositiveIntegerField()
+    content_object = generic.GenericForeignKey('content_type', 'object_id')
+
+    def __unicode__(self):
+        return unicode(self.content_object) + u" @ " + unicode(self.event)
+
+    class Meta:
+        verbose_name = _(u'Dated item')
+        verbose_name_plural = _(u'Dated items')
 
 
 class OccurrenceManager(models.Manager):

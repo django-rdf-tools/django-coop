@@ -100,3 +100,4 @@ if 'coop.exchange' in settings.INSTALLED_APPS:
                 #PaymentInline,
                 LocatedInline,  # Using coop-geo
             ]
+

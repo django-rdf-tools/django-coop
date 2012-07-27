@@ -20,25 +20,84 @@ class CustomMenu(Menu):
         Menu.__init__(self, **kwargs)
         self.children += [
             #items.MenuItem(_('Dashboard'), reverse('admin:index')),
-            items.Bookmarks('Favoris'),
-            items.AppList(
-            _(u'Database'),
-                models=('coop_local.*','coop_geo.*','coop_tag.*')
-                #exclude=('django.contrib.*', 'taggit.*', 'coop_cms.*')
+            #items.Bookmarks('Favoris'),
+
+            items.MenuItem(_('Navigation tree'), '/admin/coop_cms/navtree/1/', icon='icon-list-alt icon-white'),
+
+            items.MenuItem(_('Articles'), '/admin/coop_local/article/', icon='icon-pencil icon-white'),
+
+            items.MenuItem(_('CMS'), '#', icon='icon-cog icon-white',
+                children=[
+
+                    items.MenuItem(_('Content'), '#', icon='icon-file', children=[
+                        items.MenuItem(_('Article categories'), '/admin/coop_cms/articlecategory/'),
+                        items.MenuItem(_('Documents'), '/admin/coop_cms/document/'),
+                        items.MenuItem(_('Images'), '/admin/coop_cms/image/'),
+                        items.MenuItem(_('Newsletters'), '/admin/coop_cms/newsletter/'),
+                        items.MenuItem(_('Comments'), '/admin/comments/comment/'),
+                        ]),
+
+                    items.MenuItem(_('RSS'), '#', icon='icon-coop icon-rss', children=[
+                        items.MenuItem(_('RSS items'), '/admin/rss_sync/rssitem/'),
+                        items.MenuItem(_('RSS sources'), '/admin/rss_sync/rsssource/'),
+                        ]),
+
+                    items.MenuItem(_('Tags'), '#', icon='icon-tags', children=[
+                        items.MenuItem(_('Tags'), '/admin/coop_tag/ctag/'),
+                        #items.MenuItem(_('Tag categories'), '/admin/coop_tag/tagcategory/'),
+                        items.MenuItem(_('Tag trees'), '/admin/coop_cms/navtree/'),
+                        ]),
+
+                    items.MenuItem(_('Django'), '#', icon='icon-coop icon-django', children=[
+                        items.MenuItem(_('Users'), '/admin/auth/user/'),
+                        items.MenuItem(_('Sites'), '/admin/sites/site/'),
+                        ]),
+                ]
             ),
-            items.AppList(
-            _(u'Site'),
-                models=('coop_cms.*', )
-                #exclude=('django.contrib.*',  'taggit.*', 'coop_cms.*')
+
+
+            items.MenuItem(_('Agenda'), '#', icon='icon-calendar icon-white',
+                children=[
+                    items.MenuItem(_('Events'), '/admin/coop_local/event/'),
+                    items.MenuItem(_('Calendar'), '/admin/coop_local/calendar/'),
+                    items.MenuItem(_('Event categories'), '/admin/coop_local/eventcategory/'),
+                ]
             ),
-            items.AppList(
-            _(u'RDF'),
-                models=('webid.*','uriredirect.*')
+
+            items.MenuItem(_('Network'), '#', icon='icon-coop icon-group icon-white',
+                children=[
+
+                    items.MenuItem(_('Directory'), '#', icon='icon-home', children=[
+                        items.MenuItem(_('Organizations'), '/admin/coop_local/organization/'),
+                        items.MenuItem(_('Persons'), '/admin/coop_local/person/'),
+                        items.MenuItem(_('Organization categories'), '/admin/coop_local/organizationcategory/'),
+                        items.MenuItem(_('Person categories'), '/admin/coop_local/personcategory/'),
+                        items.MenuItem(_('Roles'), '/admin/coop_local/role/'),
+                        ]),
+
+                    items.MenuItem(_('Exchanges'), '#', icon='icon-random', children=[
+                        items.MenuItem(_('Exchanges'), '/admin/coop_local/exchange/'),
+                        items.MenuItem(_('Exchange methods'), '/admin/coop_local/exchangemethod/'),
+                        ]),
+
+                    items.MenuItem(_('Cartography'), '#', icon='icon-map-marker', children=[
+                        items.MenuItem(_('Locations'), '/admin/coop_geo/location/'),
+                        items.MenuItem(_('Areas'), '/admin/coop_geo/area/'),
+                        items.MenuItem(_('Location categories'), '/admin/coop_geo/locationcategory/'),
+                        # create my map !
+                        ]),
+
+                    items.MenuItem(_('RDF settings'), '#', icon='icon-coop icon-rdf', children=[
+                        items.MenuItem(_('URI redirection'), '/admin/uriredirect/'),
+                        # webid
+                        ]),
+
+
+                ]
             ),
-            items.AppList(
-                _('Administration'),
-                models=('django.contrib.*',)
-            )
+
+
+
         ]
 
     def init_with_context(self, context):
