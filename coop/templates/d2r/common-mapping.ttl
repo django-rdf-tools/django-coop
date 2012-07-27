@@ -136,6 +136,7 @@ map:area a d2rq:ClassMap;
     d2rq:uriColumn "coop_geo_area.uri";
     {% endif %}
     d2rq:class dct:Location;
+    d2rq:class schema:AdministrativeArea;
     .
 map:area_departement a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:area;
