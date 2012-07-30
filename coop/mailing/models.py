@@ -15,6 +15,7 @@ class BaseMailingList(models.Model):
         verbose_name = _('mailing list')
         verbose_name_plural = _('mailing lists')
         abstract = True
+        app_label = 'coop_local'
 
     def __unicode__(self):
         return u'%s' % (self.name)
@@ -37,6 +38,7 @@ class BaseSubscription(models.Model):
         verbose_name = _('mailing list subscription')
         verbose_name_plural = _('mailing list subscriptions')
         abstract = True
+        app_label = 'coop_local'
 
     def __unicode__(self):
         return _(u'subscription to ') + unicode(self.mailing_list)

@@ -20,6 +20,7 @@ class BaseCalendar(models.Model):
         verbose_name = _('calendar')
         verbose_name_plural = _('calendars')
         abstract = True
+        app_label = 'coop_local'
 
     def __unicode__(self):
         return self.title
@@ -40,6 +41,7 @@ class BaseEventCategory(models.Model):
         verbose_name = _('event category')
         verbose_name_plural = _('event categories')
         abstract = True
+        app_label = 'coop_local'
 
     def __unicode__(self):
         return self.label
@@ -74,6 +76,7 @@ class BaseEvent(URIModel):
         verbose_name_plural = _('events')
         ordering = ('title', )
         abstract = True
+        app_label = 'coop_local'
 
     def label(self):
         return self.title
@@ -132,7 +135,7 @@ class BaseEvent(URIModel):
         return get_model('coop_local', 'Occurrence').objects.daily_occurrences(dt=dt, event=self)
 
 
-class Dated(models.Model):
+class BaseDated(models.Model):
     # things which are linked to an event
     event = models.ForeignKey('coop_local.Event', null=True, blank=True,
                                  verbose_name=_(u"event"))
@@ -145,8 +148,10 @@ class Dated(models.Model):
         return unicode(self.content_object) + u" @ " + unicode(self.event)
 
     class Meta:
+        abstract = True
         verbose_name = _(u'Dated item')
         verbose_name_plural = _(u'Dated items')
+        app_label = 'coop_local'
 
 
 class OccurrenceManager(models.Manager):
@@ -201,6 +206,7 @@ class BaseOccurrence(models.Model):
         verbose_name_plural = _('occurrences')
         ordering = ('start_time', 'end_time')
         abstract = True
+        app_label = 'coop_local'
 
     def __unicode__(self):
         return u'%s: %s' % (self.title, self.start_time.isoformat())

@@ -3,10 +3,6 @@
 import os
 from coop_local.settings import PROJECT_PATH, PROJECT_NAME
 
-D2RQ_PORT = 8080
-D2RQ_ROOT = 'http://localhost:8080/' + PROJECT_NAME + '/'
-
-
 TIME_ZONE = 'Europe/Paris'
 LANGUAGE_CODE = 'fr-FR'
 SITE_ID = 1
@@ -18,10 +14,6 @@ DEFAULT_CHARSET = 'utf-8'
 
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
-
-# Not used: to set this variable here, weneed to import Site
-PUSH_HUB = ''
-SUBHUB_MAINTENANCE_AUTO = False
 
 USE_TZ = False
 
@@ -132,6 +124,7 @@ INSTALLED_APPS = [
     #'django.contrib.admindocs', # ramène sa traduction de Tags "Étiquettes"...
     'django.contrib.gis',
     'django.contrib.comments',
+    'django_load',
 
     # other 3rd parties
     'south',
@@ -172,11 +165,6 @@ INSTALLED_APPS = [
 
 ]
 
-
-
-from coop.settings import DEFAULT_RDF_NAMESPACES, NS_D2RQ, NS_LEGAL, NS_SKOS, NS_OV
-from coop.settings import NS_RDFS
-RDF_NAMESPACES = DEFAULT_RDF_NAMESPACES
 
 THUMBNAIL_FORMAT = 'PNG'
 
@@ -293,32 +281,6 @@ WEBIDPROVIDER_SKIP_PROFILE_INIT = True
 #WEBIDPROVIDER_WEBIDURI_CALLBACK = webidcb
 
 
-
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'filters': {
-#         'require_debug_false': {
-#             '()': 'django.utils.log.RequireDebugFalse'
-#         }
-#     },
-#     'handlers': {
-#         'mail_admins': {
-#             'level': 'ERROR',
-#             'filters': ['require_debug_false'],
-#             'class': 'django.utils.log.AdminEmailHandler'
-#         }
-#     },
-#     'loggers': {
-#         'django.request': {
-#             'handlers': ['mail_admins'],
-#             'level': 'ERROR',
-#             'propagate': True,
-#         },
-#     }
-# }
-
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
@@ -381,6 +343,11 @@ LOGGING = {
             'level': 'DEBUG'
 
         },
+        'coop-init': {
+            'handlers': ['console'],
+            'level': 'DEBUG'
+
+        },
 
         'raven': {
             'level': 'DEBUG',
@@ -397,4 +364,9 @@ LOGGING = {
 }
 
 
+# import default app settings from django-coop app
 
+try:
+    from coop.settings import *
+except ImportError, exp:
+    raise ImproperlyConfigured("Unable to find settings.py file from django-coop")

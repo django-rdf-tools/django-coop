@@ -43,72 +43,72 @@ class CustomIndexDashboard(Dashboard):
         #     ]
         # ))
 
-        self.children.append(modules.AppList(
-            _(u"Articles"),
-            models=('coop_local.models.Article',
-                    'coop_cms.models.ArticleCategory',
-                    'coop_cms.apps.rss_sync.models.RssItem',
-                    #'django.contrib.comments.Comment',
-                    'forms_builder.forms.models.Form',
-                    ),
-            template='admin_tools/coop_applist.html'
-        ))
+        # self.children.append(modules.AppList(
+        #     _(u"Articles"),
+        #     models=('coop_local.models.Article',
+        #             'coop_cms.models.ArticleCategory',
+        #             'coop_cms.apps.rss_sync.models.RssItem',
+        #             #'django.contrib.comments.Comment',
+        #             'forms_builder.forms.models.Form',
+        #             ),
+        #     template='admin_tools/coop_applist.html'
+        # ))
 
-        if 'coop.agenda' in settings.INSTALLED_APPS:
-            self.children.append(modules.AppList(
-                _(u"Agenda"),
-                models=('coop_local.models.Event',
-                        'coop_local.models.EventCategory',
-                        ),
-                template='admin_tools/coop_applist.html',
-            ))
-
-
-        self.children.append(modules.AppList(
-            _(u"My network"),
-            models=('coop_local.models.Person',
-                    'coop_local.models.PersonCategory',
-                    'coop_local.models.Organization',
-                    'coop_local.models.OrganizationCategory',
-                    ),
-            template='admin_tools/coop_applist.html',
-        ))
+        # if 'coop.agenda' in settings.INSTALLED_APPS:
+        #     self.children.append(modules.AppList(
+        #         _(u"Agenda"),
+        #         models=('coop_local.models.Event',
+        #                 'coop_local.models.EventCategory',
+        #                 ),
+        #         template='admin_tools/coop_applist.html',
+        #     ))
 
 
-        # append an app list module for "Administration"
-        self.children.append(modules.AppList(
-            _('Administration'),
-            models=('django.contrib.*',),
-            template='admin_tools/coop_applist.html',
-        ))
+        # self.children.append(modules.AppList(
+        #     _(u"My network"),
+        #     models=('coop_local.models.Person',
+        #             'coop_local.models.PersonCategory',
+        #             'coop_local.models.Organization',
+        #             'coop_local.models.OrganizationCategory',
+        #             ),
+        #     template='admin_tools/coop_applist.html',
+        # ))
+
+
+        # # append an app list module for "Administration"
+        # self.children.append(modules.AppList(
+        #     _('Administration'),
+        #     models=('django.contrib.*',),
+        #     template='admin_tools/coop_applist.html',
+        # ))
 
         # append a recent actions module
-        self.children.append(modules.RecentActions(_('Recent Actions'), 5))
+        self.children.append(modules.RecentActions(_('Recent Actions'), 10))
 
         # append a feed module
-        # self.children.append(modules.Feed(
-        #     _('Latest Django News'),
-        #     feed_url='http://www.djangoproject.com/rss/weblog/',
-        #     limit=5
-        # ))
+        self.children.append(modules.Feed(
+            _('Latest Django News'),
+            feed_url='http://www.djangoproject.com/rss/weblog/',
+            limit=5
+        ))
 
         # append another link list module for "support".
-        # self.children.append(modules.LinkList(
-        #     _('Support'),
-        #     children=[
-        #         {
-        #             'title': _('Blog PES'),
-        #             'url': 'http://blog.credis.org/',
-        #             'external': True,
-        #         },
-        #         {
-        #             'title': _('Django "django-users" mailing list'),
-        #             'url': 'http://groups.google.com/group/django-users',
-        #             'external': True,
-        #         },
+        self.children.append(modules.LinkList(
+            _('Support'),
+            children=[
+                {
+                    'title': _('Blog PES'),
+                    'url': 'http://blog.credis.org/',
+                    'external': True,
+                },
+                {
+                    'title': _('Django "django-users" mailing list'),
+                    'url': 'http://groups.google.com/group/django-users',
+                    'external': True,
+                },
 
-        #     ]
-        # ))
+            ]
+        ))
 
 
 class CustomAppIndexDashboard(AppIndexDashboard):

@@ -8,7 +8,7 @@ To activate your custom menu add the following to your settings.py::
 
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
-
+from django.conf import settings
 from admin_tools.menu import items, Menu
 
 
@@ -37,10 +37,7 @@ class CustomMenu(Menu):
                         items.MenuItem(_('Comments'), '/admin/comments/comment/'),
                         ]),
 
-                    items.MenuItem(_('RSS'), '#', icon='icon-coop icon-rss', children=[
-                        items.MenuItem(_('RSS items'), '/admin/rss_sync/rssitem/'),
-                        items.MenuItem(_('RSS sources'), '/admin/rss_sync/rsssource/'),
-                        ]),
+                    # RSS Sync menu gets inserted here if installed (see above)
 
                     items.MenuItem(_('Tags'), '#', icon='icon-tags', children=[
                         items.MenuItem(_('Tags'), '/admin/coop_tag/ctag/'),
@@ -56,13 +53,7 @@ class CustomMenu(Menu):
             ),
 
 
-            items.MenuItem(_('Agenda'), '#', icon='icon-calendar icon-white',
-                children=[
-                    items.MenuItem(_('Events'), '/admin/coop_local/event/'),
-                    items.MenuItem(_('Calendar'), '/admin/coop_local/calendar/'),
-                    items.MenuItem(_('Event categories'), '/admin/coop_local/eventcategory/'),
-                ]
-            ),
+            # Agenda menu inserted here if coop.agenda installed
 
             items.MenuItem(_('Network'), '#', icon='icon-coop icon-group icon-white',
                 children=[
@@ -99,6 +90,25 @@ class CustomMenu(Menu):
 
 
         ]
+
+        if 'coop_cms.apps.rss_sync' in  settings.INSTALLED_APPS:
+            children[2].insert(1,
+
+                    items.MenuItem(_('RSS'), '#', icon='icon-coop icon-rss', children=[
+                        items.MenuItem(_('RSS items'), '/admin/rss_sync/rssitem/'),
+                        items.MenuItem(_('RSS sources'), '/admin/rss_sync/rsssource/'),
+                        ])
+                    )
+
+        if 'coop.agenda' in settings.INSTALLED_APPS:
+            children.insert(1,
+                items.MenuItem(_('Agenda'), '#', icon='icon-calendar icon-white',
+                    children=[
+                        items.MenuItem(_('Events'), '/admin/coop_local/event/'),
+                        items.MenuItem(_('Calendar'), '/admin/coop_local/calendar/'),
+                        items.MenuItem(_('Event categories'), '/admin/coop_local/eventcategory/'),
+                    ])
+                )
 
     def init_with_context(self, context):
         """

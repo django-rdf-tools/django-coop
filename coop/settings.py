@@ -1,34 +1,91 @@
+# -*- coding:utf-8 -*-
+
+from coop_local.settings import PROJECT_PATH, PROJECT_NAME
+
+D2RQ_PORT = 8080
+D2RQ_ROOT = 'http://localhost:8080/' + PROJECT_NAME + '/'
+
+# Not used: to set this variable here, weneed to import Site
+PUSH_HUB = ''
+SUBHUB_MAINTENANCE_AUTO = False
+
+
+BASE_COOP_LOCAL_MODELS = [
+
+    ('coop_cms', [
+        u'Article',
+    ]),
+    ('coop.agenda', [
+        u'Calendar',
+        u'Dated',
+        u'Event',
+        u'EventCategory',
+        u'Occurrence',
+    ]),
+    ('coop.person', [
+        u'Person',
+        u'PersonCategory',
+    ]),
+    ('coop.org', [
+        u'Contact',
+        u'Engagement',
+        u'Role',
+        u'RoleCategory',
+        u'Relation',
+        u'OrganizationCategory',
+        u'Organization',
+    ]),
+    ('coop.exchange', [
+        u'ExchangeMethod',
+        u'Product',
+        u'Exchange',
+    ]),
+    ('coop.mailing', [
+        u'MailingList',
+        u'Subscription',
+    ]),
+]
+
+
 from rdflib import Namespace
 
-DEFAULT_RDF_NAMESPACES = {
- 'ess':  u'http://ns.economie-solidaire.fr/ess#',
- 'dct': u'http://purl.org/dc/terms/',
- 'org': u'http://www.w3.org/ns/org#',
+
+class AttributeDict(dict):
+    __getattr__ = dict.__getitem__
+    __setattr__ = dict.__setitem__
+
+
+def transform_dict(dict):
+    for key, value in dict.items():
+        dict[key] = Namespace(value)
+    return dict
+
+
+RDF_NAMESPACES = {
  'ctag': u'http://commontag.org/ns#',
+ 'd2rq': u'http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#',
+ 'dct': u'http://purl.org/dc/terms/',
+ 'ess':  u'http://ns.economie-solidaire.fr/ess#',
+ 'event': u'http://purl.org/NET/c4dm/event.owl#',
  'foaf': u'http://xmlns.com/foaf/0.1/',
- 'locn': u'http://www.w3.org/ns/locn#',
- 'skos': u'http://www.w3.org/2004/02/skos/core#',
+ 'geofr': u'http://rdf.insee.fr/geo/',
+ 'gr': u'http://purl.org/goodrelations/v1#',
  'legal': u'http://www.w3.org/ns/legal#',
+ 'locn': u'http://www.w3.org/ns/locn#',
+ 'opens': u'http://rdf.opensahara.com/type/geo/',
+ 'org': u'http://www.w3.org/ns/org#',
+ 'ov': u'http://open.vocab.org/terms/',
+ 'person': u'http://www.w3.org/ns/person#',
+ 'rdfs': u'http://www.w3.org/2000/01/rdf-schema#',
+ 'rss': u'http://purl.org/net/rss1.1#',
+ 'schema': u'http://schema.org/',
+ 'sioc': u'http://rdfs.org/sioc/ns#',
+ 'skos': u'http://www.w3.org/2004/02/skos/core#',
+ 'skosxl': u'http://www.w3.org/2008/05/skos-xl#',
+ 'vcal': u'http://www.w3.org/2002/12/cal/icaltzd#Vcalendar',
  'vcard': u'http://www.w3.org/2006/vcard/ns#',
  'xsd': 'http://www.w3.org/2001/XMLSchema#',
- 'geofr': u'http://rdf.insee.fr/geo/',
- 'skosxl': u'http://www.w3.org/2008/05/skos-xl#',
- 'gr': u'http://purl.org/goodrelations/v1#',
- 'event': u'http://purl.org/NET/c4dm/event.owl#',
- 'sioc': u'http://rdfs.org/sioc/ns#',
- 'opens': u'http://rdf.opensahara.com/type/geo/',
- 'person': u'http://www.w3.org/ns/person#',
- 'schema': u'http://schema.org/',
- 'rss': u'http://purl.org/net/rss1.1#',
- 'ov': u'http://open.vocab.org/terms/'
  }
 
 
- # Useful stuffs
-NS_D2RQ = Namespace('http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#')
-NS_LEGAL = Namespace(DEFAULT_RDF_NAMESPACES['legal'])
-NS_ESS = Namespace(DEFAULT_RDF_NAMESPACES['ess'])
-NS_SKOS = Namespace(DEFAULT_RDF_NAMESPACES['skos'])
-NS_OV = Namespace(DEFAULT_RDF_NAMESPACES['ov'])
-NS_RDFS = Namespace(u'http://www.w3.org/2000/01/rdf-schema#')
-NS_VCARD = Namespace(DEFAULT_RDF_NAMESPACES['vcard'])
+NS = AttributeDict( transform_dict(RDF_NAMESPACES).items() )

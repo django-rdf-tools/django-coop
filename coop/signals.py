@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+
 from coop.models import StaticURIModel, URI_MODE
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
@@ -39,7 +40,7 @@ def letsCallDistributionTaskProcess():
 # Listener tool
 # The point here is to be careful with synchronization.
 # subhub.publish will create a new DistributionTask object (if no DistributioTask
-# exists for this instance); So the signals will be call again, that why 
+# exists for this instance); So the signals will be call again, that why
 # the q.enqueue is done only when post_sae_callback is called with a DistributionTask
 # as instance.
 @receiver(post_save)

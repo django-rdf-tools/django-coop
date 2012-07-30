@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+
 from django.db import models
 from django_extensions.db import fields as exfields
 from django.conf import settings
@@ -16,8 +17,6 @@ import os
 import tempfile
 import coop
 import time
-
-
 
 
 URI_MODE = Choices(
@@ -306,13 +305,13 @@ class URIModel(StaticURIModel, TimestampedModel):
 
 def checkDirectMap(dbfieldName, d2rqGraph):
     lit = Literal(dbfieldName)
-    subj = list(d2rqGraph.subjects(settings.NS_D2RQ.column, lit))
+    subj = list(d2rqGraph.subjects(settings.NS.d2rq.column, lit))
     if len(subj) != 1:
-        subj = list(d2rqGraph.subjects(settings.NS_D2RQ.uriColumn, lit))
+        subj = list(d2rqGraph.subjects(settings.NS.d2rq.uriColumn, lit))
         if len(subj) != 1:
             return None
     subj = subj[0]
-    prop = list(d2rqGraph.objects(subj, settings.NS_D2RQ.property))
+    prop = list(d2rqGraph.objects(subj, settings.NS.d2rq.property))
     if len(prop) != 1:
         return None
     else:
@@ -324,10 +323,10 @@ def checkDirectMapFK(dbfieldName, d2rqGraph):
     # select * where { ?s d2rq:join ?l. filter(?l contains dbfieldname) }
     # mais comme le d2rqGraph n'est pas un SpaqlGraph on le fait à la main
 
-    # Well it is not possible to use settings.NS_D2RQ.join because
+    # Well it is not possible to use settings.NS.d2rq.join because
     # there is a conflict of names with the join function of the Namespace
     # class....
-    tr = list(d2rqGraph.triples((None, URIRef(str(settings.NS_D2RQ) + 'join'), None)))
+    tr = list(d2rqGraph.triples((None, URIRef(str(settings.NS.d2rq) + 'join'), None)))
 
     def useField((s, p, o)):
         if isinstance(o, Literal):
@@ -338,7 +337,7 @@ def checkDirectMapFK(dbfieldName, d2rqGraph):
     if len(candidate) == 1:
         print "Found candidate"
         subj = candidate[0][0]
-        prop = list(d2rqGraph.objects(subj, settings.NS_D2RQ.property))
+        prop = list(d2rqGraph.objects(subj, settings.NS.d2rq.property))
         if len(prop) == 1:
             return prop[0]
         else:
@@ -360,40 +359,6 @@ request_finished.connect(post_save_callback, sender=StaticURIModel)
 request_finished.connect(post_delete_callback, sender=StaticURIModel)
 updated.connect(listener)
 
-
-# ----------- Customizing coop-cms Article for more coop intergration
-
-if "coop_cms" in settings.INSTALLED_APPS:
-
-    from coop_cms.models import BaseArticle
-
-    class CoopArticle(BaseArticle, StaticURIModel):
-
-        organization = models.ForeignKey('coop_local.Organization', blank=True, null=True,
-                                verbose_name=_('publisher'), related_name='articles')
-        person = models.ForeignKey('coop_local.Person', blank=True, null=True,
-                                    verbose_name=_(u'person'), related_name='articles')
-
-        remote_person_uri = models.CharField(_(u'person URI'), blank=True, max_length=200, editable=False)
-        remote_person_label = models.CharField(_('person'), blank=True, max_length=250)
-
-        remote_organization_uri = models.CharField(_(u'organization URI'), blank=True, max_length=200, editable=False)
-        remote_organization_label = models.CharField(_('organization'), blank=True, max_length=250)
-
-        def label(self):
-            return self.title
-
-        # def can_publish_article(self, user):
-        #     return (self.author == user)
-
-        #def can_edit_article(self, user):
-        #   return True
-        #   test on URI, not on django user
-
-        class Meta:
-            verbose_name = _(u"article")
-            verbose_name_plural = _(u"articles")
-            abstract = True
 
 
 

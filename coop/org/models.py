@@ -59,6 +59,7 @@ class BaseContact(URIModel):
         ordering = ['category']
         verbose_name = _(u'Contact')
         verbose_name_plural = _(u'Contacts')
+        app_label = 'coop_local'
 
     def __unicode__(self):
         if self.content_object != None:
@@ -94,6 +95,10 @@ class BaseRoleCategory(models.Model):
     class Meta:
         abstract = True
         ordering = ['label']
+        verbose_name = _('Role category')
+        verbose_name_plural = _('Role categories')
+        #ordering = ['label']
+        app_label = 'coop_local'
 
     def __unicode__(self):
         return unicode(self.label)
@@ -112,7 +117,11 @@ class BaseRole(URIModel):
 
     class Meta:
         abstract = True
+        verbose_name = _('Role')
+        verbose_name_plural = _('Roles')
         #ordering = ['label']
+        app_label = 'coop_local'
+
 
     def __unicode__(self):
         return unicode(self.label)
@@ -140,6 +149,9 @@ class BaseRelation(models.Model):
 
     class Meta:
         abstract = True
+        verbose_name = _('Relation')
+        verbose_name_plural = _('Relations')
+        app_label = 'coop_local'
 
     def __unicode__(self):
         return u'"' + self.source.__unicode__() + u'"' + \
@@ -166,6 +178,7 @@ class BaseEngagement(URIModel):
         abstract = True
         verbose_name = _('Engagement')
         verbose_name_plural = _('Engagements')
+        app_label = 'coop_local'
 
     def __unicode__(self):
         return '%(person)s, %(role)s @ %(org)s' % {
@@ -186,6 +199,7 @@ class BaseOrganizationCategory(models.Model):
         abstract = True
         verbose_name = _(u'organization category')
         verbose_name_plural = _(u'organization categories')
+        app_label = 'coop_local'
 
     def __unicode__(self):
         return self.label
@@ -230,10 +244,10 @@ class BaseOrganization(URIModel):
     contacts = generic.GenericRelation('coop_local.Contact')
     subs = generic.GenericRelation('coop_local.Subscription')
 
-    # coop_geo must be loaded BEFORE coop_local
+    # ORDER : coop_geo must be loaded BEFORE coop_local
     if "coop_geo" in settings.INSTALLED_APPS:
-        located = generic.GenericRelation('coop_geo.Located')
-        framed = generic.GenericRelation('coop_geo.AreaLink')
+        located = generic.GenericRelation('coop_geo.Located', related_name='located_org')
+        framed = generic.GenericRelation('coop_geo.AreaLink', related_name='framed_org')
 
     birth = models.DateField(_(u'creation date'), null=True, blank=True)
     email = models.EmailField(_(u'global email'), blank=True, null=True)
@@ -260,6 +274,7 @@ class BaseOrganization(URIModel):
         ordering = ['title']
         verbose_name = _(u'Organization')
         verbose_name_plural = _(u'Organizations')
+        app_label = 'coop_local'
 
     def __unicode__(self):
         return unicode(self.title)
@@ -361,12 +376,12 @@ class BaseOrganization(URIModel):
     # because two rdf property use the coop_local_organization.title field
     # Thus we have to decide which one to use
     def updateField_title(self, dbfieldname, graph):
-            title = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS_LEGAL.legalName))
+            title = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS.legal.legalName))
             if len(title) == 1:
                 self.title = title[0]
                 print "For id %s update the field %s" % (self.id, dbfieldname)
             elif len(title) == 0:
-                title = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS_RDFS.label))
+                title = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS.rdfs.label))
                 if len(title) == 1:
                     self.title = title[0]
                     print "For id %s update the field %s" % (self.id, dbfieldname)
@@ -377,16 +392,16 @@ class BaseOrganization(URIModel):
 
 
     def updateField_pref_label(self, dbfieldname, graph):
-        prefLabel = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS_RDFS.label))
+        prefLabel = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS.rdfs.label))
         if len(prefLabel) == 1:
-            legalName = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS_LEGAL.legalName))
+            legalName = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS.legal.legalName))
             if len(legalName) == 1:
                 if prefLabel[0] == legalName[0]:
                     self.pref_label = PREFLABEL.TITLE
                     print "For id %s update the field %s" % (self.id, dbfieldname)
 
             else:
-                acronym = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS_OV.acronym))
+                acronym = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS.ov.acronym))
                 if len(acronym) == 1:
                     if prefLabel[0] == acronym[0]:
                         self.pref_label = PREFLABEL.ACRO

@@ -96,8 +96,6 @@ if 'coop.exchange' in settings.INSTALLED_APPS:
                                          'organization',
                                         'description', 'tags')
                             }),)
-        inlines = [
-                #PaymentInline,
-                LocatedInline,  # Using coop-geo
-            ]
+
+
 

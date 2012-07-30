@@ -9,6 +9,7 @@ from django.conf import settings
 from coop.models import URIModel
 from coop.utils.fields import MultiSelectField
 import rdflib
+from django.contrib.contenttypes import generic
 
 if "coop_geo" in settings.INSTALLED_APPS:
     from coop_geo.models import Area, Location
@@ -32,6 +33,7 @@ class BaseProduct(URIModel):
         ordering = ['-modified']
         verbose_name = _(u'Product')
         verbose_name_plural = _(u'Products')
+        app_label = 'coop_local'
 
 
 EWAY = Choices(
@@ -64,6 +66,7 @@ class BaseExchangeMethod(models.Model):  # this model will be initialized with a
         abstract = True
         verbose_name = _(u'Exchange method')
         verbose_name_plural = _(u'Exchange methods')
+        app_label = 'coop_local'
 
 
 class BaseExchange(URIModel):
@@ -88,9 +91,10 @@ class BaseExchange(URIModel):
     remote_organization_uri = models.CharField(_(u'organization URI'), blank=True, max_length=200, editable=False)
     remote_organization_label = models.CharField(_('organization'), blank=True, max_length=250)
 
-
     methods = models.ManyToManyField('coop_local.ExchangeMethod', verbose_name=_(u'exchange methods'))
 
+    if "coop.agenda" in settings.INSTALLED_APPS:
+        dated = generic.GenericRelation('coop_local.Dated')
 
     # coop_geo must be loaded BEFORE coop_local
     if "coop_geo" in settings.INSTALLED_APPS:
@@ -121,12 +125,13 @@ class BaseExchange(URIModel):
         ordering = ('-modified',)
         verbose_name = _(u'Exchange')
         verbose_name_plural = _(u'Exchanges')
+        app_label = 'coop_local'
 
     # title field needs a special handling. checkDirectMap does not work
     # because two rdf property use the coop_local_organization.title field
     # Thus we have to decide which one to use
     def updateField_title(self, dbfieldname, graph):
-            title = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS_RDFS.label))
+            title = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS.rdfs.label))
             if len(title) == 1:
                 self.title = title[0]
                 print "For id %s update the field %s" % (self.id, dbfieldname)
@@ -153,6 +158,7 @@ class BaseTransaction(models.Model):
         abstract = True
         verbose_name = _(u'Transaction')
         verbose_name_plural = _(u'Transactions')
+        app_label = 'coop_local'
 
 
 # MODALITIES = Choices(

@@ -24,6 +24,7 @@ class BasePersonCategory(models.Model):
         abstract = True
         verbose_name = _(u'Person category')
         verbose_name_plural = _(u'Person categories')
+        app_label = 'coop_local'
 
     def __unicode__(self):
         return self.label
@@ -55,6 +56,7 @@ class BasePerson(URIModel):
         abstract = True
         verbose_name = _(u'Person')
         verbose_name_plural = _(u'Persons')
+        app_label = 'coop_local'
 
     def __unicode__(self):
         return unicode('%s %s' % (self.first_name, self.last_name))
