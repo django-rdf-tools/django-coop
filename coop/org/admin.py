@@ -53,6 +53,8 @@ class EngagementInline(InlineAutocompleteAdmin):
     model = get_model('coop_local', 'Engagement')
     verbose_name = _(u'Member')
     verbose_name_plural = _(u'Members')
+    fields = ('person', 'role', 'role_detail', 'org_admin', 'engagement_display')
+
     related_search_fields = {'person': ('last_name', 'first_name',
                                         'email', 'structure', 'username'), }
     extra = 2
@@ -71,12 +73,13 @@ class OrgInline(InlineAutocompleteAdmin):
     model = get_model('coop_local', 'Engagement')
     verbose_name = _(u'Engagement')
     verbose_name_plural = _(u'Engagements')
+    fields = ('organization', 'role', 'role_detail', 'engagement_display')
+
     related_search_fields = {'organization': ('title', 'subtitle', 'acronym', 'description'), }
     extra = 1
 
 
 class RoleAdmin(admin.ModelAdmin):
-    pass
     list_display = ('label', 'category')
     list_editable = ('category',)
 
@@ -170,7 +173,7 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
                         'web')
             }),
         ('Description', {
-            'fields': ('description', 'category', 'tags', )
+            'fields': ('description', 'category',)# 'tags', )
             }),
 
         ('Préférences', {

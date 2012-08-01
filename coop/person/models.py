@@ -48,6 +48,10 @@ class BasePerson(URIModel):
 
     subs = generic.GenericRelation('coop_local.Subscription')
 
+    # if "coop_tag" in settings.INSTALLED_APPS:
+    #     from coop_tag.managers import TaggableManager
+    #     tags = TaggableManager(blank=True, verbose_name=_(u'Tags'))
+
     if "coop_geo" in settings.INSTALLED_APPS:
         location = models.ForeignKey(Location, null=True, blank=True, verbose_name=_(u'location'))
         location_display = models.PositiveSmallIntegerField(_(u'Display'), choices=DISPLAY.CHOICES, default=DISPLAY.USERS)

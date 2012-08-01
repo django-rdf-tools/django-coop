@@ -9,6 +9,7 @@ from coop.models import URIModel
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from django.conf import settings
 
 
 class BaseCalendar(models.Model):
@@ -56,6 +57,10 @@ class BaseEvent(URIModel):
     slug = exfields.AutoSlugField(populate_from='title')
     event_type = models.ForeignKey('coop_local.EventCategory', verbose_name=_('event type'))
     calendar = models.ForeignKey('coop_local.Calendar', verbose_name=_('calendar'))
+
+    # if "coop_tag" in settings.INSTALLED_APPS:
+    #     from coop_tag.managers import TaggableManager
+    #     tags = TaggableManager(blank=True, verbose_name=_(u'Tags'))
 
     # Linking to local objects
     organization = models.ForeignKey('coop_local.Organization', null=True, blank=True, verbose_name=_('organization'))

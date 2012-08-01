@@ -290,6 +290,9 @@ input#searchbar.search-query{
 	line-height: 1.1px;
 }
 
+.control-group > .control-label.required{
+	font-weight: bold;
+	}
 
 label.control-label.inline{
 	padding-right: 5px;

@@ -41,7 +41,8 @@ if 'coop.exchange' in settings.INSTALLED_APPS:
         #   self.fields['methods'].widget = forms.CheckboxSelectMultiple()
             self.fields['methods'].help_text = ''
             self.fields['methods'].label = _(u'exchange methods')
-            self.fields['tags'].label = 'Tags'
+            if 'tags' in self.fields:
+                self.fields['tags'].label = 'Tags'
 
         class Media:
             js = ('js/select_exchange_methods.js',)
@@ -55,7 +56,7 @@ if 'coop.exchange' in settings.INSTALLED_APPS:
         fieldsets = ((None, {'fields': (('eway', 'etype'),
                                          'methods',
                                          'title',
-                                        'description', 'tags',
+                                        'description',  # 'tags',
                                         'location', 'area')
                             }),)
         extra = 1
@@ -94,7 +95,7 @@ if 'coop.exchange' in settings.INSTALLED_APPS:
                                          'methods',
                                          'title',
                                          'organization',
-                                        'description', 'tags')
+                                        'description',)# 'tags')
                             }),)
 
 

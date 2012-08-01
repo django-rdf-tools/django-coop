@@ -1,13 +1,12 @@
 # -*- coding:utf-8 -*-
 
+from django.conf import settings
 from coop.article.models import CoopArticle
 from coop.person.models import BasePerson, BasePersonCategory
+from coop.mailing.models import BaseSubscription, BaseMailingList
 from coop.exchange.models import BaseExchange, BaseProduct, BaseExchangeMethod
 from coop.org.models import BaseOrganizationCategory, BaseOrganization, \
         BaseRelation, BaseEngagement, BaseRole, BaseContact, BaseRoleCategory
-from coop.mailing.models import BaseSubscription, BaseMailingList
-from coop.agenda.models import BaseCalendar, BaseEvent, BaseEventCategory, \
-        BaseOccurrence, BaseDated
 
 
 # ----- CMS
@@ -15,6 +14,17 @@ from coop.agenda.models import BaseCalendar, BaseEvent, BaseEventCategory, \
 class Article(CoopArticle):
     pass
 
+
+if 'coop_tag' in settings.INSTALLED_APPS:
+    from coop.tag.models import CoopTag, CoopTaggedItem
+
+    # ----- Tag
+
+    class Tag(CoopTag):
+        pass
+
+    class TaggedItem(CoopTaggedItem):
+        pass
 
 # ---- person
 
@@ -86,25 +96,24 @@ class Subscription(BaseSubscription):
 
 # ----- agenda
 
+if 'coop.agenda' in settings.INSTALLED_APPS:
+    from coop.agenda.models import BaseCalendar, BaseEvent, BaseEventCategory, \
+            BaseOccurrence, BaseDated
 
-class Calendar(BaseCalendar):
-        pass
+    class Calendar(BaseCalendar):
+            pass
 
+    class Event(BaseEvent):
+            pass
 
-class Event(BaseEvent):
-        pass
+    class EventCategory(BaseEventCategory):
+            pass
 
+    class Occurrence(BaseOccurrence):
+            pass
 
-class EventCategory(BaseEventCategory):
-        pass
-
-
-class Occurrence(BaseOccurrence):
-        pass
-
-
-class Dated(BaseDated):
-        pass
+    class Dated(BaseDated):
+            pass
 
 
 

@@ -108,6 +108,9 @@ class BaseExchange(URIModel):
                                  null=True, blank=True, related_name='exchange_area',
                                  help_text=_("choose an area among your registered impact areas."))
 
+    # if "coop_tag" in settings.INSTALLED_APPS:
+    #     from coop_tag.managers import TaggableManager
+    #     tags = TaggableManager(blank=True, verbose_name=_(u"Tags"))
 
     def __unicode__(self):
         return unicode(self.title)

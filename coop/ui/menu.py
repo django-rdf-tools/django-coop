@@ -40,7 +40,7 @@ class CustomMenu(Menu):
                     # RSS Sync menu gets inserted here if installed (see above)
 
                     items.MenuItem(_('Tags'), '#', icon='icon-tags', children=[
-                        items.MenuItem(_('Tags'), '/admin/coop_tag/ctag/'),
+                        items.MenuItem(_('Tags'), '/admin/coop_local/tag/'),
                         #items.MenuItem(_('Tag categories'), '/admin/coop_tag/tagcategory/'),
                         items.MenuItem(_('Tag trees'), '/admin/coop_cms/navtree/'),
                         ]),

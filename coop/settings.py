@@ -9,11 +9,14 @@ D2RQ_ROOT = 'http://localhost:8080/' + PROJECT_NAME + '/'
 PUSH_HUB = ''
 SUBHUB_MAINTENANCE_AUTO = False
 
-
 BASE_COOP_LOCAL_MODELS = [
 
     ('coop_cms', [
         u'Article',
+    ]),
+    ('coop_tag', [
+        u'Tag',
+        u'TaggedItem',
     ]),
     ('coop.agenda', [
         u'Calendar',
@@ -89,3 +92,5 @@ RDF_NAMESPACES = {
 
 
 NS = AttributeDict( transform_dict(RDF_NAMESPACES).items() )
+
+

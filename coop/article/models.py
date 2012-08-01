@@ -29,6 +29,10 @@ if "coop_cms" in settings.INSTALLED_APPS:
         if "coop.agenda" in settings.INSTALLED_APPS:
             dated = generic.GenericRelation('coop_local.Dated')
 
+        # if "coop_tag" in settings.INSTALLED_APPS:
+        #     from coop_tag.managers import TaggableManager
+        #     tags = TaggableManager(blank=True, verbose_name=_(u'Tags'))
+
         def label(self):
             return self.title
 

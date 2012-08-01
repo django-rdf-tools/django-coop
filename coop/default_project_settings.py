@@ -150,11 +150,7 @@ INSTALLED_APPS = [
     'django_webid.provider',
     'django_webid.auth',
 
-    # tags
-    'coop_tag',
-    'taggit',
-    'taggit_templatetags',
-    'taggit_autosuggest',
+    'coop',
 
     # PUSH
     # 'django_push.subscriber',
@@ -165,6 +161,12 @@ INSTALLED_APPS = [
 
 ]
 
+TAG_MODEL = 'coop_local.models.Tag'
+TAGGEDITEM_MODEL = 'coop_local.models.TaggedItem'
+
+TAG_MODEL_FKEY_NAME = 'coop_local.Tag'
+
+TAGGER_CSS_FILENAME = 'coop_tag.css'
 
 THUMBNAIL_FORMAT = 'PNG'
 
@@ -236,17 +238,6 @@ COOP_GEO_EPSG_PROJECTION = 4326  # WGS84
 COOP_GEO_BOUNDING_BOX = []
 COOP_GEO_REGION = LANGUAGE_CODE[:2]
 
-TAGGIT_TAG_MODEL = ('coop_tag', 'Ctag')
-TAGGIT_TAGGED_ITEM_MODEL = ('coop_tag', 'CtaggedItem')
-TAGGIT_TAG_FIELD_RELATED_NAME = 'ctagged_items'
-
-
-TAGGIT_AUTOCOMPLETE_TAG_MODEL = 'coop_tag.Ctag'
-# DEFAULT_TAGGIT_AUTOCOMPLETE_MEDIA_URL =
-
-
-TAGGIT_AUTOSUGGEST_MODEL = ('coop_tag', 'Ctag')
-TAGGIT_AUTOSUGGEST_CSS_FILENAME = 'coop_tag.css'
 
 
 #
@@ -362,7 +353,6 @@ LOGGING = {
     },
 
 }
-
 
 # import default app settings from django-coop app
 
