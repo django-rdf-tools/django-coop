@@ -249,10 +249,6 @@ class BaseOrganization(URIModel):
         located = generic.GenericRelation('coop_geo.Located', related_name='located_org')
         framed = generic.GenericRelation('coop_geo.AreaLink', related_name='framed_org')
 
-    # if "coop_tag" in settings.INSTALLED_APPS:
-    #     from coop_tag.managers import TaggableManager
-    #     tags = TaggableManager(blank=True, verbose_name=_(u'Tags'))
-
     birth = models.DateField(_(u'creation date'), null=True, blank=True)
     email = models.EmailField(_(u'global email'), blank=True, null=True)
     email_sha1 = models.CharField(_(u'email checksum'),

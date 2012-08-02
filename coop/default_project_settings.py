@@ -150,7 +150,9 @@ INSTALLED_APPS = [
     'django_webid.provider',
     'django_webid.auth',
 
-    'coop',
+    'coop_tag',
+    'feincms',  # for their MPTT tree editor, not synced
+    'coop',  # override feincms tree editor template
 
     # PUSH
     # 'django_push.subscriber',

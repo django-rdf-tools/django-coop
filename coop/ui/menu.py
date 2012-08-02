@@ -92,7 +92,7 @@ class CustomMenu(Menu):
         ]
 
         if 'coop_cms.apps.rss_sync' in  settings.INSTALLED_APPS:
-            children[2].insert(1,
+            self.children[2].insert(1,
 
                     items.MenuItem(_('RSS'), '#', icon='icon-coop icon-rss', children=[
                         items.MenuItem(_('RSS items'), '/admin/rss_sync/rssitem/'),
@@ -101,7 +101,7 @@ class CustomMenu(Menu):
                     )
 
         if 'coop.agenda' in settings.INSTALLED_APPS:
-            children.insert(1,
+            self.children.insert(2,
                 items.MenuItem(_('Agenda'), '#', icon='icon-calendar icon-white',
                     children=[
                         items.MenuItem(_('Events'), '/admin/coop_local/event/'),

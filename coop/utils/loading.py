@@ -15,7 +15,7 @@ import logging
 from django.core.exceptions import ImproperlyConfigured
 import inspect
 from django.db.models.base import ModelBase
-#from coop_local.models import local_models  # DO NOT REMOVE
+from coop_local.models import local_models  # DO NOT REMOVE !!!
 
 log = logging.getLogger('coop-init')
 
@@ -27,12 +27,15 @@ def import_class(cl):
     return getattr(m, classname)
 
 
-def relocalize_model(model_name, origin_module, target_module):
-    # import pdb
-    # pdb.set_trace()
-    klass = import_class(str(origin_module.__name__) + '.' + model_name)
-    setattr(target_module, model_name, klass)
-    log.debug('--> "%s" is now available from <%s>.' % (model_name, target_module.__name__))
+def relocalize_model(model_name, origin, target):
+    class_name = str(origin.__name__) + '.' + model_name
+    klass = import_class(class_name)
+    setattr(target, model_name, klass)
+    log.debug('--> "%s" is now available from <%s>.' % (model_name, target.__name__))
+
+
+
+
 
 
 def load_models(base_models, local_models, main_module):

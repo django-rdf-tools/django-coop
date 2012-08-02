@@ -58,10 +58,6 @@ class BaseEvent(URIModel):
     event_type = models.ForeignKey('coop_local.EventCategory', verbose_name=_('event type'))
     calendar = models.ForeignKey('coop_local.Calendar', verbose_name=_('calendar'))
 
-    # if "coop_tag" in settings.INSTALLED_APPS:
-    #     from coop_tag.managers import TaggableManager
-    #     tags = TaggableManager(blank=True, verbose_name=_(u'Tags'))
-
     # Linking to local objects
     organization = models.ForeignKey('coop_local.Organization', null=True, blank=True, verbose_name=_('organization'))
     person = models.ForeignKey('coop_local.Person', null=True, blank=True, verbose_name=_('author'))
