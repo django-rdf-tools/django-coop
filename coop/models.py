@@ -103,9 +103,6 @@ class StaticURIModel(models.Model):
                                             unicode(self.uri_id)  # can be anything = int, uuid, unicode...
                                         )
 
-
-
-
     # self.uri est null ou vide le creer (cad appel init_uri)
     # si le domain a changé alors changer l'uri (cad dire appel init_uri)
     # si le uri_registery a changer alors changer l'uri
@@ -113,31 +110,30 @@ class StaticURIModel(models.Model):
     #
     # repenser aux commons et aux importés pour voir si tout marche
 
-
-
     def save(self, *args, **kwargs):
          # create / update URI
         if self.uri_mode != URI_MODE.IMPORTED:
             if not self.uri or self.uri == '':
                 self.uri = self.init_uri()
-            else:
-                scheme, host, path, query, fragment = urlsplit(self.uri)
-                sp = path.split('/')
-                try:
-                    assert(sp[1] == 'id')  # to assert a minimal coherence...
-                except AssertionError:
-                    raise IntegrityError(_(u'Local URI path must starts with "/id/"'))
-                if sp[3] != self.uri_id:
-                    self.uri = self.init_uri()  # uri_id est pas pareil
-                else:
-                    if host != self.domain_name:
-                        self.uri = self.init_uri()
-                    else:
-                        if  sp[2] != self.uri_registry():
-                            self.uri = self.init_uri()
+            elif self.uri != self.init_uri():
+                self.uri = self.init_uri()  # uri_id est pas pareil
+            # else:
+            #     scheme, host, path, query, fragment = urlsplit(self.uri)
+            #     sp = path.split('/')
+            #     try:
+            #         assert(sp[1] == 'id')  # to assert a minimal coherence...
+            #     except AssertionError:
+            #         raise IntegrityError(_(u'Local URI path must starts with "/id/"'))
+            #     if sp[3] != self.uri_id:
+            #         self.uri = self.init_uri()  # uri_id est pas pareil
+
+            #     else:
+            #         if host != self.domain_name:
+            #             self.uri = self.init_uri()
+            #         else:
+            #             if  sp[2] != self.uri_registry():
+            #               self.uri = self.init_uri()
         super(StaticURIModel, self).save(*args, **kwargs)
-
-
 
     def toRdf(self, format):
         """
@@ -146,7 +142,7 @@ class StaticURIModel(models.Model):
                'xml' for xml
                'json-ld' for json-ld
         """
-        # Sparq endPoint
+        # D2R SPARQL endpoint is local, served by Jetty :
         uriSparql = 'http://localhost:8080/' + settings.PROJECT_NAME + '/sparql'
         graph = ConjunctiveGraph('SPARQLStore')
         graph.open(uriSparql, False)
@@ -156,8 +152,10 @@ class StaticURIModel(models.Model):
         cquery = "construct where { <%s> ?p ?o .} "
         res = graph.query(cquery % self.uri)
 
-        if format == 'ttl': format = 'n3'
-        if format == 'json': format = 'json-ld'
+        if format == 'ttl':
+            format = 'n3'
+        if format == 'json':
+            format = 'json-ld'
         return res.graph.serialize(format=format)
 
     def toN3(self):
@@ -168,7 +166,6 @@ class StaticURIModel(models.Model):
 
     def toJson(self):
         return self.toRdf("json-ld")
-
 
     @classmethod
     def getD2rqGraph(cls):
@@ -188,8 +185,6 @@ class StaticURIModel(models.Model):
         graph = Graph()
         graph.parse('file:' + fname, format='n3')
         return graph
-
-
 
     @classmethod
     def updateFromFeeds(cls):
@@ -295,15 +290,9 @@ class StaticURIModel(models.Model):
             Subscription.objects.unsubscribe(feed_url, hub=settings.PES_HUB)
 
 
-
-
 class URIModel(StaticURIModel, TimestampedModel):
     class Meta:
         abstract = True
-
-
-
-
 
 
 def checkDirectMap(dbfieldName, d2rqGraph):
@@ -324,7 +313,7 @@ def checkDirectMap(dbfieldName, d2rqGraph):
 def checkDirectMapFK(dbfieldName, d2rqGraph):
     # on commence par chercher tous les triples de la forme
     # select * where { ?s d2rq:join ?l. filter(?l contains dbfieldname) }
-    # mais comme le d2rqGraph n'est pas un SpaqlGraph on le fait à la main
+    # mais comme le d2rqGraph n'est pas un SparqlGraph on le fait à la main
 
     # Well it is not possible to use settings.NS.d2rq.join because
     # there is a conflict of names with the join function of the Namespace

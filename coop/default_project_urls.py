@@ -11,9 +11,11 @@ import sys
 # if not model_cache.loaded:
 #     model_cache.get_models()
 
+from coop_local.urls import urlpatterns
+
 handler500 = 'coop.views.SentryHandler500'
 
-urlpatterns = patterns('',
+urlpatterns += patterns('',
 
     #Testing webid urls
     url(r'^accounts/webidauth', 'coop.webid.views.test_login',
@@ -40,6 +42,22 @@ urlpatterns = patterns('',
     #url(r'^org/$', 'coop_local.views.org_list', name="org_list"),  # exemple de view django-coop surchargee
 
 )
+
+# URLS for all Classification models
+
+from django.db.models.loading import get_models
+from coop.org.models import BaseClassification
+from django.views.generic.detail import DetailView
+
+for model in [x for x in get_models() if BaseClassification in x.__mro__]:
+    urlpatterns += patterns('',
+        url(r'^%s/(?P<slug>[-_\w|\W]+)/$' % model._meta.object_name.lower(),
+            DetailView.as_view(
+                model=model,
+                template_name='org/%s-detail.html' % model._meta.object_name.lower()
+            ), name='%s-detail' % model._meta.object_name.lower()),
+    )
+
 
 # for local testing
 if settings.DEBUG or ('test' in sys.argv):

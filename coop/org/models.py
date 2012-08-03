@@ -41,7 +41,7 @@ class BaseClassification(MPTTModel, URIModel):
         return unicode(self.label)
 
     def get_absolute_url(self):
-        return reverse('classification_item', args=[self.slug])
+        return reverse('%s-detail' % self._meta.object_name.lower(), args=[self.slug])
 
     @property
     def uri_id(self):
@@ -50,6 +50,51 @@ class BaseClassification(MPTTModel, URIModel):
     def uri_registry(self):
         return u'label'
 
+
+class BaseRoleCategory(models.Model):
+    label = models.CharField(_(u'label'), max_length=60)
+    slug = exfields.AutoSlugField(populate_from=('label'), overwrite=True)
+    uri = models.CharField(_(u'URI'), blank=True, max_length=250)
+
+    class Meta:
+        abstract = True
+        ordering = ['label']
+        verbose_name = _('Role category')
+        verbose_name_plural = _('Role categories')
+        #ordering = ['label']
+        app_label = 'coop_local'
+
+    def __unicode__(self):
+        return unicode(self.label)
+
+
+class BaseRole(BaseClassification):
+    #label = models.CharField(_(u'label'), max_length=60)
+    #slug = AutoSlugField(populate_from='label', always_update=True, unique=True)
+    category = models.ForeignKey('coop_local.RoleCategory', null=True, blank=True, verbose_name=_(u'category'))
+
+    #domain_name = 'data.economie-solidaire.fr'
+
+    class Meta:
+        abstract = True
+        verbose_name = _('Role')
+        verbose_name_plural = _('Roles')
+        ordering = ['tree_id', 'lft']  # for FeinCMS TreeEditor
+        #ordering = ['label']
+        app_label = 'coop_local'
+
+    # @property
+    # def uri_id(self):
+    #     return self.slug
+
+    # def uri_registry(self):
+    #     return u'label'
+
+    # def __unicode__(self):
+    #     return unicode(self.label)
+
+    # def get_absolute_url(self):
+    #     return reverse('role_detail', args=[self.slug])
 
 DISPLAY = Choices(
     ('PUBLIC',  1,  _(u'public information')),
@@ -120,51 +165,6 @@ class BaseContact(URIModel):
         self.clean()
         #logging.error(u'A contact has been created or modified', exc_info=True, extra={'request': request})
         super(BaseContact, self).save(*args, **kwargs)
-
-
-class BaseRoleCategory(models.Model):
-    label = models.CharField(_(u'label'), max_length=60)
-    slug = exfields.AutoSlugField(populate_from=('label'), overwrite=True)
-    uri = models.CharField(_(u'URI'), blank=True, max_length=250)
-
-    class Meta:
-        abstract = True
-        ordering = ['label']
-        verbose_name = _('Role category')
-        verbose_name_plural = _('Role categories')
-        #ordering = ['label']
-        app_label = 'coop_local'
-
-    def __unicode__(self):
-        return unicode(self.label)
-
-
-class BaseRole(URIModel):
-    label = models.CharField(_(u'label'), max_length=60)
-    slug = exfields.AutoSlugField(populate_from=('label'), overwrite=True)
-    category = models.ForeignKey('coop_local.RoleCategory', null=True, blank=True, verbose_name=_(u'category'))
-
-    domain_name = 'data.economie-solidaire.fr'
-
-    class Meta:
-        abstract = True
-        verbose_name = _('Role')
-        verbose_name_plural = _('Roles')
-        #ordering = ['label']
-        app_label = 'coop_local'
-
-    @property
-    def uri_id(self):
-        return self.slug
-
-    def uri_registry(self):
-        return u'label'
-
-    def __unicode__(self):
-        return unicode(self.label)
-
-    def get_absolute_url(self):
-        return reverse('role_detail', args=[self.slug])
 
 
 RELATIONS = Choices(
