@@ -138,6 +138,8 @@ INSTALLED_APPS = [
     'chosen',
     'sorl.thumbnail',
     'tinymce',
+    'autoslug',
+    'slugify',
 
     # coop_cms
     'djaloha',
@@ -162,6 +164,8 @@ INSTALLED_APPS = [
     'raven.contrib.django',
 
 ]
+
+AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
 TAG_MODEL = 'coop_local.models.Tag'
 TAGGEDITEM_MODEL = 'coop_local.models.TaggedItem'

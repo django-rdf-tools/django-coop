@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 from django.db import models
+from autoslug import AutoSlugField
+from mptt.models import MPTTModel, TreeForeignKey
 from extended_choices import Choices
 from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
@@ -13,7 +15,40 @@ from sorl.thumbnail import ImageField
 from sorl.thumbnail import default
 import rdflib
 import logging
+
+
 ADMIN_THUMBS_SIZE = '60x60'
+
+
+class BaseClassification(MPTTModel, URIModel):
+    label = models.CharField(_(u'label'), max_length=60)
+    slug = AutoSlugField(populate_from='label', always_update=True, unique=True)
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
+
+    domain_name = 'data.economie-solidaire.fr'
+
+    class MPTTMeta:
+        order_insertion_by = ['label']
+
+    class Meta:
+        abstract = True
+        verbose_name = _('Classification')
+        verbose_name_plural = _('Classifications')
+        ordering = ['tree_id', 'lft']  # for FeinCMS TreeEditor
+        app_label = 'coop_local'
+
+    def __unicode__(self):
+        return unicode(self.label)
+
+    def get_absolute_url(self):
+        return reverse('classification_item', args=[self.slug])
+
+    @property
+    def uri_id(self):
+        return self.slug
+
+    def uri_registry(self):
+        return u'label'
 
 
 DISPLAY = Choices(
@@ -111,10 +146,6 @@ class BaseRole(URIModel):
 
     domain_name = 'data.economie-solidaire.fr'
 
-    @property
-    def uri_id(self):
-        return self.slug
-
     class Meta:
         abstract = True
         verbose_name = _('Role')
@@ -122,6 +153,12 @@ class BaseRole(URIModel):
         #ordering = ['label']
         app_label = 'coop_local'
 
+    @property
+    def uri_id(self):
+        return self.slug
+
+    def uri_registry(self):
+        return u'label'
 
     def __unicode__(self):
         return unicode(self.label)

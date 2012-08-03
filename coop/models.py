@@ -98,7 +98,10 @@ class StaticURIModel(models.Model):
         return self.__class__.__name__.lower()
 
     def init_uri(self):
-        return 'http://' + self.domain_name + '/id/' + self.uri_registry() + '/' + str(self.uri_id) + '/'
+        return u"http://%s/id/%s/%s/" % (   self.domain_name,
+                                            self.uri_registry(),
+                                            unicode(self.uri_id)  # can be anything = int, uuid, unicode...
+                                        )
 
 
 

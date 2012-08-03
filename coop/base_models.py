@@ -5,8 +5,9 @@ from coop.article.models import CoopArticle
 from coop.person.models import BasePerson, BasePersonCategory
 from coop.mailing.models import BaseSubscription, BaseMailingList
 from coop.exchange.models import BaseExchange, BaseProduct, BaseExchangeMethod
-from coop.org.models import BaseOrganizationCategory, BaseOrganization, \
-        BaseRelation, BaseEngagement, BaseRole, BaseContact, BaseRoleCategory
+from coop.org.models import (   BaseOrganizationCategory, BaseOrganization,
+                                BaseRelation, BaseEngagement, BaseRole,
+                                BaseContact, BaseRoleCategory)
 
 
 # ----- CMS
@@ -25,6 +26,7 @@ if 'coop_tag' in settings.INSTALLED_APPS:
 
     class TaggedItem(CoopTaggedItem):
         pass
+
 
 # ---- person
 

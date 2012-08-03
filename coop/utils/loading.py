@@ -14,7 +14,7 @@ from django.conf import settings
 import logging
 from django.core.exceptions import ImproperlyConfigured
 import inspect
-from django.db.models.base import ModelBase
+from django.db.models.base import Model as DjangoModel
 from coop_local.models import local_models  # DO NOT REMOVE !!!
 
 log = logging.getLogger('coop-init')
@@ -56,13 +56,12 @@ def load_models(base_models, local_models, main_module):
                         raise ImproperlyConfigured('Unable to load "%s" from local or base models : %s' % (model_name, msg))
 
     # Looking for non-coop models also declared in coop_local
-    custmodel_list = [(name, obj) for (name, obj) in \
-                    inspect.getmembers(local_models, inspect.isclass) \
-                        if hasattr(obj, '__class__')
-                        and obj.__class__ == ModelBase \
+    custmodel_list = [(name, obj) for (name, obj) in inspect.getmembers(local_models, inspect.isclass) if (
+                        hasattr(obj, '__class__')
+                        and DjangoModel in obj.__mro__
                         and 'coop_local' in obj.__module__
                         and name not in app_list
-                    ]
+                    )]
 
     log.debug('Found additional models : %s' % ', '.join([x[0] for x in custmodel_list]))
 
