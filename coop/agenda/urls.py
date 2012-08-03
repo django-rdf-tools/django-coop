@@ -4,7 +4,8 @@ from coop.agenda import views
 
 
 urlpatterns = patterns('',
-    url(r'^(?:calendar/)?$',
+    #url(r'^(?:calendar/)?$',
+    url(r'^calendar/?$',
         view=views.today_view,
         name='agenda-today'),
 
