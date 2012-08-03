@@ -5,7 +5,8 @@ from coop_local.models import *
 from coop.person.admin import PersonAdmin
 from coop.exchange.admin import ExchangeAdmin
 from coop.org.admin import OrganizationAdmin, RoleAdmin
-
+from coop.tag.admin import CoopTagTreeAdmin
+from coop_tag.settings import get_class
 
 # -- Loading base models
 
@@ -20,3 +21,5 @@ admin.site.register(ExchangeMethod)
 admin.site.register(Exchange, ExchangeAdmin)
 
 
+admin.site.unregister(get_class('tag'))
+admin.site.register(get_class('tag'), CoopTagTreeAdmin)

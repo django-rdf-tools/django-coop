@@ -484,7 +484,20 @@ p.countmonitor.warning{
 
 /* @end */
 
-/* Stacked Inlines */
+/* @group TagTree */
+
+#result_list > thead > tr > th:nth-child(2){
+    width: 16px;
+}
+
+#result_list > thead > tr > th:nth-child(2) > .text > span{
+    display: none;
+}
+
+
+/* @end */
+
+/* @group Stacked Inlines */
 
 div.stacked-inline h3 {
 	font-size: 16px;
@@ -512,6 +525,8 @@ div.stacked-inline h3 span.delete label.vCheckboxLabel.inline{
 .stacked_collapse.collapsed{
 	display: none;
 }
+
+/* @end */
 
 
 /* Fields width */
