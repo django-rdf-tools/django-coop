@@ -21,6 +21,8 @@ setup(
     version = VERSION,
     description = 'A basis for a cooperative organization directory, with people, organization, offers.',
     packages = ['coop',
+                'coop.bin',
+                'coop.article',
                 'coop.exchange',
                 'coop.link',
                 'coop.org',
@@ -48,6 +50,7 @@ setup(
     long_description = open('README.rst').read(),
     url = 'https://github.com/quinode/django-coop/',
     download_url = 'https://github.com/quinode/django-coop/tarball/master',
+    scripts = ['coop/bin/coop-admin.py'],
     classifiers = [
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
