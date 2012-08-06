@@ -131,8 +131,6 @@ INSTALLED_APPS = [
     'django_extensions',
     'extended_choices',
     'floppyforms',
-    'django_rq',
-    'subhub',
     #'haystack',
     #'oembed',
     'chosen',
@@ -155,9 +153,17 @@ INSTALLED_APPS = [
     'coop_tag',
     'feincms',  # for their MPTT tree editor, not synced
     'coop',  # override feincms tree editor template
+    'coop.link',
+    'coop.org',
+    'coop.person',
+    'coop.ui',
+    'coop.webid',
 
-    # PUSH
-    # 'django_push.subscriber',
+
+    # PuSH
+    'django_rq',
+    'subhub',
+    'django_push.subscriber',
     'uriredirect',
 
     # Logging errors (needed until we go "stable")
@@ -289,6 +295,9 @@ LOGGING = {
         'verbose': {
             'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
         },
+        'simplest': {
+            'format': '%(message)s'
+        },
         'simple': {
             'format': '%(levelname)s %(asctime)s %(message)s'
         },
@@ -302,8 +311,14 @@ LOGGING = {
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
+            'formatter': 'simple'
         },
+        'console-dumb': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simplest'
+        },
+
         # access denied problem on prod env.... to be check
         #  'file_subhub': {  # define and name a handler
         #     'level': 'DEBUG',
@@ -341,9 +356,8 @@ LOGGING = {
 
         },
         'coop-init': {
-            'handlers': ['console'],
-            'level': 'DEBUG'
-
+            'handlers': ['console-dumb'],
+            'level': 'DEBUG',
         },
 
         'raven': {

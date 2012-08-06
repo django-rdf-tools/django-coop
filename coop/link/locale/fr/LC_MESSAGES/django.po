@@ -7,43 +7,51 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop.link\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-13 09:34+0000\n"
-"PO-Revision-Date: 2012-02-13 10:35+0100\n"
+"POT-Creation-Date: 2012-08-06 12:52+0200\n"
+"PO-Revision-Date: 2012-08-06 12:54+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.Fr>\n"
-"Language: \n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"X-Poedit-Language: French\n"
-"X-Poedit-Country: FRANCE\n"
-
-#: models.py:10
-msgid "URL"
-msgstr "URL"
 
 #: models.py:11
 msgid "Label"
-msgstr "Libellé"
+msgstr "libellé"
 
-#: models.py:13
+#: models.py:12
+msgid "property URI"
+msgstr "URI de la propriété RDF"
+
+#: models.py:16
+msgid "linking property"
+msgstr "propriété de liaison RDF"
+
+#: models.py:17
+msgid "linking properties"
+msgstr "propriétés de liaison RDF"
+
+#: models.py:26
 msgid "created"
 msgstr "création"
 
-#: models.py:14
+#: models.py:27
 msgid "modified"
 msgstr "modification"
 
-#: models.py:15
-msgid "model@"
-msgstr ""
+#: models.py:33
+msgid "object URI"
+msgstr "URI cible"
 
-#: models.py:25
-msgid "Semantic Link"
-msgstr "Lien sémantique"
+#: models.py:40
+msgid "semantic link"
+msgstr "liaison sémantique"
 
-#: models.py:26
-msgid "Semantic Links"
-msgstr "Liens sémantiques"
+#: models.py:41
+msgid "semantic links"
+msgstr "liaisons sémantiques"
 
+#~ msgid "URL"
+#~ msgstr "URL"

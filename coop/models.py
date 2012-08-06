@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
 import shortuuid
 from rdflib import Graph, plugin, Literal, URIRef, ConjunctiveGraph
+from django.contrib.contenttypes import generic
 from django.db import IntegrityError
 from django.template import Template, Context
 from urlparse import urlsplit
@@ -76,6 +77,8 @@ class StaticURIModel(models.Model):
     # La version simple c'est de passer par le save() et de supprimer le default.... c'est pas
     # tres beau, car un plus couteux en runtime... mais bon
     uuid = models.CharField(_(u'uuid'), max_length=50, null=True, editable=False, unique=True, default=shortuuid.uuid)
+
+    links = generic.GenericRelation('coop_local.Link', related_name="%(app_label)s_%(class)s_related")
 
     # the default value, this attribut should be overloaded
     domain_name = settings.DEFAULT_URI_DOMAIN

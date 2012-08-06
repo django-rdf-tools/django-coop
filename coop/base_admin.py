@@ -10,6 +10,8 @@ from coop_tag.settings import get_class
 
 # -- Loading base models
 
+admin.site.register(LinkProperty)
+
 admin.site.register(PersonCategory)
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Role, CoopTagTreeAdmin)

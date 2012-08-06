@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from django.conf import settings
+from coop.link.models import BaseLinkProperty, BaseLink
 from coop.article.models import CoopArticle
 from coop.person.models import BasePerson, BasePersonCategory
 from coop.mailing.models import BaseSubscription, BaseMailingList
@@ -8,6 +9,17 @@ from coop.exchange.models import BaseExchange, BaseProduct, BaseExchangeMethod
 from coop.org.models import (   BaseOrganizationCategory, BaseOrganization,
                                 BaseRelation, BaseEngagement, BaseRole,
                                 BaseContact, BaseRoleCategory)
+
+
+# ---- person
+
+
+class LinkProperty(BaseLinkProperty):
+        pass
+
+
+class Link(BaseLink):
+        pass
 
 
 # ----- CMS
