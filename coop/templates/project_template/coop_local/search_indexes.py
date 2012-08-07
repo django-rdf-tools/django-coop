@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
-# TODO : est-ce qu'on peut proposer des valeurs par défaut ici ?
-# ou deriver d'index pre-existants et leur ajouter quelques champs spécifiques au site ?
+# TODO : est-ce qu'on peut proposer des valeurs par defaut ici ?
+# ou deriver d'index pre-existants et leur ajouter quelques champs secifiques au site ?
 
 import datetime
 from haystack import indexes, site
