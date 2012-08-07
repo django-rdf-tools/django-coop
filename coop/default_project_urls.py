@@ -11,16 +11,16 @@ import sys
 # if not model_cache.loaded:
 #     model_cache.get_models()
 
-from coop_local.urls import urlpatterns
+# from coop_local.urls import urlpatterns
 
 handler500 = 'coop.views.SentryHandler500'
 
-urlpatterns += patterns('',
+urlpatterns = patterns('',
 
     #Testing webid urls
     url(r'^accounts/webidauth', 'coop.webid.views.test_login',
         name="webidauth-login"),
-    url(r'^webid/', include('django_webid.provider.urls')),
+    # url(r'^webid/', include('django_webid.provider.urls')),
     url(r'^auth/', include('coop.webid.urls')),
 
     #XXX remove this first url. Just debuggin'

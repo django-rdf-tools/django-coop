@@ -22,7 +22,7 @@ urlpatterns = patterns('',
     url(r'^password/reset/done/$',auth_views.password_reset_done,name='auth_password_reset_done'),
     
     # sinon on délégue à l'app profiles
-    (r'^', include('profiles.urls')),
+    # (r'^', include('profiles.urls')),
     
   
 )
