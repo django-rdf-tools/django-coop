@@ -9,7 +9,7 @@ from django_extensions.db import fields as exfields
 
 class BaseLinkProperty(models.Model):
     label = models.CharField(_(u'Label'), max_length=100)
-    uri = models.URLField(blank=True, verify_exists=False, verbose_name=_(u'property URI'))
+    uri = models.URLField(blank=True, verbose_name=_(u'property URI'))  # verify_exists=False,
 
     class Meta:
         abstract = True
@@ -33,7 +33,7 @@ class BaseLink(models.Model):
     content_object = generic.GenericForeignKey('content_type', 'object_id')
 
     predicate = models.ForeignKey('coop_local.LinkProperty')
-    object_uri = models.URLField(blank=True, verify_exists=False, verbose_name=_(u'object URI'))
+    object_uri = models.URLField(blank=True, verbose_name=_(u'object URI'))  # verify_exists=False, 
 
     def __unicode__(self):
         return u"%s %s %s" % (unicode(self.content_object), unicode(self.predicate), self.object_uri)
