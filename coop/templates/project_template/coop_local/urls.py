@@ -11,6 +11,7 @@ admin.autodiscover()
 
 
 # Add you own URLs here
+urlpatterns = []
 
 # urlpatterns += patterns('',
 #    url(r'^org/$', 'coop_local.views.org_list', name="org_list"), #view coop

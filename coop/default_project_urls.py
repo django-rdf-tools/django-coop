@@ -11,11 +11,11 @@ import sys
 # if not model_cache.loaded:
 #     model_cache.get_models()
 
-# from coop_local.urls import urlpatterns
+from coop_local.urls import urlpatterns
 
 handler500 = 'coop.views.SentryHandler500'
 
-urlpatterns = patterns('',
+urlpatterns += patterns('',
 
     #Testing webid urls
     url(r'^accounts/webidauth', 'coop.webid.views.test_login',
