@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.core.exceptions import ImproperlyConfigured
 
 try:
-    from coop_local.base.base_admin import *
+    from coop.base_admin import *
 except ImportError, exp:
     raise ImproperlyConfigured("Unable to find coop_local/base/local_admin.py file")
 
@@ -12,7 +12,7 @@ except ImportError, exp:
 # subclass existing ModelAdmins and add your own model's ModelAdmins here
 
 """
-# -- overriding main models when needed : example
+# ---- overriding main models when needed : example -----------------------
 
 # first unregister previous ModelAdmin
 admin.site.unregister(Person)
@@ -35,5 +35,11 @@ class MyPersonAdmin(PersonAdmin):
     Using coop-geo
     related_search_fields = {'location': ('label', 'adr1', 'adr2', 'zipcode', 'city'), }
 admin.site.register(Person, MyPersonAdmin)
+
+# ----- admin for classifications : ultra-simple -----------------------------
+
+admin.site.register(Statut, CoopTagTreeAdmin)
+
+
 
 """

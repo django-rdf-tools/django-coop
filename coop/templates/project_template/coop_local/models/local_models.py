@@ -15,12 +15,13 @@ from coop.org.models import BaseClassification
 # Classifications classes must be instantiated manually (no default model)
 # uncomment to get a legal status and activity sector classification
 
+# from coop.org.models import BaseClassification
+
 # class Statut(BaseClassification):
 #     class Meta:
 #         verbose_name = 'statut juridique'
 #         verbose_name_plural = 'statuts juridiques'
 #         app_label = 'coop_local'
-
 
 # class Secteur(BaseClassification):
 #     class Meta:

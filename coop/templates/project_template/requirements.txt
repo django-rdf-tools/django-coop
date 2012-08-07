@@ -18,7 +18,10 @@ coop-colorbox
 git+git://github.com/Nimn/geo-django-fla.git
 
 django-autoslug
-git+git://github.com/mozilla/unicode-slugify.git
+unicode-slugify
+
+feincms
+django-mptt
 
 # coop-tag deps
 # django-taggit
