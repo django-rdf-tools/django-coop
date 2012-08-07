@@ -25,8 +25,8 @@ from coop.org.models import BaseClassification
 
 # class Secteur(BaseClassification):
 #     class Meta:
-#         verbose_name = "secteur d'activité"
-#         verbose_name_plural = "secteurs d'activité"
+#         verbose_name = u"secteur d'activite"
+#         verbose_name_plural = u"secteurs d'activite"
 #         app_label = 'coop_local'
 
 # If you uncommented one of these models, you should override the Organization model to make a Fkey to them...
