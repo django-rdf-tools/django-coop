@@ -1,7 +1,6 @@
 # WSGI config for {{ project_name }} project.
 
-ALLDIRS = ['/home/admin/.virtualenvs/coop/lib/python2.7/site-packages']
-
+ALLDIRS = ['{{ project_alldirs }}']
 # passing this variable to template context = ticket 18277
 # TODO subclass the startproject command so we get this automatically
 

@@ -17,3 +17,15 @@ DATABASES = {
     },
 }
 
+# For redis
+REDIS_PORT = {{ redis }}  # Please ask for a redis port to your administrator. Default value 6379, may already been used'
+
+# # For django-rq, this mandatory to run rqworker command from manage.py
+RQ_QUEUES = {
+    'default': {
+        'HOST': '127.0.0.1',
+        'PORT': REDIS_PORT,
+        'DB': 0,
+    },
+}
+

@@ -5,6 +5,7 @@ from django.core.management.templates import TemplateCommand
 from django.utils.crypto import get_random_string
 from django.utils.importlib import import_module
 import os
+from optparse import make_option
 
 
 class Command(TemplateCommand):
@@ -12,7 +13,19 @@ class Command(TemplateCommand):
             "project name in the current directory or optionally in the "
             "given directory.")
 
+    option_list = TemplateCommand.option_list + (
+        make_option('--redis_port',
+                    action='store', dest='redis', default=6379,
+                    help=_(u'Please set the redis port the application will used (default value is 6379')),
+        make_option('--redis_bin',
+                    action='store', dest='redis_bin', default='/opt/redis/bin/',
+                    help=_(u'Please set the redis bin directory (default value is /opt/redis/bin/')),
+
+        )
+
     def handle(self, project_name=None, target=None, *args, **options):
+        import pdb
+        pdb.set_trace()
         if project_name is None:
             raise CommandError("you must provide a project name")
 
@@ -38,5 +51,9 @@ class Command(TemplateCommand):
         # variables. Here 'template' is set 'hardy'
         options['template'] = os.path.join(coop_dir, 'templates', 'project_template')
         options['project_alldirs'] = os.path.split(coop_dir)[0]
+        # For supervisor.conf file
+        options['extentions'] = options['extensions'].append('conf')
+        options['virtualenv'] = os.getenv('VIRTUAL_ENV')
+        options['runinenv'] = os.system('which runinenv.sh')
 
         super(Command, self).handle('project', project_name, target, **options)

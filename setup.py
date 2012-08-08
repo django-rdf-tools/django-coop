@@ -50,7 +50,9 @@ setup(
     long_description = open('README.rst').read(),
     url = 'https://github.com/quinode/django-coop/',
     download_url = 'https://github.com/quinode/django-coop/tarball/master',
-    scripts = ['coop/bin/coop-admin.py'],
+    scripts = [
+        'coop/bin/coop-admin.py',
+        'coop/bin/runinenv.sh'],
     classifiers = [
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
