@@ -202,7 +202,7 @@ map:organization_seeks a d2rq:PropertyBridge;
     d2rq:condition "coop_local_exchangeSeeks.eway = 2"
     .
 
-# field note have been forgoten.... property is still rather approximative
+# field note have been forgotten.... property is still rather approximative
 map:organization_notes a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
     d2rq:property vcard:note;
