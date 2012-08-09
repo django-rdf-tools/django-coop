@@ -151,9 +151,9 @@ map:organization_tags a d2rq:PropertyBridge; # EXAMPLE M2M generic relation
     d2rq:belongsToClassMap map:organization;
     d2rq:refersToClassMap map:xlabel;
     d2rq:property dct:subject;
-    d2rq:join "coop_tag_ctag.id <= coop_tag_ctaggeditem.tag_id";
-    d2rq:join "coop_local_organization.id <= coop_tag_ctaggeditem.object_id";
-    d2rq:join "django_content_type.id <= coop_tag_ctaggeditem.content_type_id";
+    d2rq:join "coop_local_tag.id <= coop_local_taggeditem.tag_id";
+    d2rq:join "coop_local_organization.id <= coop_local_taggeditem.object_id";
+    d2rq:join "django_content_type.id <= coop_local_taggeditem.content_type_id";
     d2rq:condition "django_content_type.model = 'organization'";
     .
 map:organization_members a d2rq:PropertyBridge;
@@ -212,7 +212,7 @@ map:organization_notes a d2rq:PropertyBridge;
 map:organization_links a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:organization;
     d2rq:dynamicProperty "@@coop_local_linkproperty.uri@@";
-    d2rq:uriColumn "coop_local_link.subject_uri";
+    d2rq:uriColumn "coop_local_link.object_uri";
     d2rq:join "coop_local_linkproperty.id <= coop_local_link.predicate_id";
     d2rq:join "coop_local_organization.id <= coop_local_link.object_id";
     d2rq:join "django_content_type.id <= coop_local_link.content_type_id";
