@@ -40,7 +40,12 @@ class UpdateFeed(Feed):
     # def item_extra_kwargs
     def get_object(self, request, *args, **kwargs):
         self._model = kwargs['model']
-        self._mType = ContentType.objects.get(model=self._model, app_label='coop_local')
+        try:
+            self._mType = ContentType.objects.get(model=self._model)
+        except ContentType.MultipleObjectsReturned:
+            self._mType = ContentType.objects.get(model=self._model, app_label='coop_local')
+
+
         self.title = _(u"Updates for %s on %s." % (self._model, Site.objects.get_current().name))
         self.link = "/feed/%s/" % self._model
         return None
