@@ -24,8 +24,6 @@ class Command(TemplateCommand):
         )
 
     def handle(self, project_name=None, target=None, *args, **options):
-        import pdb
-        pdb.set_trace()
         if project_name is None:
             raise CommandError("you must provide a project name")
 
@@ -54,6 +52,8 @@ class Command(TemplateCommand):
         # For supervisor.conf file
         options['extentions'] = options['extensions'].append('conf')
         options['virtualenv'] = os.getenv('VIRTUAL_ENV')
-        options['runinenv'] = os.system('which runinenv.sh')
+        p = os.popen('which runinenv.sh', "r")
+        options['runinenv'] = p.readline().replace('\n', '')
+        p.close()
 
         super(Command, self).handle('project', project_name, target, **options)
