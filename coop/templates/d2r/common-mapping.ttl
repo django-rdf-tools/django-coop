@@ -94,43 +94,6 @@ map:xlabel_broader a d2rq:PropertyBridge;
 
 
 
-# To map the mptt property of the tags.
-# We loose the scheme and inScheme property
-# How to give it a label? How to refers to it?
-map:xlabel_tag_broader a d2rq:PropertyBridge;
-    d2rq:belongsToClassMap map:xlabel;
-    d2rq:refersToClassMap map:xlabel;
-    d2rq:property ess:broaderLabel;
-    d2rq:alias "coop_local_tag AS subject_tag";
-    d2rq:condition "subject_tag.level > 0";
-    d2rq:join "subject_tag.parent_id = coop_local_tag.id"; 
-    .
-
-map:xlabel_tag_narrower a d2rq:PropertyBridge;
-    d2rq:belongsToClassMap map:xlabel;
-    d2rq:refersToClassMap map:xlabel;
-    d2rq:property ess:narrowerLabel;
-    d2rq:alias "coop_local_tag AS subject_tag";
-    d2rq:condition "coop_local_tag.level > 0";
-    d2rq:join "coop_local_tag.parent_id = subject_tag.id"; 
-    .
-
-# Table coop_local_tag
-# Try to add a scheme with sql.... does NOT work....
-# This has to be done directly by the thesaurus
-# map:scheme_tag a d2rq:ClassMap; # classe = modele Django
-#     d2rq:dataStorage map:database;
-#     d2rq:constantValue <{{d2r_baseURI}}/id/scheme/tags> ;
-#     d2rq:class skos:Scheme; # classe RDF correspondante
-#     .
-    
-# map:scheme_tag_name a d2rq:PropertyBridge;
-#     d2rq:belongsToClassMap map:scheme_tag;
-#     d2rq:property rdfs:label;
-#     d2rq:constantValue "hiérachie des tags"@fr;
-#     .
-
-
 
 {% include "d2r/organization.ttl" %}
 
