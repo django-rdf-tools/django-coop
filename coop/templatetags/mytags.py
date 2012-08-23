@@ -49,11 +49,11 @@ class LocalRemoteNode(template.Node):
 @register.tag
 def local_or_remote(parser, token):
     try:
-        tag_name, obj, model_name = token.split_contents()
+        method_name, tag_name, obj, model_name = token.split_contents()
     except ValueError:
         raise template.TemplateSyntaxError, "This tag requires three arguments : object, uri or label, linked model name"
     #TODO verifier ce qu'on a
-    return LocalRemoteNode(obj, model_name)
+    return LocalRemoteNode(tag_name, obj, model_name)
 
 
 
