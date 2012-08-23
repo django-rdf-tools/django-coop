@@ -20,7 +20,7 @@ map:database a d2rq:Database;
 map:scheme a d2rq:ClassMap; # classe = modele Django
     d2rq:dataStorage map:database;
     d2rq:uriPattern "scheme/@@coop_cms_navtree.id@@/";
-    d2rq:class skos:Scheme; # classe RDF correspondante
+    d2rq:class skos:ConceptScheme; # classe RDF correspondante
     d2rq:condition "coop_cms_navtree.name <> 'default'"
     .
     
@@ -35,7 +35,7 @@ map:scheme_name a d2rq:PropertyBridge;
 map:xlabel a d2rq:ClassMap;
     d2rq:dataStorage map:database;
     {% if mode == 'view' %}
-    d2rq:uriPattern "ctag/@@coop_local_tag.slug@@/";
+    d2rq:uriPattern "tag/@@coop_local_tag.slug@@/";
     {% else %}
     d2rq:uriColumn "coop_local_tag.uri";
     {% endif %}
@@ -71,7 +71,7 @@ map:xlabel_inscheme a d2rq:PropertyBridge;
     d2rq:property skos:inScheme;
     d2rq:join "coop_local_tag.id <= coop_cms_navnode.object_id";
     d2rq:join "django_content_type.id <= coop_cms_navnode.content_type_id";
-    d2rq:condition "django_content_type.model = 'ctag'";
+    d2rq:condition "django_content_type.model = 'tag'";
     d2rq:join "coop_cms_navtree.id <= coop_cms_navnode.tree_id";
     .
 map:xlabel_broader a d2rq:PropertyBridge;
@@ -82,7 +82,7 @@ map:xlabel_broader a d2rq:PropertyBridge;
     d2rq:alias "coop_cms_navnode AS subject_node";
     d2rq:join "coop_local_tag.id <= coop_cms_navnode.object_id";
     d2rq:join "django_content_type.id <= coop_cms_navnode.content_type_id";
-    d2rq:condition "django_content_type.model = 'ctag'";
+    d2rq:condition "django_content_type.model = 'tag'";
     d2rq:join "subject_node.id <= coop_cms_navnode.parent_id";
     d2rq:join "subject_node.object_id => subject_tag.id"; 
     # they are on the same scheme
@@ -90,6 +90,9 @@ map:xlabel_broader a d2rq:PropertyBridge;
     .
 
 # TODO : narrower ?
+
+
+
 
 
 {% include "d2r/organization.ttl" %}

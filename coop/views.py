@@ -46,6 +46,11 @@ from coop.models import StaticURIModel
 from django.db.models.loading import get_model
 
 urimodels = dict((m.__name__.lower(), m.__module__.split('.')[0]) for m in models.get_models() if m.__mro__.__contains__(StaticURIModel))
+# To be compliante with the dynamic loading process
+for k in urimodels:
+    if urimodels[k] == 'coop':
+        urimodels[k] = 'coop_local'
+
 
 RDF_SERIALIZATIONS = {
     'nt': 'text/plain',
