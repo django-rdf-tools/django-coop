@@ -20,7 +20,7 @@ map:database a d2rq:Database;
 map:scheme a d2rq:ClassMap; # classe = modele Django
     d2rq:dataStorage map:database;
     d2rq:uriPattern "scheme/@@coop_cms_navtree.id@@/";
-    d2rq:class skos:Scheme; # classe RDF correspondante
+    d2rq:class skos:ConceptScheme; # classe RDF correspondante
     d2rq:condition "coop_cms_navtree.name <> 'default'"
     .
     
