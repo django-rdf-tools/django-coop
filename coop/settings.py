@@ -16,6 +16,7 @@ BASE_COOP_LOCAL_MODELS = [
     ]),
     ('coop_cms', [
         u'Article',
+        u'NavTree',
     ]),
     ('coop_tag', [
         u'Tag',

@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from django.conf import settings
-from coop.models import StaticURIModel
+from coop.models import StaticURIModel, URIModel
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes import generic
@@ -11,7 +11,7 @@ from django.contrib.contenttypes import generic
 
 if "coop_cms" in settings.INSTALLED_APPS:
 
-    from coop_cms.models import BaseArticle
+    from coop_cms.models import BaseArticle, BaseNavTree
 
     class CoopArticle(BaseArticle, StaticURIModel):
 
@@ -44,4 +44,16 @@ if "coop_cms" in settings.INSTALLED_APPS:
             verbose_name_plural = _(u"articles")
             abstract = True
             app_label = 'coop_local'
+
+
+# ----------- Idem for coop-cms NavTree            
+
+    class CoopNavTree(BaseNavTree, URIModel):
+
+        class Meta:
+            verbose_name = _(u'Navigation tree')
+            verbose_name_plural = _(u'Navigation trees')
+            abstract = True
+            app_label = 'coop_local'
+
 

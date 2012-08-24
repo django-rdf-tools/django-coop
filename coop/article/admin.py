@@ -12,8 +12,7 @@ from coop.utils.autocomplete_admin import FkAutocompleteAdmin
 if "coop_cms" in settings.INSTALLED_APPS:
 
     from coop_cms.admin import NavTreeAdmin, ArticleAdmin
-    from coop_cms.models import NavTree
-    from coop_cms.settings import get_article_class
+    from coop_cms.settings import get_article_class, get_navTree_class
     from coop_cms.forms import ArticleAdminForm
 
     # -- We need to customize coop-cms NavtreeAdmin
@@ -21,8 +20,9 @@ if "coop_cms" in settings.INSTALLED_APPS:
     class MyNavTreeAdmin(NavTreeAdmin):
         change_form_template = 'admin/navtree_change_form.html'
 
-    admin.site.unregister(NavTree)
-    admin.site.register(NavTree, MyNavTreeAdmin)
+    navtree_model = get_navTree_class()
+    admin.site.unregister(navtree_model)
+    admin.site.register(navtree_model, MyNavTreeAdmin)
 
     # -- We need to customize coop-cms ArticleAdmin
 

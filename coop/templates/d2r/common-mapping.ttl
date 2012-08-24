@@ -16,18 +16,22 @@ map:database a d2rq:Database;
     d2rq:password "{{d2rq_password}}";
    .
 
-# Table coop_cms_navtree
+# Table coop_local_navtree
 map:scheme a d2rq:ClassMap; # classe = modele Django
     d2rq:dataStorage map:database;
-    d2rq:uriPattern "scheme/@@coop_cms_navtree.id@@/";
+    {% if mode == 'view' %}
+    d2rq:uriPattern "scheme/@@coop_local_navtree.name@@/";
+    {% else %}
+    d2rq:uriColumn "coop_local_navtree.uri";
+    {% endif %}
     d2rq:class skos:ConceptScheme; # classe RDF correspondante
-    d2rq:condition "coop_cms_navtree.name <> 'default'"
+    d2rq:condition "coop_local_navtree.name <> 'default'"
     .
     
 map:scheme_name a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:scheme;
     d2rq:property rdfs:label;
-    d2rq:column "coop_cms_navtree.name";
+    d2rq:column "coop_local_navtree.name";
     d2rq:lang "fr"  
     .
     
@@ -72,7 +76,7 @@ map:xlabel_inscheme a d2rq:PropertyBridge;
     d2rq:join "coop_local_tag.id <= coop_cms_navnode.object_id";
     d2rq:join "django_content_type.id <= coop_cms_navnode.content_type_id";
     d2rq:condition "django_content_type.model = 'tag'";
-    d2rq:join "coop_cms_navtree.id <= coop_cms_navnode.tree_id";
+    d2rq:join "coop_local_navtree.id <= coop_cms_navnode.tree_id";
     .
 map:xlabel_broader a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:xlabel;

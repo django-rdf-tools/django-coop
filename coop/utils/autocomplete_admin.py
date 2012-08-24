@@ -684,14 +684,14 @@ class InlineAutocompleteAdmin(admin.TabularInline):
 # just mix and match as you like....
 #  e.g. in my case I used it with the admin for trees provided by FeinCms:
 
-try:
-    from feincms.admin import editor
-    #  just merging the effects of the two classes..
-    class AutocompleteTreeEditor(FkAutocompleteAdmin, editor.TreeEditor):
-        def __init__(self, *args, **kwargs):
-            super(AutocompleteTreeEditor, self).__init__(*args, **kwargs)
-except ImportError:
-    pass
+# try:
+#     from feincms.admin import editor
+#     #  just merging the effects of the two classes..
+#     class AutocompleteTreeEditor(FkAutocompleteAdmin, editor.TreeEditor):
+#         def __init__(self, *args, **kwargs):
+#             super(AutocompleteTreeEditor, self).__init__(*args, **kwargs)
+# except ImportError:
+#     pass
 #  ===========
 
 

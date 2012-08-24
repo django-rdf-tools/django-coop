@@ -2,7 +2,7 @@
 
 from django.conf import settings
 from coop.link.models import BaseLinkProperty, BaseLink
-from coop.article.models import CoopArticle
+from coop.article.models import CoopArticle, CoopNavTree
 from coop.person.models import BasePerson, BasePersonCategory
 from coop.mailing.models import BaseSubscription, BaseMailingList
 from coop.exchange.models import BaseExchange, BaseProduct, BaseExchangeMethod
@@ -27,6 +27,9 @@ class Link(BaseLink):
 class Article(CoopArticle):
     pass
 
+
+class NavTree(CoopNavTree):
+    pass
 
 if 'coop_tag' in settings.INSTALLED_APPS:
     from coop.tag.models import CoopTag, CoopTaggedItem

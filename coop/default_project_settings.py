@@ -151,7 +151,7 @@ INSTALLED_APPS = [
     'django_webid.auth',
 
     'coop_tag',
-    'feincms',  # for their MPTT tree editor, not synced
+    # 'feincms',  # for their MPTT tree editor, not synced
     'coop',  # override feincms tree editor template
     'coop.link',
     'coop.org',
@@ -194,6 +194,9 @@ TINYMCE_DEFAULT_CONFIG = {
 COOP_CMS_ARTICLE_CLASS = 'coop_local.models.Article'
 COOP_CMS_ARTICLE_FORM = 'coop.forms.ArticleForm'
 COOP_CMS_ARTICLE_LOGO_SIZE = '600'
+
+
+COOP_CMS_NAVTREE_CLASS = 'coop_local.NavTree'
 
 # You need to declare the app here to be able to select models from navigable types in coop-cms
 COOP_CMS_CONTENT_APPS = ('coop_local', 'coop_tag', 'coop_geo', 'coop_cms')
