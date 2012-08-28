@@ -15,7 +15,7 @@ MANAGERS = ADMINS
 SEND_BROKEN_LINK_EMAILS = True
 INTERNAL_IPS = ('127.0.0.1', '92.243.30.98')
 
-PES_HOST ='pes.domain.com'
+PES_HOST = 'pes.domain.com'
 
 from django.conf import settings
 
