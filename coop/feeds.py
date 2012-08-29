@@ -4,7 +4,7 @@ from django.contrib.sites.models import Site
 from django_push.publisher.feeds import Feed
 from django.db.models.loading import get_model
 from django.contrib.contenttypes.models import ContentType
-import datetime
+from coop.signals import LastDTProcess
 
 
 class UpdateFeed(Feed):
@@ -21,7 +21,13 @@ class UpdateFeed(Feed):
         # Call content type pour trouver les models ....
         # TODO : object such as uri_mode = 'common' or 'imported' are also published.
         # Is it the good feature?
-        return get_model(self._mType.app_label, self._model).objects.order_by('-modified')[:5]
+        # return get_model(self._mType.app_label, self._model).objects.order_by('-modified')[:5]
+        print 'FeedItem CALLLED'
+        qs = get_model(self._mType.app_label, self._model).objects.filter(modified__gte=LastDTProcess.get())
+        if len(qs) > 5:
+            return qs.order_by('-modified')
+        else:
+            return get_model(self._mType.app_label, self._model).objects.order_by('-modified')[:5]
 
 
     def item_link(self, item):
@@ -31,7 +37,7 @@ class UpdateFeed(Feed):
         return "%s_%s" % (item.uuid, item.modified)
 
     def item_pubdate(self, item):
-        return datetime.datetime.now()
+        return item.modified
 
     def item_categories(self, item):
         return ('django', 'coop')

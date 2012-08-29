@@ -11,29 +11,48 @@ import logging
 from urlparse import urlsplit
 from django.db.models.loading import get_model
 from django.contrib.contenttypes.models import ContentType
-
+import threading
+import time
+import django_rq
+import datetime
 
 log = logging.getLogger('subhub.maintenance')
 
 
-# Each coop is connected to a single instance of Redis.
-# So the 'use_connection' method seems to be the bet way to deal with connection
-from redis import Redis
-from rq import Queue, use_connection, get_current_connection
-if not get_current_connection():
-    conn = Redis('localhost', getattr(settings, 'REDIS_PORT', 6379))
-    use_connection(conn)
-if not get_current_connection():
-    log.error(u'Unable to create redis connection')
-# use the 'default' queue
-q = Queue()
+
+class LastDTProcess(object):
+    _update = None
+
+    @classmethod
+    def get(cls):
+        if not cls._update:
+            cls._update = datetime.datetime.now() - datetime.timedelta(seconds=2)
+        return cls._update - datetime.timedelta(seconds=2)
+
+    @classmethod
+    def update(cls):
+        now = datetime.datetime.now()
+        if not cls._update or now >= cls._update + datetime.timedelta(seconds=10):
+            cls._update = now 
+
+
 
 
 
 # Workaround for rqworker limitation
-def letsCallDistributionTaskProcess():
-    log.debug(u'IN QUEUE try to  know the numbers of tasks %s' %
-        len(subhub.models.DistributionTask.objects.all()))
+# Be careful, this code is executed by the worker... in its MainThread (I guess
+# the worker has a single thread)
+# This implies some syncro question.
+# For example, if the save is executed from the admin interface, it is
+# excuted in its one thread. Thus the DistribustionTask is not created
+# when this method is called. Passing the thread name in parameter, we can
+# decide in which case we are and then add a small delay to be such that
+# admin thread is finished
+def letsCallDistributionTaskProcess(thName):
+    if not thName == threading.currentThread().name:
+        time.sleep(2)   # wait until thread is finished
+    for dt in subhub.models.DistributionTask.objects.all():
+        print log.debug(u'INQUUEU entry_id %s' % dt.entry_id)
     subhub.models.DistributionTask.objects.process(log=log)
 
 
@@ -47,6 +66,8 @@ def letsCallDistributionTaskProcess():
 def post_save_callback(sender, instance, **kwargs):
     maintenance = getattr(settings, 'SUBHUB_MAINTENANCE_AUTO', False)
     log.debug(u"Post save callback with sender %s and instance %s and AUTO %s" % (sender, instance, maintenance))
+    log.debug(u' postSave Thread info %s' % threading.currentThread().name)
+
     if isinstance(instance, StaticURIModel):
         if instance.uri_mode == URI_MODE.IMPORTED:
             log.debug(u"%s is imported. Nothing to publish, but subscription renew" % instance)
@@ -58,12 +79,13 @@ def post_save_callback(sender, instance, **kwargs):
                 subhub.publish([feed_url], instance.uri, False)
                 log.debug('publish done; Number of Dist task %s' % len(subhub.models.DistributionTask.objects.all()))
             except Exception, e:
-                log.debug(u'Unable to publish %s for feed %s : %s' % (instance, feed_url, e))
+                log.warning(u'Unable to publish %s for feed %s : %s' % (instance, feed_url, e))
     elif isinstance(instance, subhub.models.DistributionTask) and maintenance:
         try:
-            log.debug("before call ENQUEUE, tasks %s" % len(subhub.models.DistributionTask.objects.all()))
-            q.enqueue(letsCallDistributionTaskProcess)
-
+            nb = len(subhub.models.DistributionTask.objects.all())
+            log.debug("before call ENQUEUE, tasks %s" % nb)
+            LastDTProcess.update()
+            django_rq.enqueue(letsCallDistributionTaskProcess, threading.currentThread().name)
             log.debug('after call ENQUEUE')
         except Exception, e:
             log.warning(u"%s" % e)
