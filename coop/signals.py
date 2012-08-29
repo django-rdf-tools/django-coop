@@ -15,6 +15,7 @@ import threading
 import time
 import django_rq
 import datetime
+import coop_tag
 
 log = logging.getLogger('subhub.maintenance')
 
@@ -66,13 +67,15 @@ def letsCallDistributionTaskProcess(thName):
 def post_save_callback(sender, instance, **kwargs):
     maintenance = getattr(settings, 'SUBHUB_MAINTENANCE_AUTO', False)
     log.debug(u"Post save callback with sender %s and instance %s and AUTO %s" % (sender, instance, maintenance))
-    log.debug(u' postSave Thread info %s' % threading.currentThread().name)
 
     if isinstance(instance, StaticURIModel):
         if instance.uri_mode == URI_MODE.IMPORTED:
             log.debug(u"%s is imported. Nothing to publish, but subscription renew" % instance)
             instance.subscribeToUpdades()
             # TODO check if a subscription is done, either lets do it
+        elif isinstance(instance, coop_tag.models.TagBase):
+            # Subscription done if it does not exists, in other it is simply renew
+            instance.subscribeToUpdades(host=settings.THESS_HOST)
         else:
             feed_url = 'http://%s/feed/%s/' % (Site.objects.get_current().domain, sender.__name__.lower())
             try:

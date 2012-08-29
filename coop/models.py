@@ -278,19 +278,16 @@ class StaticURIModel(models.Model):
 
         pass
 
-    # Only instance of StaticURIModel with uri_mode == URI_MODE.IMPORTED
-    # Could subscribe to update
-    # TODO et que fait-on pour les common.....????
-    def subscribeToUpdades(self):
-        if self.uri_mode == URI_MODE.IMPORTED:
-            feed_url = "%sfeed/%s/%s/" % (settings.PES_HOST, self.__class__.__name__.lower(), self.uri_id)
-            print u"Try to subscribe to feed %s" % feed_url
-            Subscription.objects.subscribe(feed_url, hub=settings.PES_HUB)
 
-    def unubscribeToUpdades(self):
-        if self.uri_mode == URI_MODE.IMPORTED:
-            feed_url = "%sfeed/%s/%s/" % (settings.PES_HOST, self.__class__.__name__.lower(), self.uri_id)
-            Subscription.objects.unsubscribe(feed_url, hub=settings.PES_HUB)
+    # This a very simple case, where feed and ub share the same host
+    def subscribeToUpdades(self, host=settings.PES_HOST):
+        feed_url = "http://%s/feed/%s/%s/" % (host, self.__class__.__name__.lower(), self.uri_id)
+        print u"Try to subscribe to feed %s" % feed_url
+        Subscription.objects.subscribe(feed_url, hub="http://%s/hub/" % host)
+
+    def unubscribeToUpdades(self, host=settings.PES_HOST):
+        feed_url = "http://%s/feed/%s/%s/" % (host, self.__class__.__name__.lower(), self.uri_id)
+        Subscription.objects.unsubscribe(feed_url, hub="http://%s/hub/" % host)
 
 
 class URIModel(StaticURIModel, TimestampedModel):
