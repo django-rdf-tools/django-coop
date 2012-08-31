@@ -5,7 +5,8 @@ from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.contrib.sites.models import Site
 from django.conf import  settings
-from rdflib import Graph
+import rdflib
+from rdflib import Graph, ConjunctiveGraph
 import subhub
 import logging
 from urlparse import urlsplit
@@ -115,22 +116,54 @@ def listener(notification, **kwargs):
     ''' Process new content being provided by hub
     '''
     log.debug("enter listener args %s" % kwargs)
-    try:
-        entry = notification.entries[0]
-        uri = str(entry.summary)
-        g = Graph()
-        g.parse(uri)
-        log.debug(u"Handle uri %s" % uri)
-    except Exception, e:
-        log.error(u"%s" % e)
-    # We have to retreive the instance
+    entry = notification.entries[0]
+    uri = str(entry.summary)
     scheme, host, path, query, fragment = urlsplit(uri)
     sp = path.split('/')
+
+   # We have to retreive the instance
     try:
         model = sp[len(sp) - 3]
         mType = ContentType.objects.get(model=model)
         obj = get_model(mType.app_label, model).objects.get(uri=uri)
-        obj.updateFromRdf(g)
     except Exception, e:
         log.error(u'%s' % e)
+
+    #  build the rdf graph
+    g = Graph()
+    if model == 'tag':
+        # This is a temporairy work around. data.economie-solidaire.fr is not
+        # yet responding. TODO we have to deal with contexts as tags come thesaurus
+        try:
+            # TEMP hard coded
+            thessEndPoint = 'http://localhost:8080/openrdf-workbench/repositories/thessRepository/query'
+            graph = ConjunctiveGraph('SPARQLStore')
+            graph.open(thessEndPoint, False)
+            ctx = 'http://%s' % settings.DEFAULT_URI_DOMAIN
+            ctx = rdflib.term.URIRef(ctx)
+            localg = graph.get_context(ctx)
+        except Exception, e:
+            log.error(u'%s' % e)
+        gen = localg.triples((rdflib.term.URIRef(uri), None, None))
+        try:
+            while True:
+                g.add(gen.next())
+        except:
+            pass
+        gen = localg.triples((None, None, rdflib.term.URIRef(uri)))
+        try:
+            while True:
+                g.add(gen.next())
+        except:
+            pass
+    else:
+        try:
+            g.parse(uri)
+            log.debug(u"Handle uri %s" % uri)
+        except Exception, e:
+            log.error(u"%s" % e)
+
+    # update
+    obj.updateFromRdf(g)
+
 

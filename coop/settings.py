@@ -84,6 +84,7 @@ RDF_NAMESPACES = {
  'ov': u'http://open.vocab.org/terms/',
  'person': u'http://www.w3.org/ns/person#',
  'rdfs': u'http://www.w3.org/2000/01/rdf-schema#',
+ 'rdf': u'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
  'rss': u'http://purl.org/net/rss1.1#',
  'schema': u'http://schema.org/',
  'sioc': u'http://rdfs.org/sioc/ns#',

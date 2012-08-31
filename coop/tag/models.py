@@ -48,5 +48,9 @@ if 'coop_tag' in settings.INSTALLED_APPS:
             abstract = True
             app_label = "coop_local"
 
+        # Tags wait for new informations
+        def updateFromRdf(self, graph):
+            print "UPDATEfromRDf with  %s and %s" % (self, graph)
+
 
 

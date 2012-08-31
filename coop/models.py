@@ -144,6 +144,7 @@ class StaticURIModel(models.Model):
                'n3' for n3
                'xml' for xml
                'json-ld' for json-ld
+               'trix' for trix
         """
         # D2R SPARQL endpoint is local, served by Jetty :
         uriSparql = 'http://localhost:8080/' + settings.PROJECT_NAME + '/sparql'
@@ -169,6 +170,9 @@ class StaticURIModel(models.Model):
 
     def toJson(self):
         return self.toRdf("json-ld")
+
+    def toTrix(self):
+        return self.toRdf("trig")
 
     @classmethod
     def getD2rqGraph(cls):
