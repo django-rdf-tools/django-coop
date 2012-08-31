@@ -57,7 +57,8 @@ RDF_SERIALIZATIONS = {
     'n3': 'text/n3',
     'ttl': 'text/turtle',
     'xml': 'application/rdf+xml',
-    'json': 'application/json'
+    'json': 'application/json',
+    'trix': 'application/trix'
 }
 
 

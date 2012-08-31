@@ -35,6 +35,11 @@ plugin.register('pretty-xml', plugin.Serializer,
 plugin.register('json-ld', plugin.Serializer,
         'rdflib_jsonld.jsonld_serializer', 'JsonLDSerializer')
 
+plugin.register('trix', plugin.Serializer,
+                'rdflib.plugins.serializers.trix', 'TriXSerializer')
+
+
+
 
 class TimestampedModel(models.Model):
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
