@@ -84,6 +84,7 @@ class WebIDProfileView(PriorityContentNegotiatedView):
             raise Http404
         D2RQ_ROOT = settings.D2RQ_ROOT
         #profileuri = "%spage/coop_local_person/%s/" % (D2RQ_ROOT, person.id)
+        # TODO ; devrait disparaitre, uriredirect fait le  boulot
         n3uri = "%sdata/coop_local_person/%s/" % (D2RQ_ROOT, person.id)
         rdfgraph = n3proxy.augment_user_profile(webiduser, n3uri).serialize()
 
