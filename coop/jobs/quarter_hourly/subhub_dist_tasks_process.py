@@ -12,9 +12,7 @@ At least, dequeud
 import logging
 from django.conf import settings
 from django_extensions.management.jobs import QuarterHourlyJob
-from rq import Queue, get_current_connection
 import subhub
-from coop.signals import letsCallDistributionTaskProcess
 
 # As subhub is the only app the use redis. All Redis stuff are logger 
 # subhub.mainteance  log
@@ -25,25 +23,9 @@ class Job(QuarterHourlyJob):
     help = "subhub DistributionTasks process"
 
     def execute(self):
-        if get_current_connection():
-            q = Queue('failed')
-            try:
-                # TODO:  well jobs could be retried.... 
-                while not q.is_empty():
-                    q.dequeue()
-            except Exception, e:
-                log.error(u'Coud not dequeue redis failed queue: %s' % e)
-
-            dt = subhub.models.DistributionTask.objects.all()
-            if len(dt) > 0 and settings.SUBHUB_MAINTENANCE_AUTO:
-                q = Queue()
-                try:
-                    q.enqueue(letsCallDistributionTaskProcess)
-                except Exception, e:
-                    log.error(u"Exception caught %s" % e)
-
-        else:
-            log.info(u"Redis connection not ready, wait and see")
+        dt = subhub.models.DistributionTask.objects.all()
+        if len(dt) > 0 and settings.SUBHUB_MAINTENANCE_AUTO:
+            subhub.models.DistributionTask.objects.process(log=log)
 
 
 
