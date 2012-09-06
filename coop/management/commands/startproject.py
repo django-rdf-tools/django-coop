@@ -21,6 +21,11 @@ class Command(TemplateCommand):
                     action='store', dest='redis_bin', default='/opt/redis/bin/',
                     help=_(u'Please set the redis bin directory (default value is /opt/redis/bin/')),
 
+        make_option('--domain',
+                    action='store', dest='domain', default='localhost:8000',
+                    help=_(u'Please set he domain name of your coop application (default value is localhost:8000/')),
+
+
         )
 
     def handle(self, project_name=None, target=None, *args, **options):
@@ -50,7 +55,7 @@ class Command(TemplateCommand):
         options['template'] = os.path.join(coop_dir, 'templates', 'project_template')
         options['project_alldirs'] = os.path.split(coop_dir)[0]
         # For supervisor.conf file
-        options['extentions'] = options['extensions'].append('conf')
+        options['extensions'].extend(['conf', 'json'])
         options['virtualenv'] = os.getenv('VIRTUAL_ENV')
         p = os.popen('which runinenv.sh', "r")
         options['runinenv'] = p.readline().replace('\n', '')

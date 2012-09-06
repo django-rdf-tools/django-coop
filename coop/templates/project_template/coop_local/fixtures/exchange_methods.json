@@ -1,0 +1,101 @@
+[
+    {
+        "pk": 1, 
+        "model": "coop_local.exchangemethod", 
+        "fields": {
+            "etypes": "1,2", 
+            "uri": "http://ns.economie-solidaire.fr/ess#OfficialCurrency", 
+            "label": "Euros"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "coop_local.exchangemethod", 
+        "fields": {
+            "etypes": "1,2", 
+            "uri": "http://ns.economie-solidaire.fr/ess#Swap", 
+            "label": "Troc"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "coop_local.exchangemethod", 
+        "fields": {
+            "etypes": "1,2,3", 
+            "uri": "http://ns.economie-solidaire.fr/ess#SharedCost", 
+            "label": "Mutualisation"
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "coop_local.exchangemethod", 
+        "fields": {
+            "etypes": "3", 
+            "uri": "http://ns.economie-solidaire.fr/ess#Employment", 
+            "label": "Emploi"
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "coop_local.exchangemethod", 
+        "fields": {
+            "etypes": "3", 
+            "uri": "http://ns.economie-solidaire.fr/ess#CivicEngagement", 
+            "label": "Volontariat"
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "coop_local.exchangemethod", 
+        "fields": {
+            "etypes": "1,2", 
+            "uri": "http://ns.economie-solidaire.fr/ess#AlternativeCurrency", 
+            "label": "Monnaie compl\u00e9mentaire"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "coop_local.exchangemethod", 
+        "fields": {
+            "etypes": "2,3", 
+            "uri": "http://ns.economie-solidaire.fr/ess#VoluntaryWork", 
+            "label": "B\u00e9n\u00e9volat"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "coop_local.exchangemethod", 
+        "fields": {
+            "etypes": "1", 
+            "uri": "http://ns.economie-solidaire.fr/ess#Gift", 
+            "label": "Don gratuit"
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "coop_local.exchangemethod", 
+        "fields": {
+            "etypes": "1", 
+            "uri": "http://ns.economie-solidaire.fr/ess#Lending", 
+            "label": "Pr\u00eat"
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "coop_local.exchangemethod", 
+        "fields": {
+            "etypes": "2,3", 
+            "uri": "http://ns.economie-solidaire.fr/ess#PracticalTraining", 
+            "label": "Stage"
+        }
+    },
+    {
+        "pk": 11, 
+        "model": "coop_local.exchangemethod", 
+        "fields": {
+            "etypes": "1,2", 
+            "uri": "http://ns.economie-solidaire.fr/ess#Renting", 
+            "label": "Location"
+        }
+    }
+]

@@ -2,7 +2,7 @@
 
 SITE_AUTHOR = 'Organisme'
 SITE_TITLE = 'Demo Django-coop'
-DEFAULT_URI_DOMAIN = 'mydomain.com'
+DEFAULT_URI_DOMAIN = '{{ domain }}'
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG

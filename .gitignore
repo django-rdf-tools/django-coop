@@ -17,7 +17,7 @@ static_collected
 test_app
 media
 GEOFLA
-fixtures
+# fixtures
 dist
 django_coop.egg-info
 
