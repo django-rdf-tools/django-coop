@@ -14,9 +14,12 @@ from django.db.models.loading import get_model
 from django.contrib.contenttypes.models import ContentType
 import threading
 import time
-import django_rq
 import datetime
 import coop_tag
+
+if getattr(settings, 'SUBHUB_MAINTENANCE_AUTO', False):
+    import django_rq
+
 
 log = logging.getLogger('subhub.maintenance')
 
@@ -109,7 +112,7 @@ def post_save_callback(sender, instance, **kwargs):
 def post_delete_callback(sender, instance, **kwargs):
     if isinstance(instance, StaticURIModel):
         if instance.uri_mode == URI_MODE.IMPORTED:
-            instance.unubscribeToUpdades()
+            instance.unsubscribeToUpdades()
 
 
 def listener(notification, **kwargs):
@@ -127,6 +130,7 @@ def listener(notification, **kwargs):
         mType = ContentType.objects.get(model=model)
         obj = get_model(mType.app_label, model).objects.get(uri=uri)
     except Exception, e:
+        obj = None
         log.error(u'%s' % e)
 
     #  build the rdf graph
@@ -164,6 +168,7 @@ def listener(notification, **kwargs):
             log.error(u"%s" % e)
 
     # update
-    obj.updateFromRdf(g)
+    if obj:
+        obj.updateFromRdf(g)
 
 

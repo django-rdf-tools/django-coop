@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from django.db import models
+from django.db.models.loading import get_model
 from django_extensions.db import fields as exfields
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
@@ -18,6 +19,7 @@ import os
 import tempfile
 import coop
 import time
+from subhub.models import DistributionTask
 
 
 URI_MODE = Choices(
@@ -96,9 +98,13 @@ class StaticURIModel(models.Model):
     @property
     def uri_id(self):
         if self.uri_mode == URI_MODE.IMPORTED:
-            scheme, host, path, query, fragment = urlsplit(self.uri)
-            sp = path.split('/')
-            return sp[len(sp) - 2]
+            try:
+                scheme, host, path, query, fragment = urlsplit(self.uri)
+                sp = path.split('/')
+                return sp[len(sp) - 2]
+            except Exception, e:
+                raise ValueError(u'Wrong uri value for %s. Reason %s' % (self.uri, e))
+
         else:
             return self.uuid
 
@@ -106,9 +112,9 @@ class StaticURIModel(models.Model):
         return self.__class__.__name__.lower()
 
     def init_uri(self):
-        return u"http://%s/id/%s/%s/" % (   self.domain_name,
-                                            self.uri_registry(),
-                                            unicode(self.uri_id)  # can be anything = int, uuid, unicode...
+        return u"http://%s/id/%s/%s/" % (self.domain_name,
+                                         self.uri_registry(),
+                                         unicode(self.uri_id)  # can be anything = int, uuid, unicode...
                                         )
 
     # self.uri est null ou vide le creer (cad appel init_uri)
@@ -125,22 +131,6 @@ class StaticURIModel(models.Model):
                 self.uri = self.init_uri()
             elif self.uri != self.init_uri():
                 self.uri = self.init_uri()  # uri_id est pas pareil
-            # else:
-            #     scheme, host, path, query, fragment = urlsplit(self.uri)
-            #     sp = path.split('/')
-            #     try:
-            #         assert(sp[1] == 'id')  # to assert a minimal coherence...
-            #     except AssertionError:
-            #         raise IntegrityError(_(u'Local URI path must starts with "/id/"'))
-            #     if sp[3] != self.uri_id:
-            #         self.uri = self.init_uri()  # uri_id est pas pareil
-
-            #     else:
-            #         if host != self.domain_name:
-            #             self.uri = self.init_uri()
-            #         else:
-            #             if  sp[2] != self.uri_registry():
-            #               self.uri = self.init_uri()
         super(StaticURIModel, self).save(*args, **kwargs)
 
     def toRdf(self, format):
@@ -178,6 +168,102 @@ class StaticURIModel(models.Model):
 
     def toTrix(self):
         return self.toRdf("trig")
+
+
+
+    ####
+    # TODO
+    # The following code has to be cleaned... print, log, ...
+    # Still waiting for tests
+
+
+    @classmethod
+    def hostNewUri(cls, old_uri, graph=None):
+        """
+        This methood change the old_uri, which belong to an external domain_name
+        to an uri hosted by this domain. The graph is the rdf graph of the resources.
+        The triples are, of course, the following
+          <old_uri> <pres1> <value1>
+          ....
+        but the values are supposed to be up-to-date, we can image that the administrator has change 
+        (at least checked) them.
+        If no graph is provided, old_uri is parsed and used
+
+        This method return the new uri or raise an exception. 
+        Link between old_uri and new_uri is done with the
+        help of the Link model
+
+        We suppose that only model from coop_local could be rehosted.
+        """
+        if not graph:
+            graph = Graph()
+            graph.parse(old_uri)
+
+        # check if an instance with thus old_uri exists
+        scheme, host, path, query, fragment = urlsplit(old_uri)
+        model_name = path.split('/')[2]
+        model = get_model('coop_local', model_name)
+        if not model:
+            raise Exception(_(u"Cannot find a model  for %s" % old_uri))
+        try:
+            instance = model.objects.get(uri=old_uri)
+        except model.DoesNotExist:
+            instance = model(uri=old_uri)   # old_uri is still usefull for updateFromRdf
+
+        if instance:
+            instance.updateFromRdf(graph)
+
+        from coop_local.models import Link, LinkProperty
+
+        instance.uuid = shortuuid.uuid()
+        instance.uri_mode = URI_MODE.LOCAL
+        instance.uri = instance.init_uri()
+        replaces, created = LinkProperty.objects.get_or_create(uri=settings.NS.dct.replaces, label=u'replaces')
+        link = Link(predicate=replaces, object_uri=old_uri)
+        instance.links.add(link)
+        instance.save()
+        return instance.uri
+
+
+    # La changement d'uri se fait en deux temps : prepareChangeDomainUri et updateDomainUri
+    # - on ajoute le triplet olduri dct:isReplacedBy new_uri et on sauve, pour  notifier tous les autres
+    # coop qui sont éventuellement abonnéeà cette instance
+    # - on met àjour l'uri est le champs uri_mode
+    def prepareUpdateDomainUri(self, new_uri):
+        """
+            When an instance of URIModel asks to rehost its uri to an external domaine. This method
+            is called when the new uri has been created by the external domain.
+        """
+        from coop_local.models import Link, LinkProperty
+
+        replacedBy, created = LinkProperty.objects.get_or_create(uri=settings.NS.dct.isReplacedBy, label=u'isReplacedBy')
+        link = Link(predicate=replacedBy, object_uri=new_uri)
+        self.links.add(link)
+        self.save()
+
+    def updateDomainUri(self, new_uri, sync=False):
+        """
+        Prerequis : self.prepareChangeDomainUri(new_uri) has been called.
+        This means, all other coop which import self.uri are aware of the rehost process, they 
+        now point to the new_uri object. The instance hasjust to update its uri and uri mode.
+        If sync is true, then update is done froom new_uri
+
+        """
+        # First check, that all Tasks have been perform. To be such that subcribers are aware of
+        # the rehosted action.
+        dts = DistributionTask.objects.all()
+        if not dts == []:
+            DistributionTask.objects.process()
+        self.uri = new_uri
+        self.uri_mode = URI_MODE.IMPORTED
+        if sync:
+            g = Graph()
+            g.parse(new_uri)
+            self.updateFromRdf(g)  # save is done here
+        else:
+            self.save()      # post_save signal is also doing the new Subcription
+
+
 
     @classmethod
     def getD2rqGraph(cls):
@@ -223,46 +309,58 @@ class StaticURIModel(models.Model):
 
     # The "reverse mapping is done here"
     def updateFromRdf(self, graph):
-        db_table = self.__class__._meta.db_table
-        d2rqGraph = self.__class__.getD2rqGraph()
-        for field in self._meta.fields:
-            dbfieldname = db_table + '.' + field.name
-            pred = checkDirectMap(dbfieldname, d2rqGraph)
-            if pred:
-                update = list(graph.objects(URIRef(self.uri), pred))
-                if len(update) > 1:
-                    print "    The field %s cannot be updated. Too many values" % dbfieldname
-                elif len(update) == 0:
-                    print "Nothing to update for field %s" % dbfieldname
-                else:
-                    print "For id %s update the field %s" % (self.id, dbfieldname)
-                    update = update[0]
-                    # Well some field have to be prepared
-                    if isinstance(field, models.fields.DateField):
-                        update = update.split('.')[0]
-                        try:
-                            tt = time.strptime(update, "%Y-%m-%dT%H:%M:%S")
-                        except ValueError:
-                            tt = time.strptime(update, "%Y-%m-%d")
-                        update = "%d-%d-%d" % (tt.tm_year, tt.tm_mon, tt.tm_mday)
-                    setattr(self, field.name, update)
-            elif isinstance(field, models.ForeignKey):
-                print "try an FKEY"
-                pred = checkDirectMapFK(dbfieldname, d2rqGraph)
-                if pred:
-                    self.updateFKfromRdf(field, dbfieldname, pred, graph)
-                else:
-                    print "    The field %s cannot be updated." % dbfieldname
+        # Before reversing mapping, we have to check that the uri has not been
+        # changed. This the case for URI_MODE.IMPORTED instance which still point to
+        # the old uri
 
-            else:
-                 # See org/models file to have example of "special" fiels handling
-                if hasattr(self, 'updateField_' + field.name):
-                    getattr(self, 'updateField_' + field.name)(dbfieldname, graph)
+        replacedBy = list(graph.objects(URIRef(self.uri), settings.NS.dct.isReplacedBy))
+        if self.uri_mode == URI_MODE.IMPORTED and len(replacedBy) == 1:
+            print "Handle rehost imported uri"
+            g = Graph()
+            g.parse(replacedBy[0])
+            self.uri = replacedBy[0]
+            self.updateFromRdf(g)
+        else:
+            db_table = self.__class__._meta.db_table
+            d2rqGraph = self.__class__.getD2rqGraph()
+            for field in self._meta.fields:
+                dbfieldname = db_table + '.' + field.name
+                pred = checkDirectMap(dbfieldname, d2rqGraph)
+                if pred:
+                    update = list(graph.objects(URIRef(self.uri), pred))
+                    if len(update) > 1:
+                        print "    The field %s cannot be updated. Too many values" % dbfieldname
+                    elif len(update) == 0:
+                        print "Nothing to update for field %s" % dbfieldname
+                    else:
+                        print "For id %s update the field %s" % (self.id, dbfieldname)
+                        update = update[0]
+                        # Well some field have to be prepared
+                        if isinstance(field, models.fields.DateField):
+                            update = update.split('.')[0]
+                            try:
+                                tt = time.strptime(update, "%Y-%m-%dT%H:%M:%S")
+                            except ValueError:
+                                tt = time.strptime(update, "%Y-%m-%d")
+                            update = "%d-%d-%d" % (tt.tm_year, tt.tm_mon, tt.tm_mday)
+                        setattr(self, field.name, update)
+                elif isinstance(field, models.ForeignKey):
+                    print "try an FKEY"
+                    pred = checkDirectMapFK(dbfieldname, d2rqGraph)
+                    if pred:
+                        self.updateFKfromRdf(field, dbfieldname, pred, graph)
+                    else:
+                        print "    The field %s cannot be updated." % dbfieldname
+
                 else:
-                    print "    The field %s cannot be updated." % dbfieldname
-        print "UpdateFromRdf all fields have been handled"
-        self.save()
-        print "save done"
+                     # See org/models file to have example of "special" fiels handling
+                    if hasattr(self, 'updateField_' + field.name):
+                        getattr(self, 'updateField_' + field.name)(dbfieldname, graph)
+                    else:
+                        print "    The field %s cannot be updated." % dbfieldname
+            print "UpdateFromRdf all fields have been handled"
+            self.save()
+            print "save done"
 
 
     def updateFKfromRdf(self, field, dbfieldname, pred, graph):
@@ -273,13 +371,13 @@ class StaticURIModel(models.Model):
             if isinstance(rdfObj, URIRef):
                 try:
                     obj = field.related.parent_model.objects.get(uri=str(rdfObj))
+                    setattr(self, field.name + '_id', obj.id)
+                    print "For id %s update the field %s" % (self.id, dbfieldname)
                 except ObjectDoesNotExist:
-                    # Object not found in db.... here we have to check il it
+                    # TODO: Object not found in db.... here we have to check il it
                     # has to be imported or not.
-                    print "Obj not in bd : %s" % obj
-                    print u"    The field %s cannot be updated. %s" % (dbfieldname)
-                setattr(self, field.name + '_id', obj.id)
-                print "For id %s update the field %s" % (self.id, dbfieldname)
+                    print "Obj not in bd : %s" % rdfObj
+                    print u"    The field %s cannot be updated." % dbfieldname
             else:
                 print "    The field %s cannot be updated." % dbfieldname
         else:
@@ -294,7 +392,7 @@ class StaticURIModel(models.Model):
         print u"Try to subscribe to feed %s" % feed_url
         Subscription.objects.subscribe(feed_url, hub="http://%s/hub/" % host)
 
-    def unubscribeToUpdades(self, host=settings.PES_HOST):
+    def unsubscribeToUpdades(self, host=settings.PES_HOST):
         feed_url = "http://%s/feed/%s/%s/" % (host, self.__class__.__name__.lower(), self.uri_id)
         Subscription.objects.unsubscribe(feed_url, hub="http://%s/hub/" % host)
 
