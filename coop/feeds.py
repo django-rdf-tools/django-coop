@@ -22,7 +22,7 @@ class UpdateFeed(Feed):
         # TODO : object such as uri_mode = 'common' or 'imported' are also published.
         # Is it the good feature?
         # return get_model(self._mType.app_label, self._model).objects.order_by('-modified')[:5]
-        print 'FeedItem CALLLED'
+        # print 'FeedItem CALLLED'
         qs = get_model(self._mType.app_label, self._model).objects.filter(modified__gte=LastDTProcess.get())
         if len(qs) > 5:
             return qs.order_by('-modified')
