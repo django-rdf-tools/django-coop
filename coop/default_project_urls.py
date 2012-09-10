@@ -45,18 +45,18 @@ urlpatterns += patterns('',
 
 # URLS for all Classification models
 
-from django.db.models.loading import get_models
-from coop.org.models import BaseClassification
-from django.views.generic.detail import DetailView
+# from django.db.models.loading import get_models
+# from coop.org.models import BaseClassification
+# from django.views.generic.detail import DetailView
 
-for model in [x for x in get_models() if BaseClassification in x.__mro__]:
-    urlpatterns += patterns('',
-        url(r'^%s/(?P<slug>[-_\w|\W]+)/$' % model._meta.object_name.lower(),
-            DetailView.as_view(
-                model=model,
-                template_name='org/%s-detail.html' % model._meta.object_name.lower()
-            ), name='%s-detail' % model._meta.object_name.lower()),
-    )
+# for model in [x for x in get_models() if BaseClassification in x.__mro__]:
+#     urlpatterns += patterns('',
+#         url(r'^%s/(?P<slug>[-_\w|\W]+)/$' % model._meta.object_name.lower(),
+#             DetailView.as_view(
+#                 model=model,
+#                 template_name='org/%s-detail.html' % model._meta.object_name.lower()
+#             ), name='%s-detail' % model._meta.object_name.lower()),
+#     )
 
 
 # for local testing
