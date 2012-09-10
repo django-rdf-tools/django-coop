@@ -78,6 +78,7 @@ if 'coop.agenda' in settings.INSTALLED_APPS:
     )
 
 urlpatterns += patterns('',
+    (r'^forms/', include('forms_builder.forms.urls')),
     (r'^id/', include('uriredirect.urls')),
     (r'^data/', include('coop.data_urls')),
     (r'^', include('coop_geo.urls', app_name='coop_geo')),
