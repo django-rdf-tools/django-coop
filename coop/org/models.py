@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from django.db import models
 from autoslug import AutoSlugField
-from mptt.models import MPTTModel, TreeForeignKey
+#from mptt.models import MPTTModel, TreeForeignKey
 from extended_choices import Choices
 from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
@@ -20,35 +20,35 @@ import logging
 ADMIN_THUMBS_SIZE = '60x60'
 
 
-class BaseClassification(MPTTModel, URIModel):
-    label = models.CharField(_(u'label'), max_length=60)
-    slug = AutoSlugField(populate_from='label', always_update=True, unique=True)
-    parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
+# class BaseClassification(MPTTModel, URIModel):
+#     label = models.CharField(_(u'label'), max_length=60)
+#     slug = AutoSlugField(populate_from='label', always_update=True, unique=True)
+#     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
 
-    domain_name = 'data.economie-solidaire.fr'
+#     domain_name = 'data.economie-solidaire.fr'
 
-    class MPTTMeta:
-        order_insertion_by = ['label']
+#     class MPTTMeta:
+#         order_insertion_by = ['label']
 
-    class Meta:
-        abstract = True
-        verbose_name = _('Classification')
-        verbose_name_plural = _('Classifications')
-        ordering = ['tree_id', 'lft']  # for FeinCMS TreeEditor
-        app_label = 'coop_local'
+#     class Meta:
+#         abstract = True
+#         verbose_name = _('Classification')
+#         verbose_name_plural = _('Classifications')
+#         ordering = ['tree_id', 'lft']  # for FeinCMS TreeEditor
+#         app_label = 'coop_local'
 
-    def __unicode__(self):
-        return unicode(self.label)
+#     def __unicode__(self):
+#         return unicode(self.label)
 
-    def get_absolute_url(self):
-        return reverse('%s-detail' % self._meta.object_name.lower(), args=[self.slug])
+#     def get_absolute_url(self):
+#         return reverse('%s-detail' % self._meta.object_name.lower(), args=[self.slug])
 
-    @property
-    def uri_id(self):
-        return self.slug
+#     @property
+#     def uri_id(self):
+#         return self.slug
 
-    def uri_registry(self):
-        return u'label'
+#     def uri_registry(self):
+#         return u'label'
 
 
 class BaseRoleCategory(models.Model):
