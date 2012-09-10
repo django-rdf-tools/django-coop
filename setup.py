@@ -22,6 +22,8 @@ setup(
     description = 'A basis for a cooperative organization directory, with people, organization, offers.',
     packages = ['coop',
                 'coop.bin',
+                'coop.management',
+                'coop.management.commands',
                 'coop.article',
                 'coop.exchange',
                 'coop.link',
