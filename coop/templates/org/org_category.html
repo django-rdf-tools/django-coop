@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block meta_title %}{{category.label}}{% endblock %}
+
+{% block document %}
+    <div id="title" class="grid_12 grid">
+    {% block title %}<h3>{{category.label}}</h3>{% endblock %}
+    </div>
+
+    {% block content %}
+
+        <div id="content">
+            <div class="grid_12 grid">
+                <ul>
+                    {% for item in org_list %}
+                    <li><a href="{{item.get_absolute_url}}">{{ item.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>    
+    {% endblock %}
+
+{% endblock %}
+

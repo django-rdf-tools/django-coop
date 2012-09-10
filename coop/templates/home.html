@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load taggit_extras %}
+
+{% block meta_title %}Accueil{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block document %}
+  
+  {% block content %}
+     
+     <div id="content" class="grid_4 grid">
+         
+          
+          <div id="dernieres_initiatives">
+              <h4>Les 10 dernières initiatives</h4>
+              <ul>
+              {% for i in dernieres_initiatives %}
+              <li><a href="{{i.get_absolute_url}}">{{ i.title }}</a></li>
+              {%endfor%}
+          </ul>
+          
+          <p><a href="/org/">Toutes les initiatives</a>
+          <p><a href='{% url org_global_map %}'>Cartographie des initiatives</a></p>
+          
+          </div>
+    </div>
+
+     <div id="content" class="grid_4 grid">
+         
+          <div id="dernieres_annonces">
+              <h4>Les 10 dernières annonces</h4>
+              <ul>
+              {% for i in dernieres_annonces %}
+              <li><a href="{{i.get_absolute_url}}">{{ i.title }}</a></li>
+              {%endfor%}
+          </ul>
+          
+          <p><a href="/annonces/">Toutes les annonces</a>
+          
+          </div>
+    </div>
+
+
+    <div id="content" class="grid_4 grid">
+          
+          <div id="inscrits">
+              <h4>Tags: </h4>
+              <ul id="tags" class="indextags">
+              {% get_taglist asvar all_tags for_obj coop_local count 15 %}
+              {% for tag in all_tags %}
+                  <li class="tag">
+                      <a href="{{ tag.get_absolute_url }}">{{tag}} ({{tag.num_times}})</a>
+                  </li>
+              {% endfor %}
+              </ul>
+          </div>
+    </div>
+
+          
+          
+  {% endblock %}
+  
+  
+  
+{% endblock %}

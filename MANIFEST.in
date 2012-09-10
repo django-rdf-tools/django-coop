@@ -1,0 +1,9 @@
+recursive-include coop/templates *
+recursive-include coop/agenda/templates *
+recursive-include coop/static *
+recursive-include coop/exchange/locale *.mo *.po
+recursive-include coop/link/locale *.mo *.po
+recursive-include coop/org/locale *.mo *.po
+recursive-include coop/person/locale *.mo *.po
+recursive-include coop/ui/locale *.mo *.po
+recursive-include coop/agenda/locale *.mo *.po

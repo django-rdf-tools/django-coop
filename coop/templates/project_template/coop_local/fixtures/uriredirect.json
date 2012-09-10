@@ -1,0 +1,380 @@
+[
+
+    {
+        "pk": 2, 
+        "model": "uriredirect.mediatype", 
+        "fields": {
+            "file_extension": "html", 
+            "mime_type": "text/html"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "uriredirect.mediatype", 
+        "fields": {
+            "file_extension": "json", 
+            "mime_type": "application/json"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "uriredirect.mediatype", 
+        "fields": {
+            "file_extension": "n3", 
+            "mime_type": "text/n3"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "uriredirect.mediatype", 
+        "fields": {
+            "file_extension": "rdf", 
+            "mime_type": "application/rdf+xml"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "uriredirect.mediatype", 
+        "fields": {
+            "file_extension": "ttl", 
+            "mime_type": "text/turtle"
+        }
+    }, 
+
+
+
+
+    {
+        "pk": 3, 
+        "model": "uriredirect.acceptmapping", 
+        "fields": {
+            "media_type": 1, 
+            "rewrite_rule": 1, 
+            "redirect_to": "http://{{ domain }}/data/organization/$1.ttl"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "uriredirect.acceptmapping", 
+        "fields": {
+            "media_type": 4, 
+            "rewrite_rule": 1, 
+            "redirect_to": "http://{{ domain }}/data/organization/$1.json"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "uriredirect.acceptmapping", 
+        "fields": {
+            "media_type": 2, 
+            "rewrite_rule": 1, 
+            "redirect_to": "http://{{ domain }}/org/@uuid:coop_local.organization:slug@/"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "uriredirect.acceptmapping", 
+        "fields": {
+            "media_type": 3, 
+            "rewrite_rule": 1, 
+            "redirect_to": "http://{{ domain }}/data/organization/$1.xml"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "uriredirect.acceptmapping", 
+        "fields": {
+            "media_type": 5, 
+            "rewrite_rule": 1, 
+            "redirect_to": "http://{{ domain }}/data/organization/$1.n3"
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "uriredirect.acceptmapping", 
+        "fields": {
+            "media_type": 2, 
+            "rewrite_rule": 2, 
+            "redirect_to": "http://{{ domain }}/annonces/@uuid:coop_local.organization:id@/"
+        }
+    }, 
+    {
+        "pk": 15, 
+        "model": "uriredirect.acceptmapping", 
+        "fields": {
+            "media_type": 2, 
+            "rewrite_rule": 4, 
+            "redirect_to": "http://{{ domain }}/role/@uuid:coop_local.organization:slug@/"
+        }
+    }, 
+    {
+        "pk": 16, 
+        "model": "uriredirect.acceptmapping", 
+        "fields": {
+            "media_type": 4, 
+            "rewrite_rule": 4, 
+            "redirect_to": "http://{{ domain }}/data/role/$1.json"
+        }
+    }, 
+    {
+        "pk": 17, 
+        "model": "uriredirect.acceptmapping", 
+        "fields": {
+            "media_type": 5, 
+            "rewrite_rule": 4, 
+            "redirect_to": "http://{{ domain }}/data/role/$1.n3"
+        }
+    }, 
+    {
+        "pk": 18, 
+        "model": "uriredirect.acceptmapping", 
+        "fields": {
+            "media_type": 3, 
+            "rewrite_rule": 4, 
+            "redirect_to": "http://{{ domain }}/data/role/$1.xml"
+        }
+    }, 
+    {
+        "pk": 19, 
+        "model": "uriredirect.acceptmapping", 
+        "fields": {
+            "media_type": 1, 
+            "rewrite_rule": 4, 
+            "redirect_to": "http://{{ domain }}/data/role/$1.ttl"
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "uriredirect.acceptmapping", 
+        "fields": {
+            "media_type": 4, 
+            "rewrite_rule": 2, 
+            "redirect_to": "http://{{ domain }}/data/exchange/$1.json"
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "uriredirect.acceptmapping", 
+        "fields": {
+            "media_type": 5, 
+            "rewrite_rule": 2, 
+            "redirect_to": "http://{{ domain }}/data/exchange/$1.n3"
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "uriredirect.acceptmapping", 
+        "fields": {
+            "media_type": 3, 
+            "rewrite_rule": 2, 
+            "redirect_to": "http://{{ domain }}/data/exchange/$1.xml"
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "uriredirect.acceptmapping", 
+        "fields": {
+            "media_type": 1, 
+            "rewrite_rule": 2, 
+            "redirect_to": "http://{{ domain }}/data/exchange/$1.ttl"
+        }
+    }, 
+    {
+        "pk": 11, 
+        "model": "uriredirect.acceptmapping", 
+        "fields": {
+            "media_type": 4, 
+            "rewrite_rule": 3, 
+            "redirect_to": "http://{{ domain }}/data/contact/$1.json"
+        }
+    }, 
+    {
+        "pk": 12, 
+        "model": "uriredirect.acceptmapping", 
+        "fields": {
+            "media_type": 5, 
+            "rewrite_rule": 3, 
+            "redirect_to": "http://{{ domain }}/data/contact/$1.xml"
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "uriredirect.acceptmapping", 
+        "fields": {
+            "media_type": 3, 
+            "rewrite_rule": 3, 
+            "redirect_to": "http://{{ domain }}/data/contact/$1.xml"
+        }
+    }, 
+    {
+        "pk": 14, 
+        "model": "uriredirect.acceptmapping", 
+        "fields": {
+            "media_type": 1, 
+            "rewrite_rule": 3, 
+            "redirect_to": "http://{{ domain }}/data/contact/$1.ttl"
+        }
+    }, 
+    {
+        "pk": 20, 
+        "model": "uriredirect.acceptmapping", 
+        "fields": {
+            "media_type": 4, 
+            "rewrite_rule": 5, 
+            "redirect_to": "http://{{ domain }}/data/product/$1.json"
+        }
+    }, 
+    {
+        "pk": 21, 
+        "model": "uriredirect.acceptmapping", 
+        "fields": {
+            "media_type": 5, 
+            "rewrite_rule": 5, 
+            "redirect_to": "http://{{ domain }}/data/product/$1.n3"
+        }
+    }, 
+    {
+        "pk": 22, 
+        "model": "uriredirect.acceptmapping", 
+        "fields": {
+            "media_type": 3, 
+            "rewrite_rule": 5, 
+            "redirect_to": "http://{{ domain }}/data/product/$1.xml"
+        }
+    }, 
+    {
+        "pk": 23, 
+        "model": "uriredirect.acceptmapping", 
+        "fields": {
+            "media_type": 1, 
+            "rewrite_rule": 5, 
+            "redirect_to": "http://{{ domain }}/data/product/$1.ttl"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "uriredirect.rewriterule", 
+        "fields": {
+            "pattern": "(?P<uuid>\\w+)/?$", 
+            "register": 1, 
+            "description": "", 
+            "label": "Organization URI Resolution"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "uriredirect.rewriterule", 
+        "fields": {
+            "pattern": "(?P<uuid>\\w+)/?$", 
+            "register": 7, 
+            "description": "", 
+            "label": "Role URI Resolution"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "uriredirect.rewriterule", 
+        "fields": {
+            "pattern": "(?P<uuid>\\w+)/?$", 
+            "register": 2, 
+            "description": "", 
+            "label": "Exchange URI Resolution"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "uriredirect.rewriterule", 
+        "fields": {
+            "pattern": "(?P<uuid>\\w+)/?$", 
+            "register": 3, 
+            "description": "", 
+            "label": "Contact URI Resolution"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "uriredirect.rewriterule", 
+        "fields": {
+            "pattern": "(?P<uuid>\\w+)/?$", 
+            "register": 8, 
+            "description": "", 
+            "label": "Product URI Resolution"
+        }
+    }, 
+
+
+
+
+    {
+        "pk": 1, 
+        "model": "uriredirect.uriregister", 
+        "fields": {
+            "url": "http://{{ domain }}/", 
+            "can_be_resolved": true, 
+            "label": "organization"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "uriredirect.uriregister", 
+        "fields": {
+            "url": "http://{{ domain }}/", 
+            "can_be_resolved": true, 
+            "label": "exchange"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "uriredirect.uriregister", 
+        "fields": {
+            "url": "http://{{ domain }}/", 
+            "can_be_resolved": true, 
+            "label": "contact"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "uriredirect.uriregister", 
+        "fields": {
+            "url": "http://{{ domain }}/", 
+            "can_be_resolved": true, 
+            "label": "location"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "uriredirect.uriregister", 
+        "fields": {
+            "url": "http://{{ domain }}/", 
+            "can_be_resolved": true, 
+            "label": "area"
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "uriredirect.uriregister", 
+        "fields": {
+            "url": "http://{{ domain }}/", 
+            "can_be_resolved": true, 
+            "label": "ctag"
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "uriredirect.uriregister", 
+        "fields": {
+            "url": "http://{{ domain }}/", 
+            "can_be_resolved": true, 
+            "label": "role"
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "uriredirect.uriregister", 
+        "fields": {
+            "url": "http://{{ domain }}/", 
+            "can_be_resolved": true, 
+            "label": "product"
+        }
+    }
+]

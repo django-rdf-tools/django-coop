@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block meta_title %}{% trans "Server Error" %}{% endblock %}
+      
+    
+{% block title %}{% trans "Server Error" %}{% endblock %}
+        
+{% block content %}
+
+{% if request.sentry.id %}
+    <p>Vous pouvez donner cette référence d'erreur à l'assistance technique :  <strong>{{ request.sentry.id }}</strong>.</p>
+{% endif %}
+
+  {% trans "An error has occured" %}    
+{% endblock %}
+

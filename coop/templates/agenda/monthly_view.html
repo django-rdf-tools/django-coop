@@ -1,0 +1,50 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% trans "Monthly View" %}{% endblock %}
+{% block document %}
+    <h3>{% trans "Monthly View" %}</h3>
+    <h4>
+        <a href="{% url agenda-monthly-view last_month.year last_month.month %}" 
+           title="{% trans "Last Month" %}">&larr;</a>
+        {{ this_month|date:"F" }}
+        <a title="{% blocktrans with this_month.year as year %}View {{ year}}{% endblocktrans %}" href="{% url agenda-yearly-view this_month.year %}">
+            {{ this_month|date:"Y" }}</a>
+        <a href="{% url agenda-monthly-view next_month.year next_month.month %}" 
+           title="{% trans "Next Month" %}">&rarr;</a>
+    </h4>
+
+    <table class="month-view">
+        <thead>
+            <tr>
+              {% for day in week %}
+                <th>{{ day }}</th>
+              {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in calendar %}
+            <tr>
+                {% for day,items in row  %}
+                <td{% ifequal day today.day  %} class="today"{% endifequal %}>
+                {% if day %}
+                    <div class="day-ordinal">
+                        <a href="{% url agenda-daily-view today.year today.month day %}">{{ day }}</a>
+                    </div>
+                    {% if items %}
+                    <ul>
+                        {% for item in items %}
+                        <li>
+                            <a href="{{ item.get_absolute_url }}">
+                                {{ item.title }}</a>
+                            <span class="event_times">{{ item.start_time|time:"H:i" }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                {% endif %}
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

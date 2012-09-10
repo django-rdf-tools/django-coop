@@ -1,0 +1,236 @@
+{% include "d2r/prefix.ttl"%}
+
+
+<> a d2r:Server;
+    rdfs:label "{{d2r_site_name}}";
+    d2r:port {{d2r_port}};
+    d2r:baseURI <{{d2r_baseURI}}>;
+    d2r:autoReloadMapping true;
+    d2r:limitPerClassMap false;   # to display everything within the interfac, default is 50
+    .
+
+map:database a d2rq:Database;
+    d2rq:jdbcDriver "org.postgresql.Driver";
+    d2rq:jdbcDSN "jdbc:postgresql://{{d2rq_db_host}}:{{d2rq_db_port}}/{{d2rq_db_name}}";
+    d2rq:username "{{d2rq_username}}";
+    d2rq:password "{{d2rq_password}}";
+   .
+
+# Table coop_local_navtree
+map:scheme a d2rq:ClassMap; # classe = modele Django
+    d2rq:dataStorage map:database;
+    {% if mode == 'view' %}
+    d2rq:uriPattern "scheme/@@coop_local_navtree.name@@/";
+    {% else %}
+    d2rq:uriColumn "coop_local_navtree.uri";
+    {% endif %}
+    d2rq:class skos:ConceptScheme; # classe RDF correspondante
+    d2rq:condition "coop_local_navtree.name <> 'default'"
+    .
+    
+map:scheme_name a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:scheme;
+    d2rq:property rdfs:label;
+    d2rq:column "coop_local_navtree.name";
+    d2rq:lang "fr"  
+    .
+    
+
+
+
+{% include "d2r/tag.ttl" %}
+
+{% include "d2r/organization.ttl" %}
+
+{% include "d2r/exchange.ttl" %}
+
+{% include "d2r/contact.ttl" %}
+
+{% include "d2r/person.ttl" %}
+
+{% include "d2r/role.ttl" %}
+
+{% include "d2r/engagement.ttl" %}
+
+
+# Table django_comments    To be finished
+map:comment a d2rq:ClassMap;
+    d2rq:dataStorage map:database;
+    d2rq:uriPattern "comment/@@django_comments.id@@";
+    d2rq:class sioc:Item;
+    d2rq:classDefinitionLabel "django_comments";
+    .
+
+map:comment__label a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:comment;
+    d2rq:property rdfs:label;
+    d2rq:pattern "Commentaire n°@@django_comments.id@@";
+    .
+
+map:comment_author a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:comment;
+    d2rq:property dct:author;
+    d2rq:column "django_comments.user_name";
+    .
+    
+    
+
+# Table coop_geo_area
+map:area a d2rq:ClassMap;
+    d2rq:dataStorage map:database;
+    {% if mode == 'view' %}
+    d2rq:uriPattern "area/@@coop_geo_area.reference@@";
+    {% else %}
+    d2rq:uriColumn "coop_geo_area.uri";
+    {% endif %}
+    d2rq:class dct:Location;
+    d2rq:class schema:AdministrativeArea;
+    .
+map:area_departement a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:area;
+    d2rq:property rdf:type;
+    d2rq:constantValue geofr:Departement;
+    d2rq:alias "coop_geo_areatype AS areatype_dep";
+    d2rq:condition "areatype_dep.txt_idx = 'DEP'";
+    d2rq:join "coop_geo_area.area_type_id => areatype_dep.id";
+    .
+map:area_commune a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:area;
+    d2rq:property rdf:type;
+    d2rq:constantValue geofr:Commune;
+    d2rq:alias "coop_geo_areatype AS areatype_com";
+    d2rq:condition "areatype_com.txt_idx = 'COM'";
+    d2rq:join "coop_geo_area.area_type_id => areatype_com.id";
+    .    
+map:area_region a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:area;
+    d2rq:property rdf:type;
+    d2rq:constantValue geofr:Region;
+    d2rq:alias "coop_geo_areatype AS areatype_reg";
+    d2rq:condition "areatype_reg.txt_idx = 'REG'";
+    d2rq:join "coop_geo_area.area_type_id => areatype_reg.id";
+    . 
+map:area_epci a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:area;
+    d2rq:property rdf:type;
+    d2rq:constantValue geofr:EPCI;
+    d2rq:alias "coop_geo_areatype AS areatype_epci";
+    d2rq:condition "areatype_epci.txt_idx = 'EPCI'";
+    d2rq:join "coop_geo_area.area_type_id => areatype_epci.id";
+    . 
+map:area_label a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:area;
+    d2rq:property rdfs:label;
+    d2rq:column "coop_geo_area.label";
+    .
+map:area_reference a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:area;
+    d2rq:property skos:notation;
+    d2rq:column "coop_geo_area.reference";
+    .
+ map:area_polygon a d2rq:PropertyBridge;
+   d2rq:belongsToClassMap map:area;
+   d2rq:property locn:geometry;
+   d2rq:sqlExpression "ST_AsText(coop_geo_area.polygon)";
+   d2rq:datatype opens:wkt;
+   .
+   
+
+
+# Table coop_geo_location
+map:location a d2rq:ClassMap;
+    d2rq:dataStorage map:database;
+    {% if mode == 'view' %}
+    d2rq:uriPattern "location/@@coop_geo_location.geohash@@";
+    {% else %}
+    d2rq:uriSqlExpression "'http://data.economie-solidaire.fr/id/location/' || coop_geo_location.geohash";
+    # d2rq:uriPattern "location/@@coop_geo_location.geohash@@";   # Wainting for an anwers
+    {% endif %}   
+    d2rq:class dct:Location;
+    .
+map:location_label a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:location;
+    d2rq:property rdfs:label;
+    d2rq:propertyDefinitionLabel "coop_geo_location label";
+    d2rq:column "coop_geo_location.label";
+    .
+ map:location_point a d2rq:PropertyBridge;
+   d2rq:belongsToClassMap map:location;
+   d2rq:property locn:geometry;
+   d2rq:sqlExpression "ST_AsText(coop_geo_location.point)";
+   d2rq:datatype opens:wkt;
+   .
+ map:location_addr a d2rq:PropertyBridge;
+   d2rq:belongsToClassMap map:location;
+   d2rq:property locn:address;
+   d2rq:refersToClassMap  map:addr;
+   .   
+map:location_created a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:location;
+    d2rq:property dct:created;
+    d2rq:column "coop_geo_location.created";
+    d2rq:datatype xsd:dateTime;
+    .
+map:location_modified a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:location;
+    d2rq:property dct:modified;
+    d2rq:column "coop_geo_location.modified";
+    d2rq:datatype xsd:dateTime;
+    .
+
+# map:location_owner_id a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:location;
+#   d2rq:property vocab:coop_geo_location_owner_id;
+#   d2rq:refersToClassMap map:auth_user;
+#   d2rq:join "coop_geo_location.owner_id => auth_user.id";
+#   .
+# map:location_area_id a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:location;
+#   d2rq:property vocab:coop_geo_location_area_id;
+#   d2rq:refersToClassMap map:coop_geo_area;
+#   d2rq:join "coop_geo_location.area_id => coop_geo_area.id";
+#   .
+
+
+
+# Table coop_geo_location is used to build addresses
+map:addr a d2rq:ClassMap;
+    d2rq:dataStorage map:database;
+    {% if mode == 'view' %}
+    d2rq:uriPattern "coop_geo_addr/@@coop_geo_location.uuid@@";
+    {% else %}
+    d2rq:uriColumn "coop_geo_location.uri";
+    {% endif %}
+    d2rq:class locn:Address;
+    .
+
+map:addr_fulladdr a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:addr;
+    d2rq:property locn:fullAddress;
+    d2rq:property rdfs:label;
+    d2rq:pattern "@@coop_geo_location.adr1@@\n@@coop_geo_location.adr2@@\n@@coop_geo_location.zipcode@@ @@coop_geo_location.city@@";
+    .
+map:addr_adr1 a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:addr;
+    d2rq:property locn:thoroughfare;
+    d2rq:column "coop_geo_location.adr1";
+    d2rq:condition "coop_geo_location.adr1 <> ''";
+    .
+map:addr_adr2 a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:addr;
+    d2rq:property locn:locatorName;
+    d2rq:column "coop_geo_location.adr2";
+    d2rq:condition "coop_geo_location.adr2 <> ''";
+    .
+map:addr_zipcode a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:addr;
+    d2rq:property locn:postCode;
+    d2rq:column "coop_geo_location.zipcode";
+    .
+map:addr_city a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:addr;
+    d2rq:property locn:postName;
+    d2rq:column "coop_geo_location.city";
+    .
+{% block mappings %}
+{% endblock %}

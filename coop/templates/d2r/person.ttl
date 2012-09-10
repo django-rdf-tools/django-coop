@@ -1,0 +1,62 @@
+# Définition basée sur la table Person
+map:person a d2rq:ClassMap;
+    d2rq:dataStorage map:database;
+{% if mode == 'view' %}
+    d2rq:uriPattern "person/@@coop_local_person.id@@/"; # URI == ID
+{% else %}
+    d2rq:uriColumn "coop_local_person.uri";
+{% endif %}
+    #d2rq:class foaf:Person;    # redundancy person:Person subclass of foaf:Person and schema:Person
+    d2rq:class person:Person;
+    .
+map:person_last_name a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:person;
+    d2rq:property foaf:familyName;
+    # d2rq:property schema:familyName;       # useless for our purpose
+    d2rq:column "coop_local_person.last_name"; # la valeur est là
+    .
+map:person_first_name a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:person;
+    d2rq:property foaf:givenName;
+    # d2rq:property schema:givenName;         # useless for our purpose
+   d2rq:column "coop_local_person.first_name";
+    .
+map:person__label a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:person;
+    d2rq:property rdfs:label;
+    d2rq:property foaf:name;
+    # d2rq:property schema:name;             # useless for our purpos
+    d2rq:pattern "@@coop_local_person.first_name@@ @@coop_local_person.last_name@@";
+    .
+
+# map:person_email a d2rq:PropertyBridge;
+#   d2rq:belongsToClassMap map:person;
+#   d2rq:property foaf:mbox;
+#   d2rq:column "coop_local_person.email";
+#   .
+map:person_email a d2rq:PropertyBridge;
+  d2rq:belongsToClassMap map:person;
+  d2rq:property foaf:mbox_sha1sum;
+  d2rq:column "coop_local_person.email_sha1";
+  .
+map:person_created a d2rq:PropertyBridge;
+  d2rq:belongsToClassMap map:person;
+  d2rq:property dct:created;
+  d2rq:column "coop_local_person.created";
+  d2rq:datatype xsd:dateTime;
+  .
+map:person_modified a d2rq:PropertyBridge;
+  d2rq:belongsToClassMap map:person;
+  d2rq:property dct:modified;
+  d2rq:column "coop_local_person.modified";
+  d2rq:datatype xsd:dateTime;
+  .
+map:person_tags a d2rq:PropertyBridge; # EXAMPLE M2M generic relation
+    d2rq:belongsToClassMap map:person;
+    d2rq:refersToClassMap map:xlabel;
+    d2rq:property dct:subject;
+    d2rq:join "coop_local_tag.id <= coop_local_taggeditem.tag_id";
+    d2rq:join "coop_local_person.id <= coop_local_taggeditem.object_id";
+    d2rq:join "django_content_type.id <= coop_local_taggeditem.content_type_id";
+    d2rq:condition "django_content_type.model = 'person'";
+    .

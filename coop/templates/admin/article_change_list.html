@@ -1,0 +1,12 @@
+{% extends "admin/change_list.html" %}
+{% load i18n %}
+
+
+      {% block object-tools-items %}
+        <a class="btn btn-info" href="/admin/coop_cms/navtree/1/"> 
+            <i class="icon-list-alt icon-white"></i> Arborescence du site </a>
+        <a href="add/{% if is_popup %}?_popup=1{% endif %}" class="btn btn-primary">
+          <i class="icon-plus icon-white"></i>
+          {% blocktrans with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktrans %}
+        </a>
+      {% endblock %}

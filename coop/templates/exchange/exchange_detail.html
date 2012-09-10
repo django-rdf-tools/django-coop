@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load smart_if thumbnail comments mytags %}
+
+{% block meta_title %}{{exchange.title}}{% endblock %}
+
+{% block extra_head %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tipsy.js"></script>
+{% endblock %}
+
+{% block document %}
+
+    <div id="title" class="grid_12 grid">
+    {% block title %}
+        <h3>{{exchange.title}}</h3>
+    {% endblock %}
+    </div>
+
+    {% block content %}
+    <div id="content">
+        <div class="grid_8 grid">
+
+            <p>{{exchange.description|safe}}</p>
+
+            <br/>
+            Publié par <a href="{% local_or_remote uri exchange organization %}">{% local_or_remote label exchange organization %}</a>
+
+        </div>
+
+
+
+        <div id="grid-right" class="grid_4 grid">
+
+        {% if exchange.organization.logo %}
+           <div class="logo">
+            {% thumbnail exchange.organization.logo "200" as im %}
+                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+            {% endthumbnail %}
+           </div>
+        {% endif %}
+
+
+           <h4>Coordonnées</h4>
+           <p class="coordonnees">
+               {% for contact in exchange.organization.contact.all %}
+
+                {% if contact.category == 1 %}<div class="tel">Tel. : {{contact.content}}</div>{%endif%}
+                {% if contact.category == 2 %}<div class="tel">Mobile : {{contact.content}}</div>{%endif%}
+                {% if contact.category == 3 %}<div class="tel">Fax : {{contact.content}}</div>{%endif%}
+
+               {% endfor %}
+           {% if exchange.organization.web %}
+           <div class="url"><a target="_blank" href="{{exchange.organization.web}}">{{exchange.organization.web}}</a></div>
+            {% endif %}
+            </p>
+
+            <img src="http://maps.googleapis.com/maps/api/staticmap?markers=size:small%7Ccolor:0xd1453e|{% for a in adresses %}{{a.location.point.get_coords.1|stringformat:"f"}},{{a.location.point.get_coords.0|stringformat:"f"}}|{% endfor %}&maptype=hybrid&size=280x200&sensor=false&zoom=7">
+
+            <br/><br/>
+            {% for a in adresses %}
+                <div class="adresse{% if a.main_location %} main_location{% endif %}">
+                {% if a.location_type %}<strong>{{a.location_type}}</strong>{% endif %}
+                <div class="postal">
+                {{a.location.adr1}}<br/>
+                {% if adresse.adr2 %}{{a.location.adr2}}<br/>{% endif %}
+                {{a.location.zipcode}} {{a.location.city}}</div>
+                </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+    {% endblock %}
+{% endblock %}
+
+{% block footer%}
+<a href="{{D2RQ_ROOT}}page/org/{{exchange.organization.slug}}/">
+    <img border="0" align="left" src="{{STATIC_URL}}img/semweb.png"></a>
+    <br/>
+{% endblock %}
+
+
+
+

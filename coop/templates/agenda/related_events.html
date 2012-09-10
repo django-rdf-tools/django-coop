@@ -1,0 +1,9 @@
+{% if article.events.all %}
+<div class="grid_12 grid">
+    <h4>Agenda</h4>
+<ul>
+{% for event in article.events.all %}
+<li>{{event}}</li>
+{% endfor %}</ul>
+</div>
+{% endif %}

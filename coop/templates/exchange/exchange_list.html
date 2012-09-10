@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Liste des Annonces{% endblock %}
+
+
+{% block document %}
+    <div id="title" class="grid_12 grid">
+    {% block title %}<h3>Liste des Annonces</h3>{% endblock %}
+    </div>
+
+    {% block content %}
+
+
+        <div id="content">
+            <div class="grid_12 grid">
+                <ul>
+                    {% for item in object_list %}
+                    <li><a href="{{item.get_absolute_url}}">{{ item.title }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+    
+    
+        </div>    
+    {% endblock %}
+
+{% endblock %}
+
+{% block footer%}        
+<a href="{{D2RQ_ROOT}}directory/exchange">
+    <img border="0" align="left" src="{{STATIC_URL}}img/semweb.png"></a>
+    <br/>
+{% endblock %}
+
+
+
+
+
+
+
+
+

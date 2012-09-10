@@ -1,0 +1,152 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: coop.Contact\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-07-03 10:10+0200\n"
+"PO-Revision-Date: 2012-07-03 10:11+0100\n"
+"Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
+"Language-Team: Quinode <contact@quinode.fr>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+
+#: forms.py:15
+msgid "name"
+msgstr "nom"
+
+#: forms.py:20
+msgid "username"
+msgstr "nom d'utilisateur"
+
+#: forms.py:21
+msgid "This value must contain only letters, numbers and underscores."
+msgstr "Ce champ ne doit comporter que des lettres, chiffres ou \"_\""
+
+#: forms.py:26
+msgid "email address"
+msgstr "Adresse e-mail"
+
+#: forms.py:27
+msgid "your personal email"
+msgstr "email personnel"
+
+#: models.py:25
+msgid "Person category"
+msgstr "Catégorie de personnes"
+
+#: models.py:26
+msgid "Person categories"
+msgstr "Catégories de personnes"
+
+#: models.py:35
+msgid "django user"
+msgstr "compte actif"
+
+#: models.py:39
+msgid "category"
+msgstr "catégorie"
+
+#: models.py:40
+msgid "last name"
+msgstr "nom"
+
+#: models.py:41
+msgid "first name"
+msgstr "prénom"
+
+#: models.py:43
+msgid "personal email"
+msgstr "email personnel"
+
+#: models.py:43
+msgid "will not be displayed on the website"
+msgstr "ne sera pas affiché sur le site web"
+
+#: models.py:44
+msgid "email checksum"
+msgstr "somme de controle "
+
+#: models.py:45
+msgid "notes"
+msgstr "notes"
+
+#: models.py:51
+msgid "location"
+msgstr "lieu"
+
+#: models.py:52
+msgid "Display"
+msgstr "Affichage"
+
+#: models.py:56
+msgid "Person"
+msgstr "Personne"
+
+#: models.py:57
+msgid "Persons"
+msgstr "Personnes"
+
+#: models.py:70
+msgid "django account"
+msgstr "compte django"
+
+#: models.py:75
+msgid "has organization"
+msgstr "membre collectif"
+
+#~ msgid "created"
+#~ msgstr "création"
+
+#~ msgid "modified"
+#~ msgstr "modification"
+
+#~ msgid "main URI"
+#~ msgstr "URI"
+
+#~ msgid "publicize name"
+#~ msgstr "afficher nom"
+
+#~ msgid "publicize location"
+#~ msgstr "afficher adresse"
+
+#~ msgid "address"
+#~ msgstr "adresse"
+
+#~ msgid "city"
+#~ msgstr "ville"
+
+#~ msgid "zip code"
+#~ msgstr "code postal"
+
+#~ msgid "land line"
+#~ msgstr "ligne fixe personnelle"
+
+#~ msgid "publicize phone"
+#~ msgstr "afficher la ligne fixe"
+
+#~ msgid "mobile phone"
+#~ msgstr "mobile"
+
+#~ msgid "publicize mobile"
+#~ msgstr "afficher le mobile"
+
+#~ msgid "Contact"
+#~ msgstr "Contact"
+
+#~ msgid "Contacts"
+#~ msgstr "Contacts"
+
+#~ msgid "Member"
+#~ msgstr "membre"
+
+#~ msgid "Members"
+#~ msgstr "membres"

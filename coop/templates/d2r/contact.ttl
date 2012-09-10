@@ -1,0 +1,121 @@
+# As for Area, the Table has to be split
+# COMM_MEANS = Choices(
+#     ('LAND',    1,  _(u'Landline phone')),
+#     ('GSM',     2,  _(u'Mobile phone')),
+#     ('FAX',     3,  _(u'Fax')),
+#     ('SKYPE',   4,  _(u'Skype')),
+#     ('TWITTER', 5,  _(u'Twitter')),
+#     ('RSS',     6,  _(u'RSS Feed')),
+#     ('VCAL',    7,  _(u'vCalendar')),
+#     ('MAIL',    8,  _(u'E-mail')),
+#     ('WEB',     9,  _(u'Secondary web site')),
+# )
+
+# Table coop_local_contact
+
+map:contact a d2rq:ClassMap;
+    d2rq:dataStorage map:database;
+{% if mode == 'view' %}
+    d2rq:uriPattern "contact/@@coop_local_contact.id@@/";
+{% else %}
+    d2rq:uriColumn "coop_local_contact.uri";
+{% endif %}
+    d2rq:condition "coop_local_contact.content <> ''"
+    .
+
+map:contact_type a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:contact;
+    d2rq:property rdf:type;
+    d2rq:constantValue ess:ContactMedium;
+    .
+map:tel_type a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:contact;
+    d2rq:property rdf:type;
+    d2rq:constantValue vcard:Tel;
+    d2rq:alias "coop_local_contact AS contact_table";
+    d2rq:condition "contact_table.category = 1";
+    .
+map:cell_type a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:contact;
+    d2rq:property rdf:type;
+    d2rq:constantValue vcard:Cell;
+    d2rq:alias "coop_local_contact AS contact_table";
+    d2rq:condition "contact_table.category = 2";
+    .
+map:fax_type a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:contact;
+    d2rq:property rdf:type;
+    d2rq:constantValue vcard:Fax;
+    d2rq:alias "coop_local_contact AS contactFax";
+    d2rq:condition "contactFax.category = 3";
+    .
+map:skype_type a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:contact;
+    d2rq:property rdf:type;
+    d2rq:constantValue foaf:OnlineChatAccount;
+    d2rq:alias "coop_local_contact AS contactSkype";
+    d2rq:condition "contactSkype.category = 4";
+    .
+map:twitter_type a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:contact;
+    d2rq:property rdf:type;
+    d2rq:constantValue foaf:OnlineAccount;
+    d2rq:alias "coop_local_contact AS contactTwitter";
+    d2rq:condition "contactTwitter.category = 5";
+    .
+map:rss_type a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:contact;
+    d2rq:property rdf:type;
+    d2rq:constantValue <http://purl.org/rss/1.0/channel>;
+    d2rq:alias "coop_local_contact AS contactRss";
+    d2rq:condition "contactRss.category = 6";
+    .
+map:vcal_type a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:contact;
+    d2rq:property rdf:type;
+    d2rq:constantValue <http://www.w3.org/2002/12/cal/icaltzd#Vcalendar>;              
+    d2rq:alias "coop_local_contact AS contactCal";
+    d2rq:condition "contactCal.category = 7";
+    .
+map:email_type a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:contact;
+    d2rq:property rdf:type;
+    d2rq:constantValue vcard:Email;
+    d2rq:alias "coop_local_contact AS contactEmail";
+    d2rq:condition "contactEmail.category = 8";
+    .
+map:web_type a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:contact;
+    d2rq:property rdf:type;
+    d2rq:constantValue sioc:Site;
+    d2rq:alias "coop_local_contact AS contactWeb";
+    d2rq:condition "contactWeb.category = 9";
+    .
+
+# la valeur de la ressource    
+map:contact_content a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:contact;
+    d2rq:property rdf:value;
+    d2rq:propertyDefinitionLabel "coop_local_contact content";
+    d2rq:column "coop_local_contact.content";
+    .
+
+# description optionelle    
+map:contact_details a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:contact;
+    d2rq:property rdfs:comment;
+    d2rq:propertyDefinitionLabel "coop_local_contact details";
+    d2rq:column "coop_local_contact.details";
+    .
+map:contact_created a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:contact;
+    d2rq:property dct:created;
+    d2rq:column "coop_local_contact.created";
+    d2rq:datatype xsd:dateTime;
+    .
+map:contact_modified a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:contact;
+    d2rq:property dct:modified;
+    d2rq:column "coop_local_contact.modified";
+    d2rq:datatype xsd:dateTime;
+    .

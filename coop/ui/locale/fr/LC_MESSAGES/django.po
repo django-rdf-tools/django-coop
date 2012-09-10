@@ -1,0 +1,215 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: coop.ui\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-07-26 19:11+0200\n"
+"PO-Revision-Date: 2012-07-26 19:16+0100\n"
+"Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
+"Language-Team: Quinode <contact@quinode.fr>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+
+#: dashboard.py:47
+#: menu.py:27
+msgid "Articles"
+msgstr "Articles"
+
+#: dashboard.py:59
+#: menu.py:59
+msgid "Agenda"
+msgstr "Agenda"
+
+#: dashboard.py:68
+msgid "My network"
+msgstr "Mon réseau"
+
+#: dashboard.py:80
+msgid "Administration"
+msgstr "Administration"
+
+#: dashboard.py:86
+#: dashboard.py:129
+msgid "Recent Actions"
+msgstr "Actions récentes"
+
+#: menu.py:25
+msgid "Navigation tree"
+msgstr "Menu de navigation"
+
+#: menu.py:29
+msgid "CMS"
+msgstr "CMS"
+
+#: menu.py:32
+msgid "Content"
+msgstr "Contenus"
+
+#: menu.py:33
+msgid "Article categories"
+msgstr "Catégories d'articles"
+
+#: menu.py:34
+msgid "Documents"
+msgstr "Documents"
+
+#: menu.py:35
+msgid "Images"
+msgstr "Images"
+
+#: menu.py:36
+msgid "Newsletters"
+msgstr "Lettres d'information"
+
+#: menu.py:37
+msgid "Comments"
+msgstr "Commentaires"
+
+#: menu.py:40
+msgid "RSS"
+msgstr "RSS"
+
+#: menu.py:41
+msgid "RSS items"
+msgstr "Articles à importer"
+
+#: menu.py:42
+msgid "RSS sources"
+msgstr "Sources d'articles"
+
+#: menu.py:45
+#: menu.py:46
+msgid "Tags"
+msgstr "Tags"
+
+#: menu.py:47
+msgid "Tag categories"
+msgstr "Catégories de tags"
+
+#: menu.py:48
+msgid "Tag trees"
+msgstr "Taxonomie"
+
+#: menu.py:51
+msgid "Django"
+msgstr "Django"
+
+#: menu.py:52
+msgid "Users"
+msgstr "Comptes utilisateurs"
+
+#: menu.py:53
+msgid "Sites"
+msgstr "Configuration du site"
+
+#: menu.py:61
+msgid "Events"
+msgstr "Événements"
+
+#: menu.py:62
+msgid "Calendar"
+msgstr "Calendrier"
+
+#: menu.py:63
+msgid "Event categories"
+msgstr "Catégories d'événements"
+
+#: menu.py:67
+msgid "Network"
+msgstr "Réseau"
+
+#: menu.py:70
+msgid "Directory"
+msgstr "Annuaire"
+
+#: menu.py:71
+msgid "Organizations"
+msgstr "Organisations"
+
+#: menu.py:72
+msgid "Persons"
+msgstr "Personnes"
+
+#: menu.py:73
+msgid "Organization categories"
+msgstr "Catégories d'organisations"
+
+#: menu.py:74
+msgid "Person categories"
+msgstr "Catégories de personnes"
+
+#: menu.py:75
+msgid "Roles"
+msgstr "Rôles"
+
+#: menu.py:78
+#: menu.py:79
+msgid "Exchanges"
+msgstr "Échanges"
+
+#: menu.py:80
+msgid "Exchange methods"
+msgstr "Modalités d'échange"
+
+#: menu.py:83
+msgid "Cartography"
+msgstr "Cartographie"
+
+#: menu.py:84
+msgid "Locations"
+msgstr "Lieux"
+
+#: menu.py:85
+msgid "Areas"
+msgstr "Zones"
+
+#: menu.py:86
+msgid "Location categories"
+msgstr "Catégories de lieux"
+
+#: menu.py:90
+msgid "RDF settings"
+msgstr "Réglages RDF"
+
+#: menu.py:91
+msgid "URI redirection"
+msgstr "Redirection d'URI"
+
+#~ msgid "Quick links"
+#~ msgstr "Liens rapides"
+
+#~ msgid "Return to site"
+#~ msgstr "Retour au site"
+
+#~ msgid "Change password"
+#~ msgstr "Changez votre mot de passe"
+
+#~ msgid "Log out"
+#~ msgstr "Déconnexion"
+
+#~ msgid "Latest Django News"
+#~ msgstr "Dernières nouvelles de Django"
+
+#~ msgid "Support"
+#~ msgstr "Support"
+
+#~ msgid "Blog PES"
+#~ msgstr "Blog PES"
+
+#~ msgid "Django \"django-users\" mailing list"
+#~ msgstr "Liste de diffusion django"
+
+#~ msgid "Database"
+#~ msgstr "Base de données"
+
+#~ msgid "RDF"
+#~ msgstr "RDF"

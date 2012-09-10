@@ -1,0 +1,220 @@
+{% extends "base.html" %}
+{% load smart_if thumbnail comments %}
+
+
+
+
+{% block meta_title %}{{organization.title}}{% endblock %}
+
+{% block extra_head %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tipsy.js"></script>
+{% endblock %}
+
+{% block document %}
+
+    <div id="title" class="grid_12 grid">
+    {% block title %}
+        <h3>{{organization.title}}</h3>
+    {% endblock %}
+    </div>
+
+    {% block content %}
+    <div id="content">
+        <div class="grid_8 grid">
+
+            <p class="statut">{{organization.subtitle}}</p>
+
+            <p>{{organization.get_statut_display}}
+            {% if organization.get_secteur_display %}</br>{{organization.get_secteur_display}}{% endif %}
+            {% if organization.birth %}</br>Année de création : {{organization.birth|date:"Y"}}{% endif %}
+            </p>
+
+            <p>{{organization.description|safe}}</p>
+
+            <br/>
+
+        {% if annonces %}
+            <h4>Annonces</h4>
+            <ul class="annonces">
+                {% for annonces in annonces %}
+                    <li>
+                        <p>
+                        <a href="{{annonce.get_absolute_url}}">{{annonce}}</a>
+                        </p>
+                    </li>
+                {% endfor %}
+            </ul>
+            <br/>
+        {% endif %}
+
+        {% if engagements %}
+            <h4>Contacts</h4>
+            <ul class="membres">
+                {% for engagement in engagements %}
+                    <li><img src="{{STATIC_URL}}img/blank_avatar.png">
+                        <p>
+                        {% if engagement.person.user %}
+                            <a href="{{engagement.person.get_absolute_url}}">{{ engagement.person }}</a>
+                        {% else %}
+                            {{ engagement.person }}
+                        {% endif %}
+                        ,<br/>
+                        <a class="role" href="{{engagement.role.get_absolute_url}}">{{engagement.role}}</a>
+                        </p>
+                    </li>
+                {% endfor %}
+            </ul>
+            <br/>
+        {% endif %}
+
+        {% comment %}
+        {% include "related_events.html" %}
+        {% endcomment %}
+
+        {% include "comments/comments.html" %}
+
+
+        </div>
+
+
+
+        <div id="grid-right" class="grid_4 grid">
+
+        {% if organization.logo %}
+           <div class="logo">
+            {% thumbnail organization.logo "200" as im %}
+                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+            {% endthumbnail %}
+           </div>
+        {% endif %}
+
+        {% if organization.get_relations %}
+            <h4>Relations</h4>
+            {% if 'IN_MEMBER' in organization.get_relations %}<div class="rel_type">Membre(s) de {{organization.title}}</div>
+                <ul class="relations">{% for org in organization.get_relations.IN_MEMBER %}
+                    <li title="{{org}}">
+                        <div class="org_icon">
+                            <a href="{{org.get_absolute_url}}">
+
+                            {% thumbnail org.logo "50x50" colorspace="GRAY" crop="left" as im_nb %}
+                                <img src="{{ im_nb.url }}" width="{{ im_nb.width }}" height="{{ im_nb.height }}"></a>
+                            {% empty %}
+                                <img src="{{STATIC_URL}}img/groupe_light.jpg" height="50" widh="50"/>
+                            {% endthumbnail %}
+                            <div class="fade">
+                                <a href="{{org.get_absolute_url}}">
+                                {% thumbnail org.logo "50x50" crop="left" as im_color %}
+                                    <img src="{{ im_color.url }}" width="{{ im_color.width }}" height="{{ im_color.height }}">
+                                {% empty %}
+                                    <img src="{{STATIC_URL}}img/groupe.jpg" height="50" widh="50"/>
+                                {% endthumbnail %}
+                                </a>
+                            </div>
+                        </div>
+                        </a>
+                    </li>
+                {% endfor %}</ul>
+            {% endif %}
+            {% if 'OUT_MEMBER' in organization.get_relations %}<div class="rel_type">Affiliations</div>
+                <ul class="relations">{% for org in organization.get_relations.OUT_MEMBER %}
+                    <li title="{{org}}">
+
+                        <div class="org_icon">
+                            <a href="{{org.get_absolute_url}}">
+
+                            {% thumbnail org.logo "50x50" colorspace="GRAY" crop="left" as im_nb %}
+                                <img src="{{ im_nb.url }}" width="{{ im_nb.width }}" height="{{ im_nb.height }}"></a>
+                            {% empty %}
+                                <img src="{{STATIC_URL}}img/groupe_light.jpg" height="50" widh="50"/>
+                            {% endthumbnail %}
+                            <div class="fade">
+                                <a href="{{org.get_absolute_url}}">
+                                {% thumbnail org.logo "50x50" crop="left" as im_color %}
+                                    <img src="{{ im_color.url }}" width="{{ im_color.width }}" height="{{ im_color.height }}">
+                                {% empty %}
+                                    <img src="{{STATIC_URL}}img/groupe.jpg" height="50" widh="50"/>
+                                {% endthumbnail %}
+                                </a>
+                            </div>
+                        </div>
+                        </a>
+                    </li>
+                {% endfor %}</ul>
+            {% endif %}
+
+        {% endif %}
+
+
+
+
+            {% if organization.get_tags %}
+            <h4>Mots-clés</h4>
+            <div id="tags">
+            {% for tag in organization.get_tags %}
+
+                <a href="{{tag.get_absolute_url}}">{{tag}}</a>
+
+            {% endfor %}
+            </div><br/>
+            {% endif %}
+
+           <h4>Coordonnées</h4>
+           <p class="coordonnees">
+               {% for contact in organization.contact.all %}
+
+                {% if contact.category == 1 %}<div class="tel">Tel. : {{contact.content}}</div>{%endif%}
+                {% if contact.category == 2 %}<div class="tel">Mobile : {{contact.content}}</div>{%endif%}
+                {% if contact.category == 3 %}<div class="tel">Fax : {{contact.content}}</div>{%endif%}
+
+               {% endfor %}
+           {% if organization.web %}
+           <div class="url"><a target="_blank" href="{{organization.web}}">{{organization.web}}</a></div>
+            {% endif %}
+            </p>
+
+            <img src="http://maps.googleapis.com/maps/api/staticmap?markers=size:small%7Ccolor:0xd1453e|{% for a in adresses %}{{a.location.point.get_coords.1|stringformat:"f"}},{{a.location.point.get_coords.0|stringformat:"f"}}|{% endfor %}&maptype=hybrid&size=280x200&sensor=false&zoom=7">
+
+            <br/><br/>
+            {% for a in adresses %}
+                <div class="adresse{% if a.main_location %} main_location{% endif %}">
+                {% if a.location_type %}<strong>{{a.location_type}}</strong>{% endif %}
+                <div class="postal">
+                {{a.location.adr1}}<br/>
+                {% if adresse.adr2 %}{{a.location.adr2}}<br/>{% endif %}
+                {{a.location.zipcode}} {{a.location.city}}</div>
+                </div>
+            {% endfor %}
+
+
+        </div>
+
+    </div>
+    {% endblock %}
+{% endblock %}
+
+{% block footer%}
+<a href="{{D2RQ_ROOT}}page/org/{{organization.slug}}/">
+    <img border="0" align="left" src="{{STATIC_URL}}img/semweb.png"></a>
+    <br/>
+{% endblock %}
+
+
+{% block jquery %}
+
+  $("ul.relations li").tipsy({gravity:"sw"});
+
+  $('div.org_icon').hover(function() {
+    var fade = $('> div', this);
+    if (fade.is(':hidden')) {
+      fade.show();
+    }
+  }, function () {
+    var fade = $('> div', this);
+    if (fade.is(':visible')) {
+      fade.hide();
+    }
+  });
+
+
+{% endblock %}
+

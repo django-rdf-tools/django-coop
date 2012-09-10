@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Cartographie des Initiatives{% endblock %}
+{% block extra_head %}
+<script src="/static/js/OpenLayers.js"></script>
+<script src="/static/js/gis/OpenStreetMap.js"></script>
+<script src="/static/js/gis/map.js"></script>
+<style type='text/css'>
+#map{
+    width:100%;
+    height:100%;
+    border:1px solid #888;
+    background-color:white;
+}
+.cloud-title{
+    padding:0.2em;
+    font-weight:bold;
+    width:300px;
+}
+.cloud-desc{
+    padding:0.2em;
+    width:300px;
+}
+</style>
+<script type='text/javascript'><!--
+var hill = new OpenLayers.Layer.TMS(
+    "Hillshading (NASA SRTM3 v2)",
+    "http://toolserver.org/~cmarqu/hill/",
+    {
+        type: 'png', getURL:osm_getTileURL,
+        displayOutsideMaxExtent: true, isBaseLayer: false,
+        transparent: true, "visibility": true
+    }
+);
+var mapnik = new OpenLayers.Layer.OSM.Mapnik("Mapnik");
+var map_layers = [mapnik];
+var map_extra_layers = [hill];
+jQuery(function(){
+    init()
+});
+// --> </script>
+{% endblock %}
+
+{% block document %}
+<div id="title" class="grid_12 grid">
+{% block title %}<h3>Cartographie des Initiatives</h3>{% endblock %}
+</div>
+
+{% block content %}
+
+<div id="content">
+    <div class="grid_12 grid">
+    <div id='map'></div>
+<script type='text/javascript'><!--
+jQuery(function(){
+{% for initiative in initiatives %}{% for site in initiative.located.all %}msg = "<div class='cloud-title'>{{initiative.title}}</div><div class='cloud-desc'>"
+msg += "{{initiative.description|escapejs}}".replace('\n', '<br/>');
+msg += "<br/><a href='{{initiative.get_absolute_url}}'>Voir la fiche de cette initiative.</a>"
+msg += "</div>";
+putMarker('{{site.location.point.y}}'.replace(',', '.'), '{{site.location.point.x}}'.replace(',', '.'), msg);
+{% endfor %}{% endfor %}
+var bounds = markers.getDataExtent();
+bounds.extend(markers.getDataExtent());
+if(bounds){
+    map.zoomToExtent(bounds);
+}
+});
+// --> </script>
+    </div>
+</div>
+{% endblock %}
+{% endblock %}
+
+
+{% block footer%}        
+<a href="http://demo.django.coop:2020/directory/organization">
+    <img border="0" align="left" src="{{STATIC_URL}}img/semweb.png"></a>
+    <br/>
+{% endblock %}

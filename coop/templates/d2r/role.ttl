@@ -1,0 +1,38 @@
+# Table coop_local_rolecategory
+map:rolecategory a d2rq:ClassMap;
+    d2rq:dataStorage map:database;
+    d2rq:uriColumn "coop_local_rolecategory.uri";
+    d2rq:class org:Role;
+    d2rq:class skos:Concept;
+    .
+map:rolecategory_label a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:rolecategory;
+    d2rq:property skos:prefLabel;
+    d2rq:column "coop_local_rolecategory.label";
+    .
+
+# Table coop_local_role
+map:role a d2rq:ClassMap;
+    d2rq:dataStorage map:database;
+{% if mode == 'view' %}
+    d2rq:uriPattern "role/@@coop_local_role.slug@@";
+{% else %}
+    d2rq:uriColumn "coop_local_role.uri";
+{% endif %}
+    d2rq:class org:Role;
+    d2rq:class skos:Concept;
+    d2rq:classDefinitionLabel "coop_local_role";
+    .
+
+map:role_label a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:role;
+    d2rq:property skos:prefLabel;
+    d2rq:column "coop_local_role.label";
+    .
+
+map:role_broader a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:role;
+    d2rq:property skos:broader;
+    d2rq:refersToClassMap map:rolecategory;
+    d2rq:join "coop_local_role.category_id = coop_local_rolecategory.id ";
+    .

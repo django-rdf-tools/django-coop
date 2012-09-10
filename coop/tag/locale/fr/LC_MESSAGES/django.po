@@ -1,0 +1,82 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: coop.tag\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-05-09 15:56+0000\n"
+"PO-Revision-Date: 2012-05-09 18:15+0100\n"
+"Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
+"Language-Team: Quinode <contact@quinode.fr>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+
+#: models.py:12
+msgid "label"
+msgstr "libellé"
+
+#: models.py:13
+#: models.py:33
+msgid "tag URI"
+msgstr "URI du tag"
+
+#: models.py:21
+msgid "tag category"
+msgstr "catégorie de tag"
+
+#: models.py:22
+msgid "tag categories"
+msgstr "catégories de tags"
+
+#: models.py:31
+msgid "language"
+msgstr "langue"
+
+#: models.py:32
+msgid "django user"
+msgstr "utilisateur"
+
+#: models.py:34
+msgid "author URI"
+msgstr "URI auteur"
+
+#: models.py:35
+msgid "created"
+msgstr "création "
+
+#: models.py:36
+msgid "modified"
+msgstr "modification"
+
+#: models.py:37
+msgid "category"
+msgstr "catégorie"
+
+#: models.py:39
+msgid "Concept URI"
+msgstr "URI du concept lié"
+
+#: models.py:45
+msgid "tag"
+msgstr "tag"
+
+#: models.py:46
+msgid "tags"
+msgstr "tags"
+
+#: models.py:53
+msgid "tagged item"
+msgstr "élément taggué"
+
+#: models.py:54
+msgid "tagged items"
+msgstr "éléments taggués"
+

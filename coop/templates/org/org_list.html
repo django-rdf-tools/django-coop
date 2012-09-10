@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Liste des Initiatives{% endblock %}
+
+
+{% block document %}
+    <div id="title" class="grid_12 grid">
+    {% block title %}<h3>Liste des Initiatives</h3>{% endblock %}
+    </div>
+
+    {% block content %}
+
+
+        <div id="content">
+            <div class="grid_12 grid">
+                <ul class="org_list">
+                    {% for item in org_list %}
+                    <li><a href="{{item.get_absolute_url}}">{{ item.title }}</a>
+                        {% if item.get_tags %}
+                         <img src="/static/img/tags-label.png" style="position:relative;top:4px;"/>
+                        {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+
+
+        </div>
+    {% endblock %}
+
+{% endblock %}
+
+{% block footer%}
+<a href="{{D2RQ_ROOT}}directory/organization">
+    <img border="0" align="left" src="{{STATIC_URL}}img/semweb.png"></a>
+    <br/>
+{% endblock %}

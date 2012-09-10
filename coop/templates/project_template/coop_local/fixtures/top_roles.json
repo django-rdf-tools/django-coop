@@ -1,0 +1,42 @@
+[
+    {
+        "pk": 3,
+        "model": "coop_local.role",
+        "fields": {
+            "slug": "associe",
+            "label": "Associ\u00e9(e)"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "coop_local.role",
+        "fields": {
+            "slug": "benevole",
+            "label": "B\u00e9n\u00e9vole"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "coop_local.role",
+        "fields": {
+            "slug": "responsable",
+            "label": "Responsable"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "coop_local.role",
+        "fields": {
+            "slug": "salarie",
+            "label": "Salari\u00e9(e)"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "coop_local.role",
+        "fields": {
+            "slug": "usager",
+            "label": "Usager"
+        }
+    }
+]

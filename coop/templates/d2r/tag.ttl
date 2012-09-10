@@ -1,0 +1,66 @@
+
+# Table coop_local_tag
+map:xlabel a d2rq:ClassMap;
+    d2rq:dataStorage map:database;
+    {% if mode == 'view' %}
+    d2rq:uriPattern "tag/@@coop_local_tag.slug@@/";
+    {% else %}
+    d2rq:uriColumn "coop_local_tag.uri";
+    {% endif %}
+    d2rq:class skosxl:Label;
+    .
+map:xlabel_name a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:xlabel;
+    d2rq:property skosxl:literalForm;
+    d2rq:property rdfs:label;
+    d2rq:column "coop_local_tag.name";
+    d2rq:lang "fr"
+    .
+map:xlabel_author_uri a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:xlabel;
+    d2rq:property foaf:made;
+    d2rq:column "coop_local_tag.person_uri";
+    .
+map:xlabel_created a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:xlabel;
+    d2rq:property dct:created;
+    d2rq:column "coop_local_tag.created";
+    d2rq:datatype xsd:dateTime;
+    .
+map:xlabel_concept a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:xlabel;
+    d2rq:property ess:labelFor;
+    d2rq:column "coop_local_tag.concept_uri";
+    .
+map:xlabel_modified a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:xlabel;
+    d2rq:property dct:modified;
+    d2rq:column "coop_local_tag.modified";
+    d2rq:datatype xsd:dateTime;
+    .
+map:xlabel_inscheme a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:xlabel;
+    d2rq:refersToClassMap map:scheme;
+    d2rq:property skos:inScheme;
+    d2rq:join "coop_local_tag.id <= coop_cms_navnode.object_id";
+    d2rq:join "django_content_type.id <= coop_cms_navnode.content_type_id";
+    d2rq:condition "django_content_type.model = 'tag'";
+    d2rq:join "coop_local_navtree.id <= coop_cms_navnode.tree_id";
+    .
+map:xlabel_broader a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:xlabel;
+    d2rq:refersToClassMap map:xlabel;
+    d2rq:property ess:broaderLabel;
+    d2rq:alias "coop_local_tag AS subject_tag";
+    d2rq:alias "coop_cms_navnode AS subject_node";
+    d2rq:join "coop_local_tag.id <= coop_cms_navnode.object_id";
+    d2rq:join "django_content_type.id <= coop_cms_navnode.content_type_id";
+    d2rq:condition "django_content_type.model = 'tag'";
+    d2rq:join "subject_node.id <= coop_cms_navnode.parent_id";
+    d2rq:join "subject_node.object_id => subject_tag.id"; 
+    # they are on the same scheme
+    d2rq:join "subject_node.tree_id = coop_cms_navnode.tree_id"; 
+    .
+
+# TODO : narrower ?
+

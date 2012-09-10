@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block meta_title %}Cartographie{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="http://leaflet.cloudmade.com/dist/leaflet.css" />
+{% endblock %}
+
+
+{% block document %}
+<div id="title" class="grid_12 grid">
+{% block title %}<h3>Cartographie</h3>{% endblock %}
+
+
+</div>
+{% block content %}
+<div id="content">
+    <div class="grid_12 grid">    
+    
+    <div id="leaflet_map" style="width: 920px; height: 500px"></div>
+    <script src="http://leaflet.cloudmade.com/dist/leaflet.js"></script>
+    <script src="https://raw.github.com/ideak/leafclusterer/master/leafclusterer.js"></script>
+    <script>
+        function addmarker(y,x,label,subtitle){
+            var markerLocation = new L.LatLng(y,x),
+                marker = new L.Marker(markerLocation);
+            //map.addLayer(marker);
+            clusterer.addMarker(marker);
+            marker.bindPopup("<b>"+label+"</b><br />"+subtitle).openPopup();
+        }
+
+
+        var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
+            cloudmadeAttribution = 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
+            cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18, attribution: cloudmadeAttribution});
+
+        var appleUrl = 'http://gsp2.apple.com/tile?api=1&style=slideshow&layers=default&lang=en_EN&z={z}&x={x}&y={y}&v=9';
+            appleAttribution = 'Map data by apple'
+            apple = new L.TileLayer(appleUrl, {maxZoom: 18, attribution: appleAttribution});
+        
+        var marseille = new L.LatLng(43.296482, 5.36978);
+        // =(45.721997, 3.469887); // geographical point (longitude and latitude)
+
+        var map = new L.Map('leaflet_map');
+        map.setView(marseille, 10).addLayer(cloudmade);
+        var clusterer = new LeafClusterer(map);
+
+
+        {% for amap in org_list %}
+
+        addmarker(  ("{{amap.main_location.point.y}}").replace(',','.'),
+                    ("{{amap.main_location.point.x}}").replace(',','.'),
+                    "{{amap.label}}",
+                    "{{amap.subtitle}}"
+                    );
+      {% endfor %}
+    </script>
+
+    </div>
+</div>    
+{% endblock %}
+{% endblock %}
+
+{% block footer%}        
+<a href="{{D2RQ_ROOT}}directory/initiative">
+    <img border="0" align="left" src="{{STATIC_URL}}img/semweb.png"></a>
+    <br/>
+{% endblock %}
+
+

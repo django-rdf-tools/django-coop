@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% trans "All Events" %}{% endblock %}
+{% block document %}
+    <h3>{% trans "All Events" %}</h3>
+    <ul>
+        {% for e in events %}
+            <li><a href="{{ e.get_absolute_url }}">{{ e }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

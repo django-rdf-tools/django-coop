@@ -1,0 +1,343 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: coop.organization\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-07-03 10:09+0200\n"
+"PO-Revision-Date: 2012-06-28 09:27+0100\n"
+"Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
+"Language-Team: Quinode <contact@quinode.fr>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+
+#: admin.py:48
+msgid "Contact information"
+msgstr "Coordonnée"
+
+#: admin.py:49
+msgid "Contact informations"
+msgstr "Coordonnées"
+
+#: admin.py:55
+msgid "Member"
+msgstr "Membre"
+
+#: admin.py:56
+msgid "Members"
+msgstr "Membres"
+
+#: admin.py:73 models.py:150
+msgid "Engagement"
+msgstr "Engagement"
+
+#: admin.py:74 models.py:151
+msgid "Engagements"
+msgstr "Engagements"
+
+#: admin.py:112
+#, python-format
+msgid "Add to the \"%s\" category"
+msgstr "Classer dans \"%s\""
+
+#: models.py:20
+msgid "public information"
+msgstr "information publique"
+
+#: models.py:21
+msgid "registered users"
+msgstr "utilisateurs enregistrés"
+
+#: models.py:22
+msgid "members of an organization"
+msgstr "membres d'une initiative"
+
+#: models.py:23
+msgid "related organizations members"
+msgstr "membres d'initiatives liées"
+
+#: models.py:24
+msgid "members of this organization"
+msgstr "membre de mon organisation"
+
+#: models.py:25
+msgid "administrators of this site"
+msgstr "administrateurs du site"
+
+#: models.py:32
+msgid "E-mail"
+msgstr "Courriel"
+
+#: models.py:33
+msgid "Landline phone"
+msgstr "Ligne fixe"
+
+#: models.py:34
+msgid "Mobile phone"
+msgstr "Mobile"
+
+#: models.py:35
+msgid "Fax"
+msgstr "Fax"
+
+#: models.py:36
+msgid "Secondary web site"
+msgstr "Site web secondaire"
+
+#: models.py:37
+msgid "Skype"
+msgstr "Skype"
+
+#: models.py:38
+msgid "Twitter"
+msgstr "Twitter"
+
+#: models.py:39
+msgid "RSS Feed"
+msgstr "flux RSS"
+
+#: models.py:40
+msgid "vCalendar"
+msgstr "Agenda"
+
+#: models.py:47
+msgid "Category"
+msgstr "Catégorie"
+
+#: models.py:49
+msgid "content"
+msgstr "contenu"
+
+#: models.py:50
+msgid "details"
+msgstr "détails"
+
+#: models.py:51 models.py:146
+msgid "Display"
+msgstr "Affichage"
+
+#: models.py:60
+msgid "Contact"
+msgstr "Contact"
+
+#: models.py:61
+msgid "Contacts"
+msgstr "Contacts"
+
+#: models.py:81
+msgid "Phone numbers must have 10 digits"
+msgstr "Les numéros de téléphone doivent avoir 10 chiffres"
+
+#: models.py:90
+msgid "label"
+msgstr "libellé"
+
+#: models.py:111
+msgid " is member of "
+msgstr "est membre de "
+
+#: models.py:112
+msgid " has for regular supplier "
+msgstr "a pour fournisseur régulier "
+
+#: models.py:113
+msgid " has for casual supplier "
+msgstr "a pour fournisseur occasionnel "
+
+#: models.py:114
+msgid " received technical support from "
+msgstr "a reçu un soutien technique de "
+
+#: models.py:115
+msgid " received financial support from "
+msgstr "a reçu un soutien financier de "
+
+#: models.py:120
+msgid "source organization"
+msgstr "organisation source"
+
+#: models.py:121
+msgid "target organization"
+msgstr "organisation cible"
+
+#: models.py:122
+msgid "Relation type"
+msgstr "Type de relation"
+
+#: models.py:123
+msgid "created"
+msgstr "création"
+
+#: models.py:124
+msgid "modified"
+msgstr "modification"
+
+#: models.py:141
+msgid "person"
+msgstr "personne"
+
+#: models.py:142
+msgid "organization"
+msgstr "organisation"
+
+#: models.py:143
+msgid "role"
+msgstr "rôle"
+
+#: models.py:144
+msgid "detailed role"
+msgstr "rôle détaillé"
+
+#: models.py:145
+msgid "has editor rights"
+msgstr "éditeur"
+
+#: models.py:170
+msgid "organization category"
+msgstr "catégorie d'organisation"
+
+#: models.py:171
+msgid "organization categories"
+msgstr "catégories d'organisations"
+
+#: models.py:183 models.py:189
+msgid "title"
+msgstr "titre"
+
+#: models.py:184 models.py:191
+msgid "acronym"
+msgstr "sigle"
+
+#: models.py:192
+msgid "Preferred label"
+msgstr "nom préféré"
+
+#: models.py:195
+msgid "tagline"
+msgstr "slogan"
+
+#: models.py:197
+msgid "tell us what your organization do in one line."
+msgstr "indiquez en une ligne ce que fait votre organisation (ou un slogan)"
+
+#: models.py:199
+msgid "description"
+msgstr "description"
+
+#: models.py:205
+msgid "relations"
+msgstr "relations"
+
+#: models.py:208
+msgid "category"
+msgstr "catégorie"
+
+#: models.py:211
+msgid "members"
+msgstr "membres"
+
+#: models.py:221
+msgid "creation date"
+msgstr "date de création"
+
+#: models.py:222
+msgid "global email"
+msgstr "email général"
+
+#: models.py:223
+msgid "email checksum"
+msgstr "checksum e-mail"
+
+#: models.py:225
+msgid "web site"
+msgstr "site web"
+
+#: models.py:228
+msgid "preferred email"
+msgstr "courriel préféré"
+
+#: models.py:231
+msgid "preferred phone"
+msgstr "téléphone préféré"
+
+#: models.py:234
+msgid "preferred postal address"
+msgstr "adresse postale préférée"
+
+#: models.py:238
+msgid "show on public site"
+msgstr "afficher sur le site"
+
+#: models.py:239
+msgid "notes"
+msgstr "notes"
+
+#: models.py:244
+msgid "Organization"
+msgstr "Organisation"
+
+#: models.py:245
+msgid "Organizations"
+msgstr "Organisations"
+
+#: models.py:264
+msgid "geo"
+msgstr "geo"
+
+#: models.py:277
+msgid "desc."
+msgstr "desc."
+
+#: models.py:284
+msgid "No Image"
+msgstr "Pas d'image"
+
+#: models.py:285
+msgid "logo"
+msgstr "logo"
+
+#~ msgid "at"
+#~ msgstr "chez"
+
+#~ msgid "%(person), %(role) at %(org)"
+#~ msgstr "%(person), %(role) chez %(org)"
+
+#, fuzzy
+#~ msgid "Contact number %s"
+#~ msgstr "Contacts"
+
+#, fuzzy
+#~ msgid "Engagement number %s"
+#~ msgstr "Engagements"
+
+#~ msgid "main URI"
+#~ msgstr "URI"
+
+#~ msgid "confirmed by the target organization"
+#~ msgstr "confirmée par l'autre organisme"
+
+#~ msgid "Title"
+#~ msgstr "titre"
+
+#~ msgid "subtitle"
+#~ msgstr "sous-titre"
+
+#~ msgid "admin"
+#~ msgstr "admin"
+
+#~ msgid "active"
+#~ msgstr "actif"
+
+#~ msgid "land line"
+#~ msgstr "ligne fixe"
+
+#~ msgid "mobile phone"
+#~ msgstr "mobile"

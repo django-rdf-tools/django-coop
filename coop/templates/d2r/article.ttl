@@ -1,0 +1,11 @@
+#TODO !
+
+# map:person_tags a d2rq:PropertyBridge; # EXAMPLE M2M generic relation
+#     d2rq:belongsToClassMap map:person;
+#     d2rq:refersToClassMap map:xlabel;
+#     d2rq:property dct:subject;
+#     d2rq:join "coop_local_tag.id <= coop_local_taggeditem.tag_id";
+#     d2rq:join "coop_local_person.id <= coop_local_taggeditem.object_id";
+#     d2rq:join "django_content_type.id <= coop_local_taggeditem.content_type_id";
+#     d2rq:condition "django_content_type.model = 'person'";
+#     .

@@ -1,0 +1,19 @@
+{% extends "admin/coop_cms/navtree/change_form.html" %}{% load i18n %}
+
+{% block object-tools %}
+{% if change %}{% if not is_popup %}
+  <div class="pull-right">
+    {% block object-tools-items %}
+
+    <a class="btn btn-primary" href="/admin/coop_local/article/add/">
+        <i class="icon-plus icon-white"></i> Ajouter un article
+    </a>
+    <a class="btn btn-info" href="/admin/coop_local/article/">
+        <i class="icon-list-alt icon-white"></i> Liste des articles
+    </a>
+    <a href="history/" class="btn btn-info">{% trans "History" %}</a>
+    {% if has_absolute_url %}<a href="../../../r/{{ content_type_id }}/{{ object_id }}/" class="btn primary">{% trans "View on site" %}</a>{% endif%}
+    {% endblock %}
+  </div>
+{% endif %}{% endif %}
+{% endblock %}

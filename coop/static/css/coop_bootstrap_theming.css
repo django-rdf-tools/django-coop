@@ -1,0 +1,783 @@
+/* @override http://localhost:8000/static/css/coop_bootstrap_theming.css */
+
+.navbar{
+	font: 85% "Lucida Grande", Lucida, Verdana, sans-serif;
+}
+
+h1.dashboard-title, 
+h1,
+h3.well,
+.dashboard-module h2,
+div.inline-group h3,
+.well .btn,
+ul.breadcrumb,
+.nav-tabs, 
+th, .btn,
+.control-group > .control-label{
+	font-family: "PT Sans Narrow", "Trebuchet MS", Trebuchet, Tahoma, Arial;
+	font-weight: normal;
+	font-style: normal;
+}
+
+h1.dashboard-title, h1,
+h3.well{
+	font-size: 24px;
+	color: #424242;
+	font-weight: bold;
+}
+
+.well .btn,
+ul.breadcrumb,
+.nav-tabs, th, 
+.control-group > .control-label{
+	font-size: 16px;
+}
+
+/* @group navbar */
+
+.nav-tabs{
+	font-weight: bold;
+}
+
+.dropdown-menu a:hover{
+	 text-shadow: 0 1px 0 #333;
+}
+
+
+li.bsmenuitem > a{
+	position: relative;
+}
+li.bsmenuitem > i,
+li.bsmenuitem > a > i{
+	position: relative;
+	top: -1px;
+	opacity: 0.5;
+}
+
+li.bsmenuitem > a:hover > i,
+li.bsmenuitem.active > a > i{
+	opacity: 1;
+}
+
+
+li.bsmenuitem > a > i{
+	
+}
+
+/* @end */
+
+/* @group new BS icons */
+
+.icon-coop{
+	 background-image: url(../img/admintools_bootstrap/coop_icons.png);
+}
+
+.icon-rdf {
+  background-position: 0 0;
+}
+.icon-white.icon-rdf {
+  background-position: -24px 0;
+}
+.icon-rss {
+  background-position: 0 -24px;
+}
+.icon-white.icon-rss {
+  background-position: -24px -24px;
+}
+
+.icon-django {
+  background-position: 0 -48px;
+}
+.icon-white.icon-django {
+  background-position: -24 -48px;
+}
+
+.icon-group {
+  background-position: 0 -48px;
+}
+.icon-white.icon-group {
+  background-position: -24px -72px;
+}
+
+
+
+
+/* @end */
+
+
+
+
+
+
+.results th{
+	font-weight: normal;
+	font-style: normal;
+}
+
+.results thead th{
+	font-weight: bold;
+	background-color: silver;
+	color: white;
+}
+
+.results thead th a{
+	color: white;
+	text-decoration: underline;
+}
+
+fieldset.tab-pane th{
+	background-color: silver;
+	color: white;
+}
+
+.dashboard-module h2{
+	line-height: 20px;
+	color: #9c9c9c;
+	font-weight: bold;
+}
+
+h3.page-top{
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
+.stacked-inline{
+}
+
+div.inline-group{
+	position: relative;
+}
+
+div.control-group{
+	clear: both;
+}
+
+
+
+div.inline-group h3{
+	font-size: 23px;
+	color: #868787;
+	margin-left: 12px;
+	margin-bottom: 10px;
+}
+
+#result_list tbody th,
+#result_list tbody td{
+	vertical-align: middle;
+}
+
+#changelist-form{
+	width: 90%;
+}
+
+#changelist-filter{
+	font: 90% "Lucida Grande", Lucida, Verdana, sans-serif;
+}
+
+#changelist-filter .nav-header{
+	padding-left: 0;
+}
+
+.dashboard-module{
+	background-color: white;
+	border-radius: 6px;
+}
+
+.dashboard-module-content ul li{	
+	font-size: 15px;
+	font-family: "PT Sans Narrow", "Trebuchet MS", Trebuchet, Tahoma, Arial;
+}
+
+.dashboard-module-content ul li:hover{
+	cursor: pointer;
+	background-color: #fef9a0;
+}
+
+#dashboard-panel h3 a {
+	background-color: white;
+}
+
+div.add-row a{
+	margin-bottom: 15px;
+	font-size: 1.2em;
+	float: left;
+}
+
+div.inline-group h2{
+	display: none;
+}
+
+
+
+i[class^="icon-"]{
+	margin-top: 1px;
+	margin-right: 4px;
+	margin-left: -2px;
+}
+
+div.controls input:not([name=logo]){
+	float: left;
+}
+
+
+div.controls{
+	position: relative;
+}
+div.controls select {
+	float: left;
+}
+
+div.controls > input[type=checkbox]{
+	width: 12px;
+}
+
+div.controls > a.related-lookup,
+div.controls > a.add-another,
+div.controls > a.changelink{
+	display: inline-block;
+	position: absolute;
+	padding-left: 7px;
+	top: 6px;
+}
+
+
+div.controls > a.related-lookup,
+div.controls > a.add-another,
+div.controls > a.changelink{
+	float: left;
+}
+
+div.controls > a.related-lookup{	
+	margin-left: 12px;
+}
+
+div.controls > a.changelink{
+	margin-left: 24px;
+}
+
+
+
+
+
+a#add_id_category{
+	display: none;
+}
+
+
+/* WTF ??
+input{
+	height: 2em;
+}
+*/
+
+#content.flex{
+	position: relative;
+}
+
+#changelist-search{
+	right: 20px;
+	float: right;
+	padding-right: 10px;
+}
+
+span.small.quiet.search-results{
+	font: normal 0.5em sans-serif;
+}
+
+input#searchbar.search-query{
+	color: #000;
+	right: 20px;
+	line-height: 1.1px;
+}
+
+.control-group > .control-label.required{
+	font-weight: bold;
+	}
+
+label.control-label.inline{
+	padding-right: 5px;
+	float: left;
+}
+
+
+div.controls > input[type=checkbox]{
+	display: block;
+}
+
+
+/* admintools-bootstrap enhancements */
+
+.field-error{
+	padding-left: 20px;
+}
+
+.field-error ul {
+	padding-left: 20px;
+	list-style-position: outside;
+}
+
+/* Bootstrap */
+
+div.tab-content{
+	background-color: white;
+}
+
+.accordion{
+	background-color: transparent;
+}
+
+/* coop-cms */
+
+button#add-object{
+}
+
+
+/* special widgets */
+
+
+
+input#id_tags.ac_input{
+    width: 600px;
+    font-size: 12px;
+}
+
+ul.object-tools{
+	top: -8px;
+	position: relative;
+}
+
+
+td.original p{
+  display: none;
+}
+
+td.original {
+	border-style: none;
+	visibility: hidden;
+	padding: 0;
+}
+
+.inline-group .tabular tr.has_original td {
+    padding-top: 7px;
+}
+
+
+/* Geo widgets */
+
+span#id_point_span_control{
+	height: 150px;
+	x-overflow: scroll;
+}
+
+span#id_point_span_map{
+	padding-left: 107px;
+}
+
+/* category widget */
+
+div.form-row.category{
+	overflow: visible;
+	position: relative;
+}
+
+div.form-row.category > div{
+	position: relative;
+}
+
+form#organization_form a#add_id_category img,
+form#person_form a#add_id_category img
+{
+	width: 16px;
+	height: 16px;
+}
+
+.help-inline{
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-style: italic;
+	color: gray;
+	margin-top: 5px;
+	margin-left: 24px;
+}
+
+/* @group CharCount */
+
+textarea.counted{
+	width: 400px;
+}
+p.countmonitor{
+	width: 400px;
+	padding: 5px 10px 5px 0;
+	margin-top: 10px;
+	font-weight: bold;
+	color: #b2b2b3;
+	text-align: right;
+	border-radius: 4px
+}
+
+p.countmonitor.exceeded{
+	background-color: #f95356;
+	color: #fff;
+}
+
+p.countmonitor.warning{
+	background-color: #f6c983;
+	color: #686969;
+	
+}
+
+/* @end */
+
+
+
+/* @group Groupbox */
+
+.groupbox{
+	display: block;
+	position: relative;
+	border-style: solid;
+	border-width: 1px;
+	width: 616px;
+    height: 300px;
+    overflow: auto;
+    border: 1px solid #ccc;
+}
+
+.groupbox-header{
+    margin: 0;
+    padding: 2px 5px 3px 5px;
+    text-align: left;
+    font-weight: bold;
+    background: #7CA0C7 url(../admin/img/admin/default-bg.gif) top left repeat-x;
+    color: white;
+    cursor: pointer;
+}
+
+.groupbox-header span.group-count{
+	display: none;
+}
+
+.module .groupbox-list {
+	position: relative;
+	display: inline-block;
+	left: 0;
+	margin: 0;
+	padding: 5px;
+	width: 585px;
+}
+
+.groupbox-list li{
+	list-style-type: none;
+}
+
+.groupbox-list li input{
+	vertical-align: 1px;
+	position: relative;
+	top: 1px;
+}
+
+.groupbox-list li label{
+	font-size: 12px;
+	margin-top: 1px;
+}
+
+
+
+/* @end */
+
+/* @group TagTree */
+
+#result_list > thead > tr > th:nth-child(2){
+    width: 16px;
+}
+
+#result_list > thead > tr > th:nth-child(2) > .text > span{
+    display: none;
+}
+
+
+/* @end */
+
+/* @group Stacked Inlines */
+
+div.stacked-inline h3 {
+	font-size: 16px;
+	border-bottom: 1px solid #dbdbdb;
+}
+
+div.stacked-inline h3 span.delete{
+	position: absolute;
+	float: left;
+	width: 120px;
+	right: 0;
+}
+
+div.stacked-inline h3 span.delete input{
+	width: 20px;
+	top: 3px;
+	position: relative;
+}
+
+div.stacked-inline h3 span.delete label.vCheckboxLabel.inline{
+	font-weight: bold;
+	float: left;
+}
+
+.stacked_collapse.collapsed{
+	display: none;
+}
+
+/* @end */
+
+
+/* Fields width */
+
+
+select[id$=-publication]{
+	width: 100px;
+}
+
+.mceIframeContainer{
+	width: 600px;
+}
+
+td.person .ac_input{
+	width: 130px;
+}
+
+input[id^="id_exchanges-"].vTextField{
+	width: 607px;
+}
+
+select[id^="id_exchanges-"]{
+	float: left;
+}
+
+ul.methods{
+	list-style-type: none;
+	width: 700px;
+	margin-top: 7px;
+}
+
+ul.methods li label input {
+	margin-right: 5px;
+	position: relative;
+	bottom: 1px;
+}
+
+a[id$='-methods'].add-another{
+	display: none;
+}
+
+div.controls > ul.methods > li{
+	display: none;
+	float: left;
+	padding-right: 30px;
+}
+
+
+select#id_pref_address{
+	width: 600px;
+}
+
+select#id_statut{
+	width: 300px;
+}
+
+td.role select{
+	width: 200px;
+}
+
+td.engagement_display select{
+	width: 160px;
+}
+
+div.controls > input[type=checkbox]{
+	margin-top: 8px;
+}
+
+input.vDateField{
+	width: 70px;
+}
+
+td.role_detail .vTextField{
+	width: 140px;
+}
+
+input#id_title,
+input#id_web,
+input#id_subtitle{
+	width: 400px;
+}
+
+.origin .ac_input{
+	width: 500px;
+}
+.origin p.help{
+	display: none;
+}
+
+
+td.location .ac_input{
+	width: 350px;
+}
+
+td.target .ac_input{
+	width: 200px;
+}
+td.content .vTextField{
+	width: 150px;
+}
+
+td .vTimeField{
+	width: 60px;
+}
+
+span.datetimeshortcuts {
+	color: #f9f9f9;
+}
+
+span.datetimeshortcuts img{
+	display: none;
+}
+
+input.vForeignKeyRawIdAdminField{
+	display: none;
+}
+
+#logo-clear_id{
+	float: left;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+.controls > div > a.thumbnail > img{
+}
+
+
+
+a#add_id_category {
+	left: 400px;
+	position: relative;
+	top: -18px;
+}
+
+
+
+/* Chosen-Multi customization */
+
+div.chzn-container-multi ul.chzn-choices{
+	background-image: none;
+	background-color: white;
+	border-color: #ccc;
+}
+
+div.chzn-container-multi ul.chzn-choices li.search-field{
+	height: 38px;
+}
+
+.chzn-container-multi ul.chzn-choices li.search-field input.default{
+	display: inline-table;
+	position: relative;
+	color: white;
+}
+
+
+div.chzn-container ul.chzn-choices,
+div.chzn-container.chzn-container-multi ul.chzn-choices,
+div.chzn-container ul.chzn-choices div.chzn-drop,
+div.chzn-container ul.chzn-choices div.chzn-drop ul.chzn-results,
+div.chzn-container ul.chzn-choices div.chzn-drop ul.chzn-results li{
+	width: 616px;
+}
+
+
+
+/* Make chosen look like Autosuggest */
+
+div.chzn-container.chzn-container-multi .chzn-choices .search-choice{
+	color: #2b3840;
+	text-shadow: 0 1px 1px #fff;
+		padding: 4px 25px 4px 10px;
+	border-radius: 12px;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	
+	color: #666666;
+	background-color: #f4f4f4;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f4f4f4), to(#d5d5d5));
+	border-color: #bbb;
+	border-top-color: #ccc;
+	box-shadow: 0 1px 1px #e9e9e9;
+	-webkit-box-shadow: 0 1px 1px #e9e9e9;
+	-moz-box-shadow: 0 1px 1px #e9e9e9;
+	
+	
+	
+	margin-top: 6px;
+	font: bold 1.1em sans-serif;
+	margin-bottom: 6px;
+}
+
+div.chzn-container.chzn-container-multi .chzn-choices .search-choice:hover{
+	
+background-color: #ddeefe;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ddeefe), to(#bfe0f1));
+	border: 1px solid #acc3ec;
+	border-top-color: #c0d9e9;
+
+	box-shadow: 0 1px 1px #e4edf2;
+	-webkit-box-shadow: 0 1px 1px #e4edf2;
+	-moz-box-shadow: 0 1px 1px #e4edf2;
+}
+
+
+div.chzn-container.chzn-container-multi .chzn-choices .search-choice a.search-choice-close {
+	top: 6px;
+	right: 6px;
+}
+
+
+
+/* Autosuggest  */
+
+
+ul.as-selections{
+width: 608px;
+
+  background: #fff;
+  border: 1px solid #ccc;
+  font-family: sans-serif;
+	padding: 4px;
+}
+
+ul.as-selections li{
+	list-style-type: none;
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+input.as-input{
+	border-style: none;
+	float: left;
+	width: 150px;
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-moz-shadow:none;
+	margin-top: 4px;
+	font-size: 17px;
+}
+
+div.as-results{
+	padding-left: 0;
+}
+
+ul.as-list{
+	padding: 0;
+}
+
+ul.as-list li{
+	list-style-type: none;
+	font-size: 16px;
+	padding: 2px;
+	
+}

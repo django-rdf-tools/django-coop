@@ -1,0 +1,61 @@
+# our apps
+coop_cms
+coop-geo
+coop-tag
+
+git+git://github.com/Nimn/geo-django-fla.git
+django-autoslug
+unicode-slugify
+feincms
+django-mptt
+django-load
+
+
+# forks we depend on
+hg+https://bitbucket.org/psyton/django-admin-tools
+git+git://github.com/quinode/django-templatetag-sugar.git
+
+# our forks
+hg+https://bitbucket.org/quinode/django-admintools-bootstrap/@0.0.2-alpha
+git+git://github.com/quinode/uriredirect.git
+git+git://github.com/quinode/django-extensions.git@use_admin_jquery
+git+git://github.com/quinode/subhub.git
+
+# do we still need the fork ?
+# git+git://github.com/quinode/django-chosen.git
+django-chosen
+
+# setup.py was broken
+git+git://github.com/quinode/djangoembed.git
+
+# coop deps
+psycopg2
+Pillow
+django-forms-builder
+git+git://github.com/ui/django-rq.git
+shortuuid
+django-tinymce
+hg+https://bitbucket.org/ubernostrum/django-profiles
+django-push
+geohash
+rdflib
+git+git://github.com/RDFLib/rdfextras.git
+git+git://github.com/RDFLib/rdflib-jsonld.git
+git+git://github.com/RDFLib/rdflib-sparqlstore.git
+git+git://github.com/toastdriven/django-haystack.git
+
+# webid deps
+pyOpenSSL
+git+git://github.com/bennomadic/django-webid-auth.git
+# git+git://github.com/bennomadic/django-webid-provider.git
+git+git://github.com/bennomadic/django-conneg.git
+
+# coop_cms deps
+git+git://github.com/gabrielgrant/django-html-field.git
+
+
+
+# central logging
+raven
+sentry
+

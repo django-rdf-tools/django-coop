@@ -1,0 +1,179 @@
+
+# Table coop_local_exchange
+map:exchange a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+{% if mode == 'view' %}
+    d2rq:uriPattern "annonces/@@coop_local_exchange.slug@@/";
+{% else %}
+    d2rq:uriColumn "coop_local_exchange.uri";
+{% endif %}
+	d2rq:class ess:Exchange;
+	.
+map:exchange_label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:exchange;
+	d2rq:property rdfs:label;
+	d2rq:property dct:title;
+	d2rq:column "coop_local_exchange.title";
+	.
+map:exchange_description a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:exchange;
+	d2rq:property dct:description;
+	d2rq:column "coop_local_exchange.description";
+	.
+map:exchange_category a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:exchange;
+    d2rq:property ov:category;
+    d2rq:column "coop_local_exchange.etype"; # TODO maps number to skos concepts
+    .
+
+# fill to gr:availabilityEnd to an arbitrairy value ...
+map:exchange_permanent a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:exchange;
+	d2rq:property gr:availabilityEnd;
+    d2rq:constantValue "2050-05-20T12:56:07.402747"^^xsd:dateTime;
+	d2rq:condition  "coop_local_exchange.permanent = 't'";
+	.
+map:exchange_expiration a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:exchange;
+	d2rq:property gr:availabilityEnd;
+	d2rq:column "coop_local_exchange.expiration";
+	d2rq:datatype xsd:date;
+	.
+map:exchange_created a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:exchange;
+	d2rq:property dct:created;
+	d2rq:column "coop_local_exchange.created";
+	d2rq:datatype xsd:dateTime;
+	.
+map:exchange_modified a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:exchange;
+	d2rq:property dct:modified;
+    d2rq:column "coop_local_exchange.modified";
+    d2rq:datatype xsd:dateTime;
+	.
+map:exchange_area a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:exchange;
+	d2rq:property gr:eligibleRegions;
+	d2rq:refersToClassMap map:area;
+	d2rq:join "coop_local_exchange.area_id => coop_geo_area.id";
+	.
+map:exchange_location a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:exchange;
+	d2rq:property locn:location;
+	d2rq:refersToClassMap map:location;
+	d2rq:join "coop_local_exchange.location_id => coop_geo_location.id";
+	.
+map:exchange_organization a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:exchange;
+	d2rq:property dct:publisher;
+	d2rq:refersToClassMap map:organization;
+	d2rq:join "coop_local_exchange.organization_id => coop_local_organization.id";
+	.
+map:exchange_person a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:exchange;
+    d2rq:property dct:creator;
+    d2rq:refersToClassMap map:person;
+    d2rq:join "coop_local_exchange.person_id => coop_local_person.id";
+    .
+map:exchange_tags a d2rq:PropertyBridge; # EXAMPLE M2M generic relation
+    d2rq:belongsToClassMap map:exchange;
+    d2rq:refersToClassMap map:xlabel;
+    d2rq:property dct:subject;
+    d2rq:join "coop_local_tag.id <= coop_local_taggeditem.tag_id";
+    d2rq:join "coop_local_exchange.id <= coop_local_taggeditem.object_id";
+    d2rq:join "django_content_type.id <= coop_local_taggeditem.content_type_id";
+    d2rq:condition "django_content_type.model = 'exchange'";
+    .
+
+# According to the etype field the Exchange can link to several Exchange Methods
+# Only problem is that they have to be recorded as individual resources, not as Classes
+
+
+map:exchange_method_offCurrency a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:exchange;
+    d2rq:property ess:hasMethod;
+    d2rq:constantValue ess:OfficialCurrency;
+    d2rq:alias "coop_local_exchange_methods AS exchange_method_offCurrency";
+    d2rq:condition "exchange_method_offCurrency.exchangemethod_id = 1";
+    d2rq:join "coop_local_exchange.id = exchange_method_offCurrency.exchange_id";
+    .
+map:exchange_method_gift a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:exchange;
+    d2rq:property ess:hasMethod;
+    d2rq:constantValue ess:Gift;
+    d2rq:alias "coop_local_exchange_methods AS exchange_method_Gift";
+    d2rq:condition "exchange_method_Gift.exchangemethod_id = 2";
+    d2rq:join "coop_local_exchange.id = exchange_method_Gift.exchange_id";
+    .
+map:exchange_method_swap a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:exchange;
+    d2rq:property ess:hasMethod;
+    d2rq:constantValue ess:Swap;
+    d2rq:alias "coop_local_exchange_methods AS exchange_method_Swap";
+    d2rq:condition "exchange_method_Swap.exchangemethod_id = 3";
+    d2rq:join "coop_local_exchange.id = exchange_method_Swap.exchange_id";
+    .
+map:exchange_method_shareCost a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:exchange;
+    d2rq:property ess:hasMethod;
+    d2rq:constantValue ess:SharedCost;
+    d2rq:alias "coop_local_exchange_methods AS exchange_method_SharedCost";
+    d2rq:condition "exchange_method_SharedCost.exchangemethod_id = 4";
+    d2rq:join "coop_local_exchange.id = exchange_method_SharedCost.exchange_id";
+    .
+map:exchange_method_voluntaryWork a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:exchange;
+    d2rq:property ess:hasMethod;
+    d2rq:constantValue ess:VoluntaryWork;
+    d2rq:alias "coop_local_exchange_methods AS exchange_method_VoluntaryWork";
+    d2rq:condition "exchange_method_VoluntaryWork.exchangemethod_id = 5";
+    d2rq:join "coop_local_exchange.id = exchange_method_VoluntaryWork.exchange_id";
+    .
+map:exchange_method_alternativeCurrency a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:exchange;
+    d2rq:property ess:hasMethod;
+    d2rq:constantValue ess:AlternativeCurrency;
+    d2rq:alias "coop_local_exchange_methods AS exchange_method_AlternativeCurrency";
+    d2rq:condition "exchange_method_AlternativeCurrency.exchangemethod_id = 6";
+    d2rq:join "coop_local_exchange.id = exchange_method_AlternativeCurrency.exchange_id";
+    .
+map:exchange_method_employment a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:exchange;
+    d2rq:property ess:hasMethod;
+    d2rq:constantValue ess:Employment;
+    d2rq:alias "coop_local_exchange_methods AS exchange_method_Employment";
+    d2rq:condition "exchange_method_Employment.exchangemethod_id = 7";
+    d2rq:join "coop_local_exchange.id = exchange_method_Employment.exchange_id";
+    .
+map:exchange_method_civicEngagement a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:exchange;
+    d2rq:property ess:hasMethod;
+    d2rq:constantValue ess:CivicEngagement;
+    d2rq:alias "coop_local_exchange_methods AS exchange_method_CivicEngagement";
+    d2rq:condition "exchange_method_CivicEngagement.exchangemethod_id = 8";
+    d2rq:join "coop_local_exchange.id = exchange_method_CivicEngagement.exchange_id";
+    .
+map:exchange_method_practicalTraining a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:exchange;
+    d2rq:property ess:hasMethod;
+    d2rq:constantValue ess:PracticalTraining;
+    d2rq:alias "coop_local_exchange_methods AS exchange_method_PracticalTraining";
+    d2rq:condition "exchange_method_PracticalTraining.exchangemethod_id = 9";
+    d2rq:join "coop_local_exchange.id = exchange_method_PracticalTraining.exchange_id";
+    .
+map:exchange_method_lending a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:exchange;
+    d2rq:property ess:hasMethod;
+    d2rq:constantValue ess:Lending;
+    d2rq:alias "coop_local_exchange_methods AS exchange_method_Lending";
+    d2rq:condition "exchange_method_Lending.exchangemethod_id = 10";
+    d2rq:join "coop_local_exchange.id = exchange_method_Lending.exchange_id";
+    .
+map:exchange_method_renting a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:exchange;
+    d2rq:property ess:hasMethod;
+    d2rq:constantValue ess:Renting;
+    d2rq:alias "coop_local_exchange_methods AS exchange_method_Renting";
+    d2rq:condition "exchange_method_Renting.exchangemethod_id = 11";
+    d2rq:join "coop_local_exchange.id = exchange_method_Renting.exchange_id";
+    .

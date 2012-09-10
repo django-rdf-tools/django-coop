@@ -1,0 +1,42 @@
+{% extends "admin/base.html" %}
+{% load i18n admin_tools_menu_tags admintools_bootstrap %}
+{% load url from future %}
+
+{% block title %}{{ title }} | {% atb_site_name %} {% trans "admin" %}{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}admintools_bootstrap/bootstrap/less/style.css?{% now "c" %}" />
+{#<script type="text/javascript" src="{{ STATIC_URL }}admintools_bootstrap/js/less-1.2.1.min.js"></script>#}
+{#<script type="text/javascript" src="{{ STATIC_URL }}admintools_bootstrap/js/less.js"></script>#}
+{#<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}admintools_bootstrap/chosen/chosen.css" />#}
+{% endblock %}
+
+{% block extrahead %}
+<script type="text/javascript" src="{{ STATIC_URL }}admintools_bootstrap/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}admintools_bootstrap/js/jquery-ui-1.8.16.custom.min.js"></script>
+<!--[if IE]><link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}admintools_bootstrap/css/custom-theme/jquery.ui.1.8.16.ie.css" /><![endif]-->
+<script type="text/javascript" src="{{ STATIC_URL }}admintools_bootstrap/bootstrap/js/bootstrap-dropdown.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}admintools_bootstrap/bootstrap/js/bootstrap-alert.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}admintools_bootstrap/bootstrap/js/bootstrap-tooltip.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}admintools_bootstrap/js/jquery-ui-timepicker-addon.js"></script>
+
+{% endblock %}
+
+{% block branding %}
+<a class="brand" href="{% url 'admin:index' %}">{% atb_site_name %}</a>
+{% endblock %}
+
+{% block nav-global %}
+{% if user.is_active and user.is_staff %}
+{% if not is_popup %}
+{% admin_tools_render_menu %}
+{% endif %}
+{% endif %}
+{% endblock %}
+
+{% block footer_scripts %}
+{% include "admin/coop_admin_scripts.html" %}
+{% endblock %}
+

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load smart_if %}
+
+{% block meta_title %}{{object}}{% endblock %}
+
+{% block document %}
+
+<div id="title" class="grid_12 grid">
+{% block title %}<h3>{{object}}</h3>{% endblock %}
+</div>
+
+{% block content %}
+<div id="content">
+    <div class="grid_8 grid">
+    
+    {% if engagements %}
+        <h4>Membres avec le même type de fonction</h4>
+        <ul class="membres">
+            {% for engagement in engagements %}
+                <li><img src="{{STATIC_URL}}img/blank_avatar.png">
+                    <p>
+                    {% if engagement.person.user %}
+                        <a href="{{engagement.person.get_absolute_url}}">{{ engagement.person }}</a>
+                    {% else %}
+                        {{ engagement.person }}
+                    {% endif %}
+                    , 
+                    <a class="role" href="{{engagement.role.get_absolute_url}}">{{engagement.role}}</a> pour 
+                    <a href="{{engagement.organization.get_absolute_url}}">{{ engagement.organization }}</a>.
+                    </p>
+                </li>
+            {% endfor %}
+        </ul>    
+        <br/>
+    {% endif %}
+    
+
+    </div>
+ 
+    
+    
+    <div id="grid-right" class="grid_4 grid">       
+     
+     
+    </div>
+    
+    
+</div>
+{% endblock %}    
+{% endblock %}
+
+
+{% block footer%}        
+<a href="{{D2RQ_ROOT}}page/role/{{object.slug}}/">
+    <img border="0" align="left" src="{{STATIC_URL}}img/semweb.png"></a>
+    <br/>
+{% endblock %}
+
