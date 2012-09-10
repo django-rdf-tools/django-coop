@@ -68,33 +68,33 @@ class BaseRoleCategory(models.Model):
         return unicode(self.label)
 
 
-class BaseRole(BaseClassification):
-    #label = models.CharField(_(u'label'), max_length=60)
-    #slug = AutoSlugField(populate_from='label', always_update=True, unique=True)
+class BaseRole(URIModel):
+    label = models.CharField(_(u'label'), max_length=60)
+    slug = AutoSlugField(populate_from='label', always_update=True, unique=True)
     category = models.ForeignKey('coop_local.RoleCategory', null=True, blank=True, verbose_name=_(u'category'))
 
-    #domain_name = 'data.economie-solidaire.fr'
+    domain_name = 'data.economie-solidaire.fr'
 
     class Meta:
         abstract = True
         verbose_name = _('Role')
         verbose_name_plural = _('Roles')
-        ordering = ['tree_id', 'lft']  # for FeinCMS TreeEditor
+        #ordering = ['tree_id', 'lft']  # for FeinCMS TreeEditor
         #ordering = ['label']
         app_label = 'coop_local'
 
-    # @property
-    # def uri_id(self):
-    #     return self.slug
+    @property
+    def uri_id(self):
+        return self.slug
 
-    # def uri_registry(self):
-    #     return u'label'
+    def uri_registry(self):
+        return u'label'
 
-    # def __unicode__(self):
-    #     return unicode(self.label)
+    def __unicode__(self):
+        return unicode(self.label)
 
-    # def get_absolute_url(self):
-    #     return reverse('role_detail', args=[self.slug])
+    def get_absolute_url(self):
+        return reverse('role_detail', args=[self.slug])
 
 DISPLAY = Choices(
     ('PUBLIC',  1,  _(u'public information')),
