@@ -32,6 +32,7 @@ setup(
                 'coop.agenda',
                 'coop.agenda.conf',
                 'coop.person',
+                'coop.tag',
                 'coop.templatetags',
                 'coop.utils',
                 'coop.webid',
