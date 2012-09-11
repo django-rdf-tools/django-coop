@@ -6,7 +6,7 @@ from django.core.exceptions import ImproperlyConfigured
 try:
     from coop.base_admin import *
 except ImportError, exp:
-    raise ImproperlyConfigured("Unable to find coop_local/base/local_admin.py file")
+    raise ImproperlyConfigured("Unable to find coop/base_admin.py file")
 
 
 # subclass existing ModelAdmins and add your own model's ModelAdmins here

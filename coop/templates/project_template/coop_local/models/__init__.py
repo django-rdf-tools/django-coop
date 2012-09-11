@@ -23,8 +23,10 @@ if "coop_tag" in settings.INSTALLED_APPS:
     from coop_local.models import TaggedItem
     t = TaggableManager(through=TaggedItem, blank=True, verbose_name=_(u'Tags'))
     t.contribute_to_class(Organization, "tags")
-    t.contribute_to_class(Exchange, "tags")
     t.contribute_to_class(Person, "tags")
     t.contribute_to_class(Article, "tags")
+    if "coop.exchange" in settings.INSTALLED_APPS:
+        t.contribute_to_class(Exchange, "tags")
+
 
 
