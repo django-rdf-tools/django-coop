@@ -10,4 +10,6 @@ from extended_choices import Choices
 #         (3, 'En projet'),
 # )
 
-# Your own models here
+# Here you can either :
+# - Customize coop models by deriving from the abstract class (BaseOrganization, Baseperson...)
+# - Or add your own models, providing you add in their Meta class app_label="coop_local"

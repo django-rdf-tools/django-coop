@@ -18,11 +18,11 @@ class CustomMenu(Menu):
     """
     def __init__(self, **kwargs):
         Menu.__init__(self, **kwargs)
-        self.children += [
+        self.children = [
             #items.MenuItem(_('Dashboard'), reverse('admin:index')),
             #items.Bookmarks('Favoris'),
 
-            items.MenuItem(_('Navigation tree'), '/admin/coop_cms/navtree/1/', icon='icon-list-alt icon-white'),
+            items.MenuItem(_('Navigation tree'), '/admin/coop_local/navtree/1/', icon='icon-list-alt icon-white'),
 
             items.MenuItem(_('Articles'), '/admin/coop_local/article/', icon='icon-pencil icon-white'),
 
