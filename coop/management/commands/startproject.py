@@ -55,7 +55,7 @@ class Command(TemplateCommand):
         options['template'] = os.path.join(coop_dir, 'templates', 'project_template')
         options['project_alldirs'] = os.path.split(coop_dir)[0]
         # For supervisor.conf file
-        options['extensions'].extend(['conf', 'json'])
+        options['extensions'].extend(['conf', 'json', 'txt'])
         options['virtualenv'] = os.getenv('VIRTUAL_ENV')
         p = os.popen('which runinenv.sh', "r")
         options['runinenv'] = p.readline().replace('\n', '')
