@@ -167,7 +167,7 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
     #         inline_instances.append(inline)
     #     return inline_instances
 
-    fieldsets = [
+    fieldsets = (
         ('Identité', {
             'fields': ['logo', 'title', ('acronym', 'pref_label'), 'subtitle', ('birth', 'active',),
                         'web']
