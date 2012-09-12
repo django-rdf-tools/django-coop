@@ -167,18 +167,18 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
     #         inline_instances.append(inline)
     #     return inline_instances
 
-    fieldsets = (
+    fieldsets = [
         ('Identité', {
-            'fields': ('logo', 'title', ('acronym', 'pref_label'), 'subtitle', ('birth', 'active',),
-                        'web')
+            'fields': ['logo', 'title', ('acronym', 'pref_label'), 'subtitle', ('birth', 'active',),
+                        'web']
             }),
         ('Description', {
-            'fields': ('description', 'category',)# 'tags', )
+            'fields': ['description', 'category',]  # 'tags', )
             }),
 
         ('Préférences', {
             #'classes': ('collapse',),
-            'fields': ('pref_email', 'pref_phone', 'pref_address', 'notes',)
+            'fields': ['pref_email', 'pref_phone', 'pref_address', 'notes',]
         })
     )
 
