@@ -20,6 +20,9 @@ import tempfile
 import coop
 import time
 from subhub.models import DistributionTask
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
+
 
 
 URI_MODE = Choices(
@@ -389,12 +392,24 @@ class StaticURIModel(models.Model):
     # This a very simple case, where feed and ub share the same host
     def subscribeToUpdades(self, host=settings.PES_HOST):
         feed_url = "http://%s/feed/%s/%s/" % (host, self.__class__.__name__.lower(), self.uri_id)
-        print u"Try to subscribe to feed %s" % feed_url
-        Subscription.objects.subscribe(feed_url, hub="http://%s/hub/" % host)
+        validate = URLValidator(verify_exists=True)
+        try:
+            validate(feed_url)
+            print u"Try to subscribe to feed %s" % feed_url
+            Subscription.objects.subscribe(feed_url, hub="http://%s/hub/" % host)
+        except ValidationError, e:
+            print u" Imposible to subscribe to %s : %s" % (feed_url, e)
+
 
     def unsubscribeToUpdades(self, host=settings.PES_HOST):
         feed_url = "http://%s/feed/%s/%s/" % (host, self.__class__.__name__.lower(), self.uri_id)
-        Subscription.objects.unsubscribe(feed_url, hub="http://%s/hub/" % host)
+        validate = URLValidator(verify_exists=True)
+        try:
+            validate(feed_url)
+            print u"Try to subscribe to feed %s" % feed_url
+            Subscription.objects.unsubscribe(feed_url, hub="http://%s/hub/" % host)
+        except ValidationError, e:
+            print u" Imposible to unsubscribe to %s : %s" % (feed_url, e)
 
 
 class URIModel(StaticURIModel, TimestampedModel):
