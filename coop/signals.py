@@ -38,7 +38,7 @@ class LastDTProcess(object):
     def update(cls):
         now = datetime.datetime.now()
         if not cls._update or now >= cls._update + datetime.timedelta(seconds=10):
-            cls._update = now 
+            cls._update = now
 
 
 
@@ -79,7 +79,10 @@ def post_save_callback(sender, instance, **kwargs):
             # TODO check if a subscription is done, either lets do it
         elif isinstance(instance, coop_tag.models.TagBase):
             # Subscription done if it does not exists, in other it is simply renew
-            instance.subscribeToUpdades(host=settings.THESS_HOST)
+            try:
+                instance.subscribeToUpdades(host=settings.THESS_HOST)
+            except:
+                pass
         else:
             feed_url = 'http://%s/feed/%s/' % (Site.objects.get_current().domain, sender.__name__.lower())
             try:
