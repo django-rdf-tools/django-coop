@@ -149,7 +149,10 @@ INSTALLED_APPS = [
     'django_webid.provider',
     'django_webid.auth',
 
+    # coop apps
     'coop_tag',
+    'coop_geo',
+
     # 'feincms',  # for their MPTT tree editor, not synced
     'coop',  # override feincms tree editor template
     'coop.link',
