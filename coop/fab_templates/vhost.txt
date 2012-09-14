@@ -1,0 +1,37 @@
+<VirtualHost *:80>
+
+    ServerName %(domain)s
+    DocumentRoot /home/%(user)s/projects/%(projet)s
+
+    <Directory /home/%(user)s/projects/%(projet)s>
+        Order allow,deny
+        Allow from all
+        <IfModule mod_headers.c>
+            # http://www.w3.org/wiki/CORS_Enabled#For_Apache
+            Header set Access-Control-Allow-Origin "*"
+        </IfModule>
+    </Directory>
+
+    Alias /media/ /home/%(user)s/projects/%(projet)s/media/
+    Alias /static/ /home/%(user)s/projects/%(projet)s/static_collected/
+
+    <Directory /home/%(user)s/projects/%(projet)s/static_collected>
+        Order deny,allow
+        Allow from all
+    </Directory>
+
+    <Directory /home/%(user)s/projects/%(projet)s/media>
+        Order deny,allow
+        Allow from all
+    </Directory>
+
+    LogLevel warn
+    ErrorLog  /home/%(user)s/projects/%(projet)s/logs/error.log
+    CustomLog /home/%(user)s/projects/%(projet)s/logs/access.log combined
+
+    WSGIDaemonProcess %(domain)s user=www-data group=www-data threads=25
+    WSGIProcessGroup %(domain)s
+
+    WSGIScriptAlias / /home/%(user)s/%(projet)s/coop_local/wsgi.py
+
+</VirtualHost>

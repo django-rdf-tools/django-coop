@@ -43,7 +43,7 @@ setup(
     author_email = 'contact@quinode.fr',
     license = 'BSD',
     zip_safe = False,
-    install_requires = [#'south==0.7.3',
+    install_requires = ['south', 'django==1.4.1',
                         #'sorl-thumbnail==11.09',
                         #'django-extensions==0.8',  # waiting for pull request, git://github.com/quinode/django-extensions.git@use_admin.jquery
                         #'django-admin-tools==0.4.1', # for 1.4 : https://bitbucket.org/psyton/django-admin-tools
