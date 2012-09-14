@@ -151,7 +151,6 @@ INSTALLED_APPS = [
 
     # coop apps
     'coop_tag',
-    'coop_geo',
 
     # 'feincms',  # for their MPTT tree editor, not synced
     'coop',  # override feincms tree editor template
@@ -160,6 +159,8 @@ INSTALLED_APPS = [
     'coop.person',
     'coop.ui',
     'coop.webid',
+
+    'coop_geo',
 
 
     # PuSH
