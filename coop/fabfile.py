@@ -206,7 +206,6 @@ def coop_setup():
     coop_project()
     dependencies()
     apache_vhost()
-    django_wsgi()
     create_pg_db()
     sudo('apachectl restart')
 
@@ -231,6 +230,7 @@ def coop_project():
                     with prefix('workon %(projet)s' % env):
                         run('coop-admin.py startproject %(projet)s --domain %(domaine)s' % env)
                         print(green('Projet Django-coop "%(projet)s" : Installé.' % env))
+                        # coop-admin scripts creates the WSGI script so we won't call django_wsgi()
         else:
             print(yellow('Projet Django-coop nommé "%(projet)s" : déjà installé.' % env))
 

@@ -1,8 +1,7 @@
+# do not remove : !-- creator:coop-admin --!
 # WSGI config for {{ project_name }} project.
 
 ALLDIRS = ['{{ project_alldirs }}']
-# passing this variable to template context = ticket 18277
-# TODO subclass the startproject command so we get this automatically
 
 # the above directory depends on the location of your python installation.
 # if using virtualenv, it will need to match your projects locale.
@@ -22,7 +21,6 @@ for directory in ALLDIRS:
             sys.path[:0] = new_sys_path
 
 sys.path.append('{{ project_directory }}')
-
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "coop_local.settings")
 
 # This application object is used by any WSGI server configured to use this

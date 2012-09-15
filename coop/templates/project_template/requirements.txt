@@ -35,7 +35,7 @@ git+git://github.com/quinode/uriredirect.git
 
 git+git://github.com/quinode/django-extensions.git@use_admin_jquery
 
-# do we still need the fork ?
+# do we still need the fork
 git+git://github.com/quinode/django-chosen.git
 
 # setup.py was broken
@@ -77,8 +77,6 @@ django-floppyforms==0.4.7
 django-pagination
 feedparser
 git+git://github.com/gabrielgrant/django-html-field.git
-
-
 
 # central logging
 raven
