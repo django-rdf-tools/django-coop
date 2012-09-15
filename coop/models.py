@@ -97,7 +97,7 @@ class StaticURIModel(models.Model):
     def label(self):
         return "Not Yet Implemented label method"
 
-    # This metho could be overwritten by subClasses
+    # This method could be overwritten by subClasses
     @property
     def uri_id(self):
         if self.uri_mode == URI_MODE.IMPORTED:

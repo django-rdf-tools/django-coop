@@ -141,6 +141,7 @@ INSTALLED_APPS = [
     # coop_cms
     'djaloha',
     'coop_cms',
+    'coop_cms.apps.rss_sync',
     'colorbox',
     'coop_bar',
     'pagination',

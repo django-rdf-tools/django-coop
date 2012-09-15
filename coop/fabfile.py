@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from fabric.api import env,local,run,sudo,cd,hide,show,settings,prefix,prompt
+from fabric.api import env, local, run, sudo, cd, hide, show, settings, prefix, prompt
 from fabric.contrib.console import confirm
-from fabric.colors import red, green,yellow
+from fabric.colors import red, green, yellow
 from fabric.decorators import task
-from fabric.contrib.files import append,contains,exists,sed,upload_template
+from fabric.contrib.files import append, contains, exists, sed, upload_template
 from fabtools import icanhaz
 import fabtools
 
@@ -14,9 +14,9 @@ env.vm_path = "/Users/dom/VM/devcoop"
 env.locale = 'fr_FR.UTF-8'
 
 #Paramétres par défaut
-domaine = "coop.apeas.fr"
-projet = "apeas"
-alias = "apeas"
+domaine = "localhost"
+projet = "coop_test"
+alias = "coop_test"
 
 pgpass = '123456'
 
@@ -35,9 +35,8 @@ def pretty_pip(pkglist):
         icanhaz.python.install(pkg)
         print(green(u'Module Python "' + unicode(pkg) + u'" : installé.'))
 
-
 @task
-def _vm():
+def local_vm():
     '''First command to use for a Vagrant VM'''
     # change from the default user to 'vagrant'
     env.user = 'vagrant'
@@ -55,7 +54,7 @@ def _vm():
 
 
 @task
-def _ssh():
+def remote():
     '''First command to use for a SSH remote host'''
     env.hosts = [prompt('Alias SSH:', default=alias)]
 
@@ -102,6 +101,7 @@ def domain():
 
 #prompt('Config : (1)Apache seul ou (2)Apache+Nginx :',key='websrv',validate=int,default=env.websrv)
 
+
 def gandi():
     '''Ajoute le dépôt APT Gandi'''
     with hide('running', 'stdout', 'stderr'):
@@ -116,6 +116,7 @@ def pip_bootstrap():
         sudo("python get-pip.py")
 
 
+@task
 def server_setup():
     '''Installation serveur pour Ubuntu >= 10.10'''
     with settings(show('user'), hide('warnings', 'running', 'stdout', 'stderr')):
@@ -141,10 +142,10 @@ def server_setup():
             fabtools.python.install_pip()
             print(green('pip : installé.'))
 
-        environnement()
+        virtualenv_setup()
         #config apache
         if(env.websrv == 1):
-            apache()
+            apache_setup()
         elif(env.websrv == 2):
             apache_nginx()
 
@@ -191,25 +192,29 @@ def project_setup():
     django_wsgi()
 
     #créer la db avec le nom du projet (idempotent)
-    pg_db()
-
+    create_pg_db()
     dependencies()
     sudo('apachectl restart')
 
 
+@task
 def coop_setup():
-    # recolte des variables
+    """Creation d'un nouveau projet django-coop"""
     project()
     domain()
     locale()
-    # creation du projet django (startproject)
     coop_project()
+    dependencies()
     apache_vhost()
     django_wsgi()
+    create_pg_db()
+    sudo('apachectl restart')
 
 
 def coop_project():
     '''Créer un projet django dans son virtualenv'''
+    project()
+    domain()
     with settings(show('user'), hide('warnings', 'running', 'stdout', 'stderr')):
         if not exists('/home/%(user)s/.virtualenvs/%(projet)s' % env):
             # if confirm('Pas de virtualenv "%(projet)s", faut-il le créer ?' % env, default=False):
@@ -230,6 +235,51 @@ def coop_project():
             print(yellow('Projet Django-coop nommé "%(projet)s" : déjà installé.' % env))
 
 
+def apache_vhost():
+    '''Configuration Vhost apache'''
+    project()
+    domain()
+    #with prefix('workon %(projet)s' % env):
+    if(env.websrv == 1):
+        vhost_context = {
+            'user': env.user,
+            'domain': env.domaine,
+            'projet': env.projet
+        }
+        import coop
+        coop_path = coop.__path__[0]
+        upload_template('%s/fab_templates/vhost.txt' % coop_path,
+                        '/etc/apache2/sites-available/%(domaine)s' % env,
+                        context=vhost_context, use_sudo=True)
+        with cd('/etc/apache2/'):
+            with settings(hide('warnings', 'running', 'stdout', 'stderr')):
+                sudo('rm sites-enabled/%(domaine)s' % env)
+            sudo('ln -s `pwd`/sites-available/%(domaine)s sites-enabled/%(domaine)s' % env)
+            print(green('VirtualHost Apache pour %(domaine)s : OK.' % env))
+    elif(env.websrv == 2):
+        print(red('Script de déploiement pas encore écrit !!!'))  # TODO
+    sudo('apachectl restart')
+
+
+def django_wsgi():
+    '''paramétrage WSGI/Apache'''
+    project()
+    if not exists('/home/%(user)s/%(projet)s/coop_local/wsgi.py' % env):
+        with prefix('workon %(projet)s' % env):
+            sp_path = run('cdsitepackages ; pwd')
+            import coop
+            coop_path = coop.__path__[0]
+            wsgi_context = {
+                'site-packages': sp_path,
+                'user': env.user,
+                'projet': env.projet
+            }
+        upload_template('%s/fab_templates/wsgi.txt' % coop_path,
+                        '/home/%(user)s/projects/%(projet)s/coop_local/wsgi.py' % env,
+                        context=wsgi_context, use_sudo=True)
+        print(green('Script WSGI pour %(projet)s créé.' % env))
+    else:
+        print(yellow('Script WSGI pour %(projet)s déjà existant.' % env))
 
 
 def django_project():
@@ -297,7 +347,8 @@ def apache_setup():
     #virer le site par défaut
     with cd('/etc/apache2/'):
         if not contains('apache2.conf', 'ServerName localhost', use_sudo=True):
-            sudo("echo 'ServerName %(domaine)s'|cat - apache2.conf > /tmp/out && mv /tmp/out apache2.conf" % env)
+            if not contains('apache2.conf', 'ServerName %(domaine)s' % env, use_sudo=True):
+                sudo("echo 'ServerName %(domaine)s'|cat - apache2.conf > /tmp/out && mv /tmp/out apache2.conf" % env)
     with cd('/etc/apache2/sites-enabled/'):
         if exists('000-default'):
             sudo('rm 000-default')
@@ -310,29 +361,6 @@ def create_pg_db():
         project()
         icanhaz.postgres.database(env.projet, env.user, template='template_postgis', locale=env.locale)
         print(green('Création base de données PostgreSQL nommée "%(projet)s" : OK.' % env))
-
-
-def apache_vhost():
-    '''Configuration Vhost apache'''
-    project()
-    domain()
-    if(env.websrv == 1):
-        vhost_context = {
-            'user': env.user,
-            'domain': env.domaine,
-            'projet': env.projet
-        }
-        upload_template('fab_templates/vhost.txt',
-                        '/etc/apache2/sites-available/%(domaine)s' % env,
-                        context=vhost_context, use_sudo=True)
-        with cd('/etc/apache2/'):
-            with settings(warn_only=True):
-                sudo('rm sites-enabled/%(domaine)s' % env)
-            sudo('ln -s `pwd`/sites-available/%(domaine)s sites-enabled/%(domaine)s' % env)
-            print(green('VirtualHost Apache pour %(domaine)s : OK.' % env))
-    elif(env.websrv == 2):
-        print(red('Script de déploiement pas encore écrit !!!'))  # TODO
-    sudo('apachectl restart')
 
 
 def virtualenv_setup():
@@ -379,24 +407,6 @@ def virtualenv_setup():
         append('.hgrc', 'bitbucket.org = 24:9c:45:8b:9c:aa:ba:55:4e:01:6d:58:ff:e4:28:7d:2a:14:ae:3b')
 
 
-def django_wsgi():
-    '''paramétrage WSGI/Apache'''
-    project()
-    prompt('Virtualenv mentionné dans les réglages WSGI:', default=env.projet, key='wsgi_venv')
-    if not exists('/home/%(user)s/%(projet)s/coop_local/wsgi.py' % env):
-        with prefix('workon %(wsgi_venv)s' % env):
-            sp_path = run('cdsitepackages ; pwd')
-            wsgi_context = {
-                'site-packages': sp_path,
-                'user': env.user,
-                'projet': env.projet
-            }
-        upload_template('fab_templates/wsgi.txt', 'wsgi.py',
-                        context=wsgi_context, use_sudo=True)
-        print(green('Script WSGI pour %(projet)s : OK.' % env))
-
-
-@task
 def push():
     '''Pull code from github on the server'''
     gitsrv = 'git+git://github.com/quinode/'
@@ -426,7 +436,6 @@ def push():
     print(green('Les mises à jour ont été appliquées.'))
 
 
-
 def dependencies():
     '''Vérification des modules nécessaires au projet'''
     with settings(show('user'), hide('warnings', 'running', 'stdout', 'stderr')):
@@ -438,6 +447,7 @@ def dependencies():
                         run('pip install -r requirements.txt')
             else:
                 print(red('Aucun fichier "requirements.txt" trouvé.'))
+
 
 def locale():
     '''Règlage des locale de l'OS'''
