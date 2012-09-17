@@ -10,6 +10,7 @@ from django.conf import settings
 
 admin.site.register(LinkProperty)
 
+admin.site.register(Role)
 admin.site.register(PersonCategory)
 admin.site.register(Person, PersonAdmin)
 

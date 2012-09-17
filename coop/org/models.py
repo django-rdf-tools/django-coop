@@ -70,7 +70,7 @@ class BaseRoleCategory(models.Model):
 
 class BaseRole(URIModel):
     label = models.CharField(_(u'label'), max_length=60)
-    slug = AutoSlugField(populate_from='label', always_update=True, unique=True)
+    slug = AutoSlugField(populate_from='label', always_update=True, unique=True, editable=False)
     category = models.ForeignKey('coop_local.RoleCategory', null=True, blank=True, verbose_name=_(u'category'))
 
     domain_name = 'data.economie-solidaire.fr'
