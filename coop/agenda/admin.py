@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 
+from django.conf import settings
 from django.contrib import admin
 from coop_local.models import Event, EventCategory, Calendar, Occurrence
 from coop.utils.autocomplete_admin import FkAutocompleteAdmin, InlineAutocompleteAdmin
@@ -27,13 +28,15 @@ class EventAdmin(FkAutocompleteAdmin):
                                         'email', 'structure', 'username'),
                             'organization': ('title', 'acronym', 'subtitle', 'description')
     }
-    fieldsets = ((None, {'fields': (
-        'title', 'description',
+    fieldsets = [[None, {'fields': ['title', 'description',
         ('event_type', 'calendar'),
         ('organization', 'person'),
         #'remote_organization_label'
-      )
-                            }),)
+      ]}],
+    ]
+
+    if "coop.agenda" in settings.INSTALLED_APPS:
+        fieldsets[0][1]['fields'].insert(2, 'tags')
 
     inlines = [OccurrenceInline, ]
 

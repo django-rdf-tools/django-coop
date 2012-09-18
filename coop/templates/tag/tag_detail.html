@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block meta_title %}Tag : {{object}}{% endblock %}
+
+{% block document %}
+
+<div id="title" class="grid_12 grid">
+{% block title %}<h3>Tag : {{object}}</h3>{% endblock %}
+    <p>Ajouté le {{object.created|date:'l t F Y'}} par {{object.user}}</p>
+    <br/>
+</div>
+
+{% block content %}
+<div id="content">
+    <div class="grid_4 grid">
+
+    {% if initiatives %}
+        <h4>Initiatives</h4>
+            <ul class="tag_icon_list">{% for org in initiatives %}
+                <li title="{{org}}">
+                    {% thumbnail org.logo "50x50" crop="left" as im_color %}
+                        <div class="org_icon">
+                            <a href="{{org.get_absolute_url}}">
+                                <img src="{{ im_color.url }}" width="{{ im_color.width }}" height="{{ im_color.height }}">
+                            </a></div>
+                    {% endthumbnail %}
+                    <a href="{{org.get_absolute_url}}">{{ org.title }}</a>
+                </li>{% endfor %}
+            </ul>
+        <br/>
+    {% endif %}
+    </div>
+
+    <div id="grid-right" class="grid_4 grid">
+       <h4>Événements</h4>
+    </div>
+
+    <div id="grid-right" class="grid_4 grid">
+       <h4>Annonces</h4>
+    </div>
+
+</div>
+{% endblock %}
+{% endblock %}
+
+
+
+{% block footer%}
+<a href="{{D2RQ_ROOT}}page/tag/{{object.slug}}">
+    <img border="0" align="left" src="{{STATIC_URL}}img/semweb.png"></a>
+    <br/>
+{% endblock %}

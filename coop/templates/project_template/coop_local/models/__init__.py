@@ -29,6 +29,8 @@ if "coop_tag" in settings.INSTALLED_APPS:
     t.contribute_to_class(Article, "tags")
     if "coop.exchange" in settings.INSTALLED_APPS:
         t.contribute_to_class(Exchange, "tags")
+    if "coop.agenda" in settings.INSTALLED_APPS:
+        t.contribute_to_class(Event, "tags")
 
 
 

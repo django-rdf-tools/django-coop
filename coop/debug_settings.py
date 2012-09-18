@@ -13,6 +13,7 @@ if DEBUG or ('runserver' in sys.argv):
         ]
     INSTALLED_APPS = DEBUG_SETTINGS['apps'] + [
         'debug_toolbar',
+        #'debug_toolbar_htmltidy',
         ]
     DEBUG_TOOLBAR_PANELS = [
         'debug_toolbar.panels.version.VersionDebugPanel',
@@ -24,6 +25,7 @@ if DEBUG or ('runserver' in sys.argv):
         'debug_toolbar.panels.sql.SQLDebugPanel',
         'debug_toolbar.panels.signals.SignalDebugPanel',
         'debug_toolbar.panels.logger.LoggingPanel',
+        #'debug_toolbar_htmltidy.panels.HTMLTidyDebugPanel',
     ]
     DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
 
