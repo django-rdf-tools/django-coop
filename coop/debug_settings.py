@@ -29,7 +29,7 @@ if DEBUG:
 
 else:
     INSTALLED_APPS = DEBUG_SETTINGS['apps'] + ['raven.contrib.django']
-    MIDDLEWARE_CLASSES = DEBUG_SETTINGS['middelware'] + [
+    MIDDLEWARE_CLASSES = DEBUG_SETTINGS['middleware'] + [
         'raven.contrib.django.middleware.Sentry404CatchMiddleware',
         ]
     DEBUG_SETTINGS['logging']['root'] = {
