@@ -66,7 +66,6 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'coop.utils.middleware.CORSMiddleware',
     'pagination.middleware.PaginationMiddleware',
-    'raven.contrib.django.middleware.Sentry404CatchMiddleware',
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = [
@@ -79,7 +78,6 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     'django.core.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
     'coop.context_processors.current_site',
-    'coop.context_processors.d2rq_settings',
 ]
 
 ROOT_URLCONF = 'coop_local.urls'
@@ -138,14 +136,6 @@ INSTALLED_APPS = [
     'autoslug',
     'slugify',
 
-    # coop_cms
-    'djaloha',
-    'coop_cms',
-    'coop_cms.apps.rss_sync',
-    'colorbox',
-    'coop_bar',
-    'pagination',
-
     # WebID
     'django_webid.provider',
     'django_webid.auth',
@@ -161,8 +151,7 @@ INSTALLED_APPS = [
     'coop.ui',
     'coop.webid',
 
-    'coop_geo',
-
+    #'coop_geo',
 
     # PuSH
     'django_rq',
@@ -170,10 +159,16 @@ INSTALLED_APPS = [
     'django_push.subscriber',
     'uriredirect',
 
-    # Logging errors (needed until we go "stable")
-    'raven.contrib.django',
+    # coop_cms
+    'djaloha',
+    'coop_cms',
+    'coop_cms.apps.rss_sync',
+    'colorbox',
+    'coop_bar',
+    'pagination',
 
 ]
+
 
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
@@ -294,10 +289,6 @@ WEBIDPROVIDER_SKIP_PROFILE_INIT = True
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
-    'root': {
-        'level': 'WARNING',
-        'handlers': ['sentry'],
-    },
     'formatters': {
         'verbose': {
             'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
@@ -311,10 +302,6 @@ LOGGING = {
 
     },
     'handlers': {
-        'sentry': {
-            'level': 'ERROR',
-            'class': 'raven.contrib.django.handlers.SentryHandler',
-       },
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
@@ -362,20 +349,9 @@ LOGGING = {
             'level': 'DEBUG'
 
         },
-        'coop-init': {
+        'coop': {
             'handlers': ['console-dumb'],
             'level': 'DEBUG',
-        },
-
-        'raven': {
-            'level': 'DEBUG',
-            'handlers': ['console'],
-            'propagate': False,
-        },
-        'sentry.errors': {
-            'level': 'DEBUG',
-            'handlers': ['console'],
-            'propagate': False,
         },
     },
 

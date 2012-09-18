@@ -81,3 +81,6 @@ git+git://github.com/gabrielgrant/django-html-field.git
 # central logging
 raven
 
+# dev debug tools
+django-debug-toolbar
+FirePython

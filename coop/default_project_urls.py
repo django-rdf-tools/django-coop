@@ -86,3 +86,8 @@ urlpatterns += patterns('',
     (r'^', include('coop.urls')),
     (r'^', include('coop_cms.urls')),
 )
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        url(r'^', include('debug_toolbar_user_panel.urls')),
+    )

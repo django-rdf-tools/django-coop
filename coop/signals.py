@@ -79,7 +79,7 @@ def post_save_callback(sender, instance, **kwargs):
             # TODO check if a subscription is done, either lets do it
         elif isinstance(instance, coop_tag.models.TagBase):
             # Subscription done if it does not exists, in other it is simply renew
-            instance.subscribeToUpdades(host=settings.THESS_HOST)
+            instance.subscribeToUpdades(host=settings.THESAURUS_HOST)
         else:
             feed_url = 'http://%s/feed/%s/' % (Site.objects.get_current().domain, sender.__name__.lower())
             try:

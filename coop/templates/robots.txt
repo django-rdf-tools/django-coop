@@ -1,2 +1,4 @@
+# TODO remove this when ready...
+
 User-agent: *
 Disallow: /

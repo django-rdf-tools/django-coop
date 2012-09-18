@@ -17,7 +17,7 @@ import inspect
 from django.db.models.base import Model as DjangoModel
 from coop_local.models import local_models  # DO NOT REMOVE !!!
 
-log = logging.getLogger('coop-init')
+log = logging.getLogger('coop')
 
 
 def import_class(cl):
