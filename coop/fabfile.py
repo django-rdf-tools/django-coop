@@ -231,6 +231,10 @@ def coop_project():
                         run('coop-admin.py startproject %(projet)s --domain %(domaine)s' % env)
                         print(green('Projet Django-coop "%(projet)s" : Installé.' % env))
                         # coop-admin scripts creates the WSGI script so we won't call django_wsgi()
+                with cd('projects/%(projet)s' % env):
+                    with prefix('workon %(projet)s' % env):
+                        run('chmod +x manage.py')
+                        sudo('chmod -R g+rw media')
         else:
             print(yellow('Projet Django-coop nommé "%(projet)s" : déjà installé.' % env))
 
@@ -447,7 +451,9 @@ def dependencies():
                         run('pip install -r requirements.txt')
             else:
                 print(red('Aucun fichier "requirements.txt" trouvé.'))
-
+        with prefix('workon %(projet)s' % env):
+            with cd('projects/%(projet)s' % env):
+                run('./manage.py collectstatic --noinput')
 
 def locale():
     '''Règlage des locale de l'OS'''

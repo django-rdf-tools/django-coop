@@ -57,6 +57,7 @@ class Command(TemplateCommand):
         # For supervisor.conf file
         options['extensions'].extend(['conf', 'json', 'txt'])
         options['virtualenv'] = os.getenv('VIRTUAL_ENV')
+        options['nice_name'] = project_name.title()
         p = os.popen('which runinenv.sh', "r")
         options['runinenv'] = p.readline().replace('\n', '')
         p.close()
