@@ -14,12 +14,12 @@
 </div>
 {% block content %}
 <div id="content">
-    <div class="grid_12 grid">    
-    
+    <div class="grid_12 grid">
+
     <div id="leaflet_map" style="width: 920px; height: 500px"></div>
     <script src="http://leaflet.cloudmade.com/dist/leaflet.js"></script>
     <script src="https://raw.github.com/ideak/leafclusterer/master/leafclusterer.js"></script>
-    <script>
+    <script type="text/javascript">
         function addmarker(y,x,label,subtitle){
             var markerLocation = new L.LatLng(y,x),
                 marker = new L.Marker(markerLocation);
@@ -36,7 +36,7 @@
         var appleUrl = 'http://gsp2.apple.com/tile?api=1&style=slideshow&layers=default&lang=en_EN&z={z}&x={x}&y={y}&v=9';
             appleAttribution = 'Map data by apple'
             apple = new L.TileLayer(appleUrl, {maxZoom: 18, attribution: appleAttribution});
-        
+
         var marseille = new L.LatLng(43.296482, 5.36978);
         // =(45.721997, 3.469887); // geographical point (longitude and latitude)
 
@@ -56,11 +56,11 @@
     </script>
 
     </div>
-</div>    
+</div>
 {% endblock %}
 {% endblock %}
 
-{% block footer%}        
+{% block footer%}
 <a href="{{D2RQ_ROOT}}directory/initiative">
     <img border="0" align="left" src="{{STATIC_URL}}img/semweb.png"></a>
     <br/>

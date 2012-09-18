@@ -1,9 +1,10 @@
 # -*- coding:utf-8 -*-
 
+import sys
 from coop_local.local_settings import DEBUG
 from coop_local.settings import DEBUG_SETTINGS
 
-if DEBUG:
+if DEBUG or ('runserver' in sys.argv):
     import firepython
     firepython.__api_version__ = '1.2'  # avoid known issue
     MIDDLEWARE_CLASSES = DEBUG_SETTINGS['middleware'] + [
@@ -24,7 +25,6 @@ if DEBUG:
         'debug_toolbar.panels.signals.SignalDebugPanel',
         'debug_toolbar.panels.logger.LoggingPanel',
     ]
-
     DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
 
 else:
