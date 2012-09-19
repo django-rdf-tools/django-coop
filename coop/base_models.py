@@ -134,24 +134,3 @@ if 'coop.agenda' in settings.INSTALLED_APPS:
 
 
 
-"""
-
-# ----- conditional generic reverse relations
-
-if "coop.agenda" in settings.INSTALLED_APPS:
-
-    # Patching our custom Article to add a backward generic relation with events (use in templates)
-    from django.contrib.contenttypes import generic
-    from coop_local.models import Article
-    from coop_local.models import Exchange
-    from coop_local.models import Dated
-
-    if 'coop_cms' in settings.INSTALLED_APPS and not hasattr(Article, "dated"):
-        e = generic.GenericRelation(Dated)
-        e.contribute_to_class(Article, "dated")
-
-    if 'coop.exchange' in settings.INSTALLED_APPS and not hasattr(Exchange, "dated"):
-        e = generic.GenericRelation(Dated)
-        e.contribute_to_class(Exchange, "dated")
-
-"""
