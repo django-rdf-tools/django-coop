@@ -20,11 +20,6 @@ git+git://github.com/Nimn/geo-django-fla.git
 django-autoslug
 unicode-slugify
 
-# coop-tag deps
-# django-taggit
-# hg+https://bitbucket.org/quinode/django-taggit-autosuggest
-# git+https://github.com/quinode/django-taggit-templatetags
-
 # forks we depend on
 hg+https://bitbucket.org/psyton/django-admin-tools
 git+git://github.com/quinode/django-templatetag-sugar.git
