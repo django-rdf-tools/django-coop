@@ -1,5 +1,4 @@
 # -*- coding:utf-8 -*-
-
 from django.db import models
 from django.db.models.loading import get_model
 from django_extensions.db import fields as exfields
@@ -465,12 +464,12 @@ def checkDirectMapFK(dbfieldName, d2rqGraph):
 
 # It seems to be the best place to do the connection
 # see http://stackoverflow.com/questions/7115097/the-right-place-to-keep-my-signals-py-files-in-django
-from django.core.signals import  request_finished
+# from django.core.signals import  request_finished
 from coop.signals import post_save_callback, post_delete_callback, listener
 from django_push.subscriber.signals import updated
 
-request_finished.connect(post_save_callback, sender=StaticURIModel)
-request_finished.connect(post_delete_callback, sender=StaticURIModel)
+# request_finished.connect(post_save_callback, sender=StaticURIModel)
+# request_finished.connect(post_delete_callback, sender=StaticURIModel)
 updated.connect(listener)
 
 
