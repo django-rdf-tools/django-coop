@@ -89,6 +89,6 @@ urlpatterns += patterns('',
 
 if settings.DEBUG:
     urlpatterns += patterns('',
-    url(r'^', include('debug_toolbar_htmltidy.urls'))
-    #url(r'^', include('debug_toolbar_user_panel.urls')),
+    # url(r'^', include('debug_toolbar_htmltidy.urls'))
+    # url(r'^', include('debug_toolbar_user_panel.urls')),
 )
