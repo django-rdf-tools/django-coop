@@ -1,4 +1,4 @@
-{% load taggit_extras %}
+{% load tagger_extras %}
 
 {% if forvar %}
 {% get_tagcloud as tags for forvar %}
@@ -8,6 +8,6 @@
 
 <div>
 {% for tag in tags %}
-<font size={{tag.weight|floatformat:0}}>{{tag}}</font> 
+<font size={{tag.weight|floatformat:0}}>{{tag}}</font>
 {% endfor %}
 </div>

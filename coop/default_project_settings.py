@@ -172,12 +172,9 @@ INSTALLED_APPS = [
 
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
-TAG_MODEL = 'coop_local.models.Tag'
-TAGGEDITEM_MODEL = 'coop_local.models.TaggedItem'
-
-TAG_MODEL_FKEY_NAME = 'coop_local.Tag'
-
-TAGGER_CSS_FILENAME = 'coop_tag.css'
+TAGGER_TAG_MODEL = 'coop_local.models.Tag'
+TAGGER_TAGGEDITEM_MODEL = 'coop_local.models.TaggedItem'
+TAGGER_FKEY_NAME = 'coop_local.Tag'
 
 THUMBNAIL_FORMAT = 'PNG'
 
