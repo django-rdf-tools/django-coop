@@ -19,7 +19,7 @@ PROJECT_NAME = '{{ project_name }}'  # which one is safer ?
 try:
     from coop.default_project_settings import *
 except ImportError, exp:
-    raise ImproperlyConfigured("Unable to find default_project_settings.py file from django-coop")
+    raise ImproperlyConfigured("Unable to find default_project_settings.py file from django-coop : ", exp)
 
 # override settings when needed in local_settings.py
 
@@ -28,13 +28,23 @@ try:
 except ImportError, exp:
     pass
 
+# debug settings : load dev tools (FireLogger & Django debug Toolbar) or setup Sentry Logging
+try:
+    DEBUG_SETTINGS = {  'apps': INSTALLED_APPS,
+                        'middleware': MIDDLEWARE_CLASSES,
+                        'logging': LOGGING
+                        }
+    from coop.debug_settings import *
+except ImportError, exp:
+    raise ImproperlyConfigured("Unable to find coop/debug_settings.py file in django-coop : ", exp)
+
 
 # db_settings file for DATABASES, and CACHE backend settings
 
 try:
     from db_settings import *
 except ImportError, exp:
-    raise ImproperlyConfigured("No db_settings.py file was found")
+    raise ImproperlyConfigured("Unable to find db_settings.py file from coop_local project : ", exp)
 
 
 # common db_settings file for DATABASE ROUTERS
@@ -42,6 +52,6 @@ except ImportError, exp:
 try:
     from coop.db_settings import *
 except ImportError, exp:
-    raise ImproperlyConfigured("Unable to find db_settings.py file from django-coop")
+    raise ImproperlyConfigured("Unable to find coop/db_settings.py file in django-coop : ", exp)
 
 

@@ -96,7 +96,7 @@ class StaticURIModel(models.Model):
     def label(self):
         return "Not Yet Implemented label method"
 
-    # This metho could be overwritten by subClasses
+    # This method could be overwritten by subClasses
     @property
     def uri_id(self):
         if self.uri_mode == URI_MODE.IMPORTED:
@@ -187,11 +187,11 @@ class StaticURIModel(models.Model):
         The triples are, of course, the following
           <old_uri> <pres1> <value1>
           ....
-        but the values are supposed to be up-to-date, we can image that the administrator has change 
+        but the values are supposed to be up-to-date, we can image that the administrator has change
         (at least checked) them.
         If no graph is provided, old_uri is parsed and used
 
-        This method return the new uri or raise an exception. 
+        This method return the new uri or raise an exception.
         Link between old_uri and new_uri is done with the
         help of the Link model
 
@@ -246,7 +246,7 @@ class StaticURIModel(models.Model):
     def updateDomainUri(self, new_uri, sync=False):
         """
         Prerequis : self.prepareChangeDomainUri(new_uri) has been called.
-        This means, all other coop which import self.uri are aware of the rehost process, they 
+        This means, all other coop which import self.uri are aware of the rehost process, they
         now point to the new_uri object. The instance hasjust to update its uri and uri mode.
         If sync is true, then update is done froom new_uri
 

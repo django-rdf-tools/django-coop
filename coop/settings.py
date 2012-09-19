@@ -10,13 +10,13 @@ PUSH_HUB = ''
 SUBHUB_MAINTENANCE_AUTO = False
 
 BASE_COOP_LOCAL_MODELS = [
-    ('coop.link', [
-        u'LinkProperty',
-        u'Link',
-    ]),
     ('coop_cms', [
         u'Article',
         u'NavTree',
+    ]),
+    ('coop.link', [
+        u'LinkProperty',
+        u'Link',
     ]),
     ('coop_tag', [
         u'Tag',

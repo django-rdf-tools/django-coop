@@ -65,7 +65,7 @@ urlpatterns += patterns('',
 
 
 # for local testing
-if settings.DEBUG or ('test' in sys.argv):
+if settings.DEBUG or ('test' in sys.argv) or ('runserver' in sys.argv):
     urlpatterns += staticfiles_urlpatterns()
     urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
@@ -90,4 +90,10 @@ urlpatterns += patterns('',
     (r'^djaloha/', include('djaloha.urls')),
     (r'^', include('coop.urls')),
     (r'^', include('coop_cms.urls')),
+)
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+    # url(r'^', include('debug_toolbar_htmltidy.urls'))
+    # url(r'^', include('debug_toolbar_user_panel.urls')),
 )

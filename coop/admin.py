@@ -36,7 +36,7 @@ if 'forms_builder.forms' in settings.INSTALLED_APPS:
     from forms_builder.forms.admin import FormAdmin
     from forms_builder.forms.models import Form
 
-    class MyFormAdmin(FormAdmin):
+    class CoopFormAdmin(FormAdmin):
         change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
         fieldsets = [
             (_("Settings"), {"fields": ( "title",
@@ -49,8 +49,6 @@ if 'forms_builder.forms' in settings.INSTALLED_APPS:
         list_display = ("title", "total_entries", "admin_links")
         list_display_links = ("title",)
         list_editable = []
-    admin.site.unregister(Form)
-    admin.site.register(Form, MyFormAdmin)
 
 
 

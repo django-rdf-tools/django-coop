@@ -4,14 +4,14 @@
 	font: 85% "Lucida Grande", Lucida, Verdana, sans-serif;
 }
 
-h1.dashboard-title, 
+h1.dashboard-title,
 h1,
 h3.well,
 .dashboard-module h2,
 div.inline-group h3,
 .well .btn,
 ul.breadcrumb,
-.nav-tabs, 
+.nav-tabs,
 th, .btn,
 .control-group > .control-label{
 	font-family: "PT Sans Narrow", "Trebuchet MS", Trebuchet, Tahoma, Arial;
@@ -28,7 +28,7 @@ h3.well{
 
 .well .btn,
 ul.breadcrumb,
-.nav-tabs, th, 
+.nav-tabs, th,
 .control-group > .control-label{
 	font-size: 16px;
 }
@@ -61,7 +61,7 @@ li.bsmenuitem.active > a > i{
 
 
 li.bsmenuitem > a > i{
-	
+
 }
 
 /* @end */
@@ -183,7 +183,7 @@ div.inline-group h3{
 	border-radius: 6px;
 }
 
-.dashboard-module-content ul li{	
+.dashboard-module-content ul li{
 	font-size: 15px;
 	font-family: "PT Sans Narrow", "Trebuchet MS", Trebuchet, Tahoma, Arial;
 }
@@ -247,7 +247,7 @@ div.controls > a.changelink{
 	float: left;
 }
 
-div.controls > a.related-lookup{	
+div.controls > a.related-lookup{
 	margin-left: 12px;
 }
 
@@ -422,7 +422,7 @@ p.countmonitor.exceeded{
 p.countmonitor.warning{
 	background-color: #f6c983;
 	color: #686969;
-	
+
 }
 
 /* @end */
@@ -603,6 +603,7 @@ td.role_detail .vTextField{
 	width: 140px;
 }
 
+input#id_ouverture,
 input#id_title,
 input#id_web,
 input#id_subtitle{
@@ -701,7 +702,7 @@ div.chzn-container.chzn-container-multi .chzn-choices .search-choice{
 	border-radius: 12px;
 	-webkit-border-radius: 12px;
 	-moz-border-radius: 12px;
-	
+
 	color: #666666;
 	background-color: #f4f4f4;
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f4f4f4), to(#d5d5d5));
@@ -710,16 +711,16 @@ div.chzn-container.chzn-container-multi .chzn-choices .search-choice{
 	box-shadow: 0 1px 1px #e9e9e9;
 	-webkit-box-shadow: 0 1px 1px #e9e9e9;
 	-moz-box-shadow: 0 1px 1px #e9e9e9;
-	
-	
-	
+
+
+
 	margin-top: 6px;
 	font: bold 1.1em sans-serif;
 	margin-bottom: 6px;
 }
 
 div.chzn-container.chzn-container-multi .chzn-choices .search-choice:hover{
-	
+
 background-color: #ddeefe;
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ddeefe), to(#bfe0f1));
 	border: 1px solid #acc3ec;
@@ -779,5 +780,5 @@ ul.as-list li{
 	list-style-type: none;
 	font-size: 16px;
 	padding: 2px;
-	
+
 }

@@ -1,26 +1,24 @@
-# our apps
-coop_cms
-coop-geo
-coop-tag
-coop-bar
-djaloha
-coop-colorbox
 
-# git+git://github.com/quinode/coop-colorbox.git
-# git+git://github.com/quinode/djaloha.git
-# git+git://github.com/quinode/coop-bar.git
-# git+git://github.com/quinode/coop-tag.git
-# git+git://github.com/quinode/coop-geo.git
-# git+git://github.com/quinode/coop_cms.git
-# git+git://github.com/quinode/django-coop.git
+# our apps
+# coop_cms
+# coop-geo
+# coop-tag
+# coop-bar
+# djaloha
+# coop-colorbox
+
+git+git://github.com/quinode/coop-colorbox.git
+git+git://github.com/quinode/djaloha.git
+git+git://github.com/quinode/coop-bar.git
+git+git://github.com/quinode/coop-tag.git
+git+git://github.com/quinode/coop-geo.git
+git+git://github.com/quinode/coop_cms.git
+git+git://github.com/quinode/django-coop.git
 
 git+git://github.com/Nimn/geo-django-fla.git
 
 django-autoslug
 unicode-slugify
-
-feincms
-django-mptt
 
 # coop-tag deps
 # django-taggit
@@ -28,7 +26,7 @@ django-mptt
 # git+https://github.com/quinode/django-taggit-templatetags
 
 # forks we depend on
-hg+https://bitbucket.org/psyton/django-admin-tools  # TODO : pourquoi ???
+hg+https://bitbucket.org/psyton/django-admin-tools
 git+git://github.com/quinode/django-templatetag-sugar.git
 
 # our forks
@@ -37,7 +35,7 @@ git+git://github.com/quinode/uriredirect.git
 
 git+git://github.com/quinode/django-extensions.git@use_admin_jquery
 
-# do we still need the fork ?
+# do we still need the fork
 git+git://github.com/quinode/django-chosen.git
 
 # setup.py was broken
@@ -80,8 +78,9 @@ django-pagination
 feedparser
 git+git://github.com/gabrielgrant/django-html-field.git
 
-
-
 # central logging
 raven
 
+# dev debug tools
+django-debug-toolbar
+FirePython

@@ -70,7 +70,7 @@ class BaseRoleCategory(models.Model):
 
 class BaseRole(URIModel):
     label = models.CharField(_(u'label'), max_length=60)
-    slug = AutoSlugField(populate_from='label', always_update=True, unique=True)
+    slug = AutoSlugField(populate_from='label', always_update=True, unique=True, editable=False)
     category = models.ForeignKey('coop_local.RoleCategory', null=True, blank=True, verbose_name=_(u'category'))
 
     domain_name = 'data.economie-solidaire.fr'
@@ -283,8 +283,8 @@ class BaseOrganization(URIModel):
 
     # ORDER : coop_geo must be loaded BEFORE coop_local
     if "coop_geo" in settings.INSTALLED_APPS:
-        located = generic.GenericRelation('coop_geo.Located', related_name='located_org')
-        framed = generic.GenericRelation('coop_geo.AreaLink', related_name='framed_org')
+        located = generic.GenericRelation('coop_geo.Located')  # , related_name='located_org')
+        framed = generic.GenericRelation('coop_geo.AreaLink')  # , related_name='framed_org')
 
     birth = models.DateField(_(u'creation date'), null=True, blank=True)
     email = models.EmailField(_(u'global email'), blank=True, null=True)

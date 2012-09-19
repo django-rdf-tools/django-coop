@@ -1,10 +1,6 @@
-# do not remove : !-- creator:coop-admin --!
-# WSGI config for {{ project_name }} project.
+# WSGI config for project %(projet)s.
 
-ALLDIRS = ['{{ project_alldirs }}']
-
-# the above directory depends on the location of your python installation.
-# if using virtualenv, it will need to match your projects locale.
+ALLDIRS = ['%(site-packages)s']
 import os
 import sys
 import site
@@ -20,7 +16,9 @@ for directory in ALLDIRS:
             sys.path.remove(item)
             sys.path[:0] = new_sys_path
 
-sys.path.append('{{ project_directory }}')
+sys.path.append('/home/%(user)s/projects/%(projet)s')
+
+os.environ.setdefault('PYTHON_EGG_CACHE', '/home/%(user)s/.python-eggs')
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "coop_local.settings")
 
 # This application object is used by any WSGI server configured to use this
@@ -34,7 +32,3 @@ try:
     application = Sentry(get_wsgi_application())
 except ImportError:
     application = get_wsgi_application()
-
-# Apply WSGI middleware here.
-# from helloworld.wsgi import HelloWorldApplication
-# application = HelloWorldApplication(application)

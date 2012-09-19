@@ -47,6 +47,3 @@ if "coop_cms" in settings.INSTALLED_APPS:
         )
         related_search_fields = {'organization': ('title', 'subtitle', 'description'), }
 
-    article_model = get_article_class()
-    admin.site.unregister(article_model)
-    admin.site.register(article_model, CoopArticleAdmin)

@@ -20,13 +20,17 @@ from django.utils.translation import ugettext_lazy as _
 
 if "coop_tag" in settings.INSTALLED_APPS:
     from coop_tag.managers import TaggableManager
-    from coop_local.models import TaggedItem
-    t = TaggableManager(through=TaggedItem, blank=True, verbose_name=_(u'Tags'))
+    # from coop_local.models import TaggedItem
+    t = TaggableManager(through=TaggedItem,
+            blank=True, verbose_name=_(u'Tags'),
+            help_text="Une liste de tags avec des virgules")
     t.contribute_to_class(Organization, "tags")
     t.contribute_to_class(Person, "tags")
     t.contribute_to_class(Article, "tags")
     if "coop.exchange" in settings.INSTALLED_APPS:
         t.contribute_to_class(Exchange, "tags")
+    if "coop.agenda" in settings.INSTALLED_APPS:
+        t.contribute_to_class(Event, "tags")
 
 
 
