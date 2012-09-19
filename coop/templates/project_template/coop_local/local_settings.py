@@ -33,3 +33,14 @@ INSTALLED_APPS = settings.INSTALLED_APPS + [
     'coop_geo',
     'coop_local',
 ]
+
+# TODO: to be discuss this settings could be in default_project_setings.py
+# file. To be check I knew more on how to configure sympa
+SYMPA_SOAP = {
+    'WSDL': 'http://sympa.economie-solidaire.fr/sympa/wsdl',
+    'APPNAME': 'djangoapp',
+    'PASSWORD': 'test',
+    'OWNER': 'USER_EMAIL=userProxy@my.server',
+    'PARAMETER_SEPARATOR': '__SEP__',
+}
+
