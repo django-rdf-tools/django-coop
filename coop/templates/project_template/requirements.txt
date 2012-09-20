@@ -21,6 +21,9 @@ git+git://github.com/Nimn/geo-django-fla.git
 django-autoslug
 unicode-slugify
 
+fabric
+fabtools
+
 # forks we depend on
 hg+https://bitbucket.org/psyton/django-admin-tools
 git+git://github.com/quinode/django-templatetag-sugar.git

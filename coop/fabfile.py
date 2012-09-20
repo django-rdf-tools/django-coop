@@ -359,9 +359,10 @@ def apache_setup():
             print(green('Site par défaut d’Apache supprimé'))
 
 
+@task
 def create_pg_db():
     '''Créer une base de données postgres au nom du projet'''
-    with settings(show('user'), hide('warnings', 'running', 'stdout', 'stderr')):
+    with settings(show('user')):#, hide('warnings', 'running', 'stdout', 'stderr')):
         project()
         icanhaz.postgres.database(env.projet, env.user, template='template_postgis', locale=env.locale)
         print(green('Création base de données PostgreSQL nommée "%(projet)s" : OK.' % env))
