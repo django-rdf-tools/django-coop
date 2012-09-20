@@ -29,7 +29,7 @@ git+git://github.com/quinode/django-templatetag-sugar.git
 hg+https://bitbucket.org/quinode/django-admintools-bootstrap/@0.0.2-alpha
 git+git://github.com/quinode/uriredirect.git
 
-git+git://github.com/quinode/django-extensions.git@use_admin_jquery
+git+git://github.com/quinode/django-extensions.git@use_django_admin_jquery
 
 # do we still need the fork
 git+git://github.com/quinode/django-chosen.git
