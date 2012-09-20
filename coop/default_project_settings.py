@@ -212,6 +212,7 @@ DJALOHA_LINK_MODELS = (
 
 COOP_CMS_ARTICLE_TEMPLATES = [
     ('coop_cms/article_standard.html', 'Standard'),
+    ('coop_cms/article_standard.html', 'Article sans logo'),
     ('coop_cms/article_rubrique.html', 'Rubrique'),
 ]
 
