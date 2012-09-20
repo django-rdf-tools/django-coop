@@ -4,23 +4,27 @@
 {% block meta_title %}{{article.title}}{% endblock %}
 
 {% block document %}
+    {% block article %}
 
+    <ul class="breadcrumb">
+        <a href="/">Accueil</a> <span class="divider">/</span>
+        {% navigation_breadcrumb article li_template="coop_cms/breadcrumb_li_template.html" %}
+    </ul>
     {% block article %}
     {% navigation_breadcrumb article %}
+    <div class="content">
     {% cms_edit article %}
-        {% block title %}
+
             <h2 id="title-article">{{article.title}}</h2>
-        {% endblock %}
-        <div class="content">
-
-            {% navigation_children article %}
-
+            <div class="summary">{{ article.summary }}</div>
             <div class="article-content">
                 {{ article.content }}
             </div>
-        
-        </div>
-        
+
     {% end_cms_edit %}
+    </div>
+
+    {% navigation_children article %}
+
     {% endblock %}
 {% endblock %}
