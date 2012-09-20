@@ -37,6 +37,9 @@ git+git://github.com/quinode/django-chosen.git
 # setup.py was broken
 git+git://github.com/quinode/djangoembed.git
 
+# mailing deps
+SOAPpy
+
 # coop deps
 psycopg2
 Pillow
