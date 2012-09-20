@@ -17,6 +17,7 @@ handler500 = 'coop.views.SentryHandler500'
 
 urlpatterns += patterns('',
 
+
     #Testing webid urls
     url(r'^accounts/webidauth', 'coop.webid.views.test_login',
         name="webidauth-login"),
@@ -40,6 +41,10 @@ urlpatterns += patterns('',
     url(r'^reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm'),
     url(r'^reset/done/$', 'django.contrib.auth.views.password_reset_complete'),
     #url(r'^org/$', 'coop_local.views.org_list', name="org_list"),  # exemple de view django-coop surchargee
+
+    # sympa test
+    url(r'^sympa_remote_list/(?P<name>\w+)$', 'coop.mailing.views.list'),
+
 
 )
 
