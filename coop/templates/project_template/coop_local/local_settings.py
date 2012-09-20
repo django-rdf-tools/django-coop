@@ -47,5 +47,5 @@ SYMPA_SOAP = {
     'APPNAME': 'djangoapp',
     'PASSWORD': 'test',
     'OWNER': 'USER_EMAIL=userProxy@my.server',
-    'PARAMETER_SEPARATOR': '__SEP__',
+    'PARAMETER_SEPARATOR': '__SEP__',      # used for template
 }

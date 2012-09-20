@@ -2,7 +2,10 @@
 from SOAPpy import WSDL, faultType
 from django.conf import settings
 
-_server = WSDL.Proxy(settings.SYMPA_SOAP['WSDL'])
+try:
+    _server = WSDL.Proxy(settings.SYMPA_SOAP['WSDL'])
+except Exception, e:
+    print u"Cannot find find Sympa server %s" % e
 
 
 def lists():
