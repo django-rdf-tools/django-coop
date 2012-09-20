@@ -36,7 +36,7 @@ INSTALLED_APPS = settings.INSTALLED_APPS + [
     #'coop.webid',
     'coop_local',
      # coop optional modules
-    'coop_geo',  # est obligatoirement place APRES coop_local
+    'coop_geo',  # est obligatoirement APRES coop_local
 
 ]
 
