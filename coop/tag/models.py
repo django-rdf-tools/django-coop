@@ -8,7 +8,7 @@ from django.conf import settings
 if 'coop_tag' in settings.INSTALLED_APPS:
     from coop_tag.models import TagBase, GenericTaggedItemBase, TaggedItemBase
     from coop.models import URIModel
-    # in coop_settings, TAG_MODEL = 'coop_local.Tag'
+    # in coop_settings, TAGGER_TAG_MODEL = 'coop_local.Tag'
 
     class CoopTaggedItem(GenericTaggedItemBase, TaggedItemBase):
         #tag = models.ForeignKey('coop_local.Tag', related_name="%(app_label)s_%(class)s_taggeditem_items")

@@ -102,7 +102,8 @@ jQuery(document).ready(function($) {
 
     $("a.add-another").each(function(){
       if($.inArray($(this).prev().val(), empty_values)=='-1' &&       // si selection pas vide
-          $(this).siblings('select').attr('multiple') != 'multiple'   // et qu'on est pas sur un select multiple
+          $(this).prev().attr('multiple') != 'multiple' &&  // et qu'on est pas sur un select multiple
+          $(this).prev().attr('name').indexOf("category") == -1  // et que c'est pas une catégorie
           ){
           $(this).after("&nbsp;<a class='changelink' href='#' title='Modifier cet objet'><img src='/static/admin/img/icon_changelink.gif'></a>");
           $(this).next().click(function(){

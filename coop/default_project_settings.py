@@ -62,7 +62,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django_webid.auth.middleware.WEBIDAuthMiddleware',
+    #'django_webid.auth.middleware.WEBIDAuthMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'coop.utils.middleware.CORSMiddleware',
     'pagination.middleware.PaginationMiddleware',
@@ -135,10 +135,11 @@ INSTALLED_APPS = [
     'tinymce',
     'autoslug',
     'slugify',
+    'forms_builder.forms',
 
     # WebID
-    'django_webid.provider',
-    'django_webid.auth',
+    #'django_webid.provider',
+    #'django_webid.auth',
 
     # coop apps
     'coop_tag',
@@ -149,7 +150,7 @@ INSTALLED_APPS = [
     'coop.org',
     'coop.person',
     'coop.ui',
-    'coop.webid',
+    #'coop.webid',
 
     #'coop_geo',
 
@@ -172,12 +173,9 @@ INSTALLED_APPS = [
 
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
-TAG_MODEL = 'coop_local.models.Tag'
-TAGGEDITEM_MODEL = 'coop_local.models.TaggedItem'
-
-TAG_MODEL_FKEY_NAME = 'coop_local.Tag'
-
-TAGGER_CSS_FILENAME = 'coop_tag.css'
+TAGGER_TAG_MODEL = 'coop_local.models.Tag'
+TAGGER_TAGGEDITEM_MODEL = 'coop_local.models.TaggedItem'
+TAGGER_FKEY_NAME = 'coop_local.Tag'
 
 THUMBNAIL_FORMAT = 'PNG'
 
@@ -239,7 +237,7 @@ ADMIN_TOOLS_THEMING_CSS = 'css/coop_bootstrap_theming.css'
 
 
 AUTHENTICATION_BACKENDS = [
-    'django_webid.auth.backends.WEBIDAuthBackend',
+    #'django_webid.auth.backends.WEBIDAuthBackend',
     'coop_cms.perms_backends.ArticlePermissionBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
