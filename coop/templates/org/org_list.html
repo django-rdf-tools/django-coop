@@ -16,7 +16,7 @@
                 <ul class="org_list">
                     {% for item in org_list %}
                     <li><a href="{{item.get_absolute_url}}">{{ item.title }}</a>
-                        {% if item.get_tags %}
+                        {% if item.tags.all %}
                          <img src="/static/img/tags-label.png" style="position:relative;top:4px;"/>
                         {% endif %}
                         </li>

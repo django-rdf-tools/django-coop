@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.db import models
+from django.db.models import Count
 from autoslug import AutoSlugField
 #from mptt.models import MPTTModel, TreeForeignKey
 from extended_choices import Choices
@@ -357,9 +358,6 @@ class BaseOrganization(URIModel):
     #@models.permalink
     def get_absolute_url(self):
         return reverse('org_detail', args=[self.slug])
-
-    def get_tags(self):
-        return self.tags.all()
 
     def get_relations(self):
         relations = {}
