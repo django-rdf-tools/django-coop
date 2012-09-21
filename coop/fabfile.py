@@ -14,7 +14,7 @@ env.vm_path = "/Users/dom/VM/devcoop"
 env.locale = 'fr_FR.UTF-8'
 
 #Paramétres par défaut
-domaine = "localhost"
+domain = "localhost"
 projet = "coop_test"
 alias = "coop_test"
 
@@ -34,6 +34,7 @@ def pretty_pip(pkglist):
     for pkg in (pkglist):
         icanhaz.python.install(pkg)
         print(green(u'Module Python "' + unicode(pkg) + u'" : installé.'))
+
 
 @task
 def local_vm():
@@ -96,8 +97,8 @@ def project():
 
 
 def domain():
-    if 'domaine' not in env.keys():
-        prompt('DNS:', default=domaine, key='domaine')
+    if 'domain' not in env.keys():
+        prompt('DNS:', default=domain, key='domain')
 
 #prompt('Config : (1)Apache seul ou (2)Apache+Nginx :',key='websrv',validate=int,default=env.websrv)
 
@@ -228,7 +229,7 @@ def coop_project():
                         default=False):
                 with cd('projects/'):
                     with prefix('workon %(projet)s' % env):
-                        run('coop-admin.py startproject %(projet)s --domain %(domaine)s' % env)
+                        run('coop-admin.py startproject %(projet)s --domain %(domain)s' % env)
                         print(green('Projet Django-coop "%(projet)s" : Installé.' % env))
                         # coop-admin scripts creates the WSGI script so we won't call django_wsgi()
                 with cd('projects/%(projet)s' % env):
@@ -247,19 +248,19 @@ def apache_vhost():
     if(env.websrv == 1):
         vhost_context = {
             'user': env.user,
-            'domain': env.domaine,
+            'domain': env.domain,
             'projet': env.projet
         }
         import coop
         coop_path = coop.__path__[0]
         upload_template('%s/fab_templates/vhost.txt' % coop_path,
-                        '/etc/apache2/sites-available/%(domaine)s' % env,
+                        '/etc/apache2/sites-available/%(domain)s' % env,
                         context=vhost_context, use_sudo=True)
         with cd('/etc/apache2/'):
             with settings(hide('warnings', 'running', 'stdout', 'stderr')):
-                sudo('rm sites-enabled/%(domaine)s' % env)
-            sudo('ln -s `pwd`/sites-available/%(domaine)s sites-enabled/%(domaine)s' % env)
-            print(green('VirtualHost Apache pour %(domaine)s : OK.' % env))
+                sudo('rm sites-enabled/%(domain)s' % env)
+            sudo('ln -s `pwd`/sites-available/%(domain)s sites-enabled/%(domain)s' % env)
+            print(green('VirtualHost Apache pour %(domain)s : OK.' % env))
     elif(env.websrv == 2):
         print(red('Script de déploiement pas encore écrit !!!'))  # TODO
     sudo('apachectl restart')
@@ -351,8 +352,8 @@ def apache_setup():
     #virer le site par défaut
     with cd('/etc/apache2/'):
         if not contains('apache2.conf', 'ServerName localhost', use_sudo=True):
-            if not contains('apache2.conf', 'ServerName %(domaine)s' % env, use_sudo=True):
-                sudo("echo 'ServerName %(domaine)s'|cat - apache2.conf > /tmp/out && mv /tmp/out apache2.conf" % env)
+            if not contains('apache2.conf', 'ServerName %(domain)s' % env, use_sudo=True):
+                sudo("echo 'ServerName %(domain)s'|cat - apache2.conf > /tmp/out && mv /tmp/out apache2.conf" % env)
     with cd('/etc/apache2/sites-enabled/'):
         if exists('000-default'):
             sudo('rm 000-default')
