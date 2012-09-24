@@ -39,18 +39,18 @@ from coop_cms.coop_bar_cfg import *
 def load_commands(coop_bar):
     coop_bar.register([
         [django_admin,],  # django_admin_navtree
-        [edit_org_link, view_org_link, org_save, org_edit_cancel_link],
+        [edit_org_link, view_org_link, org_save, org_edit_cancel_link, org_admin_link],
 
-        # [cms_edit, cms_view, cms_save, cms_cancel],
+        [cms_edit, cms_view, cms_save, cms_cancel],
 
-        # [cms_new_article, cms_article_settings, cms_set_homepage],
-        # [cms_publish],
+        [cms_new_article, cms_article_settings, cms_set_homepage],
+        [cms_publish],
 
-        # [cms_new_newsletter, edit_newsletter, cancel_edit_newsletter, save_newsletter,
-        #     change_newsletter_settings,
-        #     schedule_newsletter, test_newsletter],
+        [cms_new_newsletter, edit_newsletter, cancel_edit_newsletter, save_newsletter,
+            change_newsletter_settings,
+            schedule_newsletter, test_newsletter],
 
-        # [cms_media_library, cms_upload_image, cms_upload_doc],
+        [cms_media_library, cms_upload_image, cms_upload_doc],
 
         [log_out]
     ])

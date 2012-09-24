@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop.organization\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-22 17:53+0200\n"
-"PO-Revision-Date: 2012-09-24 10:55+0100\n"
+"POT-Creation-Date: 2012-09-24 16:04+0200\n"
+"PO-Revision-Date: 2012-09-24 16:05+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
 "Language: fr_FR\n"
@@ -47,9 +47,25 @@ msgstr "Engagements"
 msgid "Add to the \"%s\" category"
 msgstr "Classer dans \"%s\""
 
-#: coop_bar_links.py:16
+#: coop_bar_links.py:17
 msgid "Edit organization"
 msgstr "Editer organisation"
+
+#: coop_bar_links.py:25
+msgid "View"
+msgstr "Visualiser"
+
+#: coop_bar_links.py:33
+msgid "Save"
+msgstr "Enregistrer"
+
+#: coop_bar_links.py:42
+msgid "Cancel"
+msgstr "Annuler"
+
+#: coop_bar_links.py:51
+msgid "Edit via admin"
+msgstr "Editer dans l'admin"
 
 #: forms.py:40
 msgid "Title can not be empty"
@@ -75,7 +91,7 @@ msgstr "Catégorie de rôle"
 msgid "Role categories"
 msgstr "Catégories de rôles"
 
-#: models.py:75 models.py:276
+#: models.py:75 models.py:282
 msgid "category"
 msgstr "catégorie"
 
@@ -251,95 +267,95 @@ msgstr "catégorie d'organisation"
 msgid "organization categories"
 msgstr "catégories d'organisations"
 
-#: models.py:251 models.py:257
+#: models.py:251 models.py:261
 msgid "title"
 msgstr "titre"
 
-#: models.py:252 models.py:259
+#: models.py:252 models.py:263
 msgid "acronym"
 msgstr "sigle"
 
-#: models.py:260
+#: models.py:264
 msgid "Preferred label"
 msgstr "nom préféré"
 
-#: models.py:263
+#: models.py:267
 msgid "tagline"
 msgstr "slogan"
 
-#: models.py:265
+#: models.py:269
 msgid "tell us what your organization do in one line."
 msgstr "indiquez en une ligne ce que fait votre organisation (ou un slogan)"
 
-#: models.py:267
+#: models.py:271
 msgid "description"
 msgstr "description"
 
-#: models.py:273
+#: models.py:279
 msgid "relations"
 msgstr "relations"
 
-#: models.py:279
+#: models.py:285
 msgid "members"
 msgstr "membres"
 
-#: models.py:289
+#: models.py:295
 msgid "creation date"
 msgstr "date de création"
 
-#: models.py:290
+#: models.py:296
 msgid "global email"
 msgstr "email général"
 
-#: models.py:291
+#: models.py:297
 msgid "email checksum"
 msgstr "checksum e-mail"
 
-#: models.py:293
+#: models.py:299
 msgid "web site"
 msgstr "site web"
 
-#: models.py:296
+#: models.py:302
 msgid "preferred email"
 msgstr "courriel préféré"
 
-#: models.py:299
+#: models.py:305
 msgid "preferred phone"
 msgstr "téléphone préféré"
 
-#: models.py:302
+#: models.py:308
 msgid "preferred postal address"
 msgstr "adresse postale préférée"
 
-#: models.py:306
+#: models.py:312
 msgid "show on public site"
 msgstr "afficher sur le site"
 
-#: models.py:307
+#: models.py:313
 msgid "notes"
 msgstr "notes"
 
-#: models.py:312
+#: models.py:318
 msgid "Organization"
 msgstr "Organisation"
 
-#: models.py:313
+#: models.py:319
 msgid "Organizations"
 msgstr "Organisations"
 
-#: models.py:330
+#: models.py:336
 msgid "geo"
 msgstr "geo"
 
-#: models.py:343
+#: models.py:349
 msgid "desc."
 msgstr "desc."
 
-#: models.py:350
+#: models.py:356
 msgid "No Image"
 msgstr "Pas d'image"
 
-#: models.py:351
+#: models.py:357
 msgid "logo"
 msgstr "logo"
 
@@ -347,7 +363,7 @@ msgstr "logo"
 msgid "Your changes have been saved properly"
 msgstr "Vos données ont bien été enregistrées."
 
-#: views.py:61
+#: views.py:65
 msgid "An error has occured."
 msgstr "Une erreur est intervenue"
 

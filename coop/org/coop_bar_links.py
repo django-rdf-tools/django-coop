@@ -41,3 +41,12 @@ def org_edit_cancel_link(request, context):
         org = context['organization']
         return make_link(org.get_cancel_url(), _(u'Cancel'), 'fugue/cross.png',
             classes=['alert_on_click', 'icon', 'show-dirty'])
+
+
+def org_admin_link(request, context):
+    if request and request.user.is_staff and 'organization' in context:
+        if not context.get('edit_mode'):
+            org = context['organization']
+            view_name = 'admin:%s_%s_change' % ('coop_local', 'organization')
+            return make_link(reverse(view_name, args=[org.id]), _(u"Edit via admin"), 'fugue/table.png',
+                classes=['icon', 'alert_on_click'])
