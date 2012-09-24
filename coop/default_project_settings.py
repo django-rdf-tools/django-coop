@@ -26,7 +26,7 @@ STATIC_ROOT = os.path.abspath(PROJECT_PATH + '/static_collected/')
 STATIC_URL = '/static/'
 
 # compat fix ?
-ADMIN_MEDIA_PREFIX = '/static/admin/'
+ADMIN_MEDIA_PREFIX = STATIC_URL + "admin/"
 
 
 import admin_tools
@@ -170,6 +170,9 @@ INSTALLED_APPS = [
 
 ]
 
+COOP_BAR_MODULES = [
+    'coop.coop_bar_cfg',
+    ]
 
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
@@ -215,11 +218,6 @@ COOP_CMS_ARTICLE_TEMPLATES = [
     ('coop_cms/article_standard.html', 'Article sans logo'),
     ('coop_cms/article_rubrique.html', 'Rubrique'),
 ]
-
-COOPBAR_MODULES = [
-    'coop_cms.coop_bar_cfg',
-    'coop.coop_bar_cfg'
-    ]
 
 FORMS_BUILDER_USE_SITES = False
 

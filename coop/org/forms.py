@@ -1,8 +1,11 @@
 # -*- coding:utf-8 -*-
 from django import forms
 import floppyforms
+import re
 from coop_local.models import Organization
 from djaloha.widgets import AlohaInput
+from django.utils.translation import ugettext as _
+from django.core.exceptions import ValidationError
 
 
 class OrganizationForm(floppyforms.ModelForm):
@@ -36,6 +39,7 @@ class OrganizationForm(floppyforms.ModelForm):
         if not title:
             raise ValidationError(_(u"Title can not be empty"))
         if re.search(u'<(.*)>', title):
-           raise ValidationError(_(u'HTML content is not allowed in the title'))
+            raise ValidationError(_(u'HTML content is not allowed in the title'))
         return title
+
 

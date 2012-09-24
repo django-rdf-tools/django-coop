@@ -247,11 +247,14 @@ class BaseOrganizationCategory(models.Model):
         return reverse('org_category_detail', args=[self.slug])
 
 
-
 PREFLABEL = Choices(
     ('TITLE',   1,  _(u'title')),
     ('ACRO',    2,  _(u'acronym')),
 )
+
+def get_logo_folder(self, filename):
+    img_root = 'org_logos'
+    return u'{0}/{1}/{2}'.format(img_root, self.id, filename)
 
 
 class BaseOrganization(URIModel):
@@ -268,6 +271,8 @@ class BaseOrganization(URIModel):
     description = models.TextField(_(u'description'), blank=True, null=True)
 
     logo = ImageField(upload_to='logos/', null=True, blank=True)
+    #temp_logo = models.ImageField(upload_to=get_logo_folder, blank=True, null=True, default='')
+
 
     relations = models.ManyToManyField('coop_local.Organization',
                 symmetrical=False, through='coop_local.Relation',
@@ -322,9 +327,6 @@ class BaseOrganization(URIModel):
             return self.title
         elif self.pref_label == PREFLABEL.ACRO:
             return self.acronym
-
-    def can_edit_organization(self, user):
-        return True
 
     if "coop_geo" in settings.INSTALLED_APPS:
 
@@ -406,7 +408,6 @@ class BaseOrganization(URIModel):
         #     self.email_sha1 = m.hexdigest()
         super(BaseOrganization, self).save(*args, **kwargs)
 
-
     # title field needs a special handling. checkDirectMap does not work
     # because two rdf property use the coop_local_organization.title field
     # Thus we have to decide which one to use
@@ -424,7 +425,6 @@ class BaseOrganization(URIModel):
                     print "    The field %s cannot be updated." % dbfieldname
             else:
                 print "    The field %s cannot be updated." % dbfieldname
-
 
     def updateField_pref_label(self, dbfieldname, graph):
         prefLabel = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS.rdfs.label))
@@ -448,3 +448,26 @@ class BaseOrganization(URIModel):
                     print "    The field %s cannot be updated." % dbfieldname
         else:
             print "    The field %s cannot be updated." % dbfieldname
+
+    def get_edit_url(self):
+        return reverse('org_edit', args=[self.slug])
+
+    def get_cancel_url(self):
+        return reverse('org_edit_cancel', args=[self.slug])
+
+    def _can_modify_organization(self, user):
+        if user.is_authenticated():
+            if user.is_superuser:
+                return True
+            elif user.person in self.members.all():
+                return True
+            else:
+                return False
+
+    def can_view_organization(self, user):
+        # TODO use global privacy permissions on objects
+        return True
+
+    def can_edit_organization(self, user):
+        return self._can_modify_organization(user)
+

@@ -3,22 +3,28 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.template.loader import get_template
 from django.template import Context
-from coop_cms.settings import get_article_class
 from django.conf import settings
 from coop_bar.utils import make_link
-
-from coop_cms.coop_bar_cfg import can_do
-
-#can_do teste editable=true et que l'objet est presetn dans le contexte et que l'utilisateur a le droit sur ce droit
-
-can_edit_organization = can_do('can_edit',['organization']) # methode du model (doit s'appeller can_edit_organization) + objet du contexte
+from django.contrib.contenttypes.models import ContentType
 
 
-@can_edit_organization
-def edit_org(request, context):
-    org = context.get('organization')
-    url = reverse('org_detail', args=[org.slug])
-    return make_link(url, _(u'Edit organization'), 'fugue/store.png', classes=['icon'])
+def coop_perm(perm, object_names):
+    def inner_decorator(func):
+        def wrapper(request, context):
+            editable = context.get('editable')
+            # objet editable en front-end ?
+            if not editable:
+                return
+            for object_name in object_names:
+                # objet  present dans le contexte ?
+                object = context.get(object_name)
+                if object and request and request.user.has_perm(perm + "_" + object_name, object):
+                    yes_we_can = func(request, context)
+                    if yes_we_can:
+                        return yes_we_can
+            return
+        return wrapper
+    return inner_decorator
 
 # @can_post_event
 # def post_event(request, context):
@@ -26,10 +32,26 @@ def edit_org(request, context):
 #     url = reverse('org_detail', args=[org.slug])
 #     return make_link(url, _(u'Post new event'), 'fugue/calendar--plus.png.png',classes=['icon'])
 
+from coop.org.coop_bar_links import *
+from coop_cms.coop_bar_cfg import *
+
 
 def load_commands(coop_bar):
     coop_bar.register([
-        [edit_org,]  # post_event]
+        [django_admin,],  # django_admin_navtree
+        [edit_org_link, view_org_link, org_save, org_edit_cancel_link],
+
+        # [cms_edit, cms_view, cms_save, cms_cancel],
+
+        # [cms_new_article, cms_article_settings, cms_set_homepage],
+        # [cms_publish],
+
+        # [cms_new_newsletter, edit_newsletter, cancel_edit_newsletter, save_newsletter,
+        #     change_newsletter_settings,
+        #     schedule_newsletter, test_newsletter],
+
+        # [cms_media_library, cms_upload_image, cms_upload_doc],
+
+        [log_out]
     ])
 
-    #coop_bar.register_header(cms_extra_js)
