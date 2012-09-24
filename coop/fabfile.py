@@ -395,6 +395,9 @@ def virtualenv_setup():
         print(green('Dossier "projects" créé.'))
     # sur .bashrc et pas .bashrc
     # + fix pour https://bitbucket.org/dhellmann/virtualenvwrapper/issue/62/hooklog-permissions
+    run('touch .bash_login')
+    if not contains('.bash_login', '. .bashrc'):
+        append('.bash_login', 'if [ $USER == %(user)s ]; then' % env)
     if not contains('.bashrc', 'WORKON_HOME'):
         append('.bashrc', 'if [ $USER == %(user)s ]; then' % env)
         append('.bashrc', '    export WORKON_HOME=$HOME/.virtualenvs')
