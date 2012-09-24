@@ -24,6 +24,14 @@ pgpass = '123456'
 env.websrv = 1
 
 
+@task
+def test():
+    print(yellow('run() test...'))
+    run('date')
+    print(yellow('sudo() test...'))
+    sudo('date')
+
+
 def pretty_apt(pkglist):
     for pkg in (pkglist):
         icanhaz.deb.package(pkg)
