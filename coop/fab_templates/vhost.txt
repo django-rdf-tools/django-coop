@@ -32,6 +32,6 @@
     WSGIDaemonProcess %(domain)s user=www-data group=www-data threads=25
     WSGIProcessGroup %(domain)s
 
-    WSGIScriptAlias / /home/%(user)s/%(projet)s/coop_local/wsgi.py
+    WSGIScriptAlias / /home/%(user)s/projects/%(projet)s/coop_local/wsgi.py
 
 </VirtualHost>
