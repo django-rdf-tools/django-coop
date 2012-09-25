@@ -199,7 +199,7 @@ COOP_CMS_ARTICLE_LOGO_SIZE = '600'
 COOP_CMS_NAVTREE_CLASS = 'coop_local.NavTree'
 
 # You need to declare the app here to be able to select models from navigable types in coop-cms
-COOP_CMS_CONTENT_APPS = ('coop_local', 'coop_tag', 'coop_geo', 'coop_cms')
+COOP_CMS_CONTENT_APPS = ('coop_local', 'coop_tag', 'coop_geo', 'coop_cms', 'forms')
 
 DJALOHA_LINK_MODELS = (
         'coop_local.Article',

@@ -35,6 +35,8 @@ class CustomMenu(Menu):
                         items.MenuItem(_('Images'), '/admin/coop_cms/image/'),
                         items.MenuItem(_('Newsletters'), '/admin/coop_cms/newsletter/'),
                         items.MenuItem(_('Comments'), '/admin/comments/comment/'),
+                        items.MenuItem(_('Forms'), '/admin/forms/form/'),
+
                         ]),
 
                     # RSS Sync menu gets inserted here if installed (see above)

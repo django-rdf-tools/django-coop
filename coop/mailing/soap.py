@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from SOAPpy import WSDL, faultType
 from django.conf import settings
+from logging import getLogger
+logger = getLogger('coop')
 
 try:
     _server = WSDL.Proxy(settings.SYMPA_SOAP['WSDL'])
 except Exception, e:
-    print u"Cannot find find Sympa server %s" % e
+    logger.error(u"Cannot find find Sympa server - %s" % e)
 
 
 def lists():
