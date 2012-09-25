@@ -1,13 +1,14 @@
+# -*- coding:utf-8 -*-
+
 import calendar
 import itertools
 from datetime import datetime, timedelta, time
-
 from django import http
 from django.conf import settings
 from django.db import models
 from django.template.context import RequestContext
-from django.shortcuts import get_object_or_404, render_to_response
-
+from django.shortcuts import get_object_or_404, render_to_response, redirect
+from django.core.urlresolvers import reverse
 from coop_local.models import Event, Occurrence, Calendar
 from coop.agenda import utils, forms
 from coop.agenda.conf import settings as agenda_settings
@@ -15,12 +16,15 @@ from coop.agenda.conf import settings as agenda_settings
 from dateutil import parser
 
 if settings.FIRST_DAY_OF_WEEK is not None:
-    if settings.FIRST_DAY_OF_WEEK==0:
+    if settings.FIRST_DAY_OF_WEEK == 0:
         calendar.setfirstweekday(6)
     else:
-        calendar.setfirstweekday(settings.FIRST_DAY_OF_WEEK-1)
+        calendar.setfirstweekday(settings.FIRST_DAY_OF_WEEK - 1)
 elif agenda_settings.CALENDAR_FIRST_WEEKDAY is not None:
     calendar.setfirstweekday(agenda_settings.CALENDAR_FIRST_WEEKDAY)
+
+today = datetime.now()
+
 
 def event_listing(request, template='agenda/event_list.html', events=None,
     **extra_context):
@@ -38,15 +42,6 @@ def event_listing(request, template='agenda/event_list.html', events=None,
         events = Event.objects.all()
     elif hasattr(events, '_clone'):
         events = events._clone()
-
-    return render_to_response(template,
-        dict(extra_context, events=events),
-        context_instance=RequestContext(request))
-
-
-def calendar_listing(request, slug, template='agenda/event_list.html', **extra_context):
-    cal = get_object_or_404(Calendar, slug=slug)
-    events = Event.objects.filter(calendar=cal)
 
     return render_to_response(template,
         dict(extra_context, events=events),
@@ -272,7 +267,7 @@ def year_view(request, year, template='agenda/yearly_view.html', queryset=None):
         context_instance=RequestContext(request))
 
 
-def month_view(request, year, month, template='agenda/monthly_view.html',
+def month_view(request, year=today.year, month=today.month, template='agenda/monthly_view.html',
     queryset=None):
     """
     Render a traditional calendar grid view with temporal navigation variables.
@@ -336,3 +331,16 @@ def month_view(request, year, month, template='agenda/monthly_view.html',
 
     return render_to_response(template, data,
         context_instance=RequestContext(request))
+
+
+def agenda_by_name(request, slug=None, template='agenda/monthly_view.html', **extra_context):
+    #cal = get_object_or_404(Calendar, slug=slug)
+    #events = Event.objects.filter(calendar=cal)
+
+    #return redirect('agenda-monthly-view') # TODO pourquoi ça marche pas ?
+    return redirect('/agenda/%d/%d/' % (today.year, today.month))
+
+
+    # return render_to_response(template,
+    #     dict(extra_context, events=events),
+    #     context_instance=RequestContext(request))

@@ -39,6 +39,7 @@ from coop_cms.coop_bar_cfg import *
 def load_commands(coop_bar):
     coop_bar.register([
         [django_admin,],  # django_admin_navtree
+
         [edit_org_link, view_org_link, org_save, org_edit_cancel_link, org_admin_link],
 
         [cms_edit, cms_view, cms_save, cms_cancel],

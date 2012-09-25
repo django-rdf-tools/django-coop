@@ -266,7 +266,8 @@ def apache_vhost():
                         context=vhost_context, use_sudo=True)
         with cd('/etc/apache2/'):
             with settings(hide('warnings', 'running', 'stdout', 'stderr')):
-                sudo('rm sites-enabled/%(domain)s' % env)
+                if exists('sites-enabled/%(domain)s' % env):
+                    sudo('rm sites-enabled/%(domain)s' % env)
             sudo('ln -s `pwd`/sites-available/%(domain)s sites-enabled/%(domain)s' % env)
             print(green('VirtualHost Apache pour %(domain)s : OK.' % env))
     elif(env.websrv == 2):
