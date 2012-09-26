@@ -7,7 +7,7 @@ logger = getLogger('coop')
 try:
     _server = WSDL.Proxy(settings.SYMPA_SOAP['WSDL'])
 except Exception, e:
-    logger.error(u"Cannot find find Sympa server - %s" % e)
+    logger.warning(u"Cannot find find Sympa server - %s" % e)
 
 
 def lists():
