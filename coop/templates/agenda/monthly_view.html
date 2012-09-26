@@ -14,8 +14,9 @@
         <a href="{% url agenda-monthly-view last_month.year last_month.month %}"
            title="{% trans "Last Month" %}">&larr;</a>
         {{ this_month|date:"F" }}
-        <a title="{% blocktrans with this_month.year as year %}View {{ year}}{% endblocktrans %}" href="{% url agenda-yearly-view this_month.year %}">
-            {{ this_month|date:"Y" }}</a>
+        {# <a title="{% blocktrans with this_month.year as year %}View {{ year}}{% endblocktrans %}" href="{% url agenda-yearly-view this_month.year %}"> #}
+            {{ this_month|date:"Y" }}
+        {# </a> #}
         <a href="{% url agenda-monthly-view next_month.year next_month.month %}"
            title="{% trans "Next Month" %}">&rarr;</a>
     </h3>

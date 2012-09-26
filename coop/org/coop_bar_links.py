@@ -48,5 +48,5 @@ def org_admin_link(request, context):
         if not context.get('edit_mode'):
             org = context['organization']
             view_name = 'admin:%s_%s_change' % ('coop_local', 'organization')
-            return make_link(reverse(view_name, args=[org.id]), _(u"Edit via admin"), 'fugue/table.png',
+            return make_link(reverse(view_name, args=[org.id]), _(u"Edit via admin"), 'fugue/application-form.png',
                 classes=['icon', 'alert_on_click'])
