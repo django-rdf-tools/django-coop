@@ -1,6 +1,7 @@
 /* @override 
 	http://localhost:8000/static/css/style.css
 	http://www.extramarche.net/static/css/style.css
+	http://pes.mesclun.org/static/css/style.css
 */
 
 body {
@@ -107,6 +108,25 @@ h4 {
 	background: linear-gradient(#FFFFFF, #A8D7E1);
 	text-shadow: #f8f8f8 1px 1px 0;
 }
+
+ul.breadcrumb{
+	display: block;
+	height: 16px;
+	margin-bottom: 10px;
+	margin-top: 15px;
+	padding-left: 20px;
+}
+
+.breadcrumb li{
+	list-style-type: none;
+	float: left;
+}
+
+.breadcrumb li a{
+	text-decoration: none;
+	font-size: 12px;
+}
+
 
 #content {
 	font-size: 1.1em;
