@@ -147,10 +147,10 @@
 
 
 
-            {% if organization.get_tags %}
+            {% if organization.tags.all %}
             <h4>Mots-clés</h4>
             <div id="tags">
-            {% for tag in organization.get_tags %}
+            {% for tag in organization.tags.all %}
 
                 <a href="{{tag.get_absolute_url}}">{{tag}}</a>
 

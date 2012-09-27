@@ -27,7 +27,7 @@ class BaseCalendar(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('agenda-calendar', args=[self.slug])
+        return reverse('agenda-default', args=[self.slug])
 
 
 class BaseEventCategory(models.Model):

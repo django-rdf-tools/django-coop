@@ -14,14 +14,22 @@ env.vm_path = "/Users/dom/VM/devcoop"
 env.locale = 'fr_FR.UTF-8'
 
 #Paramétres par défaut
-domaine = "localhost"
-projet = "coop_test"
-alias = "coop_test"
+domain = "www.promess84.fr"
+projet = "promess84"
+alias = "promess"
 
 pgpass = '123456'
 
 # Paramétres Déploiement
 env.websrv = 1
+
+
+@task
+def test():
+    print(yellow('run() test...'))
+    run('date')
+    print(yellow('sudo() test...'))
+    sudo('date')
 
 
 def pretty_apt(pkglist):
@@ -34,6 +42,7 @@ def pretty_pip(pkglist):
     for pkg in (pkglist):
         icanhaz.python.install(pkg)
         print(green(u'Module Python "' + unicode(pkg) + u'" : installé.'))
+
 
 @task
 def local_vm():
@@ -90,14 +99,14 @@ def remote():
     #Remplacez %admin ALL=(ALL) ALL par %admin ALL=(ALL) NOPASSWD: ALL
 
 
-def project():
+def set_project():
     if 'projet' not in env.keys():
         prompt('Nom du projet :', default=projet, key='projet')
 
 
-def domain():
-    if 'domaine' not in env.keys():
-        prompt('DNS:', default=domaine, key='domaine')
+def set_domain():
+    if 'domain' not in env.keys():
+        prompt('DNS:', default=domain, key='domain')
 
 #prompt('Config : (1)Apache seul ou (2)Apache+Nginx :',key='websrv',validate=int,default=env.websrv)
 
@@ -120,10 +129,10 @@ def pip_bootstrap():
 def server_setup():
     '''Installation serveur pour Ubuntu >= 10.10'''
     with settings(show('user'), hide('warnings', 'running', 'stdout', 'stderr')):
-        project()
-        domain()
+        set_project()
+        set_domain()
         #if gandi
-        locale()
+        set_locale()
         sudo('apt-get -y install aptitude')  # demande un input
         print(yellow('Mise à jour de l’index APT...'))
         fabtools.deb.update_index()  # apt-get quiet update
@@ -155,7 +164,7 @@ def server_setup():
 def postgresql():
     '''PostgreSQL 9.1 + PostGIS 1.5'''
     with settings(show('user'), hide('warnings', 'running', 'stdout', 'stderr')):
-        project()
+        set_project()
         if 'pgpass' not in env.keys():
             prompt('Passe PostgreSQL :', default=pgpass, key='pgpass')
         print(yellow('Configuration PostgreSQL+PostGIS...'))
@@ -182,38 +191,38 @@ def postgresql():
 
 def project_setup():
     # recolte des variables
-    project()
-    domain()
-    locale()
+    set_project()
+    set_domain()
+    set_locale()
 
     # creation du projet django (startproject)
-    django_project()
+    django_set_project()
     apache_vhost()
     django_wsgi()
 
     #créer la db avec le nom du projet (idempotent)
     create_pg_db()
-    dependencies()
+    # dependencies() # TODO : parse requirements.txt to test each package
     sudo('apachectl restart')
 
 
 @task
 def coop_setup():
     """Creation d'un nouveau projet django-coop"""
-    project()
-    domain()
-    locale()
-    coop_project()
-    dependencies()
+    set_project()
+    set_domain()
+    set_locale()
+    coop_set_project()
+    # dependencies() # TODO : parse requirements.txt to test each package
     apache_vhost()
-    create_pg_db()
+    #create_pg_db()
     sudo('apachectl restart')
 
 
-def coop_project():
+def coop_set_project():
     '''Créer un projet django dans son virtualenv'''
-    project()
-    domain()
+    set_project()
+    set_domain()
     with settings(show('user'), hide('warnings', 'running', 'stdout', 'stderr')):
         if not exists('/home/%(user)s/.virtualenvs/%(projet)s' % env):
             # if confirm('Pas de virtualenv "%(projet)s", faut-il le créer ?' % env, default=False):
@@ -228,38 +237,42 @@ def coop_project():
                         default=False):
                 with cd('projects/'):
                     with prefix('workon %(projet)s' % env):
-                        run('coop-admin.py startproject %(projet)s --domain %(domaine)s' % env)
+                        run('coop-admin.py startproject %(projet)s --domain %(domain)s' % env)
                         print(green('Projet Django-coop "%(projet)s" : Installé.' % env))
                         # coop-admin scripts creates the WSGI script so we won't call django_wsgi()
                 with cd('projects/%(projet)s' % env):
                     with prefix('workon %(projet)s' % env):
                         run('chmod +x manage.py')
-                        sudo('chmod -R g+rw media')
+                        run('chmod -R g+rw media')
         else:
             print(yellow('Projet Django-coop nommé "%(projet)s" : déjà installé.' % env))
 
+from . import coop
 
 def apache_vhost():
     '''Configuration Vhost apache'''
-    project()
-    domain()
+    set_project()
+    set_domain()
     #with prefix('workon %(projet)s' % env):
     if(env.websrv == 1):
         vhost_context = {
             'user': env.user,
-            'domain': env.domaine,
+            'domain': env.domain,
             'projet': env.projet
         }
-        import coop
+        # coop_path = run('python -c "import coop; print coop.__path__[0]"')
+        # import sys
+        # print sys.modules[__name__]
         coop_path = coop.__path__[0]
-        upload_template('%s/fab_templates/vhost.txt' % coop_path,
-                        '/etc/apache2/sites-available/%(domaine)s' % env,
+        upload_template('%s/fabfile/fab_templates/vhost.txt' % coop_path,
+                        '/etc/apache2/sites-available/%(domain)s' % env,
                         context=vhost_context, use_sudo=True)
         with cd('/etc/apache2/'):
             with settings(hide('warnings', 'running', 'stdout', 'stderr')):
-                sudo('rm sites-enabled/%(domaine)s' % env)
-            sudo('ln -s `pwd`/sites-available/%(domaine)s sites-enabled/%(domaine)s' % env)
-            print(green('VirtualHost Apache pour %(domaine)s : OK.' % env))
+                if exists('sites-enabled/%(domain)s' % env):
+                    sudo('rm sites-enabled/%(domain)s' % env)
+            sudo('ln -s `pwd`/sites-available/%(domain)s sites-enabled/%(domain)s' % env)
+            print(green('VirtualHost Apache pour %(domain)s : OK.' % env))
     elif(env.websrv == 2):
         print(red('Script de déploiement pas encore écrit !!!'))  # TODO
     sudo('apachectl restart')
@@ -267,7 +280,7 @@ def apache_vhost():
 
 def django_wsgi():
     '''paramétrage WSGI/Apache'''
-    project()
+    set_project()
     if not exists('/home/%(user)s/%(projet)s/coop_local/wsgi.py' % env):
         with prefix('workon %(projet)s' % env):
             sp_path = run('cdsitepackages ; pwd')
@@ -278,7 +291,7 @@ def django_wsgi():
                 'user': env.user,
                 'projet': env.projet
             }
-        upload_template('%s/fab_templates/wsgi.txt' % coop_path,
+        upload_template('%s/fabfile/fab_templates/wsgi.txt' % coop_path,
                         '/home/%(user)s/projects/%(projet)s/coop_local/wsgi.py' % env,
                         context=wsgi_context, use_sudo=True)
         print(green('Script WSGI pour %(projet)s créé.' % env))
@@ -286,7 +299,7 @@ def django_wsgi():
         print(yellow('Script WSGI pour %(projet)s déjà existant.' % env))
 
 
-def django_project():
+def django_set_project():
     '''Créer un projet django dans son virtualenv'''
     with settings(show('user'), hide('warnings', 'running', 'stdout', 'stderr')):
         if not exists('/home/%(user)s/.virtualenvs/%(projet)s' % env):
@@ -313,7 +326,7 @@ def django_project():
 
 
 def first_syncdb():
-    project()
+    set_project()
     with cd('projects/%(projet)s' % env):
         with prefix('workon %(projet)s' % env):
             run('./manage.py syncdb --all --noinput')
@@ -351,18 +364,19 @@ def apache_setup():
     #virer le site par défaut
     with cd('/etc/apache2/'):
         if not contains('apache2.conf', 'ServerName localhost', use_sudo=True):
-            if not contains('apache2.conf', 'ServerName %(domaine)s' % env, use_sudo=True):
-                sudo("echo 'ServerName %(domaine)s'|cat - apache2.conf > /tmp/out && mv /tmp/out apache2.conf" % env)
+            if not contains('apache2.conf', 'ServerName %(domain)s' % env, use_sudo=True):
+                sudo("echo 'ServerName %(domain)s'|cat - apache2.conf > /tmp/out && mv /tmp/out apache2.conf" % env)
     with cd('/etc/apache2/sites-enabled/'):
         if exists('000-default'):
             sudo('rm 000-default')
             print(green('Site par défaut d’Apache supprimé'))
 
 
+@task
 def create_pg_db():
     '''Créer une base de données postgres au nom du projet'''
-    with settings(show('user'), hide('warnings', 'running', 'stdout', 'stderr')):
-        project()
+    with settings(show('user')):#, hide('warnings', 'running', 'stdout', 'stderr')):
+        set_project()
         icanhaz.postgres.database(env.projet, env.user, template='template_postgis', locale=env.locale)
         print(green('Création base de données PostgreSQL nommée "%(projet)s" : OK.' % env))
 
@@ -385,6 +399,9 @@ def virtualenv_setup():
         print(green('Dossier "projects" créé.'))
     # sur .bashrc et pas .bashrc
     # + fix pour https://bitbucket.org/dhellmann/virtualenvwrapper/issue/62/hooklog-permissions
+    run('touch .bash_login')
+    if not contains('.bash_login', '. .bashrc'):
+        append('.bash_login', 'if [ $USER == %(user)s ]; then' % env)
     if not contains('.bashrc', 'WORKON_HOME'):
         append('.bashrc', 'if [ $USER == %(user)s ]; then' % env)
         append('.bashrc', '    export WORKON_HOME=$HOME/.virtualenvs')
@@ -455,7 +472,7 @@ def dependencies():
             with cd('projects/%(projet)s' % env):
                 run('./manage.py collectstatic --noinput')
 
-def locale():
+def set_locale():
     '''Règlage des locale de l'OS'''
     locale = run("echo $LANG")
     if(locale != env.locale):
@@ -509,7 +526,7 @@ def locale():
 # @task
 # def update():
 #     '''Met à jour un serveur depuis le depot git "origin"'''
-#     project()
+#     set_project()
 #     #with settings(show('user'),hide('warnings', 'running', 'stdout', 'stderr')):
 #     with prefix('workon %(projet)s' % env):
 #         dependencies()

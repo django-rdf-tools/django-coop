@@ -7,44 +7,44 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop.ui\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-26 19:11+0200\n"
-"PO-Revision-Date: 2012-07-26 19:16+0100\n"
+"POT-Creation-Date: 2012-09-25 14:23+0200\n"
+"PO-Revision-Date: 2012-09-25 14:23+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
-"Language: \n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"X-Poedit-Language: French\n"
-"X-Poedit-Country: FRANCE\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.5.3\n"
 
-#: dashboard.py:47
-#: menu.py:27
-msgid "Articles"
-msgstr "Articles"
-
-#: dashboard.py:59
-#: menu.py:59
-msgid "Agenda"
-msgstr "Agenda"
-
-#: dashboard.py:68
-msgid "My network"
-msgstr "Mon réseau"
-
-#: dashboard.py:80
-msgid "Administration"
-msgstr "Administration"
-
-#: dashboard.py:86
-#: dashboard.py:129
+#: dashboard.py:86 dashboard.py:129
 msgid "Recent Actions"
 msgstr "Actions récentes"
+
+#: dashboard.py:90
+msgid "Latest Django News"
+msgstr "Dernières nouvelles de Django"
+
+#: dashboard.py:97
+msgid "Support"
+msgstr "Support"
+
+#: dashboard.py:100
+msgid "Blog PES"
+msgstr "Blog PES"
+
+#: dashboard.py:105
+msgid "Django \"django-users\" mailing list"
+msgstr "Liste de diffusion django"
 
 #: menu.py:25
 msgid "Navigation tree"
 msgstr "Menu de navigation"
+
+#: menu.py:27
+msgid "Articles"
+msgstr "Articles"
 
 #: menu.py:29
 msgid "CMS"
@@ -74,115 +74,126 @@ msgstr "Lettres d'information"
 msgid "Comments"
 msgstr "Commentaires"
 
-#: menu.py:40
-msgid "RSS"
-msgstr "RSS"
+#: menu.py:38
+msgid "Forms"
+msgstr "Formulaires"
 
-#: menu.py:41
-msgid "RSS items"
-msgstr "Articles à importer"
-
-#: menu.py:42
-msgid "RSS sources"
-msgstr "Sources d'articles"
-
-#: menu.py:45
-#: menu.py:46
+#: menu.py:44 menu.py:45
 msgid "Tags"
 msgstr "Tags"
 
 #: menu.py:47
-msgid "Tag categories"
-msgstr "Catégories de tags"
-
-#: menu.py:48
 msgid "Tag trees"
 msgstr "Taxonomie"
 
-#: menu.py:51
+#: menu.py:50
 msgid "Django"
 msgstr "Django"
 
-#: menu.py:52
+#: menu.py:51
 msgid "Users"
 msgstr "Comptes utilisateurs"
 
-#: menu.py:53
+#: menu.py:52
 msgid "Sites"
 msgstr "Configuration du site"
 
-#: menu.py:61
-msgid "Events"
-msgstr "Événements"
-
-#: menu.py:62
-msgid "Calendar"
-msgstr "Calendrier"
-
-#: menu.py:63
-msgid "Event categories"
-msgstr "Catégories d'événements"
-
-#: menu.py:67
+#: menu.py:60
 msgid "Network"
 msgstr "Réseau"
 
-#: menu.py:70
+#: menu.py:63
 msgid "Directory"
 msgstr "Annuaire"
 
-#: menu.py:71
+#: menu.py:64
 msgid "Organizations"
 msgstr "Organisations"
 
-#: menu.py:72
+#: menu.py:65
 msgid "Persons"
 msgstr "Personnes"
 
-#: menu.py:73
+#: menu.py:66
 msgid "Organization categories"
 msgstr "Catégories d'organisations"
 
-#: menu.py:74
+#: menu.py:67
 msgid "Person categories"
 msgstr "Catégories de personnes"
 
-#: menu.py:75
+#: menu.py:68
 msgid "Roles"
 msgstr "Rôles"
 
-#: menu.py:78
-#: menu.py:79
+#: menu.py:71 menu.py:72
 msgid "Exchanges"
 msgstr "Échanges"
 
-#: menu.py:80
+#: menu.py:73
 msgid "Exchange methods"
 msgstr "Modalités d'échange"
 
-#: menu.py:83
+#: menu.py:76
 msgid "Cartography"
 msgstr "Cartographie"
 
-#: menu.py:84
+#: menu.py:77
 msgid "Locations"
 msgstr "Lieux"
 
-#: menu.py:85
+#: menu.py:78
 msgid "Areas"
 msgstr "Zones"
 
-#: menu.py:86
+#: menu.py:79
 msgid "Location categories"
 msgstr "Catégories de lieux"
 
-#: menu.py:90
+#: menu.py:83
 msgid "RDF settings"
 msgstr "Réglages RDF"
 
-#: menu.py:91
+#: menu.py:84
 msgid "URI redirection"
 msgstr "Redirection d'URI"
+
+#: menu.py:99
+msgid "RSS"
+msgstr "RSS"
+
+#: menu.py:100
+msgid "RSS items"
+msgstr "Articles à importer"
+
+#: menu.py:101
+msgid "RSS sources"
+msgstr "Sources d'articles"
+
+#: menu.py:107
+msgid "Agenda"
+msgstr "Agenda"
+
+#: menu.py:109
+msgid "Events"
+msgstr "Événements"
+
+#: menu.py:110
+msgid "Calendar"
+msgstr "Calendrier"
+
+#: menu.py:111
+msgid "Event categories"
+msgstr "Catégories d'événements"
+
+#~ msgid "My network"
+#~ msgstr "Mon réseau"
+
+#~ msgid "Administration"
+#~ msgstr "Administration"
+
+#~ msgid "Tag categories"
+#~ msgstr "Catégories de tags"
 
 #~ msgid "Quick links"
 #~ msgstr "Liens rapides"
@@ -195,18 +206,6 @@ msgstr "Redirection d'URI"
 
 #~ msgid "Log out"
 #~ msgstr "Déconnexion"
-
-#~ msgid "Latest Django News"
-#~ msgstr "Dernières nouvelles de Django"
-
-#~ msgid "Support"
-#~ msgstr "Support"
-
-#~ msgid "Blog PES"
-#~ msgstr "Blog PES"
-
-#~ msgid "Django \"django-users\" mailing list"
-#~ msgstr "Liste de diffusion django"
 
 #~ msgid "Database"
 #~ msgstr "Base de données"

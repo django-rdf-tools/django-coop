@@ -3,7 +3,7 @@ from django.conf.urls.defaults import patterns, include, url
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
-from coop.webid import webiduri
+#from coop.webid import webiduri
 import sys
 
 # https://code.djangoproject.com/ticket/10405#comment:11
@@ -17,21 +17,20 @@ handler500 = 'coop.views.SentryHandler500'
 
 urlpatterns += patterns('',
 
-
     #Testing webid urls
-    url(r'^accounts/webidauth', 'coop.webid.views.test_login',
-        name="webidauth-login"),
+    # url(r'^accounts/webidauth', 'coop.webid.views.test_login',
+    #     name="webidauth-login"),
     # url(r'^webid/', include('django_webid.provider.urls')),
-    url(r'^auth/', include('coop.webid.urls')),
+    # url(r'^auth/', include('coop.webid.urls')),
 
     #XXX remove this first url. Just debuggin'
-    url(r'^testpeople/(?P<username>\S+)', 'coop.webid.views.people',
-        name="webidprovider-webid_uri.test"),
+    # url(r'^testpeople/(?P<username>\S+)', 'coop.webid.views.people',
+    #     name="webidprovider-webid_uri.test"),
     # This url is used for assigning the WebID URI for
     # a user if no callback is given in settings.
-    url(r'^people/(?P<username>\S+)$',
-        webiduri.WebIDProfileView.as_view(),
-        name="webidprovider-webid_uri"),
+    # url(r'^people/(?P<username>\S+)$',
+    #     webiduri.WebIDProfileView.as_view(),
+    #     name="webidprovider-webid_uri"),
 
     url(r'^admin_tools/', include('admin_tools.urls')),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -41,12 +40,8 @@ urlpatterns += patterns('',
     url(r'^reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm'),
     url(r'^reset/done/$', 'django.contrib.auth.views.password_reset_complete'),
     #url(r'^org/$', 'coop_local.views.org_list', name="org_list"),  # exemple de view django-coop surchargee
-
-    # sympa test
-    url(r'^sympa_remote_list/(?P<name>\w+)$', 'coop.mailing.views.list'),
-
-
 )
+
 
 # URLS for all Classification models
 

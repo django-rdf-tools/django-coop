@@ -9,7 +9,7 @@ if DEBUG or ('runserver' in sys.argv):
     firepython.__api_version__ = '1.2'  # avoid known issue
     MIDDLEWARE_CLASSES = DEBUG_SETTINGS['middleware'] + [
         'debug_toolbar.middleware.DebugToolbarMiddleware',
-        'firepython.middleware.FirePythonDjango',
+        #'firepython.middleware.FirePythonDjango',
         ]
     INSTALLED_APPS = DEBUG_SETTINGS['apps'] + [
         'debug_toolbar',
