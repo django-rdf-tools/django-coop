@@ -260,7 +260,7 @@ def get_logo_folder(self, filename):
 class BaseOrganization(URIModel):
     title = models.CharField(_(u'title'), max_length=250)
 
-    acronym = models.CharField(_(u'acronym'), max_length=20, blank=True, null=True)
+    acronym = models.CharField(_(u'acronym'), max_length=100, blank=True, null=True)
     pref_label = models.PositiveSmallIntegerField(_(u'Preferred label'),
                         choices=PREFLABEL.CHOICES, default=PREFLABEL.TITLE)
 
