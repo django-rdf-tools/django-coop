@@ -255,9 +255,6 @@ def coop_set_project():
         else:
             print(yellow('Projet Django-coop nommé "%(projet)s" : déjà installé.' % env))
 
-# from . import coop
-import coop
-
 
 def apache_vhost():
     '''Configuration Vhost apache'''
@@ -273,6 +270,7 @@ def apache_vhost():
         # coop_path = run('python -c "import coop; print coop.__path__[0]"')
         # import sys
         # print sys.modules[__name__]
+        import coop
         coop_path = coop.__path__[0]
         upload_template('%s/fabfile/fab_templates/vhost.txt' % coop_path,
                         '/etc/apache2/sites-available/%(domain)s' % env,
