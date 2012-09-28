@@ -1,11 +1,63 @@
-#TODO !
 
-# map:person_tags a d2rq:PropertyBridge; # EXAMPLE M2M generic relation
-#     d2rq:belongsToClassMap map:person;
-#     d2rq:refersToClassMap map:xlabel;
-#     d2rq:property dct:subject;
-#     d2rq:join "coop_local_tag.id <= coop_local_taggeditem.tag_id";
-#     d2rq:join "coop_local_person.id <= coop_local_taggeditem.object_id";
-#     d2rq:join "django_content_type.id <= coop_local_taggeditem.content_type_id";
-#     d2rq:condition "django_content_type.model = 'person'";
-#     .
+# table coop_local_article
+map:article a d2rq:ClassMap;
+    d2rq:dataStorage map:database;
+    {% if mode == 'view' %}
+    d2rq:uriPattern "article/@@coop_local_article.id@@/";
+    {% else %}
+    d2rq:uriColumn "coop_local_article.uri";
+    {% endif %}
+    d2rq:class dct:Text;
+    d2rq:condition "coop_local_article.publication = '1'"
+    .
+map:article_created a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:article;
+    d2rq:property dct:created;
+    d2rq:column "coop_local_article.created";
+    d2rq:datatype xsd:dateTime;
+    .
+map:article_modified a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:article;
+    d2rq:property dct:modified;
+    d2rq:column "coop_local_article.modified";
+    d2rq:datatype xsd:dateTime;
+    .
+map:article_title a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:article;
+    d2rq:property dct:title;
+    d2rq:column "coop_local_article.title";
+    .
+map:article_abstract a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:article;
+    d2rq:property dct:abstract;
+    d2rq:column "coop_local_article.summary";
+    .
+map:article_content a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:article;
+    d2rq:property dct:description;
+    d2rq:column "coop_local_article.content";
+    .
+map:article_tags a d2rq:PropertyBridge; # EXAMPLE M2M generic relation
+    d2rq:belongsToClassMap map:article;
+    d2rq:refersToClassMap map:xlabel;
+    d2rq:property dct:subject;
+    d2rq:join "coop_local_tag.id <= coop_local_taggeditem.tag_id";
+    d2rq:join "coop_local_article.id <= coop_local_taggeditem.object_id";
+    d2rq:join "django_content_type.id <= coop_local_taggeditem.content_type_id";
+    d2rq:condition "django_content_type.model = 'article'";
+    .
+map:article_creator a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:article;
+    d2rq:property dct:creator;
+    d2rq:refersToClassMap map:person;
+    d2rq:join "coop_local_article.person_id = coop_local_person.id";
+    .
+map:article_publisher a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:article;
+    d2rq:property dct:creator;
+    d2rq:refersToClassMap map:organization;
+    d2rq:join "coop_local_article.organization_id = coop_local_organization.id";
+    .
+
+
+

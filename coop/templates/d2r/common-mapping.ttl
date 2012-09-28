@@ -52,6 +52,8 @@ map:scheme_name a d2rq:PropertyBridge;
 
 {% include "d2r/engagement.ttl" %}
 
+{% include "d2r/article.ttl" %}
+
 
 # Table django_comments    To be finished
 map:comment a d2rq:ClassMap;

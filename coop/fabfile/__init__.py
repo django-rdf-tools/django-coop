@@ -244,10 +244,17 @@ def coop_set_project():
                     with prefix('workon %(projet)s' % env):
                         run('chmod +x manage.py')
                         run('chmod -R g+rw media')
+                if exists('/home/%(user)s/projects/%(projet)s/supervisor.conf' % env):
+                    print(yellow('Un fichier de configuration supervisor existe pour le projet'))
+                    # if confirm('Voir le fichier de configuration supervisor?', default=False):
+                    #     run('more /home/%(user)s/projects/%(projet)s/supervisor.conf' % env)
+                    if confirm('Utiliser ce fichier de configuration supervisor', 
+                               default=False):
+                        sudo('supervisorctl reread')
+                        sudo('supervisorctl update')
         else:
             print(yellow('Projet Django-coop nommé "%(projet)s" : déjà installé.' % env))
 
-from . import coop
 
 def apache_vhost():
     '''Configuration Vhost apache'''
@@ -263,6 +270,7 @@ def apache_vhost():
         # coop_path = run('python -c "import coop; print coop.__path__[0]"')
         # import sys
         # print sys.modules[__name__]
+        import coop
         coop_path = coop.__path__[0]
         upload_template('%s/fabfile/fab_templates/vhost.txt' % coop_path,
                         '/etc/apache2/sites-available/%(domain)s' % env,
@@ -375,7 +383,7 @@ def apache_setup():
 @task
 def create_pg_db():
     '''Créer une base de données postgres au nom du projet'''
-    with settings(show('user')):#, hide('warnings', 'running', 'stdout', 'stderr')):
+    with settings(show('user')):  # , hide('warnings', 'running', 'stdout', 'stderr')):
         set_project()
         icanhaz.postgres.database(env.projet, env.user, template='template_postgis', locale=env.locale)
         print(green('Création base de données PostgreSQL nommée "%(projet)s" : OK.' % env))
