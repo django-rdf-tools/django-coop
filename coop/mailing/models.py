@@ -11,7 +11,7 @@ from django.contrib.sites.models import Site
 from django.conf import settings
 
 
-# The sympa templates for list 
+# The sympa templates for list
 # /home/sympa/default/create_list_template
 # they MUST match the repositories name, this is the aim of the
 # templateName property
@@ -35,10 +35,10 @@ class BaseMailingList(models.Model):
     # Specific field to run sympa
     subject = models.CharField(max_length=200)
     template = models.PositiveSmallIntegerField(_(u'template'),
-                    choices=DISPLAY.CHOICES)
+                    choices=DISPLAY.CHOICES, default=DISPLAY.NEWS_REMOTE_SOURCE)
     description = models.TextField(blank=True)  # could contains html balises
-    # A choisir dans une liste... qui parametre cette liste,est-t-elle modifiable? 
-    # ... et encore pleins de questions. C'est de la mecanique interne a sympa et cela 
+    # A choisir dans une liste... qui parametre cette liste,est-t-elle modifiable?
+    # ... et encore pleins de questions. C'est de la mecanique interne a sympa et cela
     # semble optionnel.... on peut peut etre s'en passer et le gerer par nos tags
     # topics = models.CharField(max_length=200, blank=True)
 
