@@ -19,7 +19,7 @@ git+git://github.com/Nimn/geo-django-fla.git
 
 django-autoslug
 unicode-slugify
-
+git+git://github.com/praekelt/django-preferences.git
 fabric
 fabtools
 

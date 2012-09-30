@@ -9,17 +9,17 @@ from coop.exchange.models import BaseExchange, BaseProduct, BaseExchangeMethod
 from coop.org.models import (   BaseOrganizationCategory, BaseOrganization,
                                 BaseRelation, BaseEngagement, BaseRole,
                                 BaseContact, BaseRoleCategory)
-
+from coop.prefs.models import BaseSitePrefs
 
 # ---- person
 
 
 class LinkProperty(BaseLinkProperty):
-        pass
+    pass
 
 
 class Link(BaseLink):
-        pass
+    pass
 
 
 # ----- CMS
@@ -47,68 +47,68 @@ if 'coop_tag' in settings.INSTALLED_APPS:
 
 
 class PersonCategory(BasePersonCategory):
-        pass
+    pass
 
 
 class Person(BasePerson):
-        pass
+    pass
 
 
 # ----- org
 
 
 class Contact(BaseContact):
-        pass
+    pass
 
 
 class RoleCategory(BaseRoleCategory):
-        pass
+    pass
 
 
 class Role(BaseRole):
-        pass
+    pass
 
 
 class Relation(BaseRelation):
-        pass
+    pass
 
 
 class Engagement(BaseEngagement):
-        pass
+    pass
 
 
 class OrganizationCategory(BaseOrganizationCategory):
-        pass
+    pass
 
 
 class Organization(BaseOrganization):
-        pass
+    pass
 
 
 # ------ exchange
 
 
 class Exchange(BaseExchange):
-        pass
+    pass
 
 
 class ExchangeMethod(BaseExchangeMethod):
-        pass
+    pass
 
 
 class Product(BaseProduct):
-        pass
+    pass
 
 
 # ----- mailing
 
 
 class MailingList(BaseMailingList):
-        pass
+    pass
 
 
 class Subscription(BaseSubscription):
-        pass
+    pass
 
 
 # ----- agenda
@@ -118,19 +118,23 @@ if 'coop.agenda' in settings.INSTALLED_APPS:
             BaseOccurrence, BaseDated
 
     class Calendar(BaseCalendar):
-            pass
+        pass
 
     class Event(BaseEvent):
-            pass
+        pass
 
     class EventCategory(BaseEventCategory):
-            pass
+        pass
 
     class Occurrence(BaseOccurrence):
-            pass
+        pass
 
     class Dated(BaseDated):
-            pass
+        pass
 
 
+# ------ global site preferences
 
+
+class SitePrefs(BaseSitePrefs):
+    pass
