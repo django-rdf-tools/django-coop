@@ -8,4 +8,3 @@ from coop.utils.autocomplete_admin import FkAutocompleteAdmin, InlineAutocomplet
 class SitePrefsAdmin(PreferencesAdmin, FkAutocompleteAdmin):
     related_search_fields = {'main_organization': ('title', 'subtitle', 'acronym'), }
 
-admin.site.register(SitePrefs, SitePrefsAdmin)

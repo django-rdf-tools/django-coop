@@ -45,9 +45,9 @@ def load_commands(coop_bar):
 
         [edit_org_link, view_org_link, org_save, org_edit_cancel_link, org_admin_link],
 
-        [cms_edit, cms_view, cms_save, cms_cancel, django_admin_edit_article],
+        [cms_edit, cms_view, cms_save, cms_cancel, django_admin_edit_article, cms_article_settings],
 
-        [cms_new_article, cms_article_settings],
+        [cms_new_article, ],
 
         [cms_new_newsletter, edit_newsletter, cancel_edit_newsletter, save_newsletter,
             change_newsletter_settings,
