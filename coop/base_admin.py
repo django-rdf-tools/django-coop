@@ -4,18 +4,18 @@ from django.contrib import admin
 from coop_local.models import *
 from coop.person.admin import PersonAdmin
 from coop.org.admin import OrganizationAdmin
+from coop.prefs.admin import SitePrefsAdmin
 from django.conf import settings
 
 # -- Loading base models
 
 admin.site.register(LinkProperty)
-
 admin.site.register(Role)
 admin.site.register(PersonCategory)
 admin.site.register(Person, PersonAdmin)
-
 admin.site.register(Organization, OrganizationAdmin)
-admin.site.register(OrganizationCategory)
+admin.site.register(SitePrefs, SitePrefsAdmin)
+
 
 if "coop.exchange" in settings.INSTALLED_APPS:
     from coop.exchange.admin import ExchangeAdmin
@@ -32,7 +32,7 @@ if "coop_cms" in settings.INSTALLED_APPS:
 if "coop_tag" in settings.INSTALLED_APPS:
     from coop_tag.settings import get_class
     admin.site.unregister(get_class('tag'))
-    admin.site.register(get_class('tag'))
+    admin.site.register(get_class('tag'))  # et ???
 
 if 'forms_builder.forms' in settings.INSTALLED_APPS:
     from coop.admin import CoopFormAdmin
