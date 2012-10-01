@@ -14,6 +14,7 @@ admin.site.register(Role)
 admin.site.register(PersonCategory)
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Organization, OrganizationAdmin)
+admin.site.register(OrganizationCategory)
 admin.site.register(SitePrefs, SitePrefsAdmin)
 
 

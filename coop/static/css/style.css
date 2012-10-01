@@ -735,6 +735,22 @@ div.postal {
 	
 }
 
+/* @end */
+
+p.special_Case {
+	font-weight: bold;
+	padding: 10px;
+	border: 2px solid #f9c641;
+	background-color: #f5ffb7;
+	float: right;
+	position: absolute;
+	right: 0;
+	width: 200px;
+	top: 0;
+}
+
+/* @group relations */
+
 .rel_type {
 	font-size: 12px;
 }
@@ -780,19 +796,9 @@ ul.relations li a {
 	border-style: none;
 }
 
-/* @end */
 
-p.special_Case {
-	font-weight: bold;
-	padding: 10px;
-	border: 2px solid #f9c641;
-	background-color: #f5ffb7;
-	float: right;
-	position: absolute;
-	right: 0;
-	width: 200px;
-	top: 0;
-}
+
+/* @end */
 
 /* @group tipsy */
 
