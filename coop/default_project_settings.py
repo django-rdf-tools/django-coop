@@ -222,6 +222,8 @@ COOP_CMS_ARTICLE_TEMPLATES = [
     ('coop_cms/article_rubrique.html', 'Rubrique'),
 ]
 
+SKIP_DJALOHA_JQUERY = True
+
 FORMS_BUILDER_USE_SITES = False
 
 HAYSTACK_SITECONF = 'coop_local.search_sites'
