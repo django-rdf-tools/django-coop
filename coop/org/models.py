@@ -232,6 +232,7 @@ class BaseEngagement(URIModel):
 class BaseOrganizationCategory(models.Model):
     label = models.CharField(blank=True, max_length=100)
     slug = exfields.AutoSlugField(populate_from=('label'), overwrite=True)
+    description = models.TextField(_(u'description'), blank=True)
 
     class Meta:
         abstract = True
@@ -245,6 +246,31 @@ class BaseOrganizationCategory(models.Model):
     #@models.permalink
     def get_absolute_url(self):
         return reverse('org_category_detail', args=[self.slug])
+
+    def get_edit_url(self):
+        return reverse('org_category_edit', args=[self.slug])
+
+    def get_cancel_url(self):
+        return reverse('org_category_edit_cancel', args=[self.slug])
+
+    def _can_modify_organizationcategory(self, user):
+        if user.is_authenticated():
+            if user.is_superuser:
+                return True
+            else:
+                return False
+
+    def can_view_organizationcategory(self, user):
+        # TODO use global privacy permissions on objects
+        return True
+
+    def can_edit_organizationcategory(self, user):
+        return self._can_modify_organizationcategory(user)
+
+
+
+
+
 
 
 PREFLABEL = Choices(

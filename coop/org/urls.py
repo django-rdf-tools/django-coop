@@ -12,6 +12,10 @@ urlpatterns = patterns('',
     url(r'^carto/$', 'coop.org.views.leaflet', name="leaflet"),
 
     url(r'^categorie/(?P<slug>[\w-]+)/$', 'coop.org.views.org_category_detail', name="org_category_detail"),
+    url(r'^categorie/(?P<slug>[\w-]+)/edition/$', 'coop.org.views.org_category_edit', name="org_category_edit"),
+    url(r'^categorie/(?P<slug>[\w-]+)/edition/annuler/$', 'coop.org.views.org_category_edit_cancel', name="org_category_edit_cancel"),
+
+
 
     url(r'^global_map$', 'coop.org.views.global_map', name="org_global_map"),
     url(r'^(?P<slug>[\w-]+)/$', 'coop.org.views.org_detail', name="org_detail"),

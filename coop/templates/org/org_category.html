@@ -1,23 +1,47 @@
 {% extends "base.html" %}
-
-{% block meta_title %}{{category.label}}{% endblock %}
+{% load coop_edition thumbnail %}
+{% block meta_title %}{{org_category.label}}{% endblock %}
 
 {% block document %}
     <div id="title" class="grid_12 grid">
-    {% block title %}<h3>{{category.label}}</h3>{% endblock %}
+    {% block title %}<h3>{{org_category.label}}</h3>{% endblock %}
     </div>
 
     {% block content %}
 
+
+    {% cms_edit article %}
+
+     <h3>{{ org_category.label }}</h3>
+     <hr>
+
+    <p class="description">{{ org_category.description|safe }}</p>
+
+
+    {% end_cms_edit %}
+
         <div id="content">
             <div class="grid_12 grid">
-                <ul>
-                    {% for item in org_list %}
-                    <li><a href="{{item.get_absolute_url}}">{{ item.title }}</a></li>
-                    {% endfor %}
-                </ul>
+
+                {% for item in org_list %}
+                <div class="org_link vcenter_container">
+                    <div class="vcenter_wrapper org-desc-wrapper">
+                        <div class="vcenter_content org-desc-content">
+                            {% thumbnail item.logo "80x80" as im %}
+                            <a class="title" href="{{item.get_absolute_url}}">
+                               <img class="org-list-icon" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                            </a>
+                            {% endthumbnail %}
+                            <a class="title" href="{{item.get_absolute_url}}">{{ item.title }}</a><br/>
+                            <span class="subtitle">{{ item.subttile }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+
             </div>
-        </div>    
+        </div>
     {% endblock %}
 
 {% endblock %}
