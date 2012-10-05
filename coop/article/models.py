@@ -5,6 +5,7 @@ from coop.models import StaticURIModel, URIModel
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes import generic
+import rdflib
 
 
 # ----------- Customizing coop-cms Article for more coop intergration
@@ -46,6 +47,28 @@ if "coop_cms" in settings.INSTALLED_APPS:
             app_label = 'coop_local'
 
 
+        # RDF stufs
+        rdf_type = settings.NS.dct.Text
+        rdf_mapping = (
+            ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
+            ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
+            ('single_mapping', (settings.NS.dct.title, 'title'), 'single_reverse'),
+            # ('single_mapping', (settings.NS.dct.abstract, 'summary'), 'single_reverse'),  # bug in rdflib
+            ('single_mapping', (rdflib.term.URIRef(str(settings.NS['dct']) + 'abstract'), 'summary'), 'single_reverse'),
+            ('single_mapping', (settings.NS.dct.description, 'content'), 'single_reverse'),
+            ('single_mapping', (settings.NS.dct.creator, 'person'), 'single_reverse'),
+            ('single_mapping', (settings.NS.dct.publisher, 'organization'), 'single_reverse'),
+
+            ('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'),
+
+        )
+
+
+
+
+
+
+
 # ----------- Idem for coop-cms NavTree            
 
     class CoopNavTree(BaseNavTree, URIModel):
@@ -55,5 +78,29 @@ if "coop_cms" in settings.INSTALLED_APPS:
             verbose_name_plural = _(u'Navigation trees')
             abstract = True
             app_label = 'coop_local'
+
+        # RDF stuffs
+
+        # As the "default" NavTree should NOT be exort as rdf data
+        # A Nice solution is overwritte toRdfGraph method
+        def toRdfGraph(self):
+            g = rdflib.ConjunctiveGraph()
+            if not self.name == 'default':
+                g.add((rdflib.term.URIRef(self.uri), settings.NS.rdf.type, self.rdf_type))
+                for method, arguments, reverse in self.rdf_mapping:
+                    for triple in getattr(self, method)(*arguments):
+                        g.add(triple)
+            return g
+
+        rdf_type = settings.NS.skos.ConceptScheme
+        rdf_mapping = (
+            ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
+            ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
+            ('single_mapping', (settings.NS.rdfs.label, 'name'), 'single_reverse'),
+        )
+
+
+    
+
 
 

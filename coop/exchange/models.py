@@ -8,8 +8,9 @@ from decimal import Decimal
 from django.conf import settings
 from coop.models import URIModel
 from coop.utils.fields import MultiSelectField
-import rdflib
 from django.contrib.contenttypes import generic
+import datetime
+import rdflib
 
 if "coop_geo" in settings.INSTALLED_APPS:
     from coop_geo.models import Area, Location
@@ -67,6 +68,7 @@ class BaseExchangeMethod(models.Model):  # this model will be initialized with a
         verbose_name = _(u'Exchange method')
         verbose_name_plural = _(u'Exchange methods')
         app_label = 'coop_local'
+
 
 
 class BaseExchange(URIModel):
@@ -136,6 +138,51 @@ class BaseExchange(URIModel):
                 print "For id %s update the field %s" % (self.id, dbfieldname)
             else:
                 print "    The field %s cannot be updated." % dbfieldname
+
+    # RDF stuff
+    rdf_type = settings.NS.ess.Exchange
+    rdf_mapping = (
+            ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
+            ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
+            ('single_mapping', (settings.NS.rdfs.label, 'title'), 'single_reverse'),
+            ('single_mapping', (settings.NS.dct.title, 'title'), 'single_reverse'),
+            ('single_mapping', (settings.NS.dct.description, 'description'), 'single_reverse'),
+            ('single_mapping', (settings.NS.rdfs.label, 'title'), 'single_reverse'),
+            ('single_mapping', (settings.NS.dct.creator, 'person'), 'single_reverse'),
+            ('single_mapping', (settings.NS.dct.publisher, 'organization'), 'single_reverse'),
+            ('single_mapping', (settings.NS.gr.availabilityEnd, 'expiration'), 'single_reverse'),
+            ('single_mapping', (settings.NS.ov.category, 'etype'), 'single_reverse'),
+            ('single_mapping', (settings.NS.gr.eligibleRegions, 'area'), 'single_reverse'),
+            ('single_mapping', (settings.NS.locn.location, 'location'), 'single_reverse'),
+
+            ('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'),
+            ('multi_mapping', (settings.NS.ess.hasMethod, 'methods'), 'multi_reverse'),
+
+            ('permanent_mapping', (settings.NS.gr.availabilityEnd, 'permanent'), 'permanent_mapping_reverse')
+
+        )
+
+    _infinity_date = datetime.datetime(year=2050, month=12, day=31)
+
+    def permanent_mapping(self, rdfPred, djF, lang=None):
+        if getattr(self, djF):
+            return[(rdflib.term.URIRef(self.uri), rdfPred, rdflib.term.Literal(self._infinity_date))]
+        else:
+            return[(rdflib.term.URIRef(self.uri), rdfPred, rdflib.term.Literal(self.expiration))]
+
+    def permanent_mapping_reverse(self, g, rdfPred, djF, lang=None):
+        value = list(g.objects(rdflib.term.URIRef(self.uri), rdfPred))
+        if len(value) == 1:
+            if  value[0].toPython() == self._infinity_date:
+                setattr(self, djF, True)
+                setattr(self, 'expiration', None)
+            else:
+                setattr(self, djF, False)
+                setattr(self, 'expiration', value[0].toPython())
+
+
+
+
 
 
 

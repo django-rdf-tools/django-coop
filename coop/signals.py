@@ -54,8 +54,7 @@ class LastDTProcess(object):
 # decide in which case we are and then add a small delay to be such that
 # admin thread is finished
 def letsCallDistributionTaskProcess(thName):
-    if not thName == threading.currentThread().name:
-        time.sleep(2)   # wait until thread is finished
+    time.sleep(2)   # wait until thread is finished
     for dt in subhub.models.DistributionTask.objects.all():
         print log.debug(u'INQUUEU entry_id %s' % dt.entry_id)
     subhub.models.DistributionTask.objects.process(log=log)
@@ -169,6 +168,6 @@ def listener(notification, **kwargs):
 
     # update
     if obj:
-        obj.updateFromRdf(g)
+        obj.to_django(g)
 
 

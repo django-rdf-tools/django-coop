@@ -7,7 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
 import shortuuid
-from rdflib import Graph, plugin, Literal, URIRef, ConjunctiveGraph
+from rdflib import Graph, plugin, Literal, URIRef, ConjunctiveGraph, BNode
 from django.contrib.contenttypes import generic
 from django.db import IntegrityError
 from django.template import Template, Context
@@ -106,7 +106,6 @@ class StaticURIModel(models.Model):
                 return sp[len(sp) - 2]
             except Exception, e:
                 raise ValueError(u'Wrong uri value for %s. Reason %s' % (self.uri, e))
-
         else:
             return self.uuid
 
@@ -135,6 +134,171 @@ class StaticURIModel(models.Model):
                 self.uri = self.init_uri()  # uri_id est pas pareil
         super(StaticURIModel, self).save(*args, **kwargs)
 
+
+
+
+    # try to translate an rdflib object in a django object
+    # return None if it fails
+    # Bnode are not yet handled.... but it has to be done for the futur
+    @staticmethod
+    def toDjango(term):
+        if isinstance(term, Literal):
+            if term.datatype == None:
+                return unicode(term)
+            else:
+                return term.toPython()
+        elif isinstance(term, BNode):
+            return None
+        else:  # let's try to find the django object
+            uri = term.toPython()
+            scheme, host, path, query, fragment = urlsplit(uri)
+            if host == 'rdf.insee.fr':
+                # Area de INSEE
+                m = models.get_model('coop_geo', 'area')
+                try:
+                    return m.objects.get(uri=uri)
+                except m.DoesNotExist:
+                    return None
+            elif host == 'ns.economie-solidaire.fr':
+                # Exchange Method
+                m = models.get_model('coop_local', 'exchangemethod')
+                try:
+                    return m.objects.get(uri=uri)
+                except m.DoesNotExist:
+                    return None
+            elif host == 'data.economie-solidaire.fr':
+                # Role Category
+                m = models.get_model('coop_local', 'rolecategory')
+                try:
+                    return m.objects.get(uri=uri)
+                except m.DoesNotExist:
+                    pass  # les roles et les tags seront donc traités dans le code qui suit
+            # Les normaux ...
+            # BIG WARNING : it is supporded that uri dont change and match the model nam
+            mName = path.split('/')[2]
+            m = models.get_model('coop_local', mName)
+            if m == None:
+                m = models.get_model('coop_geo', mName)
+            if not m == None:
+                try:
+                    return m.objects.get(uri=uri)
+                except m.DoesNotExist:
+                    return None
+            else:
+                return None
+
+
+    def base_single_mapping(self, uri, rdfPredicate, djangoField, lang=None):
+        value = getattr(self, djangoField)
+        if value == None:
+            return []
+        else:
+            rdfSubject = URIRef(uri(self))
+            if isinstance(value, models.Model):
+                if StaticURIModel in type(value).__mro__:  # or URLField !!!!
+                    rdfValue = URIRef(value.uri)
+                elif type(self._meta.get_field(djangoField)) == models.URLField:
+                    rdfValue = URIRef(value)
+                else:
+                    rdfValue = None
+            else:
+                subject_args = {}
+                if lang:
+                    subject_args['lang'] = lang
+                rdfValue = Literal(value, **subject_args)
+            if rdfValue == None:
+                return []
+            else:
+                return [(rdfSubject, rdfPredicate, rdfValue)]
+
+    def single_mapping(self, rdfPredicate, djangoField, lang=None):
+        uri = lambda x: x.uri
+        return self.base_single_mapping(uri, rdfPredicate, djangoField, lang=None)
+
+
+    def multi_mapping_base(self, values, rdfPredicate, datatype=None, lang=None):
+        rdfSubject = URIRef(self.uri)
+        result = []
+        subject_args = {}
+        if datatype:
+            subject_args['datatype'] = datatype
+        if lang:
+            subject_args['lang'] = lang
+        for value in values:
+            if URIModel in type(value).__mro__ or 'uri' in value._meta.get_all_field_names():  # et URLField: non on pointe sur des instances de models
+                rdfValue = URIRef(value.uri)
+            else:
+                rdfValue = Literal(unicode(value), **subject_args)
+            result.append((rdfSubject, rdfPredicate, rdfValue))
+        return result
+        # generator ?
+
+    def multi_mapping(self, rdfPredicate, djangoField, datatype=None, lang=None):
+        if getattr(self, djangoField) == None:
+            return [] 
+        else:
+            values = getattr(self, djangoField).all()
+            return self.multi_mapping_base(values, rdfPredicate, lang)
+
+
+    def base_single_reverse(self, uri, g, rdfPred, djField, lang=None):
+        value = list(g.objects(URIRef(uri(self)), rdfPred))
+        if len(value) == 1:
+            value = value[0]
+            if isinstance(self._meta.get_field(djField), models.URLField):
+                setattr(self, djField, value.toPython())
+            else:
+                setattr(self, djField, StaticURIModel.toDjango(value))
+        elif len(value) == 0:
+            setattr(self, djField, None)
+        else:  # plusieurs valeurs ca peut etre une histore de language
+            fr_value = []
+            for v in value:
+                if not v.language == None and v.language == lang:
+                    fr_value.append(v)
+            if len(fr_value) == 1:
+                setattr(self, djField, unicode(fr_value[0]))
+
+
+    def single_reverse(self, g, rdfPred, djField, lang=None):
+        uri = lambda x: x.uri
+        self.base_single_reverse(uri, g, rdfPred, djField, lang)
+
+
+    def multi_reverse(self, g, rdfPred, djField, lang=None):
+        manager = getattr(self, djField)
+        rdf_values = set(g.objects(URIRef(self.uri), rdfPred))
+        values = set(map(StaticURIModel.toDjango, rdf_values))
+        old_values = set(manager.all())
+        remove = old_values.difference(values)
+        add = values.difference(old_values)
+        for v in remove:
+            manager.remove(v)
+        for v in add:
+            manager.add(v)
+
+
+
+
+
+    def toRdfGraph(self):
+        g = Graph()
+        g.add((URIRef(self.uri), settings.NS.rdf.type, self.rdf_type))
+        for method, arguments, reverse in self.rdf_mapping:
+            for triple in getattr(self, method)(*arguments):
+                g.add(triple)
+        return g
+
+    def to_django(self, g):
+        for method, arguments, reverse in self.rdf_mapping:
+            getattr(self, reverse)(g, *arguments)
+        self.save()
+
+
+
+
+
+    # Old version using d2rq
     def toRdf(self, format):
         """
            format correspond to the standard rdflib format keyword,
@@ -143,21 +307,16 @@ class StaticURIModel(models.Model):
                'json-ld' for json-ld
                'trix' for trix
         """
-        # D2R SPARQL endpoint is local, served by Jetty :
-        uriSparql = 'http://localhost:8080/' + settings.PROJECT_NAME + '/sparql'
-        graph = ConjunctiveGraph('SPARQLStore')
-        graph.open(uriSparql, False)
-        graph.store.baseURI = str(uriSparql)
+        graph = self.toRdfGraph()
 
-        # The short form of the construct where see 16.2.4 CONSTRUCT WHERE http://www.w3.org/TR/sparql11-query/#constructWhere
-        cquery = "construct where { <%s> ?p ?o .} "
-        res = graph.query(cquery % self.uri)
+        for k in settings.NS:
+            graph.bind(k, settings.NS[k])
 
         if format == 'ttl':
             format = 'n3'
         if format == 'json':
             format = 'json-ld'
-        return res.graph.serialize(format=format)
+        return graph.serialize(format=format)
 
     def toN3(self):
         return self.toRdf("n3")
@@ -210,10 +369,10 @@ class StaticURIModel(models.Model):
         try:
             instance = model.objects.get(uri=old_uri)
         except model.DoesNotExist:
-            instance = model(uri=old_uri)   # old_uri is still usefull for updateFromRdf
+            instance = model(uri=old_uri)   # old_uri is still usefull for to_django
 
         if instance:
-            instance.updateFromRdf(graph)
+            instance.to_django(graph)
 
         from coop_local.models import Link, LinkProperty
 
@@ -261,131 +420,137 @@ class StaticURIModel(models.Model):
         if sync:
             g = Graph()
             g.parse(new_uri)
-            self.updateFromRdf(g)  # save is done here
+            self.to_django(g)  # save is done here
         else:
             self.save()      # post_save signal is also doing the new Subcription
 
 
 
-    @classmethod
-    def getD2rqGraph(cls):
-        context = {}
-        context['mapping_template'] = 'd2r/' + cls.__name__.lower() + '.ttl'
-        context['namespaces'] = settings.RDF_NAMESPACES
+    # @classmethod
+    # def getD2rqGraph(cls):
+    #     context = {}
+    #     context['mapping_template'] = 'd2r/' + cls.__name__.lower() + '.ttl'
+    #     context['namespaces'] = settings.RDF_NAMESPACES
 
-        tmpfile = os.path.dirname(os.path.abspath(coop.__file__)) + '/templates/d2r/model.ttl'
-        f = open(tmpfile, 'r')
-        t = Template(f.read())
-        f.close()
-        res = t.render(Context(context))
-        (fd, fname) = tempfile.mkstemp()
-        f = open(fname, 'w')
-        f.write(res)
-        f.close()
-        graph = Graph()
-        graph.parse('file:' + fname, format='n3')
-        return graph
+    #     tmpfile = os.path.dirname(os.path.abspath(coop.__file__)) + '/templates/d2r/model.ttl'
+    #     f = open(tmpfile, 'r')
+    #     t = Template(f.read())
+    #     f.close()
+    #     res = t.render(Context(context))
+    #     (fd, fname) = tempfile.mkstemp()
+    #     f = open(fname, 'w')
+    #     f.write(res)
+    #     f.close()
+    #     graph = Graph()
+    #     graph.parse('file:' + fname, format='n3')
+    #     return graph
 
-    @classmethod
-    def updateFromFeeds(cls):
-        print "Update feed for class name %s" % cls.__name__
-        feed_url = settings.PES_HOST + 'feed/' + cls.__name__.lower() + '/'
-        parsedFeed = feedparser.parse(feed_url)
-        print "Parse feed %s" % feed_url
-        for entry in parsedFeed.entries:
-            print "Entry summary is %s " % entry.summary
-            fd, fname = tempfile.mkstemp()
-            os.write(fd, entry.summary)
-            os.close(fd)
-            g = Graph()
-            g.parse(fname, format="json-ld")
-            done = set()
-            for subj in g.subjects(None, None):
-                if not (subj in done):
-                    instance = cls.objects.get(uri=str(subj))
-                    if not instance:
-                        print "Nothing to do with uri %s. Not found in database" % subj
-                    else:
-                        instance.updateFromRdf(g)
-                    done.add(subj)
-
-    # The "reverse mapping is done here"
-    def updateFromRdf(self, graph):
-        # Before reversing mapping, we have to check that the uri has not been
-        # changed. This the case for URI_MODE.IMPORTED instance which still point to
-        # the old uri
-
-        replacedBy = list(graph.objects(URIRef(self.uri), settings.NS.dct.isReplacedBy))
-        if self.uri_mode == URI_MODE.IMPORTED and len(replacedBy) == 1:
-            print "Handle rehost imported uri"
-            g = Graph()
-            g.parse(replacedBy[0])
-            self.uri = replacedBy[0]
-            self.updateFromRdf(g)
-        else:
-            db_table = self.__class__._meta.db_table
-            d2rqGraph = self.__class__.getD2rqGraph()
-            for field in self._meta.fields:
-                dbfieldname = db_table + '.' + field.name
-                pred = checkDirectMap(dbfieldname, d2rqGraph)
-                if pred:
-                    update = list(graph.objects(URIRef(self.uri), pred))
-                    if len(update) > 1:
-                        print "    The field %s cannot be updated. Too many values" % dbfieldname
-                    elif len(update) == 0:
-                        print "Nothing to update for field %s" % dbfieldname
-                    else:
-                        print "For id %s update the field %s" % (self.id, dbfieldname)
-                        update = update[0]
-                        # Well some field have to be prepared
-                        if isinstance(field, models.fields.DateField):
-                            update = update.split('.')[0]
-                            try:
-                                tt = time.strptime(update, "%Y-%m-%dT%H:%M:%S")
-                            except ValueError:
-                                tt = time.strptime(update, "%Y-%m-%d")
-                            update = "%d-%d-%d" % (tt.tm_year, tt.tm_mon, tt.tm_mday)
-                        setattr(self, field.name, update)
-                elif isinstance(field, models.ForeignKey):
-                    print "try an FKEY"
-                    pred = checkDirectMapFK(dbfieldname, d2rqGraph)
-                    if pred:
-                        self.updateFKfromRdf(field, dbfieldname, pred, graph)
-                    else:
-                        print "    The field %s cannot be updated." % dbfieldname
-
-                else:
-                     # See org/models file to have example of "special" fiels handling
-                    if hasattr(self, 'updateField_' + field.name):
-                        getattr(self, 'updateField_' + field.name)(dbfieldname, graph)
-                    else:
-                        print "    The field %s cannot be updated." % dbfieldname
-            print "UpdateFromRdf all fields have been handled"
-            self.save()
-            print "save done"
+    # @classmethod
+    # def updateFromFeeds(cls):
+    #     print "Update feed for class name %s" % cls.__name__
+    #     feed_url = settings.PES_HOST + 'feed/' + cls.__name__.lower() + '/'
+    #     parsedFeed = feedparser.parse(feed_url)
+    #     print "Parse feed %s" % feed_url
+    #     for entry in parsedFeed.entries:
+    #         print "Entry summary is %s " % entry.summary
+    #         fd, fname = tempfile.mkstemp()
+    #         os.write(fd, entry.summary)
+    #         os.close(fd)
+    #         g = Graph()
+    #         g.parse(fname, format="json-ld")
+    #         cls.updateFromGraph(g)
 
 
-    def updateFKfromRdf(self, field, dbfieldname, pred, graph):
-        rdfObj = list(graph.objects(URIRef(self.uri), pred))
-        if len(rdfObj) == 1:
-            rdfObj = rdfObj[0]
-            print "FK object found %s" % rdfObj
-            if isinstance(rdfObj, URIRef):
-                try:
-                    obj = field.related.parent_model.objects.get(uri=str(rdfObj))
-                    setattr(self, field.name + '_id', obj.id)
-                    print "For id %s update the field %s" % (self.id, dbfieldname)
-                except ObjectDoesNotExist:
-                    # TODO: Object not found in db.... here we have to check il it
-                    # has to be imported or not.
-                    print "Obj not in bd : %s" % rdfObj
-                    print u"    The field %s cannot be updated." % dbfieldname
-            else:
-                print "    The field %s cannot be updated." % dbfieldname
-        else:
-            print "    The field %s cannot be updated." % dbfieldname
+    # @classmethod
+    # def updateFromGraph(cls, g):
+    #     done = set()
+    #     for subj in g.subjects(None, None):
+    #         if not (subj in done):
+    #             instance = cls.objects.get(uri=str(subj))
+    #             if not instance:
+    #                 print "Nothing to do with uri %s. Not found in database" % subj
+    #             else:
+    #                 instance.updateFromRdf(g)
+    #             done.add(subj)
 
-        pass
+    # # Old version with d2R
+    # # The "reverse mapping is done here"
+    # def updateFromRdf(self, graph):
+    #     # Before reversing mapping, we have to check that the uri has not been
+    #     # changed. This the case for URI_MODE.IMPORTED instance which still point to
+    #     # the old uri
+
+    #     replacedBy = list(graph.objects(URIRef(self.uri), settings.NS.dct.isReplacedBy))
+    #     if self.uri_mode == URI_MODE.IMPORTED and len(replacedBy) == 1:
+    #         print "Handle rehost imported uri"
+    #         g = Graph()
+    #         g.parse(replacedBy[0])
+    #         self.uri = replacedBy[0]
+    #         self.updateFromRdf(g)
+    #     else:
+    #         db_table = self.__class__._meta.db_table
+    #         d2rqGraph = self.__class__.getD2rqGraph()
+    #         for field in self._meta.fields:
+    #             dbfieldname = db_table + '.' + field.name
+    #             pred = checkDirectMap(dbfieldname, d2rqGraph)
+    #             if pred:
+    #                 update = list(graph.objects(URIRef(self.uri), pred))
+    #                 if len(update) > 1:
+    #                     print "    The field %s cannot be updated. Too many values" % dbfieldname
+    #                 elif len(update) == 0:
+    #                     print "Nothing to update for field %s" % dbfieldname
+    #                 else:
+    #                     print "For id %s update the field %s" % (self.id, dbfieldname)
+    #                     update = update[0]
+    #                     # Well some field have to be prepared
+    #                     if isinstance(field, models.fields.DateField):
+    #                         update = update.split('.')[0]
+    #                         try:
+    #                             tt = time.strptime(update, "%Y-%m-%dT%H:%M:%S")
+    #                         except ValueError:
+    #                             tt = time.strptime(update, "%Y-%m-%d")
+    #                         update = "%d-%d-%d" % (tt.tm_year, tt.tm_mon, tt.tm_mday)
+    #                     setattr(self, field.name, update)
+    #             elif isinstance(field, models.ForeignKey):
+    #                 print "try an FKEY"
+    #                 pred = checkDirectMapFK(dbfieldname, d2rqGraph)
+    #                 if pred:
+    #                     self.updateFKfromRdf(field, dbfieldname, pred, graph)
+    #                 else:
+    #                     print "    The field %s cannot be updated." % dbfieldname
+
+    #             else:
+    #                  # See org/models file to have example of "special" fiels handling
+    #                 if hasattr(self, 'updateField_' + field.name):
+    #                     getattr(self, 'updateField_' + field.name)(dbfieldname, graph)
+    #                 else:
+    #                     print "    The field %s cannot be updated." % dbfieldname
+    #         print "UpdateFromRdf all fields have been handled"
+    #         self.save()
+    #         print "save done"
+
+
+    # def updateFKfromRdf(self, field, dbfieldname, pred, graph):
+    #     rdfObj = list(graph.objects(URIRef(self.uri), pred))
+    #     if len(rdfObj) == 1:
+    #         rdfObj = rdfObj[0]
+    #         print "FK object found %s" % rdfObj
+    #         if isinstance(rdfObj, URIRef):
+    #             try:
+    #                 obj = field.related.parent_model.objects.get(uri=str(rdfObj))
+    #                 setattr(self, field.name + '_id', obj.id)
+    #                 print "For id %s update the field %s" % (self.id, dbfieldname)
+    #             except ObjectDoesNotExist:
+    #                 # TODO: Object not found in db.... here we have to check il it
+    #                 # has to be imported or not.
+    #                 print "Obj not in bd : %s" % rdfObj
+    #                 print u"    The field %s cannot be updated." % dbfieldname
+    #         else:
+    #             print "    The field %s cannot be updated." % dbfieldname
+    #     else:
+    #         print "    The field %s cannot be updated." % dbfieldname
+
+    #     pass
 
 
     # This a very simple case, where feed and ub share the same host
@@ -416,50 +581,62 @@ class URIModel(StaticURIModel, TimestampedModel):
         abstract = True
 
 
-def checkDirectMap(dbfieldName, d2rqGraph):
-    lit = Literal(dbfieldName)
-    subj = list(d2rqGraph.subjects(settings.NS.d2rq.column, lit))
-    if len(subj) != 1:
-        subj = list(d2rqGraph.subjects(settings.NS.d2rq.uriColumn, lit))
-        if len(subj) != 1:
-            return None
-    subj = subj[0]
-    prop = list(d2rqGraph.objects(subj, settings.NS.d2rq.property))
-    if len(prop) != 1:
-        return None
-    else:
-        return prop[0]
+# def checkDirectMap(dbfieldName, d2rqGraph):
+#     lit = Literal(dbfieldName)
+#     subj = list(d2rqGraph.subjects(settings.NS.d2rq.column, lit))
+#     if len(subj) != 1:
+#         subj = list(d2rqGraph.subjects(settings.NS.d2rq.uriColumn, lit))
+#         if len(subj) != 1:
+#             return None
+#     subj = subj[0]
+#     prop = list(d2rqGraph.objects(subj, settings.NS.d2rq.property))
+#     if len(prop) != 1:
+#         return None
+#     else:
+#         return prop[0]
 
 
-def checkDirectMapFK(dbfieldName, d2rqGraph):
-    # on commence par chercher tous les triples de la forme
-    # select * where { ?s d2rq:join ?l. filter(?l contains dbfieldname) }
-    # mais comme le d2rqGraph n'est pas un SparqlGraph on le fait à la main
+# def checkDirectMapFK(dbfieldName, d2rqGraph):
+#     # on commence par chercher tous les triples de la forme
+#     # select * where { ?s d2rq:join ?l. filter(?l contains dbfieldname) }
+#     # mais comme le d2rqGraph n'est pas un SparqlGraph on le fait à la main
 
-    # Well it is not possible to use settings.NS.d2rq.join because
-    # there is a conflict of names with the join function of the Namespace
-    # class....
-    tr = list(d2rqGraph.triples((None, URIRef(str(settings.NS.d2rq) + 'join'), None)))
+#     # Well it is not possible to use settings.NS.d2rq.join because
+#     # there is a conflict of names with the join function of the Namespace
+#     # class....
+#     tr = list(d2rqGraph.triples((None, URIRef(str(settings.NS.d2rq) + 'join'), None)))
 
-    def useField((s, p, o)):
-        if isinstance(o, Literal):
-            return dbfieldName in o
-        else:
-            return False
-    candidate = filter(useField, tr)
-    if len(candidate) == 1:
-        print "Found candidate"
-        subj = candidate[0][0]
-        prop = list(d2rqGraph.objects(subj, settings.NS.d2rq.property))
-        if len(prop) == 1:
-            return prop[0]
-        else:
-            return None
-    else:
-        return None
+#     def useField((s, p, o)):
+#         if isinstance(o, Literal):
+#             return dbfieldName in o
+#         else:
+#             return False
+#     candidate = filter(useField, tr)
+#     if len(candidate) == 1:
+#         print "Found candidate"
+#         subj = candidate[0][0]
+#         prop = list(d2rqGraph.objects(subj, settings.NS.d2rq.property))
+#         if len(prop) == 1:
+#             return prop[0]
+#         else:
+#             return None
+#     else:
+#         return None
 
 
 
+def rdfDumpAll(destination, format):
+    """
+    """
+    g = Graph()
+    for k in settings.NS:
+        g.bind(k, settings.NS[k])
+
+    for m in models.get_models():
+        if coop.models.StaticURIModel in m.__mro__:
+            for o in m.objects.all():
+                g += o.toRdfGraph()
+    g.serialize(destination, format=format)
 
 
 # It seems to be the best place to do the connection

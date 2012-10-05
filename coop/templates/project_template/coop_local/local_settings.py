@@ -11,9 +11,6 @@ SITE_AUTHOR = 'Organisme'
 SITE_TITLE = 'Demo Django-coop'
 DEFAULT_URI_DOMAIN = '{{ domain }}'
 
-D2RQ_PORT = 8080
-D2RQ_ROOT = 'http://{{ domain }}:8080/' + settings.PROJECT_NAME + '/'
-
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG

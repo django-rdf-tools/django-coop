@@ -15,7 +15,10 @@ from coop.models import URIModel
 from sorl.thumbnail import ImageField
 from sorl.thumbnail import default
 import rdflib
+import coop
 import logging
+from urlparse import urlsplit
+
 
 
 ADMIN_THUMBS_SIZE = '60x60'
@@ -57,6 +60,12 @@ class BaseRoleCategory(models.Model):
     slug = exfields.AutoSlugField(populate_from=('label'), overwrite=True)
     uri = models.CharField(_(u'URI'), blank=True, max_length=250)
 
+    def save(self, *args, **kwargs):
+        self.save_base()
+        self.uri = u'http://data.economie-solidaire.fr/id/role/%s/' % self.slug
+        super(BaseRoleCategory, self).save(*args, **kwargs)
+
+
     class Meta:
         abstract = True
         ordering = ['label']
@@ -96,6 +105,35 @@ class BaseRole(URIModel):
 
     def get_absolute_url(self):
         return reverse('role_detail', args=[self.slug])
+
+    # rdf stuff
+    rdf_type = settings.NS.org.Role
+    rdf_mapping = (
+        ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
+        ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
+        ('single_mapping', (settings.NS.skos.prefLabel, 'label'), 'single_reverse'),
+
+        # quand RoleCategory sera un URIModels on aura tout simpleùent
+        #('single_mapping', (settings.NS.skos.broader, 'category'), 'single_reverse'),
+
+        ('category_mapping', (settings.NS.skos.broader, 'category'), 'category_mapping_reverse'),
+    )
+
+    def category_mapping(self, rdfPred, djF, lang=None):
+        value = getattr(self, djF)
+        if value == None:
+            return []
+        else:
+            [(rdflib.term.URIRef(self), rdfPred, rdflib.term.URIRef(value.uri))]
+
+    def category_mapping_reverse(self, g, rdfPred, djF, lang=None):
+        values = list(g.objects(rdflib.term.URIRef(self), rdfPred))
+        if values == []:
+            setattr(self, djF, None)
+        elif len(values) == 1:
+            value = values[0]
+            setattr(self, djF, models.get_model('coop_base', 'rolecategory').object.get(uri=value))
+
 
 DISPLAY = Choices(
     ('PUBLIC',  1,  _(u'public information')),
@@ -168,6 +206,73 @@ class BaseContact(URIModel):
         super(BaseContact, self).save(*args, **kwargs)
 
 
+    # RDF stufs
+    rdf_type = settings.NS.ess.ContactMedium
+    rdf_mapping = (
+        ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
+        ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
+        ('single_mapping', (settings.NS.rdf.value, 'content'), 'single_reverse'),
+        ('single_mapping', (settings.NS.rdfs.comment, 'details'), 'single_reverse'),
+
+        ('conditionnal_mapping', (settings.NS.rdf.type, 'category'), 'conditionnal_mapping_reverse'),
+    )
+
+
+    def conditionnal_mapping(self, rdfPred, djF, lang=None):
+        ctype = getattr(self, djF)
+
+        if ctype == COMM_MEANS.LAND:
+            rdfValue = settings.NS.vcard.Tel
+        elif ctype == COMM_MEANS.GSM:
+            rdfValue = settings.NS.vcard.Cell 
+        elif ctype == COMM_MEANS.FAX:
+            rdfValue = settings.NS.vcard.Fax 
+        elif ctype == COMM_MEANS.SKYPE:
+            rdfValue = settings.NS.foaf.OnlineChatAccount
+        elif ctype == COMM_MEANS.TWITTER:
+            rdfValue = settings.NS.foaf.OnlineAccount
+        elif ctype == COMM_MEANS.RSS:
+            rdfValue = settings.NS.rss.channel
+        elif ctype == COMM_MEANS.VCAL:
+            rdfValue = settings.NS.vcal.Vcalendar
+        elif ctype == COMM_MEANS.MAIL:
+            rdfValue = settings.NS.vcard.Email
+        else:  # ctype == COMM_MEANS.WEB:
+            rdfValue = settings.NS.sioc.Site
+        return [(rdflib.term.URIRef(self.uri), rdfPred, rdfValue)]
+
+    def conditionnal_mapping_reverse(self, g, rdfPred, djF, lang=None):
+        values = list(g.objects((rdflib.term.URIRef(self.uri), rdfPred)))
+        values.remove(self.rdf_type)
+        if len(values) == 1:
+            value = values[0]
+            if value == settings.NS.vcard.Tel:
+                setattr(self, djF, COMM_MEANS.LAND)
+            elif value == settings.NS.vcard.Cell:
+                setattr(self, djF, COMM_MEANS.GSM)
+            elif value == settings.NS.vcard.Fax:
+                setattr(self, djF, COMM_MEANS.FAX)
+            elif value == settings.NS.foaf.OnlineChatAccount:
+                setattr(self, djF, COMM_MEANS.SKYPE)
+            elif value == settings.NS.foaf.OnlineAccount:
+                setattr(self, djF, COMM_MEANS.TWITTER)
+            elif value == settings.NS.rss.channel:
+                setattr(self, djF, COMM_MEANS.RSS)
+            elif value == settings.NS.vcal.Vcalendar:
+                setattr(self, djF, COMM_MEANS.VCAL)
+            elif value == settings.NS.vcard.Email:
+                setattr(self, djF, COMM_MEANS.MAIL)
+            elif value == settings.NS.sioc.Site:
+                setattr(self, djF, COMM_MEANS.WEB)
+            else:
+                pass
+        else:
+            pass
+
+
+
+
+
 RELATIONS = Choices(
     ('MEMBER',          1,  _(u' is member of ')),
     ('REG_SUPPLIER',    2,  _(u' has for regular supplier ')),
@@ -228,6 +333,26 @@ class BaseEngagement(URIModel):
     def label(self):
         return self.__unicode__()
 
+    # RDF stufs
+    rdf_type = settings.NS.org.Membership
+    rdf_mapping = (
+        ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
+        ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
+        ('single_mapping', (settings.NS.org.member, 'person'), 'single_reverse'),
+        ('single_mapping', (settings.NS.org.organization, 'organization'), 'single_reverse'),
+        ('single_mapping', (settings.NS.org.role, 'role'), 'single_reverse'),
+
+        ('label_mapping', (settings.NS.rdfs.label, 'id', 'fr'), 'label_mapping_reverse'),
+
+    )
+
+    def label_mapping(self, rdfPred, djF, lang):
+        return [(rdflib.term.URIRef(self.uri), rdfPred, rdflib.term.Literal(u'Engagement n°%s' % self.id, lang))]
+
+    def label_mapping_reverse(self, g, rdfPred, djF, lang=None):
+        pass
+
+
 
 class BaseOrganizationCategory(models.Model):
     label = models.CharField(blank=True, max_length=100)
@@ -277,6 +402,7 @@ PREFLABEL = Choices(
     ('TITLE',   1,  _(u'title')),
     ('ACRO',    2,  _(u'acronym')),
 )
+
 
 def get_logo_folder(self, filename):
     img_root = 'org_logos'
@@ -436,61 +562,6 @@ class BaseOrganization(URIModel):
         #     self.email_sha1 = m.hexdigest()
         super(BaseOrganization, self).save(*args, **kwargs)
 
-    # title field needs a special handling. checkDirectMap does not work
-    # because two rdf property use the coop_local_organization.title field
-    # Thus we have to decide which one to use
-    def updateField_title(self, dbfieldname, graph):
-            title = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS.legal.legalName))
-            if len(title) == 1:
-                self.title = title[0]
-                print "For id %s update the field %s" % (self.id, dbfieldname)
-            elif len(title) == 0:
-                title = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS.rdfs.label))
-                if len(title) == 1:
-                    self.title = title[0]
-                    print "For id %s update the field %s" % (self.id, dbfieldname)
-                else:
-                    print "    The field %s cannot be updated." % dbfieldname
-            else:
-                print "    The field %s cannot be updated." % dbfieldname
-
-    def updateField_pref_label(self, dbfieldname, graph):
-        prefLabel = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS.rdfs.label))
-        if len(prefLabel) == 1:
-            legalName = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS.legal.legalName))
-            if len(legalName) == 1:
-                if prefLabel[0] == legalName[0]:
-                    self.pref_label = PREFLABEL.TITLE
-                    print "For id %s update the field %s" % (self.id, dbfieldname)
-
-            else:
-                acronym = list(graph.objects(rdflib.term.URIRef(self.uri), settings.NS.ov.acronym))
-                if len(acronym) == 1:
-                    if prefLabel[0] == acronym[0]:
-                        self.pref_label = PREFLABEL.ACRO
-                        print "For id %s update the field %s" % (self.id, dbfieldname)
-
-                    else:
-                        print "    The field %s cannot be updated." % dbfieldname
-                else:
-                    print "    The field %s cannot be updated." % dbfieldname
-        else:
-            print "    The field %s cannot be updated." % dbfieldname
-
-    def get_edit_url(self):
-        return reverse('org_edit', args=[self.slug])
-
-    def get_cancel_url(self):
-        return reverse('org_edit_cancel', args=[self.slug])
-
-    def _can_modify_organization(self, user):
-        if user.is_authenticated():
-            if user.is_superuser:
-                return True
-            elif user.person in self.members.all():
-                return True
-            else:
-                return False
 
     def can_view_organization(self, user):
         # TODO use global privacy permissions on objects
@@ -498,4 +569,136 @@ class BaseOrganization(URIModel):
 
     def can_edit_organization(self, user):
         return self._can_modify_organization(user)
+
+    rdf_type = settings.NS.org.Organization
+    rdf_mapping = (
+        ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
+        ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
+        ('single_mapping', (settings.NS.dct.title, 'title'), 'single_reverse'),
+        ('single_mapping', (settings.NS.ov.prefAcronym, 'acronym'), 'single_reverse'),
+        ('single_mapping', (settings.NS.rdfs.comment, 'subtitle'), 'single_reverse'),
+        ('single_mapping', (settings.NS.dct.description, 'description'), 'single_reverse'),
+        ('single_mapping', (settings.NS.foaf.mbox_sha1sum, 'email_sha1'), 'single_reverse'),
+        ('single_mapping', (settings.NS.foaf.homepage, 'web'), 'single_reverse'),
+        ('single_mapping', (settings.NS.foaf.birthday, 'birth'), 'single_reverse'),
+        ('single_mapping', (settings.NS.vcard.tel, 'pref_phone'), 'single_reverse'),
+        ('single_mapping', (settings.NS.vcard.mail, 'pref_email'), 'single_reverse'),
+        ('single_mapping', (settings.NS.legal.registeredAddress, 'pref_address'), 'single_reverse'),
+        ('single_mapping', (settings.NS.vcard.note, 'notes'), 'single_reverse'),
+
+        ('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'),
+        ('multi_mapping', (settings.NS.ess.hasContactMedium, 'contacts'), 'multi_reverse'),
+        ('multi_mapping', (settings.NS.org.hasMember, 'members'), 'multi_reverse'),
+
+        ('logo_mapping', (settings.NS.foaf.logo, 'logo'), 'logo_mapping_reverse'),
+        ('prefLabel_mapping', (settings.NS.rdfs.label, 'pref_label'), 'prefLabel_mapping_reverse'),
+        ('location_mapping', (settings.NS.locn.location, 'located'), 'location_mapping_reverse'),
+        ('location_mapping', (settings.NS.ess.actionArea, 'framed'), 'location_mapping_reverse'),
+        ('exchange_mapping', (settings.NS.gr.seeks, settings.NS.gr.offers), 'exchange_mapping_reverse'),
+
+    )
+
+
+    def location_mapping(self, rdfPred, djF):
+        values = map(lambda x: x.location, getattr(self, djF).all())
+        return self.multi_mapping_base(values, rdfPred)
+
+
+    def location_mapping_reverse(self, g, rdfPred, djField, lang=None):
+        rdf_values = set(g.objects(rdflib.term.URIRef(self.uri), rdfPred))
+        # Values contient des instances de Location. 
+        # Il faut remonter soit a des Located soit a des AreaLink
+        values = map(coop.models.StaticURIModel.toDjango, rdf_values)
+        if djField == 'located':
+            m = models.get_model('coop_geo', 'located')
+            values = set(map(lambda x: m.objects.get(object_id=self.id, location=x), values))
+        elif djField == 'framed':
+            m = models.get_model('coop_geo', 'arealink')
+            values = set(map(lambda x: m.objects.get(object_id=self.id, location=x), values))
+        manager = getattr(self, djField)
+        old_values = set(manager.all())
+        remove = old_values.difference(values)
+        add = values.difference(old_values)
+        for v in remove:
+            manager.remove(v)
+        for v in add:
+            manager.add(v)
+
+
+    def logo_mapping(self, rdfPred, djF):
+        logo = getattr(self, djF)
+        if logo == None:
+            return []
+        else:
+            try:
+                rdfSubject = rdflib.term.URIRef(self.uri)
+                rdfValue = rdflib.term.URIRef('http://' + settings.DEFAULT_URI_DOMAIN + logo.url)
+                return [(rdfSubject, rdfPred, rdfValue)]
+            except ValueError:
+                return []
+
+    def logo_mapping_reverse(self, g, rdfPred, djF):
+        value = list(g.objects(rdflib.term.URIRef(self.uri), rdfPred))
+        if len(value) == 1:
+            value = value[0].toPython()
+            scheme, host, path, query, fragment = urlsplit(value)
+            sp = path.split('/')
+            setattr(self, djF, "%s:%s" % (sp[len(sp) - 2], sp[len(sp) - 1]))
+        else:
+            pass
+
+    def prefLabel_mapping(self, rdfPred, djF, lang=None):
+        label = self.label()
+        if label == None:
+            return []
+        else:
+            subject_args = {}
+            if lang:
+                subject_args['lang'] = lang
+            rdfValue = rdflib.term.Literal(unicode(label), **subject_args)
+            return[(rdflib.term.URIRef(self.uri), rdfPred, rdfValue)]
+
+    def prefLabel_mapping_reverse(self, g, rdfPred, djF, lang=None):
+        value = list(g.objects(rdflib.term.URIRef(self.uri), rdfPred))
+        title = list(g.objects(rdflib.term.URIRef(self.uri), settings.NS.dct.title))
+        if value == title:
+            setattr(self, 'pref_label', PREFLABEL.TITLE)
+        else:
+            setattr(self, 'pref_label', PREFLABEL.ACRO)
+
+
+    def exchange_mapping(self, rdfOffer, rdfSeek, lang=None):
+        from coop.exchange.models import EWAY
+        values = models.get_model('coop_local', 'exchange').objects.filter(organization=self)
+        rdfSubject = rdflib.term.URIRef(self.uri)
+        result = []
+        for value in values:
+            if value.eway == EWAY.OFFER:
+                result.append((rdfSubject, rdfOffer, rdflib.term.URIRef(value.uri)))
+            else:
+                result.append((rdfSubject, rdfSeek, rdflib.term.URIRef(value.uri)))
+        return result
+
+
+    def exchange_mapping_reverse(self, g, rdfOffer, rdfSeek, lang=None):
+        from coop.exchange.models import EWAY
+        values = list(g.objects(rdflib.term.URIRef(self.uri), rdfOffer))
+        exchangeModel = models.get_model('coop_local', 'exchange')
+        for value in values:
+            ex = exchangeModel.objects.get(uri=str(value))
+            ex.eway = EWAY.OFFER
+            ex.organization = self
+            ex.save()
+        values = list(g.objects(rdflib.term.URIRef(self.uri), rdfSeek))
+        for value in values:
+            ex = exchangeModel.objects.get(uri=str(value))
+            ex.eway = EWAY.NEED
+            ex.organization = self
+            ex.save()
+
+
+
+
+
+
 
