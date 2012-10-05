@@ -18,12 +18,8 @@
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-    <!-- block jquery_declaration -->
-    {% block jquery_declaration %}
-    <script type="text/javascript" charset="utf-8" src="{{ STATIC_URL }}js/jquery-1.7.1.min.js"></script>
-    {% endblock %}
-
-    <!-- CSS: implied media="all" -->
+{% block stylesheet %}
+        <!-- CSS: implied media="all" -->
     <link rel="stylesheet" href="{{ STATIC_URL }}css/html5.css?v=2">
     <link rel="stylesheet" href="{{ STATIC_URL }}css/normalize.css" type="text/css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/960.css" type="text/css" />
@@ -32,8 +28,20 @@
     <!-- Custom fonts -->
     <link href='http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow:700|Nobile:400,400italic,700' rel='stylesheet' type='text/css'>
+{% endblock stylesheet %}
 
+{% block jquery_declaration %}
+    <!-- block jquery_declaration -->
+    <script type="text/javascript" charset="utf-8" src="{{ STATIC_URL }}js/jquery-1.7.1.min.js"></script>
+{% endblock %}
+
+
+{% block javascript %}
+    <!-- block javascript -->
     {# <script type="text/javascript" src="{{ STATIC_URL }}js/modernizr.js"></script> #}
+{% endblock javascript %}
+
+
 
     <!-- coop_bar_headers -->
     {% coop_bar_headers %}
