@@ -4,7 +4,6 @@ from django.conf import settings
 from coop.link.models import BaseLinkProperty, BaseLink
 from coop.article.models import CoopArticle, CoopNavTree
 from coop.person.models import BasePerson, BasePersonCategory
-from coop.mailing.models import BaseSubscription, BaseMailingList
 from coop.exchange.models import BaseExchange, BaseProduct, BaseExchangeMethod
 from coop.org.models import (   BaseOrganizationCategory, BaseOrganization,
                                 BaseRelation, BaseEngagement, BaseRole,
@@ -102,13 +101,14 @@ class Product(BaseProduct):
 
 # ----- mailing
 
+if 'coop.mailing' in settings.INSTALLED_APPS:
+    from coop.mailing.models import BaseSubscription, BaseMailingList
+    
+    class MailingList(BaseMailingList):
+        pass
 
-class MailingList(BaseMailingList):
-    pass
-
-
-class Subscription(BaseSubscription):
-    pass
+    class Subscription(BaseSubscription):
+        pass
 
 
 # ----- agenda

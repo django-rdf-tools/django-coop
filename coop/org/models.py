@@ -311,7 +311,9 @@ class BaseOrganization(URIModel):
                 through='coop_local.Engagement', verbose_name=_(u'members'))
 
     contacts = generic.GenericRelation('coop_local.Contact')
-    subs = generic.GenericRelation('coop_local.Subscription')
+
+    if 'coop.mailing' in settings.INSTALLED_APPS:
+        subs = generic.GenericRelation('coop_local.Subscription')
 
     # ORDER : coop_geo must be loaded BEFORE coop_local
     if "coop_geo" in settings.INSTALLED_APPS:

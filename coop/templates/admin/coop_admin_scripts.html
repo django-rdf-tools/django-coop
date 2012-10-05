@@ -99,11 +99,13 @@ jQuery(document).ready(function($) {
     // adapted from http://djangosnippets.org/snippets/431/
 
     empty_values = ['','---------']
+    not_editable_fkeys = ["event_type", "calendar"]
 
     $("a.add-another").each(function(){
-      if($.inArray($(this).prev().val(), empty_values)=='-1' &&       // si selection pas vide
-          $(this).prev().attr('multiple') != 'multiple' &&  // et qu'on est pas sur un select multiple
-          $(this).prev().attr('name').indexOf("category") == -1  // et que c'est pas une catégorie
+      if($.inArray($(this).prev().val(), empty_values)=='-1' &&             // si selection pas vide
+          $(this).prev().attr('multiple') != 'multiple' &&                  // et qu'on est pas sur un select multiple
+          $(this).prev().attr('name').indexOf("category") == -1 &&          // et que c'est pas une catégorie
+          $.inArray($(this).prev().attr("name"), not_editable_fkeys)=='-1'  // ou un autre truc du genre
           ){
           $(this).after("&nbsp;<a class='changelink' href='#' title='Modifier cet objet'><img src='/static/admin/img/icon_changelink.gif'></a>");
           $(this).next().click(function(){

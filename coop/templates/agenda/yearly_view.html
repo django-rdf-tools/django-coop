@@ -1,11 +1,14 @@
-{% extends "base.html" %}{% load i18n %}
+{% extends "base.html" %}
+
+{% load url from future %}
+{% load i18n %}
 {% block title %}{% blocktrans %}Yearly View {{ year }}{% endblocktrans %}{% endblock %}
 {% block document %}
     <h3>
-        <a href="{% url agenda-yearly-view last_year %}" 
+        <a href="{% url 'agenda-yearly-view' last_year %}" 
            title="{% trans "Last Month" %}">&larr;</a>
         {% blocktrans %}Yearly View {{ year }}{% endblocktrans %}
-        <a href="{% url agenda-yearly-view next_year %}" 
+        <a href="{% url 'agenda-yearly-view' next_year %}" 
            title="{% trans "Next Month" %}">&rarr;</a>
     </h3>
     
@@ -24,7 +27,7 @@
         {% for dt,occurrences in by_month %}
         <tr class="month-divider">
             <th rowspan="{{ occurrences|length }}">
-                <a href="{% url agenda-monthly-view dt.year dt.month %}">
+                <a href="{% url 'agenda-monthly-view' dt.year dt.month %}">
                     {{ dt|date:"F" }}</a>
             </th>
             {% for o in occurrences %}

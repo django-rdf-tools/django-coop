@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+
+{% load url from future %}
+
 {% load i18n %}
 
 
@@ -11,13 +14,13 @@
 
 {% block title %}
     <h3 class="agenda-title">
-        <a href="{% url agenda-monthly-view last_month.year last_month.month %}"
+        <a href="{% url 'agenda-monthly-view' last_month.year last_month.month %}"
            title="{% trans "Last Month" %}">&larr;</a>
         {{ this_month|date:"F" }}
-        {# <a title="{% blocktrans with this_month.year as year %}View {{ year}}{% endblocktrans %}" href="{% url agenda-yearly-view this_month.year %}"> #}
+        {# <a title="{% blocktrans with this_month.year as year %}View {{ year}}{% endblocktrans %}" href="{% url 'agenda-yearly-view' this_month.year %}"> #}
             {{ this_month|date:"Y" }}
         {# </a> #}
-        <a href="{% url agenda-monthly-view next_month.year next_month.month %}"
+        <a href="{% url 'agenda-monthly-view' next_month.year next_month.month %}"
            title="{% trans "Next Month" %}">&rarr;</a>
     </h3>
 {% endblock %}
@@ -38,7 +41,7 @@
                 {% if day %}
 
                     <div class="day-ordinal">
-                        {# <a href="{% url agenda-daily-view today.year today.month day %}">{{ day }}</a> #}
+                        {# <a href="{% url 'agenda-daily-view' today.year today.month day %}">{{ day }}</a> #}
                         <span class="bg-day">{{day}}</span>
                     </div>
 

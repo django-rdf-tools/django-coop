@@ -46,7 +46,8 @@ class BasePerson(URIModel):
     notes = models.TextField(_(u'notes'), blank=True, null=True)
     structure = models.CharField(blank=True, max_length=100)
 
-    subs = generic.GenericRelation('coop_local.Subscription')
+    if 'coop.mailing' in settings.INSTALLED_APPS:
+        subs = generic.GenericRelation('coop_local.Subscription')
 
     if "coop_geo" in settings.INSTALLED_APPS:
         location = models.ForeignKey(Location, null=True, blank=True, verbose_name=_(u'location'))

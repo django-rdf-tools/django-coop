@@ -1,4 +1,7 @@
-{% extends "base.html" %}{% load i18n %}{% csrf_token %}
+{% extends "base.html" %}
+
+{% load url from future %}
+{% load i18n %}{% csrf_token %}
 {% block title %}{% trans "Event Occurrence" %}{% endblock %}
 {% block document %}
      <h3>{% trans "Event Occurrence" %}</h3>
@@ -6,7 +9,7 @@
          <a href="{{ occurrence.event.get_absolute_url }}">{{ occurrence.title }}</a>
          &ndash;
          {% with occurrence.start_time as st  %}
-         <a href="{% url agenda-daily-view st.year st.month st.day %}">
+         <a href="{% url 'agenda-daily-view' st.year st.month st.day %}">
             {{ st|date:"DATETIME_FORMAT" }}</a>
         </h4>
         {% endwith %}
