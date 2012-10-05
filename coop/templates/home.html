@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+
+{% load url from future %}
+
 {% load tagger_extras %}
 
 {% block meta_title %}Accueil{% endblock %}
@@ -22,7 +25,7 @@
           </ul>
 
           <p><a href="/org/">Toutes les initiatives</a>
-          <p><a href='{% url org_global_map %}'>Cartographie des initiatives</a></p>
+          <p><a href='{% url 'org_global_map' %}'>Cartographie des initiatives</a></p>
 
           </div>
     </div>

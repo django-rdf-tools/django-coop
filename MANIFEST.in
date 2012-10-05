@@ -9,4 +9,5 @@ recursive-include coop/person/locale *.mo *.po
 recursive-include coop/org/locale *.mo *.po
 recursive-include coop/mailing/locale *.mo *.po
 recursive-include coop/agenda/locale *.mo *.po
+recursive-include coop/prefs/locale *.mo *.po
 recursive-include coop/fab_templates *.txt

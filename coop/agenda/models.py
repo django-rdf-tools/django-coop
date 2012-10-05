@@ -61,6 +61,8 @@ class BaseEvent(URIModel):
     # Linking to local objects
     organization = models.ForeignKey('coop_local.Organization', null=True, blank=True, verbose_name=_('organization'))
     person = models.ForeignKey('coop_local.Person', null=True, blank=True, verbose_name=_('author'))
+    if "coop_geo" in settings.INSTALLED_APPS:
+        location = models.ForeignKey('coop_geo.Location', null=True, blank=True, verbose_name=_('location'))
 
     # Linking to remote objects
     remote_person_uri = models.CharField(_('author URI'), blank=True, max_length=255, editable=False)

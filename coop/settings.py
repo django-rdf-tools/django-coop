@@ -49,6 +49,9 @@ BASE_COOP_LOCAL_MODELS = [
         u'MailingList',
         u'Subscription',
     ]),
+    ('coop.prefs', [
+        u'SitePrefs',
+    ]),
 ]
 
 

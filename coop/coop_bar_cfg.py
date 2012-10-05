@@ -40,14 +40,23 @@ from coop_cms.coop_bar_cfg import *
 def load_commands(coop_bar):
     coop_bar.register([
 
+        [django_admin, ],  # django_admin_navtree
 
-        [django_admin,],  # django_admin_navtree
+        [   org_edit_link,
+            org_view_link,
+            org_save,
+            org_edit_cancel_link,
+            org_admin_link
+        ],
+        [   org_category_edit_link,
+            org_category_view_link,
+            org_save,
+            org_category_edit_cancel_link
+        ],
 
-        [edit_org_link, view_org_link, org_save, org_edit_cancel_link, org_admin_link],
+        [cms_edit, cms_view, cms_save, cms_cancel, django_admin_edit_article, cms_article_settings],
 
-        [cms_edit, cms_view, cms_save, cms_cancel, django_admin_edit_article],
-
-        [cms_new_article, cms_article_settings],
+        [cms_new_article, ],
 
         [cms_new_newsletter, edit_newsletter, cancel_edit_newsletter, save_newsletter,
             change_newsletter_settings,

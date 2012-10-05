@@ -1,4 +1,7 @@
-{% extends "base.html" %}{% load i18n %}
+{% extends "base.html" %}
+
+{% load url from future %}
+{% load i18n %}
 {% block title %}{% blocktrans %}Event: {{ event }}{% endblocktrans %}{% endblock %}
 {% block document %}
     <h3>{% trans "Event" %}</h3>
@@ -37,7 +40,7 @@
     <ol>
         {% for o in event.occurrence_set.all %}
         <li>
-            <a href="{% url agenda-occurrence event.id o.id %}">
+            <a href="{% url 'agenda-occurrence' event.id o.id %}">
                 {{ o.start_time|date:"DATETIME_FORMAT" }} &ndash; 
                 {{ o.end_time|date:"DATETIME_FORMAT" }}</a>
         </li>

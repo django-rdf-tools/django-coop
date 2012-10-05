@@ -32,6 +32,7 @@ setup(
                 'coop.agenda',
                 'coop.agenda.conf',
                 'coop.person',
+                'coop.prefs',
                 'coop.tag',
                 'coop.templatetags',
                 'coop.utils',
@@ -44,11 +45,11 @@ setup(
     license = 'BSD',
     zip_safe = False,
     install_requires = ['south', 'django',
-                        #'sorl-thumbnail==11.09',
-                        #'django-extensions==0.8',  # waiting for pull request, git://github.com/quinode/django-extensions.git@use_admin.jquery
-                        #'django-admin-tools==0.4.1', # for 1.4 : https://bitbucket.org/psyton/django-admin-tools
-                        #'django-haystack==1.2.6',
-                        #'djangoembed==0.1.1', # plutot via github: https://github.com/ericflo/django-oembed
+                        'sorl-thumbnail==11.09',
+                        #'django-extensions==0.8',  # waiting for new Pypi version with our 12/09/12 commit
+                        #'django-admin-tools==0.4.1', # for 1.4 : waiting for merging of https://bitbucket.org/psyton/django-admin-tools
+                        #'django-haystack==1.2.6', # github dev version needed
+                        #'djangoembed==0.1.1', # Pypi: bad version, we use: https://github.com/ericflo/django-oembed
                         ],
     long_description = open('README.rst').read(),
     url = 'https://github.com/quinode/django-coop/',

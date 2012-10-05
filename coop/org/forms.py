@@ -2,7 +2,7 @@
 from django import forms
 import floppyforms
 import re
-from coop_local.models import Organization
+from coop_local.models import Organization, OrganizationCategory
 from djaloha.widgets import AlohaInput
 from django.utils.translation import ugettext as _
 from django.core.exceptions import ValidationError
@@ -41,5 +41,30 @@ class OrganizationForm(floppyforms.ModelForm):
         if re.search(u'<(.*)>', title):
             raise ValidationError(_(u'HTML content is not allowed in the title'))
         return title
+
+
+class OrganizationCategoryForm(floppyforms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(OrganizationCategoryForm, self).__init__(*args, **kwargs)
+        self.org_category = kwargs.get('instance', None)
+
+    class Meta:
+        model = OrganizationCategory
+        fields = ('label', 'description')
+        widgets = {
+            'label': AlohaInput(text_color_plugin=False),
+            'description': AlohaInput(text_color_plugin=False),
+        }
+
+    def clean_label(self):
+        label = self.cleaned_data['label'].strip()
+        if label[-4:].lower() == '<br>':
+            label = label[:-4]
+        if not label:
+            raise ValidationError(_(u"Label can not be empty"))
+        if re.search(u'<(.*)>', label):
+            raise ValidationError(_(u'HTML content is not allowed in the label'))
+        return label
 
 

@@ -36,6 +36,7 @@ class CustomMenu(Menu):
                         items.MenuItem(_('Newsletters'), '/admin/coop_cms/newsletter/'),
                         items.MenuItem(_('Comments'), '/admin/comments/comment/'),
                         items.MenuItem(_('Forms'), '/admin/forms/form/'),
+                        items.MenuItem(_('Preferences'), '/admin/coop_local/siteprefs/'),
 
                         ]),
 

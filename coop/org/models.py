@@ -357,6 +357,7 @@ class BaseEngagement(URIModel):
 class BaseOrganizationCategory(models.Model):
     label = models.CharField(blank=True, max_length=100)
     slug = exfields.AutoSlugField(populate_from=('label'), overwrite=True)
+    description = models.TextField(_(u'description'), blank=True)
 
     class Meta:
         abstract = True
@@ -370,6 +371,31 @@ class BaseOrganizationCategory(models.Model):
     #@models.permalink
     def get_absolute_url(self):
         return reverse('org_category_detail', args=[self.slug])
+
+    def get_edit_url(self):
+        return reverse('org_category_edit', args=[self.slug])
+
+    def get_cancel_url(self):
+        return reverse('org_category_edit_cancel', args=[self.slug])
+
+    def _can_modify_organizationcategory(self, user):
+        if user.is_authenticated():
+            if user.is_superuser:
+                return True
+            else:
+                return False
+
+    def can_view_organizationcategory(self, user):
+        # TODO use global privacy permissions on objects
+        return True
+
+    def can_edit_organizationcategory(self, user):
+        return self._can_modify_organizationcategory(user)
+
+
+
+
+
 
 
 PREFLABEL = Choices(
@@ -386,7 +412,7 @@ def get_logo_folder(self, filename):
 class BaseOrganization(URIModel):
     title = models.CharField(_(u'title'), max_length=250)
 
-    acronym = models.CharField(_(u'acronym'), max_length=20, blank=True, null=True)
+    acronym = models.CharField(_(u'acronym'), max_length=100, blank=True, null=True)
     pref_label = models.PositiveSmallIntegerField(_(u'Preferred label'),
                         choices=PREFLABEL.CHOICES, default=PREFLABEL.TITLE)
 
@@ -411,7 +437,9 @@ class BaseOrganization(URIModel):
                 through='coop_local.Engagement', verbose_name=_(u'members'))
 
     contacts = generic.GenericRelation('coop_local.Contact')
-    subs = generic.GenericRelation('coop_local.Subscription')
+
+    if 'coop.mailing' in settings.INSTALLED_APPS:
+        subs = generic.GenericRelation('coop_local.Subscription')
 
     # ORDER : coop_geo must be loaded BEFORE coop_local
     if "coop_geo" in settings.INSTALLED_APPS:

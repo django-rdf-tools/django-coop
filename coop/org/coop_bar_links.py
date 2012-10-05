@@ -6,27 +6,45 @@ from django.utils.translation import ugettext as _
 from coop_bar.utils import make_link
 
 can_edit_org = coop_perm('can_edit', ['organization'])
-# La methode du model doit s'appeller "can_edit_orgnization")
+can_edit_org_category = coop_perm('can_edit', ['organizationcategory'])
+
+# La methode du model doit s'appeller "can_edit_organization")
+
 
 @can_edit_org
-def edit_org_link(request, context):
-    print 'loading link : edit_org_link'
+def org_edit_link(request, context):
     if not context.get('edit_mode'):
         org = context.get('organization')
         url = reverse('org_edit', args=[org.slug])
         return make_link(url, _(u'Edit organization'), 'fugue/store.png', classes=['icon'])
 
 
+@can_edit_org_category
+def org_category_edit_link(request, context):
+    if not context.get('edit_mode'):
+        org_category = context.get('org_category')
+        url = reverse('org_category_edit', args=[org_category.slug])
+        return make_link(url, _(u'Edit category'), 'fugue/store.png', classes=['icon'])
+
+
 @can_edit_org
-def view_org_link(request, context):
-    print 'loading link : org_detail_link'
+def org_view_link(request, context):
     if context.get('edit_mode'):
         org = context['organization']
         return make_link(org.get_cancel_url(), _(u'View'), 'fugue/eye.png',
             classes=['alert_on_click', 'icon', 'show-clean'])
 
 
+@can_edit_org_category
+def org_category_view_link(request, context):
+    if context.get('edit_mode'):
+        org_category = context['org_category']
+        return make_link(org_category.get_cancel_url(), _(u'View'), 'fugue/eye.png',
+            classes=['alert_on_click', 'icon', 'show-clean'])
+
+
 @can_edit_org
+@can_edit_org_category
 def org_save(request, context):
     if context.get('edit_mode'):
         #No link, will be managed by catching the js click event
@@ -36,10 +54,17 @@ def org_save(request, context):
 
 @can_edit_org
 def org_edit_cancel_link(request, context):
-    print 'org_edit_cancel_link'
     if context.get('edit_mode'):
         org = context['organization']
         return make_link(org.get_cancel_url(), _(u'Cancel'), 'fugue/cross.png',
+            classes=['alert_on_click', 'icon', 'show-dirty'])
+
+
+@can_edit_org_category
+def org_category_edit_cancel_link(request, context):
+    if context.get('edit_mode'):
+        org_category = context['org_category']
+        return make_link(org_category.get_cancel_url(), _(u'Cancel'), 'fugue/cross.png',
             classes=['alert_on_click', 'icon', 'show-dirty'])
 
 

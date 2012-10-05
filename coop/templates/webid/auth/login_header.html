@@ -1,8 +1,9 @@
+{% load url from future %}
 {% comment %}
 {% if user.is_anonymous %}
-  <p>Hello, guest | <a href="{% url auth_login %}">Log in</a></p>
+  <p>Hello, guest | <a href="{% url 'auth_login' %}">Log in</a></p>
 {% else %}
-  <p>Hello, {{user.username}} | <a href="{% url webidprovider-logout %}">Log out</a></p>
+  <p>Hello, {{user.username}} | <a href="{% url 'webidprovider-logout' %}">Log out</a></p>
 {% endif %}
 {% endcomment %}
 

@@ -129,7 +129,7 @@ class FkSearchInput(ForeignKeyRawIdWidget):
         context = {
             'url': url,
             'related_url': related_url,
-            'admin_media_prefix': settings.ADMIN_MEDIA_PREFIX,
+            #'admin_media_prefix': settings.ADMIN_MEDIA_PREFIX,
             'search_path': self.search_path,
             'search_fields': ','.join(self.search_fields),
             'model_name': model_name,
@@ -209,7 +209,7 @@ class NoLookupsForeignKeySearchInput(ForeignKeyRawIdWidget):
         context = {
             'url': url,
             'related_url': related_url,
-            'admin_media_prefix': settings.ADMIN_MEDIA_PREFIX,
+            #'admin_media_prefix': settings.ADMIN_MEDIA_PREFIX,
             'search_path': self.search_path,
             'search_fields': ','.join(self.search_fields),
             'model_name': model_name,
@@ -287,7 +287,7 @@ class InlineSearchInput(ForeignKeyRawIdWidget):
         context = {
             'url': url,
             'related_url': related_url,
-            'admin_media_prefix': settings.ADMIN_MEDIA_PREFIX,
+            #'admin_media_prefix': settings.ADMIN_MEDIA_PREFIX,
             'search_path': self.search_path,
             'search_fields': ','.join(self.search_fields),
             'model_name': model_name,

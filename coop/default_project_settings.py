@@ -78,6 +78,8 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     'django.core.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
     'coop.context_processors.current_site',
+    'preferences.context_processors.preferences_cp',
+
 ]
 
 ROOT_URLCONF = 'coop_local.urls'
@@ -136,6 +138,7 @@ INSTALLED_APPS = [
     'autoslug',
     'slugify',
     'forms_builder.forms',
+    'preferences',
 
     # WebID
     #'django_webid.provider',
@@ -218,6 +221,8 @@ COOP_CMS_ARTICLE_TEMPLATES = [
     ('coop_cms/article_standard.html', 'Article sans logo'),
     ('coop_cms/article_rubrique.html', 'Rubrique'),
 ]
+
+SKIP_DJALOHA_JQUERY = True
 
 FORMS_BUILDER_USE_SITES = False
 
