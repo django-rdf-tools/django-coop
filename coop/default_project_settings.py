@@ -26,7 +26,7 @@ STATIC_ROOT = os.path.abspath(PROJECT_PATH + '/static_collected/')
 STATIC_URL = '/static/'
 
 # compat fix ?
-ADMIN_MEDIA_PREFIX = STATIC_URL + "admin/"
+# ADMIN_MEDIA_PREFIX = STATIC_URL + "admin/"
 
 
 import admin_tools
@@ -150,12 +150,13 @@ INSTALLED_APPS = [
     # 'feincms',  # for their MPTT tree editor, not synced
     'coop',  # override feincms tree editor template
     'coop.link',
+    'coop.prefs',
     'coop.org',
     'coop.person',
     'coop.ui',
     #'coop.webid',
 
-    #'coop_geo',
+    'coop_geo',
 
     # PuSH
     'django_rq',
