@@ -232,9 +232,9 @@ class BaseContact(URIModel):
         elif ctype == COMM_MEANS.TWITTER:
             rdfValue = settings.NS.foaf.OnlineAccount
         elif ctype == COMM_MEANS.RSS:
-            rdfValue = rdflib.term.URIRef('<http://purl.org/rss/1.0/channel>')
+            rdfValue = settings.NS.rss.channel
         elif ctype == COMM_MEANS.VCAL:
-            rdfValue = rdflib.term.URIRef('<http://www.w3.org/2002/12/cal/icaltzd#Vcalendar>')
+            rdfValue = settings.NS.vcal.Vcalendar
         elif ctype == COMM_MEANS.MAIL:
             rdfValue = settings.NS.vcard.Email
         else:  # ctype == COMM_MEANS.WEB:
@@ -256,9 +256,9 @@ class BaseContact(URIModel):
                 setattr(self, djF, COMM_MEANS.SKYPE)
             elif value == settings.NS.foaf.OnlineAccount:
                 setattr(self, djF, COMM_MEANS.TWITTER)
-            elif value == rdflib.term.URIRef('<http://purl.org/rss/1.0/channel>'):
+            elif value == settings.NS.rss.channel:
                 setattr(self, djF, COMM_MEANS.RSS)
-            elif value == rdflib.term.URIRef('<http://www.w3.org/2002/12/cal/icaltzd#Vcalendar>'):
+            elif value == settings.NS.vcal.Vcalendar:
                 setattr(self, djF, COMM_MEANS.VCAL)
             elif value == settings.NS.vcard.Email:
                 setattr(self, djF, COMM_MEANS.MAIL)

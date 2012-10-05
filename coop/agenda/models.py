@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.conf import settings
+import rdflib
 
 
 class BaseCalendar(models.Model):
@@ -59,7 +60,9 @@ class BaseEvent(URIModel):
     calendar = models.ForeignKey('coop_local.Calendar', verbose_name=_('calendar'))
 
     # Linking to local objects
-    organization = models.ForeignKey('coop_local.Organization', null=True, blank=True, verbose_name=_('organization'))
+    organization = models.ForeignKey('coop_local.Organization', null=True, blank=True, verbose_name=_('organization'), related_name=_('prem organization'))
+    organizations = models.ManyToManyField('coop_local.Organization', null=True, blank=True, verbose_name=_('organizations'), related_name=_('other organizations'))
+
     person = models.ForeignKey('coop_local.Person', null=True, blank=True, verbose_name=_('author'))
     if "coop_geo" in settings.INSTALLED_APPS:
         location = models.ForeignKey('coop_geo.Location', null=True, blank=True, verbose_name=_('location'))
@@ -136,6 +139,46 @@ class BaseEvent(URIModel):
         Convenience method wrapping ``Occurrence.objects.daily_occurrences``.
         """
         return get_model('coop_local', 'Occurrence').objects.daily_occurrences(dt=dt, event=self)
+
+
+    # RDF stuffs
+    rdf_type = settings.NS.vcal.Vevent
+    rdf_mapping = (
+        ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
+        ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
+        ('single_mapping', (settings.NS.vcal.summary, 'title'), 'single_reverse'),
+        ('single_mapping', (settings.NS.vcal.description, 'description'), 'single_reverse'),
+        ('single_mapping', (settings.NS.vcal.contact, 'person'), 'single_reverse'),
+        ('single_mapping', (settings.NS.vcal.organizer, 'organization'), 'single_reverse'),
+        ('single_mapping', (settings.NS.vcal.location, 'location'), 'single_reverse'),
+
+        ('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'),
+        ('multi_mapping', (settings.NS.dct.organizer, 'organizations'), 'multi_reverse'),
+
+
+        ('category_mapping', (settings.NS.vcal.categories, 'event_type'), 'category_mapping_reverse'),
+
+    )
+
+
+    def category_mapping(self, rdfPred, djF, lang=None):
+        value = getattr(self, djF).label
+        return [(rdflib.term.URIRef(self.uri), rdfPred, value)]
+
+
+    def category_mapping_reverse(self, g, rdfPred, djField, lang=None):
+        values = list(g.objects(rdflib.term.URIRef(self.uri), rdfPred))
+        m = models.get_model('coop_local', 'eventcategory')
+        if len(values) == 1:
+            value = values[0]
+            try:
+                djValue = m.objects.get(label=value)
+                setattr(self, djField, djValue)
+            except m.DoesNotExist:
+                pass
+
+
+
 
 
 class BaseDated(models.Model):
