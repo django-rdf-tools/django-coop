@@ -157,6 +157,8 @@ class BaseEvent(URIModel):
 
 
         ('category_mapping', (settings.NS.vcal.categories, 'event_type'), 'category_mapping_reverse'),
+        ('occurence_mapping', (settings.NS.vcal.dtstart, settings.NS.vcal.dtend), 'occurence_mapping_reverse'),
+
 
     )
 
@@ -164,7 +166,6 @@ class BaseEvent(URIModel):
     def category_mapping(self, rdfPred, djF, lang=None):
         value = getattr(self, djF).label
         return [(rdflib.term.URIRef(self.uri), rdfPred, value)]
-
 
     def category_mapping_reverse(self, g, rdfPred, djField, lang=None):
         values = list(g.objects(rdflib.term.URIRef(self.uri), rdfPred))
@@ -176,6 +177,13 @@ class BaseEvent(URIModel):
                 setattr(self, djField, djValue)
             except m.DoesNotExist:
                 pass
+
+    def occurence_mapping(self, rdfStart, rdfEnd, lang=None):
+        pass
+
+    def occurence_mapping_reverse(self, g, rdfStart, rdfEnd, lang=None):
+        pass
+
 
 
 
