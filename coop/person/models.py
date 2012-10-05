@@ -11,6 +11,7 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from coop.models import URIModel
+import rdflib
 
 if "coop_geo" in settings.INSTALLED_APPS:
     from coop_geo.models import Location
@@ -107,3 +108,26 @@ class BasePerson(URIModel):
             if(chg):
                 self.user.save()
         super(BasePerson, self).save(*args, **kwargs)
+
+
+    # RDF stuf
+    rdf_type = settings.NS.person.Person
+    rdf_mapping = (
+        ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
+        ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
+        ('single_mapping', (settings.NS.foaf.familyName, 'last_name'), 'single_reverse'),
+        ('single_mapping', (settings.NS.foaf.givenName, 'first_name'), 'single_reverse'),
+        ('single_mapping', (settings.NS.foaf.mbox_sha1sum, 'email_sha1'), 'single_reverse'),
+
+        ('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'),
+
+        ('name_mapping', (settings.NS.foaf.name, ''), 'name_mapping_reverse')
+ 
+
+    )
+
+    def name_mapping(self, rdfPred, djF, lang=None):
+        return [(rdflib.term.URIRef(self.uri), rdfPred, rdflib.term.Literal(u"%s %s" % (self.first_name, self.last_name), lang))]
+
+    def name_mapping_reverse(self, g, rdfP, djF, lang=None):
+        pass

@@ -148,7 +148,13 @@ map:location a d2rq:ClassMap;
     d2rq:uriSqlExpression "'http://data.economie-solidaire.fr/id/location/' || coop_geo_location.geohash";
     # d2rq:uriPattern "location/@@coop_geo_location.geohash@@";   # Wainting for an anwers
     {% endif %}   
-    d2rq:class dct:Location;
+#    d2rq:class dct:Location;  # voir le PropertyBrige si dessous
+    .
+
+map:location_type a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:location;
+    d2rq:property rdf:type;
+    d2rq:constantValue dct:Location;
     .
 map:location_label a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:location;
@@ -166,6 +172,9 @@ map:location_label a d2rq:PropertyBridge;
    d2rq:belongsToClassMap map:location;
    d2rq:property locn:address;
    d2rq:refersToClassMap  map:addr;
+   d2rq:alias "coop_geo_location AS location";
+   d2rq:condition "location.id = coop_geo_location.id";
+   d2rq:condition "location.adr1 <> ''"; 
    .   
 map:location_created a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:location;
@@ -203,14 +212,28 @@ map:addr a d2rq:ClassMap;
     {% else %}
     d2rq:uriColumn "coop_geo_location.uri";
     {% endif %}
-    d2rq:class locn:Address;
+#    d2rq:class locn:Address;  replace by the property brige addr_type
+    .
+
+map:addr_type a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:addr;
+    d2rq:property rdf:type;
+    d2rq:constantValue locn:Address;
+    d2rq:alias "coop_geo_location AS address";
+    d2rq:condition "address.adr1 <> ''"; 
+    .    
+
+map:addr_label a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:addr;
+    d2rq:property rdfs:label;
+    d2rq:column "coop_geo_location.label";
     .
 
 map:addr_fulladdr a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:addr;
     d2rq:property locn:fullAddress;
-    d2rq:property rdfs:label;
     d2rq:pattern "@@coop_geo_location.adr1@@\n@@coop_geo_location.adr2@@\n@@coop_geo_location.zipcode@@ @@coop_geo_location.city@@";
+    d2rq:condition "coop_geo_location.adr1 <> ''";
     .
 map:addr_adr1 a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:addr;

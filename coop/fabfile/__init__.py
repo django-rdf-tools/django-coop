@@ -255,7 +255,7 @@ def coop_set_project():
         else:
             print(yellow('Projet Django-coop nommé "%(projet)s" : déjà installé.' % env))
 
-
+@task
 def apache_vhost():
     '''Configuration Vhost apache'''
     set_project()
