@@ -58,6 +58,12 @@ class Command(TemplateCommand):
         options['extensions'].extend(['conf', 'json', 'txt'])
         options['virtualenv'] = os.getenv('VIRTUAL_ENV')
         options['nice_name'] = project_name.title()
+
+        if options["domain"] != "localhost:8000":
+            options["root_domain"] = (".").join(options["domain"].split(".")[1:])
+        else:
+            options["root_domain"] = options["domain"]
+
         p = os.popen('which runinenv.sh', "r")
         options['runinenv'] = p.readline().replace('\n', '')
         p.close()

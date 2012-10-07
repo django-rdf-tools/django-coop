@@ -44,9 +44,9 @@ INSTALLED_APPS = settings.INSTALLED_APPS + [
 # TODO: to be discuss this settings could be in default_project_setings.py
 # file. To be check I knew more on how to configure sympa
 SYMPA_SOAP = {
-    'WSDL': 'http://sympa.{{ domain }}/sympa/wsdl',
+    'WSDL': 'http://sympa.{{ root_domain }}/sympa/wsdl',
     'APPNAME': 'djangoapp',
     'PASSWORD': 'test',
-    'OWNER': 'USER_EMAIL=userProxy@my.server',
+    'OWNER': ADMINS[0][1],
     'PARAMETER_SEPARATOR': '__SEP__',      # used for template
 }
