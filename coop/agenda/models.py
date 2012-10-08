@@ -57,7 +57,7 @@ class BaseEvent(URIModel):
     """
     Container model for general metadata and associated ``Occurrence`` entries.
     """
-    title = models.CharField(_('title'), max_length=32)
+    title = models.CharField(_('title'), max_length=120)
     description = models.TextField(_(u'description'), blank=True)
     slug = exfields.AutoSlugField(populate_from='title')
     event_type = models.ForeignKey('coop_local.EventCategory', verbose_name=_('event type'))  # TODO rename category !!!
