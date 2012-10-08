@@ -112,7 +112,7 @@ def geojson_objects(request, what, criteria):
 
         for event in qs:
             loc = event.location
-            if not loc.city in positions:
+            if loc and not loc.city in positions:
                 positions[loc.city] = {
                     "type": "Feature",
                     "properties": {
