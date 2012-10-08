@@ -25,3 +25,10 @@
 {% if event.organization %}
     <div class="event_org">Organisateur : <a href="{{ event.organization.get_absolute_url }}">{{ event.organization }}</a></div>
 {% endif %}
+
+
+{% if event.location %}
+
+    <img src="http://maps.googleapis.com/maps/api/staticmap?markers=size:small%7Ccolor:0xd1453e|{{event.location.point.get_coords.1|stringformat:"f"}},{{event.location.point.get_coords.0|stringformat:"f"}}|&amp;maptype=hybrid&amp;size=280x200&amp;sensor=false&amp;zoom=7">
+
+{% endif %}

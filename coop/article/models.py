@@ -47,7 +47,7 @@ if "coop_cms" in settings.INSTALLED_APPS:
             app_label = 'coop_local'
 
 
-        # RDF stufs
+        # RDF stuff
         rdf_type = settings.NS.dct.Text
         rdf_mapping = (
             ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),

@@ -3,10 +3,12 @@
 from django.conf import settings
 from django.contrib import admin
 from django import forms
-from coop_local.models import Event, EventCategory, Calendar, Occurrence
+from coop_local.models import Event, EventCategory, Calendar, Occurrence, Dated
 from coop.utils.autocomplete_admin import FkAutocompleteAdmin, InlineAutocompleteAdmin
 from coop_geo.admin import LocatedInline
 from django.db.models.loading import get_model
+from django.contrib.contenttypes.generic import GenericTabularInline
+from django.utils.translation import ugettext_lazy as _
 
 #from genericadmin.admin import GenericAdminModelAdmin
 # GenericStackedInline or GenericTabularInline
@@ -68,3 +70,11 @@ class EventAdmin(FkAutocompleteAdmin):
 admin.site.register(Event, EventAdmin)
 admin.site.register(EventCategory, EventCategoryAdmin)
 admin.site.register(Calendar)
+
+
+class DatedInline(GenericTabularInline, InlineAutocompleteAdmin):
+    verbose_name = _(u'Date')
+    verbose_name_plural = _(u'Dates')
+    model = Dated
+    related_search_fields = {'event': ('title', 'description', 'slug'), }
+    extra = 1

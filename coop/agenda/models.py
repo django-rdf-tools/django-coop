@@ -48,6 +48,10 @@ class BaseEventCategory(models.Model):
     def __unicode__(self):
         return self.label
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('agenda-event-category', [str(self.slug)])
+
 
 class BaseEvent(URIModel):
     """
@@ -56,7 +60,7 @@ class BaseEvent(URIModel):
     title = models.CharField(_('title'), max_length=32)
     description = models.TextField(_(u'description'), blank=True)
     slug = exfields.AutoSlugField(populate_from='title')
-    event_type = models.ForeignKey('coop_local.EventCategory', verbose_name=_('event type'))
+    event_type = models.ForeignKey('coop_local.EventCategory', verbose_name=_('event type'))  # TODO rename category !!!
     calendar = models.ForeignKey('coop_local.Calendar', verbose_name=_('calendar'))
 
     # Linking to local objects
@@ -93,6 +97,16 @@ class BaseEvent(URIModel):
     @models.permalink
     def get_absolute_url(self):
         return ('agenda-event', [str(self.id)])
+
+    def linked_articles(self):
+        linked_items = self.dated_set.all()
+        if linked_items:
+            result = []
+            for item in linked_items:
+                result.append(item.content_object)
+            return result    
+        else:
+            return None
 
     def add_occurrences(self, start_time, end_time, **rrule_params):
         """
@@ -183,10 +197,6 @@ class BaseEvent(URIModel):
 
     def occurence_mapping_reverse(self, g, rdfStart, rdfEnd, lang=None):
         pass
-
-
-
-
 
 
 class BaseDated(models.Model):

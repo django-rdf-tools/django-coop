@@ -1,13 +1,14 @@
 # -*- coding:utf-8 -*-
 
 from django.shortcuts import render_to_response, redirect
-from coop_local.models import Organization, Person
+from coop_local.models import Event, EventCategory, Organization, OrganizationCategory, Person
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.http import Http404
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
+import json
 
 if('coop.exchange' in settings.INSTALLED_APPS):
     from coop_local.models import Exchange
@@ -62,6 +63,7 @@ RDF_SERIALIZATIONS = {
 }
 
 
+# smallest data API ever
 def get_rdf(request, model, uuid, format):
     req_model = get_model(urimodels[model], model)
     object = get_object_or_404(req_model, uuid=uuid)
@@ -77,4 +79,55 @@ def SentryHandler500(request):
         'request': request,
         'STATIC_URL': settings.STATIC_URL,
     })))
+
+
+def geojson_objects(request, what, criteria):
+    positions = {}
+    if what == "org":
+        cat = OrganizationCategory.objects.get(slug=criteria)
+        qs = Organization.objects.filter(category=cat)
+        for org in qs:
+            for loc in org.locations():
+                if not loc.city in positions:
+                    positions[loc.city] = {
+                        "type": "Feature",
+                        "properties": {
+                            #"name": cl.commune.nom,
+                            "popupContent": u"<h4>" + loc.city + u"</h4><p class='org'><a href='" + org.get_absolute_url() + u"'>" + org.label() + u"</a></p>"
+                            },
+                        "geometry": {
+                            "type": "Point",
+                            #"coordinates": [str(loc.point.x), str(loc.point.y)]
+                            "coordinates": [loc.point.x, loc.point.y]
+
+                            }
+                        }
+
+                else:
+                    positions[loc.city]["properties"]["popupContent"] += u"\n<p class='geo_item'><a href='" + \
+                            org.get_absolute_url() + u"'>" + org.label() + u"</a></p>"
+    elif what == "event":
+        cat = EventCategory.objects.get(slug=criteria)
+        qs = Event.objects.filter(event_type=cat)  # TODO rename category !!
+
+        for event in qs:
+            loc = event.location
+            if not loc.city in positions:
+                positions[loc.city] = {
+                    "type": "Feature",
+                    "properties": {
+                        "popupContent": u"<h4>" + loc.city + u"</h4><p class='org'><a href='" + event.get_absolute_url() + u"'>" + event.title + u"</a></p>"
+                        },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [loc.point.x, loc.point.y]
+
+                        }
+                    }
+            else:
+                positions[loc.city]["properties"]["popupContent"] += u"\n<p class='geo_item'><a href='" + \
+                            event.get_absolute_url() + u"'>" + event.title + u"</a></p>"
+
+    result = {"type": "FeatureCollection", "features": positions.values()}
+    return HttpResponse(json.dumps(result), mimetype="application/json")
 
