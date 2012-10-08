@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 from datetime import datetime
 
 from django.utils.translation import ugettext_lazy as _
@@ -142,6 +144,9 @@ class BaseEvent(URIModel):
 
 
     # RDF stuffs
+    # Attention il faut tenir compte des occurences.... ca complique un peu
+
+
     rdf_type = settings.NS.vcal.Vevent
     rdf_mapping = (
         ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
@@ -159,13 +164,12 @@ class BaseEvent(URIModel):
         ('category_mapping', (settings.NS.vcal.categories, 'event_type'), 'category_mapping_reverse'),
         ('occurence_mapping', (settings.NS.vcal.dtstart, settings.NS.vcal.dtend), 'occurence_mapping_reverse'),
 
-
     )
 
 
     def category_mapping(self, rdfPred, djF, lang=None):
         value = getattr(self, djF).label
-        return [(rdflib.term.URIRef(self.uri), rdfPred, value)]
+        return [(rdflib.term.URIRef(self.uri), rdfPred, rdflib.term.Literal(value))]
 
     def category_mapping_reverse(self, g, rdfPred, djField, lang=None):
         values = list(g.objects(rdflib.term.URIRef(self.uri), rdfPred))
@@ -179,10 +183,60 @@ class BaseEvent(URIModel):
                 pass
 
     def occurence_mapping(self, rdfStart, rdfEnd, lang=None):
-        pass
+        m = models.get_model('coop_local', 'occurrence')
+        occurrences = m.objects.filter(event=self)
+        if len(occurrences) == 1:  # ouf rien à faire
+            occurrence = occurrences[0]
+            return [(rdflib.term.URIRef(self.uri), rdfStart, rdflib.term.Literal(occurrence.start_time)),
+                    (rdflib.term.URIRef(self.uri), rdfEnd, rdflib.term.Literal(occurrence.end_time))]
+        elif len(occurrences) == 0:
+            return []
+        else:  # On gère les occurrences à minima et en trichant un peu on modifie l'uri stockée
+            i = 0
+            res = []
+            for occurrence in occurrences:
+                i += 1
+                uri = self.uri + '#%s' % i
+                res.append((rdflib.term.URIRef(uri), settings.NS.rdf.type, self.rdf_type))
+                res.append((rdflib.term.URIRef(uri), rdfStart, rdflib.term.Literal(occurrence.start_time)))
+                res.append((rdflib.term.URIRef(uri), rdfEnd, rdflib.term.Literal(occurrence.end_time)))
+            return res  # en attendant meiux
 
     def occurence_mapping_reverse(self, g, rdfStart, rdfEnd, lang=None):
-        pass
+        start = list(g.objects(rdflib.term.URIRef(self.uri), rdfStart))
+        m = models.get_model('coop_local', 'occurrence')
+
+        if len(start) == 1:
+            end = list(g.objects(rdflib.term.URIRef(self.uri), rdfEnd))
+            duration = list(g.objects(rdflib.term.URIRef(self.uri), settings.NS.vcal.duration))
+            start = start[0].toPython()
+            if len(end) == 1:
+                occur, created = m.objects.get_or_create(start_time=start, end_time=end[0].toPython(), event=self)
+            elif len(duration) == 1:
+                end = start + duration[0].toPython()
+                occur, created = m.objects.get_or_create(start_time=start, end_time=end, event=self)
+        elif len(start) == 0:
+            # Il faut chercher les uri de la forme self.uri#i avec i = 1,2,3,....
+            i = 0
+            again = True
+            while again:
+                i += 1
+                uri = self.uri + "#%s" % i
+                start = list(g.objects(rdflib.term.URIRef(uri), rdfStart))
+                again = not start == []
+                if len(start) == 1:
+                    end = list(g.objects(rdflib.term.URIRef(uri), rdfEnd))
+                    duration = list(g.objects(rdflib.term.URIRef(uri), settings.NS.vcal.duration))
+                    start = start[0].toPython()
+                    if len(end) == 1:
+                        occur, created = m.objects.get_or_create(start_time=start, end_time=end[0].toPython(), event=self)
+                    elif len(duration) == 1:
+                        end = start + duration[0].toPython()
+                        occur, created = m.objects.get_or_create(start_time=start, end_time=end, event=self)
+                else:
+                    pass
+        else:
+            pass
 
 
 

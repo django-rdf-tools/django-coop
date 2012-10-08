@@ -625,15 +625,26 @@ class URIModel(StaticURIModel, TimestampedModel):
 
 
 
-def rdfDumpAll(destination, format):
+def rdfDumpAll(destination, format, model=None):
     """
     """
     g = Graph()
     for k in settings.NS:
         g.bind(k, settings.NS[k])
 
-    for m in models.get_models():
-        if coop.models.StaticURIModel in m.__mro__:
+    if model == None:
+        for m in models.get_models():
+            if coop.models.StaticURIModel in m.__mro__:
+                for o in m.objects.all():
+                    g += o.toRdfGraph()
+    else:
+        m = models.get_model('coop_local', model)
+        if m == None:
+            m = models.get_model('coop_geo', model)
+        if m == None:
+            print _(u"Warning")
+            print _(u"Warning no model found for model name %s" % model)
+        else:
             for o in m.objects.all():
                 g += o.toRdfGraph()
     g.serialize(destination, format=format)
@@ -642,7 +653,7 @@ def rdfDumpAll(destination, format):
 # It seems to be the best place to do the connection
 # see http://stackoverflow.com/questions/7115097/the-right-place-to-keep-my-signals-py-files-in-django
 # from django.core.signals import  request_finished
-from coop.signals import post_save_callback, post_delete_callback, listener
+from coop.signals import listener
 from django_push.subscriber.signals import updated
 
 # request_finished.connect(post_save_callback, sender=StaticURIModel)
