@@ -14,9 +14,9 @@ env.vm_path = "/Users/dom/VM/devcoop"
 env.locale = 'fr_FR.UTF-8'
 
 #Paramétres par défaut
-domain = "www.promess84.fr"
-projet = "promess84"
-alias = "promess"
+domain = "coop.allianceprovence.org"
+projet = "alliance"
+alias = "alliance"
 
 pgpass = '123456'
 
@@ -213,7 +213,7 @@ def coop_setup():
     set_domain()
     set_locale()
     coop_set_project()
-    # dependencies() # TODO : parse requirements.txt to test each package
+    #dependencies() # TODO : parse requirements.txt to test each package
     apache_vhost()
     #create_pg_db()
     sudo('apachectl restart')
@@ -244,32 +244,39 @@ def coop_set_project():
                     with prefix('workon %(projet)s' % env):
                         run('chmod +x manage.py')
                         run('chmod -R g+rw media')
-                if exists('/home/%(user)s/projects/%(projet)s/supervisor.conf' % env):
-                    print(yellow('Un fichier de configuration supervisor existe pour le projet'))
-                    # if confirm('Voir le fichier de configuration supervisor?', default=False):
-                    #     run('more /home/%(user)s/projects/%(projet)s/supervisor.conf' % env)
-                    if confirm('Utiliser ce fichier de configuration supervisor', 
-                               default=False):
-                        sudo('supervisorctl reread')
-                        sudo('supervisorctl update')
+                vrfy_supervisor_conf()
+
         else:
             print(yellow('Projet Django-coop nommé "%(projet)s" : déjà installé.' % env))
+            # TODO proposer de réinstaller
+            vrfy_supervisor_conf()
+
+
+def vrfy_supervisor_conf():
+    with cd('projects/%(projet)s' % env):
+        if exists('/home/%(user)s/projects/%(projet)s/supervisor.conf' % env):
+            print(green('Fichier de configuration supervisor présent.'))
+                    # if confirm('Voir le fichier de configuration supervisor?', default=False):
+                    #     run('more /home/%(user)s/projects/%(projet)s/supervisor.conf' % env)
+            sudo('supervisorctl reread')
+            sudo('supervisorctl update')
+        else:
+            print(red('Supervisor non configuré, Redis ne fonctionnera pas.'))
+            # if confirm('Utiliser ce fichier de configuration supervisor',
+             #            default=False):
+
 
 @task
 def apache_vhost():
     '''Configuration Vhost apache'''
     set_project()
     set_domain()
-    #with prefix('workon %(projet)s' % env):
     if(env.websrv == 1):
         vhost_context = {
             'user': env.user,
             'domain': env.domain,
             'projet': env.projet
         }
-        # coop_path = run('python -c "import coop; print coop.__path__[0]"')
-        # import sys
-        # print sys.modules[__name__]
         import coop
         coop_path = coop.__path__[0]
         upload_template('%s/fabfile/fab_templates/vhost.txt' % coop_path,

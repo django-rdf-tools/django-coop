@@ -18,7 +18,6 @@ urlpatterns = []
 # )
 
 
-from coop.default_project_urls import *
+from coop.default_project_urls import urlpatterns as default_project_urls
+urlpatterns += default_project_urls
 
-
-#    url(r'^org/$', 'coop_local.views.org_list', name="org_list"), #view coop a surcharger --> voir plutot les CBV

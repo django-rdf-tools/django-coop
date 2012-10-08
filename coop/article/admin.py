@@ -8,6 +8,9 @@ from django import forms
 from sorl.thumbnail.admin import AdminImageMixin
 from coop.utils.autocomplete_admin import FkAutocompleteAdmin
 
+if "coop.agenda" in settings.INSTALLED_APPS:
+    from coop.agenda.admin import DatedInline
+
 
 if "coop_cms" in settings.INSTALLED_APPS:
 
@@ -48,3 +51,5 @@ if "coop_cms" in settings.INSTALLED_APPS:
         )
         related_search_fields = {'organization': ('title', 'subtitle', 'description'), }
 
+        if "coop.agenda" in settings.INSTALLED_APPS:
+            inlines = [DatedInline]

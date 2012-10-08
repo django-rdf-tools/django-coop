@@ -9,7 +9,7 @@ from django.db import models
 from django.template.context import RequestContext
 from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.core.urlresolvers import reverse
-from coop_local.models import Event, Occurrence, Calendar
+from coop_local.models import Event, EventCategory, Occurrence, Calendar
 from coop.agenda import utils, forms
 from coop.agenda.conf import settings as agenda_settings
 
@@ -52,6 +52,13 @@ def event_minimal_view(request, pk, template='agenda/event_minimal_view.html'):
     event = get_object_or_404(Event, pk=pk)
     return render_to_response(template, {'event': event},
         context_instance=RequestContext(request))
+
+
+def event_category_view(request, slug):
+    category = get_object_or_404(EventCategory, slug=slug)
+    rdict = {'event_category': category}
+    rdict['events'] = Event.objects.filter(event_type=category)
+    return render_to_response('agenda/event_category.html', rdict, RequestContext(request))
 
 
 def event_view(request, pk, template='agenda/event_detail.html',

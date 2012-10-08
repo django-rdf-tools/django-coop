@@ -15,10 +15,10 @@ def coop_perm(perm, object_names):
             # objet editable en front-end ?
             if not editable:
                 return
-            for object_name in object_names:
+            for model_name in object_names:
                 # objet  present dans le contexte ?
-                object = context.get(object_name)
-                if object and request and request.user.has_perm(perm + "_" + object_name, object):
+                object = context.get(model_name)
+                if object and request and request.user.has_perm(perm + "_" + model_name, object):
                     yes_we_can = func(request, context)
                     if yes_we_can:
                         return yes_we_can

@@ -26,7 +26,7 @@ STATIC_ROOT = os.path.abspath(PROJECT_PATH + '/static_collected/')
 STATIC_URL = '/static/'
 
 # compat fix ?
-# ADMIN_MEDIA_PREFIX = STATIC_URL + "admin/"
+ADMIN_MEDIA_PREFIX = STATIC_URL + "admin/"
 
 
 import admin_tools

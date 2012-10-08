@@ -77,6 +77,11 @@ if 'coop.agenda' in settings.INSTALLED_APPS:
         (r'^', include('coop.agenda.urls')),
     )
 
+if 'coop.mailing' in settings.INSTALLED_APPS:
+    urlpatterns += patterns('',
+        (r'^', include('coop.mailing.urls')),
+    )
+
 urlpatterns += patterns('',
     (r'^forms/', include('forms_builder.forms.urls')),
     (r'^id/', include('uriredirect.urls')),

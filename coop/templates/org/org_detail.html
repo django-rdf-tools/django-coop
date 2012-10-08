@@ -172,7 +172,7 @@
             {% endif %}
             </p>
 
-            <img src="http://maps.googleapis.com/maps/api/staticmap?markers=size:small%7Ccolor:0xd1453e|{% for a in adresses %}{{a.location.point.get_coords.1|stringformat:"f"}},{{a.location.point.get_coords.0|stringformat:"f"}}|{% endfor %}&maptype=hybrid&size=280x200&sensor=false&zoom=7">
+            <img src="http://maps.googleapis.com/maps/api/staticmap?markers=size:small%7Ccolor:0xd1453e|{% for a in adresses %}{{a.location.point.get_coords.1|stringformat:"f"}},{{a.location.point.get_coords.0|stringformat:"f"}}|{% endfor %}&amp;maptype=hybrid&amp;size=280x200&amp;sensor=false&amp;zoom=7">
 
             <br/><br/>
             {% for a in adresses %}

@@ -20,7 +20,7 @@ def lists():
     try:
         return _server.authenticateRemoteAppAndRun(sympa_soap['APPNAME'],
                                                     sympa_soap['PASSWORD'],
-                                                    sympa_soap['OWNER'],
+                                                    'USER_EMAIL=' + sympa_soap['OWNER'],
                                                     'lists'
                                                     )
     except faultType, e:
@@ -31,7 +31,7 @@ def info(name):
     try:
         return _server.authenticateRemoteAppAndRun(sympa_soap['APPNAME'],
                                                     sympa_soap['PASSWORD'],
-                                                    sympa_soap['OWNER'],
+                                                    'USER_EMAIL=' + sympa_soap['OWNER'],
                                                     'info',
                                                     (name,)
                                                     )
@@ -51,7 +51,7 @@ def create_list(name, subject, template, description, topics=u'topics'):
     try:
         return _server.authenticateRemoteAppAndRun(sympa_soap['APPNAME'],
                                                     sympa_soap['PASSWORD'],
-                                                    sympa_soap['OWNER'],
+                                                    'USER_EMAIL=' + sympa_soap['OWNER'],
                                                     'createList',
                                                     (name, subject, template, description, topics)
                                                     )
@@ -63,7 +63,7 @@ def close_list(name):
     try:
         return _server.authenticateRemoteAppAndRun(sympa_soap['APPNAME'],
                                                     sympa_soap['PASSWORD'],
-                                                    sympa_soap['OWNER'],
+                                                    'USER_EMAIL=' + sympa_soap['OWNER'],
                                                     'closeList',
                                                     (name,)
                                                     )
