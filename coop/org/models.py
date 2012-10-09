@@ -562,6 +562,20 @@ class BaseOrganization(URIModel):
         #     self.email_sha1 = m.hexdigest()
         super(BaseOrganization, self).save(*args, **kwargs)
 
+    def get_edit_url(self):
+        return reverse('org_edit', args=[self.slug])
+
+    def get_cancel_url(self):
+        return reverse('org_edit_cancel', args=[self.slug])
+
+    def _can_modify_organization(self, user):
+        if user.is_authenticated():
+            if user.is_superuser:
+                return True
+            elif user.person in self.members.all():
+                return True
+            else:
+                return False
 
     def can_view_organization(self, user):
         # TODO use global privacy permissions on objects

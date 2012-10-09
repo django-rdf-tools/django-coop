@@ -15,13 +15,11 @@ git+git://github.com/quinode/coop-tag.git
 git+git://github.com/quinode/coop-geo.git
 git+git://github.com/quinode/coop_cms.git
 
-git+git://github.com/Nimn/geo-django-fla.git
-
 django-autoslug
 unicode-slugify
 git+git://github.com/praekelt/django-preferences.git
-fabric
-fabtools
+#fabric
+#fabtools
 
 # forks we depend on
 hg+https://bitbucket.org/psyton/django-admin-tools
@@ -45,9 +43,13 @@ SOAPpy
 psycopg2
 Pillow
 south
-rq
+
 django-forms-builder
+
+# Queues
+rq
 git+git://github.com/ui/django-rq.git
+
 python-dateutil
 sorl-thumbnail==11.09
 shortuuid
@@ -64,6 +66,7 @@ git+git://github.com/RDFLib/rdflib-jsonld.git
 git+git://github.com/RDFLib/rdflib-sparqlstore.git
 git+git://github.com/quinode/subhub.git
 django-appconf
+
 git+git://github.com/toastdriven/django-haystack.git
 
 # webid deps : not ready
