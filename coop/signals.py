@@ -69,7 +69,7 @@ def letsCallDistributionTaskProcess(thName):
 @receiver(post_save)
 def post_save_callback(sender, instance, **kwargs):
     maintenance = getattr(settings, 'SUBHUB_MAINTENANCE_AUTO', False)
-    log.debug(u"Post save callback with sender %s and instance %s and AUTO %s" % (unicode(sender), unicode(instance), maintenance))
+    # log.debug(u"Post save callback with sender %s and instance %s and AUTO %s" % (unicode(sender), unicode(instance), maintenance))
 
     if isinstance(instance, StaticURIModel):
         if instance.uri_mode == URI_MODE.IMPORTED:

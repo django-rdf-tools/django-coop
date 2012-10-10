@@ -7,7 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 from extended_choices import Choices
 import shortuuid
-from rdflib import Graph, plugin, Literal, URIRef, ConjunctiveGraph, BNode
+from rdflib import Graph, plugin, Literal, URIRef, BNode
 from django.contrib.contenttypes import generic
 from django.db import IntegrityError
 from django.template import Template, Context
@@ -131,7 +131,10 @@ class StaticURIModel(models.Model):
             if not self.uri or self.uri == '':
                 self.uri = self.init_uri()
             elif self.uri != self.init_uri():
-                self.uri = self.init_uri()  # uri_id est pas pareil
+                # Be careful: we need to keep history of uri modification
+                from coop_local.models import LinkProperty
+                self.links.add(predicate=LinkProperty.objects.get(label='replace'), object_uri=self.uri)
+                self.uri = self.init_uri()   # uri_id est pas pareil
         super(StaticURIModel, self).save(*args, **kwargs)
 
 
@@ -287,11 +290,25 @@ class StaticURIModel(models.Model):
         for method, arguments, reverse in self.rdf_mapping:
             for triple in getattr(self, method)(*arguments):
                 g.add(triple)
+        for l in self.links.all():
+            g.add((URIRef(self.uri),  URIRef(l.predicate.uri), URIRef(l.object_uri)))
         return g
+
+
 
     def to_django(self, g):
         for method, arguments, reverse in self.rdf_mapping:
             getattr(self, reverse)(g, *arguments)
+        from coop_local.models import Link, LinkProperty
+         # TODO possible optimisation: Do not remove all links, 
+        # check the diffence between new and old values as in previous multi_reverse fonction
+        for l in self.links.all():
+            self.links.remove(l)
+        for lp in LinkProperty.objects.all():
+            values = list(g.objects(URIRef(self.uri), URIRef(lp.uri)))
+            for v in values:
+                link = Link(predicate=lp, object_uri=str(v))
+                self.links.add(link)
         self.save()
 
 
