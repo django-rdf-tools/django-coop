@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: coop.organization\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-09-24 16:04+0200\n"
-"PO-Revision-Date: 2012-09-24 16:05+0100\n"
+"PO-Revision-Date: 2012-10-10 11:44+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
 "Language: fr_FR\n"
@@ -20,11 +20,11 @@ msgstr ""
 
 #: admin.py:47
 msgid "Contact information"
-msgstr "Moyen de contact"
+msgstr "Contact"
 
 #: admin.py:48
 msgid "Contact informations"
-msgstr "Moyens de contact"
+msgstr "Contacts"
 
 #: admin.py:54
 msgid "Member"
@@ -34,11 +34,13 @@ msgstr "Membre"
 msgid "Members"
 msgstr "Membres"
 
-#: admin.py:74 models.py:217
+#: admin.py:74
+#: models.py:217
 msgid "Engagement"
 msgstr "Engagement"
 
-#: admin.py:75 models.py:218
+#: admin.py:75
+#: models.py:218
 msgid "Engagements"
 msgstr "Engagements"
 
@@ -75,11 +77,13 @@ msgstr "Le titre ne peut pas être vide"
 msgid "HTML content is not allowed in the title"
 msgstr "Le HTML n'est pas autorisé dans le champ titre"
 
-#: models.py:56 models.py:73
+#: models.py:56
+#: models.py:73
 msgid "label"
 msgstr "libellé"
 
-#: models.py:58 models.py:212
+#: models.py:58
+#: models.py:212
 msgid "URI"
 msgstr "URI"
 
@@ -91,7 +95,8 @@ msgstr "Catégorie de rôle"
 msgid "Role categories"
 msgstr "Catégories de rôles"
 
-#: models.py:75 models.py:282
+#: models.py:75
+#: models.py:282
 msgid "category"
 msgstr "catégorie"
 
@@ -175,7 +180,8 @@ msgstr "contenu"
 msgid "details"
 msgstr "détails"
 
-#: models.py:132 models.py:210
+#: models.py:132
+#: models.py:210
 msgid "Display"
 msgstr "Affichage"
 
@@ -267,11 +273,13 @@ msgstr "catégorie d'organisation"
 msgid "organization categories"
 msgstr "catégories d'organisations"
 
-#: models.py:251 models.py:261
+#: models.py:251
+#: models.py:261
 msgid "title"
 msgstr "titre"
 
-#: models.py:252 models.py:263
+#: models.py:252
+#: models.py:263
 msgid "acronym"
 msgstr "sigle"
 
@@ -369,7 +377,6 @@ msgstr "Une erreur est intervenue"
 
 #~ msgid "at"
 #~ msgstr "chez"
-
 #~ msgid "%(person), %(role) at %(org)"
 #~ msgstr "%(person), %(role) chez %(org)"
 
@@ -380,27 +387,20 @@ msgstr "Une erreur est intervenue"
 #, fuzzy
 #~ msgid "Engagement number %s"
 #~ msgstr "Engagements"
-
 #~ msgid "main URI"
 #~ msgstr "URI"
-
 #~ msgid "confirmed by the target organization"
 #~ msgstr "confirmée par l'autre organisme"
-
 #~ msgid "Title"
 #~ msgstr "titre"
-
 #~ msgid "subtitle"
 #~ msgstr "sous-titre"
-
 #~ msgid "admin"
 #~ msgstr "admin"
-
 #~ msgid "active"
 #~ msgstr "actif"
-
 #~ msgid "land line"
 #~ msgstr "ligne fixe"
-
 #~ msgid "mobile phone"
 #~ msgstr "mobile"
+
