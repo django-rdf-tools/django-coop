@@ -51,7 +51,7 @@
           <div id="inscrits">
               <h4>Tags: </h4>
               <ul id="tags" class="indextags">
-              {% get_taglist asvar all_tags for_obj coop_local count 15 %}
+              {% get_taglist asvar all_tags forvar coop_local count 15 %}
               {% for tag in all_tags %}
                   <li class="tag">
                       <a href="{{ tag.get_absolute_url }}">{{tag}} ({{tag.num_times}})</a>
