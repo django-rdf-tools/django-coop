@@ -84,14 +84,11 @@ if "coop_cms" in settings.INSTALLED_APPS:
         # As the "default" NavTree should NOT be exort as rdf data
         # A Nice solution is overwritte toRdfGraph method
         def toRdfGraph(self):
-            g = rdflib.ConjunctiveGraph()
             if not self.name == 'default':
-                g.add((rdflib.term.URIRef(self.uri), settings.NS.rdf.type, self.rdf_type))
-                for method, arguments, reverse in self.rdf_mapping:
-                    for triple in getattr(self, method)(*arguments):
-                        g.add(triple)
-            return g
-
+                return super(CoopNavTree, self).toRdfGraph()
+            else:
+                return rdflib.ConjunctiveGraph()
+ 
         rdf_type = settings.NS.skos.ConceptScheme
         rdf_mapping = (
             ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
