@@ -1,5 +1,5 @@
+# -*- coding:utf-8 -*-
 from optparse import make_option
-import sys
 from django.core.management.base import BaseCommand
 import coop
 
@@ -18,14 +18,12 @@ class Command(BaseCommand):
         ),
     )
     option_list = BaseCommand.option_list + base_options
-    
+
     def handle(self, **options):
-        import pdb
-        pdb.set_trace()
         format = options.get('rdfformat')
         dest = options.get('output_file')
         model = options.get('model')
         if not model == None:
-           model = model.lower()
-        coop.models.rdfDumpAll(dest,format, model)
+            model = model.lower()
+        coop.models.rdfDumpAll(dest, format, model)
 
