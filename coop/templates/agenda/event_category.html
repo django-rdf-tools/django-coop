@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load coop_edition thumbnail %}
+{% block meta_title %}{{event_category.label}}{% endblock %}
+
+
+{% block document %}
+
+    {% block content %}
+
+     <h3>{{ event_category.label }}</h3>
+     <hr>
+
+        {% for item in events %}
+        <div class="event_link vcenter_container">
+            <div class="vcenter_wrapper event-desc-wrapper">
+                <div class="vcenter_content event-desc-content">
+
+                    {% for o in item.upcoming_occurrences%}
+                    <span class="date">
+                        <span class="day">{{ o.start_time|date:"j" }}</span>
+                        <span class="month">{{ o.start_time|date:"N" }}</span>
+                    </span>
+                    {% endfor %}
+
+                    {% if item.linked_articles %}
+
+                        {% with item.linked_articles.0 as article %}
+                        {% thumbnail article.logo "80x80" as im %}
+                        <a class="title" href="{{ article.get_absolute_url }}">
+                           <img class="event-article-icon" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                        </a>
+                        {% endthumbnail %}
+
+                        <a class="title" href="{{ article.get_absolute_url }}">{{ article.title }}</a><br/>
+                        <span class="subtitle">{{ article.summary }}</span>
+
+                        {% endwith %}
+
+                    {% else %}
+
+                        <a class="title" href="{{item.get_absolute_url}}">{{ item.title }}</a><br/>
+                        <span class="subtitle">{{ item.description }}</span>
+
+                    {% endif %}
+
+
+
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+
+
+    {% endblock %}
+
+{% endblock %}
+
