@@ -617,7 +617,6 @@ class BaseOrganization(URIModel):
         values = map(lambda x: x.location, getattr(self, djF).all())
         return self.multi_mapping_base(values, rdfPred)
 
-
     def location_mapping_reverse(self, g, rdfPred, djField, lang=None):
         rdf_values = set(g.objects(rdflib.term.URIRef(self.uri), rdfPred))
         # Values contient des instances de Location. 
@@ -637,7 +636,6 @@ class BaseOrganization(URIModel):
             manager.remove(v)
         for v in add:
             manager.add(v)
-
 
     def logo_mapping(self, rdfPred, djF):
         logo = getattr(self, djF)
@@ -680,7 +678,6 @@ class BaseOrganization(URIModel):
         else:
             setattr(self, 'pref_label', PREFLABEL.ACRO)
 
-
     def exchange_mapping(self, rdfOffer, rdfSeek, lang=None):
         from coop.exchange.models import EWAY
         values = models.get_model('coop_local', 'exchange').objects.filter(organization=self)
@@ -692,7 +689,6 @@ class BaseOrganization(URIModel):
             else:
                 result.append((rdfSubject, rdfSeek, rdflib.term.URIRef(value.uri)))
         return result
-
 
     def exchange_mapping_reverse(self, g, rdfOffer, rdfSeek, lang=None):
         from coop.exchange.models import EWAY

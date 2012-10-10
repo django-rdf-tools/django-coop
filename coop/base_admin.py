@@ -10,6 +10,7 @@ from django.conf import settings
 # -- Loading base models
 
 admin.site.register(LinkProperty)
+admin.site.register(Link)
 admin.site.register(Role)
 admin.site.register(PersonCategory)
 admin.site.register(Person, PersonAdmin)

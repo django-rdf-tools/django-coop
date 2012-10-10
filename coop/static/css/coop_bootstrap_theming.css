@@ -125,6 +125,10 @@ li.bsmenuitem > a > i{
 	text-decoration: underline;
 }
 
+.results td img{
+	max-width: none;
+}
+
 fieldset.tab-pane th{
 	background-color: silver;
 	color: white;

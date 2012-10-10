@@ -20,6 +20,8 @@ class EventCategoryAdmin(admin.ModelAdmin):
 
 
 class OccurrenceInline(admin.TabularInline):
+    verbose_name = _(u'Date')
+    verbose_name_plural = _(u'Dates')
     model = Occurrence
     extra = 1
 
