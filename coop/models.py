@@ -642,7 +642,7 @@ class URIModel(StaticURIModel, TimestampedModel):
 
 
 
-def rdfDumpAll(destination, format, model=None):
+def rdfGraphAll(model=None):
     """
     """
     g = Graph()
@@ -664,6 +664,11 @@ def rdfDumpAll(destination, format, model=None):
         else:
             for o in m.objects.all():
                 g += o.toRdfGraph()
+    return g
+
+
+def rdfDumpAll(destination, format, model=None):
+    g = rdfGraphAll(model)
     g.serialize(destination, format=format)
 
 
