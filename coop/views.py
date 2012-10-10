@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from django.shortcuts import render_to_response, redirect
-from coop_local.models import Event, EventCategory, Organization, OrganizationCategory, Person
+from coop_local.models import Organization, OrganizationCategory, Person
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.conf import settings
@@ -12,6 +12,9 @@ import json
 
 if('coop.exchange' in settings.INSTALLED_APPS):
     from coop_local.models import Exchange
+
+if('coop.agenda' in settings.INSTALLED_APPS):
+    from coop_local.models import Event, EventCategory
 
 
 def home(request):
