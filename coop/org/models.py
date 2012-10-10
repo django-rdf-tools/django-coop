@@ -588,7 +588,7 @@ class BaseOrganization(URIModel):
     rdf_mapping = (
         ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
         ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
-        ('single_mapping', (settings.NS.dct.title, 'title'), 'single_reverse'),
+        ('single_mapping', (settings.NS.legal.legalName, 'title'), 'single_reverse'),
         ('single_mapping', (settings.NS.ov.prefAcronym, 'acronym'), 'single_reverse'),
         ('single_mapping', (settings.NS.rdfs.comment, 'subtitle'), 'single_reverse'),
         ('single_mapping', (settings.NS.dct.description, 'description'), 'single_reverse'),
