@@ -9,6 +9,7 @@ from django.http import Http404
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 import json
+from coop.models import rdfGraphAll
 
 if('coop.exchange' in settings.INSTALLED_APPS):
     from coop_local.models import Exchange
@@ -23,6 +24,8 @@ def home(request):
     if('coop.exchange' in settings.INSTALLED_APPS):
         rdict['dernieres_annonces'] = Exchange.objects.all()[:10]
     return render_to_response('home.html', rdict, RequestContext(request))
+
+
 
 
 # def d2r_mapping(request, mode):
@@ -71,6 +74,17 @@ def get_rdf(request, model, uuid, format):
     req_model = get_model(urimodels[model], model)
     object = get_object_or_404(req_model, uuid=uuid)
     return HttpResponse(object.toRdf(format), mimetype=RDF_SERIALIZATIONS[format])
+
+
+
+def rdfdump(request, format):
+    g = rdfGraphAll()
+    if format == 'ttl':
+        return HttpResponse(g.serialize(format='n3'), mimetype=RDF_SERIALIZATIONS[format])
+    elif format == 'json':
+        return HttpResponse(g.serialize(format='json-ld'), mimetype=RDF_SERIALIZATIONS[format])
+    elif format in RDF_SERIALIZATIONS:
+        return HttpResponse(g.serialize(format=format), mimetype=RDF_SERIALIZATIONS[format])
 
 
 def SentryHandler500(request):
