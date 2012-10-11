@@ -57,8 +57,23 @@ def event_minimal_view(request, pk, template='agenda/event_minimal_view.html'):
 def event_category_view(request, slug):
     category = get_object_or_404(EventCategory, slug=slug)
     rdict = {'event_category': category}
-    rdict['events'] = Event.objects.filter(event_type=category)
     return render_to_response('agenda/event_category.html', rdict, RequestContext(request))
+
+
+def agenda_by_category(request, slug):
+    agenda = get_object_or_404(Calendar, slug=slug)
+    categories = {}
+    for cat in EventCategory.objects.all():
+        ev = Event.objects.filter(calendar=agenda, event_type=cat)
+        if ev.exists():
+            categories[cat] = ev
+    rdict = {'agenda': agenda, 'events_by_categories': categories}
+    print rdict
+    return render_to_response('agenda/event_list_by_category.html', rdict, RequestContext(request))
+
+
+def agenda_by_name(request, slug=None, template='agenda/monthly_view.html', **extra_context):
+    return redirect('/agenda/%d/%d/' % (today.year, today.month))
 
 
 def event_view(request, pk, template='agenda/event_detail.html',
@@ -340,14 +355,3 @@ def month_view(request, year=today.year, month=today.month, template='agenda/mon
         context_instance=RequestContext(request))
 
 
-def agenda_by_name(request, slug=None, template='agenda/monthly_view.html', **extra_context):
-    #cal = get_object_or_404(Calendar, slug=slug)
-    #events = Event.objects.filter(calendar=cal)
-
-    #return redirect('agenda-monthly-view') # TODO pourquoi ça marche pas ?
-    return redirect('/agenda/%d/%d/' % (today.year, today.month))
-
-
-    # return render_to_response(template,
-    #     dict(extra_context, events=events),
-    #     context_instance=RequestContext(request))

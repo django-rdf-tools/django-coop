@@ -74,7 +74,7 @@ jQuery(document).ready(function($) {
 
     // AdminDate widgets
 
-    $('.vDateField').datepicker({dateFormat: 'yy-mm-dd'});
+    $('.vDateField').datepicker({dateFormat: 'yy-mm-dd', constrainInput: false});
     $('.vTimeField').timepicker({ timeFormat: 'hh:mm', separator:' h ',  stepMinute: 15,  hour: 9, minute: 00});
     $('span.datetimeshortcuts').siblings('br').remove();
 
@@ -144,7 +144,7 @@ jQuery(document).ready(function($) {
     // http://djangosnippets.org/snippets/1492
     // Only for stacked inlines
 
-    $('div.stacked-inline').each(function() {
+    $('div.dynamic-exchanges div.stacked-inline').each(function() {
 
         fs = $(this).find('fieldset')
         h3 = $(this).find('h3:first')

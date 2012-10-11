@@ -10,7 +10,8 @@ urlpatterns = patterns('coop.agenda.views',
         name='agenda-default'),
 
     url(r'^agenda/(?P<slug>[\w-]+)/$',
-        'agenda_by_name',
+        'agenda_by_category',
+        # 'agenda_by_name',
         name='agenda-default'),
 
     url(r'^agenda/category/(?P<slug>[\w-]+)/$',

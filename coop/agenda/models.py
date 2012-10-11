@@ -13,7 +13,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.conf import settings
 import rdflib
-
+from django.template.defaultfilters import date as _date
+from datetime import datetime
 
 class BaseCalendar(models.Model):
     title = models.CharField(_('title'), blank=True, max_length=250)
@@ -54,6 +55,9 @@ class BaseEventCategory(models.Model):
     def get_absolute_url(self):
         return ('agenda-event-category', [str(self.slug)])
 
+    def events(self):
+        return self.event_set.all()
+        
 
 class BaseEvent(URIModel):
     """
@@ -327,7 +331,7 @@ class BaseOccurrence(models.Model):
         app_label = 'coop_local'
 
     def __unicode__(self):
-        return u'%s: %s' % (self.title, self.start_time.isoformat())
+        return _date(self.start_time, _("l j F Y"))
 
     @models.permalink
     def get_absolute_url(self):

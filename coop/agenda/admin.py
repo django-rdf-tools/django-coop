@@ -9,6 +9,7 @@ from coop_geo.admin import LocatedInline
 from django.db.models.loading import get_model
 from django.contrib.contenttypes.generic import GenericTabularInline
 from django.utils.translation import ugettext_lazy as _
+from coop.agenda.forms import SingleOccurrenceForm
 
 #from genericadmin.admin import GenericAdminModelAdmin
 # GenericStackedInline or GenericTabularInline
@@ -19,7 +20,8 @@ class EventCategoryAdmin(admin.ModelAdmin):
     list_display = ('label',)
 
 
-class OccurrenceInline(admin.TabularInline):
+class OccurrenceInline(admin.StackedInline):
+    #form = SingleOccurrenceForm
     verbose_name = _(u'Date')
     verbose_name_plural = _(u'Dates')
     model = Occurrence

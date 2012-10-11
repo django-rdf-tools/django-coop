@@ -148,6 +148,8 @@ h3.page-top{
 .stacked-inline{
 }
 
+
+
 div.inline-group{
 	position: relative;
 }
@@ -529,6 +531,12 @@ div.stacked-inline h3 span.delete label.vCheckboxLabel.inline{
 .stacked_collapse.collapsed{
 	display: none;
 }
+
+/*.dynamic-occurrence_set > */
+.stacked-inline > h3 > a {
+	display: none;
+}
+
 
 /* @end */
 

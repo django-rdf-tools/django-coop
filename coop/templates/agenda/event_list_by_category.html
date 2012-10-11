@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load i18n coop_edition coop_navigation thumbnail %}
+{% block meta_title %}{% trans "Events by category for " %}{{ agenda.title }}{% endblock %}
+
+{% block document %}
+
+    <div class="span8">
+
+{% block article %}
+
+        <ul class="breadcrumb">
+        <a href="/">Accueil</a> <span class="divider">/</span>
+        {% navigation_breadcrumb agenda li_template="coop_cms/breadcrumb_li_template.html" %}
+        </ul>
+
+
+        {% for event_category, events in events_by_categories.items %}
+
+            {% include "agenda/event_category_list.html" with event_category=event_category events=events %}
+
+        {% endfor %}
+
+        
+
+{% endblock %}
+</div>
+{% endblock %}
+
+{% block column %}
+    {% include "column.html" %}
+{% endblock %}
