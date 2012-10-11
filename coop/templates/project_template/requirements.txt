@@ -29,8 +29,9 @@ git+git://github.com/quinode/django-templatetag-sugar.git
 hg+https://bitbucket.org/quinode/django-admintools-bootstrap/@0.0.2-alpha
 git+git://github.com/quinode/uriredirect.git
 
+# to support extending + overriding template
+https://bitbucket.org/wojas/django-apptemplates
 git+git://github.com/django-extensions/django-extensions.git
-
 git+git://github.com/quinode/django-chosen.git
 
 # setup.py was broken
