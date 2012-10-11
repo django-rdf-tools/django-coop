@@ -17,14 +17,13 @@
 
     <p class="description">{{ org_category.description|safe }}</p>
 
-
     {% end_cms_edit %}
 
         <div id="content">
             <div class="grid_12 grid">
 
                 {% for item in org_list %}
-                <div class="org_link vcenter_container">
+                <div class="list_item vcenter_container">
                     <div class="vcenter_wrapper org-desc-wrapper">
                         <div class="vcenter_content org-desc-content">
                             {% thumbnail item.logo "80x80" as im %}
