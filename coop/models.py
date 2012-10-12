@@ -133,7 +133,7 @@ class StaticURIModel(models.Model):
             elif self.uri != self.init_uri():
                 # Be careful: we need to keep history of uri modification
                 from coop_local.models import LinkProperty
-                self.links.add(predicate=LinkProperty.objects.get(label='replace'), object_uri=self.uri)
+                self.links.add(predicate=LinkProperty.objects.get(label='replaces'), object_uri=self.uri)
                 self.uri = self.init_uri()   # uri_id est pas pareil
         super(StaticURIModel, self).save(*args, **kwargs)
 
