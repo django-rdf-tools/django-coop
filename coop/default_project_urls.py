@@ -60,7 +60,7 @@ urlpatterns += patterns('',
 
 
 # for local testing
-if settings.DEBUG or ('test' in sys.argv) or ('runserver' in sys.argv):
+if settings.DEBUG:
     urlpatterns += staticfiles_urlpatterns()
     urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
