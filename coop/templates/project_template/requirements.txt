@@ -88,3 +88,7 @@ raven
 # dev debug tools
 django-debug-toolbar
 FirePython
+
+
+# for spip translation
+# MySQL-python
