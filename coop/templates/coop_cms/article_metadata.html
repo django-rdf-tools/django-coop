@@ -1,0 +1,33 @@
+            <dl class="attr_table">
+
+                {% if article.dated.all %}
+                    {% for dated in article.dated.all %}
+                        <dt>Date{{ dated.event.occurrence_set.all|pluralize }} agenda</dt>
+                        <dd><div>{% for o in dated.event.occurrence_set.all %}
+                            {{ o.start_time|date:"j F Y, \d\e H\hi" }} à {{ o.end_time|date:"H\hi" }}<br>
+                            {% endfor %}
+                            </div>
+                        </dd>
+                    {% endfor %}
+                    
+                    <br>
+                {% endif %}
+
+
+                <dt>Dernière mise à jour</dt>
+                <dd>{{ article.modified|date:"j F Y" }}</dd>
+
+                {% if article.person %}
+                    <dt>Auteur</dt>
+                    <dd>{{ article.person }}</dd>
+                {% endif %}
+
+
+                {% if article.tags.all %}
+                    <dt>Mots-clés</dt>
+                    <dd>{% for tag in article.tags.all %}
+                        <a href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %}, {% endif %}
+                        {% endfor %}</dd>
+                {% endif %}
+
+            </dl>

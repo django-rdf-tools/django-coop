@@ -14,7 +14,9 @@ admin.autodiscover()
 urlpatterns = []
 
 # urlpatterns += patterns('',
+#	 url(r'^$', 'coop_local.views.home', name="home"),
 #    url(r'^org/$', 'coop_local.views.org_list', name="org_list"), #view coop
+
 # )
 
 

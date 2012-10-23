@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from django.conf import settings
+import sys
 
 # Here you can override any settings from coop default settings files
 # See :
@@ -11,8 +12,13 @@ SITE_AUTHOR = 'Organisme'
 SITE_TITLE = 'Demo Django-coop'
 DEFAULT_URI_DOMAIN = '{{ domain }}'
 
-
+# let this setting to False in production, except for urgent debugging
 DEBUG = False
+
+# Force DEBUG setting if we're developing locally or testing
+if 'runserver' in sys.argv or 'test' in sys.argv:
+    DEBUG = True
+
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (

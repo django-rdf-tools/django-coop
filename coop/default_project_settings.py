@@ -344,11 +344,11 @@ LOGGING = {
         },
         'subhub.maintenance': {
             'handlers': ['console'],
-            'level': 'DEBUG'
+            'level': 'ERROR'
         },
         'subhub.distribution.process': {
             'handlers': ['console'],
-            'level': 'DEBUG'
+            'level': 'ERROR'
 
         },
         'worker': {
@@ -358,7 +358,7 @@ LOGGING = {
         },
         'coop': {
             'handlers': ['console-dumb'],
-            'level': 'DEBUG',
+            'level': 'ERROR',
         },
     },
 

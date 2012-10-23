@@ -79,7 +79,7 @@ class BaseRoleCategory(models.Model):
 
 
 class BaseRole(URIModel):
-    label = models.CharField(_(u'label'), max_length=60)
+    label = models.CharField(_(u'label'), max_length=120)
     slug = AutoSlugField(populate_from='label', always_update=True, unique=True, editable=False)
     category = models.ForeignKey('coop_local.RoleCategory', null=True, blank=True, verbose_name=_(u'category'))
 
@@ -189,19 +189,21 @@ class BaseContact(URIModel):
     def label(self):
         return self.__unicode__()
 
-    def clean(self):
-        if self.category in [1, 2, 3]:
-            import re
-            phoneSplitRegex = re.compile(r"[\-\(\) \.\,]")
-            parts = phoneSplitRegex.split(self.content)
-            num = ''.join(parts)
-            if len(num) == 10:
-                self.content = '.'.join((num[:2], num[2:4], num[4:6], num[6:8], num[8:]))
-            else:
-                raise ValidationError(_(u'Phone numbers must have 10 digits'))
+    @classmethod
+    def clean_phone(cls, number):
+        import re
+        phoneSplitRegex = re.compile(r"[\-\(\) \.\,]")
+        parts = phoneSplitRegex.split(number)
+        num = ''.join(parts)
+        if len(num) == 10:
+            cleaned_number = '.'.join((num[:2], num[2:4], num[4:6], num[6:8], num[8:]))
+            return cleaned_number
+        else:
+            raise ValidationError(_(u'Phone numbers must have 10 digits'))
 
     def save(self, *args, **kwargs):
-        self.clean()
+        if self.category in [1, 2, 3]:
+            self.content = self.clean_phone(self.content)
         #logging.error(u'A contact has been created or modified', exc_info=True, extra={'request': request})
         super(BaseContact, self).save(*args, **kwargs)
 
@@ -544,7 +546,8 @@ class BaseOrganization(URIModel):
     def save(self, *args, **kwargs):
         # Set default values for preferred email, phone and postal address
         if self.pref_phone == None:
-            fixes = self.contacts.filter(category=1)
+            phone_categories = [1, 2]
+            fixes = self.contacts.filter(category__in=phone_categories)
             if fixes.count() == 1:
                 self.pref_phone = fixes[0]
         if self.pref_email == None:

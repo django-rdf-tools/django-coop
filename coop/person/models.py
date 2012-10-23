@@ -96,9 +96,14 @@ class BasePerson(URIModel):
 
         # create username slug if not set
         if self.username == '':
+            from coop_local.models import Person
             newname = slugify(self.first_name).replace('-', '_') + '.' + \
                         slugify(self.last_name).replace('-', '_')
+            if Person.objects.filter(username=newname).exists():
+                offset = Person.objects.filter(username=newname).count()
+                newname = newname + '_' + str(offset + 1)
             self.username = newname
+
         # synchronize fields with django User model
         if self.user:
             chg = False
