@@ -39,7 +39,7 @@ from coop_cms.coop_bar_cfg import *
 
 def admin_articles(request, context):
     if request and request.user.is_staff:
-        return make_link(reverse('admin:fcpe_article_changelist'), 'Articles', 'fugue/documents-stack.png',
+        return make_link(reverse('admin:coop_local_article_changelist'), 'Articles', 'fugue/documents-stack.png',
             classes=['icon', 'alert_on_click'])
 
 

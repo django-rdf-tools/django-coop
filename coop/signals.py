@@ -55,8 +55,8 @@ class LastDTProcess(object):
 # admin thread is finished
 def letsCallDistributionTaskProcess(thName):
     time.sleep(2)   # wait until thread is finished
-    for dt in subhub.models.DistributionTask.objects.all():
-        print log.debug(u'INQUUEU entry_id %s' % dt.entry_id)
+    #for dt in subhub.models.DistributionTask.objects.all():
+        # log.debug(u'INQUUEU entry_id %s' % dt.entry_id)
     subhub.models.DistributionTask.objects.process(log=log)
 
 
@@ -73,7 +73,7 @@ def post_save_callback(sender, instance, **kwargs):
 
     if isinstance(instance, StaticURIModel):
         if instance.uri_mode == URI_MODE.IMPORTED:
-            log.debug(u"%s is imported. Nothing to publish, but subscription renew" % instance)
+            # log.debug(u"%s is imported. Nothing to publish, but subscription renew" % instance)
             instance.subscribeToUpdades()
             # TODO check if a subscription is done, either lets do it
         elif isinstance(instance, coop_tag.models.TagBase):
@@ -83,16 +83,16 @@ def post_save_callback(sender, instance, **kwargs):
             feed_url = 'http://%s/feed/%s/' % (Site.objects.get_current().domain, sender.__name__.lower())
             try:
                 subhub.publish([feed_url], instance.uri, False)
-                log.debug('publish done; Number of Dist task %s' % len(subhub.models.DistributionTask.objects.all()))
+                #log.debug('publish done; Number of Dist task %s' % len(subhub.models.DistributionTask.objects.all()))
             except Exception, e:
                 log.warning(u'Unable to publish %s for feed %s : %s' % (instance, feed_url, e))
     elif isinstance(instance, subhub.models.DistributionTask) and maintenance:
         try:
             nb = len(subhub.models.DistributionTask.objects.all())
-            log.debug("before call ENQUEUE, tasks %s" % nb)
+            #log.debug("before call ENQUEUE, tasks %s" % nb)
             LastDTProcess.update()
             django_rq.enqueue(letsCallDistributionTaskProcess, threading.currentThread().name)
-            log.debug('after call ENQUEUE')
+            #log.debug('after call ENQUEUE')
         except Exception, e:
             log.warning(u"%s" % e)
     elif isinstance(instance, subhub.models.SubscriptionTask) and maintenance:
@@ -117,7 +117,7 @@ def post_delete_callback(sender, instance, **kwargs):
 def listener(notification, **kwargs):
     ''' Process new content being provided by hub
     '''
-    log.debug("enter listener args %s" % kwargs)
+    #log.debug("enter listener args %s" % kwargs)
     entry = notification.entries[0]
     uri = str(entry.summary)
     scheme, host, path, query, fragment = urlsplit(uri)
@@ -162,7 +162,7 @@ def listener(notification, **kwargs):
     else:
         try:
             g.parse(uri)
-            log.debug(u"Handle uri %s" % uri)
+            #log.debug(u"Handle uri %s" % uri)
         except Exception, e:
             log.error(u"%s" % e)
 

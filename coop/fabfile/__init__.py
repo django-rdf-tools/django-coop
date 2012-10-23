@@ -14,11 +14,11 @@ env.vm_path = "/Users/dom/VM/devcoop"
 env.locale = 'fr_FR.UTF-8'
 
 #Paramétres par défaut
-domain = "coop.allianceprovence.org"
-projet = "alliance"
-alias = "alliance"
+domain = "coop.cerapcoop.org"
+projet = "cerapcoop"
+alias = "cerapcoop"
 
-pgpass = '123456'
+pgpass = '0rQ142kfMv6X'
 
 # Paramétres Déploiement
 env.websrv = 1
