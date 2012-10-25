@@ -1,0 +1,98 @@
+[
+    {
+        "pk": 1,
+        "model": "coop_cms.navtype",
+        "fields": {
+            "search_field": "",
+            "content_type": [
+                "coop_cms",
+                "articlecategory"
+            ],
+            "label_rule": 0
+        }
+    },
+    {
+        "pk": 2,
+        "model": "coop_cms.navtype",
+        "fields": {
+            "search_field": "",
+            "content_type": [
+                "coop_local",
+                "article"
+            ],
+            "label_rule": 0
+        }
+    },
+    {
+        "pk": 3,
+        "model": "coop_cms.navtype",
+        "fields": {
+            "search_field": "",
+            "content_type": [
+                "coop_local",
+                "tag"
+            ],
+            "label_rule": 0
+        }
+    },
+    {
+        "pk": 4,
+        "model": "coop_cms.navtype",
+        "fields": {
+            "search_field": "",
+            "content_type": [
+                "coop_local",
+                "organizationcategory"
+            ],
+            "label_rule": 0
+        }
+    },
+    {
+        "pk": 5,
+        "model": "coop_cms.navtype",
+        "fields": {
+            "search_field": "",
+            "content_type": [
+                "coop_local",
+                "organization"
+            ],
+            "label_rule": 0
+        }
+    },
+    {
+        "pk": 6,
+        "model": "coop_cms.navtype",
+        "fields": {
+            "search_field": "",
+            "content_type": [
+                "coop_local",
+                "calendar"
+            ],
+            "label_rule": 0
+        }
+    },
+    {
+        "pk": 7,
+        "model": "coop_cms.navtype",
+        "fields": {
+            "search_field": "",
+            "content_type": [
+                "coop_local",
+                "eventcategory"
+            ],
+            "label_rule": 0
+        }
+    },
+    {
+        "pk": 8,
+        "model": "coop_cms.navtype",
+        "fields": {
+            "search_field": "",
+            "content_type": [
+                "forms",
+                "form"
+            ],
+            "label_rule": 0
+        }
+    }
+]
