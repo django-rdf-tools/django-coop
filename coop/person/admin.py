@@ -28,11 +28,11 @@ class PersonAdmin(FkAutocompleteAdmin):
     related_search_fields = {'location': ('label', 'adr1', 'adr2', 'zipcode', 'city'), }
 
     form = PersonAdminForm
-    search_fields = ['last_name', 'first_name', 'email']
-    list_display = ('last_name', 'first_name', 'email', 'structure', 'has_user_account', 'has_role')
+    search_fields = ['last_name', 'first_name']
+    list_display = ('last_name', 'first_name', 'structure', 'has_user_account', 'has_role')
     list_filter = ('category',)
     list_display_links = ('last_name', 'first_name')
-    search_fields = ('last_name', 'first_name', 'email', 'structure')
+    search_fields = ('last_name', 'first_name', 'structure')
     ordering = ('last_name',)
     inlines = [ ContactInline,
                 OrgInline,
@@ -46,7 +46,6 @@ class PersonAdmin(FkAutocompleteAdmin):
         ('Identification', {
             'fields': (('first_name', 'last_name'),
                         ('location', 'location_display'),  # Using coop-geo
-                        'email',
                         'category'
                         ),
             }),
