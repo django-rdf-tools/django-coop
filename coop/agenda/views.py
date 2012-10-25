@@ -57,6 +57,7 @@ def event_minimal_view(request, pk, template='agenda/event_minimal_view.html'):
 def event_category_view(request, slug):
     category = get_object_or_404(EventCategory, slug=slug)
     rdict = {'event_category': category}
+    rdict['events'] = Event.objects.filter(event_type__in=[category])
     return render_to_response('agenda/event_category.html', rdict, RequestContext(request))
 
 
