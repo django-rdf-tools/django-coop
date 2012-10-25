@@ -505,11 +505,15 @@ class BaseOrganization(URIModel):
     has_description.short_description = _(u'desc.')
 
     def logo_list_display(self):
-        if self.logo:
-            thumb = default.backend.get_thumbnail(self.logo.file, ADMIN_THUMBS_SIZE)
-            return '<img width="%s" src="%s" />' % (thumb.width, thumb.url)
-        else:
+        try:
+            if self.logo:
+                thumb = default.backend.get_thumbnail(self.logo.file, ADMIN_THUMBS_SIZE)
+                return '<img width="%s" src="%s" />' % (thumb.width, thumb.url)
+            else:
+                return _(u"No Image")
+        except IOError:
             return _(u"No Image")
+
     logo_list_display.short_description = _(u"logo")
     logo_list_display.allow_tags = True
 
@@ -611,7 +615,7 @@ class BaseOrganization(URIModel):
         ('prefLabel_mapping', (settings.NS.rdfs.label, 'pref_label'), 'prefLabel_mapping_reverse'),
         ('location_mapping', (settings.NS.locn.location, 'located'), 'location_mapping_reverse'),
         ('location_mapping', (settings.NS.ess.actionArea, 'framed'), 'location_mapping_reverse'),
-        ('exchange_mapping', (settings.NS.gr.seeks, settings.NS.gr.offers), 'exchange_mapping_reverse'),
+        ('exchange_mapping', (settings.NS.gr.offers, settings.NS.gr.seeks), 'exchange_mapping_reverse'),
 
     )
 
