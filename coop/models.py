@@ -286,12 +286,13 @@ class StaticURIModel(models.Model):
 
     def toRdfGraph(self):
         g = Graph()
-        g.add((URIRef(self.uri), settings.NS.rdf.type, self.rdf_type))
-        for method, arguments, reverse in self.rdf_mapping:
-            for triple in getattr(self, method)(*arguments):
-                g.add(triple)
-        for l in self.links.all():
-            g.add((URIRef(self.uri),  URIRef(l.predicate.uri), URIRef(l.object_uri)))
+        if self.rdf_type:
+            g.add((URIRef(self.uri), settings.NS.rdf.type, self.rdf_type))
+            for method, arguments, reverse in self.rdf_mapping:
+                for triple in getattr(self, method)(*arguments):
+                    g.add(triple)
+            for l in self.links.all():
+                g.add((URIRef(self.uri),  URIRef(l.predicate.uri), URIRef(l.object_uri)))
         return g
 
 
