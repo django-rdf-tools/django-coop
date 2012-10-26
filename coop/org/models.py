@@ -124,7 +124,7 @@ class BaseRole(URIModel):
         if value == None:
             return []
         else:
-            [(rdflib.term.URIRef(self), rdfPred, rdflib.term.URIRef(value.uri))]
+            return [(rdflib.term.URIRef(self.uri), rdfPred, rdflib.term.URIRef(value.uri))]
 
     def category_mapping_reverse(self, g, rdfPred, djF, lang=None):
         values = list(g.objects(rdflib.term.URIRef(self), rdfPred))
