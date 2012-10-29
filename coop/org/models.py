@@ -16,6 +16,7 @@ from sorl.thumbnail import ImageField
 from sorl.thumbnail import default
 import rdflib
 import coop
+from django.contrib.sites.models import Site
 import logging
 from urlparse import urlsplit
 
@@ -651,7 +652,7 @@ class BaseOrganization(URIModel):
         else:
             try:
                 rdfSubject = rdflib.term.URIRef(self.uri)
-                rdfValue = rdflib.term.URIRef('http://' + settings.DEFAULT_URI_DOMAIN + logo.url)
+                rdfValue = rdflib.term.URIRef('http://' + str(Site.objects.get_current().domain) + logo.url)
                 return [(rdfSubject, rdfPred, rdfValue)]
             except ValueError:
                 return []

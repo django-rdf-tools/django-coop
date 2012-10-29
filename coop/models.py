@@ -9,6 +9,7 @@ from extended_choices import Choices
 import shortuuid
 from rdflib import Graph, plugin, Literal, URIRef, BNode
 from django.contrib.contenttypes import generic
+from django.contrib.sites.models import Site
 from django.db import IntegrityError
 from django.template import Template, Context
 from urlparse import urlsplit
@@ -90,8 +91,7 @@ class StaticURIModel(models.Model):
     links = generic.GenericRelation('coop_local.Link', related_name="%(app_label)s_%(class)s_related")
 
     # the default value, this attribut should be overloaded
-    domain_name = settings.DEFAULT_URI_DOMAIN
-    #str(Site.objects.get_current().domain)
+    domain_name = str(Site.objects.get_current().domain)
 
     def label(self):
         return "Not Yet Implemented label method"

@@ -10,7 +10,7 @@ import sys
 
 SITE_AUTHOR = 'Organisme'
 SITE_TITLE = 'Demo Django-coop'
-DEFAULT_URI_DOMAIN = '{{ domain }}'
+# DEFAULT_URI_DOMAIN = '{{ domain }}' useless use Site.objects.get_current().domain instead
 
 # let this setting to False in production, except for urgent debugging
 DEBUG = False
