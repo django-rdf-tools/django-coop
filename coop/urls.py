@@ -30,7 +30,8 @@ urlpatterns = patterns('',
 
     url(r'^robots\.txt$', TextPlainView.as_view(template_name='robots.txt')),
     url(r'^favicon\.ico$', RedirectView.as_view(url='/static/img/favicon.ico')),
-    url(r'^rdfdump/all.(?P<format>[\w-]+)$', 'coop.views.rdfdump'),
+    url(r'^rdfdump/(?P<model>[\w-]+).(?P<format>[\w-]+)$', 'coop.views.rdfdump'),
+    
     # url(r'^d2r/(?P<mode>[\w-]+)/mapping.ttl$', 'coop.views.d2r_mapping'),
 
 
