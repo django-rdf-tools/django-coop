@@ -281,12 +281,13 @@ class StaticURIModel(models.Model):
             manager.add(v)
 
 
-
-
+    # to be overwriten to filter instance available at rdf level
+    def isOpenData(self):
+        return True
 
     def toRdfGraph(self):
         g = Graph()
-        if self.rdf_type:
+        if self.rdf_type and self.isOpenData():
             g.add((URIRef(self.uri), settings.NS.rdf.type, self.rdf_type))
             for method, arguments, reverse in self.rdf_mapping:
                 for triple in getattr(self, method)(*arguments):

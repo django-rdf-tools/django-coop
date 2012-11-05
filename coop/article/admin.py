@@ -40,14 +40,14 @@ if "coop_cms" in settings.INSTALLED_APPS:
         search_fields = ['title', 'summary', 'content']
         ordering = ['-modified']
 
-        list_display = ['logo_list_display', 'title', 'publication', 'headline', 'in_newsletter', 'category']
-        list_editable = ['publication', 'in_newsletter', 'headline', 'category']
+        list_display = ['logo_list_display', 'title', 'publication', 'headline', 'isSection', 'category']
+        list_editable = ['publication', 'isSection', 'headline', 'category']
         list_display_links = ['title']
 
         readonly_fields = []
         fieldsets = (
             #(_('Navigation'), {'fields': ('navigation_parent',)}),
-            ('Edition', {'fields': ('title', 'logo', 'content', 'template', 'organization')}),
+            ('Edition', {'fields': ('title', 'logo', 'content', 'template', 'isSection','organization')}),
             ('Options', {'fields': ('summary', 'category', 'is_homepage', 'in_newsletter')}),
         )
         related_search_fields = {'organization': ('title', 'subtitle', 'description'), }
