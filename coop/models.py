@@ -9,6 +9,7 @@ from extended_choices import Choices
 import shortuuid
 from rdflib import Graph, plugin, Literal, URIRef, BNode
 from django.contrib.contenttypes import generic
+from django.contrib.sites.models import Site
 from django.db import IntegrityError
 from django.template import Template, Context
 from urlparse import urlsplit
@@ -90,8 +91,7 @@ class StaticURIModel(models.Model):
     links = generic.GenericRelation('coop_local.Link', related_name="%(app_label)s_%(class)s_related")
 
     # the default value, this attribut should be overloaded
-    domain_name = settings.DEFAULT_URI_DOMAIN
-    #str(Site.objects.get_current().domain)
+    domain_name = str(Site.objects.get_current().domain)
 
     def label(self):
         return "Not Yet Implemented label method"
@@ -281,17 +281,19 @@ class StaticURIModel(models.Model):
             manager.add(v)
 
 
-
-
+    # to be overwriten to filter instance available at rdf level
+    def isOpenData(self):
+        return True
 
     def toRdfGraph(self):
         g = Graph()
-        g.add((URIRef(self.uri), settings.NS.rdf.type, self.rdf_type))
-        for method, arguments, reverse in self.rdf_mapping:
-            for triple in getattr(self, method)(*arguments):
-                g.add(triple)
-        for l in self.links.all():
-            g.add((URIRef(self.uri),  URIRef(l.predicate.uri), URIRef(l.object_uri)))
+        if self.rdf_type and self.isOpenData():
+            g.add((URIRef(self.uri), settings.NS.rdf.type, self.rdf_type))
+            for method, arguments, reverse in self.rdf_mapping:
+                for triple in getattr(self, method)(*arguments):
+                    g.add(triple)
+            for l in self.links.all():
+                g.add((URIRef(self.uri),  URIRef(l.predicate.uri), URIRef(l.object_uri)))
         return g
 
 

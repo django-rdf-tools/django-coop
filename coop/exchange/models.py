@@ -37,6 +37,19 @@ class BaseProduct(URIModel):
         app_label = 'coop_local'
 
 
+    # RDF stuff
+    rdf_type = settings.NS.schema.Product
+    rdf_mapping = (
+            ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
+            ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
+            ('single_mapping', (settings.NS.schema.name, 'title'), 'single_reverse'),
+            ('single_mapping', (settings.NS.schema.description, 'description'), 'single_reverse'),
+            ('single_mapping', (settings.NS.schema.manufacturer, 'organization'), 'single_reverse'),
+
+    )
+
+
+
 EWAY = Choices(
     ('OFFER',   1,  _(u"I'm offering")),
     ('NEED',    2,  _(u"I'm looking for"))

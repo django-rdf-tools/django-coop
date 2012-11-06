@@ -27,6 +27,9 @@ if "coop_cms" in settings.INSTALLED_APPS:
         remote_organization_uri = models.CharField(_(u'organization URI'), blank=True, max_length=200, editable=False)
         remote_organization_label = models.CharField(_('organization'), blank=True, max_length=250)
 
+        isSection = models.BooleanField(_(u'is section'), default=False)
+
+
         if "coop.agenda" in settings.INSTALLED_APPS:
             dated = generic.GenericRelation('coop_local.Dated')
 
@@ -48,6 +51,9 @@ if "coop_cms" in settings.INSTALLED_APPS:
 
 
         # RDF stuff
+        def isOpenData(self):
+            return not self.isSection
+
         rdf_type = settings.NS.dct.Text
         rdf_mapping = (
             ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
@@ -83,11 +89,8 @@ if "coop_cms" in settings.INSTALLED_APPS:
 
         # As the "default" NavTree should NOT be exort as rdf data
         # A Nice solution is overwritte toRdfGraph method
-        def toRdfGraph(self):
-            if not self.name == 'default':
-                return super(CoopNavTree, self).toRdfGraph()
-            else:
-                return rdflib.ConjunctiveGraph()
+        def isOpenData(self):
+            return not self.name == 'default'
  
         rdf_type = settings.NS.skos.ConceptScheme
         rdf_mapping = (

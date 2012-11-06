@@ -16,6 +16,7 @@ from sorl.thumbnail import ImageField
 from sorl.thumbnail import default
 import rdflib
 import coop
+from django.contrib.sites.models import Site
 import logging
 from urlparse import urlsplit
 
@@ -124,7 +125,7 @@ class BaseRole(URIModel):
         if value == None:
             return []
         else:
-            [(rdflib.term.URIRef(self), rdfPred, rdflib.term.URIRef(value.uri))]
+            return [(rdflib.term.URIRef(self.uri), rdfPred, rdflib.term.URIRef(value.uri))]
 
     def category_mapping_reverse(self, g, rdfPred, djF, lang=None):
         values = list(g.objects(rdflib.term.URIRef(self), rdfPred))
@@ -651,7 +652,7 @@ class BaseOrganization(URIModel):
         else:
             try:
                 rdfSubject = rdflib.term.URIRef(self.uri)
-                rdfValue = rdflib.term.URIRef('http://' + settings.DEFAULT_URI_DOMAIN + logo.url)
+                rdfValue = rdflib.term.URIRef('http://' + str(Site.objects.get_current().domain) + logo.url)
                 return [(rdfSubject, rdfPred, rdfValue)]
             except ValueError:
                 return []

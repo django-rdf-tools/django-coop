@@ -142,7 +142,7 @@ def listener(notification, **kwargs):
             thessEndPoint = 'http://localhost:8080/openrdf-workbench/repositories/thessRepository/query'
             graph = ConjunctiveGraph('SPARQLStore')
             graph.open(thessEndPoint, False)
-            ctx = 'http://%s' % settings.DEFAULT_URI_DOMAIN
+            ctx = 'http://%s' % str(Site.objects.get_current().domain)
             ctx = rdflib.term.URIRef(ctx)
             localg = graph.get_context(ctx)
         except Exception, e:

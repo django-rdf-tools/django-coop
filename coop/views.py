@@ -77,8 +77,11 @@ def get_rdf(request, model, uuid, format):
 
 
 
-def rdfdump(request, format):
-    g = rdfGraphAll()
+def rdfdump(request, model, format):
+    if model == 'all':
+        g = rdfGraphAll()
+    else:
+        g = rdfGraphAll(model)
     if format == 'ttl':
         return HttpResponse(g.serialize(format='n3'), mimetype=RDF_SERIALIZATIONS[format])
     elif format == 'json':
