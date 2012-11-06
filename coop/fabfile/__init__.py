@@ -142,7 +142,7 @@ def server_setup():
         print(yellow('Installation des paquets de base...'))
         pretty_apt(['git-core', 'mercurial', 'gcc', 'curl', 'build-essential',
                     'libfreetype6', 'libfreetype6-dev', 'liblcms1-dev', 'libpng12-dev',
-                    'libjpeg8-dev', 'python-imaging',
+                    'libjpeg8-dev', 'python-imaging', 'supervisor',
                     'python-setuptools', 'nano', 'python-dev', 'swig',
                     'memcached', 'python-memcache'])
 
@@ -213,7 +213,7 @@ def coop_setup():
     set_domain()
     set_locale()
     coop_set_project()
-    #dependencies() # TODO : parse requirements.txt to test each package
+    # dependencies() # TODO : parse requirements.txt to test each package
     apache_vhost()
     #create_pg_db()
     sudo('apachectl restart')
@@ -229,7 +229,7 @@ def coop_set_project():
             run('mkvirtualenv %(projet)s' % env)
             run('source .bash_profile')
         with prefix('workon %(projet)s' % env):
-            run('pip install django-coop')
+            run('pip install git+git://github.com/quinode/django-coop.git')
             print(green('Django et django-coop installé.'))
         if not exists('projects/%s/' % (env.projet)):
             print(yellow('le projet %(projet)s n’existe pas encore' % env))

@@ -34,15 +34,18 @@ class LocalRemoteNode(template.Node):
 
         related = object.__getattribute__(self.model_name)
         if related:
+            # l'objet a bien une Fkey vers le modele correspondant
+            # on renvoie donc le champ lié demandé
             if self.attr == 'uri':
                 return related.get_absolute_url()
             elif self.attr == 'label':
                 return related.label()
         else:
+            # pas de Fkey donc on cherche un champ remote_{nom du modèle lié}_uri
             try:
-                return object.__getattribute__(self.model_name + '_' + self.attr)
+                return object.__getattribute__('remote_' + self.model_name + '_' + self.attr)
             except AttributeError:
-                raise FieldError('Field %s_%s is not present on %s' % (self.model_name, self.attr, object))
+                raise FieldError('Field remote_%s_%s is not present on %s' % (self.model_name, self.attr, object))
 
 
 
