@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 from django import template
 from urlparse import urlparse, urlunparse
 from django.core.exceptions import FieldError
@@ -5,11 +7,9 @@ from django.db.models.fields import FieldDoesNotExist
 
 register = template.Library()
 
-
 @register.simple_tag
 def favicon(url):
     parsed_url = urlparse(url)
-
     return urlunparse((parsed_url[0], parsed_url[1],
                        u'favicon.ico', parsed_url[3],
                        parsed_url[4], parsed_url[5]))
@@ -17,10 +17,12 @@ def favicon(url):
 
 class LocalRemoteNode(template.Node):
 
-    def __init__(self, attr, obj, model_name):
+    def __init__(self, attr, obj, model_name, as_var=None):
         self.attr = attr
         self.obj = template.Variable(obj)
         self.model_name = model_name
+        if as_var:
+            self.as_var = as_var
 
     def render(self, context):
         try:
@@ -37,33 +39,36 @@ class LocalRemoteNode(template.Node):
             # l'objet a bien une Fkey vers le modele correspondant
             # on renvoie donc le champ lié demandé
             if self.attr == 'uri':
-                return related.get_absolute_url()
+                res = related.get_absolute_url()
             elif self.attr == 'label':
-                return related.label()
+                res = related.label()
         else:
             # pas de Fkey donc on cherche un champ remote_{nom du modèle lié}_uri
             try:
-                res = object.__getattribute__('remote_' + self.model_name + '_' + self.attr)
-                return res if res is not None else None
-                # if self.attr == 'uri':
-                #     uri = object.__getattribute__('remote_' + self.model_name + '_uri')
-                #     return uri if uri is not None else "#"
-                # elif self.attr == 'label':
-                #     label = object.__getattribute__('remote_' + self.model_name + '_label')
-                #     return label if label is not None else None
+                fieldname = 'remote_' + self.model_name + '_' + self.attr
+                res = object.__getattribute__(fieldname)
             except AttributeError:
                 raise FieldError('Field remote_%s_%s is not present on %s, correct your templatetag call syntax or add the corresponding field' % (self.model_name, self.attr, object))
+        if self.as_var:
+            context[self.as_var] = res
+            return u''
+        else:
+            return res
 
 
 @register.tag
 def local_or_remote(parser, token):
+
+    contents = token.split_contents()
+    params = contents[1:]
     try:
-        method_name, tag_name, obj, model_name = token.split_contents()
+        if len(params) == 3:
+            tag_name, obj, model_name = params
+        elif len(params) == 5 and params[3] == u'as':
+            tag_name, obj, model_name, as_param, as_var = params
+            params.remove(u'as')
     except ValueError:
-        raise template.TemplateSyntaxError, "This tag requires three arguments : object, uri or label, linked model name"
+        raise template.TemplateSyntaxError, "This tag requires three arguments : object, uri or label, linked model name, and optional as parameter with a variable name"
     #TODO verifier ce qu'on a
-    return LocalRemoteNode(tag_name, obj, model_name)
-
-
-
+    return LocalRemoteNode(*params)
 

@@ -23,13 +23,13 @@
 
             <br/>
             Publié par 
-                {% with local_or_remote uri exchange organization as org_uri %}
-                {% with local_or_remote label exchange organization as org_label %}
+                {% local_or_remote uri exchange organization as org_uri %}
+                {% local_or_remote label exchange organization as org_label %}
+
                 {% if org_uri %}<a href="{{org_uri}}">{% endif %}
                 {{ org_label }}
                 {% if org_uri %}</a>{% endif %}
-                {% endwith %}
-                {% endwith %}
+                
         </div>
 
 
