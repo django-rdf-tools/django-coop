@@ -22,8 +22,14 @@
             <p>{{exchange.description|safe}}</p>
 
             <br/>
-            Publié par <a href="{% local_or_remote uri exchange organization %}">{% local_or_remote label exchange organization %}</a>
+            Publié par 
+                {% local_or_remote uri exchange organization as org_uri %}
+                {% local_or_remote label exchange organization as org_label %}
 
+                {% if org_uri %}<a href="{{org_uri}}">{% endif %}
+                {{ org_label }}
+                {% if org_uri %}</a>{% endif %}
+                
         </div>
 
 

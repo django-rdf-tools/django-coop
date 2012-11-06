@@ -3,14 +3,11 @@
 {% block meta_title %}{{org_category.label}}{% endblock %}
 
 {% block document %}
-    <div id="title" class="grid_12 grid">
-    {% block title %}<h3>{{org_category.label}}</h3>{% endblock %}
-    </div>
 
-    {% block content %}
+    {% block article %}
 
 
-    {% cms_edit article %}
+    {% cms_edit org_category %}
 
      <h3>{{ org_category.label }}</h3>
      <hr>
@@ -32,7 +29,7 @@
                             </a>
                             {% endthumbnail %}
                             <a class="title" href="{{item.get_absolute_url}}">{{ item.title }}</a><br/>
-                            <span class="subtitle">{{ item.subtitle }}</span>
+                            {% if item.subtitle %}<span class="subtitle">{{ item.subtitle }}</span>{% endif %}
                         </div>
                     </div>
                 </div>
