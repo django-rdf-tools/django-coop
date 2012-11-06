@@ -33,6 +33,10 @@ SUBHUB_MAINTENANCE_AUTO = False    # set this value to True to automatically syn
 PES_HOST = 'pes.domain.com'
 THESAURUS_HOST = 'thess.domain.com'
 
+# Need to be set to true, when domain stop moving,
+# to keep history of renaming of uri
+URI_FIXED = False  
+
 INSTALLED_APPS = settings.INSTALLED_APPS + [
     # select your coop components
     'coop.tag',
