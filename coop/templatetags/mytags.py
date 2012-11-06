@@ -43,10 +43,16 @@ class LocalRemoteNode(template.Node):
         else:
             # pas de Fkey donc on cherche un champ remote_{nom du modèle lié}_uri
             try:
-                return object.__getattribute__('remote_' + self.model_name + '_' + self.attr)
+                res = object.__getattribute__('remote_' + self.model_name + '_' + self.attr)
+                return res if res is not None else None
+                # if self.attr == 'uri':
+                #     uri = object.__getattribute__('remote_' + self.model_name + '_uri')
+                #     return uri if uri is not None else "#"
+                # elif self.attr == 'label':
+                #     label = object.__getattribute__('remote_' + self.model_name + '_label')
+                #     return label if label is not None else None
             except AttributeError:
-                raise FieldError('Field remote_%s_%s is not present on %s' % (self.model_name, self.attr, object))
-
+                raise FieldError('Field remote_%s_%s is not present on %s, correct your templatetag call syntax or add the corresponding field' % (self.model_name, self.attr, object))
 
 
 @register.tag

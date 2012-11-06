@@ -36,8 +36,6 @@ from coop.org.models import DISPLAY
 class BasePerson(URIModel):
     user = models.OneToOneField(User, blank=True, null=True, unique=True, verbose_name=_(u'django user'), editable=False)
     username = models.CharField(blank=True, max_length=100, unique=True)
-    #pour D2RQ et poura voir des URI clean meme pour des non-users
-
     category = models.ManyToManyField('coop_local.PersonCategory', blank=True, null=True, verbose_name=_(u'category'))
     last_name = models.CharField(_(u'last name'), max_length=100)
     first_name = models.CharField(_(u'first name'), max_length=100, null=True, blank=True)
@@ -45,7 +43,13 @@ class BasePerson(URIModel):
     email = models.EmailField(_(u'personal email'), blank=True, help_text=_(u'will not be displayed on the website'))
     email_sha1 = models.CharField(_(u'email checksum'), max_length=250, blank=True, null=True)
     notes = models.TextField(_(u'notes'), blank=True, null=True)
+
     structure = models.CharField(blank=True, max_length=100)
+
+    remote_organization_uri = models.CharField(_('remote organization URI'), blank=True, max_length=255, editable=False)
+    remote_organization_label = models.CharField(_(u'remote organization label'),
+                                                max_length=250, blank=True, null=True,
+                                                help_text=_(u'fill this only if the organization record is not available locally'))
 
     if 'coop.mailing' in settings.INSTALLED_APPS:
         subs = generic.GenericRelation('coop_local.Subscription')
