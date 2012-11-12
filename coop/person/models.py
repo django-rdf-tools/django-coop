@@ -131,7 +131,8 @@ class BasePerson(URIModel):
 
         ('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'),
 
-        ('name_mapping', (settings.NS.foaf.name, ''), 'name_mapping_reverse')
+        ('name_mapping', (settings.NS.foaf.name, ''), 'name_mapping_reverse'),
+        ('location_mapping', (settings.NS.locn.location, 'location'), 'location_mapping_reverse')
  
 
     )
@@ -140,4 +141,14 @@ class BasePerson(URIModel):
         return [(rdflib.term.URIRef(self.uri), rdfPred, rdflib.term.Literal(u"%s %s" % (self.first_name, self.last_name), lang))]
 
     def name_mapping_reverse(self, g, rdfP, djF, lang=None):
+        pass
+
+    def location_mapping(self, rdfPred, djF, lang=None):
+        if hasattr(self, 'location_display') and self.location_display == DISPLAY.PUBLIC:
+            if self.location:
+                return[(rdflib.term.URIRef(self.uri), rdfPred, rdflib.term.URIRef(self.location.uri))]
+        else:
+            return []
+
+    def location_mapping_reverse(self, g, rdfP, djF, lang=None):
         pass
