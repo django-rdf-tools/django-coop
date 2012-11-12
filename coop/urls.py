@@ -15,10 +15,10 @@ urlpatterns = patterns('',
 
     url(r'^$', 'coop.views.home', name="home"),
 
-    (r'^org/', include('coop.org.urls')),
-    (r'^geojson/(?P<what>[\w-]+)/(?P<criteria>[\w-]+)/$', 'coop.views.geojson_objects'),
+    url(r'^org/', include('coop.org.urls')),
+    url(r'^geojson/(?P<what>[\w-]+)/(?P<criteria>[\w-]+)/$', 'coop.views.geojson_objects'),
 
-    (r'^comments/', include('django.contrib.comments.urls')),
+    url(r'^comments/', include('django.contrib.comments.urls')),
 
     # a revoir
     (r'^perso/$', 'coop.person.views.perso'),

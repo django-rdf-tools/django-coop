@@ -1,0 +1,74 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: django-coop\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-11-08 11:16+0100\n"
+"PO-Revision-Date: 2012-11-08 12:05+0100\n"
+"Last-Translator: Coopérative Quinode <contact@quinode.fr>\n"
+"Language-Team: Quinode <contact@quinode.fr>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: models.py:20
+msgid "publisher"
+msgstr "organisation"
+
+#: models.py:22
+msgid "person"
+msgstr "auteur"
+
+#: models.py:24
+msgid "remote person URI"
+msgstr "URI (externe) pour l'auteur"
+
+#: models.py:25
+msgid "remote person label"
+msgstr "Libellé auteur (externe)"
+
+#: models.py:27
+msgid "fill this only if the person record is not available locally"
+msgstr "à remplir uniquement si la personne n'est pas inscrite sur ce site"
+
+#: models.py:28
+msgid "remote organization URI"
+msgstr "URI (externe) pour l'organisation"
+
+#: models.py:29
+msgid "remote organization label"
+msgstr "Libellé organisation (externe)"
+
+#: models.py:31
+msgid "fill this only if the organization record is not available locally"
+msgstr "à remplir uniquement si l'organisation n'est pas inscrite sur ce site"
+
+#: models.py:33
+msgid "is section"
+msgstr "rubrique"
+
+#: models.py:50
+msgid "article"
+msgstr "article"
+
+#: models.py:51
+msgid "articles"
+msgstr "articles"
+
+#: models.py:86
+msgid "Navigation tree"
+msgstr "Arborescence"
+
+#: models.py:87
+msgid "Navigation trees"
+msgstr "Arborescences"
+

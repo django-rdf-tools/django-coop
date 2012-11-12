@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load i18n coop_edition coop_navigation article_tags %}
+
+{% block meta_title %}
+    {{ category.label }}
+{% endblock %}
+
+{% block jquery_declaration %}
+{{ block.super }}
+{% if_cms_edition %}{% cms_form_media %}{% endif %}
+{% endblock %}
+
+{% block document %}
+
+    {% block article %}
+
+    <ul class="breadcrumb">
+    <a href="/">Accueil</a> <span class="divider">/</span>
+    {% navigation_breadcrumb category li_template="coop_cms/breadcrumb_li_template.html" %}
+    </ul>
+
+        {% block title %}
+            <h2 id="title">{{ category.label }}</h2>
+        {% endblock %}
+
+            <div class="article-content">
+                {{ category.description }}
+            </div>
+
+    <ul class="articles">
+        {% last_articles 10 "coop_cms/article_list_item.html" category %}
+    </ul>
+
+    {% endblock %}
+
+
+{% endblock %}
+

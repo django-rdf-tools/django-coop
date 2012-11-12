@@ -15,6 +15,8 @@ git+git://github.com/quinode/coop-tag.git
 git+git://github.com/quinode/coop-geo.git
 git+git://github.com/quinode/coop_cms.git
 
+django-scanredirect
+
 django-autoslug
 unicode-slugify
 git+git://github.com/praekelt/django-preferences.git

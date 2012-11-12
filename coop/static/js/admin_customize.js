@@ -32,4 +32,6 @@
             }
         }).removeAttr('href').css('cursor', 'pointer');
     });
+
 })(django.jQuery);
+

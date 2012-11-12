@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib import admin
 from django import forms
 from coop_local.models import Event, EventCategory, Calendar, Occurrence, Dated
-from coop.utils.autocomplete_admin import FkAutocompleteAdmin, InlineAutocompleteAdmin
+from coop.utils.autocomplete_admin import FkAutocompleteAdmin, InlineAutocompleteAdmin, NoLookupsFkAutocompleteAdmin
 from coop_geo.admin import LocatedInline
 from django.db.models.loading import get_model
 from django.contrib.contenttypes.generic import GenericTabularInline
@@ -48,7 +48,7 @@ class EventAdminForm(forms.ModelForm):
         self.fields['event_type'].initial = EventCategory.objects.get(id=1)
 
 
-class EventAdmin(FkAutocompleteAdmin):
+class EventAdmin(NoLookupsFkAutocompleteAdmin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
     form = EventAdminForm
     list_display = ('title', 'event_type', 'description')
@@ -61,8 +61,9 @@ class EventAdmin(FkAutocompleteAdmin):
     }
     fieldsets = [['Description', {'fields': ['title', 'description',
         ('event_type', 'calendar'),
-        ('organization', 'person'),
-        ('location')
+        'organization', 'remote_organization_label', 'remote_organization_uri',
+        'person', 'remote_person_label', 'remote_person_uri',
+        'location', 'remote_location_label', 'remote_location_uri',
       ]}],
     ]
 

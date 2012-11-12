@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 #
 #    Autocomplete feature for admin panel
 #
@@ -136,6 +138,7 @@ class FkSearchInput(ForeignKeyRawIdWidget):
             'app_label': app_label,
             'label': label,
             'name': name,
+            'remote_search_path': 'http://' + settings.PES_HOST + '/suggestions/',
         }
 
 
@@ -216,6 +219,8 @@ class NoLookupsForeignKeySearchInput(ForeignKeyRawIdWidget):
             'app_label': app_label,
             'label': label,
             'name': name,
+            'remote_search_path': 'http://' + settings.PES_HOST + '/suggestions/',
+
         }
 
 # tried to change widget_template but it needs a subclass (of what?) not a string
@@ -294,6 +299,8 @@ class InlineSearchInput(ForeignKeyRawIdWidget):
             'app_label': app_label,
             'label': label,
             'name': name,
+            'remote_search_path': 'http://' + settings.PES_HOST + '/suggestions/',
+
         }
 
 # tried to change widget_template but it needs a subclass (of what?) not a string
@@ -525,14 +532,24 @@ class NoLookupsFkAutocompleteAdmin(admin.ModelAdmin):
         return HttpResponseNotFound()
 
     def get_help_text(self, field_name, model_name):
-        searchable_fields = self.related_search_fields.get(field_name, None)
-        if searchable_fields:
-            help_kwargs = {
-                'model_name': model_name,
-                'field_list': get_text_list(searchable_fields, _('and')),
-            }
-            return _('Use the left field to do %(model_name)s lookups in the fields %(field_list)s.') % help_kwargs
-        return ''
+        #import pdb; pdb.set_trace()
+        help_vars = {'field': field_name}
+        return _(u"""<select class="input_method_select" id="%(field)s_input_method" style="margin-right:20px;">
+                     <option value="key">Rechercher sur ce site</option>
+                     <option value="pes">Rechercher sur la PES</option>
+                     <option value="txt">Indiquer juste le nom</option>
+                     </select>&nbsp;&nbsp;&nbsp;
+                        """) % help_vars
+
+
+        # searchable_fields = self.related_search_fields.get(field_name, None)
+        # if searchable_fields:
+        #     help_kwargs = {
+        #         'model_name': model_name,
+        #         'field_list': get_text_list(searchable_fields, _('and')),
+        #     }
+        #     return _('Use the left field to do %(model_name)s lookups in the fields %(field_list)s.') % help_kwargs
+        # return ''
 
 
 # this method gets called when creating the formfields - probably this is what you need to extend

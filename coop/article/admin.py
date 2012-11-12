@@ -6,7 +6,7 @@ from django.conf import settings
 from tinymce.widgets import AdminTinyMCE
 from django import forms
 from sorl.thumbnail.admin import AdminImageMixin
-from coop.utils.autocomplete_admin import FkAutocompleteAdmin
+from coop.utils.autocomplete_admin import FkAutocompleteAdmin, NoLookupsFkAutocompleteAdmin
 
 if "coop.agenda" in settings.INSTALLED_APPS:
     from coop.agenda.admin import DatedInline
@@ -32,7 +32,15 @@ if "coop_cms" in settings.INSTALLED_APPS:
     class CoopArticleForm(ArticleAdminForm):
         content = forms.CharField(widget=AdminTinyMCE(attrs={'cols': 80, 'rows': 60}), required=False)
 
-    class CoopArticleAdmin(ArticleAdmin, FkAutocompleteAdmin, AdminImageMixin):
+
+        # def __init__(self, *args, **kwargs):
+        #     from django.forms.widgets import HiddenInput
+        #     super(CoopArticleForm, self).__init__(*args, **kwargs)
+        #     self.fields['remote_organization_uri'].widget = HiddenInput()
+        #     self.fields['remote_person_uri'].widget = HiddenInput()
+
+
+    class CoopArticleAdmin(ArticleAdmin, NoLookupsFkAutocompleteAdmin, AdminImageMixin):
         form = CoopArticleForm
         change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
         change_list_template = 'admin/article_change_list.html'
@@ -47,10 +55,14 @@ if "coop_cms" in settings.INSTALLED_APPS:
         readonly_fields = []
         fieldsets = (
             #(_('Navigation'), {'fields': ('navigation_parent',)}),
-            ('Edition', {'fields': ('title', 'logo', 'content', 'template', 'isSection','organization')}),
-            ('Options', {'fields': ('summary', 'category', 'is_homepage', 'in_newsletter')}),
+            ('Edition', {'fields': ('title', 'logo', 'content', 
+                                    'organization', 'remote_organization_label', 'remote_organization_uri',
+                                    'person', 'remote_person_label', 'remote_person_uri')}),
+            ('Options', {'fields': ('summary', 'category', 'template', 'is_homepage', 'in_newsletter', 'isSection')}),
         )
-        related_search_fields = {'organization': ('title', 'subtitle', 'description'), }
+        related_search_fields = {'organization': ('title', 'subtitle', 'description'), 
+                                 'person': ('first_name', 'last_name',), }
 
         if "coop.agenda" in settings.INSTALLED_APPS:
             inlines = [DatedInline]
+

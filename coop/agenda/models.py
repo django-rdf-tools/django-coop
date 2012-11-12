@@ -70,19 +70,23 @@ class BaseEvent(URIModel):
     calendar = models.ForeignKey('coop_local.Calendar', verbose_name=_('calendar'))
 
     # Linking to local objects
-    organization = models.ForeignKey('coop_local.Organization', null=True, blank=True, verbose_name=_('organization'), related_name=_('prem organization'))
+    organization = models.ForeignKey('coop_local.Organization', null=True, blank=True, verbose_name=_('organization'), related_name=_('publisher organization'))
     organizations = models.ManyToManyField('coop_local.Organization', null=True, blank=True, verbose_name=_('organizations'), related_name=_('other organizations'))
 
     person = models.ForeignKey('coop_local.Person', null=True, blank=True, verbose_name=_('author'))
     if "coop_geo" in settings.INSTALLED_APPS:
         location = models.ForeignKey('coop_geo.Location', null=True, blank=True, verbose_name=_('location'))
+        remote_location_uri = models.CharField(_('remote location URI'), blank=True, max_length=255)
+        remote_location_label = models.CharField(_(u'remote location label'),
+                                                max_length=250, blank=True, null=True,
+                                                help_text=_(u'fill this only if the location record is not available locally'))
 
     # Linking to remote objects
-    remote_person_uri = models.CharField(_('remote person URI'), blank=True, max_length=255, editable=False)
+    remote_person_uri = models.CharField(_('remote person URI'), blank=True, max_length=255)
     remote_person_label = models.CharField(_(u'remote person label'),
                                                 max_length=250, blank=True, null=True,
                                                 help_text=_(u'fill this only if the person record is not available locally'))
-    remote_organization_uri = models.CharField(_('remote organization URI'), blank=True, max_length=255, editable=False)
+    remote_organization_uri = models.CharField(_('remote organization URI'), blank=True, max_length=255)
     remote_organization_label = models.CharField(_(u'remote organization label'),
                                                 max_length=250, blank=True, null=True,
                                                 help_text=_(u'fill this only if the organization record is not available locally'))

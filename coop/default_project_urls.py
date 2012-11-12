@@ -16,6 +16,8 @@ from coop_local.urls import urlpatterns
 handler500 = 'coop.views.SentryHandler500'
 
 urlpatterns += patterns('',
+    
+    url(r'^', include('scanredirect.urls')),
 
     #Testing webid urls
     # url(r'^accounts/webidauth', 'coop.webid.views.test_login',

@@ -1,6 +1,11 @@
 <script type="text/javascript" src="/static/js/jquery.cookie.js"></script>
 <script type="text/javascript">
 
+function log(message){
+  if(typeof console == "object"){
+    console.log(message);
+  }
+}
 
 // common : tab functions
 function tabCookie (hash){
@@ -170,6 +175,87 @@ jQuery(document).ready(function($) {
                 $(this).html('(' + gettext('Hide') + ')');
             }
         }).removeAttr('href').css('cursor', 'pointer');
+    });
+
+
+    function switch_input(model, method){
+      if(method == 'key'){
+          log(model + ' : switching to AutocompleteFkey Input')
+          $("#lookup_" + model ).show();
+          $("#remote_lookup_" + model).val('').hide();
+          $("#id_remote_" + model + "_label").val('').hide();
+          $("#id_remote_" + model + "_uri").val('');
+      }else if(method == 'pes'){
+          log(model + ' : switching to PES autocomplete input')
+          $("#lookup_" + model ).val('').hide();
+          $("#id_" + model).val('');
+          $("#remote_lookup_" + model).show();
+          $("#id_remote_" + model + "_label").hide();
+      }else if(method == 'txt'){
+          log(model + ' : switching to free text input')
+          $("#lookup_" + model ).val('').hide();
+          $("#id_" + model).val('');
+          $("#remote_lookup_" + model).val('').hide();
+          $("#id_remote_" + model + "_label").show();
+          $("#id_remote_" + model + "_uri").val('');
+      }
+    }
+
+    // Gestion des clés internes/externes
+    $("input[name^=remote_][name$=_label]").each(function() {
+
+        model = $(this).attr('name').split('_')[1]
+        log('********* Input init for '+ model)
+
+        remlabel = $(this).val()
+        remlabel_row = $(this).parent().parent()
+        fkey_row = $(this).parent().parent().prev()
+        fkey = fkey_row.children('.controls').children('input[id^=id_]')
+
+        // on veut pas pouvoir ajouter d'instance depuis cet endroit
+        fkey_row.children('.controls').children('a.add-another').hide()
+
+        // bouger le menu de selection devant les champs
+        fkey_row.children('.controls').prepend( fkey_row.children('.controls').children('.help-inline').children('select') );
+
+        // bouger le champ remote_label dans le control block de la fkey
+        fkey_row.children('.controls').append( remlabel_row.children('.controls').children('input[id^=id_remote_][id$=_label]') );
+        // cacher le champ remote par défaut
+        fkey_row.children('.controls').children('input[id^=id_remote_]').hide()
+        // masquer la ligne d'ou on a extrait le champ label
+        remlabel_row.hide();
+
+        // masquer la ligne du champ URI
+        $("#id_remote_" + model + "_uri").parent().parent().hide()
+
+        fkey_row.children('.controls').children('input[type=text]').width(365)
+
+        $("select#" + model + "_input_method").width(180).bind('change', function(){
+          model = $(this).attr('id').split('_')[0]
+          method = $(this).val()
+          switch_input(model, method)
+        });
+
+        if( $("#id_" + model).val() != ''){
+            log('I have a Fkey for ' + model)
+            $("select#" + model + "_input_method").val('key')
+            switch_input(model, 'key')
+        }else if( $("#id_remote_" + model + "_uri").val() != '' && $("#id_remote_" + model + "_label").val() != ''){
+            log(' I have a remote URI for '+model+' and a remote label too')
+            // remettre l'ancienne valeur juste pour affichage utilisateur
+            $("#remote_lookup_" + model).val( $("#id_remote_" + model + "_label").val() )
+            $("select#" + model + "_input_method").val('pes')
+            switch_input(model, 'pes')
+        }else if( $("#id_remote_" + model + "_uri").val() == '' && $("#id_remote_" + model + "_label").val() != ''){
+            log('I have only a remote label for '+ model)
+            $("select#" + model + "_input_method").val('txt')
+            switch_input(model, 'txt')
+        }else{
+            log('I have no previous data for '+ model)
+            $("select#" + model + "_input_method").val('key')
+            switch_input(model, 'key')
+        }
+
     });
 
 

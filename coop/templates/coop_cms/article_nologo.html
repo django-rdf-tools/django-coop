@@ -1,0 +1,25 @@
+{% extends "coop_cms/article.html" %}
+{% load i18n coop_edition coop_navigation %}
+
+    {% block article %}
+
+        <ul class="breadcrumb">
+       <li><a href="/">Accueil</a> <span class="divider">/</span></li>
+        {% navigation_breadcrumb article li_template="coop_cms/breadcrumb_li_template.html" %}
+        </ul>
+
+    {% cms_edit article %}
+
+            <h2 id="title">{{article.title}}</h2>
+            <div class="content">
+
+            <div class="summary">{{ article.summary }}</div>
+                {{ article.content }}
+            </div>
+
+
+    {% end_cms_edit %}
+    {% if_cms_edition %}
+        {% include "coop_cms/_article_publication.html" %}
+    {% endif %}
+    {% endblock %}

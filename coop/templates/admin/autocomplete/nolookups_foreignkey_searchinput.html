@@ -1,5 +1,7 @@
 {% load i18n %}
 <input type="text" id="lookup_{{ name }}" value="{{ label }}" style="display:none;" />
+<input type="text" id="remote_lookup_{{ name }}" style="display:none;"/>
+
 {# <a href="{{ related_url }}{{ url }}" class="related-lookup" id="lookup_id_{{ name }}" onclick="return showRelatedObjectLookupPopup(this);"> #}
 {#   <img src="/static/admin/img/admin/selector-search.gif" width="16" height="16" alt="{% trans "Lookup" %}" /> #}
 {# </a> #}
@@ -8,10 +10,12 @@
 (function($){ 
     // Show lookup input (nolookups)
     $("#lookup_{{ name }}").show();
+
     function reset() {
         $('#id_{{ name }}').val('');
         $('#lookup_{{ name }}').val('');
     };
+
     function lookup(query) {
         $.get('{{ search_path }}', {
             'search_fields': '{{ search_fields }}',
@@ -23,6 +27,8 @@
             {{ name }}_value = query;
         });
     };
+
+
     $('#id_{{ name }}').bind(($.browser.opera ? "keypress" : "keyup"), function(event) {
         if ($(this).val()) {
             if (event.keyCode == 27) {
@@ -32,6 +38,7 @@
             };
         };
     });
+
     $('#lookup_{{ name }}').autocomplete('{{ search_path }}', {
         extraParams: {
             'search_fields': '{{ search_fields }}',
@@ -47,6 +54,8 @@
             reset();
         };
     });
+
+    
     var {{ name }}_value = $('#id_{{ name }}').val();
     function check() {
         {{ name }}_check = $('#id_{{ name }}').val();
@@ -57,6 +66,44 @@
         }
     }
     timeout = window.setInterval(check, 300);
+
+
+
+    function remote_reset() {
+        $('#remote_{{ name }}_uri').val('');
+        $('#remote_{{ name }}_label').val('');
+        $('#remote_lookup_{{ name }}').val('');
+    };
+
+    function remote_lookup(query) {
+        $.get('{{ remote_search_path }}', {
+            'model_name': '{{ model_name }}',
+            //'object_pk': query
+        }, function(data){
+            $('#remote_lookup_{{ name }}').val(data);
+            //{{ name }}_value = query;
+        });
+    };
+
+
+    $('#remote_lookup_{{ name }}').autocomplete('{{ remote_search_path }}', {
+        extraParams: {
+            'model_name': '{{ model_name }}'
+        }, max: 100, scrollHeight: 400,   // mikele: added by me
+    }).result(function(event, data, formatted) {
+        if (data) {
+            $('#id_remote_{{ name }}_label').val(data[0]);
+            $('#id_remote_{{ name }}_uri').val(data[1]);
+        }
+    }).keyup(function(event){
+        if (event.keyCode == 27) {
+            //remote_reset();
+        };
+    });
+
+
+
 })(django.jQuery);
 //}); // domguard : use django admin jQuery version
 </script>
+

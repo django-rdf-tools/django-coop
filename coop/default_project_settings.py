@@ -142,6 +142,7 @@ INSTALLED_APPS = [
     'forms_builder.forms',
     'preferences',
     'apptemplates',
+    'scanredirect',
 
 
     # WebID
@@ -222,10 +223,10 @@ DJALOHA_LINK_MODELS = (
 # COOP_CMS_ARTICLE_TEMPLATES = 'coop_local.get_article_templates' # marche plus ?
 
 COOP_CMS_ARTICLE_TEMPLATES = [
-    ('coop_cms/article_standard.html', 'Standard'),
-    ('coop_cms/article_standard.html', 'Article sans logo'),
-    ('coop_cms/article_rubrique.html', 'Rubrique'),
+    ('coop_cms/article.html', 'Standard'),
+    ('coop_cms/article_nologo.html', 'Sans logo'),
 ]
+
 
 SKIP_DJALOHA_JQUERY = True
 
