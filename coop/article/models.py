@@ -93,7 +93,7 @@ if "coop_cms" in settings.INSTALLED_APPS:
         # As the "default" NavTree should NOT be exort as rdf data
         # A Nice solution is overwritte toRdfGraph method
         def isOpenData(self):
-            return not self.name == 'default'
+            return not (self.name == 'default' or self.name == 'spip')
  
         rdf_type = settings.NS.skos.ConceptScheme
         rdf_mapping = (
