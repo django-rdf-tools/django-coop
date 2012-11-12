@@ -131,14 +131,17 @@ class BasePerson(URIModel):
 
         ('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'),
 
-        ('name_mapping', (settings.NS.foaf.name, ''), 'name_mapping_reverse'),
+        ('name_mapping', (settings.NS.foaf.name, 'username'), 'name_mapping_reverse'),
         ('location_mapping', (settings.NS.locn.location, 'location'), 'location_mapping_reverse')
  
 
     )
 
     def name_mapping(self, rdfPred, djF, lang=None):
-        return [(rdflib.term.URIRef(self.uri), rdfPred, rdflib.term.Literal(u"%s %s" % (self.first_name, self.last_name), lang))]
+        if (self.first_name == "" or self.first_name == None) and self.last_name == "":
+            return [(rdflib.term.URIRef(self.uri), rdfPred, rdflib.term.Literal(self.username, lang))]
+        else:
+            return [(rdflib.term.URIRef(self.uri), rdfPred, rdflib.term.Literal(u"%s %s" % (self.first_name, self.last_name), lang))]
 
     def name_mapping_reverse(self, g, rdfP, djF, lang=None):
         pass
