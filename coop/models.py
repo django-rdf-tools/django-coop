@@ -132,8 +132,10 @@ class StaticURIModel(models.Model):
                 self.uri = self.init_uri()
             elif self.uri != self.init_uri():
                 # Be careful: we need to keep history of uri modification
-                from coop_local.models import LinkProperty, Link
-                self.links.add(Link(predicate=LinkProperty.objects.get(label='replaces'), object_uri=self.uri))
+                # But it is a little be to early.... uri are link to the domain...
+                if getattr(settings, 'URI_FIXED', False):
+                    from coop_local.models import LinkProperty, Link
+                    self.links.add(Link(predicate=LinkProperty.objects.get(label='replaces'), object_uri=self.uri))
                 self.uri = self.init_uri()   # uri_id est pas pareil
         super(StaticURIModel, self).save(*args, **kwargs)
 

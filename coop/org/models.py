@@ -235,7 +235,7 @@ class BaseContact(URIModel):
         elif ctype == COMM_MEANS.TWITTER:
             rdfValue = settings.NS.foaf.OnlineAccount
         elif ctype == COMM_MEANS.RSS:
-            rdfValue = settings.NS.rss.channel
+            rdfValue = settings.NS.rss.Channel
         elif ctype == COMM_MEANS.VCAL:
             rdfValue = settings.NS.vcal.Vcalendar
         elif ctype == COMM_MEANS.MAIL:

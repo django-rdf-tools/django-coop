@@ -65,7 +65,7 @@ def local_vm():
 @task
 def remote():
     '''First command to use for a SSH remote host'''
-    env.hosts = [prompt('Alias SSH:', default=alias)]
+    env.hosts = [prompt('Alias SSH:', default=alias, key='alias')]
 
     def _annotate_hosts_with_ssh_config_info():
         from os.path import expanduser
@@ -101,7 +101,10 @@ def remote():
 
 def set_project():
     if 'projet' not in env.keys():
-        prompt('Nom du projet :', default=projet, key='projet')
+        if 'alias' in env.keys():
+            prompt('Nom du projet :', default=env['alias'], key='projet')
+        else:
+            prompt('Nom du projet :', default=projet, key='projet')
 
 
 def set_domain():
@@ -443,12 +446,47 @@ def virtualenv_setup():
         append('.hgrc', 'bitbucket.org = 24:9c:45:8b:9c:aa:ba:55:4e:01:6d:58:ff:e4:28:7d:2a:14:ae:3b')
 
 
+# Old version
+# def push():
+#     '''Pull code from github on the server'''
+#     gitsrv = 'git+git://github.com/quinode/'
+#     app = prompt('app to update ?', default='django-coop')
+#     #with settings(show('user'),hide('warnings', 'running', 'stdout', 'stderr')):
+#     with prefix('workon coop'):
+#         try:
+#             print(yellow('desinstallation du paquet...'))
+#             run('pip uninstall -q %s' % app)
+#         except:
+#             print(red('paquet non installé'))
+#             pass
+#         print(yellow('réinstallation du paquet depuis github...'))
+#         run('pip install %s%s.git' % (gitsrv, app))
+#         if app == 'django-coop':
+#             for site in ('apeas', 'alliance', 'credis', 'extramarche', 'mesclun', 'varennes'):
+#                 with cd('projects/%s' % site):
+#                     with settings(warn_only=True):
+#                         print(yellow('%s : migration de coop_local' % site))
+#                         sudo('python manage.py schemamigration coop_local --auto', user='admin')
+#                         sudo('python manage.py migrate coop_local', user='admin')
+#                     print(yellow('%s : collecte des fichiers statiques...' % site))
+#                     sudo('python manage.py collectstatic --noinput', user='admin')
+#                     sudo('python manage.py clean_pyc', user='admin')
+
+#     sudo('apachectl restart')
+#     print(green('Les mises à jour ont été appliquées.'))
+
+
+
+
+@task
 def push():
-    '''Pull code from github on the server'''
+    """Push quinode repository """
+    set_project()
+    # set_domain()
     gitsrv = 'git+git://github.com/quinode/'
     app = prompt('app to update ?', default='django-coop')
-    #with settings(show('user'),hide('warnings', 'running', 'stdout', 'stderr')):
-    with prefix('workon coop'):
+    with prefix('workon %(projet)s' % env):
+        print (yellow('ok virtual env'))
         try:
             print(yellow('desinstallation du paquet...'))
             run('pip uninstall -q %s' % app)
@@ -457,19 +495,25 @@ def push():
             pass
         print(yellow('réinstallation du paquet depuis github...'))
         run('pip install %s%s.git' % (gitsrv, app))
-        if app == 'django-coop':
-            for site in ('apeas', 'alliance', 'credis', 'extramarche', 'mesclun', 'varennes'):
-                with cd('projects/%s' % site):
-                    with settings(warn_only=True):
-                        print(yellow('%s : migration de coop_local' % site))
-                        sudo('python manage.py schemamigration coop_local --auto', user='admin')
-                        sudo('python manage.py migrate coop_local', user='admin')
-                    print(yellow('%s : collecte des fichiers statiques...' % site))
-                    sudo('python manage.py collectstatic --noinput', user='admin')
-                    sudo('python manage.py clean_pyc', user='admin')
+        with cd('~/projects/%(projet)s' % env):
 
-    sudo('apachectl restart')
+            if app == 'django-coop':
+                with settings(warn_only=True):
+                    print(yellow('%(projet)s : migration de coop_local' % env))
+                    run('python manage.py schemamigration coop_local --auto')
+                    run('python manage.py migrate coop_local')
+            print(yellow('%(projet)s : collecte des fichiers statiques...' % env))
+            sudo('python manage.py collectstatic --noinput', user='admin')
+            sudo('python manage.py clean_pyc', user='admin')
+            print(yellow('%(projet)s : touch du fichier wsgi'))
+            run('touch *_local/wsgi.py')
+        print(yellow('%(projet)s :restart du redis worker'))
+        if app == 'django-coop':
+            run('sudo supervisorctl restart rqworker%(projet)s' % env)
+        elif app == 'pes':
+            run('sudo supervisorctl restart rqw%(projet)s' % env)
     print(green('Les mises à jour ont été appliquées.'))
+
 
 
 def dependencies():
