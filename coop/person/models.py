@@ -147,8 +147,7 @@ class BasePerson(URIModel):
         if hasattr(self, 'location_display') and self.location_display == DISPLAY.PUBLIC:
             if self.location:
                 return[(rdflib.term.URIRef(self.uri), rdfPred, rdflib.term.URIRef(self.location.uri))]
-        else:
-            return []
+        return []
 
     def location_mapping_reverse(self, g, rdfP, djF, lang=None):
         pass
