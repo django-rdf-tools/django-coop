@@ -1,10 +1,14 @@
-# # -*- coding:utf-8 -*-
-from django.shortcuts import render_to_response, redirect
-from coop_local.models import Organization, Person
+# -*- coding:utf-8 -*-
+from django.shortcuts import render_to_response, redirect, get_object_or_404
+from coop_local.models import Organization, Person, Article
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 
-def perso(request):
+
+def public_profile(request, uuid):
     context = {}
-    context['user'] = request.user
-    return render_to_response('person/panel.html',context,RequestContext(request))
+    person = get_object_or_404(Person, uuid=uuid)
+    context['person'] = person
+    context['articles'] = Article.objects.filter(person=person).order_by('-created')
+
+    return render_to_response('person/public_profile.html', context, RequestContext(request))

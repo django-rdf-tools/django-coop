@@ -21,8 +21,7 @@ urlpatterns = patterns('',
     url(r'^comments/', include('django.contrib.comments.urls')),
 
     # a revoir
-    (r'^perso/$', 'coop.person.views.perso'),
-    (r'^membre/', include('coop.person.urls')),
+    (r'^profil/', include('coop.person.urls')),
 
     url(r'^feed/(?P<model>[\w-]+)/$', UpdateFeed()),
     url(r'^hub/', include('subhub.urls')),

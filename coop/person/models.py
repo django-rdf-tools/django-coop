@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse_lazy
 from django.template.defaultfilters import slugify
 from django.contrib.contenttypes import generic
 from django.contrib.sites.models import Site
@@ -67,10 +67,9 @@ class BasePerson(URIModel):
     def __unicode__(self):
         return unicode('%s %s' % (self.first_name, self.last_name))
 
-    @models.permalink
+    #@models.permalink
     def get_absolute_url(self):
-        return reverse('profiles_profile_detail', args=[self.username])
-        #return ('profiles_profile_detail', (), {'username': self.username})
+        return reverse_lazy('coop.person.views.public_profile', kwargs={'uuid': self.uuid})
 
     def has_user_account(self):
         return (self.user != None)

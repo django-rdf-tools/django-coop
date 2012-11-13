@@ -10,9 +10,9 @@ urlpatterns = patterns('',
     (r'^logout/$', 'django.contrib.auth.views.logout', {'template_name':'accounts/logout.html'}),
     
     # interception de la page edition de profil pour injecter notre formulaire
-    (r'^edit/$', 'profiles.views.edit_profile', {'form_class': ProfileForm,}),
+    # (r'^edit/$', 'profiles.views.edit_profile', {'form_class': ProfileForm,}),
     
-    # url(r'^(?P<username>[_a-z]+)/$', 'profiles.views.profile_detail', name='profiles_profile_detail'),
+    url(r'^(?P<uuid>\w+)/$', 'coop.person.views.public_profile'),
 
     url(r'^password/change/$',auth_views.password_change,name='auth_password_change'),
     url(r'^password/change/done/$',auth_views.password_change_done,name='auth_password_change_done'),
@@ -22,7 +22,8 @@ urlpatterns = patterns('',
     url(r'^password/reset/done/$',auth_views.password_reset_done,name='auth_password_reset_done'),
     
     # sinon on délégue à l'app profiles
-    (r'^', include('profiles.urls')),
+    # (r'^', include('profiles.urls')),
     
+
   
 )

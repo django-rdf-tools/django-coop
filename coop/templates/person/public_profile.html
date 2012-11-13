@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block meta_title %}Profil de {{person}}{% endblock %}
+
+{% block jquery_declaration %}
+{{ block.super }}
+{% endblock %}
+
+{% block article %}
+
+
+        <h2 id="title">{{person}}</h2>
+
+
+    {% if articles %}
+    <h3>Articles de cette personne</h3>
+    <ul>
+
+        {% for item in articles %}
+				<li>
+				    <a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a>
+				            Posté il y a {% blocktrans with item.created|timesince as when %}{{ when }}
+				            {% endblocktrans %}</span>
+				</li>
+
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+{% endblock %}
+
