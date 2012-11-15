@@ -91,7 +91,7 @@ class StaticURIModel(models.Model):
     links = generic.GenericRelation('coop_local.Link', related_name="%(app_label)s_%(class)s_related")
 
     # the default value, this attribut should be overloaded
-    domain_name = str(Site.objects.get_current().domain)
+    domain_name = None
 
     def label(self):
         return "Not Yet Implemented label method"
@@ -113,7 +113,7 @@ class StaticURIModel(models.Model):
         return self.__class__.__name__.lower()
 
     def init_uri(self):
-        return u"http://%s/id/%s/%s/" % (self.domain_name,
+        return u"http://%s/id/%s/%s/" % (self.domain_name or str(Site.objects.get_current().domain),
                                          self.uri_registry(),
                                          unicode(self.uri_id)  # can be anything = int, uuid, unicode...
                                         )
