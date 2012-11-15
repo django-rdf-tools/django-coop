@@ -177,7 +177,7 @@ class BaseEvent(URIModel):
         ('single_mapping', (settings.NS.vcal.description, 'description'), 'single_reverse'),
         ('single_mapping', (settings.NS.vcal.contact, 'person'), 'single_reverse'),
         ('single_mapping', (settings.NS.vcal.organizer, 'organization'), 'single_reverse'),
-        ('single_mapping', (settings.NS.vcal.location, 'location'), 'single_reverse'),
+        ('single_mapping', (settings.NS.locn.location, 'location'), 'single_reverse'),
 
         ('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'),
         ('multi_mapping', (settings.NS.dct.organizer, 'organizations'), 'multi_reverse'),
