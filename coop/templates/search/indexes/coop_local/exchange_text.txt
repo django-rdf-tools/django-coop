@@ -1,4 +1,3 @@
 {{ object.title }}
-{{ object.subtitle }}
 {{ object.description }}
-{{ object.tags }}
+{{ object.organization.title }}

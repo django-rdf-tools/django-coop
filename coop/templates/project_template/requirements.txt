@@ -95,3 +95,9 @@ FirePython
 
 # for spip translation
 # MySQL-python
+
+{% if haystack %}
+git+git://github.com/rhec/pyelasticsearch.git
+git+git://github.com/quinode/django-haystack.git
+git+git://github.com/quinode/haystackES-fr.git
+{% endif %}

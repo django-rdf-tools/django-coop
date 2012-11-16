@@ -14,6 +14,11 @@ class Command(TemplateCommand):
             "given directory.")
 
     option_list = TemplateCommand.option_list + (
+
+        make_option('--haystack',
+                    action='store_true', dest='haystack', default=False,
+                    help=_(u'Set the value to 1 to have Haystack available (default is 0)')),
+
         make_option('--redis_port',
                     action='store', dest='redis', default=6379,
                     help=_(u'Please set the redis port the application will used (default value is 6379')),

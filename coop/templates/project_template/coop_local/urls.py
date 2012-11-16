@@ -23,3 +23,16 @@ urlpatterns = []
 from coop.default_project_urls import urlpatterns as default_project_urls
 urlpatterns += default_project_urls
 
+
+{% if haystack %}
+# minimal version
+from haystack.views import  search_view_factory, SearchView
+urlpatterns += patterns('haystack.views',
+    url(r'^search/$', search_view_factory(
+        view_class=SearchView,
+        template='search/search.html',
+        load_all=False
+    ), name='haystack_search'),
+)
+{% endif %}
+

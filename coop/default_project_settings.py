@@ -232,13 +232,6 @@ SKIP_DJALOHA_JQUERY = True
 
 FORMS_BUILDER_USE_SITES = False
 
-HAYSTACK_SITECONF = 'coop_local.search_sites'
-HAYSTACK_SEARCH_ENGINE = 'simple'
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
-    },
-}
 
 ADMIN_TOOLS_MENU = 'coop.ui.menu.CustomMenu'
 ADMIN_TOOLS_INDEX_DASHBOARD = 'coop.ui.dashboard.CustomIndexDashboard'

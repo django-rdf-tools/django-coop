@@ -1,0 +1,5 @@
+{{ object.title }}
+{{ object.description }}
+{{ object.comment }}
+{{ object.acronym }}
+{{ object.web }}

@@ -1,0 +1,4 @@
+{% if object.logo %}
+<img width="40" height="13" src="/media/{{ object.logo.file }}">
+{% endif %}
+<a href="{{ object.get_absolute_url }}">{{ object.title}}</a>

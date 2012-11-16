@@ -1,0 +1,7 @@
+{% comment %}
+{% if object.logo %}
+<img width="40" height="13" src="/media/{{ object.logo.file }}">
+{% endif %}
+{% endcomment %}
+
+<a href="{{ object.get_absolute_url }}">{{ object.title}}</a>
