@@ -1,21 +1,28 @@
 # -*- coding:utf-8 -*-
-
-# TODO : est-ce qu'on peut proposer des valeurs par defaut ici ?
-# ou deriver d'index pre-existants et leur ajouter quelques champs secifiques au site ?
-
-import datetime
-from haystack import indexes, site
-from coop_local.models import Organization
+from haystack import indexes
+from coop.search_indexes import OrganizationIndex as BaseOrganizationIndex
+from coop.search_indexes import ExchangeIndex as BaseExchangeIndex
+from coop.search_indexes import ArticleIndex as BaseArticleIndex
+from coop.search_indexes import EventIndex as BaseEventIndex
 
 
-class OrganizationIndex(indexes.RealTimeSearchIndex):
-    text = indexes.CharField(document=True, use_template=True)
-    title = indexes.CharField(model_attr='title')
-    acronym = indexes.CharField(model_attr='subtitle')
-    description = indexes.CharField(model_attr='description')
-    tags = indexes.MultiValueField()
 
-    def prepare_tags(self, obj):
-        return [tag.name for tag in obj.tags.all()]
+# If you dont want to use the default index, please comment the following
+# lines and write your own indexes
 
-site.register(Organization, OrganizationIndex)
+
+
+class OrganizationIndex(BaseOrganizationIndex, indexes.Indexable):
+    pass
+
+
+class ExchangeIndex(BaseExchangeIndex, indexes.Indexable):
+    pass
+
+
+class ArticleIndex(BaseArticleIndex, indexes.Indexable):
+    pass
+
+
+class EventIndex(BaseEventIndex, indexes.Indexable):
+    pass
