@@ -180,10 +180,10 @@ def geojson(request):
 
     #import pdb; pdb.set_trace()
 
-    if request.GET.get('limit'):
-        dist = request.GET['limit']
+    if request.GET.get('distance'):
+        dist = request.GET['distance']
     else:
-        dist = 30
+        dist = 20
 
     if request.GET.get('center'):
         print request.GET['center']
@@ -211,7 +211,8 @@ def geojson(request):
         for loc in location.located_set.all():
             obj = loc.content_object
             if obj.__class__ == Organization and "amap" in [x.slug for x in obj.category.all()]:
-                res.append(obj.to_geoJson())
+                if obj.to_geoJson():
+                    res.append(obj.to_geoJson())
 
     result = {"type": "FeatureCollection", "features":  res}
     return HttpResponse(json.dumps(result), mimetype="application/json")
