@@ -18,7 +18,7 @@ import feedparser
 import os
 import tempfile
 import coop
-import time
+import datetime
 from subhub.models import DistributionTask
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
@@ -207,10 +207,10 @@ class StaticURIModel(models.Model):
             if isinstance(value, models.Model):
                 if StaticURIModel in type(value).__mro__:  # or URLField !!!!
                     rdfValue = URIRef(value.uri)
-                elif type(self._meta.get_field(djangoField)) == models.URLField:
-                    rdfValue = URIRef(value)
                 else:
                     rdfValue = None
+            elif isinstance(self._meta.get_field(djangoField), models.URLField):
+                rdfValue = URIRef(value)
             else:
                 subject_args = {}
                 if lang:
@@ -224,6 +224,16 @@ class StaticURIModel(models.Model):
     def single_mapping(self, rdfPredicate, djangoField, lang=None):
         uri = lambda x: x.uri
         return self.base_single_mapping(uri, rdfPredicate, djangoField, lang=None)
+
+
+    def local_or_remote_mapping(self, rdfPredicate, djangoField, lang=None):
+        uri = lambda x: x.uri
+        if getattr(self, djangoField):
+            return self.base_single_mapping(uri, rdfPredicate, djangoField, lang=None)
+        elif hasattr(self, 'remote_' + djangoField + '_uri'):
+            return self.base_single_mapping(uri, rdfPredicate, 'remote_' + djangoField + '_uri', lang=None)
+        else:
+            return []
 
 
     def multi_mapping_base(self, values, rdfPredicate, datatype=None, lang=None):
@@ -274,6 +284,14 @@ class StaticURIModel(models.Model):
         uri = lambda x: x.uri
         self.base_single_reverse(uri, g, rdfPred, djField, lang)
 
+
+    def local_or_remote_reverse(self, g, rdfPred, djField, lang=None):
+        uri = lambda x: x.uri
+        # lets try the local version
+        self.base_single_reverse(uri, g, rdfPred, djField, lang)
+        if not getattr(self, djField):
+            self.base_single_reverse(uri, g, rdfPred, 'remote_' + djField + '_uri', lang)
+        
 
     def multi_reverse(self, g, rdfPred, djField, lang=None):
         manager = getattr(self, djField)
@@ -584,11 +602,16 @@ class StaticURIModel(models.Model):
         feed_url = "http://%s/feed/%s/%s/" % (host, self.__class__.__name__.lower(), self.uri_id)
         validate = URLValidator(verify_exists=True)
         try:
-            validate(feed_url)
-            print u"Try to subscribe to feed %s" % feed_url
-            Subscription.objects.subscribe(feed_url, hub="http://%s/hub/" % host)
-        except ValidationError, e:
-            print u" Imposible to subscribe to %s : %s" % (feed_url, e)
+            subs = Subscription.objects.get(topic=feed_url)
+        except Subscription.DoesNotExist:
+            subs = None
+        if not subs or (subs.lease_expiration and subs.lease_expiration < datetime.datetime.now() + datetime.timedelta(days=10)):   
+            try:
+                validate(feed_url)
+                # print u"Try to subscribe to feed %s" % feed_url
+                Subscription.objects.subscribe(feed_url, hub="http://%s/hub/" % host)
+            except ValidationError, e:
+                print u" Imposible to subscribe to %s : %s" % (feed_url, e)
 
 
     def unsubscribeToUpdades(self, host=settings.PES_HOST):
@@ -596,7 +619,6 @@ class StaticURIModel(models.Model):
         validate = URLValidator(verify_exists=True)
         try:
             validate(feed_url)
-            print u"Try to subscribe to feed %s" % feed_url
             Subscription.objects.unsubscribe(feed_url, hub="http://%s/hub/" % host)
         except ValidationError, e:
             print u" Imposible to unsubscribe to %s : %s" % (feed_url, e)
