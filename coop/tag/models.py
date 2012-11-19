@@ -51,7 +51,7 @@ if 'coop_tag' in settings.INSTALLED_APPS:
 
         # RDDF stuff
         rdf_type = settings.NS.skosxl.Label
-        rdf_mapping = (
+        base_mapping = [
             ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
             ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
             ('single_mapping', (settings.NS.skosxl.literalForm, 'name', 'fr'), 'single_reverse'),
@@ -61,7 +61,7 @@ if 'coop_tag' in settings.INSTALLED_APPS:
 
             ('scheme_mapping', (settings.NS.skos.inScheme, ''), 'scheme_mapping_reverse'),
             ('broader_mapping', (settings.NS.ess.broaderLabel, ''), 'broader_mapping_reverse'),
-       )
+       ]
 
         def scheme_mapping(self, rdfPred, djF, lang=None):
             try:

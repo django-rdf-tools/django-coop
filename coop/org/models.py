@@ -109,7 +109,7 @@ class BaseRole(URIModel):
 
     # rdf stuff
     rdf_type = settings.NS.org.Role
-    rdf_mapping = (
+    base_mapping = [
         ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
         ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
         ('single_mapping', (settings.NS.skos.prefLabel, 'label'), 'single_reverse'),
@@ -118,7 +118,7 @@ class BaseRole(URIModel):
         #('single_mapping', (settings.NS.skos.broader, 'category'), 'single_reverse'),
 
         ('category_mapping', (settings.NS.skos.broader, 'category'), 'category_mapping_reverse'),
-    )
+    ]
 
     def category_mapping(self, rdfPred, djF, lang=None):
         value = getattr(self, djF)
@@ -211,14 +211,14 @@ class BaseContact(URIModel):
 
     # RDF stufs
     rdf_type = settings.NS.ess.ContactMedium
-    rdf_mapping = (
+    base_mapping = [
         ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
         ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
         ('single_mapping', (settings.NS.rdf.value, 'content'), 'single_reverse'),
         ('single_mapping', (settings.NS.rdfs.comment, 'details'), 'single_reverse'),
 
         ('conditionnal_mapping', (settings.NS.rdf.type, 'category'), 'conditionnal_mapping_reverse'),
-    )
+    ]
 
 
     def conditionnal_mapping(self, rdfPred, djF, lang=None):
@@ -338,7 +338,7 @@ class BaseEngagement(URIModel):
 
     # RDF stufs
     rdf_type = settings.NS.org.Membership
-    rdf_mapping = (
+    base_mapping = [
         ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
         ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
         ('single_mapping', (settings.NS.org.member, 'person'), 'single_reverse'),
@@ -347,7 +347,7 @@ class BaseEngagement(URIModel):
 
         ('label_mapping', (settings.NS.rdfs.label, 'id', 'fr'), 'label_mapping_reverse'),
 
-    )
+    ]
 
     def label_mapping(self, rdfPred, djF, lang):
         return [(rdflib.term.URIRef(self.uri), rdfPred, rdflib.term.Literal(u'Engagement n°%s' % self.id, lang))]
@@ -608,7 +608,7 @@ class BaseOrganization(URIModel):
         return self._can_modify_organization(user)
 
     rdf_type = settings.NS.org.Organization
-    rdf_mapping = (
+    base_mapping = [
         ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
         ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
         ('single_mapping', (settings.NS.legal.legalName, 'title'), 'single_reverse'),
@@ -633,7 +633,7 @@ class BaseOrganization(URIModel):
         ('location_mapping', (settings.NS.ess.actionArea, 'framed'), 'location_mapping_reverse'),
         ('exchange_mapping', (settings.NS.gr.offers, settings.NS.gr.seeks), 'exchange_mapping_reverse'),
 
-    )
+    ]
 
 
     def location_mapping(self, rdfPred, djF):

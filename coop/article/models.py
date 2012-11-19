@@ -59,7 +59,7 @@ if "coop_cms" in settings.INSTALLED_APPS:
             return not self.isSection
 
         rdf_type = settings.NS.dct.Text
-        rdf_mapping = (
+        base_mapping = [
             ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
             ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
             ('single_mapping', (settings.NS.dct.title, 'title'), 'single_reverse'),
@@ -70,8 +70,7 @@ if "coop_cms" in settings.INSTALLED_APPS:
             ('single_mapping', (settings.NS.dct.publisher, 'organization'), 'single_reverse'),
 
             ('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'),
-
-        )
+            ]
 
 
 
@@ -97,11 +96,11 @@ if "coop_cms" in settings.INSTALLED_APPS:
             return not (self.name == 'default' or self.name == 'spip')
  
         rdf_type = settings.NS.skos.ConceptScheme
-        rdf_mapping = (
+        base_mapping = [
             ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
             ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
             ('single_mapping', (settings.NS.rdfs.label, 'name'), 'single_reverse'),
-        )
+        ]
 
 
     

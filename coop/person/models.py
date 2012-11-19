@@ -121,7 +121,7 @@ class BasePerson(URIModel):
 
     # RDF stuf
     rdf_type = settings.NS.person.Person
-    rdf_mapping = (
+    base_mapping = [
         ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
         ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
         ('single_mapping', (settings.NS.foaf.familyName, 'last_name'), 'single_reverse'),
@@ -134,7 +134,7 @@ class BasePerson(URIModel):
         ('location_mapping', (settings.NS.locn.location, 'location'), 'location_mapping_reverse')
  
 
-    )
+    ]
 
     def name_mapping(self, rdfPred, djF, lang=None):
         if (self.first_name == "" or self.first_name == None) and self.last_name == "":
