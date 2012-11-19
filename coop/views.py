@@ -2,6 +2,7 @@
 
 from django.shortcuts import render_to_response, redirect
 from coop_local.models import Organization, OrganizationCategory, Person
+from coop_geo.models import Location, Area, AreaType
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.conf import settings
@@ -10,6 +11,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 import json
 from coop.models import rdfGraphAll
+from django.core.exceptions import ImproperlyConfigured
 
 if('coop.exchange' in settings.INSTALLED_APPS):
     from coop_local.models import Exchange
@@ -74,7 +76,6 @@ def get_rdf(request, model, uuid, format):
     req_model = get_model(urimodels[model], model)
     object = get_object_or_404(req_model, uuid=uuid)
     return HttpResponse(object.toRdf(format), mimetype=RDF_SERIALIZATIONS[format])
-
 
 
 def rdfdump(request, model, format):
@@ -149,5 +150,70 @@ def geojson_objects(request, what, criteria):
                             event.get_absolute_url() + u"'>" + event.title + u"</a></p>"
 
     result = {"type": "FeatureCollection", "features": positions.values()}
+    return HttpResponse(json.dumps(result), mimetype="application/json")
+
+
+from django.core import serializers
+
+
+def communes(request):
+    label = request.GET['term']
+    qs = Location.objects.filter(city__icontains=label, is_ref_center=True)
+    data = []
+    for l in qs:
+        item = {}
+        item['label'] = l.city
+        item['value'] = l.point.coords
+        data.append(item)
+
+    #data = serializers.serialize('json', qs, fields=('city','point'))
+
+    return HttpResponse(json.dumps(data), mimetype="application/json")
+
+
+def geojson(request):
+
+    from django.contrib.gis.measure import Distance
+    from django.contrib.gis.geoip import GeoIP
+    from django.contrib.gis.geos import Point
+    from django.contrib.gis.geos import fromstr
+
+    #import pdb; pdb.set_trace()
+
+    if request.GET.get('distance'):
+        dist = request.GET['distance']
+    else:
+        dist = 20
+
+    if request.GET.get('center'):
+        print request.GET['center']
+        coords = request.GET['center'].split(',')
+        my_lat = coords[0]
+        my_long = coords[1]
+        center = fromstr('POINT(' + my_lat + " " + my_long + ')')
+    else:
+        g = GeoIP()
+        center = g.geos(request.META['REMOTE_ADDR'])
+
+    try:
+        regiontype = AreaType.objects.get(label="Région")
+        region = Area.objects.get(area_type=regiontype, reference=settings.DEFAULT_REGION_CODE)
+    except:
+        raise ImproperlyConfigured("No default region has been configured")
+
+    if not center or not region.polygon.contains(center):
+        center = region.default_location.point
+        dist = 1000
+
+    res = []
+
+    for location in Location.objects.filter(point__distance_lte=(center, Distance(km=dist))):
+        for loc in location.located_set.all():
+            obj = loc.content_object
+            if obj.__class__ == Organization and "amap" in [x.slug for x in obj.category.all()]:
+                if obj.to_geoJson():
+                    res.append(obj.to_geoJson())
+
+    result = {"type": "FeatureCollection", "features":  res}
     return HttpResponse(json.dumps(result), mimetype="application/json")
 

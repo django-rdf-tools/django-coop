@@ -507,6 +507,21 @@ class BaseOrganization(URIModel):
             from coop_geo.models import Area
             return Area.objects.filter(id__in=self.framed.all().values_list('location_id', flat=True))
 
+        def to_geoJson(self):
+            if self.pref_address and self.pref_address.point:
+                return {
+                   "type": "Feature",
+                    "properties": {
+                            "name": self.label(),
+                            "popupContent": u"<h4>" + self.label() + u"</h4><p><a href='" + \
+                            self.get_absolute_url() + u"'>" + self.label() + u"</a></p>"
+                            },
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [self.pref_address.point.x, self.pref_address.point.y]
+                            }
+                        }
+
     def has_description(self):
         return self.description != None and len(self.description) > 20
     has_description.boolean = True
