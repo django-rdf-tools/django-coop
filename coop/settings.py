@@ -97,6 +97,6 @@ RDF_NAMESPACES = {
  }
 
 
-NS = AttributeDict( transform_dict(RDF_NAMESPACES).items() )
+# NS = AttributeDict( transform_dict(RDF_NAMESPACES).items() )
 
 
