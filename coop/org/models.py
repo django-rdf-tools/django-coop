@@ -317,8 +317,14 @@ class BaseEngagement(URIModel):
     org_admin = models.BooleanField(_(u'has editor rights'), default=True)
     engagement_display = models.PositiveSmallIntegerField(_(u'Display'), choices=DISPLAY.CHOICES, default=DISPLAY.PUBLIC)
 
-    remote_role_uri = models.CharField(_(u'URI'), blank=True, null=True, max_length=250)
+    remote_role_uri = models.URLField(_(u'URI'), blank=True, null=True, max_length=250)
     remote_role_label = models.CharField(blank=True, max_length=100)
+
+    remote_organization_uri = models.URLField(_(u'remote organization URI'), blank=True, max_length=255, editable=False)
+    remote_organization_label = models.CharField(_(u'remote organization label'),
+                                                max_length=250, blank=True, null=True,
+                                                help_text=_(u'fill this only if the organization record is not available locally'))
+
 
     class Meta:
         abstract = True
@@ -342,8 +348,9 @@ class BaseEngagement(URIModel):
         ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
         ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
         ('single_mapping', (settings.NS.org.member, 'person'), 'single_reverse'),
-        ('single_mapping', (settings.NS.org.organization, 'organization'), 'single_reverse'),
-        ('single_mapping', (settings.NS.org.role, 'role'), 'single_reverse'),
+
+        ('local_or_remote_mapping', (settings.NS.org.organization, 'organization'), 'local_or_remote_mapping'),
+        ('local_or_remote_mapping', (settings.NS.org.role, 'role'), 'local_or_remote_mapping'),
 
         ('label_mapping', (settings.NS.rdfs.label, 'id', 'fr'), 'label_mapping_reverse'),
 

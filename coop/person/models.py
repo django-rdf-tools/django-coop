@@ -46,10 +46,6 @@ class BasePerson(URIModel):
 
     structure = models.CharField(blank=True, max_length=100)
 
-    remote_organization_uri = models.CharField(_('remote organization URI'), blank=True, max_length=255, editable=False)
-    remote_organization_label = models.CharField(_(u'remote organization label'),
-                                                max_length=250, blank=True, null=True,
-                                                help_text=_(u'fill this only if the organization record is not available locally'))
 
     if 'coop.mailing' in settings.INSTALLED_APPS:
         subs = generic.GenericRelation('coop_local.Subscription')
@@ -127,7 +123,7 @@ class BasePerson(URIModel):
         ('single_mapping', (settings.NS.foaf.familyName, 'last_name'), 'single_reverse'),
         ('single_mapping', (settings.NS.foaf.givenName, 'first_name'), 'single_reverse'),
         ('single_mapping', (settings.NS.foaf.mbox_sha1sum, 'email_sha1'), 'single_reverse'),
-
+ 
         ('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'),
 
         ('name_mapping', (settings.NS.foaf.name, 'username'), 'name_mapping_reverse'),

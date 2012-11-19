@@ -23,7 +23,7 @@ class BaseProduct(URIModel):
     organization = models.ForeignKey('coop_local.Organization', blank=True, null=True,
                                         verbose_name='publisher', related_name='products')
 
-    remote_organization_uri = models.CharField(_(u'publisher URI'), blank=True, max_length=200, editable=False)
+    remote_organization_uri = models.URLField(_(u'publisher URI'), blank=True, max_length=200, editable=False)
     remote_organization_label = models.CharField(_('organization'), blank=True, max_length=250)
 
     def __unicode__(self):
@@ -44,7 +44,8 @@ class BaseProduct(URIModel):
             ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
             ('single_mapping', (settings.NS.schema.name, 'title'), 'single_reverse'),
             ('single_mapping', (settings.NS.schema.description, 'description'), 'single_reverse'),
-            ('single_mapping', (settings.NS.schema.manufacturer, 'organization'), 'single_reverse'),
+ 
+            ('local_or_remote_mapping', (settings.NS.schema.manufacturer, 'organization'), 'local_or_remote_reverse'),
 
     )
 
@@ -101,11 +102,11 @@ class BaseExchange(URIModel):
     products = models.ManyToManyField('coop_local.Product', verbose_name=_(u'linked products'))
 
     # Linking to remote objects
-    remote_person_uri = models.CharField(_('remote person URI'), blank=True, max_length=255, editable=False)
+    remote_person_uri = models.URLField(_(u'remote person URI'), blank=True, max_length=255, editable=False)
     remote_person_label = models.CharField(_(u'remote person label'),
                                                 max_length=250, blank=True, null=True,
                                                 help_text=_(u'fill this only if the person record is not available locally'))
-    remote_organization_uri = models.CharField(_('remote organization URI'), blank=True, max_length=255, editable=False)
+    remote_organization_uri = models.URLField(_(u'remote organization URI'), blank=True, max_length=255, editable=False)
     remote_organization_label = models.CharField(_(u'remote organization label'),
                                                 max_length=250, blank=True, null=True,
                                                 help_text=_(u'fill this only if the organization record is not available locally'))
@@ -165,12 +166,14 @@ class BaseExchange(URIModel):
             ('single_mapping', (settings.NS.dct.title, 'title'), 'single_reverse'),
             ('single_mapping', (settings.NS.dct.description, 'description'), 'single_reverse'),
             ('single_mapping', (settings.NS.rdfs.label, 'title'), 'single_reverse'),
-            ('single_mapping', (settings.NS.dct.creator, 'person'), 'single_reverse'),
-            ('single_mapping', (settings.NS.dct.publisher, 'organization'), 'single_reverse'),
             ('single_mapping', (settings.NS.gr.availabilityEnd, 'expiration'), 'single_reverse'),
             ('single_mapping', (settings.NS.ov.category, 'etype'), 'single_reverse'),
             ('single_mapping', (settings.NS.gr.eligibleRegions, 'area'), 'single_reverse'),
             ('single_mapping', (settings.NS.locn.location, 'location'), 'single_reverse'),
+
+            ('local_or_remote_mapping', (settings.NS.dct.creator, 'person'), 'local_or_remote_reverse'),
+            ('local_or_remote_mapping', (settings.NS.dct.publisher, 'organization'), 'local_or_remote_reverse'),
+
 
             ('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'),
             ('multi_mapping', (settings.NS.ess.hasMethod, 'methods'), 'multi_reverse'),

@@ -76,17 +76,17 @@ class BaseEvent(URIModel):
     person = models.ForeignKey('coop_local.Person', null=True, blank=True, verbose_name=_('author'))
     if "coop_geo" in settings.INSTALLED_APPS:
         location = models.ForeignKey('coop_geo.Location', null=True, blank=True, verbose_name=_('location'))
-        remote_location_uri = models.CharField(_('remote location URI'), blank=True, max_length=255)
+        remote_location_uri = models.URLField(_('remote location URI'), blank=True, max_length=255)
         remote_location_label = models.CharField(_(u'remote location label'),
                                                 max_length=250, blank=True, null=True,
                                                 help_text=_(u'fill this only if the location record is not available locally'))
 
     # Linking to remote objects
-    remote_person_uri = models.CharField(_('remote person URI'), blank=True, max_length=255)
+    remote_person_uri = models.URLField(_('remote person URI'), blank=True, max_length=255)
     remote_person_label = models.CharField(_(u'remote person label'),
                                                 max_length=250, blank=True, null=True,
                                                 help_text=_(u'fill this only if the person record is not available locally'))
-    remote_organization_uri = models.CharField(_('remote organization URI'), blank=True, max_length=255)
+    remote_organization_uri = models.URLField(_('remote organization URI'), blank=True, max_length=255)
     remote_organization_label = models.CharField(_(u'remote organization label'),
                                                 max_length=250, blank=True, null=True,
                                                 help_text=_(u'fill this only if the organization record is not available locally'))
@@ -175,9 +175,12 @@ class BaseEvent(URIModel):
         ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
         ('single_mapping', (settings.NS.vcal.summary, 'title'), 'single_reverse'),
         ('single_mapping', (settings.NS.vcal.description, 'description'), 'single_reverse'),
-        ('single_mapping', (settings.NS.vcal.contact, 'person'), 'single_reverse'),
-        ('single_mapping', (settings.NS.vcal.organizer, 'organization'), 'single_reverse'),
-        ('single_mapping', (settings.NS.locn.location, 'location'), 'single_reverse'),
+ 
+
+        ('local_or_remote_mapping', (settings.NS.vcal.contact, 'person'), 'local_or_remote_reverse'),
+        ('local_or_remote_mapping', (settings.NS.vcal.organizer, 'organization'), 'local_or_remote_reverse'),
+        ('local_or_remote_mapping', (settings.NS.locn.location, 'location'), 'local_or_remote_reverse'),
+
 
         ('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'),
         ('multi_mapping', (settings.NS.dct.organizer, 'organizations'), 'multi_reverse'),
