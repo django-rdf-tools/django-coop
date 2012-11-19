@@ -192,6 +192,11 @@ class StaticURIModel(models.Model):
             else:
                 return None
 
+    extra_mapping = []
+
+    @property
+    def rdf_mapping(self):
+        return self.base_mapping + self.extra_mapping
 
     def base_single_mapping(self, uri, rdfPredicate, djangoField, datatype=None, lang=None):
         value = getattr(self, djangoField)

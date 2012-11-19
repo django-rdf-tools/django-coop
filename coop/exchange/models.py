@@ -39,7 +39,7 @@ class BaseProduct(URIModel):
 
     # RDF stuff
     rdf_type = settings.NS.schema.Product
-    rdf_mapping = (
+    base_mapping = [
             ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
             ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
             ('single_mapping', (settings.NS.schema.name, 'title'), 'single_reverse'),
@@ -47,7 +47,7 @@ class BaseProduct(URIModel):
  
             ('local_or_remote_mapping', (settings.NS.schema.manufacturer, 'organization'), 'local_or_remote_reverse'),
 
-    )
+    ]
 
 
 
@@ -159,7 +159,7 @@ class BaseExchange(URIModel):
 
     # RDF stuff
     rdf_type = settings.NS.ess.Exchange
-    rdf_mapping = (
+    base_mapping = [
             ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
             ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
             ('single_mapping', (settings.NS.rdfs.label, 'title'), 'single_reverse'),
@@ -180,7 +180,7 @@ class BaseExchange(URIModel):
 
             ('permanent_mapping', (settings.NS.gr.availabilityEnd, 'permanent'), 'permanent_mapping_reverse')
 
-        )
+        ]
 
     _infinity_date = datetime.datetime(year=2050, month=12, day=31)
 

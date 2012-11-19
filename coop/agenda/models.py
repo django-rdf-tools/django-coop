@@ -170,7 +170,7 @@ class BaseEvent(URIModel):
 
 
     rdf_type = settings.NS.vcal.Vevent
-    rdf_mapping = (
+    base_mapping = [
         ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
         ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
         ('single_mapping', (settings.NS.vcal.summary, 'title'), 'single_reverse'),
@@ -189,7 +189,7 @@ class BaseEvent(URIModel):
         ('category_mapping', (settings.NS.vcal.categories, 'event_type'), 'category_mapping_reverse'),
         ('occurence_mapping', (settings.NS.vcal.dtstart, settings.NS.vcal.dtend), 'occurence_mapping_reverse'),
 
-    )
+    ]
 
 
     def category_mapping(self, rdfPred, djF, lang=None):
