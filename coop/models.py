@@ -193,7 +193,7 @@ class StaticURIModel(models.Model):
                 return None
 
 
-    def base_single_mapping(self, uri, rdfPredicate, djangoField, lang=None):
+    def base_single_mapping(self, uri, rdfPredicate, djangoField, datatype=None, lang=None):
         value = getattr(self, djangoField)
         if value == None:
             return []
@@ -216,17 +216,17 @@ class StaticURIModel(models.Model):
             else:
                 return [(rdfSubject, rdfPredicate, rdfValue)]
 
-    def single_mapping(self, rdfPredicate, djangoField, lang=None):
+    def single_mapping(self, rdfPredicate, djangoField, datatype=None, lang=None):
         uri = lambda x: x.uri
-        return self.base_single_mapping(uri, rdfPredicate, djangoField, lang=None)
+        return self.base_single_mapping(uri, rdfPredicate, djangoField, datatype, lang)
 
 
-    def local_or_remote_mapping(self, rdfPredicate, djangoField, lang=None):
+    def local_or_remote_mapping(self, rdfPredicate, djangoField, datatype=None, lang=None):
         uri = lambda x: x.uri
         if getattr(self, djangoField):
-            return self.base_single_mapping(uri, rdfPredicate, djangoField, lang=None)
+            return self.base_single_mapping(uri, rdfPredicate, djangoField, datatype, lang)
         elif hasattr(self, 'remote_' + djangoField + '_uri'):
-            return self.base_single_mapping(uri, rdfPredicate, 'remote_' + djangoField + '_uri', lang=None)
+            return self.base_single_mapping(uri, rdfPredicate, 'remote_' + djangoField + '_uri', datatype, lang)
         else:
             return []
 
@@ -253,10 +253,10 @@ class StaticURIModel(models.Model):
             return [] 
         else:
             values = getattr(self, djangoField).all()
-            return self.multi_mapping_base(values, rdfPredicate, lang)
+            return self.multi_mapping_base(values, rdfPredicate, datatype, lang)
 
 
-    def base_single_reverse(self, uri, g, rdfPred, djField, lang=None):
+    def base_single_reverse(self, uri, g, rdfPred, djField, datatype=None, lang=None):
         value = list(g.objects(URIRef(uri(self)), rdfPred))
         if len(value) == 1:
             value = value[0]
@@ -275,20 +275,20 @@ class StaticURIModel(models.Model):
                 setattr(self, djField, unicode(fr_value[0]))
 
 
-    def single_reverse(self, g, rdfPred, djField, lang=None):
+    def single_reverse(self, g, rdfPred, djField, datatype=None, lang=None):
         uri = lambda x: x.uri
-        self.base_single_reverse(uri, g, rdfPred, djField, lang)
+        self.base_single_reverse(uri, g, rdfPred, djField, datatype, lang)
 
 
-    def local_or_remote_reverse(self, g, rdfPred, djField, lang=None):
+    def local_or_remote_reverse(self, g, rdfPred, djField, datatype=None, lang=None):
         uri = lambda x: x.uri
         # lets try the local version
-        self.base_single_reverse(uri, g, rdfPred, djField, lang)
+        self.base_single_reverse(uri, g, rdfPred, djField, datatype, lang)
         if not getattr(self, djField):
-            self.base_single_reverse(uri, g, rdfPred, 'remote_' + djField + '_uri', lang)
-        
+            self.base_single_reverse(uri, g, rdfPred, 'remote_' + djField + '_uri', datatype, lang)
 
-    def multi_reverse(self, g, rdfPred, djField, lang=None):
+
+    def multi_reverse(self, g, rdfPred, djField, datatype=None, lang=None):
         manager = getattr(self, djField)
         rdf_values = set(g.objects(URIRef(self.uri), rdfPred))
         values = set(map(StaticURIModel.toDjango, rdf_values))

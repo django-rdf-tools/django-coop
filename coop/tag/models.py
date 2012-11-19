@@ -54,8 +54,8 @@ if 'coop_tag' in settings.INSTALLED_APPS:
         rdf_mapping = (
             ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
             ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
-            ('single_mapping', (settings.NS.skosxl.literalForm, 'name', 'fr'), 'single_reverse'),
-            ('single_mapping', (settings.NS.rdfs.label, 'name', 'fr'), 'single_reverse'),
+            ('single_mapping', (settings.NS.skosxl.literalForm, 'name', None, 'fr'), 'single_reverse'),
+            ('single_mapping', (settings.NS.rdfs.label, 'name', None, 'fr'), 'single_reverse'),
             ('single_mapping', (settings.NS.foaf.made, 'person_uri'), 'single_reverse'),
             ('single_mapping', (settings.NS.ess.labelFor, 'concept_uri'), 'single_reverse'),
 
@@ -63,7 +63,7 @@ if 'coop_tag' in settings.INSTALLED_APPS:
             ('broader_mapping', (settings.NS.ess.broaderLabel, ''), 'broader_mapping_reverse'),
        )
 
-        def scheme_mapping(self, rdfPred, djF, lang=None):
+        def scheme_mapping(self, rdfPred, djF, datatype=None, lang=None):
             try:
                 m = models.get_model('coop_cms', 'navnode')
                 nodes = m.objects.filter(object_id=self.id)
@@ -76,7 +76,7 @@ if 'coop_tag' in settings.INSTALLED_APPS:
             return res
 
         #TODO to be TESTED..... comment ca marche les NavNode, NavTree....
-        def scheme_mapping_reverse(self, g, rdfPred, djF, lang=None):
+        def scheme_mapping_reverse(self, g, rdfPred, djF, datatype=None, lang=None):
             schemes = list(g.objects(rdflib.term.URIRef(self.uri), rdfPred))
             nodes = models.get_model('coop_cms', 'navnode').objects.filter(object_id=self.id)
             # Un tag peut appartenir a plusieurs schemes
@@ -89,7 +89,7 @@ if 'coop_tag' in settings.INSTALLED_APPS:
                         node.save()
 
 
-        def broader_mapping(self, rdfPred, djF, lang=None):
+        def broader_mapping(self, rdfPred, djF, datatype=None, lang=None):
             try:
                 m = models.get_model('coop_cms', 'navnode')
                 nodes = m.objects.filter(object_id=self.id)
@@ -110,7 +110,7 @@ if 'coop_tag' in settings.INSTALLED_APPS:
 
 
 
-        def broader_mapping_reverse(self, g, rdfPred, djF, lang=None):
+        def broader_mapping_reverse(self, g, rdfPred, djF, datatype=None, lang=None):
             pass
 
 
