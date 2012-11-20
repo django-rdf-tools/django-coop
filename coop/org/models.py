@@ -161,18 +161,36 @@ COMM_MEANS = Choices(
 )
 
 
+class BaseContactMedium(models.Model):  # this model will be initialized with a fixture
+    label = models.CharField(_(u'label'), max_length=250)
+    uri = models.CharField(_(u'URI'), blank=True, max_length=250)
+
+    def __unicode__(self):
+        return self.label
+
+    class Meta:
+        abstract = True
+        verbose_name = _(u'Contact medium')
+        verbose_name_plural = _(u'Contact mediums')
+        app_label = 'coop_local'
+
+
+
 # A model to deal with how contact (an organization, persone,...)
 # mail,fax, ... see COMM_MEANS
 class BaseContact(URIModel):
     category = models.PositiveSmallIntegerField(_(u'Category'),
-                    choices=COMM_MEANS.CHOICES)
+                    choices=COMM_MEANS.CHOICES, editable=False)
     content = models.CharField(_(u'content'), max_length=250)
     details = models.CharField(_(u'details'), blank=True, max_length=100)
     display = models.PositiveSmallIntegerField(_(u'Display'),
                     choices=DISPLAY.CHOICES, default=DISPLAY.PUBLIC)
+
     content_type = models.ForeignKey(ContentType, blank=True, null=True)
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
+
+    contact_medium = models.ForeignKey('coop_local.ContactMedium', blank=True, null=True)
 
     class Meta:
         abstract = True
@@ -209,8 +227,11 @@ class BaseContact(URIModel):
         super(BaseContact, self).save(*args, **kwargs)
 
 
-    # RDF stufs
+
+    # RDF stuff
+
     rdf_type = settings.NS.ess.ContactMedium
+
     base_mapping = [
         ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
         ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),

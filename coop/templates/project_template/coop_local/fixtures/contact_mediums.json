@@ -1,0 +1,74 @@
+[
+    {
+        "pk": 2,
+        "model": "coop_local.contactmedium",
+        "fields": {
+            "uri": "http://www.w3.org/2006/vcard/ns#Cell",
+            "label": "Mobile"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "coop_local.contactmedium",
+        "fields": {
+            "uri": "http://www.w3.org/2006/vcard/ns#Fax",
+            "label": "Fax"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "coop_local.contactmedium",
+        "fields": {
+            "uri": "http://www.w3.org/2006/vcard/ns#Tel",
+            "label": "T\u00e9l\u00e9phone"
+        }
+    },
+    {
+        "pk": 8,
+        "model": "coop_local.contactmedium",
+        "fields": {
+            "uri": "http://www.w3.org/2006/vcard/ns#Email",
+            "label": "Email"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "coop_local.contactmedium",
+        "fields": {
+            "uri": "http://xmlns.com/foaf/0.1/OnlineChatAccount",
+            "label": "Skype"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "coop_local.contactmedium",
+        "fields": {
+            "uri": "http://xmlns.com/foaf/0.1/OnlineAccount",
+            "label": "Twitter"
+        }
+    },
+    {
+        "pk": 9,
+        "model": "coop_local.contactmedium",
+        "fields": {
+            "uri": "http://rdfs.org/sioc/ns#Site",
+            "label": "Site web"
+        }
+    },
+    {
+        "pk": 6,
+        "model": "coop_local.contactmedium",
+        "fields": {
+            "uri": "http://purl.org/net/rss1.1#Channel",
+            "label": "RSS"
+        }
+    },
+    {
+        "pk": 7,
+        "model": "coop_local.contactmedium",
+        "fields": {
+            "uri": "http://www.w3.org/2002/12/cal/icaltzd#Vcalendar",
+            "label": "Calendrier"
+        }
+    }
+]
