@@ -32,6 +32,7 @@ BASE_COOP_LOCAL_MODELS = [
         u'PersonCategory',
     ]),
     ('coop.org', [
+        u'ContactMedium',
         u'Contact',
         u'Engagement',
         u'Role',

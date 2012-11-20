@@ -7,7 +7,7 @@ from coop.person.models import BasePerson, BasePersonCategory
 from coop.exchange.models import BaseExchange, BaseProduct, BaseExchangeMethod
 from coop.org.models import (   BaseOrganizationCategory, BaseOrganization,
                                 BaseRelation, BaseEngagement, BaseRole,
-                                BaseContact, BaseRoleCategory)
+                                BaseContact, BaseRoleCategory, BaseContactMedium)
 from coop.prefs.models import BaseSitePrefs
 
 # ---- person
@@ -54,6 +54,10 @@ class Person(BasePerson):
 
 
 # ----- org
+
+
+class ContactMedium(BaseContactMedium):
+    pass
 
 
 class Contact(BaseContact):

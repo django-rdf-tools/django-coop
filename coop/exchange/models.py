@@ -36,7 +36,6 @@ class BaseProduct(URIModel):
         verbose_name_plural = _(u'Products')
         app_label = 'coop_local'
 
-
     # RDF stuff
     rdf_type = settings.NS.schema.Product
     base_mapping = [
@@ -46,7 +45,6 @@ class BaseProduct(URIModel):
             ('single_mapping', (settings.NS.schema.description, 'description'), 'single_reverse'),
  
             ('local_or_remote_mapping', (settings.NS.schema.manufacturer, 'organization'), 'local_or_remote_reverse'),
-
     ]
 
 
@@ -158,7 +156,8 @@ class BaseExchange(URIModel):
                 print "    The field %s cannot be updated." % dbfieldname
 
     # RDF stuff
-    rdf_type = settings.NS.ess.Exchange
+    rdf_type = [settings.NS.ess.Exchange, settings.NS.gr.Offering]
+
     base_mapping = [
             ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
             ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
@@ -167,7 +166,9 @@ class BaseExchange(URIModel):
             ('single_mapping', (settings.NS.dct.description, 'description'), 'single_reverse'),
             ('single_mapping', (settings.NS.rdfs.label, 'title'), 'single_reverse'),
             ('single_mapping', (settings.NS.gr.availabilityEnd, 'expiration'), 'single_reverse'),
-            ('single_mapping', (settings.NS.ov.category, 'etype'), 'single_reverse'),
+
+            ('etype_mapping', (settings.NS.ov.category, 'etype'), 'etype_reverse_mapping'),
+
             ('single_mapping', (settings.NS.gr.eligibleRegions, 'area'), 'single_reverse'),
             ('single_mapping', (settings.NS.locn.location, 'location'), 'single_reverse'),
 
@@ -186,24 +187,26 @@ class BaseExchange(URIModel):
 
     def permanent_mapping(self, rdfPred, djF, lang=None):
         if getattr(self, djF):
-            return[(rdflib.term.URIRef(self.uri), rdfPred, rdflib.term.Literal(self._infinity_date))]
+            return [(rdflib.term.URIRef(self.uri), rdfPred, rdflib.term.Literal(self._infinity_date))]
         else:
-            return[(rdflib.term.URIRef(self.uri), rdfPred, rdflib.term.Literal(self.expiration))]
+            return [(rdflib.term.URIRef(self.uri), rdfPred, rdflib.term.Literal(self.expiration))]
+
+    def etype_mapping(self, rdfPred, djF, lang=None):
+        return [(rdflib.term.URIRef(self.uri), rdfPred, rdflib.term.Literal(ETYPE.CHOICES_DICT[self.etype]))]
+
+    def etype_reverse_mapping(self, g, rdfPred, djF, lang=None):
+        value = list(g.objects(rdflib.term.URIRef(self.uri), rdfPred))
+        setattr(self, djF, ETYPE.REVERTED_CHOICES_DICT[value])
 
     def permanent_mapping_reverse(self, g, rdfPred, djF, lang=None):
         value = list(g.objects(rdflib.term.URIRef(self.uri), rdfPred))
         if len(value) == 1:
-            if  value[0].toPython() == self._infinity_date:
+            if value[0].toPython() == self._infinity_date:
                 setattr(self, djF, True)
                 setattr(self, 'expiration', None)
             else:
                 setattr(self, djF, False)
                 setattr(self, 'expiration', value[0].toPython())
-
-
-
-
-
 
 
 class BaseTransaction(models.Model):

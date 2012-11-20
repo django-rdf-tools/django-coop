@@ -46,6 +46,7 @@ class ContactInline(GenericTabularInline):
     model = get_model('coop_local', 'Contact')
     verbose_name = _(u'Contact information')
     verbose_name_plural = _(u'Contact informations')
+    fields = ('contact_medium', 'content', 'details', 'display')
     extra = 1
 
 
