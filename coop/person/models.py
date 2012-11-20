@@ -123,12 +123,12 @@ class BasePerson(URIModel):
         ('single_mapping', (settings.NS.foaf.familyName, 'last_name'), 'single_reverse'),
         ('single_mapping', (settings.NS.foaf.givenName, 'first_name'), 'single_reverse'),
         ('single_mapping', (settings.NS.foaf.mbox_sha1sum, 'email_sha1'), 'single_reverse'),
+        ('single_mapping', (settings.NS.skos.note, 'notes'), 'single_reverse'),
  
         ('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'),
 
         ('name_mapping', (settings.NS.foaf.name, 'username'), 'name_mapping_reverse'),
         ('location_mapping', (settings.NS.locn.location, 'location'), 'location_mapping_reverse')
- 
 
     ]
 

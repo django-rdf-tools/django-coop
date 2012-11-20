@@ -649,7 +649,7 @@ class BaseOrganization(URIModel):
         ('single_mapping', (settings.NS.vcard.tel, 'pref_phone'), 'single_reverse'),
         ('single_mapping', (settings.NS.vcard.mail, 'pref_email'), 'single_reverse'),
         ('single_mapping', (settings.NS.legal.registeredAddress, 'pref_address'), 'single_reverse'),
-        ('single_mapping', (settings.NS.vcard.note, 'notes'), 'single_reverse'),
+        ('single_mapping', (settings.NS.skos.note, 'notes'), 'single_reverse'),
 
         ('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'),
         ('multi_mapping', (settings.NS.ess.hasContactMedium, 'contacts'), 'multi_reverse'),
