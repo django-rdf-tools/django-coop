@@ -313,7 +313,11 @@ class StaticURIModel(models.Model):
     def toRdfGraph(self):
         g = Graph()
         if self.rdf_type and self.isOpenData():
-            g.add((URIRef(self.uri), settings.NS.rdf.type, self.rdf_type))
+            if isinstance(self.rdf_type, list):
+                for rt in self.rdf_type:
+                    g.add((URIRef(self.uri), settings.NS.rdf.type, rt))
+            else:
+                g.add((URIRef(self.uri), settings.NS.rdf.type, self.rdf_type))
             for method, arguments, reverse in self.rdf_mapping:
                 for triple in getattr(self, method)(*arguments):
                     g.add(triple)
