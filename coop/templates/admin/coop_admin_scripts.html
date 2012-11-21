@@ -109,9 +109,9 @@ jQuery(document).ready(function($) {
     $("a.add-another").each(function(){
 
       if((!$(this).prev("select").length == 0 &&
-          $.inArray($(this).prev("select").val(), empty_values)=='-1' &&             // si selection pas vide
-          $(this).prev("select").attr('multiple') != 'multiple' &&                  // et qu'on est pas sur un select multiple
-          $(this).prev("select").attr('name').indexOf("category") == '-1' &&          // et que c'est pas une catégorie
+          $.inArray($(this).prev("select").val(), empty_values)=='-1' &&               // si selection pas vide
+          $(this).prev("select").attr('multiple') != 'multiple' &&                     // et qu'on est pas sur un select multiple
+          $(this).prev("select").attr('name').indexOf("category") == '-1' &&           // et que c'est pas une catégorie
           $.inArray($(this).prev("select").attr("name"), not_editable_fkeys)=='-1') || // ou un autre truc du genre
           
         (!$(this).prev("input.ac_input").length==0 &&
