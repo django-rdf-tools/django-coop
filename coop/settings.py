@@ -1,9 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from coop_local.settings import PROJECT_PATH, PROJECT_NAME
-
-
-# Not used: to set this variable here, weneed to import Site
+# Not used: to set this variable here, we need to import Site
 PUSH_HUB = ''
 SUBHUB_MAINTENANCE_AUTO = False
 

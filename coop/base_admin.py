@@ -19,6 +19,7 @@ admin.site.register(OrganizationCategory)
 admin.site.register(SitePrefs, SitePrefsAdmin)
 
 
+
 if "coop.exchange" in settings.INSTALLED_APPS:
     from coop.exchange.admin import ExchangeAdmin
     admin.site.register(ExchangeMethod)
