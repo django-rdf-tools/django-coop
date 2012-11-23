@@ -55,7 +55,13 @@ class TimestampedModel(models.Model):
 
 
 def get_urimode_from_uri(uri):
-    return URI_MODE.COMMON
+    scheme, host, path, query, fragment = urlsplit(uri)
+    if host == Site.objects.get_current().domain:
+        return URI_MODE.LOCAL
+    elif host in ['rdf.insee.fr', 'ns.economie-solidaire.fr', 'data.economie-solidaire.fr']:
+        return URI_MODE.COMMON
+    else:
+        return URI_MODE.IMPORTED
 
 
 class StaticURIModel(models.Model):

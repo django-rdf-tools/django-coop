@@ -231,60 +231,24 @@ class BaseContact(URIModel):
         ('single_mapping', (settings.NS.rdf.value, 'content'), 'single_reverse'),
         ('single_mapping', (settings.NS.rdfs.comment, 'details'), 'single_reverse'),
 
-        ('conditionnal_mapping', (settings.NS.rdf.type, 'category'), 'conditionnal_mapping_reverse'),
+        ('medium_mapping', (settings.NS.rdf.type, 'contact_medium'), 'medium_mapping_reverse'),
     ]
 
 
-    def conditionnal_mapping(self, rdfPred, djF, lang=None):
-        ctype = getattr(self, djF)
+    def medium_mapping(self, rdfPred, djF, lang=None):
+        medium = getattr(self, djF)
+        rdfSubject = rdflib.URIRef(self.uri)
+        return [(rdfSubject, rdfPred, rdflib.URIRef(medium.uri))]
 
-        if ctype == COMM_MEANS.LAND:
-            rdfValue = settings.NS.vcard.Tel
-        elif ctype == COMM_MEANS.GSM:
-            rdfValue = settings.NS.vcard.Cell 
-        elif ctype == COMM_MEANS.FAX:
-            rdfValue = settings.NS.vcard.Fax 
-        elif ctype == COMM_MEANS.SKYPE:
-            rdfValue = settings.NS.foaf.OnlineChatAccount
-        elif ctype == COMM_MEANS.TWITTER:
-            rdfValue = settings.NS.foaf.OnlineAccount
-        elif ctype == COMM_MEANS.RSS:
-            rdfValue = settings.NS.rss.Channel
-        elif ctype == COMM_MEANS.VCAL:
-            rdfValue = settings.NS.vcal.Vcalendar
-        elif ctype == COMM_MEANS.MAIL:
-            rdfValue = settings.NS.vcard.Email
-        else:  # ctype == COMM_MEANS.WEB:
-            rdfValue = settings.NS.sioc.Site
-        return [(rdflib.term.URIRef(self.uri), rdfPred, rdfValue)]
 
-    def conditionnal_mapping_reverse(self, g, rdfPred, djF, lang=None):
-        values = list(g.objects((rdflib.term.URIRef(self.uri), rdfPred)))
+    def medium_mapping_reverse(self, g, rdfPred, djF, lang=None):
+        values = list(g.objects((rdflib.term.URIRef(self.uri), rdfPred)))        
         values.remove(self.rdf_type)
+        m = models.get_model('coop_local', 'contactmedium')
         if len(values) == 1:
             value = values[0]
-            if value == settings.NS.vcard.Tel:
-                setattr(self, djF, COMM_MEANS.LAND)
-            elif value == settings.NS.vcard.Cell:
-                setattr(self, djF, COMM_MEANS.GSM)
-            elif value == settings.NS.vcard.Fax:
-                setattr(self, djF, COMM_MEANS.FAX)
-            elif value == settings.NS.foaf.OnlineChatAccount:
-                setattr(self, djF, COMM_MEANS.SKYPE)
-            elif value == settings.NS.foaf.OnlineAccount:
-                setattr(self, djF, COMM_MEANS.TWITTER)
-            elif value == settings.NS.rss.channel:
-                setattr(self, djF, COMM_MEANS.RSS)
-            elif value == settings.NS.vcal.Vcalendar:
-                setattr(self, djF, COMM_MEANS.VCAL)
-            elif value == settings.NS.vcard.Email:
-                setattr(self, djF, COMM_MEANS.MAIL)
-            elif value == settings.NS.sioc.Site:
-                setattr(self, djF, COMM_MEANS.WEB)
-            else:
-                pass
-        else:
-            pass
+            medium = m.objects.get(uri=str(value))
+            setattr(self, djF, medium)
 
 
 # TODO : use django-multilingual-ng to translate the label field in multiple languages
