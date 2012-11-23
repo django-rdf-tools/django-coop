@@ -65,7 +65,7 @@ class RelationInline(InlineAutocompleteAdmin):
     model = get_model('coop_local', 'Relation')
     fk_name = 'source'
     readonly_fields = ('created',)
-    fields = ('reltype', 'target', 'created')
+    fields = ('relation_type', 'target', 'created')
     related_search_fields = {'target': ('title', 'subtitle', 'acronym',), }
     extra = 1
 

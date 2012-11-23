@@ -2,7 +2,6 @@
 from django.db import models
 from django.db.models import Count
 from autoslug import AutoSlugField
-#from mptt.models import MPTTModel, TreeForeignKey
 from extended_choices import Choices
 from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
@@ -20,16 +19,13 @@ from django.contrib.sites.models import Site
 import logging
 from urlparse import urlsplit
 
-
-
 ADMIN_THUMBS_SIZE = '60x60'
 
-
+#from mptt.models import MPTTModel, TreeForeignKey
 # class BaseClassification(MPTTModel, URIModel):
 #     label = models.CharField(_(u'label'), max_length=60)
 #     slug = AutoSlugField(populate_from='label', always_update=True, unique=True)
 #     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
-
 #     domain_name = 'data.economie-solidaire.fr'
 
 #     class MPTTMeta:
@@ -65,7 +61,6 @@ class BaseRoleCategory(models.Model):
         self.save_base()
         self.uri = u'http://data.economie-solidaire.fr/id/role/%s/' % self.slug
         super(BaseRoleCategory, self).save(*args, **kwargs)
-
 
     class Meta:
         abstract = True
@@ -136,6 +131,9 @@ class BaseRole(URIModel):
             setattr(self, djF, models.get_model('coop_base', 'rolecategory').object.get(uri=value))
 
 
+# will apply to contact numbers and other things
+# TODO simplify it, see PPO Ontology
+
 DISPLAY = Choices(
     ('PUBLIC',  1,  _(u'public information')),
     ('USERS',   2,  _(u'registered users')),
@@ -144,9 +142,6 @@ DISPLAY = Choices(
     ('ORG',     5,  _(u'members of this organization')),
     ('ADMIN',   6,  _(u'administrators of this site')),
 )
-
-# will apply to contact numbers and other things
-# TODO simplify it, see PPO Ontology
 
 COMM_MEANS = Choices(
     ('MAIL',    8,  _(u'E-mail')),
@@ -175,12 +170,12 @@ class BaseContactMedium(models.Model):  # this model will be initialized with a 
         app_label = 'coop_local'
 
 
-
-# A model to deal with how contact (an organization, persone,...)
-# mail,fax, ... see COMM_MEANS
 class BaseContact(URIModel):
+    """ A model which represents any communication medium (a phone number, an email) """
     category = models.PositiveSmallIntegerField(_(u'Category'),
-                    choices=COMM_MEANS.CHOICES, editable=False)
+                    choices=COMM_MEANS.CHOICES, editable=False)  # TODO erase when data migrated
+    contact_medium = models.ForeignKey('coop_local.ContactMedium', blank=True, null=True)
+
     content = models.CharField(_(u'content'), max_length=250)
     details = models.CharField(_(u'details'), blank=True, max_length=100)
     display = models.PositiveSmallIntegerField(_(u'Display'),
@@ -189,8 +184,6 @@ class BaseContact(URIModel):
     content_type = models.ForeignKey(ContentType, blank=True, null=True)
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
-
-    contact_medium = models.ForeignKey('coop_local.ContactMedium', blank=True, null=True)
 
     class Meta:
         abstract = True
@@ -294,7 +287,20 @@ class BaseContact(URIModel):
             pass
 
 
+# TODO : use django-multilingual-ng to translate the label field in multiple languages
 
+class BaseOrgRelationType(models.Model):  # this model will be initialized with a fixture
+    label = models.CharField(_(u'label'), max_length=250)
+    uri = models.CharField(_(u'URI'), blank=True, max_length=250)
+
+    def __unicode__(self):
+        return self.label
+
+    class Meta:
+        abstract = True
+        verbose_name = _(u'Organizations relation type')
+        verbose_name_plural = _(u'Organization relations types')
+        app_label = 'coop_local'
 
 
 RELATIONS = Choices(
@@ -309,7 +315,10 @@ RELATIONS = Choices(
 class BaseRelation(models.Model):
     source = models.ForeignKey('coop_local.Organization', verbose_name=_(u'source organization'), related_name='source')
     target = models.ForeignKey('coop_local.Organization', verbose_name=_(u'target organization'), related_name='target')
-    reltype = models.PositiveSmallIntegerField(_(u'Relation type'), choices=RELATIONS.CHOICES)
+    reltype = models.PositiveSmallIntegerField(_(u'Relation type'), choices=RELATIONS.CHOICES)  # TODO erase when data migrated AND remove
+    relation_type = models.ForeignKey('coop_local.OrgRelationType', verbose_name=_(u'relation type'), 
+                                                            null=True, blank=True)      # blank, null = True from the new Fkey
+    
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
     #confirmed = models.BooleanField(default=False, verbose_name=_(u'confirmed by the target organization'))

@@ -5,9 +5,9 @@ from coop.link.models import BaseLinkProperty, BaseLink
 from coop.article.models import CoopArticle, CoopNavTree
 from coop.person.models import BasePerson, BasePersonCategory
 from coop.exchange.models import BaseExchange, BaseProduct, BaseExchangeMethod
-from coop.org.models import (   BaseOrganizationCategory, BaseOrganization,
-                                BaseRelation, BaseEngagement, BaseRole,
-                                BaseContact, BaseRoleCategory, BaseContactMedium)
+from coop.org.models import (BaseOrganizationCategory, BaseOrganization,
+                             BaseRelation, BaseEngagement, BaseRole, BaseOrgRelationType,
+                             BaseContact, BaseRoleCategory, BaseContactMedium)
 from coop.prefs.models import BaseSitePrefs
 
 # ---- person
@@ -77,6 +77,10 @@ class Relation(BaseRelation):
 
 
 class Engagement(BaseEngagement):
+    pass
+
+
+class OrgRelationType(BaseOrgRelationType):
     pass
 
 

@@ -57,9 +57,7 @@
 
       django.jQuery(document).bind('formset_add.admin.NoLookupsForeignKeySearchInput', function(event, row_element) {
 
-
           new_ac = $(row_element).find(".inline_lookup")
-
 
               new_ac.autocomplete('{{ search_path }}', {
                   extraParams: {
