@@ -65,7 +65,7 @@ if "coop_cms" in settings.INSTALLED_APPS:
             ('single_mapping', (settings.NS.dct.title, 'title'), 'single_reverse'),
             ('single_mapping', (rdflib.URIRef(str(settings.NS['dct']) + 'abstract'), 'summary'), 'single_reverse'),  # bug in rdflib
             ('single_mapping', (settings.NS.dct.description, 'content'), 'single_reverse'),
-            ('single_mapping', (settings.NS.dce.type, 'rdf_type'), ''),  # DC compliance
+            # ('single_mapping', (settings.NS.dce.type, 'rdf_type'), ''),  # DC compliance
 
             ('local_or_remote_mapping', (settings.NS.dct.creator, 'person'), 'local_or_remote_reverse'),
             ('local_or_remote_mapping', (settings.NS.dct.publisher, 'organization'), 'local_or_remote_reverse'),
