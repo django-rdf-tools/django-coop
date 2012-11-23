@@ -220,14 +220,13 @@ class BaseEvent(URIModel):
     def article_mapping(self, rdfPred, djF, datatype=None, lang=None):
         return self.multi_mapping(rdfPred, djF, datatype, lang)
 
-    #TODO! Je ne comprend pas comment est ajouté l'attribut dated_set à un event
     def article_mapping_reverse(self, g, rdfPred, djField, lang=None):
         articles = list(g.objects(rdflib.term.URIRef(self.uri), rdfPred))
         model_article = models.get_model('coop_local', 'article')
         model_dated = models.get_model('coop_local', 'dated')
 
         for a in articles:
-            ar = model_article.get_or_created_from_rdf(uri=str(a))
+            ar = model_article.get_or_create_from_rdf(uri=str(a))
             new_dated = model_dated(content_object=ar, event=self)
             new_dated.save()
 
