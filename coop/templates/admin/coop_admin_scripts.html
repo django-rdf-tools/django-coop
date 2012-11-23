@@ -114,6 +114,7 @@ jQuery(document).ready(function($) {
             $(this).prev("select").attr('multiple') != 'multiple' &&                 // et qu'on est pas sur un select multiple
             $(this).prev("select").attr('name').indexOf("category") == '-1' &&       // et que c'est pas une catégorie
             $.inArray($(this).prev("select").attr("name"), not_editable_fkeys)=='-1' // ou un autre truc du genre
+            // TODO pas bon, c'est un test sur contain ce string qu'on veut
 
           ) || (
 
@@ -271,7 +272,7 @@ jQuery(document).ready(function($) {
 
     $("li.dropdown.open").removeClass('open');
 
-
+    $(".chzn-container-multi").next("a.add-another").hide()
 
 });
 
