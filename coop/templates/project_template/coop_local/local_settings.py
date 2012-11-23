@@ -48,11 +48,6 @@ INSTALLED_APPS = settings.INSTALLED_APPS + [
     'coop_local',
      # coop optional modules
     'coop_geo',  # est obligatoirement APRES coop_local
-    {% if haystack %}
-    'haystack',
-    'haystack_fr',
-    {% endif %}
-
 ]
 
 # TODO: to be discuss this settings could be in default_project_setings.py

@@ -18,7 +18,7 @@ DATABASES = {
 }
 
 # For redis
-REDIS_PORT = {{ redis }}  # Please ask for a redis port to your administrator. Default value 6379, may already been used'
+REDIS_PORT = 6379  # Please ask for a redis port to your administrator. Default value 6379, may already been used'
 
 # # For django-rq, this mandatory to run rqworker command from manage.py
 RQ_QUEUES = {
@@ -30,15 +30,13 @@ RQ_QUEUES = {
 }
 
 
-
-{% if haystack %}
 # Elastic search
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack_fr.backends.elasticsearch_backend.ElasticsearchSearchEngine',
-        'URL': 'http://88.190.28.59:9200/',
+        'URL': 'http://localhost:9200/',
         'INDEX_NAME': settings.PROJECT_NAME,
         # 'INCLUDE_SPELLING': True,   # not yet handled by ES
     },
 }
-{% endif %}
+

@@ -91,7 +91,6 @@ class FkSearchInput(ForeignKeyRawIdWidget):
             'all': ('autocomplete/css/jquery.autocomplete.css',)
         }
         js = (
-            #'autocomplete/js/jquery.js',
             'autocomplete/js/jquery.bgiframe.min.js',
             'autocomplete/js/jquery.ajaxQueue.js',
             'autocomplete/js/jquery.autocomplete.js',
@@ -171,7 +170,6 @@ class NoLookupsForeignKeySearchInput(ForeignKeyRawIdWidget):
             'all': ('autocomplete/css/jquery.autocomplete.css',)
         }
         js = (
-            #'autocomplete/js/jquery.js',
             'autocomplete/js/jquery.bgiframe.min.js',
             'autocomplete/js/jquery.ajaxQueue.js',
             'autocomplete/js/jquery.autocomplete.js',
@@ -251,7 +249,6 @@ class InlineSearchInput(ForeignKeyRawIdWidget):
             'all': ('autocomplete/css/jquery.autocomplete.css',)
         }
         js = (
-            #'autocomplete/js/jquery.js', # plus besoin avec 1.3 et django.jQuery
             'autocomplete/js/jquery.bgiframe.min.js',
             'autocomplete/js/jquery.ajaxQueue.js',
             'autocomplete/js/jquery.autocomplete.js',

@@ -20,7 +20,11 @@ git+git://github.com/quinode/django-scanredirect.git
 
 django-autoslug
 unicode-slugify
-git+git://github.com/praekelt/django-preferences.git
+
+
+git+git://github.com/quinode/django-preferences.git 
+# waiting for a merge
+
 #fabric
 #fabtools
 

@@ -105,19 +105,24 @@ jQuery(document).ready(function($) {
 
     empty_values = ['','---------']
     not_editable_fkeys = ["event_type", "calendar"]
-
+    not_editable_ac = ["lookup_coop_geo-located"]
     $("a.add-another").each(function(){
 
-      if((!$(this).prev("select").length == 0 &&
-          $.inArray($(this).prev("select").val(), empty_values)=='-1' &&             // si selection pas vide
-          $(this).prev("select").attr('multiple') != 'multiple' &&                  // et qu'on est pas sur un select multiple
-          $(this).prev("select").attr('name').indexOf("category") == '-1' &&          // et que c'est pas une catégorie
-          $.inArray($(this).prev("select").attr("name"), not_editable_fkeys)=='-1') || // ou un autre truc du genre
-          
-        (!$(this).prev("input.ac_input").length==0 &&
-          $(this).prev("input.ac_input").attr("id").indexOf("lookup_coop_geo-located") == '-1')
+      if( (
+            !$(this).prev("select").length == 0 &&
+            $.inArray($(this).prev("select").val(), empty_values)=='-1' &&           // si le champ est un SELECT
+            $(this).prev("select").attr('multiple') != 'multiple' &&                 // et qu'on est pas sur un select multiple
+            $(this).prev("select").attr('name').indexOf("category") == '-1' &&       // et que c'est pas une catégorie
+            $.inArray($(this).prev("select").attr("name"), not_editable_fkeys)=='-1' // ou un autre truc du genre
+            // TODO pas bon, c'est un test sur contain ce string qu'on veut
 
-          ){
+          ) || (
+
+          $(this).prev("input.ac_input").length>0 &&                                    // ou que c'est un autocomplete
+          $.inArray( $(this).prev("input.ac_input").attr("id"), not_editable_ac )=='-1' // mais pas un de ceux_là
+          )
+        ){
+
           $(this).after("&nbsp;<a class='changelink' href='#' title='Modifier cet objet'><img src='/static/admin/img/icon_changelink.gif'></a>");
           $(this).next().click(function(){
               if($(this).prev().prev().attr('value')=='')return false;
@@ -267,7 +272,7 @@ jQuery(document).ready(function($) {
 
     $("li.dropdown.open").removeClass('open');
 
-
+    $(".chzn-container-multi").next("a.add-another").hide()
 
 });
 

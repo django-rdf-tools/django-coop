@@ -66,7 +66,7 @@ class RelationInline(InlineAutocompleteAdmin):
     fk_name = 'source'
     readonly_fields = ('created',)
     fields = ('reltype', 'target', 'created')
-    related_search_fields = {'target': ('title', 'subtitle', 'acronym', 'description'), }
+    related_search_fields = {'target': ('title', 'subtitle', 'acronym',), }
     extra = 1
 
 
@@ -76,7 +76,7 @@ class OrgInline(InlineAutocompleteAdmin):
     verbose_name_plural = _(u'Engagements')
     fields = ('organization', 'role', 'role_detail', 'engagement_display')
 
-    related_search_fields = {'organization': ('title', 'subtitle', 'acronym', 'description'), }
+    related_search_fields = {'organization': ('title', 'subtitle', 'acronym',), }
     extra = 1
 
 
