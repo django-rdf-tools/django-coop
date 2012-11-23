@@ -54,6 +54,10 @@ class TimestampedModel(models.Model):
         abstract = True
 
 
+def get_urimode_from_uri(uri):
+    return URI_MODE.COMMON
+
+
 class StaticURIModel(models.Model):
     """
     To use this model as a basis for your own abstract model, you need to have
@@ -328,9 +332,20 @@ class StaticURIModel(models.Model):
                 g.add((URIRef(self.uri),  URIRef(l.predicate.uri), URIRef(l.object_uri)))
         return g
 
+    @classmethod
+    def get_or_create_from_rdf(cls, uri, graph=None):
+        exists = cls.objects.filter(uri=uri).exists()
+        if not graph:
+            graph = Graph()
+            graph.parse(uri)  # RDFLib rules !!!!
+        if not exists:
+            instance = cls(uri=uri, uri_mode=get_urimode_from_uri(uri))
+        else:
+            instance = cls.objects.get(uri=uri)
+        instance.import_rdf_data(graph)
 
 
-    def to_django(self, g):
+    def import_rdf_data(self, g):
         for method, arguments, reverse in self.rdf_mapping:
             if hasattr(self, reverse):
                 getattr(self, reverse)(g, *arguments)
@@ -421,10 +436,10 @@ class StaticURIModel(models.Model):
         try:
             instance = model.objects.get(uri=old_uri)
         except model.DoesNotExist:
-            instance = model(uri=old_uri)   # old_uri is still usefull for to_django
+            instance = model(uri=old_uri)   # old_uri is still usefull for import_rdf_data
 
         if instance:
-            instance.to_django(graph)
+            instance.import_rdf_data(graph)
 
         from coop_local.models import Link, LinkProperty
 
@@ -472,7 +487,7 @@ class StaticURIModel(models.Model):
         if sync:
             g = Graph()
             g.parse(new_uri)
-            self.to_django(g)  # save is done here
+            self.import_rdf_data(g)  # save is done here
         else:
             self.save()      # post_save signal is also doing the new Subcription
 

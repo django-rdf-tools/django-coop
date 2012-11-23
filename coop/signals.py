@@ -168,6 +168,6 @@ def listener(notification, **kwargs):
 
     # update
     if obj:
-        obj.to_django(g)
+        obj.import_rdf_data(g)
 
 
