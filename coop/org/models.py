@@ -497,6 +497,9 @@ class BaseOrganization(URIModel):
     active = models.BooleanField(_(u'show on public site'), default=True,)
     notes = models.TextField(_(u'notes'), blank=True)
 
+    if "coop.agenda" in settings.INSTALLED_APPS:
+        dated = generic.GenericRelation('coop_local.Dated')
+
     class Meta:
         abstract = True
         ordering = ['title']
