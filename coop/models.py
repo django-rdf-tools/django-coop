@@ -231,7 +231,10 @@ class StaticURIModel(models.Model):
         if getattr(self, djangoField):
             return self.base_single_mapping(uri, rdfPredicate, djangoField, datatype, lang)
         elif hasattr(self, 'remote_' + djangoField + '_uri'):
-            return self.base_single_mapping(uri, rdfPredicate, 'remote_' + djangoField + '_uri', datatype, lang)
+            if getattr(self, 'remote_' + djangoField + '_uri') == u'':
+                return []
+            else:
+                return self.base_single_mapping(uri, rdfPredicate, 'remote_' + djangoField + '_uri', datatype, lang)
         else:
             return []
 
@@ -261,7 +264,7 @@ class StaticURIModel(models.Model):
             return self.multi_mapping_base(values, rdfPredicate, datatype, lang)
 
 
-    def base_single_reverse(self, uri, g, rdfPred, djField, datatype=None, lang=None):
+    def base_single_reverse(self, uri, g, rdfPred, djField, datatype=None, lang=None, empty_value=None):
         value = list(g.objects(URIRef(uri(self)), rdfPred))
         if len(value) == 1:
             value = value[0]
@@ -270,7 +273,7 @@ class StaticURIModel(models.Model):
             else:
                 setattr(self, djField, StaticURIModel.toDjango(value))
         elif len(value) == 0:
-            setattr(self, djField, None)
+            setattr(self, djField, empty_value)
         else:  # plusieurs valeurs ca peut etre une histore de language
             fr_value = []
             for v in value:
@@ -290,7 +293,7 @@ class StaticURIModel(models.Model):
         # lets try the local version
         self.base_single_reverse(uri, g, rdfPred, djField, datatype, lang)
         if not getattr(self, djField):
-            self.base_single_reverse(uri, g, rdfPred, 'remote_' + djField + '_uri', datatype, lang)
+            self.base_single_reverse(uri, g, rdfPred, 'remote_' + djField + '_uri', datatype, lang, empty_value=u'')
 
 
     def multi_reverse(self, g, rdfPred, djField, datatype=None, lang=None):
@@ -329,7 +332,8 @@ class StaticURIModel(models.Model):
 
     def to_django(self, g):
         for method, arguments, reverse in self.rdf_mapping:
-            getattr(self, reverse)(g, *arguments)
+            if hasattr(self, reverse):
+                getattr(self, reverse)(g, *arguments)
         from coop_local.models import Link, LinkProperty
          # TODO possible optimisation: Do not remove all links, 
         # check the diffence between new and old values as in previous multi_reverse fonction

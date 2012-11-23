@@ -58,14 +58,14 @@ if "coop_cms" in settings.INSTALLED_APPS:
         def isOpenData(self):
             return not self.isSection
 
-        rdf_type = settings.NS.dct.Text
+        rdf_type = settings.NS.dcmi.Text
         base_mapping = [
             ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
             ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
             ('single_mapping', (settings.NS.dct.title, 'title'), 'single_reverse'),
-            # ('single_mapping', (settings.NS.dct.abstract, 'summary'), 'single_reverse'),  # bug in rdflib
-            ('single_mapping', (rdflib.term.URIRef(str(settings.NS['dct']) + 'abstract'), 'summary'), 'single_reverse'),
+            ('single_mapping', (rdflib.URIRef(str(settings.NS['dct']) + 'abstract'), 'summary'), 'single_reverse'),  # bug in rdflib
             ('single_mapping', (settings.NS.dct.description, 'content'), 'single_reverse'),
+            ('single_mapping', (settings.NS.dce.type, 'rdf_type'), ''),  # DC compliance
 
             ('local_or_remote_mapping', (settings.NS.dct.creator, 'person'), 'local_or_remote_reverse'),
             ('local_or_remote_mapping', (settings.NS.dct.publisher, 'organization'), 'local_or_remote_reverse'),

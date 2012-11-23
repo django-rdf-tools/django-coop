@@ -16,7 +16,8 @@ import rdflib
 from django.template.defaultfilters import date as _date
 from datetime import datetime
 
-class BaseCalendar(models.Model):
+
+class BaseCalendar(URIModel):
     title = models.CharField(_('title'), blank=True, max_length=250)
     description = models.TextField(_(u'description'), blank=True)
     slug = exfields.AutoSlugField(populate_from='title')
@@ -32,6 +33,32 @@ class BaseCalendar(models.Model):
 
     def get_absolute_url(self):
         return reverse('agenda-default', args=[self.slug])
+
+    rdf_type = settings.NS.vcal.Vcalendar
+    base_mapping = [
+        ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
+        ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
+        ('single_mapping', (settings.NS.dct.title, 'title'), 'single_reverse'),
+        ('single_mapping', (settings.NS.dct.description, 'description'), 'single_reverse'),
+
+        ('component_mapping', (settings.NS.vcal.component, ''), 'component_mapping_reverse'),
+
+    ]
+
+    def component_mapping(self, rdfPred, djF, lang=None):
+        events = models.get_model('coop_local', 'event').objects.filter(calendar=self)
+        res = []
+        for e in events:
+            res.append((rdflib.URIRef(self.uri), rdfPred, rdflib.URIRef(e.uri)))
+        return res
+
+    def component_mapping_reverse(self, g, rdfPred, rdfEnd, lang=None):
+        values = list(g.objects(rdflib.term.URIRef(self.uri), rdfPred))
+        m = models.get_model('coop_local', 'event')
+        for v in values:
+            event, created = m.objects.get_or_create(uri=str(v))
+            event.calendar = self
+            event.save()
 
 
 class BaseEventCategory(models.Model):
@@ -108,6 +135,7 @@ class BaseEvent(URIModel):
     def get_absolute_url(self):
         return ('agenda-event', [str(self.id)])
 
+    @property
     def linked_articles(self):
         linked_items = self.dated_set.all()
         if linked_items:
@@ -176,21 +204,25 @@ class BaseEvent(URIModel):
         ('single_mapping', (settings.NS.vcal.summary, 'title'), 'single_reverse'),
         ('single_mapping', (settings.NS.vcal.description, 'description'), 'single_reverse'),
  
-
         ('local_or_remote_mapping', (settings.NS.vcal.contact, 'person'), 'local_or_remote_reverse'),
         ('local_or_remote_mapping', (settings.NS.vcal.organizer, 'organization'), 'local_or_remote_reverse'),
         ('local_or_remote_mapping', (settings.NS.locn.location, 'location'), 'local_or_remote_reverse'),
 
-
         ('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'),
-        ('multi_mapping', (settings.NS.dct.organizer, 'organizations'), 'multi_reverse'),
+        ('multi_mapping', (settings.NS.vcal.attendee, 'organizations'), 'multi_reverse'),
 
-
+        ('article_mapping', (settings.NS.dct.relation, 'linked_articles'), 'article_mapping_reverse'),
         ('category_mapping', (settings.NS.vcal.categories, 'event_type'), 'category_mapping_reverse'),
         ('occurence_mapping', (settings.NS.vcal.dtstart, settings.NS.vcal.dtend), 'occurence_mapping_reverse'),
-
     ]
 
+
+    def article_mapping(self, rdfPred, djF, datatype=None, lang=None):
+        return self.multi_mapping(rdfPred, djF, datatype, lang)
+
+    #TODO! Je ne comprend pas comment est ajouté l'attribut dated_set à un event
+    def article_mapping_reverse(self, g, rdfPred, djField, lang=None):
+        pass
 
     def category_mapping(self, rdfPred, djF, lang=None):
         value = getattr(self, djF).label
@@ -223,6 +255,7 @@ class BaseEvent(URIModel):
                 i += 1
                 uri = self.uri + '#%s' % i
                 res.append((rdflib.term.URIRef(uri), settings.NS.rdf.type, self.rdf_type))
+                res.append((rdflib.term.URIRef(uri), settings.NS.dct.modified, self.modified))
                 res.append((rdflib.term.URIRef(uri), rdfStart, rdflib.term.Literal(occurrence.start_time)))
                 res.append((rdflib.term.URIRef(uri), rdfEnd, rdflib.term.Literal(occurrence.end_time)))
             return res  # en attendant meiux
