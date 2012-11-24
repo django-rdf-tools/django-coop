@@ -127,7 +127,7 @@ class CustomMenu(Menu):
                     ])
                 )
 
-        if settings.ADMINTOOLS_CUSTOM_MENUS:
+        try:    
             idx = len(self.children)
             for menu in settings.ADMINTOOLS_CUSTOM_MENUS:
                 self.children.insert(idx, items.MenuItem(
@@ -136,6 +136,8 @@ class CustomMenu(Menu):
                     children=[items.MenuItem(x[0], x[1]) for x in menu['children']]
                     ))
                 idx += 1
+        except AttributeError:
+            pass        
 
     def init_with_context(self, context):
         """
