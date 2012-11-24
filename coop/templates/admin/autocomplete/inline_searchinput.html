@@ -55,12 +55,12 @@
       {% endif %}
 
 
-      django.jQuery(document).bind('formset_add.admin.FkSearchInput', function(event, row_element) {
+      django.jQuery(document).bind('formset_add.admin', function(event, row_element) {
 
           new_ac = $(row_element).find(".inline_lookup")
-          console.log(new_ac)
+          //console.log(new_ac)
           value_field = $("#" + new_ac.attr('id').replace('lookup_','id_'))
-          console.log(value_field)
+          //console.log(value_field)
 
               new_ac.autocomplete('{{ search_path }}', {
                   extraParams: {
