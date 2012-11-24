@@ -173,8 +173,8 @@ class BaseContactMedium(models.Model):  # this model will be initialized with a 
 class BaseContact(URIModel):
     """ A model which represents any communication medium (a phone number, an email) """
     category = models.PositiveSmallIntegerField(_(u'Category'),
-                    choices=COMM_MEANS.CHOICES, editable=False)  # TODO erase when data migrated
-    contact_medium = models.ForeignKey('coop_local.ContactMedium', blank=True, null=True)
+                    choices=COMM_MEANS.CHOICES, editable=False, blank=True, null=True)  # TODO erase when data migrated
+    contact_medium = models.ForeignKey('coop_local.ContactMedium', blank=True, null=True, verbose_name=u'medium')
 
     content = models.CharField(_(u'content'), max_length=250)
     details = models.CharField(_(u'details'), blank=True, max_length=100)
@@ -279,7 +279,7 @@ RELATIONS = Choices(
 class BaseRelation(models.Model):
     source = models.ForeignKey('coop_local.Organization', verbose_name=_(u'source organization'), related_name='source')
     target = models.ForeignKey('coop_local.Organization', verbose_name=_(u'target organization'), related_name='target')
-    reltype = models.PositiveSmallIntegerField(_(u'Relation type'), choices=RELATIONS.CHOICES)  # TODO erase when data migrated AND remove
+    reltype = models.PositiveSmallIntegerField(_(u'Relation type'), choices=RELATIONS.CHOICES, blank=True, null=True)  # TODO erase when data migrated AND remove
     relation_type = models.ForeignKey('coop_local.OrgRelationType', verbose_name=_(u'relation type'), 
                                                             null=True, blank=True)      # blank, null = True from the new Fkey
     
@@ -295,7 +295,7 @@ class BaseRelation(models.Model):
 
     def __unicode__(self):
         return u'"' + self.source.__unicode__() + u'"' + \
-            unicode(RELATIONS.CHOICES_DICT[self.reltype]) + \
+            self.relation_type.__unicode__() + \
             u'"' + self.target.__unicode__() + u'".'
     '''
     def save(self):
