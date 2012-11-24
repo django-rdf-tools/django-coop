@@ -55,11 +55,12 @@
       {% endif %}
 
 
-      django.jQuery(document).bind('formset_add.admin.NoLookupsForeignKeySearchInput', function(event, row_element) {
-
+      django.jQuery(document).bind('formset_add.admin', function(event, row_element) {
 
           new_ac = $(row_element).find(".inline_lookup")
-
+          //console.log(new_ac)
+          value_field = $("#" + new_ac.attr('id').replace('lookup_','id_'))
+          //console.log(value_field)
 
               new_ac.autocomplete('{{ search_path }}', {
                   extraParams: {
@@ -69,13 +70,13 @@
                   }, max: 100, scrollHeight: 400,   // mikele: added by me
               }).result(function(event, data, formatted) {
                   if (data) {
-                      $("#id_{{name}}").val(data[1]);
+                      value_field.val(data[1]);
                   }
               }).keyup(function(event){
                   if (event.keyCode == 27) {
                       reset();
                   };
-              }).attr("rel", "true");
+              });
       });
 
 

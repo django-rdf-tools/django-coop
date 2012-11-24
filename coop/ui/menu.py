@@ -14,7 +14,21 @@ from admin_tools.menu import items, Menu
 
 class CustomMenu(Menu):
     """
-    Custom Menu for devcoop admin site.
+    This is a base Menu for django-coop admin site.
+
+    You can :
+    - override the whole thing using the ADMIN_TOOLS_MENU setting
+    - just add your own custom menus by passing a list of dicts in coop_local/local_settings.py :
+
+    ADMINTOOLS_CUSTOM_MENUS = [
+            {'title': 'My Own Menu',
+             'icon': 'icon-tint icon-white',  # a bootstrap icon, see http://twitter.github.com/bootstrap/base-css.html#images
+             'children': [
+                            ('First sub-menu', '/admin/coop_local/my_custom_model/'),
+                            ('Second sub-menu', '/admin/coop_local/another_custom_model/'),
+                        ]}
+                ]
+
     """
     def __init__(self, **kwargs):
         Menu.__init__(self, **kwargs)
@@ -94,7 +108,7 @@ class CustomMenu(Menu):
 
         ]
 
-        if 'coop_cms.apps.rss_sync' in  settings.INSTALLED_APPS:
+        if 'coop_cms.apps.rss_sync' in settings.INSTALLED_APPS:
             self.children[2].children.insert(1,
 
                     items.MenuItem(_('RSS'), '#', icon='icon-coop icon-rss', children=[
@@ -112,6 +126,18 @@ class CustomMenu(Menu):
                         items.MenuItem(_('Event categories'), '/admin/coop_local/eventcategory/'),
                     ])
                 )
+
+        try:    
+            idx = len(self.children)
+            for menu in settings.ADMINTOOLS_CUSTOM_MENUS:
+                self.children.insert(idx, items.MenuItem(
+                    menu['title'], '#',
+                    icon=menu['icon'],
+                    children=[items.MenuItem(x[0], x[1]) for x in menu['children']]
+                    ))
+                idx += 1
+        except AttributeError:
+            pass        
 
     def init_with_context(self, context):
         """

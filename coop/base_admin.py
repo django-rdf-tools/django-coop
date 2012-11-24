@@ -16,8 +16,8 @@ admin.site.register(PersonCategory)
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(OrganizationCategory)
+admin.site.register(OrgRelationType)
 admin.site.register(SitePrefs, SitePrefsAdmin)
-
 
 
 if "coop.exchange" in settings.INSTALLED_APPS:
