@@ -295,8 +295,9 @@ class BaseRelation(models.Model):
 
     def __unicode__(self):
         return u'"' + self.source.__unicode__() + u'"' + \
-            self.relation_type.__unicode__() + \
-            u'"' + self.target.__unicode__() + u'".'
+                self.relation_type.__unicode__() + \
+                u'"' + self.target.__unicode__() + u'".'
+
     '''
     def save(self):
         vérifier si la relation inverse existe

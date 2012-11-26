@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False# -*- coding:utf-8 -*-
 
 from coop_local.settings import PROJECT_NAME
 
@@ -35,7 +35,7 @@ HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack_fr.backends.elasticsearch_backend.ElasticsearchSearchEngine',
         'URL': 'http://localhost:9200/',
-        'INDEX_NAME': settings.PROJECT_NAME,
+        'INDEX_NAME': PROJECT_NAME,
         # 'INCLUDE_SPELLING': True,   # not yet handled by ES
     },
 }
