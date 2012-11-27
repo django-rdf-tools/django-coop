@@ -22,6 +22,9 @@ import datetime
 from subhub.models import DistributionTask
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
+import logging
+
+log = logging.getLogger('coop')
 
 
 
@@ -153,7 +156,7 @@ class StaticURIModel(models.Model):
 
 
     # try to translate an rdflib object in a django object
-    # return None if it fails
+    # return None if it fails; This method does NOT create any instance
     # Bnode are not yet handled.... but it has to be done for the futur
     @staticmethod
     def toDjango(term):
@@ -369,9 +372,6 @@ class StaticURIModel(models.Model):
 
 
 
-
-
-    # Old version using d2rq
     def toRdf(self, format):
         """
            format correspond to the standard rdflib format keyword,
@@ -512,10 +512,10 @@ class StaticURIModel(models.Model):
         if not subs or (subs.lease_expiration and subs.lease_expiration < datetime.datetime.now() + datetime.timedelta(days=10)):   
             try:
                 validate(feed_url)
-                # print u"Try to subscribe to feed %s" % feed_url
+                # log.debug(u"Try to subscribe to feed %s" % feed_url)
                 Subscription.objects.subscribe(feed_url, hub="http://%s/hub/" % host)
             except ValidationError, e:
-                print u" Imposible to subscribe to %s : %s" % (feed_url, e)
+                log.debug(u" Imposible to subscribe to %s : %s" % (feed_url, e))
 
 
     def unsubscribeToUpdades(self, host=settings.PES_HOST):
@@ -525,55 +525,13 @@ class StaticURIModel(models.Model):
             validate(feed_url)
             Subscription.objects.unsubscribe(feed_url, hub="http://%s/hub/" % host)
         except ValidationError, e:
-            print u" Imposible to unsubscribe to %s : %s" % (feed_url, e)
+            log.debug(u" Imposible to unsubscribe to %s : %s" % (feed_url, e))
 
 
 class URIModel(StaticURIModel, TimestampedModel):
     class Meta:
         abstract = True
 
-
-# def checkDirectMap(dbfieldName, d2rqGraph):
-#     lit = Literal(dbfieldName)
-#     subj = list(d2rqGraph.subjects(settings.NS.d2rq.column, lit))
-#     if len(subj) != 1:
-#         subj = list(d2rqGraph.subjects(settings.NS.d2rq.uriColumn, lit))
-#         if len(subj) != 1:
-#             return None
-#     subj = subj[0]
-#     prop = list(d2rqGraph.objects(subj, settings.NS.d2rq.property))
-#     if len(prop) != 1:
-#         return None
-#     else:
-#         return prop[0]
-
-
-# def checkDirectMapFK(dbfieldName, d2rqGraph):
-#     # on commence par chercher tous les triples de la forme
-#     # select * where { ?s d2rq:join ?l. filter(?l contains dbfieldname) }
-#     # mais comme le d2rqGraph n'est pas un SparqlGraph on le fait à la main
-
-#     # Well it is not possible to use settings.NS.d2rq.join because
-#     # there is a conflict of names with the join function of the Namespace
-#     # class....
-#     tr = list(d2rqGraph.triples((None, URIRef(str(settings.NS.d2rq) + 'join'), None)))
-
-#     def useField((s, p, o)):
-#         if isinstance(o, Literal):
-#             return dbfieldName in o
-#         else:
-#             return False
-#     candidate = filter(useField, tr)
-#     if len(candidate) == 1:
-#         print "Found candidate"
-#         subj = candidate[0][0]
-#         prop = list(d2rqGraph.objects(subj, settings.NS.d2rq.property))
-#         if len(prop) == 1:
-#             return prop[0]
-#         else:
-#             return None
-#     else:
-#         return None
 
 
 
@@ -594,8 +552,8 @@ def rdfGraphAll(model=None):
         if m == None:
             m = models.get_model('coop_geo', model)
         if m == None:
-            print _(u"Warning")
-            print _(u"Warning no model found for model name %s" % model)
+            log.debug(_(u"Warning"))
+            log.debug(_(u"Warning no model found for model name %s" % model))
         else:
             for o in m.objects.all():
                 g += o.toRdfGraph()
