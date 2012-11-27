@@ -212,6 +212,7 @@ class StaticURIModel(models.Model):
         return self.base_mapping + self.extra_mapping
 
     def base_single_mapping(self, uri, rdfPredicate, djangoField, datatype=None, lang=None):
+        validate = URLValidator()
         value = getattr(self, djangoField)
         if value == None:
             return []
@@ -223,7 +224,12 @@ class StaticURIModel(models.Model):
                 else:
                     rdfValue = None
             elif isinstance(self._meta.get_field(djangoField), models.URLField):
-                rdfValue = URIRef(value)
+                # let's protect rdf data...
+                try:
+                    validate(value)
+                    rdfValue = URIRef(value)
+                except ValidationError:
+                    rdfValue = None
             else:
                 subject_args = {}
                 if lang:
