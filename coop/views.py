@@ -71,24 +71,13 @@ RDF_SERIALIZATIONS = {
 }
 
 
+
+
 # smallest data API ever
 def get_rdf(request, model, uuid, format):
     req_model = get_model(urimodels[model], model)
     object = get_object_or_404(req_model, uuid=uuid)
     return HttpResponse(object.toRdf(format), mimetype=RDF_SERIALIZATIONS[format])
-
-
-def rdfdump(request, model, format):
-    if model == 'all':
-        g = rdfGraphAll()
-    else:
-        g = rdfGraphAll(model)
-    if format == 'ttl':
-        return HttpResponse(g.serialize(format='n3'), mimetype=RDF_SERIALIZATIONS[format])
-    elif format == 'json':
-        return HttpResponse(g.serialize(format='json-ld'), mimetype=RDF_SERIALIZATIONS[format])
-    elif format in RDF_SERIALIZATIONS:
-        return HttpResponse(g.serialize(format=format), mimetype=RDF_SERIALIZATIONS[format])
 
 
 def SentryHandler500(request):
@@ -216,4 +205,7 @@ def geojson(request):
 
     result = {"type": "FeatureCollection", "features":  res}
     return HttpResponse(json.dumps(result), mimetype="application/json")
+
+
+
 
