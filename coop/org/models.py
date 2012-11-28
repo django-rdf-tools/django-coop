@@ -314,6 +314,11 @@ class BaseEngagement(URIModel):
     org_admin = models.BooleanField(_(u'has editor rights'), default=True)
     engagement_display = models.PositiveSmallIntegerField(_(u'Display'), choices=DISPLAY.CHOICES, default=DISPLAY.PUBLIC)
 
+    remote_person_uri = models.URLField(_(u'remote person URI'), blank=True, max_length=255, editable=False)
+    remote_person_label = models.CharField(_(u'remote person label'),
+                                                max_length=250, blank=True, null=True,
+                                                help_text=_(u'fill this only if the person record is not available locally'))
+
     remote_role_uri = models.URLField(_(u'URI'), blank=True, null=True, max_length=250)
     remote_role_label = models.CharField(blank=True, max_length=100)
 
@@ -634,13 +639,22 @@ class BaseOrganization(URIModel):
         ('single_mapping', (settings.NS.legal.registeredAddress, 'pref_address'), 'single_reverse'),
         ('single_mapping', (settings.NS.skos.note, 'notes'), 'single_reverse'),
 
-        ('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'),
-        ('multi_mapping', (settings.NS.ess.hasContactMedium, 'contacts'), 'multi_reverse'),
-        ('multi_mapping', (settings.NS.org.hasMember, 'members'), 'multi_reverse'),
+        #('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'), 
+        # FIXME : Organization objects need to have a primary key value before you can access their tags.
+
+        # ('multi_mapping', (settings.NS.ess.hasContactMedium, 'contacts'), 'multi_reverse'),
+        # FIXME : 'Contact' instance expected
+
+        # ('multi_mapping', (settings.NS.org.hasMember, 'members'), 'multi_reverse'),
+        # FIXME : 'Organization' instance needs to have a primary key value before a many-to-many relationship can be used.
+
 
         ('logo_mapping', (settings.NS.foaf.logo, 'logo'), 'logo_mapping_reverse'),
         ('prefLabel_mapping', (settings.NS.rdfs.label, 'pref_label'), 'prefLabel_mapping_reverse'),
-        ('location_mapping', (settings.NS.locn.location, 'located'), 'location_mapping_reverse'),
+        
+        # ('location_mapping', (settings.NS.locn.location, 'located'), 'location_mapping_reverse'),
+        # FIXME : Located matching query does not exist.
+
         ('location_mapping', (settings.NS.ess.actionArea, 'framed'), 'location_mapping_reverse'),
         ('exchange_mapping', (settings.NS.gr.offers, settings.NS.gr.seeks), 'exchange_mapping_reverse'),
 
@@ -683,6 +697,7 @@ class BaseOrganization(URIModel):
             except ValueError:
                 return []
 
+    # TODO : télécharger le logo dans un dossier /tmp et le passer à sorl.thumbnail pour traitement
     def logo_mapping_reverse(self, g, rdfPred, djF):
         value = list(g.objects(rdflib.term.URIRef(self.uri), rdfPred))
         if len(value) == 1:

@@ -4,18 +4,73 @@
 
 {% block extrahead %}
 {{ block.super }}
+    <script type="text/javascript" src="{{ STATIC_URL }}admintools_bootstrap/bootstrap/js/bootstrap-tab.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.json.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/json2.js"></script>
+
 
     <script src="{{ STATIC_URL }}js/mustache.js" charset="utf-8" type="text/javascript"></script>
     <script type="text/html" id="res-templ">
+        <ul class="results_list">
+           [[#results ]] 
+            <li class="primary_object" rel="[[ &import_rdf_url ]]" id="[[ id ]]">
+                <div class="info" style="display:none">[[ &info ]]</div>
+                <input type="checkbox" name=""> 
+                [[ &label ]]
+                    [[#has_locations ]]<ul class="linked_objects">
+                    [[#locations ]] 
+                        <li rel="[[ &import_rdf_url ]]" id="[[ id ]]">
+                            <div class="info" style="display:none">[[ &info ]]</div>
+                            <input type="checkbox" name="" checked="checked">
+                            <label>Adresse : </label> [[ &label ]]
+                        </li>
+                    [[/locations ]]
+                    </ul>[[/has_locations ]]
 
-    <ul>
-       [[#results ]] 
-        <li rel="[[uri]]">
-            <input type="checkbox" name="" checked=""> 
-            [[ &label ]]
-        </li>
-       [[/results ]]
-    </ul>
+                    [[#has_persons ]]<ul class="linked_objects">
+                    [[#persons ]]
+                        <li rel="[[ &import_rdf_url ]]" id="[[ id ]]">
+                            <div class="info" style="display:none">[[ &info ]]</div>
+                            <input type="checkbox" name="">
+                            <label>Membre : </label> [[ &label ]]
+                        </li>
+                    [[/persons ]]
+                    </ul>[[/has_persons ]]
+
+                    [[#has_organizations ]]<ul class="linked_objects">
+                    [[#organizations ]] 
+                        <li rel="[[ &import_rdf_url ]]" id="[[ id ]]">
+                            <div class="info" style="display:none">[[ &info ]]</div>
+                            <input type="checkbox" name="">
+                            <label>Organisme : </label> [[ &label ]]
+                        </li>
+                    [[/organizations ]]
+                    </ul>[[/has_organizations ]]
+
+                    [[#has_events ]]<ul class="linked_objects">
+                    [[#events ]] 
+                        <li rel="[[ &import_rdf_url ]]" id="[[ id ]]">
+                            <div class="info" style="display:none">[[ &info ]]</div>
+                            <input type="checkbox" name="">
+                            <label>Evénement : </label> [[ &label ]]
+                        </li>
+                    [[/events ]]
+                    </ul>[[/has_events ]]
+
+                    [[#has_contacts ]]<ul class="linked_objects">
+                    [[#contacts ]] 
+                        <li rel="[[ &import_rdf_url ]]" id="[[ id ]]">
+                            <div class="info" style="display:none">[[ &info ]]</div>
+                            <input type="checkbox" name="">
+                            <label>Moyen de contact : </label> [[ &label ]]
+                        </li>
+                    [[/contacts ]]
+                    </ul>[[/has_contacts ]]
+
+
+            </li>
+           [[/results ]]
+        </ul>
     </script>
 
 {% endblock %}
@@ -23,7 +78,7 @@
 
 {% block extrastyle %}
 {{ block.super }}
-{#<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}admin/css/forms.css" />#}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}rdf/css/admin.css" />
 {% endblock %}
 
 
@@ -54,6 +109,8 @@
 
     <div id="content-main">
 
+            
+
         <div>
 
             <div class="tabbable">
@@ -61,80 +118,209 @@
 
                     {% for model in models %}  
                         <li{% if forloop.first %} class="active"{% endif %}>
-                        <a href="#{{ model.name }}" data-toggle="tab">{{ model.label|title }}</a></li>
+                        <a href="#{{ model.name }}_pane" data-toggle="tab">{{ model.label|title }}</a></li>
                     {% endfor %}
                 </ul>
 
                 <div class="tab-content">
 
                     {% for model in models %}
-                    <fieldset class="module aligned  well control-group tab-pane active" id="{{ model.name }}">
+                    <fieldset class="module aligned well control-group" id="{{ model.name }}_pane">
                         <h2 style="display: none;">{{ model.label|title }}</h2>
-                        <div class="description">Test</div>
 
-                        <form action="{{ form_url }}" method="post" class="search form-horizontal">{% csrf_token %}
+                        <div class="control-group">
 
-                            <div class="control-group">
-
-                                <label for="{{model_name}}_searchbox" class="required control-label">Titre:</label>
-                                <div class="controls">
-                                  
-                                    <input type="text" id="{{model_name}}_searchbox" class="vTextField" name="q" maxlength="50">
+                            <label for="{{ model.name }}_searchbox" class="required control-label">Recherche :</label>
+                            <div class="controls">
+                                <form action="" method="post" rel="{{ model.name }}" class="search form-horizontal">
+                                    <input type="text" id="{{ model.name }}_searchbox" class="vTextField" name="q" maxlength="50">
                                     <input type="hidden" name="model" value="{{ model.name }}">
-                                    <input type="submit" value="ok">
+                                    <input type="submit" class="btn" value="ok">
+                                </form>
 
-                                </div>
-
-                                <div class="results"></div>
-
-                                
                             </div>
-                        </form>
-
+                                <div id="{{ model.name }}_results"></div>
+                                <hr style="clear:both"/>
+                                <input rel="{{ model.name }}" type="submit" class="btn btn-primary import_btn"
+                                    value="Importer les données sélectionnées"/>
+                                <div class="ajax_message"></div>
+                                
+                        </div>
                     </fieldset>
 
-                    <script type="text/javascript">
-
-                    function get_res(query, tmpl){
-                            $.getJSON(
-                                "{{ pes }}/searchforimportJson/?" + query,
-                                function(data){
-                                    results_html = Mustache.render(tmpl,data);
-                                    $("#{{ model.name }} .results").html(results_html)
-                                }
-                            )
-                    };
-
-                    $(function(){
-                        Mustache.tags = ['[[', ']]'];
-                        restmpl = $('#res-templ').html()
-
-                        $('#{{ model.name }} .search').submit(function() {
-                          get_res($(this).serialize(), restmpl);
-                          return false;
-                        });
-
-                    });
-                    </script>
                     {% endfor %}
-                    {% block after_field_sets %}{% endblock %}
 
                 </div>
 
             </div>
 
-            <script type="text/javascript">
-              $(function(){
-                $('.tabbable fieldset').addClass('tab-pane');
-                $('.tabbable fieldset:first').addClass('active');
-                $('.tabbable fieldset h2').hide();
+        </div>
+        </form>
+
+
+        <script type="text/javascript">
+
+                function pad(number, length) {
+                    var str = '' + number;
+                    while (str.length < length) {
+                        str = '0' + str;
+                    }
+                    return str;
+                }
+
+                $.extend({
+                    postJSON: function(url, data, callback) {
+                      return jQuery.ajax({
+                        type: "POST",
+                        url: url,
+                        data: JSON.stringify(data),
+                        success: callback,
+                        dataType: "json",
+                        contentType: "application/json",
+                        processData: false
+                      });
+                    }
+                  });
+
+                function get_res(query, tmpl, model){
+                    $.getJSON(
+                        "{{ pes }}/searchforimportJson/?" + query,
+                        function(data){
+                            //results_html = ''
+                            for( object_idx=0; object_idx < data.results.length; object_idx++){
+
+                                r = data.results[object_idx]
+                                data.results[object_idx].id = '0_' + pad(object_idx+1, 5)
+                                object_info = {
+                                    import_rdf_url: r.import_rdf_url,
+                                    uri: r.uri,
+                                    model: model,
+                                    label: r.label
+                                }
+                                data.results[object_idx].info = $.toJSON( object_info )
+                                models = ['persons','locations','contacts','organizations','events']
+
+
+                                global_linked_count = 0
+                                for( model_idx=0; model_idx < models.length; model_idx++){
+
+                                    if (typeof(r[models[model_idx]]) != "undefined"){
+                                        data.results[object_idx]['has_'+models[model_idx]] = r[models[model_idx]].length 
+
+                                        global_linked_count += 1
+                                        for( linked_idx=0; linked_idx < r[models[model_idx]].length; linked_idx++){
+                                            linked_object = r[models[model_idx]][linked_idx]
+                                            r[models[model_idx]][linked_idx].id = '1_' + pad( object_idx+1, 5 ) + '_' + pad(global_linked_count, 5 )
+                                            linked_object = {
+                                                'import_rdf_url': linked_object.import_rdf_url,
+                                                'uri': linked_object.uri,
+                                                'model': models[model_idx].substring(0, models[model_idx].length-1), // au singulier
+                                                'label': linked_object.label
+                                            }
+                                            r[models[model_idx]][linked_idx].info = $.toJSON( linked_object )
+                                        }
+
+                                    };
+                                }
+   
+                            }
+                         
+                            results_html = Mustache.render(tmpl, data);
+                            $("#" + model + "_results").html(results_html)
+                        }
+                    )
+                };
+
+                $(function(){
+                    $('.tabbable fieldset').addClass('tab-pane');
+                    $('.tabbable fieldset:first').addClass('active');
+                    //$('.tabbable fieldset h2').hide();
+
+                    Mustache.tags = ['[[', ']]'];
+                    restmpl = $('#res-templ').html()
+
+                    $('form.search').submit(function() {
+                        get_res($(this).serialize(), restmpl, $(this).attr('rel'));
+                        return false;
+                    });
+
+
+                    $("li.primary_object input").live('change', function(){
+                        if($(this).is(':checked')){
+                            $(this).nextAll("ul.linked_objects").slideDown()
+                            data = $(this).parent('li').children(".info").html()
+                        }else{
+                            $(this).nextAll(".linked_objects").slideUp()
+                        }
+                    });
+
+                    $(".import_btn").click(function(){
+                        import_list = [ [], [] ]  // 2 levels deep for the moment !!
+                        model = $(this).attr("rel")
+                        li_objects = $("#" + model + "_results li.primary_object > input:checked").parent("li")
+                        objects = li_objects.children(".info")
+                        objects.each(function(idx){
+                            json_data = JSON.parse($(objects[idx]).html())
+                            console.log(json_data)
+                            import_list[0].push(json_data)
+                        })
+
+                        
+                        li_linked = li_objects.children("ul.linked_objects").children("li")
+                        li_linked_checked = li_linked.children("input:checked")
+                        li_linked_checked.each(function(idx){
+                            linked_object = $(li_linked_checked[idx]).parent("li")
+                            linked_data = JSON.parse(linked_object.children(".info").html())
+                            import_list[1].push(linked_data)
+                            
+                        })
+                        import_list.reverse()
+
+                        console.log(import_list)
+
+                        $.each(import_list, function( list_index, object_list ){
+
+                            if (object_list.length > 0){
+
+                                setTimeout(function() {
+ 
+                                    $.each( object_list, function( object_index, object_data ){
+                                        console.log(object_data)
+
+                                        jQuery.ajax({
+                                            url: '/rdf/importuri/',
+                                            type: "POST",
+                                            data: JSON.stringify(object_data),
+                                            contentType: 'application/json; charset=utf-8',
+                                            dataType: 'json',
+                                            async: false,
+                                            success: function(response) {
+                                                $('#' + model + '_pane .ajax_message').append('<p class="' + 
+                                                    response.result + '">' + response.message + '</p>');
+                                            }
+                                        });
+
+                                        // $.postJSON('/rdf/importuri/', object_data, function(data) {
+                                        //     $('#' + model + '_ajax_message').html(data.message);
+                                        // });
+                                    }); 
+                                }, 300);  // do not hammer the server
+
+
+                            }
+                        })
+
+                        $('#' + model + '_pane .ajax_message').delay(5000).html("")
+
+
+                    })
+
+                    get_res("q=art&model=organization", $('#res-templ').html(), "organization")
+
+
               });
             </script>
 
-            {% block after_related_objects %}{% endblock %}
-
-        </div>
-        </form>
     </div>
 
 {% endblock %}

@@ -1,0 +1,60 @@
+/* @override 
+	http://192.168.1.53:8000/static/rdf/admin/css/admin.css
+	http://192.168.1.53:8000/static/rdf/css/admin.css
+*/
+
+.results_list{
+	display: block;
+	clear: both;
+	list-style-type: none;
+	padding: 25px 10px 10px;
+}
+
+
+.results_list > li{
+	padding-bottom: 5px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.results_list > li > ul{
+	display: none;
+}
+
+.results_list li ul li{
+	list-style-type: none;
+	font-size: 11px;
+	margin-left: 20px;
+	font-weight: normal;
+}
+
+.results_list li ul li input{
+	font-size: 10px;
+	margin-right: 4px;
+}
+
+.results_list li ul li label{
+	font-weight: bold;
+	display: inline-block;
+	color: #08c;
+	font-size: 12px;
+}
+
+.ajax_message{
+	display: inline;
+		font-weight: bold;
+
+	padding: 7px 7px 7px 40px;
+}
+
+.ajax_message .error{
+	color: #ff2943;
+}
+
+.ajax_message .created{
+	color: #00cf50;
+}
+
+.ajax_message .updated{
+	color: #08c;
+}
