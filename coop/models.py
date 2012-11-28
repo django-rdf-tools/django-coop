@@ -198,11 +198,19 @@ class StaticURIModel(models.Model):
                     return None
             elif host == 'data.economie-solidaire.fr':
                 # Role Category
-                m = models.get_model('coop_local', 'rolecategory')
+                m_role_category = models.get_model('coop_local', 'rolecategory')
                 try:
-                    return m.objects.get(uri=uri)
-                except m.DoesNotExist:
-                    pass  # les roles et les tags seront donc traités dans le code qui suit
+                    return m_role_category.objects.get(uri=uri)
+                except m_role_category.DoesNotExist:
+                    m_role = models.get_model('coop_local', 'role')
+                    try:
+                        return m_role.objects.get(uri=uri)
+                    except m_role.DoesNotExist:
+                        m_tag = models.get_model('coop_local', 'tag')
+                        try:
+                            return m_tag.objects.get(uri=uri)
+                        except m_tag.DoesNotExist:
+                            return None
             # Les normaux ...
             # BIG WARNING : it is supporded that uri dont change and match the model nam
             mName = path.split('/')[2]
@@ -339,12 +347,13 @@ class StaticURIModel(models.Model):
                     pass
             else:  # I dont know what to do
                 pass
-           
+
 
     def multi_reverse(self, g, rdfPred, djField, datatype=None, lang=None):
         manager = getattr(self, djField)
         rdf_values = set(g.objects(URIRef(self.uri), rdfPred))
         values = set(map(StaticURIModel.toDjango, rdf_values))
+        values.remove(None)   # if toDango return None for every rdf_valuesthen the set must be emty
         old_values = set(manager.all())
         remove = old_values.difference(values)
         add = values.difference(old_values)
@@ -388,6 +397,8 @@ class StaticURIModel(models.Model):
 
 
     def import_rdf_data(self, g):
+        # We have to split self.rdf_mapping in two
+        # A self.save() has to
         for method, arguments, reverse in self.rdf_mapping:
             if hasattr(self, reverse):
                 getattr(self, reverse)(g, *arguments)

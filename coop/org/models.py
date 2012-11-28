@@ -672,10 +672,16 @@ class BaseOrganization(URIModel):
         values = map(coop.models.StaticURIModel.toDjango, rdf_values)
         if djField == 'located':
             m = models.get_model('coop_geo', 'located')
-            values = set(map(lambda x: m.objects.get(object_id=self.id, location=x), values))
+            try:
+                values = set(map(lambda x: m.objects.get(object_id=self.id, location=x), values))
+            except m.DoesNotExist:
+                values = set([])
         elif djField == 'framed':
             m = models.get_model('coop_geo', 'arealink')
-            values = set(map(lambda x: m.objects.get(object_id=self.id, location=x), values))
+            try:
+                values = set(map(lambda x: m.objects.get(object_id=self.id, location=x), values))
+            except m.DoesNotExist:
+                values = set([])
         manager = getattr(self, djField)
         old_values = set(manager.all())
         remove = old_values.difference(values)
@@ -744,16 +750,20 @@ class BaseOrganization(URIModel):
         values = list(g.objects(rdflib.term.URIRef(self.uri), rdfOffer))
         exchangeModel = models.get_model('coop_local', 'exchange')
         for value in values:
-            ex = exchangeModel.objects.get(uri=str(value))
-            ex.eway = EWAY.OFFER
-            ex.organization = self
-            ex.save()
+            exists = exchangeModel.objects.filter(uri=str(value)).exists()
+            if exists:
+                ex = exchangeModel.objects.get(uri=str(value))
+                ex.eway = EWAY.OFFER
+                ex.organization = self
+                ex.save()
         values = list(g.objects(rdflib.term.URIRef(self.uri), rdfSeek))
         for value in values:
-            ex = exchangeModel.objects.get(uri=str(value))
-            ex.eway = EWAY.NEED
-            ex.organization = self
-            ex.save()
+            exists = exchangeModel.objects.filter(uri=str(value)).exists()
+            if exists:
+                ex = exchangeModel.objects.get(uri=str(value))
+                ex.eway = EWAY.NEED
+                ex.organization = self
+                ex.save()
 
 
 
