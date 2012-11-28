@@ -615,6 +615,10 @@ class BaseOrganization(URIModel):
         return self._can_modify_organization(user)
 
     rdf_type = settings.NS.org.Organization
+
+    def isOpenData(self):
+        return self.active
+
     base_mapping = [
         ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
         ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
