@@ -38,6 +38,7 @@ setup(
                 'coop.utils',
                 'coop.webid',
                 'coop.ui',
+                'coop.rdf',
                 ],
     include_package_data = True,
     author = 'Cooperative Quinode',

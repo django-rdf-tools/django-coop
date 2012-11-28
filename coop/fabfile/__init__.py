@@ -14,11 +14,11 @@ env.vm_path = "/Users/dom/VM/devcoop"
 env.locale = 'fr_FR.UTF-8'
 
 #Paramétres par défaut
-domain = "coop.cerapcoop.org"
-projet = "cerapcoop"
-alias = "cerapcoop"
+domain = "www.extramarche.net"
+projet = "extramarche"
+alias = "extralocal"
 
-pgpass = '0rQ142kfMv6X'
+pgpass = '123456'
 
 # Paramétres Déploiement
 env.websrv = 1
@@ -101,7 +101,7 @@ def remote():
 
 def set_project():
     if 'projet' not in env.keys():
-        if 'alias' in env.keys():
+        if 'alias' in env.keys() and not 'projet' in env.keys():
             prompt('Nom du projet :', default=env['alias'], key='projet')
         else:
             prompt('Nom du projet :', default=projet, key='projet')
@@ -161,10 +161,10 @@ def server_setup():
         elif(env.websrv == 2):
             apache_nginx()
 
-        postgresql()
+        postgresql_setup()
 
-
-def postgresql():
+@task
+def postgresql_setup():
     '''PostgreSQL 9.1 + PostGIS 1.5'''
     with settings(show('user'), hide('warnings', 'running', 'stdout', 'stderr')):
         set_project()
@@ -215,21 +215,22 @@ def coop_setup():
     set_project()
     set_domain()
     set_locale()
-    coop_set_project()
-    # dependencies() # TODO : parse requirements.txt to test each package
+    coop_project_setup()
+    dependencies() # TODO : parse requirements.txt to test each package
     apache_vhost()
     #create_pg_db()
     sudo('apachectl restart')
 
 
-def coop_set_project():
+@task
+def coop_project_setup():
     '''Créer un projet django dans son virtualenv'''
     set_project()
     set_domain()
-    with settings(show('user'), hide('warnings', 'running', 'stdout', 'stderr')):
+    with settings(show('user')):#, hide('warnings', 'running', 'stdout', 'stderr')):
         if not exists('/home/%(user)s/.virtualenvs/%(projet)s' % env):
             # if confirm('Pas de virtualenv "%(projet)s", faut-il le créer ?' % env, default=False):
-            run('mkvirtualenv %(projet)s' % env)
+            run('mkvirtualenv --system-site-packages %(projet)s' % env)
             run('source .bash_profile')
         with prefix('workon %(projet)s' % env):
             run('pip install git+git://github.com/quinode/django-coop.git')
@@ -280,8 +281,9 @@ def apache_vhost():
             'domain': env.domain,
             'projet': env.projet
         }
-        import coop
-        coop_path = coop.__path__[0]
+        #import coop
+        from os.path import basename
+        coop_path = basename(__file__) #coop.__path__[0]
         upload_template('%s/fabfile/fab_templates/vhost.txt' % coop_path,
                         '/etc/apache2/sites-available/%(domain)s' % env,
                         context=vhost_context, use_sudo=True)
@@ -374,9 +376,10 @@ def apache_nginx():
             print(green('/etc/nginx/nginx.conf updated'))
     #to be continued...proxy.conf, vhosts...
 
-
+@task
 def apache_setup():
     '''Config générale Apache + mod_wsgi sans media proxy'''
+    set_domain()
     print(yellow('Configuration d’Apache...'))
     pretty_apt(['apache2', 'libapache2-mod-wsgi'])
     #virer le site par défaut
@@ -399,6 +402,7 @@ def create_pg_db():
         print(green('Création base de données PostgreSQL nommée "%(projet)s" : OK.' % env))
 
 
+@task
 def virtualenv_setup():
     '''setup virtualenv'''
     print(yellow('Environnement virtuel et dossier "projects"...'))

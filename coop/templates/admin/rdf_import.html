@@ -1,0 +1,140 @@
+{% extends "admintools_bootstrap/tabbed_change_form.html" %}
+{% load i18n admin_modify adminmedia %}
+{% load url from future %}
+
+{% block extrahead %}
+{{ block.super }}
+
+    <script src="{{ STATIC_URL }}js/mustache.js" charset="utf-8" type="text/javascript"></script>
+    <script type="text/html" id="res-templ">
+
+    <ul>
+       [[#results ]] 
+        <li rel="[[uri]]">
+            <input type="checkbox" name="" checked=""> 
+            [[ &label ]]
+        </li>
+       [[/results ]]
+    </ul>
+    </script>
+
+{% endblock %}
+
+
+{% block extrastyle %}
+{{ block.super }}
+{#<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}admin/css/forms.css" />#}
+{% endblock %}
+
+
+{% block coltype %}{% if ordered_objects %}colMS{% else %}colM{% endif %}{% endblock %}
+
+{% block bodyclass %}{{ opts.app_label }}-{{ opts.object_name.lower }} change-form{% endblock %}
+
+{% block breadcrumbs %}
+
+    <li><a href="../../">Accueil</a>
+    <li class="active">Importation RDF</li>
+{% endblock %}
+
+{% block object-tools %}
+{% endblock %}
+
+{% block messages %}
+{% endblock %}
+
+
+{% block content_title %}
+    <h3 class="well page-top">
+      Importation de données depuis la PES  
+    </h3>
+{% endblock %}
+
+{% block content %}
+
+    <div id="content-main">
+
+        <div>
+
+            <div class="tabbable">
+                <ul class="nav nav-tabs">
+
+                    {% for model in models %}  
+                        <li{% if forloop.first %} class="active"{% endif %}>
+                        <a href="#{{ model.name }}" data-toggle="tab">{{ model.label|title }}</a></li>
+                    {% endfor %}
+                </ul>
+
+                <div class="tab-content">
+
+                    {% for model in models %}
+                    <fieldset class="module aligned  well control-group tab-pane active" id="{{ model.name }}">
+                        <h2 style="display: none;">{{ model.label|title }}</h2>
+                        <div class="description">Test</div>
+
+                        <form action="{{ form_url }}" method="post" class="search form-horizontal">{% csrf_token %}
+
+                            <div class="control-group">
+
+                                <label for="{{model_name}}_searchbox" class="required control-label">Titre:</label>
+                                <div class="controls">
+                                  
+                                    <input type="text" id="{{model_name}}_searchbox" class="vTextField" name="q" maxlength="50">
+                                    <input type="hidden" name="model" value="{{ model.name }}">
+                                    <input type="submit" value="ok">
+
+                                </div>
+
+                                <div class="results"></div>
+
+                                
+                            </div>
+                        </form>
+
+                    </fieldset>
+
+                    <script type="text/javascript">
+
+                    function get_res(query, tmpl){
+                            $.getJSON(
+                                "{{ pes }}/searchforimportJson/?" + query,
+                                function(data){
+                                    results_html = Mustache.render(tmpl,data);
+                                    $("#{{ model.name }} .results").html(results_html)
+                                }
+                            )
+                    };
+
+                    $(function(){
+                        Mustache.tags = ['[[', ']]'];
+                        restmpl = $('#res-templ').html()
+
+                        $('#{{ model.name }} .search').submit(function() {
+                          get_res($(this).serialize(), restmpl);
+                          return false;
+                        });
+
+                    });
+                    </script>
+                    {% endfor %}
+                    {% block after_field_sets %}{% endblock %}
+
+                </div>
+
+            </div>
+
+            <script type="text/javascript">
+              $(function(){
+                $('.tabbable fieldset').addClass('tab-pane');
+                $('.tabbable fieldset:first').addClass('active');
+                $('.tabbable fieldset h2').hide();
+              });
+            </script>
+
+            {% block after_related_objects %}{% endblock %}
+
+        </div>
+        </form>
+    </div>
+
+{% endblock %}

@@ -93,22 +93,22 @@ class CustomIndexDashboard(Dashboard):
         ))
 
         # append another link list module for "support".
-        self.children.append(modules.LinkList(
-            _('Support'),
-            children=[
-                {
-                    'title': _('Blog PES'),
-                    'url': 'http://blog.credis.org/',
-                    'external': True,
-                },
-                {
-                    'title': _('Django "django-users" mailing list'),
-                    'url': 'http://groups.google.com/group/django-users',
-                    'external': True,
-                },
+        # self.children.append(modules.LinkList(
+        #     _('Support'),
+        #     children=[
+        #         {
+        #             'title': _('Blog PES'),
+        #             'url': 'http://blog.credis.org/',
+        #             'external': True,
+        #         },
+        #         {
+        #             'title': _('Django "django-users" mailing list'),
+        #             'url': 'http://groups.google.com/group/django-users',
+        #             'external': True,
+        #         },
 
-            ]
-        ))
+        #     ]
+        # ))
 
 
 class CustomAppIndexDashboard(AppIndexDashboard):

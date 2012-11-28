@@ -15,6 +15,8 @@ urlpatterns = patterns('',
 
     url(r'^$', 'coop.views.home', name="home"),
 
+    url(r'^rdf/', include('coop.rdf.urls')),
+
     url(r'^org/', include('coop.org.urls')),
     url(r'^geojson/(?P<what>[\w-]+)/(?P<criteria>[\w-]+)/$', 'coop.views.geojson_objects'),
 

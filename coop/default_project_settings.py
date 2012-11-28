@@ -159,6 +159,7 @@ INSTALLED_APPS = [
     'coop.org',
     'coop.person',
     'coop.ui',
+    'coop.rdf',
     #'coop.webid',
 
     'coop_geo',

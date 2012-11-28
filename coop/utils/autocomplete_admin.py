@@ -137,7 +137,7 @@ class FkSearchInput(ForeignKeyRawIdWidget):
             'app_label': app_label,
             'label': label,
             'name': name,
-            'remote_search_path': 'http://' + settings.PES_HOST + '/suggestions/',
+            'remote_search_path': settings.PES_HOST + '/suggestions/',
         }
 
 
@@ -217,7 +217,7 @@ class NoLookupsForeignKeySearchInput(ForeignKeyRawIdWidget):
             'app_label': app_label,
             'label': label,
             'name': name,
-            'remote_search_path': 'http://' + settings.PES_HOST + '/suggestions/',
+            'remote_search_path': settings.PES_HOST + '/suggestions/',
 
         }
 
@@ -296,7 +296,7 @@ class InlineSearchInput(ForeignKeyRawIdWidget):
             'app_label': app_label,
             'label': label,
             'name': name,
-            'remote_search_path': 'http://' + settings.PES_HOST + '/suggestions/',
+            'remote_search_path': settings.PES_HOST + '/suggestions/',
 
         }
 
