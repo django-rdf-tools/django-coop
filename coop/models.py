@@ -49,12 +49,21 @@ plugin.register('trix', plugin.Serializer,
 
 
 
+
 class TimestampedModel(models.Model):
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
 
     class Meta:
         abstract = True
+
+
+def select_with_lang(literals, lang=None):
+    res = []
+    for l in literals:
+        if l.language == lang:
+            res.append(l)
+    return res
 
 
 def get_urimode_from_uri(uri):
@@ -65,6 +74,9 @@ def get_urimode_from_uri(uri):
         return URI_MODE.COMMON
     else:
         return URI_MODE.IMPORTED
+
+
+
 
 
 class StaticURIModel(models.Model):
@@ -202,6 +214,7 @@ class StaticURIModel(models.Model):
                     return m.objects.get(uri=uri)
                 except m.DoesNotExist:
                     return None
+                    # return m.get_or_create_from_rdf(uri)  # trop tôt !
             else:
                 return None
 
@@ -294,10 +307,7 @@ class StaticURIModel(models.Model):
         elif len(value) == 0:
             setattr(self, djField, empty_value)
         else:  # plusieurs valeurs ca peut etre une histore de language
-            fr_value = []
-            for v in value:
-                if not v.language == None and v.language == lang:
-                    fr_value.append(v)
+            fr_value = select_with_lang(value, lang)
             if len(fr_value) == 1:
                 setattr(self, djField, unicode(fr_value[0]))
 
@@ -307,13 +317,29 @@ class StaticURIModel(models.Model):
         self.base_single_reverse(uri, g, rdfPred, djField, datatype, lang)
 
 
+    # TODO et les label
     def local_or_remote_reverse(self, g, rdfPred, djField, datatype=None, lang=None):
         uri = lambda x: x.uri
         # lets try the local version
         self.base_single_reverse(uri, g, rdfPred, djField, datatype, lang)
         if not getattr(self, djField):
             self.base_single_reverse(uri, g, rdfPred, 'remote_' + djField + '_uri', datatype, lang, empty_value=u'')
-
+            # to get the label... it is more complicated
+            value = list(g.objects(URIRef(uri(self)), rdfPred))
+            if len(value) == 1:
+                value = value[0]    # Should be an URIRef
+                if isinstance(value, URIRef):
+                    g_value = Graph()
+                    g_value.parse(value)
+                    labels = list(g_value.objects(value, settings.NS.rdfs.label))
+                    labels = set(select_with_lang(labels, lang))
+                    label = labels.pop()  # On suppose tres fort qu'il y en qu'un
+                    setattr(self, 'remote_' + djField + '_label', unicode(label))
+                else:
+                    pass
+            else:  # I dont know what to do
+                pass
+           
 
     def multi_reverse(self, g, rdfPred, djField, datatype=None, lang=None):
         manager = getattr(self, djField)
@@ -358,6 +384,7 @@ class StaticURIModel(models.Model):
         else:
             instance = cls.objects.get(uri=uri)
         instance.import_rdf_data(graph)
+        return (instance, not exists)
 
 
     def import_rdf_data(self, g):
@@ -509,7 +536,7 @@ class StaticURIModel(models.Model):
 
     # This a very simple case, where feed and ub share the same host
     def subscribeToUpdades(self, host=settings.PES_HOST):
-        feed_url = "http://%s/feed/%s/%s/" % (host, self.__class__.__name__.lower(), self.uri_id)
+        feed_url = "%s/feed/%s/%s/" % (host, self.__class__.__name__.lower(), self.uri_id)
         validate = URLValidator(verify_exists=True)
         try:
             subs = Subscription.objects.get(topic=feed_url)
@@ -519,17 +546,17 @@ class StaticURIModel(models.Model):
             try:
                 validate(feed_url)
                 # log.debug(u"Try to subscribe to feed %s" % feed_url)
-                Subscription.objects.subscribe(feed_url, hub="http://%s/hub/" % host)
+                Subscription.objects.subscribe(feed_url, hub="%s/hub/" % host)
             except ValidationError, e:
                 log.debug(u" Imposible to subscribe to %s : %s" % (feed_url, e))
 
 
     def unsubscribeToUpdades(self, host=settings.PES_HOST):
-        feed_url = "http://%s/feed/%s/%s/" % (host, self.__class__.__name__.lower(), self.uri_id)
+        feed_url = "%s/feed/%s/%s/" % (host, self.__class__.__name__.lower(), self.uri_id)
         validate = URLValidator(verify_exists=True)
         try:
             validate(feed_url)
-            Subscription.objects.unsubscribe(feed_url, hub="http://%s/hub/" % host)
+            Subscription.objects.unsubscribe(feed_url, hub="%s/hub/" % host)
         except ValidationError, e:
             log.debug(u" Imposible to unsubscribe to %s : %s" % (feed_url, e))
 
@@ -569,6 +596,7 @@ def rdfGraphAll(model=None):
 def rdfDumpAll(destination, format, model=None):
     g = rdfGraphAll(model)
     g.serialize(destination, format=format)
+
 
 
 # It seems to be the best place to do the connection
