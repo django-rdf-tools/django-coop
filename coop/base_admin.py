@@ -34,7 +34,7 @@ if "coop_cms" in settings.INSTALLED_APPS:
 
 if "coop_tag" in settings.INSTALLED_APPS:
     from coop_tag.settings import get_class
-    admin.site.unregister(get_class('tag'))
+    # admin.site.unregister(get_class('tag'))
     admin.site.register(get_class('tag'))  # et ???
 
 if 'forms_builder.forms' in settings.INSTALLED_APPS:
