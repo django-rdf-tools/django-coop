@@ -129,6 +129,7 @@ class BasePerson(URIModel):
         ('multi_mapping', (settings.NS.ess.hasContactMedium, 'contact'), 'multi_reverse'),
 
         ('name_mapping', (settings.NS.foaf.name, 'username'), 'name_mapping_reverse'),
+        ('name_mapping', (settings.NS.rdfs.label, 'username'), 'name_mapping_reverse'),
         ('location_mapping', (settings.NS.locn.location, 'location'), 'location_mapping_reverse')
 
     ]
