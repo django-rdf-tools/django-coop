@@ -222,6 +222,8 @@ class BaseContact(URIModel):
 
 
     # RDF stuff
+    def isOpenData(self):
+        return self.display == DISPLAY.PUBLIC
 
     rdf_type = settings.NS.ess.ContactMedium
 
@@ -340,6 +342,9 @@ class BaseEngagement(URIModel):
         return self.__unicode__()
 
     # RDF stufs
+    def isOpenData(self):
+        return self.engagement_display == DISPLAY.PUBLIC
+
     rdf_type = settings.NS.org.Membership
     base_mapping = [
         ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),

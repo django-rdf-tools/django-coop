@@ -56,7 +56,7 @@ if "coop_cms" in settings.INSTALLED_APPS:
 
         # RDF stuff
         def isOpenData(self):
-            return not self.isSection
+            return not self.isSection and self.publication == BaseArticle.PUBLISHED
 
         rdf_type = settings.NS.dcmi.Text
         base_mapping = [
