@@ -660,7 +660,7 @@ class BaseOrganization(URIModel):
         ('multi_mapping', (settings.NS.ess.hasContactMedium, 'contacts'), 'multi_reverse'),
         # FIXME : 'Contact' instance expected
 
-        ('multi_mapping', (settings.NS.org.hasMember, 'members'), 'multi_reverse'),
+        ('multi_mapping', (settings.NS.org.hasMember, 'members'), 'none_reverse'),
         # FIXME : 'Organization' instance needs to have a primary key value before a many-to-many relationship can be used.
 
 

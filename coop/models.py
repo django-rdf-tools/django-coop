@@ -305,6 +305,10 @@ class StaticURIModel(models.Model):
             return self.multi_mapping_base(values, rdfPredicate, datatype, lang)
 
 
+    def none_reverse(self,  g, values, rdfPredicate, datatype=None, lang=None):
+        pass
+
+
     def base_single_reverse(self, uri, g, rdfPred, djField, datatype=None, lang=None, empty_value=None):
         value = list(g.objects(URIRef(uri(self)), rdfPred))
         if len(value) == 1:
