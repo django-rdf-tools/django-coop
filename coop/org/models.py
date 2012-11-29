@@ -356,8 +356,8 @@ class BaseEngagement(URIModel):
         ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
         ('single_mapping', (settings.NS.org.member, 'person'), 'single_reverse'),
 
-        ('local_or_remote_mapping', (settings.NS.org.organization, 'organization'), 'local_or_remote_mapping'),
-        ('local_or_remote_mapping', (settings.NS.org.role, 'role'), 'local_or_remote_mapping'),
+        ('local_or_remote_mapping', (settings.NS.org.organization, 'organization'), 'local_or_remote_reverse'),
+        ('local_or_remote_mapping', (settings.NS.org.role, 'role'), 'local_or_remote_reverse'),
 
         ('label_mapping', (settings.NS.rdfs.label, 'id', 'fr'), 'label_mapping_reverse'),
 
