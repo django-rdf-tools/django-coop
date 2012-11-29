@@ -53,28 +53,31 @@ def rdf_import(request):
 def import_from_uri(request):
     results = {}
     if request.method == 'POST':
-        data = request.POST
-        uri = data.get('uri')
-        model_name = data.get('model')
+        data = json.loads(request.raw_post_data)
+
+        uri = data['uri']
+        model_name = data['model']
         model = get_model('coop_local', model_name)
+
         if model == None:
             model = get_model('coop_geo', model_name)
-        graph_url = data.get('import_rdf_url')
+        graph_url = data['import_rdf_url']
+
         if graph_url:
-            g = rdflib.Grap()
-            g.parse(graph_url)
+            g = rdflib.Graph()
+            g.parse(graph_url, format="json-ld")
         else:
             g = None
-        try:
-            (instance, created) = model.get_or_create_from_rdf(uri, g)
-            if created:
-                results = {"results": "created"} 
-            else:
-                results = {"results": "updated"} 
-        except Exception, e:
-            results = {"results": "error", "message": e}
+        # try:
+        instance, created = model.get_or_create_from_rdf(uri, g)
+        if created:
+            results = {"result": "created", "message": u"L'objet %s a été importé avec succès" % instance.__unicode__()}
+        else:
+            results = {"result": "updated", "message": u"L'objet %s a été mis à jour avec succès" % instance.__unicode__()}
+        # except Exception, e:
+        #     results = {"result": "error", "message": u"Erreur d'importation : %s" % e}
     else:
-        results = {"results": "error", "message": "wainting for a POST request"}
+        return Http404
     return HttpResponse(json.dumps(results), mimetype="application/json")
 
 

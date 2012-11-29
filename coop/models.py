@@ -404,7 +404,7 @@ class StaticURIModel(models.Model):
             if hasattr(self, reverse):
                 getattr(self, reverse)(g, *arguments)
         from coop_local.models import Link, LinkProperty
-         # TODO possible optimisation: Do not remove all links, 
+        # TODO possible optimisation: Do not remove all links, 
         # check the diffence between new and old values as in previous multi_reverse fonction
         for l in self.links.all():
             self.links.remove(l)

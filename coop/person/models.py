@@ -126,6 +126,8 @@ class BasePerson(URIModel):
         ('single_mapping', (settings.NS.skos.note, 'notes'), 'single_reverse'),
  
         ('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'),
+        # TODO Person objects need to have a primary key value before you can access their tags.
+
         ('multi_mapping', (settings.NS.ess.hasContactMedium, 'contact'), 'multi_reverse'),
 
         ('name_mapping', (settings.NS.foaf.name, 'username'), 'name_mapping_reverse'),

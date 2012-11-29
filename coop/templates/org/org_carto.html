@@ -28,29 +28,28 @@
             marker.bindPopup("<b>"+label+"</b><br />"+subtitle).openPopup();
         }
 
-
         var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
             cloudmadeAttribution = 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
             cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18, attribution: cloudmadeAttribution});
 
-        var appleUrl = 'http://gsp2.apple.com/tile?api=1&style=slideshow&layers=default&lang=en_EN&z={z}&x={x}&y={y}&v=9';
-            appleAttribution = 'Map data by apple'
-            apple = new L.TileLayer(appleUrl, {maxZoom: 18, attribution: appleAttribution});
+        // var appleUrl = 'http://gsp2.apple.com/tile?api=1&style=slideshow&layers=default&lang=en_EN&z={z}&x={x}&y={y}&v=9';
+        //     appleAttribution = 'Map data by apple'
+        //     apple = new L.TileLayer(appleUrl, {maxZoom: 18, attribution: appleAttribution});
 
-        var marseille = new L.LatLng(43.296482, 5.36978);
+        var centre = new L.LatLng(45.777222, 3.087025);
         // =(45.721997, 3.469887); // geographical point (longitude and latitude)
 
         var map = new L.Map('leaflet_map');
-        map.setView(marseille, 10).addLayer(cloudmade);
+        map.setView(centre, 10).addLayer(cloudmade);
         var clusterer = new LeafClusterer(map);
 
 
-        {% for amap in org_list %}
+        {% for org in org_list %}
 
-        addmarker(  ("{{amap.main_location.point.y}}").replace(',','.'),
-                    ("{{amap.main_location.point.x}}").replace(',','.'),
-                    "{{amap.label}}",
-                    "{{amap.subtitle}}"
+        addmarker(  ("{{org.main_location.point.y}}").replace(',','.'),
+                    ("{{org.main_location.point.x}}").replace(',','.'),
+                    "{{org.label}}",
+                    "{{org.subtitle}}"
                     );
       {% endfor %}
     </script>
