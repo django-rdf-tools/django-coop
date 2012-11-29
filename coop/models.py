@@ -390,6 +390,9 @@ class StaticURIModel(models.Model):
             graph.parse(uri)  # RDFLib rules !!!!
         if not exists:
             instance = cls(uri=uri, uri_mode=get_urimode_from_uri(uri))
+            # a save is necessary, instance need to have a pk
+            # before calling import_rdf_data
+            instance.save()  
         else:
             instance = cls.objects.get(uri=uri)
         instance.import_rdf_data(graph)
@@ -397,8 +400,6 @@ class StaticURIModel(models.Model):
 
 
     def import_rdf_data(self, g):
-        # We have to split self.rdf_mapping in two
-        # A self.save() has to
         for method, arguments, reverse in self.rdf_mapping:
             if hasattr(self, reverse):
                 getattr(self, reverse)(g, *arguments)
