@@ -13,15 +13,15 @@
     <script type="text/html" id="res-templ">
         <ul class="results_list">
            [[#results ]] 
-            <li class="primary_object" rel="[[ &import_rdf_url ]]" id="[[ id ]]">
+            <li class="primary_object" rel="[[ model ]]" id="[[ id ]]">
                 <div class="info" style="display:none">[[ &info ]]</div>
-                <input type="checkbox" name=""> 
-                [[ &label ]]
+                <input type="checkbox"/> 
+                [[ &label ]] <span class="source">[ source: <span>[[&authority_source]]</span> ]</span>
                     [[#has_locations ]]<ul class="linked_objects">
                     [[#locations ]] 
                         <li rel="[[ &import_rdf_url ]]" id="[[ id ]]">
                             <div class="info" style="display:none">[[ &info ]]</div>
-                            <input type="checkbox" name="" checked="checked">
+                            <input type="checkbox" checked="checked"/>
                             <label>Adresse : </label> [[ &label ]]
                         </li>
                     [[/locations ]]
@@ -31,7 +31,7 @@
                     [[#persons ]]
                         <li rel="[[ &import_rdf_url ]]" id="[[ id ]]">
                             <div class="info" style="display:none">[[ &info ]]</div>
-                            <input type="checkbox" name="">
+                            <input type="checkbox"/>
                             <label>Membre : </label> [[ &label ]]
                         </li>
                     [[/persons ]]
@@ -41,7 +41,7 @@
                     [[#organizations ]] 
                         <li rel="[[ &import_rdf_url ]]" id="[[ id ]]">
                             <div class="info" style="display:none">[[ &info ]]</div>
-                            <input type="checkbox" name="">
+                            <input type="checkbox"/>
                             <label>Organisme : </label> [[ &label ]]
                         </li>
                     [[/organizations ]]
@@ -51,7 +51,7 @@
                     [[#events ]] 
                         <li rel="[[ &import_rdf_url ]]" id="[[ id ]]">
                             <div class="info" style="display:none">[[ &info ]]</div>
-                            <input type="checkbox" name="">
+                            <input type="checkbox"/>
                             <label>Evénement : </label> [[ &label ]]
                         </li>
                     [[/events ]]
@@ -61,16 +61,27 @@
                     [[#contacts ]] 
                         <li rel="[[ &import_rdf_url ]]" id="[[ id ]]">
                             <div class="info" style="display:none">[[ &info ]]</div>
-                            <input type="checkbox" name="">
+                            <input type="checkbox"/>
                             <label>Moyen de contact : </label> [[ &label ]]
                         </li>
                     [[/contacts ]]
                     </ul>[[/has_contacts ]]
 
-
+                <button style="display:none" type="button" class="btn btn-info preview" rel="[[ &import_rdf_url ]]">
+                    <i class="icon-eye-open icon-white"></i> Prévisualiser
+                </button>
             </li>
            [[/results ]]
         </ul>
+    </script>
+
+    <script type="text/html" id="organization-templ">
+        <b>Preview</b>
+        <div class="logo"></div>
+        <h3>[[&http://www.w3.org/ns/legal#legalName]]</h3>
+        <h3>[[&rdfs:label]]</h3>
+        <p>[[&http://purl.org/dc/terms/description]]</p>
+
     </script>
 
 {% endblock %}
@@ -130,21 +141,25 @@
 
                         <div class="control-group">
 
-                            <label for="{{ model.name }}_searchbox" class="required control-label">Recherche :</label>
                             <div class="controls">
                                 <form action="" method="post" rel="{{ model.name }}" class="search form-horizontal">
                                     <input type="text" id="{{ model.name }}_searchbox" class="vTextField" name="q" maxlength="50">
                                     <input type="hidden" name="model" value="{{ model.name }}">
-                                    <input type="submit" class="btn" value="ok">
+                                    <input type="submit" class="btn" value="Recherche">
                                 </form>
+                                <br/>
+                            <hr style="clear:both"/>
 
                             </div>
-                                <div id="{{ model.name }}_results"></div>
-                                <hr style="clear:both"/>
-                                <input rel="{{ model.name }}" type="submit" class="btn btn-primary import_btn"
-                                    value="Importer les données sélectionnées"/>
-                                <div class="ajax_message"></div>
+                            <div id="{{ model.name }}_results"></div>
+                            <div id="{{ model.name }}_preview" class="preview_box"></div>
+                            <hr style="clear:both"/>
+                            <input rel="{{ model.name }}" type="submit" class="btn btn-primary import_btn"
+                                value="Importer les données sélectionnées"/>
+                            <div class="ajax_message"></div>
                                 
+                        
+
                         </div>
                     </fieldset>
 
@@ -159,6 +174,8 @@
 
 
         <script type="text/javascript">
+
+                Mustache.tags = ['[[', ']]'];
 
                 function pad(number, length) {
                     var str = '' + number;
@@ -191,6 +208,7 @@
 
                                 r = data.results[object_idx]
                                 data.results[object_idx].id = '0_' + pad(object_idx+1, 5)
+                                data.results[object_idx].model = model
                                 object_info = {
                                     import_rdf_url: r.import_rdf_url,
                                     uri: r.uri,
@@ -236,7 +254,6 @@
                     $('.tabbable fieldset:first').addClass('active');
                     //$('.tabbable fieldset h2').hide();
 
-                    Mustache.tags = ['[[', ']]'];
                     restmpl = $('#res-templ').html()
 
                     $('form.search').submit(function() {
@@ -248,10 +265,28 @@
                     $("li.primary_object input").live('change', function(){
                         if($(this).is(':checked')){
                             $(this).nextAll("ul.linked_objects").slideDown()
-                            data = $(this).parent('li').children(".info").html()
+                            $(this).siblings(".preview").show()
+
                         }else{
                             $(this).nextAll(".linked_objects").slideUp()
+                            $(this).siblings(".preview").hide()
+
                         }
+                    });
+
+
+                    $("button.preview").live('click', function(){
+                        model = $(this).parent("li").attr("rel");
+                        json_ld_url = $(this).attr("rel");
+                        $.getJSON(
+                            json_ld_url,
+                            function(data){
+                                console.log(data)
+
+                                preview_html = Mustache.render($('#' + model + '-templ').html(), data);
+                                $("#" + model + "_preview").html(preview_html)
+                            }
+                        )
                     });
 
                     $(".import_btn").click(function(){
