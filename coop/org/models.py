@@ -244,7 +244,7 @@ class BaseContact(URIModel):
 
 
     def medium_mapping_reverse(self, g, rdfPred, djF, lang=None):
-        values = list(g.objects((rdflib.term.URIRef(self.uri), rdfPred)))        
+        values = list(g.objects(rdflib.term.URIRef(self.uri), rdfPred))        
         values.remove(self.rdf_type)
         m = models.get_model('coop_local', 'contactmedium')
         if len(values) == 1:
