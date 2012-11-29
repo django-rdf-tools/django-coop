@@ -742,7 +742,7 @@ class BaseOrganization(URIModel):
 
     def prefLabel_mapping_reverse(self, g, rdfPred, djF, lang=None):
         value = list(g.objects(rdflib.term.URIRef(self.uri), rdfPred))
-        title = list(g.objects(rdflib.term.URIRef(self.uri), settings.NS.dct.title))
+        title = list(g.objects(rdflib.term.URIRef(self.uri), settings.NS.legal.legalName))
         if value == title:
             setattr(self, 'pref_label', PREFLABEL.TITLE)
         else:
