@@ -654,20 +654,20 @@ class BaseOrganization(URIModel):
         ('single_mapping', (settings.NS.legal.registeredAddress, 'pref_address'), 'single_reverse'),
         ('single_mapping', (settings.NS.skos.note, 'notes'), 'single_reverse'),
 
-        #('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'), 
+        ('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'), 
         # FIXME : Organization objects need to have a primary key value before you can access their tags.
 
-        # ('multi_mapping', (settings.NS.ess.hasContactMedium, 'contacts'), 'multi_reverse'),
+        ('multi_mapping', (settings.NS.ess.hasContactMedium, 'contacts'), 'multi_reverse'),
         # FIXME : 'Contact' instance expected
 
-        # ('multi_mapping', (settings.NS.org.hasMember, 'members'), 'multi_reverse'),
+        ('multi_mapping', (settings.NS.org.hasMember, 'members'), 'multi_reverse'),
         # FIXME : 'Organization' instance needs to have a primary key value before a many-to-many relationship can be used.
 
 
         ('logo_mapping', (settings.NS.foaf.logo, 'logo'), 'logo_mapping_reverse'),
         ('prefLabel_mapping', (settings.NS.rdfs.label, 'pref_label'), 'prefLabel_mapping_reverse'),
         
-        # ('location_mapping', (settings.NS.locn.location, 'located'), 'location_mapping_reverse'),
+        ('location_mapping', (settings.NS.locn.location, 'located'), 'location_mapping_reverse'),
         # FIXME : Located matching query does not exist.
 
         ('location_mapping', (settings.NS.ess.actionArea, 'framed'), 'location_mapping_reverse'),
