@@ -23,6 +23,7 @@ from subhub.models import DistributionTask
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 import logging
+import urllib
 
 log = logging.getLogger('coop')
 
@@ -337,11 +338,22 @@ class StaticURIModel(models.Model):
             if len(value) == 1:
                 value = value[0]    # Should be an URIRef
                 if isinstance(value, URIRef):
+                    # Il faut parsser sur la PES a cause des roles 
                     g_value = Graph()
-                    g_value.parse(value)
+                    imp_uri = "%s/get_rdf/?url=%s" % (settings.PES_HOST, urllib.quote_plus(unicode(value).encode('utf-8')))
+                    g_value.parse(imp_uri, format='json-ld')
                     labels = list(g_value.objects(value, settings.NS.rdfs.label))
                     labels = set(select_with_lang(labels, lang))
-                    label = labels.pop()  # On suppose tres fort qu'il y en qu'un
+                    if len(labels) > 0:
+                        label = labels.pop()  # On suppose tres fort qu'il y en qu'un
+                    else:
+                        # lets try skos:prefLabel
+                        labels = list(g_value.objects(value, settings.NS.skos.prefLabel))
+                        labels = set(select_with_lang(labels, lang))
+                        if len(labels) > 0:
+                            label = labels.pop()
+                        else:
+                            label = u""
                     setattr(self, 'remote_' + djField + '_label', unicode(label))
                 else:
                     pass
