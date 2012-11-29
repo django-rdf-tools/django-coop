@@ -353,7 +353,9 @@ class StaticURIModel(models.Model):
         manager = getattr(self, djField)
         rdf_values = set(g.objects(URIRef(self.uri), rdfPred))
         values = set(map(StaticURIModel.toDjango, rdf_values))
-        values.remove(None)   # if toDango return None for every rdf_valuesthen the set must be emty
+        # if toDango return None for every rdf_valuesthen the set must be emty
+        if None in values:
+            values.remove(None)   
         old_values = set(manager.all())
         remove = old_values.difference(values)
         add = values.difference(old_values)
