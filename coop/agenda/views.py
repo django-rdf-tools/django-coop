@@ -49,7 +49,7 @@ def event_listing(request, template='agenda/event_list.html', events=None,
 
 
 def event_minimal_view(request, pk, template='agenda/event_minimal_view.html'):
-    event = get_object_or_404(Event, pk=pk)
+    event = get_object_or_404(Event, pk=pk, sites__id=settings.SITE_ID)
     return render_to_response(template, {'event': event},
         context_instance=RequestContext(request))
 
@@ -62,7 +62,7 @@ def event_category_view(request, slug):
 
 
 def agenda_by_category(request, slug):
-    agenda = get_object_or_404(Calendar, slug=slug)
+    agenda = get_object_or_404(Calendar, slug=slug, sites__id=settings.SITE_ID)
     categories = {}
     for cat in EventCategory.objects.all():
         ev = Event.objects.filter(calendar=agenda, event_type=cat)
@@ -95,7 +95,7 @@ def event_view(request, pk, template='agenda/event_detail.html',
     recurrence_form
         a form object for adding occurrences
     """
-    event = get_object_or_404(Event, pk=pk)
+    event = get_object_or_404(Event, pk=pk, sites__id=settings.SITE_ID)
     event_form = recurrence_form = None
     if request.method == 'POST':
         if '_update' in request.POST:

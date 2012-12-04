@@ -37,7 +37,7 @@ def org_detail(request, slug):
 @login_required
 def org_edit(request, slug):
     logger = getLogger('default')
-    organization = get_object_or_404(Organization, slug=slug)  # model
+    organization = get_object_or_404(Organization, slug=slug, sites__id=settings.SITE_ID)  # model
     if not request.user.has_perm('can_edit_org', organization):  # model
         raise PermissionDenied
 
@@ -134,7 +134,7 @@ def org_category_edit(request, slug):
 @login_required
 def org_edit_cancel(request, slug):
     """if cancel_edit, delete the preview image"""
-    organization = get_object_or_404(Organization, slug=slug)
+    organization = get_object_or_404(Organization, slug=slug, sites__id=settings.SITE_ID)
     # if organization.temp_logo:
     #     organization.temp_logo = ''
     #     organization.save()
@@ -143,7 +143,7 @@ def org_edit_cancel(request, slug):
 
 @login_required
 def org_category_edit_cancel(request, slug):
-    org_category = get_object_or_404(OrganizationCategory, slug=slug)
+    org_category = get_object_or_404(OrganizationCategory, slug=slug, sites__id=settings.SITE_ID)
     return HttpResponseRedirect(org_category.get_absolute_url())
 
 
