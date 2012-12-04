@@ -91,12 +91,15 @@ if 'coop.exchange' in settings.INSTALLED_APPS:
         # TODO to be finished ...
         # list_editable = ('methods',)
         related_search_fields = {'organization': ('title', 'subtitle', 'description'), }
-        fieldsets = ((None, {'fields': (('eway', 'etype'),
+        fieldsets = ((None, {'fields': [('eway', 'etype'),
                                          'methods',
                                          'title',
                                          'organization',
-                                        'description',)# 'tags')
+                                        'description',]# 'tags')
                             }),)
+
+        if settings.COOP_USE_SITES:
+            fieldsets[0][1]['fields'].insert(0, 'sites')
 
 
 

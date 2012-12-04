@@ -97,6 +97,8 @@ raven
 django-debug-toolbar
 FirePython
 
+# multi-site
+django-multisite
 
 # for spip translation
 # MySQL-python

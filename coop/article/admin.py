@@ -55,9 +55,9 @@ if "coop_cms" in settings.INSTALLED_APPS:
         readonly_fields = []
         fieldsets = (
             #(_('Navigation'), {'fields': ('navigation_parent',)}),
-            ('Edition', {'fields': ('title', 'logo', 'content', 
+            ('Edition', {'fields': ['title', 'logo', 'content', 
                                     'organization', 'remote_organization_label', 'remote_organization_uri',
-                                    'person', 'remote_person_label', 'remote_person_uri')}),
+                                    'person', 'remote_person_label', 'remote_person_uri']}),
             ('Options', {'fields': ('summary', 'category', 'template', 'is_homepage', 'in_newsletter', 'isSection')}),
         )
         related_search_fields = {'organization': ('title', 'subtitle', 'description'), 
@@ -65,4 +65,8 @@ if "coop_cms" in settings.INSTALLED_APPS:
 
         if "coop.agenda" in settings.INSTALLED_APPS:
             inlines = [DatedInline]
+
+        if settings.COOP_USE_SITES:
+            fieldsets[0][1]['fields'].insert(0, 'sites')
+
 

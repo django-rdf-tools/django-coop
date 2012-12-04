@@ -72,6 +72,9 @@ def post_save_callback(sender, instance, **kwargs):
     # log.debug(u"Post save callback with sender %s and instance %s and AUTO %s" % (unicode(sender), unicode(instance), maintenance))
 
     if isinstance(instance, StaticURIModel):
+        # Init the 'sites' many2many field
+        if instance.sites.all().count() == 0:
+            instance.sites.add(Site.objects.get_current())
         if instance.uri_mode == URI_MODE.IMPORTED:
             # log.debug(u"%s is imported. Nothing to publish, but subscription renew" % instance)
             instance.subscribeToUpdades()

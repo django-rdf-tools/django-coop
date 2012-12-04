@@ -184,6 +184,9 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
         })
     )
 
+    if settings.COOP_USE_SITES:
+        fieldsets[0][1]['fields'].insert(0, 'sites')
+
     def get_actions(self, request):
         myactions = dict(create_action(s) for s in get_model('coop_local', 'OrganizationCategory').objects.all())
         return dict(myactions, **super(OrganizationAdmin, self).get_actions(request))  # merging two dicts

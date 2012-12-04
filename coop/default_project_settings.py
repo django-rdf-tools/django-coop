@@ -5,7 +5,12 @@ from coop_local.settings import PROJECT_PATH, PROJECT_NAME
 
 TIME_ZONE = 'Europe/Paris'
 LANGUAGE_CODE = 'fr-FR'
-SITE_ID = 1
+
+from multisite import SiteID
+SITE_ID = SiteID(default=1)
+COOP_USE_SITES = False
+
+
 USE_I18N = True
 USE_L10N = True
 
@@ -43,11 +48,13 @@ STATICFILES_FINDERS = [
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 ]
 
+
 TEMPLATE_DIRS = [
     os.path.abspath(PROJECT_PATH + '/coop_local/templates/')
 ]
 
 TEMPLATE_LOADERS = [
+    'multisite.template_loader.Loader',
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
@@ -63,6 +70,7 @@ MIDDLEWARE_CLASSES = [
     #'django.middleware.cache.FetchFromCacheMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'multisite.middleware.DynamicSiteMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     #'django_webid.auth.middleware.WEBIDAuthMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -89,6 +97,8 @@ ROOT_URLCONF = 'coop_local.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'coop_local.wsgi.application'
 
+CACHE_MULTISITE_ALIAS = 'multisite'
+
 # Cache middelware must be enabled above
 CACHES = {
     'default': {
@@ -98,6 +108,10 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
         #'LOCATION': '127.0.0.1:11211',
         'LOCATION': 'unix:/tmp/memcached.sock',
+    },
+    'multisite': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'TIMEOUT': 60 * 60 * 24,  # 24 hours
     }
 }
 
@@ -105,6 +119,12 @@ CACHE_MIDDLEWARE_ALIAS = 'memcached'
 CACHE_MIDDLEWARE_SECONDS = 60 * 60
 CACHE_MIDDLEWARE_KEY_PREFIX = PROJECT_NAME
 
+
+# The view function or class-based view that django-multisite will
+# use when it cannot match the hostname with a Site. This can be
+# the name of the function or the function itself.
+# Default: None
+MULTISITE_FALLBACK = 'django.views.generic.base.RedirectView'
 
 INSTALLED_APPS = [
 
@@ -143,6 +163,7 @@ INSTALLED_APPS = [
     'preferences',
     'apptemplates',
     'scanredirect',
+    'multisite',
 
 
     # WebID

@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.contrib import admin
+from django.conf import settings
 from django import forms
 from coop.org.admin import create_action, ContactInline, OrgInline
 from django.db.models.loading import get_model
@@ -44,13 +45,17 @@ class PersonAdmin(FkAutocompleteAdmin):
 
     fieldsets = (
         ('Identification', {
-            'fields': ('first_name', 'last_name',
+            'fields': ['first_name', 'last_name',
                         ('location', 'location_display'),  # Using coop-geo
                         'category'
-                        ),
+                        ],
             }),
         ('Notes', {
             'fields': ('structure', 'notes',)
         })
     )
+
+    if settings.COOP_USE_SITES:
+        fieldsets[0][1]['fields'].insert(0, 'sites')
+
 
