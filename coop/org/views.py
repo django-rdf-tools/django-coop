@@ -4,6 +4,7 @@ from django.shortcuts import render_to_response
 from coop_local.models import Organization, OrganizationCategory, Engagement, Role
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
+from django.conf import settings
 from coop.org.forms import OrganizationForm, OrganizationCategoryForm
 from django.contrib.auth.decorators import login_required
 from logging import getLogger
@@ -26,7 +27,7 @@ def org_category_detail(request, slug):
 
 def org_detail(request, slug):
     context = {'editable': True}
-    org = get_object_or_404(Organization, slug=slug)
+    org = get_object_or_404(Organization, slug=slug, sites__id=settings.SITE_ID)
     context['organization'] = org
     context['adresses'] = org.located.all()
     context['engagements'] = Engagement.objects.filter(organization=org)

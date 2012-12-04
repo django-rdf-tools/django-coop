@@ -59,3 +59,8 @@ SYMPA_SOAP = {
     'OWNER': ADMINS[0][1],
     'PARAMETER_SEPARATOR': '__SEP__',      # used for template
 }
+
+
+# Keyword arguments for the MULTISITE_FALLBACK view.
+# Default: {}
+MULTISITE_FALLBACK_KWARGS = {}

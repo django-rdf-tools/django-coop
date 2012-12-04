@@ -10,6 +10,7 @@ import shortuuid
 from rdflib import Graph, plugin, Literal, URIRef, BNode
 from django.contrib.contenttypes import generic
 from django.contrib.sites.models import Site
+from django.contrib.sites.managers import CurrentSiteManager
 from django.db import IntegrityError
 from django.template import Template, Context
 from urlparse import urlsplit
@@ -115,6 +116,11 @@ class StaticURIModel(models.Model):
     uuid = models.CharField(_(u'uuid'), max_length=50, null=True, editable=False, unique=True, default=shortuuid.uuid)
 
     links = generic.GenericRelation('coop_local.Link', related_name="%(app_label)s_%(class)s_related")
+
+    # to handle multi site possibility
+    sites = models.ManyToManyField(Site, default=Site.objects.get_current)
+    objects_manager = models.Manager()  # take care of the order, the admin uses the first manager found
+    objects = CurrentSiteManager()
 
     # the default value, this attribut should be overloaded
     domain_name = None

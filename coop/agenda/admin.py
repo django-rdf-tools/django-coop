@@ -70,6 +70,9 @@ class EventAdmin(NoLookupsFkAutocompleteAdmin):
     if "coop_tag" in settings.INSTALLED_APPS:
         fieldsets[0][1]['fields'].insert(2, 'tags')
 
+    if settings.COOP_USE_SITES:
+        fieldsets[0][1]['fields'].insert(0, 'sites')
+
     inlines = [OccurrenceInline]
 
 admin.site.register(Event, EventAdmin)
