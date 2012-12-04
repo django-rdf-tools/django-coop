@@ -7,7 +7,7 @@ TIME_ZONE = 'Europe/Paris'
 LANGUAGE_CODE = 'fr-FR'
 
 from multisite import SiteID
-SITE_ID = SiteID()
+SITE_ID = SiteID(default=1)
 COOP_USE_SITES = False
 
 
@@ -48,13 +48,14 @@ STATICFILES_FINDERS = [
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 ]
 
+
 TEMPLATE_DIRS = [
     os.path.abspath(PROJECT_PATH + '/coop_local/templates/')
 ]
 
 TEMPLATE_LOADERS = [
-    'django.template.loaders.filesystem.Loader',
     'multisite.template_loader.Loader',
+    'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
     'apptemplates.Loader',

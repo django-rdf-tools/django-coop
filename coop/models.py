@@ -118,7 +118,7 @@ class StaticURIModel(models.Model):
     links = generic.GenericRelation('coop_local.Link', related_name="%(app_label)s_%(class)s_related")
 
     # to handle multi site possibility
-    sites = models.ManyToManyField(Site, default=Site.objects.get_current)
+    sites = models.ManyToManyField(Site)
     objects_manager = models.Manager()  # take care of the order, the admin uses the first manager found
     objects = CurrentSiteManager()
 
