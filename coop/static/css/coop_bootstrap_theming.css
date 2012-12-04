@@ -622,6 +622,10 @@ input#id_subtitle{
 	width: 400px;
 }
 
+input#id_label{
+	width: 600px;
+}
+
 .origin .ac_input{
 	width: 500px;
 }

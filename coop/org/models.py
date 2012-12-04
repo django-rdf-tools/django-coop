@@ -542,6 +542,7 @@ class BaseOrganization(URIModel):
         return self.description != None and len(self.description) > 20
     has_description.boolean = True
     has_description.short_description = _(u'desc.')
+    
 
     def logo_list_display(self):
         try:
