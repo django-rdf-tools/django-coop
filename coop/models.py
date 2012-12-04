@@ -23,6 +23,7 @@ from subhub.models import DistributionTask
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 import logging
+import urllib
 
 log = logging.getLogger('coop')
 
@@ -304,6 +305,10 @@ class StaticURIModel(models.Model):
             return self.multi_mapping_base(values, rdfPredicate, datatype, lang)
 
 
+    def none_reverse(self,  g, values, rdfPredicate, datatype=None, lang=None):
+        pass
+
+
     def base_single_reverse(self, uri, g, rdfPred, djField, datatype=None, lang=None, empty_value=None):
         value = list(g.objects(URIRef(uri(self)), rdfPred))
         if len(value) == 1:
@@ -337,11 +342,22 @@ class StaticURIModel(models.Model):
             if len(value) == 1:
                 value = value[0]    # Should be an URIRef
                 if isinstance(value, URIRef):
+                    # Il faut parsser sur la PES a cause des roles 
                     g_value = Graph()
-                    g_value.parse(value)
+                    imp_uri = "%s/get_rdf/?url=%s" % (settings.PES_HOST, urllib.quote_plus(unicode(value).encode('utf-8')))
+                    g_value.parse(imp_uri, format='json-ld')
                     labels = list(g_value.objects(value, settings.NS.rdfs.label))
                     labels = set(select_with_lang(labels, lang))
-                    label = labels.pop()  # On suppose tres fort qu'il y en qu'un
+                    if len(labels) > 0:
+                        label = labels.pop()  # On suppose tres fort qu'il y en qu'un
+                    else:
+                        # lets try skos:prefLabel
+                        labels = list(g_value.objects(value, settings.NS.skos.prefLabel))
+                        labels = set(select_with_lang(labels, lang))
+                        if len(labels) > 0:
+                            label = labels.pop()
+                        else:
+                            label = u""
                     setattr(self, 'remote_' + djField + '_label', unicode(label))
                 else:
                     pass
@@ -353,7 +369,9 @@ class StaticURIModel(models.Model):
         manager = getattr(self, djField)
         rdf_values = set(g.objects(URIRef(self.uri), rdfPred))
         values = set(map(StaticURIModel.toDjango, rdf_values))
-        values.remove(None)   # if toDango return None for every rdf_valuesthen the set must be emty
+        # if toDango return None for every rdf_valuesthen the set must be emty
+        if None in values:
+            values.remove(None)   
         old_values = set(manager.all())
         remove = old_values.difference(values)
         add = values.difference(old_values)
@@ -390,6 +408,9 @@ class StaticURIModel(models.Model):
             graph.parse(uri)  # RDFLib rules !!!!
         if not exists:
             instance = cls(uri=uri, uri_mode=get_urimode_from_uri(uri))
+            # a save is necessary, instance need to have a pk
+            # before calling import_rdf_data
+            instance.save()  
         else:
             instance = cls.objects.get(uri=uri)
         instance.import_rdf_data(graph)
@@ -397,8 +418,6 @@ class StaticURIModel(models.Model):
 
 
     def import_rdf_data(self, g):
-        # We have to split self.rdf_mapping in two
-        # A self.save() has to
         for method, arguments, reverse in self.rdf_mapping:
             if hasattr(self, reverse):
                 getattr(self, reverse)(g, *arguments)

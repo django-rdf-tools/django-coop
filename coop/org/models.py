@@ -222,6 +222,8 @@ class BaseContact(URIModel):
 
 
     # RDF stuff
+    def isOpenData(self):
+        return self.display == DISPLAY.PUBLIC
 
     rdf_type = settings.NS.ess.ContactMedium
 
@@ -242,7 +244,7 @@ class BaseContact(URIModel):
 
 
     def medium_mapping_reverse(self, g, rdfPred, djF, lang=None):
-        values = list(g.objects((rdflib.term.URIRef(self.uri), rdfPred)))        
+        values = list(g.objects(rdflib.term.URIRef(self.uri), rdfPred))        
         values.remove(self.rdf_type)
         m = models.get_model('coop_local', 'contactmedium')
         if len(values) == 1:
@@ -335,24 +337,34 @@ class BaseEngagement(URIModel):
         app_label = 'coop_local'
 
     def __unicode__(self):
-        return '%(person)s, %(role)s @ %(org)s' % {
-                    'person': self.person.__unicode__(),
-                    'role': self.role.__unicode__(),
-                    'org': self.organization.__unicode__()
-                    }
+        if self.role:
+            return '%(person)s, %(role)s @ %(org)s' % {
+                        'person': self.person.__unicode__(),
+                        'role': self.role.__unicode__(),
+                        'org': self.organization.__unicode__()
+                        }
+        else:
+            return '%(person)s, %(role)s @ %(org)s' % {
+                        'person': self.person.__unicode__(),
+                        'role': self.remote_role_label,
+                        'org': self.organization.__unicode__()
+                        }
 
     def label(self):
         return self.__unicode__()
 
     # RDF stufs
+    def isOpenData(self):
+        return self.engagement_display == DISPLAY.PUBLIC
+
     rdf_type = settings.NS.org.Membership
     base_mapping = [
         ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
         ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
         ('single_mapping', (settings.NS.org.member, 'person'), 'single_reverse'),
 
-        ('local_or_remote_mapping', (settings.NS.org.organization, 'organization'), 'local_or_remote_mapping'),
-        ('local_or_remote_mapping', (settings.NS.org.role, 'role'), 'local_or_remote_mapping'),
+        ('local_or_remote_mapping', (settings.NS.org.organization, 'organization'), 'local_or_remote_reverse'),
+        ('local_or_remote_mapping', (settings.NS.org.role, 'role'), 'local_or_remote_reverse'),
 
         ('label_mapping', (settings.NS.rdfs.label, 'id', 'fr'), 'label_mapping_reverse'),
 
@@ -642,20 +654,20 @@ class BaseOrganization(URIModel):
         ('single_mapping', (settings.NS.legal.registeredAddress, 'pref_address'), 'single_reverse'),
         ('single_mapping', (settings.NS.skos.note, 'notes'), 'single_reverse'),
 
-        #('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'), 
+        ('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'), 
         # FIXME : Organization objects need to have a primary key value before you can access their tags.
 
-        # ('multi_mapping', (settings.NS.ess.hasContactMedium, 'contacts'), 'multi_reverse'),
+        ('multi_mapping', (settings.NS.ess.hasContactMedium, 'contacts'), 'multi_reverse'),
         # FIXME : 'Contact' instance expected
 
-        # ('multi_mapping', (settings.NS.org.hasMember, 'members'), 'multi_reverse'),
+        ('multi_mapping', (settings.NS.org.hasMember, 'members'), 'none_reverse'),
         # FIXME : 'Organization' instance needs to have a primary key value before a many-to-many relationship can be used.
 
 
         ('logo_mapping', (settings.NS.foaf.logo, 'logo'), 'logo_mapping_reverse'),
         ('prefLabel_mapping', (settings.NS.rdfs.label, 'pref_label'), 'prefLabel_mapping_reverse'),
         
-        # ('location_mapping', (settings.NS.locn.location, 'located'), 'location_mapping_reverse'),
+        ('location_mapping', (settings.NS.locn.location, 'located'), 'location_mapping_reverse'),
         # FIXME : Located matching query does not exist.
 
         ('location_mapping', (settings.NS.ess.actionArea, 'framed'), 'location_mapping_reverse'),
@@ -730,7 +742,7 @@ class BaseOrganization(URIModel):
 
     def prefLabel_mapping_reverse(self, g, rdfPred, djF, lang=None):
         value = list(g.objects(rdflib.term.URIRef(self.uri), rdfPred))
-        title = list(g.objects(rdflib.term.URIRef(self.uri), settings.NS.dct.title))
+        title = list(g.objects(rdflib.term.URIRef(self.uri), settings.NS.legal.legalName))
         if value == title:
             setattr(self, 'pref_label', PREFLABEL.TITLE)
         else:
