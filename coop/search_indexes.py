@@ -35,6 +35,25 @@ class CoopIndex(Indexes):
         return prepared_data
 
 
+# The main class
+class CoopIndexWithoutSite(Indexes):
+    text = indexes.CharField(document=True, use_template=True)
+    tags = indexes.MultiValueField(boost=1.2, faceted=True)
+    # modified = indexes.DateField(model_attr='modified', faceted=True)
+    rendered = indexes.CharField(use_template=True, indexed=False)
+
+    def prepare_tags(self, obj):
+        return [u"%s" % tag.name for tag in obj.tags.all()]
+
+    def prepare(self, obj):
+        print "prepare id=%s %s" % (obj.id, obj)
+        prepared_data = super(CoopIndex, self).prepare(obj)
+
+        prepared_data['text'] = prepared_data['text'] + ' ' + \
+        ' '.join(prepared_data['tags']) 
+        return prepared_data
+
+
 class OrganizationIndex(CoopIndex):
 
     def get_model(self):
