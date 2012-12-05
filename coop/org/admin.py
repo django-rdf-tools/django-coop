@@ -90,7 +90,8 @@ class OrganizationAdminForm(forms.ModelForm):
 
     class Meta:
         model = get_model('coop_local', 'Organization')
-        widgets = {'category': chosenwidgets.ChosenSelectMultiple()}
+        widgets = {'category': chosenwidgets.ChosenSelectMultiple(),
+                    'sites': chosenwidgets.ChosenSelectMultiple()}
 
     def __init__(self, *args, **kwargs):
         super(OrganizationAdminForm, self).__init__(*args, **kwargs)
