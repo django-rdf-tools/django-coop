@@ -70,7 +70,7 @@ def select_with_lang(literals, lang=None):
 
 def get_urimode_from_uri(uri):
     scheme, host, path, query, fragment = urlsplit(uri)
-    if host == Site.objects.get_current().domain:
+    if host == Site.objects.get(id=1).domain  or host == Site.objects.get_current().domain:
         return URI_MODE.LOCAL
     elif host in ['rdf.insee.fr', 'ns.economie-solidaire.fr', 'data.economie-solidaire.fr']:
         return URI_MODE.COMMON
@@ -144,8 +144,9 @@ class StaticURIModel(models.Model):
     def uri_registry(self):
         return self.__class__.__name__.lower()
 
+    # be careful in case of multi domain. Uri are localted to the FIRST domain, supposed to be the principal
     def init_uri(self):
-        return u"http://%s/id/%s/%s/" % (self.domain_name or str(Site.objects.get_current().domain),
+        return u"http://%s/id/%s/%s/" % (self.domain_name or str(Site.objects.get(id=1).domain),
                                          self.uri_registry(),
                                          unicode(self.uri_id)  # can be anything = int, uuid, unicode...
                                         )

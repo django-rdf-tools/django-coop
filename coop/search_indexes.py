@@ -17,6 +17,11 @@ class CoopIndex(Indexes):
     tags = indexes.MultiValueField(boost=1.2, faceted=True)
     # modified = indexes.DateField(model_attr='modified', faceted=True)
     rendered = indexes.CharField(use_template=True, indexed=False)
+    sites = indexes.MultiValueField()
+
+
+    def prepare_sites(self, obj):
+        return [u"%s" % site.domain for site in obj.sites.all()]
 
     def prepare_tags(self, obj):
         return [u"%s" % tag.name for tag in obj.tags.all()]
@@ -28,7 +33,6 @@ class CoopIndex(Indexes):
         prepared_data = super(CoopIndex, self).prepare(obj)
         if obj.title == u'Tous candidats le 2 mars 2012':
             print 'after super'
-       
         prepared_data['text'] = prepared_data['text'] + ' ' + \
         ' '.join(prepared_data['tags']) 
         return prepared_data
@@ -52,7 +56,7 @@ class ExchangeIndex(CoopIndex):
         prepared_data['text'] = prepared_data['text'] + ' ' + \
         ' '.join(prepared_data['product']) 
         return prepared_data
- 
+
     def get_model(self):
         return Exchange
 

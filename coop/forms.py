@@ -1,9 +1,11 @@
 # -*- coding:utf-8 -*-
-
+from haystack.forms import SearchForm
 import floppyforms as forms
 from coop_cms.forms import ArticleForm as CmsArticleForm
 from coop_cms.settings import get_article_class
 from djaloha.widgets import AlohaInput
+from django.contrib.sites.models import Site
+
 
 class ArticleForm(CmsArticleForm):
     class Meta:
@@ -14,3 +16,18 @@ class ArticleForm(CmsArticleForm):
             'summary': AlohaInput(text_color_plugin=False),
             'content': AlohaInput(text_color_plugin=False),
         }
+
+
+
+
+
+class SiteSearchForm(SearchForm):
+
+    def search(self):
+        # First, store the SearchQuerySet received from other processing.
+        sqs = super(SiteSearchForm, self).search()
+        sqs = sqs.filter(sites__contains=Site.objects.get_current().domain)
+
+        return sqs
+
+

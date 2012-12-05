@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 
-{% block content %}
-    <h2>Search</h2>
+{% block meta_title %} Search {% endblock %}
+  
+
+{% block document %}
+
+
+    {% block content %}
 
     <form method="get" action=".">
         <table>
@@ -13,10 +18,11 @@
                 </td>
             </tr>
         </table>
+    </form>
 
-        {% if query %}
+    {% if query %}
 
-        <div>
+    <div>
             {% if org %}
             <div>
                 <h3> Structures </h3>
@@ -26,6 +32,8 @@
                 {% endfor %}
                 </ul>
             </div>
+            {% endif %}
+
 
             {% if exchange %}
             <div>
@@ -36,6 +44,8 @@
                 {% endfor %}
                 </ul>
             </div>
+            {% endif %}
+
            
             {% if event %}
             <div>
@@ -46,6 +56,8 @@
                 {% endfor %}
                 </ul>
             </div>
+            {% endif %}
+
 
             {% if article %}
             <div>
@@ -56,10 +68,13 @@
                 {% endfor %}
                 </ul>
             </div>
+            {% endif %}
 
 
-        </div>
+    </div>
+    {% endif %}
 
 
-    </form>
+    {% endblock %}
+
 {% endblock %}
