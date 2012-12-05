@@ -1,4 +1,4 @@
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False# -*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 from coop_local.settings import PROJECT_NAME
 
