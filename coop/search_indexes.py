@@ -28,11 +28,8 @@ class CoopIndex(Indexes):
 
     def prepare(self, obj):
         print "prepare id=%s %s" % (obj.id, obj)
-        if obj.title == u'Tous candidats le 2 mars 2012':
-            print 'before super'
         prepared_data = super(CoopIndex, self).prepare(obj)
-        if obj.title == u'Tous candidats le 2 mars 2012':
-            print 'after super'
+
         prepared_data['text'] = prepared_data['text'] + ' ' + \
         ' '.join(prepared_data['tags']) 
         return prepared_data
