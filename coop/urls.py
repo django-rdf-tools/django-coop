@@ -51,3 +51,18 @@ if 'coop.webid' in settings.INSTALLED_APPS:
     urlpatterns = urlpatterns + patterns('',
         (r'^webid/', include('coop.webid.urls')),
 )
+
+
+if 'haystack' in settings.INSTALLED_APPS:
+    # minimal version
+    from haystack.views import search_view_factory
+    from haystack.forms import SearchForm
+    from coop.views import ModelSearchView
+    urlpatterns += patterns('haystack.views',
+        url(r'^search/search/$', search_view_factory(
+            view_class=ModelSearchView,
+            form_class=SearchForm,
+            template='search/search.html',
+            load_all=False
+        ), name='haystack_search'),
+    )

@@ -1,5 +1,4 @@
 # -*- coding:utf-8 -*-
-
 from django.shortcuts import render_to_response, redirect
 from coop_local.models import Organization, OrganizationCategory, Person
 from coop_geo.models import Location, Area, AreaType
@@ -209,3 +208,30 @@ def geojson(request):
 
 
 
+if 'haystack' in settings.INSTALLED_APPS:
+    from haystack.views import SearchView
+    from coop_local.models import Article
+
+    class ModelSearchView(SearchView):
+        def __name__(self):
+            return "ModelSearchView"
+
+        def extra_context(self):
+            extra = super(ModelSearchView, self).extra_context()
+
+            if self.results == []:
+                extra['org'] = self.form.search().models(Organization)
+                if('coop.exchange' in settings.INSTALLED_APPS):
+                    extra['exchange'] = self.form.search().models(Exchange)
+                extra['article'] = self.form.search().models(Article)
+                if('coop.agenda' in settings.INSTALLED_APPS):
+                    extra['event'] = self.form.search().models(Event)
+            else:
+                extra['org'] = self.results.models(Organization)
+                if('coop.exchange' in settings.INSTALLED_APPS):
+                    extra['exchange'] = self.results.models(Exchange)
+                extra['article'] = self.results.models(Article)
+                if('coop.agenda' in settings.INSTALLED_APPS):
+                    extra['event'] = self.results.models(Event)
+
+            return extra
