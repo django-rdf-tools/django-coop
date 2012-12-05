@@ -30,8 +30,8 @@ if "coop_cms" in settings.INSTALLED_APPS:
                                                     max_length=250, blank=True, null=True,
                                                     help_text=_(u'fill this only if the organization record is not available locally'))
 
-        isSection = models.BooleanField(_(u'is section'), default=False, 
-                                        help_text=_(u"Afficher les articles de niveau inférieur dans l'arborescence"))
+        isSection = models.BooleanField(_(u'Container article'), default=False, 
+                                        help_text=_(u"Will display a list of links for its children articles"))
 
 
         if "coop.agenda" in settings.INSTALLED_APPS:
