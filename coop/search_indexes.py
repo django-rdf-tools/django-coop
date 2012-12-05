@@ -47,7 +47,7 @@ class CoopIndexWithoutSite(Indexes):
 
     def prepare(self, obj):
         print "prepare id=%s %s" % (obj.id, obj)
-        prepared_data = super(CoopIndex, self).prepare(obj)
+        prepared_data = super(CoopIndexWithoutSite, self).prepare(obj)
 
         prepared_data['text'] = prepared_data['text'] + ' ' + \
         ' '.join(prepared_data['tags']) 
