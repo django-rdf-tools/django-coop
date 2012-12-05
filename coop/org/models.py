@@ -19,7 +19,6 @@ from django.contrib.sites.models import Site
 import logging
 from urlparse import urlsplit
 
-ADMIN_THUMBS_SIZE = '60x60'
 
 #from mptt.models import MPTTModel, TreeForeignKey
 # class BaseClassification(MPTTModel, URIModel):
@@ -543,11 +542,12 @@ class BaseOrganization(URIModel):
         return self.description != None and len(self.description) > 20
     has_description.boolean = True
     has_description.short_description = _(u'desc.')
+    
 
     def logo_list_display(self):
         try:
             if self.logo:
-                thumb = default.backend.get_thumbnail(self.logo.file, ADMIN_THUMBS_SIZE)
+                thumb = default.backend.get_thumbnail(self.logo.file, settings.ADMIN_THUMBS_SIZE)
                 return '<img width="%s" src="%s" />' % (thumb.width, thumb.url)
             else:
                 return _(u"No Image")

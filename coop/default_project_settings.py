@@ -152,7 +152,8 @@ INSTALLED_APPS = [
     'django_extensions',
     'extended_choices',
     'floppyforms',
-    #'haystack',
+    # 'haystack',
+    # 'haystack_fr',
     #'oembed',
     'chosen',
     'sorl.thumbnail',
@@ -212,6 +213,7 @@ TAGGER_TAGGEDITEM_MODEL = 'coop_local.models.TaggedItem'
 TAGGER_FKEY_NAME = 'coop_local.Tag'
 
 THUMBNAIL_FORMAT = 'PNG'
+ADMIN_THUMBS_SIZE = '60x60'
 
 TINYMCE_DEFAULT_CONFIG = {
     'theme': "advanced",

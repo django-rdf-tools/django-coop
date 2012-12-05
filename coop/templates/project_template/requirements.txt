@@ -33,7 +33,8 @@ hg+https://bitbucket.org/psyton/django-admin-tools
 git+git://github.com/quinode/django-templatetag-sugar.git
 
 # our forks
-hg+https://bitbucket.org/quinode/django-admintools-bootstrap/@0.0.2-alpha
+# hg+https://bitbucket.org/quinode/django-admintools-bootstrap/@0.0.2-alpha
+git+git://github.com/quinode/django-admintools-bootstrap.git
 git+git://github.com/quinode/uriredirect.git
 
 

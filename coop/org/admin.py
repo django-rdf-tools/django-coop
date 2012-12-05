@@ -101,8 +101,8 @@ class OrganizationAdminForm(forms.ModelForm):
           | Q(content_type=ContentType.objects.get(model='person'), object_id__in=members_id)
             )
         phone_categories = [1, 2]
-        self.fields['pref_email'].queryset = org_contacts.filter(category=8)
-        self.fields['pref_phone'].queryset = org_contacts.filter(category__in=phone_categories)
+        self.fields['pref_email'].queryset = org_contacts.filter(contact_medium_id=8)
+        self.fields['pref_phone'].queryset = org_contacts.filter(contact_medium_id__in=phone_categories)
         self.fields['category'].help_text = None
 
         member_locations_id = [m.location.id for m in
