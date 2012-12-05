@@ -105,6 +105,9 @@ class OrganizationAdminForm(forms.ModelForm):
         self.fields['pref_email'].queryset = org_contacts.filter(contact_medium_id=8)
         self.fields['pref_phone'].queryset = org_contacts.filter(contact_medium_id__in=phone_categories)
         self.fields['category'].help_text = None
+        if 'sites' in self.fields:
+            self.fields['sites'].help_text = None
+
 
         member_locations_id = [m.location.id for m in
             Person.objects.filter(id__in=members_id).exclude(location=None)]  # limit SQL to location field
@@ -176,7 +179,7 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
                         'web']
             }),
         ('Description', {
-            'fields': ['description', 'category',]  # 'tags', )
+            'fields': ['description', 'category',]  # 'tags', ]
             }),
 
         ('Préférences', {

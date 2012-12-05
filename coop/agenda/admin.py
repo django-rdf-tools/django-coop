@@ -6,10 +6,11 @@ from django import forms
 from coop_local.models import Event, EventCategory, Calendar, Occurrence, Dated
 from coop.utils.autocomplete_admin import FkAutocompleteAdmin, InlineAutocompleteAdmin, NoLookupsFkAutocompleteAdmin
 from coop_geo.admin import LocatedInline
-from django.db.models.loading import get_model
 from django.contrib.contenttypes.generic import GenericTabularInline
 from django.utils.translation import ugettext_lazy as _
 from coop.agenda.forms import SingleOccurrenceForm
+from django.db.models.loading import get_model
+from chosen import widgets as chosenwidgets
 
 #from genericadmin.admin import GenericAdminModelAdmin
 # GenericStackedInline or GenericTabularInline
@@ -31,7 +32,7 @@ class OccurrenceInline(admin.StackedInline):
 class EventAdminForm(forms.ModelForm):
     class Meta:
         model = get_model('coop_local', 'Event')
-        #widgets = {'category': chosenwidgets.ChosenSelectMultiple()}
+        widgets = {'sites': chosenwidgets.ChosenSelectMultiple()}
 
     def __init__(self, *args, **kwargs):
         # initial = {
@@ -46,6 +47,8 @@ class EventAdminForm(forms.ModelForm):
         super(EventAdminForm, self).__init__(*args, **kwargs)
         self.fields['calendar'].initial = Calendar.objects.get(id=1)
         self.fields['event_type'].initial = EventCategory.objects.get(id=1)
+        if 'sites' in self.fields:
+            self.fields['sites'].help_text = None
 
 
 class EventAdmin(NoLookupsFkAutocompleteAdmin):

@@ -376,7 +376,6 @@ class BaseEngagement(URIModel):
         pass
 
 
-
 class BaseOrganizationCategory(models.Model):
     label = models.CharField(blank=True, max_length=100)
     slug = exfields.AutoSlugField(populate_from=('label'), overwrite=True)

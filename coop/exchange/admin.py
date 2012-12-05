@@ -10,6 +10,7 @@ from tinymce.widgets import AdminTinyMCE
 from coop.utils.fields import MultiSelectFormField, MethodsCheckboxSelectMultiple, DomainCheckboxSelectMultiple
 from coop.exchange.models import ETYPE
 from django.conf import settings
+from chosen import widgets as chosenwidgets
 
 from coop.admin import ObjEnabledInline
 
@@ -35,7 +36,7 @@ if 'coop.exchange' in settings.INSTALLED_APPS:
         methods = forms.ModelMultipleChoiceField(   queryset=get_model('coop_local', 'ExchangeMethod').objects.all(),
                                                     widget=MethodsCheckboxSelectMultiple(),
                                                     required=False)
-
+        
         def __init__(self, *args, **kwargs):
             super(ExchangeForm, self).__init__(*args, **kwargs)
         #   self.fields['methods'].widget = forms.CheckboxSelectMultiple()
@@ -43,12 +44,16 @@ if 'coop.exchange' in settings.INSTALLED_APPS:
             self.fields['methods'].label = _(u'exchange methods')
             if 'tags' in self.fields:
                 self.fields['tags'].label = 'Tags'
+            if 'sites' in self.fields:
+                self.fields['sites'].help_text = None
 
         class Media:
             js = ('js/select_exchange_methods.js',)
 
         class Meta:
             model = get_model('coop_local', 'Exchange')
+            widgets = {'sites': chosenwidgets.ChosenSelectMultiple()}
+
 
     class ExchangeInline(admin.StackedInline, ObjEnabledInline):
         form = ExchangeForm

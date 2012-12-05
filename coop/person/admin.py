@@ -16,12 +16,15 @@ class PersonAdminForm(forms.ModelForm):
     #         queryset=get_model('coop_local', 'PersonCategory').objects.all())
 
     class Meta:
-        widgets = {'category': chosenwidgets.ChosenSelectMultiple()}
+        widgets = {'category': chosenwidgets.ChosenSelectMultiple(),
+                    'sites': chosenwidgets.ChosenSelectMultiple()}
 
     def __init__(self, *args, **kwargs):
         super(PersonAdminForm, self).__init__(*args, **kwargs)
         self.fields['category'].help_text = None
         self.fields['location'].help_text = None
+        if 'sites' in self.fields:
+            self.fields['sites'].help_text = None
 
 
 class PersonAdmin(FkAutocompleteAdmin):

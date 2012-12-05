@@ -7,13 +7,13 @@ from tinymce.widgets import AdminTinyMCE
 from django import forms
 from sorl.thumbnail.admin import AdminImageMixin
 from coop.utils.autocomplete_admin import FkAutocompleteAdmin, NoLookupsFkAutocompleteAdmin
+from django.db.models.loading import get_model
+from chosen import widgets as chosenwidgets
 
 if "coop.agenda" in settings.INSTALLED_APPS:
     from coop.agenda.admin import DatedInline
 
-
 if "coop_cms" in settings.INSTALLED_APPS:
-
     from coop_cms.admin import NavTreeAdmin, ArticleAdmin
     from coop_cms.settings import get_article_class, get_navTree_class
     from coop_cms.forms import ArticleAdminForm
@@ -32,10 +32,15 @@ if "coop_cms" in settings.INSTALLED_APPS:
     class CoopArticleForm(ArticleAdminForm):
         content = forms.CharField(widget=AdminTinyMCE(attrs={'cols': 80, 'rows': 60}), required=False)
 
+        class Meta:
+            model = get_model('coop_local', 'Article')
+            widgets = {'sites': chosenwidgets.ChosenSelectMultiple()}
 
-        # def __init__(self, *args, **kwargs):
+        def __init__(self, *args, **kwargs):
+            super(CoopArticleForm, self).__init__(*args, **kwargs)
+            if 'sites' in self.fields:
+                self.fields['sites'].help_text = None
         #     from django.forms.widgets import HiddenInput
-        #     super(CoopArticleForm, self).__init__(*args, **kwargs)
         #     self.fields['remote_organization_uri'].widget = HiddenInput()
         #     self.fields['remote_person_uri'].widget = HiddenInput()
 
