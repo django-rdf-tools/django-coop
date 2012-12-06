@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from django.shortcuts import render_to_response, redirect
-from coop_local.models import Organization, OrganizationCategory, Person
-from coop_geo.models import Location, Area, AreaType
+from coop_local.models import Organization, OrganizationCategory, Person, Location, Area
+from coop_geo.models import AreaType
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.conf import settings

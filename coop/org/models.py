@@ -481,7 +481,7 @@ class BaseOrganization(URIModel):
     pref_phone = models.ForeignKey('coop_local.Contact',
                 verbose_name=_(u'preferred phone'),
                 related_name='pref_phone', null=True, blank=True)
-    pref_address = models.ForeignKey('coop_geo.Location',
+    pref_address = models.ForeignKey('coop_local.Location',
                 verbose_name=_(u'preferred postal address'),
                 related_name='pref_adress', null=True, blank=True)
 
@@ -516,11 +516,11 @@ class BaseOrganization(URIModel):
         has_location.short_description = _(u'geo')
 
         def locations(self):
-            from coop_geo.models import Location
+            from coop_local.models import Location
             return Location.objects.filter(id__in=self.located.all().values_list('location_id', flat=True))
 
         def areas(self):
-            from coop_geo.models import Area
+            from coop_local.models import Area
             return Area.objects.filter(id__in=self.framed.all().values_list('location_id', flat=True))
 
         def to_geoJson(self):

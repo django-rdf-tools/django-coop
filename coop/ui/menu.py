@@ -89,8 +89,8 @@ class CustomMenu(Menu):
                         ]),
 
                     items.MenuItem(_('Cartography'), '#', icon='icon-map-marker', children=[
-                        items.MenuItem(_('Locations'), '/admin/coop_geo/location/'),
-                        items.MenuItem(_('Areas'), '/admin/coop_geo/area/'),
+                        items.MenuItem(_('Locations'), '/admin/coop_local/location/'),
+                        items.MenuItem(_('Areas'), '/admin/coop_local/area/'),
                         items.MenuItem(_('Location categories'), '/admin/coop_geo/locationcategory/'),
                         # create my map !
                         ]),

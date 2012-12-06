@@ -5,6 +5,7 @@ from coop_local.models import *
 from coop.person.admin import PersonAdmin
 from coop.org.admin import OrganizationAdmin
 from coop.prefs.admin import SitePrefsAdmin
+from coop_geo.admin import LocationAdmin, AreaAdmin
 from django.conf import settings
 
 # -- Loading base models
@@ -18,6 +19,8 @@ admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(OrganizationCategory)
 admin.site.register(OrgRelationType)
 admin.site.register(SitePrefs, SitePrefsAdmin)
+admin.site.register(Location, LocationAdmin)
+admin.site.register(Area, AreaAdmin)
 
 
 if "coop.exchange" in settings.INSTALLED_APPS:

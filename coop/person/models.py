@@ -13,8 +13,8 @@ from django.contrib.contenttypes import generic
 from coop.models import URIModel
 import rdflib
 
-if "coop_geo" in settings.INSTALLED_APPS:
-    from coop_geo.models import Location
+# if "coop_geo" in settings.INSTALLED_APPS:
+#     from coop_local.models import Location
 
 
 class BasePersonCategory(models.Model):
@@ -51,7 +51,7 @@ class BasePerson(URIModel):
         subs = generic.GenericRelation('coop_local.Subscription')
 
     if "coop_geo" in settings.INSTALLED_APPS:
-        location = models.ForeignKey(Location, null=True, blank=True, verbose_name=_(u'location'))
+        location = models.ForeignKey('coop_local.Location', null=True, blank=True, verbose_name=_(u'location'))
         location_display = models.PositiveSmallIntegerField(_(u'Display'), choices=DISPLAY.CHOICES, default=DISPLAY.USERS)
 
     class Meta:

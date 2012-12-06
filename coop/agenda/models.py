@@ -102,7 +102,7 @@ class BaseEvent(URIModel):
 
     person = models.ForeignKey('coop_local.Person', null=True, blank=True, verbose_name=_('author'))
     if "coop_geo" in settings.INSTALLED_APPS:
-        location = models.ForeignKey('coop_geo.Location', null=True, blank=True, verbose_name=_('location'))
+        location = models.ForeignKey('coop_local.Location', null=True, blank=True, verbose_name=_('location'))
         remote_location_uri = models.URLField(_('remote location URI'), blank=True, max_length=255)
         remote_location_label = models.CharField(_(u'remote location label'),
                                                 max_length=250, blank=True, null=True,

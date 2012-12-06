@@ -12,8 +12,8 @@ from django.contrib.contenttypes import generic
 import datetime
 import rdflib
 
-if "coop_geo" in settings.INSTALLED_APPS:
-    from coop_geo.models import Area, Location
+# if "coop_geo" in settings.INSTALLED_APPS:
+#     from coop_local.models import Area, Location
 
 
 class BaseProduct(URIModel):
@@ -117,11 +117,11 @@ class BaseExchange(URIModel):
     # coop_geo must be loaded BEFORE coop_local
     if "coop_geo" in settings.INSTALLED_APPS:
 
-        location = models.ForeignKey(   Location,
+        location = models.ForeignKey(   'coop_local.Location',
                                         verbose_name=_(u'location'),
                                         null=True, blank=True, related_name='exchange_location',
                                         help_text=_("choose a location among your registered locations."))
-        area = models.ForeignKey(Area,
+        area = models.ForeignKey('coop_local.Area',
                                  verbose_name=_(u'interest area'),
                                  null=True, blank=True, related_name='exchange_area',
                                  help_text=_("choose an area among your registered impact areas."))

@@ -185,7 +185,7 @@ class StaticURIModel(models.Model):
             scheme, host, path, query, fragment = urlsplit(uri)
             if host == 'rdf.insee.fr':
                 # Area de INSEE
-                m = models.get_model('coop_geo', 'area')
+                m = models.get_model('coop_local', 'area')
                 try:
                     return m.objects.get(uri=uri)
                 except m.DoesNotExist:
@@ -216,8 +216,8 @@ class StaticURIModel(models.Model):
             # BIG WARNING : it is supporded that uri dont change and match the model nam
             mName = path.split('/')[2]
             m = models.get_model('coop_local', mName)
-            if m == None:
-                m = models.get_model('coop_geo', mName)
+            # if m == None:
+            #     m = models.get_model('coop_geo', mName)
             if not m == None:
                 try:
                     return m.objects.get(uri=uri)
@@ -612,8 +612,8 @@ def rdfGraphAll(model=None):
                     g += o.toRdfGraph()
     else:
         m = models.get_model('coop_local', model)
-        if m == None:
-            m = models.get_model('coop_geo', model)
+        # if m == None:
+        #     m = models.get_model('coop_geo', model)
         if m == None:
             log.debug(_(u"Warning"))
             log.debug(_(u"Warning no model found for model name %s" % model))
