@@ -14,9 +14,9 @@ env.vm_path = "/Users/dom/VM/devcoop"
 env.locale = 'fr_FR.UTF-8'
 
 #Paramétres par défaut
-domain = "www.extramarche.net"
-projet = "extramarche"
-alias = "extralocal"
+domain = "coop.cerapcoop.org"
+projet = "cerapcoop"
+alias = "cerapcoop"
 
 pgpass = '123456'
 

@@ -76,3 +76,7 @@ if 'haystack' in settings.INSTALLED_APPS:
         ), name='haystack_search'),
     )
 
+
+urlpatterns += patterns('',
+    (r'^', include('coop_cms.urls')),
+)
