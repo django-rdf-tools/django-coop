@@ -31,7 +31,7 @@
                 {% endif %}
 
                 {% if article.organization or article.remote_organization_label %}
-                    <dt>Auteur</dt>
+                    <dt>Structure</dt>
                     {% local_or_remote uri article organization as org_uri %}
                     {% local_or_remote label article organization as org_label %}
                     <dd>{% if org_uri %}<a href="{{org_uri}}">{% endif %}

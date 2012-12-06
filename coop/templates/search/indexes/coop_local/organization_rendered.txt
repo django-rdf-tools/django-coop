@@ -1,7 +1,10 @@
-{% comment %}
+{% load thumbnail %}
+
 {% if object.logo %}
-<img width="40" height="13" src="/media/{{ object.logo.file }}">
+	{% thumbnail organization.logo "40x40" as im %}
+	     <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+	{% endthumbnail %}
 {% endif %}
-{% endcomment %}
+
 
 <a href="{{ object.get_absolute_url }}">{{ object.title}}</a>
