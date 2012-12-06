@@ -329,7 +329,7 @@ class BaseEngagement(URIModel):
     def __unicode__(self):
         return '%(person)s, %(role)s @ %(org)s' % {
                     'person': self.person.__unicode__(),
-                    'role': self.role.__unicode__(),
+                    'role': self.role.__unicode__() if self.role else '',
                     'org': self.organization.__unicode__()
                     }
 
