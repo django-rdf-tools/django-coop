@@ -28,11 +28,27 @@ class CoopIndex(Indexes):
 
     def prepare(self, obj):
         print "prepare id=%s %s" % (obj.id, obj)
-        if obj.title == u'Tous candidats le 2 mars 2012':
-            print 'before super'
         prepared_data = super(CoopIndex, self).prepare(obj)
-        if obj.title == u'Tous candidats le 2 mars 2012':
-            print 'after super'
+
+        prepared_data['text'] = prepared_data['text'] + ' ' + \
+        ' '.join(prepared_data['tags']) 
+        return prepared_data
+
+
+# The main class
+class CoopIndexWithoutSite(Indexes):
+    text = indexes.CharField(document=True, use_template=True)
+    tags = indexes.MultiValueField(boost=1.2, faceted=True)
+    # modified = indexes.DateField(model_attr='modified', faceted=True)
+    rendered = indexes.CharField(use_template=True, indexed=False)
+
+    def prepare_tags(self, obj):
+        return [u"%s" % tag.name for tag in obj.tags.all()]
+
+    def prepare(self, obj):
+        print "prepare id=%s %s" % (obj.id, obj)
+        prepared_data = super(CoopIndexWithoutSite, self).prepare(obj)
+
         prepared_data['text'] = prepared_data['text'] + ' ' + \
         ' '.join(prepared_data['tags']) 
         return prepared_data

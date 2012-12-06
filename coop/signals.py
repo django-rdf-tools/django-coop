@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from coop.models import StaticURIModel, URI_MODE
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save, post_delete, pre_save
 from django.dispatch import receiver
 from django.contrib.sites.models import Site
 from django.conf import  settings
@@ -60,6 +60,14 @@ def letsCallDistributionTaskProcess(thName):
     subhub.models.DistributionTask.objects.process(log=log)
 
 
+
+@receiver(pre_save)
+def pre_save_callback(sender, instance, **kwargs):
+    # Initialize the 'sites' many2many field with the default site
+    if hasattr(instance, 'sites') and not instance.sites.all().exists():
+        instance.sites.add(Site.objects.get_current())
+
+
 # Listener tool
 # The point here is to be careful with synchronization.
 # subhub.publish will create a new DistributionTask object (if no DistributioTask
@@ -70,10 +78,6 @@ def letsCallDistributionTaskProcess(thName):
 def post_save_callback(sender, instance, **kwargs):
     maintenance = getattr(settings, 'SUBHUB_MAINTENANCE_AUTO', False)
     # log.debug(u"Post save callback with sender %s and instance %s and AUTO %s" % (unicode(sender), unicode(instance), maintenance))
-
-    # Initialize the 'sites' many2many field with the default site
-    if hasattr(instance, 'sites') and not instance.sites.all().exists():
-        instance.sites.add(Site.objects.get_current())
 
     if isinstance(instance, StaticURIModel):
         if instance.uri_mode == URI_MODE.IMPORTED:
