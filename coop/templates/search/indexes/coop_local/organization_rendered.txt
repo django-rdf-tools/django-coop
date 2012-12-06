@@ -1,10 +1,9 @@
 {% load thumbnail %}
 
 {% if object.logo %}
-	{% thumbnail organization.logo "40x40" as im %}
+	{% thumbnail object.logo "40x40" as im %}
 	     <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
 	{% endthumbnail %}
 {% endif %}
-
 
 <a href="{{ object.get_absolute_url }}">{{ object.title}}</a>
