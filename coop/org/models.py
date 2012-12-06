@@ -345,7 +345,7 @@ class BaseEngagement(URIModel):
         else:
             return '%(person)s, %(role)s @ %(org)s' % {
                         'person': self.person.__unicode__(),
-                        'role': self.remote_role_label,
+                        'role': self.remote_role_label if self.remote_role_label else '',
                         'org': self.organization.__unicode__()
                         }
 
