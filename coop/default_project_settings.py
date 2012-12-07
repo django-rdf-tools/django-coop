@@ -146,7 +146,7 @@ INSTALLED_APPS = [
     #'django.contrib.admindocs', # ramène sa traduction de Tags "Étiquettes"...
     'django.contrib.gis',
     'django.contrib.comments',
-    'djgeojson',
+    # 'djgeojson',
 
     # other 3rd parties
     'south',
