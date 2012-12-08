@@ -21,7 +21,7 @@ if getattr(settings, 'SUBHUB_MAINTENANCE_AUTO', False):
     import django_rq
 
 
-log = logging.getLogger('subhub.maintenance')
+log = logging.getLogger('coop')
 
 
 
