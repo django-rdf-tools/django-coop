@@ -112,6 +112,8 @@ def post_delete_callback(sender, instance, **kwargs):
     if isinstance(instance, StaticURIModel):
         if instance.uri_mode == URI_MODE.IMPORTED:
             instance.unsubscribeToUpdades()
+        if instance.uri_mode == URI_MODE.LOCAL:
+            log.debug("NYI deleted instance %s" % instance)
 
 
 def listener(notification, **kwargs):
