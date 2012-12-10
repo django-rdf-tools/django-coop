@@ -361,15 +361,15 @@ LOGGING = {
             'handlers': ['console'],
             'propagate': False,
         },
-        'subhub.maintenance': {
-            'handlers': ['console'],
-            'level': 'ERROR'
-        },
-        'subhub.distribution.process': {
-            'handlers': ['console'],
-            'level': 'ERROR'
+        # 'subhub.maintenance': {
+        #     'handlers': ['console'],
+        #     'level': 'ERROR'
+        # },
+        # 'subhub.distribution.process': {
+        #     'handlers': ['console'],
+        #     'level': 'ERROR'
 
-        },
+        # },
         'worker': {
             'handlers': ['console'],
             'level': 'DEBUG'
@@ -377,7 +377,7 @@ LOGGING = {
         },
         'coop': {
             'handlers': ['console-dumb'],
-            'level': 'ERROR',
+            'level': 'DEBUG',
         },
     },
 

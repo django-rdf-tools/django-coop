@@ -16,7 +16,7 @@ import subhub
 
 # As subhub is the only app the use redis. All Redis stuff are logger 
 # subhub.mainteance  log
-log = logging.getLogger('subhub.maintenance')
+log = logging.getLogger('coop')
 
 
 class Job(QuarterHourlyJob):

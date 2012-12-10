@@ -15,7 +15,7 @@ from rq import Queue, use_connection, get_current_connection, Worker
 
 # As subhub is the only app the use redis. All Redis stuff are logger 
 # subhub.mainteance  log
-log = logging.getLogger('subhub.maintenance')
+log = logging.getLogger('coop')
 
 
 class Job(HourlyJob):
