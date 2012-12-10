@@ -639,7 +639,7 @@ class BaseOrganization(URIModel):
         return self.active
 
     base_mapping = [
-        ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
+        ('single_mapping', (settings.NS.dct.created, 'birth'), 'single_reverse'),
         ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
         ('single_mapping', (settings.NS.legal.legalName, 'title'), 'single_reverse'),
         ('single_mapping', (settings.NS.ov.prefAcronym, 'acronym'), 'single_reverse'),
