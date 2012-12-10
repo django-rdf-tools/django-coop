@@ -666,15 +666,26 @@ class BaseOrganization(URIModel):
 
         ('logo_mapping', (settings.NS.foaf.logo, 'logo'), 'logo_mapping_reverse'),
         ('prefLabel_mapping', (settings.NS.rdfs.label, 'pref_label'), 'prefLabel_mapping_reverse'),
-        
+    
         ('location_mapping', (settings.NS.locn.location, 'located'), 'location_mapping_reverse'),
         # FIXME : Located matching query does not exist.
 
         ('location_mapping', (settings.NS.ess.actionArea, 'framed'), 'location_mapping_reverse'),
         ('exchange_mapping', (settings.NS.gr.offers, settings.NS.gr.seeks), 'exchange_mapping_reverse'),
+        ('engagement_mapping', (settings.NS.org.organization, 'engagement_set'), 'engagement_mapping_reverse'),
 
     ]
 
+
+    # We to add in the graph the coresponding Engagement
+    def engagement_mapping(self, rdfPred, djF):
+        res = []
+        for e in getattr(self, djF).all():
+            res.append((rdflib.term.URIRef(e.uri), rdfPred, rdflib.term.URIRef(self.uri)))
+        return res
+
+    def engagement_mapping_reverse(self, g, rdfPred, djF):
+        pass
 
     def location_mapping(self, rdfPred, djF):
         values = map(lambda x: x.location, getattr(self, djF).all())

@@ -132,9 +132,22 @@ class BasePerson(URIModel):
 
         ('name_mapping', (settings.NS.foaf.name, 'username'), 'name_mapping_reverse'),
         ('name_mapping', (settings.NS.rdfs.label, 'username'), 'name_mapping_reverse'),
-        ('location_mapping', (settings.NS.locn.location, 'location'), 'location_mapping_reverse')
+        ('location_mapping', (settings.NS.locn.location, 'location'), 'location_mapping_reverse'),
+        ('engagement_mapping', (settings.NS.org.member, 'engagements'), 'engagement_mapping_reverse'),
 
     ]
+
+
+    # We to add in the graph the coresponding Engagement
+    def engagement_mapping(self, rdfPred, djF):
+        res = []
+        for e in getattr(self, djF).all():
+            res.append((rdflib.URIRef(e.uri), rdfPred, rdflib.URIRef(self.uri)))
+        return res
+
+    def engagement_mapping_reverse(self, g, rdfPred, djF):
+        pass
+
 
     def name_mapping(self, rdfPred, djF, lang=None):
         if (self.first_name == "" or self.first_name == None) and self.last_name == "":
