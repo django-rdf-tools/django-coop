@@ -9,6 +9,9 @@ BASE_COOP_LOCAL_MODELS = [
         u'Location', 
         u'Area',
     ]),
+    ('coop.rdf', [
+        u'DeletedURI',
+    ]),
     ('coop_cms', [
         u'Article',
         u'NavTree',

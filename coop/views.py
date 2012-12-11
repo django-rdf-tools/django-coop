@@ -1,15 +1,15 @@
 # -*- coding:utf-8 -*-
+
 from django.shortcuts import render_to_response, redirect
 from coop_local.models import Organization, OrganizationCategory, Person, Location, Area
 from coop_geo.models import AreaType
+from django.shortcuts import render_to_response
+from coop_local.models import Organization, OrganizationCategory, DeletedURI
 from django.template import RequestContext
-from django.core.urlresolvers import reverse
 from django.conf import settings
-from django.http import Http404
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 import json
-from coop.models import rdfGraphAll
 from django.core.exceptions import ImproperlyConfigured
 
 if('coop.exchange' in settings.INSTALLED_APPS):
@@ -75,8 +75,14 @@ RDF_SERIALIZATIONS = {
 # smallest data API ever
 def get_rdf(request, model, uuid, format):
     req_model = get_model(urimodels[model], model)
-    object = get_object_or_404(req_model, uuid=uuid)
-    return HttpResponse(object.toRdf(format), mimetype=RDF_SERIALIZATIONS[format])
+    import pdb
+    pdb.set_trace()
+    try:
+        object = req_model.objects.get(uuid=uuid)
+        return HttpResponse(object.toRdf(format), mimetype=RDF_SERIALIZATIONS[format])
+    except req_model.DoesNotExist:
+        object = get_object_or_404(DeletedURI, uuid=uuid)
+        return HttpResponse(object.toRdf(format), mimetype=RDF_SERIALIZATIONS[format])
 
 
 def SentryHandler500(request):
