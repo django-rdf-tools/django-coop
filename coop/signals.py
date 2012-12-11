@@ -88,7 +88,11 @@ def post_save_callback(sender, instance, **kwargs):
             # Subscription done if it does not exists, in other it is simply renew
             instance.subscribeToUpdades(host=settings.THESAURUS_HOST)
         else:
-            feed_url = 'http://%s/feed/%s/' % (Site.objects.get_current().domain, sender.__name__.lower())
+            domain = Site.objects.get_current().domain
+            if domain.startswith('http'):
+                feed_url = '%s/feed/%s/' % (domain, sender.__name__.lower())
+            else:
+                feed_url = 'http://%s/feed/%s/' % (domain, sender.__name__.lower())
             try:
                 subhub.publish([feed_url], instance.uri, False)
                 #log.debug('publish done; Number of Dist task %s' % len(subhub.models.DistributionTask.objects.all()))
@@ -121,7 +125,23 @@ def post_delete_callback(sender, instance, **kwargs):
         if instance.uri_mode == URI_MODE.IMPORTED:
             instance.unsubscribeToUpdades()
         if instance.uri_mode == URI_MODE.LOCAL:
-            log.debug("NYI deleted instance %s" % instance)
+            from coop_local.models import DeletedURI
+            #peut etre à completer
+            model_name = sender.__name__.lower()
+            deleted = DeletedURI(uri=instance.uri, date=datetime.datetime.now(),\
+                rdf_type=instance.rdf_type, uuid=instance.uuid, model_name=model_name)
+            deleted.save()
+            domain = Site.objects.get_current().domain
+            if domain.startswith('http'):
+                feed_url = '%s/feed/%s/' % (domain, sender.__name__.lower())
+            else:
+                feed_url = 'http://%s/feed/%s/' % (domain, sender.__name__.lower())
+            try:
+                subhub.publish([feed_url], instance.uri, False)
+                #log.debug('publish done; Number of Dist task %s' % len(subhub.models.DistributionTask.objects.all()))
+            except Exception, e:
+                log.warning(u'Unable to publish %s for feed %s : %s' % (instance, feed_url, e))
+
 
 
 def listener(notification, **kwargs):

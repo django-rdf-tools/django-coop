@@ -9,6 +9,14 @@ from coop.org.models import (BaseOrganizationCategory, BaseOrganization,
                              BaseRelation, BaseEngagement, BaseRole, BaseOrgRelationType,
                              BaseContact, BaseRoleCategory, BaseContactMedium)
 from coop.prefs.models import BaseSitePrefs
+from coop.rdf.models import DeletedURI as BaseDeletedURI
+
+
+
+# ---- DeletedUri
+class DeletedURI(BaseDeletedURI):
+    pass
+
 
 # ---- person
 

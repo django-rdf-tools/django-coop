@@ -5,6 +5,7 @@ from django_push.publisher.feeds import Feed
 from django.db.models.loading import get_model
 from django.contrib.contenttypes.models import ContentType
 from coop.signals import LastDTProcess
+from coop_local.models import DeletedURI
 
 
 class UpdateFeed(Feed):
@@ -23,11 +24,15 @@ class UpdateFeed(Feed):
         # Is it the good feature?
         # return get_model(self._mType.app_label, self._model).objects.order_by('-modified')[:5]
         # print 'FeedItem CALLLED'
+        deleted = DeletedURI.objects.filter(model_name=self._mType).order_by('-modified')[:5]
+        with_deleted = list(deleted)
         qs = get_model(self._mType.app_label, self._model).objects.filter(modified__gte=LastDTProcess.get())
         if len(qs) > 5:
-            return qs.order_by('-modified')
+            with_deleted.extend(qs.order_by('-modified'))
         else:
-            return get_model(self._mType.app_label, self._model).objects.order_by('-modified')[:5]
+            with_deleted.extend(get_model(self._mType.app_label, self._model).objects.order_by('-modified')[:5])
+        return with_deleted
+
 
 
     def item_link(self, item):
