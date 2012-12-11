@@ -5,6 +5,9 @@ PUSH_HUB = ''
 SUBHUB_MAINTENANCE_AUTO = False
 
 BASE_COOP_LOCAL_MODELS = [
+    ('coop.rdf', [
+        u'DeletedURI',
+    ]),
     ('coop_cms', [
         u'Article',
         u'NavTree',
