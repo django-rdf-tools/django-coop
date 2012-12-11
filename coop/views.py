@@ -72,8 +72,6 @@ RDF_SERIALIZATIONS = {
 # smallest data API ever
 def get_rdf(request, model, uuid, format):
     req_model = get_model(urimodels[model], model)
-    import pdb
-    pdb.set_trace()
     try:
         object = req_model.objects.get(uuid=uuid)
         return HttpResponse(object.toRdf(format), mimetype=RDF_SERIALIZATIONS[format])

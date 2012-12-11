@@ -128,7 +128,7 @@ def post_delete_callback(sender, instance, **kwargs):
             from coop_local.models import DeletedURI
             #peut etre à completer
             model_name = sender.__name__.lower()
-            deleted = DeletedURI(uri=instance.uri, date=datetime.datetime.now(),\
+            deleted = DeletedURI(uri=instance.uri, modified=datetime.datetime.now(),\
                 rdf_type=instance.rdf_type, uuid=instance.uuid, model_name=model_name)
             deleted.save()
             domain = Site.objects.get_current().domain
