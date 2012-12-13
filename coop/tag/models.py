@@ -31,7 +31,7 @@ if 'coop_tag' in settings.INSTALLED_APPS:
         concept_uri = models.CharField(_(u'Concept URI'), blank=True, max_length=250, editable=False)
 
         # Tags have a common uri domain
-        domain_name = 'data.economie-solidaire.fr'
+        domain_name = 'thess.economie-solidaire.fr'
 
         @property
         def uri_id(self):
