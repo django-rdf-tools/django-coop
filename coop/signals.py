@@ -157,7 +157,7 @@ def listener(notification, **kwargs):
     #  build the rdf graph
     g = Graph()
     if model == 'tag':
-        # This is a temporairy work around. data.economie-solidaire.fr is not
+        # This is a temporairy work around. thess.economie-solidaire.fr is not
         # yet responding. TODO we have to deal with contexts as tags come thesaurus
         try:
             # TEMP hard coded

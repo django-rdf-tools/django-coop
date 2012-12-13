@@ -71,7 +71,7 @@ def get_urimode_from_uri(uri):
     scheme, host, path, query, fragment = urlsplit(uri)
     if host == Site.objects.get_current().domain:
         return URI_MODE.LOCAL
-    elif host in ['rdf.insee.fr', 'ns.economie-solidaire.fr', 'data.economie-solidaire.fr']:
+    elif host in ['rdf.insee.fr', 'ns.economie-solidaire.fr', 'thess.economie-solidaire.fr']:
         return URI_MODE.COMMON
     else:
         return URI_MODE.IMPORTED
@@ -197,7 +197,7 @@ class StaticURIModel(models.Model):
                     return m.objects.get(uri=uri)
                 except m.DoesNotExist:
                     return None
-            elif host == 'data.economie-solidaire.fr':
+            elif host == 'thess.economie-solidaire.fr':
                 # Role Category
                 m_role_category = models.get_model('coop_local', 'rolecategory')
                 try:
