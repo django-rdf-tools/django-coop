@@ -41,7 +41,7 @@ class DeletedURI(models.Model):
             graph.bind(k, settings.NS[k])
 
         graph.add((URIRef(self.uri), settings.NS.rdf.type, URIRef(self.rdf_type)))
-        graph.add((URIRef(self.uri), settings.NS.ess.deletedOn, Literal(self.modified)))
+        graph.add((URIRef(self.uri), settings.NS.ov.deletedOn, Literal(self.modified)))
         if format == 'ttl':
             format = 'n3'
         if format == 'json':
