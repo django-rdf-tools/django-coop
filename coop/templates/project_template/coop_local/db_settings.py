@@ -31,12 +31,11 @@ RQ_QUEUES = {
 
 
 # Elastic search
+import os
 HAYSTACK_CONNECTIONS = {
     'default': {
-        'ENGINE': 'haystack_fr.backends.elasticsearch_backend.ElasticsearchSearchEngine',
-        'URL': 'http://localhost:9200/',
-        'INDEX_NAME': PROJECT_NAME,
-        # 'INCLUDE_SPELLING': True,   # not yet handled by ES
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(os.path.dirname(__file__), 'whoosh_index'),
     },
 }
-
+HAYSTACK_REALTIME = True  # To rebuild on the fly
