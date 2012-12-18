@@ -1,5 +1,4 @@
 # -*- coding:utf-8 -*-
-
 import os
 from coop_local.settings import PROJECT_PATH, PROJECT_NAME
 
