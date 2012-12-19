@@ -10,9 +10,7 @@ from django.conf import settings
 from django.db.models.loading import get_model
 from django.utils.translation import ugettext_lazy as _
 from coop.utils.autocomplete_admin import FkAutocompleteAdmin, InlineAutocompleteAdmin
-
-from coop_local.models import Contact, Person
-from coop_geo.models import Location
+from coop_local.models import Contact, Person, Location
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
 

@@ -1,7 +1,10 @@
 # -*- coding:utf-8 -*-
+
+from django.shortcuts import render_to_response, redirect
+from coop_local.models import Organization, OrganizationCategory, Person, Location, Area
+from coop_geo.models import AreaType
 from django.shortcuts import render_to_response
 from coop_local.models import Organization, OrganizationCategory, DeletedURI
-from coop_geo.models import Location, Area, AreaType
 from django.template import RequestContext
 from django.conf import settings
 from django.http import HttpResponse

@@ -9,8 +9,18 @@ from coop.org.models import (BaseOrganizationCategory, BaseOrganization,
                              BaseRelation, BaseEngagement, BaseRole, BaseOrgRelationType,
                              BaseContact, BaseRoleCategory, BaseContactMedium)
 from coop.prefs.models import BaseSitePrefs
+from coop_geo.models import Location as BaseLocation
+from coop_geo.models import Area as BaseArea
 from coop.rdf.models import DeletedURI as BaseDeletedURI
 
+
+# ---- geo
+class Location(BaseLocation):
+    pass
+
+
+class Area(BaseArea):
+    pass
 
 
 # ---- DeletedUri

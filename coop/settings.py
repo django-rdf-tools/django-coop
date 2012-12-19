@@ -5,6 +5,10 @@ PUSH_HUB = ''
 SUBHUB_MAINTENANCE_AUTO = False
 
 BASE_COOP_LOCAL_MODELS = [
+    ('coop_geo', [
+        u'Location', 
+        u'Area',
+    ]),
     ('coop.rdf', [
         u'DeletedURI',
     ]),

@@ -59,8 +59,8 @@ def import_from_uri(request):
         model_name = data['model']
         model = get_model('coop_local', model_name)
 
-        if model == None:
-            model = get_model('coop_geo', model_name)
+        # if model == None:
+        #     model = get_model('coop_geo', model_name)
         graph_url = data['import_rdf_url']
 
         if graph_url:
