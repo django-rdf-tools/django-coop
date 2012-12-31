@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from haystack.forms import SearchForm
+from django.conf import settings
 import floppyforms as forms
 from coop_cms.forms import ArticleForm as CmsArticleForm
 from coop_cms.settings import get_article_class
@@ -19,15 +19,17 @@ class ArticleForm(CmsArticleForm):
 
 
 
+if 'haystack' in settings.INSTALLED_APPS:
+    from haystack.forms import SearchForm
 
 
-class SiteSearchForm(SearchForm):
+    class SiteSearchForm(SearchForm):
 
-    def search(self):
-        # First, store the SearchQuerySet received from other processing.
-        sqs = super(SiteSearchForm, self).search()
-        sqs = sqs.filter(sites__contains=Site.objects.get_current().domain)
+        def search(self):
+            # First, store the SearchQuerySet received from other processing.
+            sqs = super(SiteSearchForm, self).search()
+            sqs = sqs.filter(sites__contains=Site.objects.get_current().domain)
 
-        return sqs
+            return sqs
 
 

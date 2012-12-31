@@ -76,7 +76,7 @@ git+git://github.com/RDFLib/rdflib-sparqlstore.git
 git+git://github.com/quinode/subhub.git
 django-appconf
 
-git+git://github.com/toastdriven/django-haystack.git
+# git+git://github.com/toastdriven/django-haystack.git
 
 # webid deps : not ready
 # pyOpenSSL
