@@ -61,5 +61,5 @@ msgstr "inscriptions à une liste"
 
 #: models.py:42
 msgid "subscription to "
-msgstr "inscription à"
+msgstr "inscription à "
 

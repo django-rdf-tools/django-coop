@@ -9,6 +9,10 @@ from chosen import widgets as chosenwidgets
 from coop.utils.autocomplete_admin import FkAutocompleteAdmin
 
 
+if 'coop.mailing' in settings.INSTALLED_APPS:
+    from coop.mailing.admin import SubscribtionMailingListInline
+
+
 class PersonAdminForm(forms.ModelForm):
     # category = chosenforms.ChosenModelMultipleChoiceField(
     #         required=False,
@@ -38,9 +42,12 @@ class PersonAdmin(FkAutocompleteAdmin):
     list_display_links = ('last_name', 'first_name')
     search_fields = ('last_name', 'first_name', 'structure')
     ordering = ('last_name',)
-    inlines = [ ContactInline,
+    inlines = [ContactInline,
                 OrgInline,
                 ]
+    if "coop.mailing" in settings.INSTALLED_APPS:
+        inlines.append(SubscribtionMailingListInline)
+
 
     def get_actions(self, request):
         myactions = dict(create_action(s) for s in get_model('coop_local', 'PersonCategory').objects.all())

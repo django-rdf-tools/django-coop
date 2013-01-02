@@ -224,6 +224,8 @@ TINYMCE_DEFAULT_CONFIG = {
     'theme_advanced_buttons2': '', 'theme_advanced_buttons3': ''
     }
 
+COOP_NEWLETTER_ITEM_CLASSES = ['article']
+
 COOP_CMS_ARTICLE_CLASS = 'coop_local.models.Article'
 COOP_CMS_ARTICLE_FORM = 'coop.forms.ArticleForm'
 COOP_CMS_ARTICLE_LOGO_SIZE = '600'

@@ -29,6 +29,9 @@ if "coop.exchange" in settings.INSTALLED_APPS:
 if "coop_geo" in settings.INSTALLED_APPS:
     from coop_geo.admin import LocatedInline, AreaInline
 
+if 'coop.mailing' in settings.INSTALLED_APPS:
+    from coop.mailing.admin import SubscribtionMailingListInline
+
 from django.contrib.contenttypes.generic import GenericTabularInline
 
 
@@ -156,6 +159,8 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
                     EngagementInline,
                     LocatedInline,
                     ]
+    if "coop.mailing" in settings.INSTALLED_APPS:
+        inlines.append(SubscribtionMailingListInline)
 
     # grace au patch
     # https://code.djangoproject.com/ticket/17856
