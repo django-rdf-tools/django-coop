@@ -6,7 +6,6 @@ from coop.person.admin import PersonAdmin
 from coop.org.admin import OrganizationAdmin
 from coop.prefs.admin import SitePrefsAdmin
 from coop_geo.admin import LocationAdmin, AreaAdmin
-from coop.mailing.admin import MailingListAdmin
 from django.conf import settings
 
 # -- Loading base models
@@ -22,7 +21,10 @@ admin.site.register(OrgRelationType)
 admin.site.register(SitePrefs, SitePrefsAdmin)
 admin.site.register(Location, LocationAdmin)
 admin.site.register(Area, AreaAdmin)
-admin.site.register(MailingList, MailingListAdmin)
+
+if "coop.mailing" in settings.INSTALLED_APPS:
+    from coop.mailing.admin import MailingListAdmin
+    admin.site.register(MailingList, MailingListAdmin)
 
 if "coop.exchange" in settings.INSTALLED_APPS:
     from coop.exchange.admin import ExchangeAdmin
