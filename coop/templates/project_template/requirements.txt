@@ -8,12 +8,12 @@
 # djaloha
 # coop-colorbox
 
-git+git://github.com/quinode/coop-colorbox.git
-git+git://github.com/quinode/djaloha.git
-git+git://github.com/quinode/coop-bar.git
-git+git://github.com/quinode/coop-tag.git
-git+git://github.com/quinode/coop-geo.git
-git+git://github.com/quinode/coop_cms.git
+git+git://github.com/credis/coop-colorbox.git
+git+git://github.com/credis/djaloha.git
+git+git://github.com/credis/coop-bar.git
+git+git://github.com/credis/coop-tag.git
+git+git://github.com/credis/coop-geo.git
+git+git://github.com/credis/coop_cms.git
 
 # django-scanredirect
 git+git://github.com/quinode/django-scanredirect.git
@@ -73,10 +73,8 @@ rdflib
 git+git://github.com/RDFLib/rdfextras.git
 git+git://github.com/RDFLib/rdflib-jsonld.git
 git+git://github.com/RDFLib/rdflib-sparqlstore.git
-git+git://github.com/quinode/subhub.git
+git+git://github.com/credis/subhub.git
 django-appconf
-
-git+git://github.com/toastdriven/django-haystack.git
 
 # webid deps : not ready
 # pyOpenSSL
