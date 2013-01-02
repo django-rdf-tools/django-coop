@@ -594,12 +594,12 @@ class BaseOrganization(URIModel):
                 self.pref_phone = fixes[0]
         if self.pref_email == None:
             orgmails = self.contacts.filter(category=8)
-            if orgmails.count() == 1:
+            if orgmails.count() > 0:
                 self.pref_email = orgmails[0]
         if 'coop_geo' in settings.INSTALLED_APPS:
             if self.pref_address == None:
                 locations = self.located.all()  # should we have a "main venue" ?
-                if locations.count() == 1:
+                if locations.count() > 0:
                     self.pref_address = locations[0].location
 
         # TODO move this to Contact model or do it in SQL

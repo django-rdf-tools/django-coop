@@ -1,6 +1,10 @@
 # -*- coding:utf-8 -*-
+from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
-from coop_local.models import MailingList
+from coop_local.models import Newsletter, Subscription
+from django.db.models.loading import get_model
+from coop.utils.autocomplete_admin import FkAutocompleteAdmin
+from django.contrib.contenttypes.generic import GenericTabularInline
 
 # from django.conf import settings
 # from django.utils.translation import ugettext_lazy as _
@@ -52,4 +56,59 @@ from coop_local.models import MailingList
 #         else:
 #             messages.error(request, _(u"Cannot close the list : %s" % result))
 
-admin.site.register(MailingList)
+
+admin.site.register(Newsletter)
+admin.site.register(Subscription)
+
+
+class SubscriptionInline(admin.TabularInline):
+    model = get_model('coop_local', 'Subscription')
+    # fk_name = 'mailing_list'
+    verbose_name = _(u'subscription')
+    verbose_name_plural = _(u'subscriptions')
+    fields = ('label', 'email')
+    extra = 1
+
+
+
+class MailingListInline(admin.TabularInline):
+    model = get_model('coop_local', 'MailingList')
+    verbose_name = _(u'mailing list')
+    verbose_name_plural = _(u'mailing list')
+    fields = ('name', 'subject', 'description')
+    extra = 1
+
+
+class SubscribtionMailingListInline(GenericTabularInline):
+    model = get_model('coop_local', 'Subscription')
+    verbose_name = _(u'subscription')
+    verbose_name_plural = _(u'subscriptions')
+    fields = ('mailing_list', 'label', 'email') # TODO les 2 derniersdoivent avoir une valeur par default
+    # inlines = [MailingListInline, ]  Ne s'écrit pas comme cela
+    related_search_fields = {'email': ('last_name', 'first_name',
+                                        'email', 'structure', 'username'), }
+
+    extra = 1
+
+
+
+
+
+class MailingListAdmin(FkAutocompleteAdmin):
+    change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
+    # list_display_links = ['email', ]
+    search_fields = ['name', 'subject', 'email', 'description']
+    list_per_page = 10
+    list_select_related = True
+    read_only_fields = ['created', 'modified']
+    ordering = ('name',)
+
+    inlines = [SubscriptionInline]
+
+    fieldsets = (
+        ('Description', {
+            'fields': ['name', 'subject', 'description', 'subscription_option', 'tags'
+                       ]
+            }),
+    )
+

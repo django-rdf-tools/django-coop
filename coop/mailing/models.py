@@ -9,13 +9,26 @@ from django.core.exceptions import ValidationError
 from coop.mailing import soap
 from django.contrib.sites.models import Site
 from django.conf import settings
+from django.core.urlresolvers import reverse
+from django.db.models.signals import post_save, pre_delete
+from coop.org.models import COMM_MEANS, DISPLAY
+import logging
+
+log = logging.getLogger('coop')
+
+#####################################################
+#
+#  Mailling List
+#
+#####################################################
+
 
 
 # The sympa templates for list
 # /home/sympa/default/create_list_template
 # they MUST match the repositories name, this is the aim of the
 # templateName property
-DISPLAY = Choices(
+SYMPA_TEMPLATES = Choices(
     ('DISCUSSION_LIST', 1, _(u'discussion list')),
     ('HOSTLINE',   2,  _(u'hotline')),
     ('HTML_NEWS_LETTER',  3,  _(u'html news letter')),
@@ -26,21 +39,38 @@ DISPLAY = Choices(
     ('NEWS_REMOTE_SOURCE', 8, _(u'diffusion list with remote source')),
 )
 
+SUBSCRIPTION_OPTION = Choices(
+    ('MANUAL', 1, _(u'custion email list')),
+    ('ALL', 2, _(u'all email address')),
+    ('ALL_ORGS', 3, _(u'all organizations contact')),
+    ('ALL_PERSONS', 4, _(u'all registered persons')),
+    ('ORGS_OPTION', 5, _(u'some organization contacts')),    
+)
+
 
 class BaseMailingList(models.Model):
     name = models.CharField(_('name'), max_length=50, unique=True)
     email = models.EmailField(_('Newsletter email'), editable=False)
     # main_url = models.URLField(_('List URL'))
 
+
+    subscription_option = models.PositiveSmallIntegerField(_(u'option'),
+                    choices=SUBSCRIPTION_OPTION.CHOICES, default=SUBSCRIPTION_OPTION.MANUAL)
+    # ce champ ne doit apparaitre que si on est a subscription_option = 6 ou 7
+    org_subscriptions = models.ManyToManyField('coop_local.Organization', blank=True)
+
+
+
     # Specific field to run sympa
     subject = models.CharField(max_length=200)
     template = models.PositiveSmallIntegerField(_(u'template'),
-                    choices=DISPLAY.CHOICES, default=DISPLAY.NEWS_REMOTE_SOURCE)
+                    choices=SYMPA_TEMPLATES.CHOICES, default=SYMPA_TEMPLATES.NEWS_REMOTE_SOURCE)
     description = models.TextField(blank=True)  # could contains html balises
     # A choisir dans une liste... qui parametre cette liste,est-t-elle modifiable?
     # ... et encore pleins de questions. C'est de la mecanique interne a sympa et cela
     # semble optionnel.... on peut peut etre s'en passer et le gerer par nos tags
     # topics = models.CharField(max_length=200, blank=True)
+
 
     def __str__(self):
         return self.name
@@ -52,25 +82,29 @@ class BaseMailingList(models.Model):
     def clean(self, *args, **kwargs):
         # TODO quant on aura ajouter les noms de domaines... il faudrait
         # surement modifier des choses
-        if soap.exists(self.name):
-            raise ValidationError(_(u"List %s exists. If you want to reopen it, please contact the sympa list administator" % self.name))
-        if not self.email:
-            self.email = "%s@%s" % (self.name, Site.objects.get_current())
-        if self.template == 8:
-            # subject = '%s%shttp://%s/sympa_remote_list/%s' % (self.subject, settings.SYMPA_SOAP['PARAMETER_SEPARATOR'], Site.objects.get_current(), self.name)
-            subject = '%s%shttp://www.credis.org/tmp/test_list.txt' % (self.subject, settings.SYMPA_SOAP['PARAMETER_SEPARATOR'])
-        else:
-            subject = self.subject
-        result = soap.create_list(self.name, subject, self.templateName, self.description)
-        if not result == 1:
-            raise ValidationError(_(u"Cannot add the list (sympa cannot create it): %s" % result))
+        if soap.sympa_available():
+            if soap.exists(self.name):
+                raise ValidationError(_(u"List %s exists. If you want to reopen it, please contact the sympa list administator" % self.name))
+            if not self.email:
+                self.email = "%s@%s" % (self.name, Site.objects.get_current())
+            if self.template == 8:
+                # subject = '%s%shttp://%s/sympa_remote_list/%s' % (self.subject, settings.SYMPA_SOAP['PARAMETER_SEPARATOR'], Site.objects.get_current(), self.name)
+                subject = '%s%shttp://www.credis.org/tmp/test_list.txt' % (self.subject, settings.SYMPA_SOAP['PARAMETER_SEPARATOR'])
+            else:
+                subject = self.subject
+            result = soap.create_list(self.name, subject, self.templateName, self.description)
+            if not result == 1:
+                raise ValidationError(_(u"Cannot add the list (sympa cannot create it): %s" % result))
         super(BaseMailingList, self).clean(*args, **kwargs)
 
     def full_clean(self, *args, **kwargs):
         return self.clean(*args, **kwargs)
 
+    # Update the subscription_list according to subscriptions
+    # let's build the mailing list even if soap server is not accessible
     def save(self, *args, **kwargs):
         self.full_clean()
+        # lets fill distribution list
         super(BaseMailingList, self).save(*args, **kwargs)
 
     def delete(self):
@@ -92,27 +126,130 @@ class BaseMailingList(models.Model):
 
     @property
     def templateName(self):
-        """ We have to retourn the orresponding repertory name
+        """ We have to retourn the corresponding repertory name
         Please check with sympa server directory /home/sympa/default/create_list_templates
         """
-        if self.template == DISPLAY.DISCUSSION_LIST:
+        if self.template == SYMPA_TEMPLATES.DISCUSSION_LIST:
             return 'discussion_list'
-        elif self.template == DISPLAY.HOSTLINE:
+        elif self.template == SYMPA_TEMPLATES.HOSTLINE:
             return 'hotline'
-        elif self.template == DISPLAY.HTML_NEWS_LETTER:
+        elif self.template == SYMPA_TEMPLATES.HTML_NEWS_LETTER:
             return 'html-news-letter'
-        elif self.template == DISPLAY.INTRANET_LIST:
+        elif self.template == SYMPA_TEMPLATES.INTRANET_LIST:
             return 'intranet_list'
-        elif self.template == DISPLAY.NEWS_LETTER:
+        elif self.template == SYMPA_TEMPLATES.NEWS_LETTER:
             return 'news-letter'
-        elif self.template == DISPLAY.PRIVATE_WORKING:
+        elif self.template == SYMPA_TEMPLATES.PRIVATE_WORKING:
             return 'private_working_group'
-        elif self.template == DISPLAY.PUBLIC_WEB_FORUM:
+        elif self.template == SYMPA_TEMPLATES.PUBLIC_WEB_FORUM:
             return 'pulic_web_forum'
-        elif self.template == DISPLAY.NEWS_REMOTE_SOURCE:
+        elif self.template == SYMPA_TEMPLATES.NEWS_REMOTE_SOURCE:
             return 'news-remote-source'
         else:
             return ''
+
+    def _organization_to_subcription(self, org):
+        from coop_local.models import Organization, Subscription
+
+        if not 'ct_org' in self._organization_to_subcription.__dict__:
+            self._organization_to_subcription.__dict__['ct_org'] = ContentType.objects.get_for_model(Organization)
+
+        for org in Organization.objects.all():
+            if org.pref_email and org.pref_email.display == DISPLAY.PUBLIC:
+                # check for doublon
+                qs = Subscription.objects.filter(mailing_list=self, email=org.pref_email.content)
+                if qs.exists():
+                    subs = qs[0]
+                    subs.label = org.label()
+                    subs.save()
+                else:
+                    Subscription.objects.get_or_create(email=org.pref_email.content, 
+                                                    object_id=org.id,
+                                                    mailing_list=self,
+                                                    content_type=self._organization_to_subcription.__dict__['ct_org'], 
+                                                    label=org.label())
+
+    def _person_to_subscription(self, person):
+        # cache stuff
+        if not 'ct_person' in self._person_to_subscription.__dict__:
+            from coop_local.models import Person
+            self._person_to_subscription.__dict__['ct_person'] = ContentType.objects.get_for_model(Person)
+ 
+        from coop_local.models import Subscription
+        contacts = person.contact.filter(category=COMM_MEANS.MAIL)
+        if contacts.exists():
+            contacts = contacts.filter(display=DISPLAY.PUBLIC)
+            if contacts.exists():
+                contact = contacts[0]
+                # check for doublon
+                qs = Subscription.objects.filter(mailing_list=self, email=contact.content)
+                if qs.exists():
+                    subs = qs[0]
+                    subs.label = person.label()
+                    subs.save()
+                else:
+                    subs, created = Subscription.objects.get_or_create(email=contact.content, 
+                                                                    object_id=person.id, 
+                                                                    mailing_list=self,
+                                                                    label=person.label(),
+                                                                    content_type=self._person_to_subscription.__dict__['ct_person'])
+        else:
+            if person.email and not person.email == '':
+                qs = Subscription.objects.filter(mailing_list=self, email=person.email)
+                if qs.exists():
+                    subs = qs[0]
+                    subs.label = person.label()
+                    subs.save()
+                else:
+                    subs, created = Subscription.objects.get_or_create(email=person.email, 
+                                                object_id=person.id,
+                                                mailing_list=self,
+                                                content_type=self._person_to_subscription.__dict__['ct_person'], 
+                                                label=person.label())
+
+
+    # buils subscriptions accordinf to the subcription_option
+    def auto_subscription(self):
+        from coop_local.models import Contact, Organization, Person, Subscription
+        if self.subscription_option == SUBSCRIPTION_OPTION.ALL:
+            for contact in Contact.objects.filter(category=COMM_MEANS.MAIL).filter(display=DISPLAY.PUBLIC):
+                # check for doublon
+                qs = Subscription.objects.filter(mailing_list=self, email=contact.content)
+                if not qs.exists():
+                    subs, create = Subscription.objects.get_or_create(email=contact.content, 
+                                                                      mailing_list=self,
+                                                                      label=contact.content_type.get_object_for_this_type(id=contact.object_id).label(),
+                                                                      object_id=contact.object_id, 
+                                                                      content_type=contact.content_type)
+        elif self.subscription_option == SUBSCRIPTION_OPTION.ALL_ORGS:
+            for org in Organization.objects.all():
+                self._organization_to_subcription(org)
+        elif self.subscription_option == SUBSCRIPTION_OPTION.ALL_PERSONS:
+            for person in Person.objects.all():
+                self._person_to_subscription(person)
+        elif self.subscription_option == SUBSCRIPTION_OPTION.ORGS_OPTION:
+            for org in self.org_subscriptions.all():
+                self._organization_to_subcription(org)
+
+
+    def subscription_list(self):
+        from coop_local.models import Subscription
+        res = ''
+        for s in Subscription.objects.filter(mailing_list=self):
+            if s.label:
+                res += '%s <%s>;\n' % (s.label, s.email)
+            else:
+                res += '<%s>;\n' % s.email
+        return res
+
+
+def on_create_mailing_instance(sender, instance, created, raw, **kwargs):
+    from coop_local.models import MailingList
+    if sender == MailingList:
+        if not instance.subscription_option == SUBSCRIPTION_OPTION.MANUAL:
+            instance.auto_subscription()
+post_save.connect(on_create_mailing_instance)
+
 
 
 # class Parameter(models.Model):
@@ -128,11 +265,14 @@ class BaseMailingList(models.Model):
 
 
 
+
+
 class BaseSubscription(models.Model):
     mailing_list = models.ForeignKey('coop_local.MailingList',
                                         related_name='subs')
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
+    label = models.CharField(max_length=250, null=True)
     # subscription options (HTML, text ...)
     email = models.EmailField(_('subscribed email'), default='')
 
@@ -149,3 +289,177 @@ class BaseSubscription(models.Model):
 
     def __unicode__(self):
         return _(u'subscription to ') + unicode(self.mailing_list)
+
+
+
+
+
+
+
+
+#####################################################
+#
+#  News Letter
+#
+#####################################################
+
+
+class BaseNewsletterItem(models.Model):
+    content_type = models.ForeignKey(
+        ContentType, 
+        verbose_name=_("content_type"),        
+        related_name="%(app_label)s_%(class)s_newsletter_items"
+    )
+    object_id = models.PositiveIntegerField(verbose_name=_("object id"))
+    content_object = generic.GenericForeignKey('content_type', 'object_id')
+
+    class Meta:
+        abstract = True
+        app_label = 'coop_local'
+        unique_together = (("content_type", "object_id"),)
+        verbose_name = _(u'newsletter item')
+        verbose_name_plural = _(u'newsletter items')
+
+    def __unicode__(self):
+        return u'{0}: {1}'.format(self.content_type, self.content_object)
+
+
+
+
+class BaseNewsletter(models.Model):
+    subject = models.CharField(max_length=200, verbose_name=_(u'subject'), blank=True, default="")
+    #content = HTMLField(content_cleaner, verbose_name=_(u"content"), default="<br>", blank=True)
+    content = models.TextField(_(u"content"), default="<br>", blank=True)
+    items = models.ManyToManyField('coop_local.NewsletterItem', blank=True)
+    template = models.CharField(_(u'template'), max_length=200, default='mailing/newsletter.html', blank=True)
+
+    mailing_list = models.ForeignKey('coop_local.MailingList', null=True)
+
+    def get_items(self):
+        return [item.content_object for item in self.items.all()]
+
+    def get_items_by_category(self):
+        items = self.get_items()
+
+        def sort_by_category(item):
+            category = getattr(item, 'category', None)
+            if category:
+                return category.ordering
+            return 0
+        items.sort(key=sort_by_category)
+        return items
+
+
+    def can_edit_newsletter(self, user):
+        return user.has_perm('coop_cms.change_newsletter')
+
+    def get_absolute_url(self):
+        return reverse('coop_view_newsletter', args=[self.id])
+
+    def get_edit_url(self):
+        return reverse('coop_edit_newsletter', args=[self.id])
+
+    def get_template_name(self):
+        template = self.template
+        if not template:
+            self = 'mailing/newsletter.html'
+        return template
+
+    def __unicode__(self):
+        return self.subject
+
+    class Meta:
+        abstract = True
+        app_label = 'coop_local'
+        verbose_name = _(u'newsletter')
+        verbose_name_plural = _(u'newsletters')
+
+
+
+class NewsletterSending(models.Model):
+
+    newsletter = models.ForeignKey('coop_local.Newsletter')
+
+    scheduling_dt = models.DateTimeField(_(u"scheduling date"), blank=True, default=None, null=True)
+    sending_dt = models.DateTimeField(_(u"sending date"), blank=True, default=None, null=True)
+
+    def __unicode__(self):
+        return self.newsletter.subject
+
+    class Meta:
+        verbose_name = _(u'newsletter sending')
+        verbose_name_plural = _(u'newsletter sendings')
+
+
+
+
+
+def get_coop_local_newletters_item_class():
+    if hasattr(get_coop_local_newletters_item_class, '_cache_class'):
+        return getattr(get_coop_local_newletters_item_class, '_cache_class')
+    else:
+        klass = models.get_model('coop_local', 'newsletteritem')
+        setattr(get_coop_local_newletters_item_class, '_cache_class', klass)
+    return klass
+
+
+
+def get_coop_local_newletters_class():
+    if hasattr(get_coop_local_newletters_class, '_cache_class'):
+        return getattr(get_coop_local_newletters_class, '_cache_class')
+    else:
+        klass = models.get_model('coop_local', 'newsletter')
+        setattr(get_coop_local_newletters_class, '_cache_class', klass)
+    return klass
+
+
+def coop_newletter_items_classes():
+    if hasattr(coop_newletter_items_classes, '_cache_class'):
+        return getattr(coop_newletter_items_classes, '_cache_class')
+    else:
+        classes = []
+        for c in settings.COOP_NEWLETTER_ITEM_CLASSES:
+            classes.append(models.get_model('coop_local', c))
+        setattr(coop_newletter_items_classes, '_cache_class', classes)
+        return classes
+
+
+
+#delete item when content object is deleted
+def on_delete_newsletterable_item(sender, instance, **kwargs):
+    if sender in coop_newletter_items_classes():
+        if hasattr(instance, 'id'):
+            try:
+                ct = ContentType.objects.get_for_model(instance)
+                klass = get_coop_local_newletters_item_class()
+                item = klass.objects.get(content_type=ct, object_id=instance.id)
+                item.delete()
+            except (klass.DoesNotExist, ContentType.DoesNotExist):
+                pass
+pre_delete.connect(on_delete_newsletterable_item)
+
+
+def create_newsletter_item(instance):
+    ct = ContentType.objects.get_for_model(instance)
+    if getattr(instance, 'in_newsletter', True):
+        #Create a newsletter item automatically
+        #An optional 'in_newsletter' field can skip the automatic creation if set to False
+        klass = get_coop_local_newletters_item_class()
+        return klass.objects.get_or_create(content_type=ct, object_id=instance.id)
+    elif hasattr(instance, 'in_newsletter'):
+        #If 'in_newsletter' field existe and is False
+        #We delete the Item if exists
+        try:
+            item = klass.objects.get(content_type=ct, object_id=instance.id)
+            item.delete()
+            return None, True
+        except klass.DoesNotExist:
+            return None, False
+
+
+#create automatically a newsletter item for every objects configured as newsletter_item
+def on_create_newsletterable_instance(sender, instance, created, raw, **kwargs):
+    if sender in coop_newletter_items_classes():
+        create_newsletter_item(instance)
+post_save.connect(on_create_newsletterable_instance)
+

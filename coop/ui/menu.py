@@ -47,7 +47,7 @@ class CustomMenu(Menu):
                         items.MenuItem(_('Article categories'), '/admin/coop_cms/articlecategory/'),
                         items.MenuItem(_('Documents'), '/admin/coop_cms/document/'),
                         items.MenuItem(_('Images'), '/admin/coop_cms/image/'),
-                        items.MenuItem(_('Newsletters'), '/admin/coop_cms/newsletter/'),
+                        items.MenuItem(_('Newsletters'), '/admin/coop_local/newsletter/'),
                         items.MenuItem(_('Comments'), '/admin/comments/comment/'),
                         items.MenuItem(_('Forms'), '/admin/forms/form/'),
                         items.MenuItem(_('Preferences'), '/admin/coop_local/siteprefs/'),
