@@ -585,7 +585,7 @@ class StaticURIModel(models.Model):
                 # log.debug(u"Try to subscribe to feed %s" % feed_url)
                 Subscription.objects.subscribe(feed_url, hub="%s/hub/" % host)
             except ValidationError, e:
-                log.debug(u" Imposible to subscribe to %s : %s" % (feed_url, e))
+                log.debug(u" Impossible to subscribe to %s : %s" % (feed_url, e))
 
 
     def unsubscribeToUpdades(self, host=settings.PES_HOST):
@@ -595,7 +595,7 @@ class StaticURIModel(models.Model):
             validate(feed_url)
             Subscription.objects.unsubscribe(feed_url, hub="%s/hub/" % host)
         except ValidationError, e:
-            log.debug(u" Imposible to unsubscribe to %s : %s" % (feed_url, e))
+            log.debug(u" Impossible to unsubscribe to %s : %s" % (feed_url, e))
 
 
 class URIModel(StaticURIModel, TimestampedModel):
