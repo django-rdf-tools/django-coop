@@ -61,13 +61,6 @@ def letsCallDistributionTaskProcess(thName):
 
 
 
-@receiver(pre_save)
-def pre_save_callback(sender, instance, **kwargs):
-    # Initialize the 'sites' many2many field with the default site
-    if hasattr(instance, 'sites') and not instance.sites.all().exists():
-        instance.sites.add(Site.objects.get_current())
-
-
 # Listener tool
 # The point here is to be careful with synchronization.
 # subhub.publish will create a new DistributionTask object (if no DistributioTask
@@ -76,6 +69,10 @@ def pre_save_callback(sender, instance, **kwargs):
 # as instance.
 @receiver(post_save)
 def post_save_callback(sender, instance, **kwargs):
+    # Initialize the 'sites' many2many field with the default site
+    if hasattr(instance, 'sites') and not instance.sites.all().exists():
+        instance.sites.add(Site.objects.get_current())
+
     maintenance = getattr(settings, 'SUBHUB_MAINTENANCE_AUTO', False)
     # log.debug(u"Post save callback with sender %s and instance %s and AUTO %s" % (unicode(sender), unicode(instance), maintenance))
 
