@@ -233,7 +233,7 @@ def coop_project_setup():
             run('mkvirtualenv --system-site-packages %(projet)s' % env)
             run('source .bash_profile')
         with prefix('workon %(projet)s' % env):
-            run('pip install git+git://github.com/quinode/django-coop.git')
+            run('pip install git+git://github.com/credis/django-coop.git')
             print(green('Django et django-coop installé.'))
         if not exists('projects/%s/' % (env.projet)):
             print(yellow('le projet %(projet)s n’existe pas encore' % env))
@@ -487,7 +487,9 @@ def push():
     """Push quinode repository """
     set_project()
     # set_domain()
-    gitsrv = 'git+git://github.com/quinode/'
+    git_prefix = 'git+git://github.com/'
+    # gitsrv = 'git+git://github.com/credis/'
+    gitsrv = prompt('git repository?', default='credis')
     app = prompt('app to update ?', default='django-coop')
     with prefix('workon %(projet)s' % env):
         print (yellow('ok virtual env'))
@@ -498,7 +500,8 @@ def push():
             print(red('paquet non installé'))
             pass
         print(yellow('réinstallation du paquet depuis github...'))
-        run('pip install %s%s.git' % (gitsrv, app))
+        print(yellow('intallation from %s%s/%s.git' % (git_prefix, gitsrv, app)))
+        run('pip install %s%s/%s.git' % (git_prefix, gitsrv, app))
         with cd('~/projects/%(projet)s' % env):
 
             if app == 'django-coop':
