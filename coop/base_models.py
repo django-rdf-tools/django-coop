@@ -128,7 +128,8 @@ class Product(BaseProduct):
 # ----- mailing
 
 if 'coop.mailing' in settings.INSTALLED_APPS:
-    from coop.mailing.models import BaseSubscription, BaseMailingList, BaseNewsletterItem, BaseNewsletter
+    from coop.mailing.models import BaseSubscription, BaseMailingList, \
+           BaseNewsletterItem, BaseNewsletter, BaseNewsletterSending
 
     class MailingList(BaseMailingList):
         pass
@@ -140,6 +141,9 @@ if 'coop.mailing' in settings.INSTALLED_APPS:
         pass
 
     class Newsletter(BaseNewsletter):
+        pass
+
+    class NewsletterSending(BaseNewsletterSending):
         pass
 
 

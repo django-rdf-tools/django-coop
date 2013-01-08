@@ -2,8 +2,7 @@
 from django.utils.translation import ugettext as _
 from django.conf import settings
 from django import forms
-from coop_local.models import Newsletter
-from coop.mailing.models import NewsletterSending
+from coop_local.models import Newsletter, NewsletterSending
 from django.utils.importlib import import_module
 from django.core.exceptions import ValidationError
 import floppyforms

@@ -23,8 +23,9 @@ admin.site.register(Location, LocationAdmin)
 admin.site.register(Area, AreaAdmin)
 
 if "coop.mailing" in settings.INSTALLED_APPS:
-    from coop.mailing.admin import MailingListAdmin
+    from coop.mailing.admin import MailingListAdmin, NewsletterAdmin
     admin.site.register(MailingList, MailingListAdmin)
+    admin.site.register(Newsletter, NewsletterAdmin)
 
 if "coop.exchange" in settings.INSTALLED_APPS:
     from coop.exchange.admin import ExchangeAdmin

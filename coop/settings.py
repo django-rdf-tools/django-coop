@@ -56,6 +56,7 @@ BASE_COOP_LOCAL_MODELS = [
         u'Subscription',
         u'NewsletterItem',
         u'Newsletter',
+        u'NewsletterSending',
     ]),
     ('coop.prefs', [
         u'SitePrefs',

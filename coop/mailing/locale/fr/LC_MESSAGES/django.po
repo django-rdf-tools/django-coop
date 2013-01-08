@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop.mailing\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-11 18:46+0200\n"
+"POT-Creation-Date: 2013-01-04 15:41+0100\n"
 "PO-Revision-Date: 2012-04-11 19:24+0100\n"
 "Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
@@ -19,47 +19,211 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 
-#: models.py:10
-msgid "name"
-msgstr "nom"
+#: admin.py:71 admin.py:90
+#, fuzzy
+msgid "subscription"
+msgstr "inscription à"
 
-#: models.py:11
-msgid "Newsletter email"
-msgstr "Courriel de la liste"
+#: admin.py:72 admin.py:91
+#, fuzzy
+msgid "subscriptions"
+msgstr "inscriptions à"
 
-#: models.py:12
-msgid "List URL"
-msgstr "URL de la liste"
-
-#: models.py:15
+#: admin.py:80 admin.py:81 models.py:121
 msgid "mailing list"
 msgstr "liste de diffusion"
 
-#: models.py:16
+#: forms.py:102
+msgid "This field is required"
+msgstr ""
+
+#: forms.py:105
+msgid "The scheduling date must be in future"
+msgstr "La date doit être dans le futur"
+
+#: models.py:32
+msgid "discussion list"
+msgstr "Liste de discussion publique"
+
+#: models.py:33
+msgid "hotline"
+msgstr "Liste de type hotline"
+
+#: models.py:34
+msgid "html news letter"
+msgstr "Paramétrage adapté à une newsletter aux formats Text/plain et HTML"
+
+#: models.py:35
+msgid "intranet list"
+msgstr "Liste pour l'Intranet"
+
+#: models.py:36
+#, fuzzy
+msgid "news letter"
+msgstr "Paramétrage adapté à une newsletter"
+
+#: models.py:37
+msgid "private working"
+msgstr "Paramétrage pour un groupe de travail"
+
+#: models.py:38
+msgid "public web forum"
+msgstr ""
+"Liste de type forum web Les messages peuvent être consultés par mail "
+"(abonnement) ou par l'interface web"
+
+#: models.py:39
+#, fuzzy
+msgid "news letter list with remote source"
+msgstr "Courriel de la liste"
+
+#: models.py:43
+#, fuzzy
+msgid "custom email list"
+msgstr "liste de diffusion"
+
+#: models.py:44
+msgid "all email address"
+msgstr "toutes les adresses mail publiques"
+
+#: models.py:45
+msgid "all organizations contact"
+msgstr "mail publiques de toutes les organizations"
+
+#: models.py:46
+msgid "all registered persons"
+msgstr "mails publics de chaque personne"
+
+#: models.py:52
+msgid "name"
+msgstr "nom"
+
+#: models.py:53
+msgid "Newsletter email"
+msgstr "Courriel de la liste"
+
+#: models.py:59
+msgid "option"
+msgstr ""
+
+#: models.py:61
+msgid "filter with tags"
+msgstr "filter à l'aide des tags"
+
+#: models.py:66 models.py:342
+msgid "template"
+msgstr ""
+
+#: models.py:87
+#, python-format
+msgid ""
+"List %s exists. If you want to reopen it, please contact the sympa list "
+"administator"
+msgstr ""
+
+#: models.py:97
+#, python-format
+msgid "Cannot add the list (sympa cannot create it): %s"
+msgstr ""
+
+#: models.py:117
+#, python-format
+msgid "Cannot close the list : %s"
+msgstr ""
+
+#: models.py:122
 msgid "mailing lists"
 msgstr "listes de diffusion"
 
-#: models.py:26
+#: models.py:281
 msgid "created"
 msgstr "création"
 
-#: models.py:27
+#: models.py:282
 msgid "modified"
 msgstr "modification"
 
-#: models.py:29
+#: models.py:285
 msgid "subscribed email"
 msgstr "courriel inscrit"
 
-#: models.py:37
+#: models.py:293
 msgid "mailing list subscription"
 msgstr "inscription à une liste"
 
-#: models.py:38
+#: models.py:294
 msgid "mailing list subscriptions"
 msgstr "inscriptions à une liste"
 
-#: models.py:42
+#: models.py:299
 msgid "subscription to "
 msgstr "inscription à "
 
+#: models.py:318
+msgid "content_type"
+msgstr ""
+
+#: models.py:321
+msgid "object id"
+msgstr ""
+
+#: models.py:328
+#, fuzzy
+msgid "newsletter item"
+msgstr "Courriel de la liste"
+
+#: models.py:329
+#, fuzzy
+msgid "newsletter items"
+msgstr "Courriel de la liste"
+
+#: models.py:338
+msgid "subject"
+msgstr ""
+
+#: models.py:340
+msgid "content"
+msgstr ""
+
+#: models.py:382
+#, fuzzy
+msgid "newsletter"
+msgstr "Courriel de la liste"
+
+#: models.py:383
+#, fuzzy
+msgid "newsletters"
+msgstr "Courriels de la liste"
+
+#: models.py:391
+msgid "scheduling date"
+msgstr ""
+
+#: models.py:392
+msgid "sending date"
+msgstr "date d'envoi"
+
+#: models.py:398
+#, fuzzy
+msgid "newsletter sending"
+msgstr "Courriel de la liste"
+
+#: models.py:399
+#, fuzzy
+msgid "newsletter sendings"
+msgstr "Courriel de la liste"
+
+#: views.py:62
+msgid "The newsletter has been saved properly"
+msgstr ""
+
+#: views.py:176
+msgid "The test email has been sent to {0} addresses: {1}"
+msgstr ""
+
+#: views.py:179
+msgid "An error has occured."
+msgstr ""
+
+#~ msgid "List URL"
+#~ msgstr "URL de la liste"

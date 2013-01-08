@@ -1,10 +1,11 @@
 # -*- coding:utf-8 -*-
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
-from coop_local.models import Newsletter, Subscription
+from coop_local.models import NewsletterSending
 from django.db.models.loading import get_model
 from coop.utils.autocomplete_admin import FkAutocompleteAdmin
 from django.contrib.contenttypes.generic import GenericTabularInline
+from coop.mailing.models import instance_to_pref_email
 
 # from django.conf import settings
 # from django.utils.translation import ugettext_lazy as _
@@ -57,8 +58,11 @@ from django.contrib.contenttypes.generic import GenericTabularInline
 #             messages.error(request, _(u"Cannot close the list : %s" % result))
 
 
-admin.site.register(Newsletter)
-admin.site.register(Subscription)
+# admin.site.register(Newsletter)
+# admin.site.register(NewsletterSending)
+# admin.site.register(Subscription)
+
+
 
 
 class SubscriptionInline(admin.TabularInline):
@@ -79,16 +83,33 @@ class MailingListInline(admin.TabularInline):
     extra = 1
 
 
+# On ne peut pas heriter de ObjEnabledInline le polymorphisme ne passe pas 
+# Car GenericTabularInline surcharge aussi la method get_formset
 class SubscribtionMailingListInline(GenericTabularInline):
     model = get_model('coop_local', 'Subscription')
     verbose_name = _(u'subscription')
     verbose_name_plural = _(u'subscriptions')
-    fields = ('mailing_list', 'label', 'email') # TODO les 2 derniersdoivent avoir une valeur par default
+    fields = ('mailing_list', 'label', 'email')  
     # inlines = [MailingListInline, ]  Ne s'écrit pas comme cela
     related_search_fields = {'email': ('last_name', 'first_name',
                                         'email', 'structure', 'username'), }
 
     extra = 1
+
+    def get_formset(self, request, obj=None, **kwargs):
+        # Hack! Hook parent obj just in time to use in formfield_for_manytomany
+        self.parent_obj = obj
+        return super(SubscribtionMailingListInline, self).get_formset(
+            request, obj, **kwargs)
+
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        if self.parent_obj != None:
+            if db_field.name == 'label':
+                kwargs['initial'] = self.parent_obj.label()
+            if db_field.name == 'email':
+                kwargs['initial'] = instance_to_pref_email(self.parent_obj)
+        return super(SubscribtionMailingListInline, self).formfield_for_dbfield(db_field, **kwargs)
+
 
 
 
@@ -107,8 +128,27 @@ class MailingListAdmin(FkAutocompleteAdmin):
 
     fieldsets = (
         ('Description', {
-            'fields': ['name', 'subject', 'description', 'subscription_option', 'tags'
+            'fields': ['name',
+                       'subject', 
+                       'description', 
+                        ('subscription_filter_with_tags', 'subscription_option'),
+                       'tags'
                        ]
             }),
     )
+
+
+
+
+class NewsletterSendingInline(admin.StackedInline):
+    #form = SingleOccurrenceForm
+    verbose_name = _(u'Sending Date')
+    verbose_name_plural = _(u'Sending Dates')
+    model = NewsletterSending
+    extra = 1
+
+
+class NewsletterAdmin(admin.ModelAdmin):
+    change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
+    inlines = [NewsletterSendingInline]
 

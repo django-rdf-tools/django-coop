@@ -2,6 +2,7 @@
 # Create your views here.
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
+from django.http import Http404
 from django.template import RequestContext
 from django.core.exceptions import PermissionDenied
 import sys
@@ -10,10 +11,11 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from colorbox.decorators import popup_redirect
+from coop_local.models import NewsletterSending, MailingList
 from coop_cms.utils import send_newsletter
 from django.utils.log import getLogger
 from datetime import datetime
-from coop.mailing.models import get_coop_local_newletters_class, NewsletterSending
+from coop.mailing.models import get_coop_local_newletters_class
 from coop.mailing import forms
 from django.core.urlresolvers import reverse
 from soap import info as soap_info, lists
@@ -24,12 +26,17 @@ from coop_cms.views import coop_bar_aloha_js
 
 
 
-def list(request, name):
+def list(request, ml_id):
     """
-    :name MailingList name
+    :ml_id MailingList id 
     """
-    # TODO il faut contruite la liste a partir de la 
-    return HttpResponse('clo claude.huchet@quinode.fr')
+    print request.META
+    if request.META['REMOTE_ADDR'] in settings.INTERNAL_IPS:
+        mailinglist = get_object_or_404(MailingList, id=ml_id)  
+        return HttpResponse(mailinglist.subscription_list())
+    else:
+        raise Http404
+
 
 
 
