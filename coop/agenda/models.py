@@ -218,7 +218,12 @@ class BaseEvent(URIModel):
 
 
     def article_mapping(self, rdfPred, djF, datatype=None, lang=None):
-        return self.multi_mapping(rdfPred, djF, datatype, lang)
+        if getattr(self, djF) == None:
+            return [] 
+        else:
+            values = getattr(self, djF)
+            return self.multi_mapping_base(values, rdfPred, datatype, lang)
+
 
     def article_mapping_reverse(self, g, rdfPred, djField, lang=None):
         articles = list(g.objects(rdflib.term.URIRef(self.uri), rdfPred))
