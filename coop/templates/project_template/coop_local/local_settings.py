@@ -31,7 +31,7 @@ INTERNAL_IPS = ('127.0.0.1', '92.243.30.98')
 
 SUBHUB_MAINTENANCE_AUTO = False    # set this value to True to automatically syncronize with agregator
 PES_HOST = 'http://pes.domain.com'
-THESAURUS_HOST = 'http://thess.domain.com'
+# THESAURUS_HOST = 'http://thess.domain.com'
 
 # Need to be set to true, when domain stop moving,
 # to keep history of renaming of uri
@@ -42,7 +42,7 @@ INSTALLED_APPS = settings.INSTALLED_APPS + [
     'coop.tag',
     'coop.agenda',
     'coop.article',
-    'coop.mailing',
+    # 'coop.mailing',   # the mailinglist management is HARDLY link to our sympa installation 
     'coop.exchange',
     #'coop.webid',
     'coop_local',

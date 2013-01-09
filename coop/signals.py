@@ -83,7 +83,9 @@ def post_save_callback(sender, instance, **kwargs):
             # TODO check if a subscription is done, either lets do it
         elif isinstance(instance, coop_tag.models.TagBase):
             # Subscription done if it does not exists, in other it is simply renew
-            instance.subscribeToUpdades(host=settings.THESAURUS_HOST)
+            if hasattr(settings, 'THESAURUS_HOST') and \
+                    not settings.THESAURUS_HOST == 'http://thess.domain.com':
+                instance.subscribeToUpdades(host=settings.THESAURUS_HOST)
         else:
             domain = Site.objects.get_current().domain
             if domain.startswith('http'):
