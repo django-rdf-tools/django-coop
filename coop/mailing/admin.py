@@ -80,6 +80,7 @@ class MailingListInline(admin.TabularInline):
     verbose_name = _(u'mailing list')
     verbose_name_plural = _(u'mailing list')
     fields = ('name', 'subject', 'description')
+    readonly_fields = ('email',)
     extra = 1
 
 
@@ -123,6 +124,7 @@ class MailingListAdmin(FkAutocompleteAdmin):
     list_select_related = True
     read_only_fields = ['created', 'modified']
     ordering = ('name',)
+    readonly_fields = ('email',)
 
     inlines = [SubscriptionInline]
 
@@ -131,7 +133,8 @@ class MailingListAdmin(FkAutocompleteAdmin):
             'fields': ['name',
                        'subject', 
                        'description', 
-                        ('subscription_filter_with_tags', 'subscription_option'),
+                       'email',
+                        ('subscription_option', 'subscription_filter_with_tags'),
                        'tags'
                        ]
             }),

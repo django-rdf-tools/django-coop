@@ -15,7 +15,7 @@ from coop_local.models import NewsletterSending, MailingList
 from coop_cms.utils import send_newsletter
 from django.utils.log import getLogger
 from datetime import datetime
-from coop.mailing.models import get_coop_local_newletters_class
+from coop_local.models import Newsletter
 from coop.mailing import forms
 from django.core.urlresolvers import reverse
 from soap import info as soap_info, lists
@@ -31,7 +31,8 @@ def list(request, ml_id):
     :ml_id MailingList id 
     """
     print request.META
-    if request.META['REMOTE_ADDR'] in settings.INTERNAL_IPS:
+    if request.META['REMOTE_ADDR'] in settings.INTERNAL_IPS or \
+            (request.user.is_authenticated() and request.user.is_superuser):
         mailinglist = get_object_or_404(MailingList, id=ml_id)  
         return HttpResponse(mailinglist.subscription_list())
     else:
@@ -44,7 +45,7 @@ def list(request, ml_id):
 
 @login_required
 def edit_newsletter(request, newsletter_id):
-    newsletter = get_object_or_404(get_coop_local_newletters_class(), id=newsletter_id)
+    newsletter = get_object_or_404(Newsletter, id=newsletter_id)
     newsletter_form_class = forms.get_newsletter_form()
 
     if not request.user.has_perm('can_edit_newsletter', newsletter):
@@ -99,7 +100,7 @@ def new_newsletter(request, newsletter_id=None):
     #    raise PermissionDenied
 
     if newsletter_id:
-        newsletter = get_object_or_404(get_coop_local_newletters_class(), id=newsletter_id)
+        newsletter = get_object_or_404(Newsletter, id=newsletter_id)
     else:
         newsletter = None
 
@@ -127,7 +128,7 @@ def new_newsletter(request, newsletter_id=None):
 
 def view_newsletter(request, newsletter_id):
 
-    newsletter = get_object_or_404(get_coop_local_newletters_class(), id=newsletter_id)
+    newsletter = get_object_or_404(Newsletter, id=newsletter_id)
 
     context_dict = {
         'title': newsletter.subject, 'newsletter': newsletter,
@@ -144,7 +145,7 @@ def view_newsletter(request, newsletter_id):
 @login_required
 @popup_redirect
 def change_newsletter_template(request, newsletter_id):
-    newsletter = get_object_or_404(get_coop_local_newletters_class(), id=newsletter_id)
+    newsletter = get_object_or_404(Newsletter, id=newsletter_id)
 
     if not request.user.has_perm('can_edit_newsletter', newsletter):
         raise PermissionDenied
@@ -168,7 +169,7 @@ def change_newsletter_template(request, newsletter_id):
 @login_required
 @popup_redirect
 def test_newsletter(request, newsletter_id):
-    newsletter = get_object_or_404(get_coop_local_newletters_class(), id=newsletter_id)
+    newsletter = get_object_or_404(Newsletter, id=newsletter_id)
 
     if not request.user.has_perm('can_edit_newsletter', newsletter):
         raise PermissionDenied
@@ -204,7 +205,7 @@ def test_newsletter(request, newsletter_id):
 @login_required
 @popup_redirect
 def schedule_newsletter_sending(request, newsletter_id):
-    newsletter = get_object_or_404(get_coop_local_newletters_class(), id=newsletter_id)
+    newsletter = get_object_or_404(Newsletter, id=newsletter_id)
     instance = NewsletterSending(newsletter=newsletter)
 
     if request.method == "POST":
