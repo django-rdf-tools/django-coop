@@ -616,7 +616,10 @@ def rdfGraphAll(model=None):
         for m in models.get_models():
             if coop.models.StaticURIModel in m.__mro__:
                 for o in m.objects.all():
-                    g += o.toRdfGraph()
+                    try:
+                        g += o.toRdfGraph()
+                    except:
+                        pass
     else:
         m = models.get_model('coop_local', model)
         # if m == None:
@@ -626,7 +629,10 @@ def rdfGraphAll(model=None):
             log.debug(_(u"Warning no model found for model name %s" % model))
         else:
             for o in m.objects.all():
-                g += o.toRdfGraph()
+                try:
+                    g += o.toRdfGraph()
+                except:
+                    pass
     return g
 
 
