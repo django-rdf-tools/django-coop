@@ -3,7 +3,7 @@
 from django.contrib import admin
 from coop_local.models import *
 from coop.person.admin import PersonAdmin
-from coop.org.admin import OrganizationAdmin
+from coop.org.admin import OrganizationAdmin, ProjectAdmin
 from coop.prefs.admin import SitePrefsAdmin
 from coop_geo.admin import LocationAdmin, AreaAdmin
 from django.conf import settings
@@ -18,6 +18,7 @@ admin.site.register(Person, PersonAdmin)
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(OrganizationCategory)
 admin.site.register(OrgRelationType)
+admin.site.register(Project, ProjectAdmin)
 admin.site.register(SitePrefs, SitePrefsAdmin)
 admin.site.register(Location, LocationAdmin)
 admin.site.register(Area, AreaAdmin)

@@ -7,7 +7,8 @@ from coop.person.models import BasePerson, BasePersonCategory
 from coop.exchange.models import BaseExchange, BaseProduct, BaseExchangeMethod
 from coop.org.models import (BaseOrganizationCategory, BaseOrganization,
                              BaseRelation, BaseEngagement, BaseRole, BaseOrgRelationType,
-                             BaseContact, BaseRoleCategory, BaseContactMedium)
+                             BaseContact, BaseRoleCategory, BaseContactMedium,
+                             BaseProjectSupport, BaseProject)
 from coop.prefs.models import BaseSitePrefs
 from coop_geo.models import Location as BaseLocation
 from coop_geo.models import Area as BaseArea
@@ -107,6 +108,14 @@ class OrganizationCategory(BaseOrganizationCategory):
 
 
 class Organization(BaseOrganization):
+    pass
+
+
+class ProjectSupport(BaseProjectSupport):
+    pass
+
+
+class Project(BaseProject):
     pass
 
 

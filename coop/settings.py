@@ -45,6 +45,9 @@ BASE_COOP_LOCAL_MODELS = [
         u'Relation',
         u'OrganizationCategory',
         u'Organization',
+        u'ProjectSupport',
+        u'Project',
+
     ]),
     ('coop.exchange', [
         u'ExchangeMethod',

@@ -257,6 +257,8 @@ class BaseContact(URIModel):
 class BaseOrgRelationType(models.Model):  # this model will be initialized with a fixture
     label = models.CharField(_(u'label'), max_length=250)
     uri = models.CharField(_(u'URI'), blank=True, max_length=250)
+    org_to_org = models.BooleanField(_('available for org-to-org relations'), default=True)
+    org_to_project = models.BooleanField(_('available for org-to-project relations'), default=True)
 
     def __unicode__(self):
         return self.label
@@ -281,9 +283,10 @@ class BaseRelation(models.Model):
     source = models.ForeignKey('coop_local.Organization', verbose_name=_(u'source organization'), related_name='source')
     target = models.ForeignKey('coop_local.Organization', verbose_name=_(u'target organization'), related_name='target')
     reltype = models.PositiveSmallIntegerField(_(u'Relation type'), choices=RELATIONS.CHOICES, blank=True, null=True)  # TODO erase when data migrated AND remove
-    relation_type = models.ForeignKey('coop_local.OrgRelationType', verbose_name=_(u'relation type'), 
-                                                            null=True, blank=True)      # blank, null = True from the new Fkey
-    
+    relation_type = models.ForeignKey('coop_local.OrgRelationType',
+                                        verbose_name=_(u'relation type'),
+                                        null=True, blank=True)
+
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
     #confirmed = models.BooleanField(default=False, verbose_name=_(u'confirmed by the target organization'))
@@ -295,13 +298,11 @@ class BaseRelation(models.Model):
         app_label = 'coop_local'
 
     def __unicode__(self):
-        return u'"Relation de ' + self.source.__unicode__()
-
-        """ + u'"' + \
-                self.relation_type.__unicode__() + \
-                u'"' + self.target.__unicode__() + u'".'
-"""
+        return _(u"Relation : %(a)s is a %(r)s of %(b)s") % {'a': self.source.__unicode__(),
+                                                             'r': self.relation_type.__unicode__(),
+                                                             'b': self.target.__unicode__()}
     '''
+    # TODO
     def save(self):
         vérifier si la relation inverse existe
     '''
@@ -791,8 +792,80 @@ class BaseOrganization(URIModel):
                 ex.save()
 
 
+# TODO : use django-multilingual-ng to translate the label field in multiple languages
+# Copied from OrgrelationType, goal is to use the same properties, as Project are Collaborations, a RDF subclass of project
+
+# class BaseCollaborationType(models.Model):  # this model will be initialized with a fixture
+#     label = models.CharField(_(u'label'), max_length=250)
+#     uri = models.CharField(_(u'URI'), blank=True, max_length=250)
+
+#     def __unicode__(self):
+#         return self.label
+
+#     class Meta:
+#         verbose_name = _(u'Collaboration type')
+#         verbose_name_plural = _(u'Collaboration types')
+#         app_label = 'coop_local'
 
 
+PROJECT_STATUS = (
+    (1,  _(u'just thinking about it')),  # u'en réflexion'),
+    (2,  _(u'looking for partners')),  # u'en recherche de partenariat'),
+    (3,  _(u'preparing launch')),  # en cours de montage'),
+    (4,  _(u'currently running')),  # u'en cours de réalisation'),
+    (5,  _(u'acheived')),  # u'terminé')
+)
 
+
+class BaseProject(URIModel):
+    title = models.CharField(_(u'Title'), max_length=250)
+    slug = exfields.AutoSlugField(populate_from='title', blank=True, overwrite=True)
+    organization = models.ForeignKey('coop_local.Organization', verbose_name=_("organization"), related_name="project_organizer")
+    status = models.PositiveSmallIntegerField(_(u"status"), choices=PROJECT_STATUS)
+    start = models.DateField(_(u'start date'), blank=True, null=True)
+    end = models.DateField(_(u'end date'), blank=True, null=True)
+    description = models.TextField(_(u'Description'))
+    notes = models.TextField(_(u'notes'), blank=True, null=True)
+    published = models.BooleanField(_(u'published on the web site'), default=False)
+
+    zone = models.ForeignKey('coop_local.Area', verbose_name=_(u"zone"), null=True, blank=True)
+    budget = models.PositiveIntegerField(_(u'budget'), blank=True, null=True)
+    relations = models.ManyToManyField('coop_local.Organization',
+                through='coop_local.ProjectSupport',
+                verbose_name=_(u'project partners'), related_name='support')
+
+    class Meta:
+        verbose_name = _(u"Project")
+        verbose_name_plural = _(u"Projects")
+        app_label = 'coop_local'
+        abstract = True
+
+    def __unicode__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('project_detail', args=[self.id])
+
+    # def save(self, *args, **kwargs):
+    #     if not self.sites.all().exists():
+    #         self.sites.add(Site.objects.get_current())
+    #     super(Project, self).save(*args, **kwargs)
+
+
+class BaseProjectSupport(models.Model):
+    project = models.ForeignKey('coop_local.Project', verbose_name=_(u'project'), related_name='project')
+    partner = models.ForeignKey('coop_local.Organization', verbose_name=_(u'partner'), related_name='partner')
+    relation_type = models.ForeignKey('coop_local.OrgRelationType', verbose_name=_(u'relation type'))
+
+    class Meta:
+        verbose_name = _(u'Collaboration')
+        verbose_name_plural = _(u'Collaborations')
+        app_label = 'coop_local'
+        abstract = True
+
+    def __unicode__(self):
+        return _(u" %(a)s is %(b)s for the project %(p)s ") % {'a': self.partner.__unicode__(),
+                                                              'b': self.collaboration_type.__unicode__(),
+                                                              'p': self.project.__unicode__()}
 
 

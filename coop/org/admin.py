@@ -1,12 +1,8 @@
 # -*- coding:utf-8 -*-
 from django.contrib import admin
-from coop.org.models import BaseEngagement, BaseRelation
-from coop.person.models import BasePerson
-#from coop.exchange.models import BaseExchange, BasePaymentModality, BaseTransaction, BaseProduct
 from django import forms
 from django.conf import settings
 
-# from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.db.models.loading import get_model
 from django.utils.translation import ugettext_lazy as _
 from coop.utils.autocomplete_admin import FkAutocompleteAdmin, InlineAutocompleteAdmin
@@ -20,6 +16,7 @@ from django.utils.safestring import mark_safe
 
 from sorl.thumbnail.admin import AdminImageMixin
 from tinymce.widgets import AdminTinyMCE
+from coop.agenda.admin import DatedInline
 
 from chosen import widgets as chosenwidgets
 
@@ -78,6 +75,16 @@ class OrgInline(InlineAutocompleteAdmin):
     fields = ('organization', 'role', 'role_detail', 'engagement_display')
 
     related_search_fields = {'organization': ('title', 'subtitle', 'acronym',), }
+    extra = 1
+
+
+class ProjectSupportInline(InlineAutocompleteAdmin):
+    model = get_model('coop_local', 'ProjectSupport')
+    verbose_name =_(u'Project partner')
+    verbose_name_plural = _(u'Project partners')
+    fk_name = 'project'
+    fields = ('relation_type', 'partner')
+    related_search_fields = {'partner': ('title', 'subtitle', 'acronym',), }
     extra = 1
 
 
@@ -193,6 +200,7 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
 
     if settings.COOP_USE_SITES:
         fieldsets[0][1]['fields'].insert(0, 'sites')
+        list_filter.append('sites')
 
     def get_actions(self, request):
         myactions = dict(create_action(s) for s in get_model('coop_local', 'OrganizationCategory').objects.all())
@@ -206,4 +214,48 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
 
     class Media:
         js = ('/static/js/admin_customize.js',)
+
+
+
+
+
+class ProjectAdminForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ProjectAdminForm, self).__init__(*args, **kwargs)
+        self.fields['ead_niveaux'].help_text = None
+        self.fields['ead_disciplines'].help_text = None
+        if 'sites' in self.fields:
+            self.fields['sites'].help_text = None
+
+    class Meta:
+        model = Project
+        widgets = {'ead_niveaux': chosenwidgets.ChosenSelectMultiple(),
+                   'ead_disciplines': chosenwidgets.ChosenSelectMultiple(),
+                   'sites': chosenwidgets.ChosenSelectMultiple(),
+                    }
+
+
+class ProjectAdmin(FkAutocompleteAdmin):
+    form = ProjectAdminForm
+    change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
+    list_display = ('title', 'organization', 'zone')
+    list_filter = ('status', 'sites')
+    fieldsets = (
+       ('Description', {
+            'fields': ('title', 'status', 'start', 'end', 'description', 'organization', 'published', 'zone', 'budget', 'notes')
+        }),
+
+    )
+    related_search_fields = {'organization': ('title', 'subtitle', 'acronym',),
+                             'zone': ('label', 'reference')}
+
+    inlines = [ProjectSupportInline,
+               LocatedInline,
+               DatedInline
+               ]
+
+    if settings.COOP_USE_SITES:
+        fieldsets[0][1]['fields'].insert(0, 'sites')
+        list_filter.append('sites')
+
 
