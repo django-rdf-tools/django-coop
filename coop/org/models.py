@@ -135,11 +135,8 @@ class BaseRole(URIModel):
 
 DISPLAY = Choices(
     ('PUBLIC',  1,  _(u'public information')),
-    ('USERS',   2,  _(u'registered users')),
-    ('MEMBER',  3,  _(u'members of an organization')),
-    ('RELATED', 4,  _(u'related organizations members')),
-    ('ORG',     5,  _(u'members of this organization')),
-    ('ADMIN',   6,  _(u'administrators of this site')),
+    ('USERS',   2,  _(u'organiztion members')),
+    ('ADMIN',   3,  _(u'administrators of this site')),
 )
 
 COMM_MEANS = Choices(
