@@ -618,8 +618,8 @@ def rdfGraphAll(model=None):
                 for o in m.objects.all():
                     try:
                         g += o.toRdfGraph()
-                    except:
-                        pass
+                    except Exception, e:
+                        log.debug('Unable to create rdf graph for %s, %s' % (o, e))
     else:
         m = models.get_model('coop_local', model)
         # if m == None:
@@ -631,8 +631,8 @@ def rdfGraphAll(model=None):
             for o in m.objects.all():
                 try:
                     g += o.toRdfGraph()
-                except:
-                    pass
+                except Exception, e:
+                        log.debug('Unable to create rdf graph for %s, %s' % (o, e))
     return g
 
 

@@ -6,6 +6,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from extended_choices import Choices
 from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
 from coop.mailing import soap
 from django.contrib.sites.models import Site
 from django.conf import settings
@@ -50,19 +51,20 @@ SUBSCRIPTION_OPTION = Choices(
 
 class BaseMailingList(models.Model):
     name = models.CharField(_('name'), max_length=50, unique=True)
-    email = models.EmailField(_('Newsletter email'), editable=False)
-    # main_url = models.URLField(_('List URL'))
-
-
+    # The 'slug' field is used to build the email of the list
+    slug = exfields.AutoSlugField(populate_from=('name'), overwrite=True, editable=False)
+    # pour le moment, le champs suivant sert uniquement pour info
+    email = models.EmailField(_('Mailing list email'), editable=False)
 
     # various subscription option
-    subscription_option = models.PositiveSmallIntegerField(_(u'option'),
+    subscription_option = models.PositiveSmallIntegerField(_(u'subscriptions option'),
                     choices=SUBSCRIPTION_OPTION.CHOICES, default=SUBSCRIPTION_OPTION.MANUAL)
-    subscription_filter_with_tags = models.BooleanField(_(u'filter with tags'), default=True)
+    subscription_filter_with_tags = models.BooleanField(_(u'filter subscriptions with tags'), default=False)
 
 
     # Specific field to run sympa
     subject = models.CharField(max_length=200)
+    # avec ce templateon peut gerer les inscripts depuis django-coop. Sinon.... passer par sympa
     template = models.PositiveSmallIntegerField(_(u'template'),
                     choices=SYMPA_TEMPLATES.CHOICES, default=SYMPA_TEMPLATES.NEWS_REMOTE_SOURCE)
     description = models.TextField(blank=True)  # could contains html balises
@@ -78,15 +80,18 @@ class BaseMailingList(models.Model):
     def __unicode__(self):
         return u"%s: %s" % (self.name, self.subject)
 
+    #  attention ce code est vraiment lié a notre sysem de mailing list
+    def build_email(self):
+        domain = '.'.join(Site.objects.get_current().domain.split('.')[1:])
+        return "%s@listes.%s" % (self.slug, domain)
+
     # laliste sympa est deja cree
     def clean(self, *args, **kwargs):
-        # TODO quant on aura ajouter les noms de domaines... il faudrait
-        # surement modifier des choses
         if soap.sympa_available():
-            if soap.exists(self.name):
-                raise ValidationError(_(u"List %s exists. If you want to reopen it, please contact the sympa list administator" % self.name))
+            if soap.exists(self.slug):
+                raise ValidationError(_(u"List %s exists. If you want to reopen it, please contact the sympa list administator" % self.slug))
             if not self.email:
-                self.email = "%s@%s" % (self.name, Site.objects.get_current())
+                self.email = self.build_email()
             if self.template == 8:
                 # subject = '%s%shttp://%s/sympa_remote_list/%s' % (self.subject, settings.SYMPA_SOAP['PARAMETER_SEPARATOR'], Site.objects.get_current(), self.name)
                 subject = '%s%shttp://%s%s' % \
@@ -96,24 +101,25 @@ class BaseMailingList(models.Model):
                      reverse('sympa_remote_list', args=[self.id]))
             else:
                 subject = self.subject
-            result = soap.create_list(self.name, subject, self.templateName, self.description)
+            result = soap.create_list(self.slug, subject, self.templateName, self.description)
             if not result == 1:
                 raise ValidationError(_(u"Cannot add the list (sympa cannot create it): %s" % result))
+        # let's build the mailing list even if soap server is not accessible
         super(BaseMailingList, self).clean(*args, **kwargs)
 
     def full_clean(self, *args, **kwargs):
+        super(BaseMailingList, self).full_clean(*args, **kwargs)
         return self.clean(*args, **kwargs)
 
-    # Update the subscription_list according to subscriptions
-    # let's build the mailing list even if soap server is not accessible
     def save(self, *args, **kwargs):
+        self._meta.get_field('slug').pre_save(self, True)  # Slug have to be uptodate
         self.full_clean()
         super(BaseMailingList, self).save(*args, **kwargs)
 
     def delete(self):
         result = 1
-        if soap.exists(self.name):
-            result = soap.close_list(self.name)
+        if soap.exists(self.slug):
+            result = soap.close_list(self.slug)
 
         if result == 1 or result == 'list allready closed':
             super(BaseMailingList, self).delete()
@@ -122,8 +128,8 @@ class BaseMailingList(models.Model):
 
 
     class Meta:
-        verbose_name = _('mailing list')
-        verbose_name_plural = _('mailing lists')
+        verbose_name = _(u'mailing list')
+        verbose_name_plural = _(u'mailing lists')
         abstract = True
         app_label = 'coop_local'
 
@@ -429,16 +435,6 @@ def get_coop_local_newletters_item_class():
     return klass
 
 
-
-def get_coop_local_newletters_class():
-    if hasattr(get_coop_local_newletters_class, '_cache_class'):
-        return getattr(get_coop_local_newletters_class, '_cache_class')
-    else:
-        klass = models.get_model('coop_local', 'newsletter')
-        setattr(get_coop_local_newletters_class, '_cache_class', klass)
-    return klass
-
-
 def coop_newletter_items_classes():
     if hasattr(coop_newletter_items_classes, '_cache_class'):
         return getattr(coop_newletter_items_classes, '_cache_class')
@@ -467,10 +463,10 @@ pre_delete.connect(on_delete_newsletterable_item)
 
 def create_newsletter_item(instance):
     ct = ContentType.objects.get_for_model(instance)
+    klass = get_coop_local_newletters_item_class()
     if getattr(instance, 'in_newsletter', True):
         #Create a newsletter item automatically
         #An optional 'in_newsletter' field can skip the automatic creation if set to False
-        klass = get_coop_local_newletters_item_class()
         return klass.objects.get_or_create(content_type=ct, object_id=instance.id)
     elif hasattr(instance, 'in_newsletter'):
         #If 'in_newsletter' field existe and is False
