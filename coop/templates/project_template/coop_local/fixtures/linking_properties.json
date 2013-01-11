@@ -1,0 +1,28 @@
+[
+    {
+        "pk": 1,
+        "model": "coop_local.linkproperty",
+        "fields": {
+            "uri": "http://www.w3.org/2000/01/rdf-schema#seeAlso",
+            "label": "seeAlso"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "coop_local.linkproperty",
+        "fields": {
+            "uri": "http://purl.org/dc/terms/isReplacedBy",
+            "label": "isReplacedBy"
+        }
+    },
+     {
+        "pk": 3,
+        "model": "coop_local.linkproperty",
+        "fields": {
+            "uri": "http://purl.org/dc/terms/replaces",
+            "label": "replaces"
+        }
+
+    }
+
+]

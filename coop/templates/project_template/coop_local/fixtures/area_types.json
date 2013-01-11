@@ -1,0 +1,34 @@
+[
+    {
+        "pk": 3,
+        "model": "coop_geo.areatype",
+        "fields": {
+            "txt_idx": "EPCI",
+            "label": "Intercommunalit\u00e9"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "coop_geo.areatype",
+        "fields": {
+            "txt_idx": "DEP",
+            "label": "D\u00e9partment"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "coop_geo.areatype",
+        "fields": {
+            "txt_idx": "COM",
+            "label": "Commune"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "coop_geo.areatype",
+        "fields": {
+            "txt_idx": "REG",
+            "label": "R\u00e9gion"
+        }
+    }
+]
