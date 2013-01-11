@@ -336,32 +336,35 @@ class BaseSubscription(models.Model):
 #####################################################
 
 
-class BaseNewsletterItem(models.Model):
-    content_type = models.ForeignKey(
-        ContentType, 
-        verbose_name=_("content_type"),        
-        related_name="%(app_label)s_%(class)s_newsletter_items"
-    )
-    object_id = models.PositiveIntegerField(verbose_name=_("object id"))
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
+# class BaseNewsletterItem(models.Model):
+#     content_type = models.ForeignKey(
+#         ContentType, 
+#         verbose_name=_("content_type"),        
+#         related_name="%(app_label)s_%(class)s_newsletter_items"
+#     )
+#     object_id = models.PositiveIntegerField(verbose_name=_("object id"))
+#     content_object = generic.GenericForeignKey('content_type', 'object_id')
 
-    class Meta:
-        abstract = True
-        app_label = 'coop_local'
-        unique_together = (("content_type", "object_id"),)
-        verbose_name = _(u'newsletter item')
-        verbose_name_plural = _(u'newsletter items')
+#     class Meta:
+#         abstract = True
+#         app_label = 'coop_local'
+#         unique_together = (("content_type", "object_id"),)
+#         verbose_name = _(u'newsletter item')
+#         verbose_name_plural = _(u'newsletter items')
 
-    def __unicode__(self):
-        return u'{0}: {1}'.format(self.content_type, self.content_object)
+#     def __unicode__(self):
+#         return u'{0}: {1}'.format(self.content_type, self.content_object)
 
 
 class BaseNewsletter(models.Model):
     subject = models.CharField(max_length=200, verbose_name=_(u'subject'), blank=True, default="")
-    #content = HTMLField(content_cleaner, verbose_name=_(u"content"), default="<br>", blank=True)
     content = models.TextField(_(u"content"), default="<br>", blank=True)
-    items = models.ManyToManyField('coop_local.NewsletterItem', blank=True)
+    # items = models.ManyToManyField('coop_local.NewsletterItem', blank=True)
+
     template = models.CharField(_(u'template'), max_length=200, default='mailing/newsletter.html', blank=True)
+
+    articles = models.ManyToManyField('coop_local.Article')
+    events = models.ManyToManyField('coop_local.Event')
 
     lists = models.ManyToManyField('coop_local.MailingList', verbose_name=_(u'destination lists'))
 
@@ -409,8 +412,6 @@ class BaseNewsletter(models.Model):
 class BaseNewsletterSending(models.Model):
 
     newsletter = models.ForeignKey('coop_local.Newsletter')
-
-    scheduling_dt = models.DateTimeField(_(u"scheduling date"), blank=True, default=None, null=True)
     sending_dt = models.DateTimeField(_(u"sending date"), blank=True, default=None, null=True)
 
     def __unicode__(self):
@@ -456,7 +457,6 @@ def coop_newletter_items_classes():
             classes.append(models.get_model('coop_local', c))
         setattr(coop_newletter_items_classes, '_cache_class', classes)
         return classes
-
 
 
 #delete item when content object is deleted
