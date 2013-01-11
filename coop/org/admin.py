@@ -216,9 +216,6 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
         js = ('/static/js/admin_customize.js',)
 
 
-
-
-
 class ProjectAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProjectAdminForm, self).__init__(*args, **kwargs)
@@ -228,7 +225,6 @@ class ProjectAdminForm(forms.ModelForm):
             self.fields['sites'].help_text = None
 
     class Meta:
-        model = Project
         widgets = {'ead_niveaux': chosenwidgets.ChosenSelectMultiple(),
                    'ead_disciplines': chosenwidgets.ChosenSelectMultiple(),
                    'sites': chosenwidgets.ChosenSelectMultiple(),
@@ -239,10 +235,10 @@ class ProjectAdmin(FkAutocompleteAdmin):
     form = ProjectAdminForm
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
     list_display = ('title', 'organization', 'zone')
-    list_filter = ('status', 'sites')
+    list_filter = ['status']
     fieldsets = (
        ('Description', {
-            'fields': ('title', 'status', 'start', 'end', 'description', 'organization', 'published', 'zone', 'budget', 'notes')
+            'fields': ['title', 'status', 'start', 'end', 'description', 'organization', 'published', 'zone', 'budget', 'notes']
         }),
 
     )
