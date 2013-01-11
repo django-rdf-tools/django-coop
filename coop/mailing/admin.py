@@ -6,6 +6,7 @@ from django.db.models.loading import get_model
 from coop.utils.autocomplete_admin import FkAutocompleteAdmin
 from django.contrib.contenttypes.generic import GenericTabularInline
 from coop.mailing.models import instance_to_pref_email
+from django import forms
 
 # from django.conf import settings
 # from django.utils.translation import ugettext_lazy as _
@@ -151,7 +152,38 @@ class NewsletterSendingInline(admin.StackedInline):
     extra = 1
 
 
+from chosen import widgets as chosenwidgets
+from django.contrib.admin.widgets import FilteredSelectMultiple
+from coop_local.models import Article, Newsletter
+
+class NewsletterAdminForm(forms.ModelForm):
+    class Meta:
+        widgets = {'lists': chosenwidgets.ChosenSelectMultiple(),}
+        model = Newsletter
+
+    articles = forms.ModelMultipleChoiceField(
+        queryset=Article.objects.all(),
+        widget=FilteredSelectMultiple(('articles'), False)
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(NewsletterAdminForm, self).__init__(*args, **kwargs)
+        self.fields['articles'].help_text = None
+        self.fields['events'].help_text = None
+        self.fields['lists'].help_text = None
+
+
+
 class NewsletterAdmin(admin.ModelAdmin):
+    form = NewsletterAdminForm
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
-    inlines = [NewsletterSendingInline]
+
+    fieldsets = (
+       (_(u'Definition'), {
+            'fields': ['subject', 'content', 'template', 'articles', 'events', 'lists']
+        }),
+
+    )
+
+    #inlines = [NewsletterSendingInline]
 

@@ -1,0 +1,11 @@
+{% load i18n %}
+{% with newsletter.get_items_by_category as items %}
+{% regroup items by category as categories %}
+<ul class="newsletter-category-index">
+{% for category in categories %}
+    <li id="si-{{category.grouper.id}}">
+        <a href="#category-{{category.grouper.id}}">{{ category.grouper.name }}</a>
+    </li>
+{% endfor %}
+</ul>
+{% endwith %}

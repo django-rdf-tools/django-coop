@@ -369,18 +369,20 @@ class BaseNewsletter(models.Model):
     lists = models.ManyToManyField('coop_local.MailingList', verbose_name=_(u'destination lists'))
 
     def get_items(self):
-        return [item.content_object for item in self.items.all()]
+        return None
+        # return [item.content_object for item in self.items.all()]
 
     def get_items_by_category(self):
-        items = self.get_items()
+        return None
+        # items = self.get_items()
 
-        def sort_by_category(item):
-            category = getattr(item, 'category', None)
-            if category:
-                return category.ordering
-            return 0
-        items.sort(key=sort_by_category)
-        return items
+        # def sort_by_category(item):
+        #     category = getattr(item, 'category', None)
+        #     if category:
+        #         return category.ordering
+        #     return 0
+        # items.sort(key=sort_by_category)
+        # return items
 
 
     def can_edit_newsletter(self, user):

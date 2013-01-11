@@ -55,7 +55,7 @@ def get_newsletter_form():
 class NewNewsletterForm(forms.ModelForm):
     class Meta:
         model = Newsletter
-        fields = ('subject', 'template', 'items')
+        fields = ('subject', 'template')#, 'items')
         #widgets = {}
         #try:
         #    widgets.update({
@@ -92,10 +92,10 @@ class NewsletterForm(floppyforms.ModelForm):
 class NewsletterSchedulingForm(floppyforms.ModelForm):
     class Meta:
         model = NewsletterSending
-        fields = ('scheduling_dt',)
+        fields = ('sending_dt',)
 
-    def clean_scheduling_dt(self):
-        sch_dt = self.cleaned_data['scheduling_dt']
+    def clean_sending_dt(self):
+        sch_dt = self.cleaned_data['sending_dt']
 
         if not sch_dt:
             raise ValidationError(_(u"This field is required"))
@@ -130,7 +130,7 @@ class NewsletterAdminForm(forms.ModelForm):
 
     class Meta:
         model = Newsletter
-        fields = ('subject', 'content', 'template', 'items')
+        fields = ('subject', 'content', 'template')#, 'items')
         widgets = {}
         try:
             widgets.update({

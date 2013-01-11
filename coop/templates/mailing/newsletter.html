@@ -88,7 +88,7 @@
     {% block newsletter %}
         {% cms_edit newsletter %}
             <div id="content">{{ newsletter.content }}</div>
-            {% include "coop_cms/_newsletter_articles.html" %}
+            {% include "mailing/_newsletter_articles.html" %}
         {% end_cms_edit %}
     {% endblock %}
     </div>
