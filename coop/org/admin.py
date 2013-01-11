@@ -219,16 +219,11 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
 class ProjectAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProjectAdminForm, self).__init__(*args, **kwargs)
-        self.fields['ead_niveaux'].help_text = None
-        self.fields['ead_disciplines'].help_text = None
         if 'sites' in self.fields:
             self.fields['sites'].help_text = None
 
     class Meta:
-        widgets = {'ead_niveaux': chosenwidgets.ChosenSelectMultiple(),
-                   'ead_disciplines': chosenwidgets.ChosenSelectMultiple(),
-                   'sites': chosenwidgets.ChosenSelectMultiple(),
-                    }
+        widgets = {'sites': chosenwidgets.ChosenSelectMultiple(),}
 
 
 class ProjectAdmin(FkAutocompleteAdmin):
