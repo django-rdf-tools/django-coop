@@ -1,0 +1,13 @@
+{% load i18n %}
+{% for item in newsletter.get_items %}
+    <div class="newsletter-item">
+        <img src="{{MEDIA_URL}}{{item.logo_thumbnail}}"/>
+        <div class="item-content">
+            <h3>{{item.title}}</h3>
+            <div class="summary">
+                {{item.summary}}
+                <a class="read-more" href="{{item.get_absolute_url}}">{% trans "Read more"%}</a>
+            </div>
+        </div>
+    </div>
+{% endfor %}

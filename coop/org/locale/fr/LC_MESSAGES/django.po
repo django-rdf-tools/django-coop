@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop.organization\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-11 09:38+0100\n"
-"PO-Revision-Date: 2013-01-11 09:40+0100\n"
+"POT-Creation-Date: 2013-01-11 11:30+0100\n"
+"PO-Revision-Date: 2013-01-11 11:30+0100\n"
 "Last-Translator: Quinode <contact@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
 "Language: fr_FR\n"
@@ -18,31 +18,39 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: admin.py:48
+#: admin.py:45
 msgid "Contact information"
 msgstr "Contact"
 
-#: admin.py:49
+#: admin.py:46
 msgid "Contact informations"
 msgstr "Contacts"
 
-#: admin.py:56
+#: admin.py:53
 msgid "Member"
 msgstr "Membre"
 
-#: admin.py:57
+#: admin.py:54
 msgid "Members"
 msgstr "Membres"
 
-#: admin.py:76 models.py:335
+#: admin.py:73 models.py:335
 msgid "Engagement"
 msgstr "Engagement"
 
-#: admin.py:77 models.py:336
+#: admin.py:74 models.py:336
 msgid "Engagements"
 msgstr "Engagements"
 
-#: admin.py:127
+#: admin.py:83
+msgid "Project partner"
+msgstr "partenaire du projet"
+
+#: admin.py:84
+msgid "Project partners"
+msgstr "partenaires du projet"
+
+#: admin.py:134
 #, python-format
 msgid "Add to the \"%s\" category"
 msgstr "Classer dans \"%s\""

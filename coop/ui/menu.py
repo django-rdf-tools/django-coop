@@ -33,39 +33,39 @@ class CustomMenu(Menu):
     def __init__(self, **kwargs):
         Menu.__init__(self, **kwargs)
         self.children = [
-            #items.MenuItem(_('Dashboard'), reverse('admin:index')),
-            #items.Bookmarks('Favoris'),
+            #items.MenuItem(_(u'Dashboard'), reverse('admin:index')),
+            #items.Bookmarks(u'Favoris'),
 
-            items.MenuItem(_('Navigation tree'), '/admin/coop_local/navtree/1/', icon='icon-list-alt icon-white'),
+            items.MenuItem(_(u'Navigation tree'), '/admin/coop_local/navtree/1/', icon='icon-list-alt icon-white'),
 
-            items.MenuItem(_('Articles'), '/admin/coop_local/article/', icon='icon-pencil icon-white'),
+            items.MenuItem(_(u'Articles'), '/admin/coop_local/article/', icon='icon-pencil icon-white'),
 
-            items.MenuItem(_('CMS'), '#', icon='icon-cog icon-white',
+            items.MenuItem(_(u'CMS'), '#', icon='icon-cog icon-white',
                 children=[
 
-                    items.MenuItem(_('Content'), '#', icon='icon-file', children=[
-                        items.MenuItem(_('Article categories'), '/admin/coop_cms/articlecategory/'),
-                        items.MenuItem(_('Documents'), '/admin/coop_cms/document/'),
-                        items.MenuItem(_('Images'), '/admin/coop_cms/image/'),
-                        items.MenuItem(_('Newsletters'), '/admin/coop_local/newsletter/'),
-                        items.MenuItem(_('MailingLists'), '/admin/coop_local/mailinglist/'),
-                        items.MenuItem(_('Comments'), '/admin/comments/comment/'),
-                        items.MenuItem(_('Forms'), '/admin/forms/form/'),
-                        items.MenuItem(_('Preferences'), '/admin/coop_local/siteprefs/'),
+                    items.MenuItem(_(u'Content'), '#', icon='icon-file', children=[
+                        items.MenuItem(_(u'Article categories'), '/admin/coop_cms/articlecategory/'),
+                        items.MenuItem(_(u'Documents'), '/admin/coop_cms/document/'),
+                        items.MenuItem(_(u'Images'), '/admin/coop_cms/image/'),
+                        items.MenuItem(_(u'Newsletters'), '/admin/coop_local/newsletter/'),
+                        items.MenuItem(_(u'MailingLists'), '/admin/coop_local/mailinglist/'),
+                        items.MenuItem(_(u'Comments'), '/admin/comments/comment/'),
+                        items.MenuItem(_(u'Forms'), '/admin/forms/form/'),
+                        items.MenuItem(_(u'Preferences'), '/admin/coop_local/siteprefs/'),
 
                         ]),
 
                     # RSS Sync menu gets inserted here if installed (see above)
 
-                    items.MenuItem(_('Tags'), '#', icon='icon-tags', children=[
-                        items.MenuItem(_('Tags'), '/admin/coop_local/tag/'),
+                    items.MenuItem(_(u'Tags'), '#', icon='icon-tags', children=[
+                        items.MenuItem(_(u'Tags'), '/admin/coop_local/tag/'),
                         #items.MenuItem(_('Tag categories'), '/admin/coop_tag/tagcategory/'),
-                        items.MenuItem(_('Tag trees'), '/admin/coop_local/navtree/'),
+                        items.MenuItem(_(u'Tag trees'), '/admin/coop_local/navtree/'),
                         ]),
 
-                    items.MenuItem(_('Django'), '#', icon='icon-coop icon-django', children=[
-                        items.MenuItem(_('Users'), '/admin/auth/user/'),
-                        items.MenuItem(_('Sites'), '/admin/sites/site/'),
+                    items.MenuItem(_(u'Django'), '#', icon='icon-coop icon-django', children=[
+                        items.MenuItem(_(u'Users'), '/admin/auth/user/'),
+                        items.MenuItem(_(u'Sites'), '/admin/sites/site/'),
                         ]),
                 ]
             ),
@@ -77,27 +77,28 @@ class CustomMenu(Menu):
                 children=[
 
                     items.MenuItem(_('Directory'), '#', icon='icon-home', children=[
-                        items.MenuItem(_('Organizations'), '/admin/coop_local/organization/'),
-                        items.MenuItem(_('Persons'), '/admin/coop_local/person/'),
-                        items.MenuItem(_('Organization categories'), '/admin/coop_local/organizationcategory/'),
-                        items.MenuItem(_('Person categories'), '/admin/coop_local/personcategory/'),
-                        items.MenuItem(_('Roles'), '/admin/coop_local/role/'),
+                        items.MenuItem(_(u'Organizations'), '/admin/coop_local/organization/'),
+                        items.MenuItem(_(u'Projects'), '/admin/coop_local/project/'),
+                        items.MenuItem(_(u'Persons'), '/admin/coop_local/person/'),
+                        items.MenuItem(_(u'Organization categories'), '/admin/coop_local/organizationcategory/'),
+                        items.MenuItem(_(u'Person categories'), '/admin/coop_local/personcategory/'),
+                        items.MenuItem(_(u'Roles'), '/admin/coop_local/role/'),
                         ]),
 
-                    items.MenuItem(_('Exchanges'), '#', icon='icon-random', children=[
-                        items.MenuItem(_('Exchanges'), '/admin/coop_local/exchange/'),
-                        items.MenuItem(_('Exchange methods'), '/admin/coop_local/exchangemethod/'),
+                    items.MenuItem(_(u'Exchanges'), '#', icon='icon-random', children=[
+                        items.MenuItem(_(u'Exchanges'), '/admin/coop_local/exchange/'),
+                        items.MenuItem(_(u'Exchange methods'), '/admin/coop_local/exchangemethod/'),
                         ]),
 
-                    items.MenuItem(_('Cartography'), '#', icon='icon-map-marker', children=[
-                        items.MenuItem(_('Locations'), '/admin/coop_local/location/'),
-                        items.MenuItem(_('Areas'), '/admin/coop_local/area/'),
-                        items.MenuItem(_('Location categories'), '/admin/coop_geo/locationcategory/'),
+                    items.MenuItem(_(u'Cartography'), '#', icon='icon-map-marker', children=[
+                        items.MenuItem(_(u'Locations'), '/admin/coop_local/location/'),
+                        items.MenuItem(_(u'Areas'), '/admin/coop_local/area/'),
+                        items.MenuItem(_(u'Location categories'), '/admin/coop_geo/locationcategory/'),
                         # create my map !
                         ]),
 
-                    items.MenuItem(_('RDF settings'), '#', icon='icon-coop icon-rdf', children=[
-                        items.MenuItem(_('URI redirection'), '/admin/uriredirect/'),
+                    items.MenuItem(_(u'RDF settings'), '#', icon='icon-coop icon-rdf', children=[
+                        items.MenuItem(_(u'URI redirection'), '/admin/uriredirect/'),
                         # webid
                         ]),
 
@@ -112,19 +113,19 @@ class CustomMenu(Menu):
         if 'coop_cms.apps.rss_sync' in settings.INSTALLED_APPS:
             self.children[2].children.insert(1,
 
-                    items.MenuItem(_('RSS'), '#', icon='icon-coop icon-rss', children=[
-                        items.MenuItem(_('RSS items'), '/admin/rss_sync/rssitem/'),
-                        items.MenuItem(_('RSS sources'), '/admin/rss_sync/rsssource/'),
+                    items.MenuItem(_(u'RSS'), '#', icon='icon-coop icon-rss', children=[
+                        items.MenuItem(_(u'RSS items'), '/admin/rss_sync/rssitem/'),
+                        items.MenuItem(_(u'RSS sources'), '/admin/rss_sync/rsssource/'),
                         ])
                     )
 
         if 'coop.agenda' in settings.INSTALLED_APPS:
             self.children.insert(2,
-                items.MenuItem(_('Agenda'), '#', icon='icon-calendar icon-white',
+                items.MenuItem(_(u'Agenda'), '#', icon='icon-calendar icon-white',
                     children=[
-                        items.MenuItem(_('Events'), '/admin/coop_local/event/'),
-                        items.MenuItem(_('Calendar'), '/admin/coop_local/calendar/'),
-                        items.MenuItem(_('Event categories'), '/admin/coop_local/eventcategory/'),
+                        items.MenuItem(_(u'Events'), '/admin/coop_local/event/'),
+                        items.MenuItem(_(u'Calendar'), '/admin/coop_local/calendar/'),
+                        items.MenuItem(_(u'Event categories'), '/admin/coop_local/eventcategory/'),
                     ])
                 )
 

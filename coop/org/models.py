@@ -135,11 +135,8 @@ class BaseRole(URIModel):
 
 DISPLAY = Choices(
     ('PUBLIC',  1,  _(u'public information')),
-    ('USERS',   2,  _(u'registered users')),
-    ('MEMBER',  3,  _(u'members of an organization')),
-    ('RELATED', 4,  _(u'related organizations members')),
-    ('ORG',     5,  _(u'members of this organization')),
-    ('ADMIN',   6,  _(u'administrators of this site')),
+    ('USERS',   2,  _(u'organiztion members')),
+    ('ADMIN',   3,  _(u'administrators of this site')),
 )
 
 COMM_MEANS = Choices(
@@ -865,7 +862,7 @@ class BaseProjectSupport(models.Model):
 
     def __unicode__(self):
         return _(u" %(a)s is %(b)s for the project %(p)s ") % {'a': self.partner.__unicode__(),
-                                                              'b': self.collaboration_type.__unicode__(),
+                                                              'b': self.relation_type.__unicode__(),
                                                               'p': self.project.__unicode__()}
 
 

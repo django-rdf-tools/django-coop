@@ -1,0 +1,43 @@
+[
+    {
+        "pk": 1,
+        "model": "coop_local.orgrelationtype",
+        "fields": {
+            "uri": "http://ns.economie-solidaire.fr/ess#isMemberOf",
+            "label": " membre "
+        }
+    },
+    {
+        "pk": 2,
+        "model": "coop_local.orgrelationtype",
+        "fields": {
+            "uri": "http://ns.economie-solidaire.fr/ess#hasRegularSupplier",
+            "label": " fournisseur r\u00e9gulier "
+        }
+    },
+    {
+        "pk": 3,
+        "model": "coop_local.orgrelationtype",
+        "fields": {
+            "uri": "http://ns.economie-solidaire.fr/ess#hasCasualSupplier",
+            "label": " fournisseur occasionnel "
+        }
+    },
+    {
+        "pk": 4,
+        "model": "coop_local.orgrelationtype",
+        "fields": {
+            "uri": "http://ns.economie-solidaire.fr/ess#receivedTechnicalSupportFrom",
+            "label": " soutien technique "
+        }
+    },
+    {
+        "pk": 5,
+        "model": "coop_local.orgrelationtype",
+        "fields": {
+            "uri": "http://ns.economie-solidaire.fr/ess#receivedFinancialSupportOf",
+            "label": " soutien financier "
+        }
+    }
+
+]

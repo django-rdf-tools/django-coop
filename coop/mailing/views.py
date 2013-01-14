@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from colorbox.decorators import popup_redirect
 from coop_local.models import NewsletterSending, MailingList
-from coop_cms.utils import send_newsletter
+from coop.mailing.utils import send_newsletter
 from django.utils.log import getLogger
 from datetime import datetime
 from coop_local.models import Newsletter
@@ -37,9 +37,6 @@ def list(request, slug):
         return HttpResponse(mailinglist.subscription_list())
     else:
         raise Http404
-
-
-
 
 
 

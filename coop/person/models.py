@@ -39,10 +39,14 @@ class BasePerson(URIModel):
     category = models.ManyToManyField('coop_local.PersonCategory', blank=True, null=True, verbose_name=_(u'category'))
     last_name = models.CharField(_(u'last name'), max_length=100)
     first_name = models.CharField(_(u'first name'), max_length=100, null=True, blank=True)
-    contact = generic.GenericRelation('coop_local.Contact')
-    email = models.EmailField(_(u'personal email'), blank=True, help_text=_(u'will not be displayed on the website'))
-    email_sha1 = models.CharField(_(u'email checksum'), max_length=250, blank=True, null=True)
+    contacts = generic.GenericRelation('coop_local.Contact')
+    email = models.EmailField(_(u'personal email'), blank=True)
     notes = models.TextField(_(u'notes'), blank=True, null=True)
+
+    pref_email = models.ForeignKey('coop_local.Contact',
+                verbose_name=_(u'preferred email'),
+                related_name="preferred_email", null=True, blank=True,
+                help_text=_(u'will not be displayed on the website'))
 
     structure = models.CharField(blank=True, max_length=100)
 
@@ -87,11 +91,11 @@ class BasePerson(URIModel):
         return eng
 
     def save(self, *args, **kwargs):
-        if self.email != '':
-            import hashlib
-            m = hashlib.sha1()
-            m.update(self.email)
-            self.email_sha1 = m.hexdigest()
+        # if self.email != '':
+        #     import hashlib
+        #     m = hashlib.sha1()
+        #     m.update(self.email)
+        #     self.email_sha1 = m.hexdigest()
 
         # create username slug if not set
         if self.username == '':
@@ -112,6 +116,12 @@ class BasePerson(URIModel):
                     chg = True
             if(chg):
                 self.user.save()
+
+        if self.pref_email == None:
+            emails = self.contacts.filter(category=8)
+            if emails.count() > 0:
+                self.pref_email = emails[0]
+
         super(BasePerson, self).save(*args, **kwargs)
 
 
@@ -122,7 +132,7 @@ class BasePerson(URIModel):
         ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
         ('single_mapping', (settings.NS.foaf.familyName, 'last_name'), 'single_reverse'),
         ('single_mapping', (settings.NS.foaf.givenName, 'first_name'), 'single_reverse'),
-        ('single_mapping', (settings.NS.foaf.mbox_sha1sum, 'email_sha1'), 'single_reverse'),
+        #('single_mapping', (settings.NS.foaf.mbox_sha1sum, 'email_sha1'), 'single_reverse'),
         ('single_mapping', (settings.NS.skos.note, 'notes'), 'single_reverse'),
  
         ('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'),

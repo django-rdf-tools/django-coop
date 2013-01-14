@@ -61,6 +61,8 @@ class BaseMailingList(models.Model):
                     choices=SUBSCRIPTION_OPTION.CHOICES, default=SUBSCRIPTION_OPTION.MANUAL)
     subscription_filter_with_tags = models.BooleanField(_(u'filter subscriptions with tags'), default=False)
 
+    person_category = models.ForeignKey('coop_local.Person', verbose_name=_('person category'), blank=True, null=True)
+    organization_category = models.ForeignKey('coop_local.Organization', verbose_name=_('organization category'), blank=True, null=True)
 
     # Specific field to run sympa
     subject = models.CharField(max_length=200)
@@ -250,6 +252,18 @@ class BaseMailingList(models.Model):
                         self.subscription_option in [SUBSCRIPTION_OPTION.ALL, SUBSCRIPTION_OPTION.ALL_PERSONS]:
                     self._person_to_subscription(obj)
 
+    def verify_subscriptions(self):
+        if not self.subscription_option == SUBSCRIPTION_OPTION.MANUAL:
+            orgs = ContentType.objects.get(app_label='coop_local', model_name='organization')
+            pers = ContentType.objects.get(app_label='coop_local', model_name='person')
+            orgs_ids = set(self.subs.filter(content_type=orgs).values_list('id', flat=True).order_by('id'))
+            pers_ids = setself.subs.filter(content_type=pers).values_list('id', flat=True).order_by('id')
+
+
+
+
+
+
     def subscription_list(self):
         from coop_local.models import Subscription
         res = ''
@@ -322,50 +336,53 @@ class BaseSubscription(models.Model):
 #####################################################
 
 
-class BaseNewsletterItem(models.Model):
-    content_type = models.ForeignKey(
-        ContentType, 
-        verbose_name=_("content_type"),        
-        related_name="%(app_label)s_%(class)s_newsletter_items"
-    )
-    object_id = models.PositiveIntegerField(verbose_name=_("object id"))
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
+# class BaseNewsletterItem(models.Model):
+#     content_type = models.ForeignKey(
+#         ContentType, 
+#         verbose_name=_("content_type"),        
+#         related_name="%(app_label)s_%(class)s_newsletter_items"
+#     )
+#     object_id = models.PositiveIntegerField(verbose_name=_("object id"))
+#     content_object = generic.GenericForeignKey('content_type', 'object_id')
 
-    class Meta:
-        abstract = True
-        app_label = 'coop_local'
-        unique_together = (("content_type", "object_id"),)
-        verbose_name = _(u'newsletter item')
-        verbose_name_plural = _(u'newsletter items')
+#     class Meta:
+#         abstract = True
+#         app_label = 'coop_local'
+#         unique_together = (("content_type", "object_id"),)
+#         verbose_name = _(u'newsletter item')
+#         verbose_name_plural = _(u'newsletter items')
 
-    def __unicode__(self):
-        return u'{0}: {1}'.format(self.content_type, self.content_object)
-
-
+#     def __unicode__(self):
+#         return u'{0}: {1}'.format(self.content_type, self.content_object)
 
 
 class BaseNewsletter(models.Model):
     subject = models.CharField(max_length=200, verbose_name=_(u'subject'), blank=True, default="")
-    #content = HTMLField(content_cleaner, verbose_name=_(u"content"), default="<br>", blank=True)
     content = models.TextField(_(u"content"), default="<br>", blank=True)
-    items = models.ManyToManyField('coop_local.NewsletterItem', blank=True)
+    # items = models.ManyToManyField('coop_local.NewsletterItem', blank=True)
+
     template = models.CharField(_(u'template'), max_length=200, default='mailing/newsletter.html', blank=True)
 
-    mailing_list = models.ForeignKey('coop_local.MailingList', null=True)
+    articles = models.ManyToManyField('coop_local.Article')
+    events = models.ManyToManyField('coop_local.Event')
+
+    lists = models.ManyToManyField('coop_local.MailingList', verbose_name=_(u'destination lists'))
 
     def get_items(self):
-        return [item.content_object for item in self.items.all()]
+        return None
+        # return [item.content_object for item in self.items.all()]
 
     def get_items_by_category(self):
-        items = self.get_items()
+        return None
+        # items = self.get_items()
 
-        def sort_by_category(item):
-            category = getattr(item, 'category', None)
-            if category:
-                return category.ordering
-            return 0
-        items.sort(key=sort_by_category)
-        return items
+        # def sort_by_category(item):
+        #     category = getattr(item, 'category', None)
+        #     if category:
+        #         return category.ordering
+        #     return 0
+        # items.sort(key=sort_by_category)
+        # return items
 
 
     def can_edit_newsletter(self, user):
@@ -397,8 +414,6 @@ class BaseNewsletter(models.Model):
 class BaseNewsletterSending(models.Model):
 
     newsletter = models.ForeignKey('coop_local.Newsletter')
-
-    scheduling_dt = models.DateTimeField(_(u"scheduling date"), blank=True, default=None, null=True)
     sending_dt = models.DateTimeField(_(u"sending date"), blank=True, default=None, null=True)
 
     def __unicode__(self):
@@ -410,7 +425,7 @@ class BaseNewsletterSending(models.Model):
         abstract = True
         app_label = 'coop_local'
 
-
+# TODO à virer
 
 def instance_to_pref_email(instance):
     if hasattr(instance, 'pref_email'):
@@ -444,7 +459,6 @@ def coop_newletter_items_classes():
             classes.append(models.get_model('coop_local', c))
         setattr(coop_newletter_items_classes, '_cache_class', classes)
         return classes
-
 
 
 #delete item when content object is deleted

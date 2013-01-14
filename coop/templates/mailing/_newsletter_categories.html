@@ -1,0 +1,23 @@
+{% load i18n %}
+<div class="category">
+{% with newsletter.get_items_by_category as items %}
+{% regroup items by category as categories %}
+{% for category in categories %}
+    <div class="newsletter-category" id="s-{{category.grouper.id}}">
+        <h3><a name="category-{{category.grouper.id}}">{{ category.grouper.name }}</a></h3>
+        {% for item in category.list %}
+        <div class="newsletter-item">
+            <img src="{{MEDIA_URL}}{{item.logo_thumbnail}}"/>
+            <div class="item-content">
+                <h3>{{item.title}}</h3>
+                <div class="summary">
+                    {{item.summary}}
+                    <a class="read-more" href="{{item.get_absolute_url}}">{% trans "Read more"%}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endfor %}
+</div>
+{% endwith %}

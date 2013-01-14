@@ -113,7 +113,7 @@ class StaticURIModel(models.Model):
 
     # La version simple c'est de passer par le save() et de supprimer le default.... c'est pas
     # tres beau, car un plus couteux en runtime... mais bon
-    uuid = models.CharField(_(u'uuid'), max_length=50, null=True, editable=False, unique=True, default=shortuuid.uuid)
+    uuid = models.CharField(_(u'uuid'), max_length=50, null=True, editable=False, default=shortuuid.uuid)
 
     links = generic.GenericRelation('coop_local.Link', related_name="%(app_label)s_%(class)s_related")
 
