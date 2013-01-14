@@ -26,14 +26,14 @@ from coop_cms.views import coop_bar_aloha_js
 
 
 
-def list(request, ml_id):
+def list(request, slug):
     """
     :ml_id MailingList id 
     """
     print request.META
     if request.META['REMOTE_ADDR'] in settings.INTERNAL_IPS or \
             (request.user.is_authenticated() and request.user.is_superuser):
-        mailinglist = get_object_or_404(MailingList, id=ml_id)  
+        mailinglist = get_object_or_404(MailingList, slug=slug)  
         return HttpResponse(mailinglist.subscription_list())
     else:
         raise Http404

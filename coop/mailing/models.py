@@ -94,11 +94,11 @@ class BaseMailingList(models.Model):
                 self.email = self.build_email()
             if self.template == 8:
                 # subject = '%s%shttp://%s/sympa_remote_list/%s' % (self.subject, settings.SYMPA_SOAP['PARAMETER_SEPARATOR'], Site.objects.get_current(), self.name)
-                subject = '%s%shttp://%s%s' % \
+                subject = '%s%shttp://%s%s%s/' % \
                     (self.subject, 
                      settings.SYMPA_SOAP['PARAMETER_SEPARATOR'], 
                      Site.objects.get_current(),
-                     reverse('sympa_remote_list', args=[self.id]))
+                     '/sympa_remote_list/', self.slug)
             else:
                 subject = self.subject
             result = soap.create_list(self.slug, subject, self.templateName, self.description)
