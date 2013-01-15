@@ -62,6 +62,7 @@ def exists(name):
         return list_info
 
 
+# We do not need of the 'topics' parameter
 def create_list(name, subject, template, description, topics=u'topics'):
     try:
         if _server:

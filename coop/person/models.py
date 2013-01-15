@@ -118,7 +118,7 @@ class BasePerson(URIModel):
                 self.user.save()
 
         if self.pref_email == None:
-            emails = self.contacts.filter(category=8)
+            emails = self.contacts.filter(contact_medium_id=8)
             if emails.count() > 0:
                 self.pref_email = emails[0]
 
