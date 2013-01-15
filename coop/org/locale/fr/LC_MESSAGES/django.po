@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop.organization\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-11 11:30+0100\n"
+"POT-Creation-Date: 2013-01-15 12:48+0100\n"
 "PO-Revision-Date: 2013-01-11 11:30+0100\n"
 "Last-Translator: Quinode <contact@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
@@ -34,23 +34,15 @@ msgstr "Membre"
 msgid "Members"
 msgstr "Membres"
 
-#: admin.py:73 models.py:335
+#: admin.py:73 models.py:332
 msgid "Engagement"
 msgstr "Engagement"
 
-#: admin.py:74 models.py:336
+#: admin.py:74 models.py:333
 msgid "Engagements"
 msgstr "Engagements"
 
-#: admin.py:83
-msgid "Project partner"
-msgstr "partenaire du projet"
-
-#: admin.py:84
-msgid "Project partners"
-msgstr "partenaires du projet"
-
-#: admin.py:134
+#: admin.py:124
 #, python-format
 msgid "Add to the \"%s\" category"
 msgstr "Classer dans \"%s\""
@@ -95,11 +87,11 @@ msgstr "Le titre ne peut pas être vide"
 msgid "HTML content is not allowed in the label"
 msgstr "Le HTML n'est pas autorisé dans le champ titre"
 
-#: models.py:55 models.py:77 models.py:159 models.py:258
+#: models.py:55 models.py:77 models.py:156 models.py:255
 msgid "label"
 msgstr "libellé"
 
-#: models.py:57 models.py:160 models.py:259 models.py:324
+#: models.py:57 models.py:157 models.py:256 models.py:321
 msgid "URI"
 msgstr "URI"
 
@@ -111,7 +103,7 @@ msgstr "Catégorie de rôle"
 msgid "Role categories"
 msgstr "Catégories de rôles"
 
-#: models.py:79 models.py:457
+#: models.py:79 models.py:454
 msgid "category"
 msgstr "catégorie"
 
@@ -128,402 +120,306 @@ msgid "public information"
 msgstr "information publique"
 
 #: models.py:138
-msgid "registered users"
-msgstr "utilisateurs enregistrés"
-
-#: models.py:139
-msgid "members of an organization"
-msgstr "membres d'une initiative"
-
-#: models.py:140
-msgid "related organizations members"
+#, fuzzy
+msgid "organiztion members"
 msgstr "membres d'initiatives liées"
 
-#: models.py:141
-msgid "members of this organization"
-msgstr "membre de mon organisation"
-
-#: models.py:142
+#: models.py:139
 msgid "administrators of this site"
 msgstr "administrateurs du site"
 
-#: models.py:146
+#: models.py:143
 msgid "E-mail"
 msgstr "Courriel"
 
-#: models.py:147
+#: models.py:144
 msgid "Landline phone"
 msgstr "Ligne fixe"
 
-#: models.py:148
+#: models.py:145
 msgid "Mobile phone"
 msgstr "Mobile"
 
-#: models.py:149
+#: models.py:146
 msgid "Fax"
 msgstr "Fax"
 
-#: models.py:150
+#: models.py:147
 msgid "Secondary web site"
 msgstr "Site web secondaire"
 
-#: models.py:151
+#: models.py:148
 msgid "Skype"
 msgstr "Skype"
 
-#: models.py:152
+#: models.py:149
 msgid "Twitter"
 msgstr "Twitter"
 
-#: models.py:153
+#: models.py:150
 msgid "RSS Feed"
 msgstr "flux RSS"
 
-#: models.py:154
+#: models.py:151
 msgid "vCalendar"
 msgstr "Agenda"
 
-#: models.py:167
+#: models.py:164
 msgid "Contact medium"
 msgstr "Moyen de contact"
 
-#: models.py:168
+#: models.py:165
 msgid "Contact mediums"
 msgstr "Moyens de contact"
 
-#: models.py:174
+#: models.py:171
 msgid "Category"
 msgstr "Catégorie"
 
-#: models.py:178
+#: models.py:175
 msgid "content"
 msgstr "contenu"
 
-#: models.py:179
+#: models.py:176
 msgid "details"
 msgstr "détails"
 
-#: models.py:180 models.py:317
+#: models.py:177 models.py:314
 msgid "Display"
 msgstr "Affichage"
 
-#: models.py:190
+#: models.py:187
 msgid "Contact"
 msgstr "Contact"
 
-#: models.py:191
+#: models.py:188
 msgid "Contacts"
 msgstr "Contacts"
 
-#: models.py:213
+#: models.py:210
 msgid "Phone numbers must have 10 digits"
 msgstr "Les numéros de téléphone doivent avoir 10 chiffres"
 
-#: models.py:260
+#: models.py:257
 msgid "available for org-to-org relations"
 msgstr "disponible pour les relations entre organisations"
 
-#: models.py:261
+#: models.py:258
 msgid "available for org-to-project relations"
 msgstr "disponibles pour les partenariats projets"
 
-#: models.py:268
+#: models.py:265
 msgid "Organizations relation type"
 msgstr "Type de relation entre organisations"
 
-#: models.py:269
+#: models.py:266
 msgid "Organization relations types"
 msgstr "Types de relation entre organisation"
 
-#: models.py:274
+#: models.py:271
 msgid " is member of "
 msgstr "est membre de "
 
-#: models.py:275
+#: models.py:272
 msgid " has for regular supplier "
 msgstr "a pour fournisseur régulier "
 
-#: models.py:276
+#: models.py:273
 msgid " has for casual supplier "
 msgstr "a pour fournisseur occasionnel "
 
-#: models.py:277
+#: models.py:274
 msgid " received technical support from "
 msgstr "a reçu un soutien technique de "
 
-#: models.py:278
+#: models.py:275
 msgid " received financial support from "
 msgstr "a reçu un soutien financier de "
 
-#: models.py:283
+#: models.py:280
 msgid "source organization"
 msgstr "organisation source"
 
-#: models.py:284
+#: models.py:281
 msgid "target organization"
 msgstr "organisation cible"
 
-#: models.py:285
+#: models.py:282
 msgid "Relation type"
 msgstr "Type de relation"
 
-#: models.py:287 models.py:858
+#: models.py:284
 msgid "relation type"
 msgstr "Type de relation"
 
-#: models.py:290
+#: models.py:287
 msgid "created"
 msgstr "création"
 
-#: models.py:291
+#: models.py:288
 msgid "modified"
 msgstr "modification"
 
-#: models.py:296
+#: models.py:293
 msgid "Relation"
 msgstr "Relation"
 
-#: models.py:297
+#: models.py:294
 msgid "Relations"
 msgstr "Relations"
 
-#: models.py:301
+#: models.py:298
 #, python-format
 msgid "Relation : %(a)s is a %(r)s of %(b)s"
 msgstr "Relation : %(a)s est un(e) %(r)s de %(b)s"
 
-#: models.py:312
+#: models.py:309
 msgid "person"
 msgstr "personne"
 
-#: models.py:313 models.py:823
+#: models.py:310
 msgid "organization"
 msgstr "organisation"
 
-#: models.py:314
+#: models.py:311
 msgid "role"
 msgstr "rôle"
 
-#: models.py:315
+#: models.py:312
 msgid "detailed role"
 msgstr "rôle détaillé"
 
-#: models.py:316
+#: models.py:313
 msgid "has editor rights"
 msgstr "éditeur"
 
-#: models.py:319
+#: models.py:316
 msgid "remote person URI"
 msgstr "URI du contact externe"
 
-#: models.py:320
+#: models.py:317
 msgid "remote person label"
 msgstr "Libellé du contact externe"
 
-#: models.py:322
+#: models.py:319
 msgid "fill this only if the person record is not available locally"
 msgstr ""
 "remplissez ce champ uniquement si la personne n'est pas enregistrée sur ce "
 "site"
 
-#: models.py:327
+#: models.py:324
 msgid "remote organization URI"
 msgstr "URI de l'organisation externe"
 
-#: models.py:328
+#: models.py:325
 msgid "remote organization label"
 msgstr "Libellé de l'organisation externe"
 
-#: models.py:330
+#: models.py:327
 msgid "fill this only if the organization record is not available locally"
 msgstr ""
 "remplissez ce champ uniquement si l'organisation n'est pas enregistrée sur "
 "ce site"
 
-#: models.py:383 models.py:446
+#: models.py:380 models.py:443
 msgid "description"
 msgstr "description"
 
-#: models.py:387
+#: models.py:384
 msgid "organization category"
 msgstr "catégorie d'organisation"
 
-#: models.py:388
+#: models.py:385
 msgid "organization categories"
 msgstr "catégories d'organisations"
 
-#: models.py:425 models.py:436
+#: models.py:422 models.py:433
 msgid "title"
 msgstr "titre"
 
-#: models.py:426 models.py:438
+#: models.py:423 models.py:435
 msgid "acronym"
 msgstr "sigle"
 
-#: models.py:439
+#: models.py:436
 msgid "Preferred label"
 msgstr "nom préféré"
 
-#: models.py:442
+#: models.py:439
 msgid "tagline"
 msgstr "slogan"
 
-#: models.py:444
+#: models.py:441
 msgid "tell us what your organization do in one line."
 msgstr "indiquez en une ligne ce que fait votre organisation (ou un slogan)"
 
-#: models.py:454
+#: models.py:451
 msgid "relations"
 msgstr "relations"
 
-#: models.py:460
+#: models.py:457
 msgid "members"
 msgstr "membres"
 
-#: models.py:472
+#: models.py:469
 msgid "creation date"
 msgstr "date de création"
 
-#: models.py:473
+#: models.py:470
 msgid "global email"
 msgstr "email général"
 
-#: models.py:474
+#: models.py:471
 msgid "email checksum"
 msgstr "checksum e-mail"
 
-#: models.py:476
+#: models.py:473
 msgid "web site"
 msgstr "site web"
 
-#: models.py:479
+#: models.py:476
 msgid "preferred email"
 msgstr "courriel préféré"
 
-#: models.py:482
+#: models.py:479
 msgid "preferred phone"
 msgstr "téléphone préféré"
 
-#: models.py:485
+#: models.py:482
 msgid "preferred postal address"
 msgstr "adresse postale préférée"
 
-#: models.py:489
+#: models.py:486
 msgid "show on public site"
 msgstr "afficher sur le site"
 
-#: models.py:490 models.py:828
+#: models.py:487
 msgid "notes"
 msgstr "notes"
 
-#: models.py:498
+#: models.py:495
 msgid "Organization"
 msgstr "Organisation"
 
-#: models.py:499
+#: models.py:496
 msgid "Organizations"
 msgstr "Organisations"
 
-#: models.py:516
+#: models.py:513
 msgid "geo"
 msgstr "geo"
 
-#: models.py:544
+#: models.py:541
 msgid "desc."
 msgstr "desc."
 
-#: models.py:553 models.py:555
+#: models.py:550 models.py:552
 msgid "No Image"
 msgstr "Pas d'image"
 
-#: models.py:557
+#: models.py:554
 msgid "logo"
 msgstr "logo"
-
-#: models.py:812
-msgid "just thinking about it"
-msgstr "en réflexion"
-
-#: models.py:813
-msgid "looking for partners"
-msgstr "recherche de partenariat"
-
-#: models.py:814
-msgid "preparing launch"
-msgstr "en cours de montage"
-
-#: models.py:815
-msgid "currently running"
-msgstr "en cours de réalisation"
-
-#: models.py:816
-msgid "acheived"
-msgstr "terminé"
-
-#: models.py:821
-msgid "Title"
-msgstr "titre"
-
-#: models.py:824
-msgid "status"
-msgstr "statut"
-
-#: models.py:825
-msgid "start date"
-msgstr "date de début"
-
-#: models.py:826
-msgid "end date"
-msgstr "date de fin"
-
-#: models.py:827
-msgid "Description"
-msgstr "Description"
-
-#: models.py:829
-msgid "published on the web site"
-msgstr "publié sur le site"
-
-#: models.py:831
-msgid "zone"
-msgstr "zone"
-
-#: models.py:832
-msgid "budget"
-msgstr "budget"
-
-#: models.py:835
-msgid "project partners"
-msgstr "partenaires du projet"
-
-#: models.py:838
-msgid "Project"
-msgstr "Projet"
-
-#: models.py:839
-msgid "Projects"
-msgstr "Projets"
-
-#: models.py:856
-msgid "project"
-msgstr "projet"
-
-#: models.py:857
-msgid "partner"
-msgstr "partenaire"
-
-#: models.py:861
-msgid "Collaboration"
-msgstr "Collaboration"
-
-#: models.py:862
-msgid "Collaborations"
-msgstr "Collaborations"
-
-#: models.py:867
-#, python-format
-msgid " %(a)s is %(b)s for the project %(p)s "
-msgstr "%(a)s est %(b)s pour le projet %(p)s "
 
 #: views.py:57 views.py:105
 msgid "Your changes have been saved properly"
@@ -532,6 +428,84 @@ msgstr "Vos données ont bien été enregistrées."
 #: views.py:66 views.py:110
 msgid "An error has occured."
 msgstr "Une erreur est intervenue"
+
+#~ msgid "Project partner"
+#~ msgstr "partenaire du projet"
+
+#~ msgid "Project partners"
+#~ msgstr "partenaires du projet"
+
+#~ msgid "registered users"
+#~ msgstr "utilisateurs enregistrés"
+
+#~ msgid "members of an organization"
+#~ msgstr "membres d'une initiative"
+
+#~ msgid "members of this organization"
+#~ msgstr "membre de mon organisation"
+
+#~ msgid "just thinking about it"
+#~ msgstr "en réflexion"
+
+#~ msgid "looking for partners"
+#~ msgstr "recherche de partenariat"
+
+#~ msgid "preparing launch"
+#~ msgstr "en cours de montage"
+
+#~ msgid "currently running"
+#~ msgstr "en cours de réalisation"
+
+#~ msgid "acheived"
+#~ msgstr "terminé"
+
+#~ msgid "Title"
+#~ msgstr "titre"
+
+#~ msgid "status"
+#~ msgstr "statut"
+
+#~ msgid "start date"
+#~ msgstr "date de début"
+
+#~ msgid "end date"
+#~ msgstr "date de fin"
+
+#~ msgid "Description"
+#~ msgstr "Description"
+
+#~ msgid "published on the web site"
+#~ msgstr "publié sur le site"
+
+#~ msgid "zone"
+#~ msgstr "zone"
+
+#~ msgid "budget"
+#~ msgstr "budget"
+
+#~ msgid "project partners"
+#~ msgstr "partenaires du projet"
+
+#~ msgid "Project"
+#~ msgstr "Projet"
+
+#~ msgid "Projects"
+#~ msgstr "Projets"
+
+#~ msgid "project"
+#~ msgstr "projet"
+
+#~ msgid "partner"
+#~ msgstr "partenaire"
+
+#~ msgid "Collaboration"
+#~ msgstr "Collaboration"
+
+#~ msgid "Collaborations"
+#~ msgstr "Collaborations"
+
+#~ msgid " %(a)s is %(b)s for the project %(p)s "
+#~ msgstr "%(a)s est %(b)s pour le projet %(p)s "
 
 #~ msgid "Collaboration type"
 #~ msgstr "Type de collaboration"
