@@ -80,6 +80,11 @@ if 'coop.agenda' in settings.INSTALLED_APPS:
         (r'^', include('coop.agenda.urls')),
     )
 
+if 'coop.project' in settings.INSTALLED_APPS:
+    urlpatterns += patterns('',
+        (r'^', include('coop.project.urls')),
+    )
+
 if 'coop.mailing' in settings.INSTALLED_APPS:
     urlpatterns += patterns('',
         (r'^', include('coop.mailing.urls')),

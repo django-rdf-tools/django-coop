@@ -43,6 +43,8 @@ INSTALLED_APPS = settings.INSTALLED_APPS + [
     'coop.agenda',
     'coop.article',
     # 'coop.mailing',   # the mailinglist management is HARDLY link to our sympa installation 
+    # 'coop.project',  # Only if you need the Project module
+    # 'coop.doc'  # Only if you need the Doc module
     'coop.exchange',
     #'coop.webid',
     'coop_local',

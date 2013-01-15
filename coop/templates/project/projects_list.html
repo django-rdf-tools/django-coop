@@ -1,0 +1,154 @@
+{% extends "page.html" %}
+{% load i18n thumbnail remote %}
+
+{% block meta_title %}Liste des projets{% endblock %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.css" />
+    <!--[if lte IE 8]>
+         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.ie.css" />
+    <![endif]-->
+    {{ block.super }}
+{% endblock stylesheet %}
+
+{% block javascript %}
+    {{ block.super }}
+    <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.1.2"></script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.4/leaflet.js"></script>
+{% endblock javascript %}
+
+
+{% block article %}
+
+        <h2 class="like-h1">Liste des projets</h2>
+
+
+        <p>Vous trouverez ici tous les projets d'Education au développement portés par les membres du réseau.
+        </p>
+
+
+<!--  -->
+    <div id="map-projects" ></div>
+   <div id="map" class="block" style="width: 640px; height: 320px"></div>
+
+    
+
+    <script>
+        var map = new L.Map('map');
+        var ailleurs = new L.LatLng(45.654827, 3.430401); // geographical point (longitude and latitude)
+        // var noms = new L.StamenTileLayer("toner-labels");
+        // var fond = new L.StamenTileLayer("watercolor");
+
+
+        var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
+            cloudmadeAttribution = 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
+            cloudmade = new L.tileLayer(cloudmadeUrl, {maxZoom: 18, attribution: cloudmadeAttribution});
+
+        map.setView(ailleurs, 10).addLayer(cloudmade);
+
+        // map.addLayer(fond);
+        // map.addLayer(noms);
+
+        $(function(){
+
+            $.getJSON('/projets/map/', function(data) {
+
+                var eadGeojsonLayer = new L.geoJson(data, {
+                    // style for all vector layers (color, opacity, etc.), either function or object (optional)
+                    style: function (feature) {
+                            return feature.properties && feature.properties.style;
+                    },
+                    // function that gets called on every created feature layer (optional)
+                    onEachFeature: function (feature, layer) {
+
+                    if (feature.properties && feature.properties.popupContent) {
+                             layer.bindPopup(feature.properties.popupContent);
+                         }
+                    }
+
+                }).addTo(map);
+
+                map.fitBounds(eadGeojsonLayer.getBounds());
+
+
+             });
+
+        });
+
+
+    </script>
+<!-- -->
+
+
+{% for item in projets %}
+
+    <div class="list_item vcenter_container">
+
+        <div class="vcenter_wrapper item-desc-wrapper">
+            <div class="vcenter_content item-desc-content">
+                {% thumbnail item.logo "180x180" as im %}
+                <a class="title" href="{{item.get_absolute_url}}">
+                   <img class="item-list-icon" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                </a>
+                {% endthumbnail %}
+                <a class="title" href="{{item.get_absolute_url}}">{{ item.title }}</a><br/>
+                <p class="abbr_desc">{{ item.description|safe|truncatewords:30 }}</span>
+
+            <dl class="attr_table">
+
+
+                {% if item.person or item.remote_person_label %}
+                    <dt>Auteur</dt>
+                    {% local_or_remote uri article person as author_uri %}
+                    {% local_or_remote label article person as author_label %}
+                    <dd>{% if author_uri %}<a href="{{author_uri}}">{% endif %}
+                        {{ author_label }}
+                        {% if author_uri %}</a>{% endif %}</dd>
+                {% endif %}
+
+                {% if item.organization or item.remote_organization_label %}
+                    <dt>Structure</dt>
+                    {% local_or_remote uri item organization as org_uri %}
+                    {% local_or_remote label item organization as org_label %}
+                    <dd>{% if org_uri %}<a href="{{org_uri}}">{% endif %}
+                        {{ org_label }}
+                        {% if org_uri %}</a>{% endif %}</dd>
+                {% endif %}
+
+
+                {% if item.zone %}
+                    <dt>Zone géographique</dt>
+                    <dd>{{ item.zone.label }}</dd>
+                {% endif %}
+
+                {% if item.status %}
+                    <dt>Statut</dt>
+                    <dd>{{ item.get_status_display }}</dd>
+                {% endif %}
+
+                {% if item.ead_disciplines.all %}
+                    <dt>Discipline associée</dt>
+                    <dd>{% for d in item.ead_disciplines.all %}
+                        {{ d }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}</dd>
+                {% endif %}
+
+                {% if item.tags.all %}
+                    <dt>Mots-clés</dt>
+                    <dd>{% for tag in item.tags.all %}
+                        <a href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %}, {% endif %}
+                        {% endfor %}</dd>
+                {% endif %}
+
+            </dl>
+
+            <a href="{{item.get_absolute_url}}" class="btn btn-warning btn-small proj"><i class="icon-plus icon-white"></i>En savoir plus sur ce projet</a>
+
+            </div>
+        </div>
+
+    </div>
+
+{% endfor%}
+
+{% endblock article %}

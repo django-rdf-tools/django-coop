@@ -78,7 +78,6 @@ class CustomMenu(Menu):
 
                     items.MenuItem(_('Directory'), '#', icon='icon-home', children=[
                         items.MenuItem(_(u'Organizations'), '/admin/coop_local/organization/'),
-                        items.MenuItem(_(u'Projects'), '/admin/coop_local/project/'),
                         items.MenuItem(_(u'Persons'), '/admin/coop_local/person/'),
                         items.MenuItem(_(u'Organization categories'), '/admin/coop_local/organizationcategory/'),
                         items.MenuItem(_(u'Person categories'), '/admin/coop_local/personcategory/'),
@@ -128,6 +127,20 @@ class CustomMenu(Menu):
                         items.MenuItem(_(u'Event categories'), '/admin/coop_local/eventcategory/'),
                     ])
                 )
+
+        if 'coop.project' in settings.INSTALLED_APPS:
+            if 'coop.agenda' in settings.INSTALLED_APPS:
+                menu_nb = 4
+            else:
+                menu_nb = 3
+
+            self.children[menu_nb].children.insert(1,
+
+                    items.MenuItem(_(u'Projects'), '#', icon='icon-book', children=[
+                        items.MenuItem(_(u'Projects'), '/admin/coop_local/project/'),
+                        items.MenuItem(_(u'Projects categories'), '/admin/coop_local/projectcategory/'),
+                        ])
+                    )
 
         try:    
             idx = len(self.children)
