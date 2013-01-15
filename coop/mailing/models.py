@@ -90,10 +90,12 @@ class BaseMailingList(models.Model):
         res = set(res)
         if not self.subscription_filter_with_tags:
             return res
-        else:
+        elif self.pk:
             similar_objects = set(self.tags.similar_objects())
             # the intersection
             return res.intersection(similar_objects)
+        else:
+            return res
 
     def org_qs(self):
         from coop_local.models import Organization
@@ -108,11 +110,12 @@ class BaseMailingList(models.Model):
         res = set(res)
         if not self.subscription_filter_with_tags:
             return res
-        else:
+        elif self.pk:
             similar_objects = set(self.tags.similar_objects())
             # the intersection
             return res.intersection(similar_objects)
-
+        else:
+            return res
 
 
     def save(self, *args, **kwargs):

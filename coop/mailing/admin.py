@@ -15,12 +15,12 @@ from django.contrib.sites.models import Site
 from genericadmin.admin import GenericAdminModelAdmin, GenericTabularInline
 
 
-class SubscriptionInline(GenericTabularInline):
+class SubscriptionInline(admin.TabularInline):
     model = get_model('coop_local', 'Subscription')
     # fk_name = 'mailing_list'
     verbose_name = _(u'subscription')
     verbose_name_plural = _(u'subscriptions')
-    content_type_whitelist = ('coop_local/person', 'coop_local/organization')
+    #content_type_whitelist = ('coop_local/person', 'coop_local/organization')
     extra = 1
 
 
@@ -84,7 +84,7 @@ class MailingListAdminForm(forms.ModelForm):
         model = get_model('coop_local', 'MailingList')
 
 
-class MailingListAdmin(GenericAdminModelAdmin, FkAutocompleteAdmin):
+class MailingListAdmin(FkAutocompleteAdmin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
     # list_display_links = ['email', ]
     form = MailingListAdminForm
@@ -105,7 +105,7 @@ class MailingListAdmin(GenericAdminModelAdmin, FkAutocompleteAdmin):
                        'email',
                         ('subscription_option', 'subscription_filter_with_tags'),
                         'person_category', 'organization_category',
-                       'tags'
+                       #'tags'
                        ]
             }),
     )
