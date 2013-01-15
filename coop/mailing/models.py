@@ -1,12 +1,11 @@
 # -*- coding:utf-8 -*-
 from django.db import models
+from django.forms import ValidationError
 from django_extensions.db import fields as exfields
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from extended_choices import Choices
-from django.core.exceptions import ValidationError
-from django.core.validators import RegexValidator
 from coop.mailing import soap
 from django.contrib.sites.models import Site
 from django.conf import settings
@@ -51,9 +50,6 @@ SUBSCRIPTION_OPTION = Choices(
 
 class BaseMailingList(models.Model):
     name = models.CharField(_('name'), max_length=50, unique=True)
-    # The 'slug' field is used to build the email of the list
-    slug = exfields.AutoSlugField(populate_from=('name'), overwrite=True, editable=False)
-    # pour le moment, le champs suivant sert uniquement pour info
     email = models.EmailField(_('Mailing list email'), editable=False)
 
     # various subscription option
@@ -61,23 +57,16 @@ class BaseMailingList(models.Model):
                     choices=SUBSCRIPTION_OPTION.CHOICES, default=SUBSCRIPTION_OPTION.MANUAL)
     subscription_filter_with_tags = models.BooleanField(_(u'filter subscriptions with tags'), default=False)
 
-    person_category = models.ForeignKey('coop_local.Person', verbose_name=_('person category'), blank=True, null=True)
-    organization_category = models.ForeignKey('coop_local.Organization', verbose_name=_('organization category'), blank=True, null=True)
+    person_category = models.ForeignKey('coop_local.PersonCategory', verbose_name=_('person category'), blank=True, null=True)
+    organization_category = models.ForeignKey('coop_local.OrganizationCategory', verbose_name=_('organization category'), blank=True, null=True)
 
     # Specific field to run sympa
-    subject = models.CharField(max_length=200)
+    subject = models.CharField(max_length=500)
     # avec ce templateon peut gerer les inscripts depuis django-coop. Sinon.... passer par sympa
     template = models.PositiveSmallIntegerField(_(u'template'),
                     choices=SYMPA_TEMPLATES.CHOICES, default=SYMPA_TEMPLATES.NEWS_REMOTE_SOURCE)
     description = models.TextField(blank=True)  # could contains html balises
-    # A choisir dans une liste... qui parametre cette liste,est-t-elle modifiable?
-    # ... et encore pleins de questions. C'est de la mecanique interne a sympa et cela
-    # semble optionnel.... on peut peut etre s'en passer et le gerer par nos tags
-    # topics = models.CharField(max_length=200, blank=True)
 
-
-    # def __str__(self):
-    #     return self.name
 
     def __unicode__(self):
         return u"%s: %s" % (self.name, self.subject)
@@ -85,43 +74,68 @@ class BaseMailingList(models.Model):
     #  attention ce code est vraiment lié a notre sysem de mailing list
     def build_email(self):
         domain = '.'.join(Site.objects.get_current().domain.split('.')[1:])
-        return "%s@listes.%s" % (self.slug, domain)
+        return "%s@listes.%s" % (self.name, domain)
 
-    # laliste sympa est deja cree
-    def clean(self, *args, **kwargs):
-        if soap.sympa_available():
-            if soap.exists(self.slug):
-                raise ValidationError(_(u"List %s exists. If you want to reopen it, please contact the sympa list administator" % self.slug))
-            if not self.email:
-                self.email = self.build_email()
-            if self.template == 8:
-                # subject = '%s%shttp://%s/sympa_remote_list/%s' % (self.subject, settings.SYMPA_SOAP['PARAMETER_SEPARATOR'], Site.objects.get_current(), self.name)
-                subject = '%s%shttp://%s%s' % \
-                    (self.subject, 
-                     settings.SYMPA_SOAP['PARAMETER_SEPARATOR'], 
-                     Site.objects.get_current(),
-                     reverse('sympa_remote_list', args=[self.id]))
+    # This is not really a QuerySet,as we want to use the similar_objects property from tags
+    def person_qs(self):
+        from coop_local.models import Person
+        res = Person.objects.none()
+        if self.subscription_option == SUBSCRIPTION_OPTION.ALL:
+            res = Person.objects.all()
+        elif self.subscription_option == SUBSCRIPTION_OPTION.ALL_PERSONS:
+            if self.person_category:
+                res = Person.objects.filter(category__in=[self.person_category]) 
             else:
-                subject = self.subject
-            result = soap.create_list(self.slug, subject, self.templateName, self.description)
-            if not result == 1:
-                raise ValidationError(_(u"Cannot add the list (sympa cannot create it): %s" % result))
-        # let's build the mailing list even if soap server is not accessible
-        super(BaseMailingList, self).clean(*args, **kwargs)
+                res = Person.objects.all()
+        res = set(res)
+        if not self.subscription_filter_with_tags:
+            return res
+        else:
+            similar_objects = set(self.tags.similar_objects())
+            # the intersection
+            return res.intersection(similar_objects)
 
-    def full_clean(self, *args, **kwargs):
-        super(BaseMailingList, self).full_clean(*args, **kwargs)
-        return self.clean(*args, **kwargs)
+    def org_qs(self):
+        from coop_local.models import Organization
+        res = Organization.objects.none()
+        if self.subscription_option == SUBSCRIPTION_OPTION.ALL:
+            res = Organization.objects.all()
+        elif self.subscription_option == SUBSCRIPTION_OPTION.ALL_ORGS:
+            if self.organization_category:
+                res = Organization.objects.filter(category__in=[self.organization_category]) 
+            else:
+                res = Organization.objects.all()
+        res = set(res)
+        if not self.subscription_filter_with_tags:
+            return res
+        else:
+            similar_objects = set(self.tags.similar_objects())
+            # the intersection
+            return res.intersection(similar_objects)
+
+
 
     def save(self, *args, **kwargs):
-        self._meta.get_field('slug').pre_save(self, True)  # Slug have to be uptodate
         self.full_clean()
-        super(BaseMailingList, self).save(*args, **kwargs)
+        if soap.sympa_available():
+            if not soap.exists(self.name):
+                subject = '%s%shttp://%s/sympa_remote_list/%s/' % \
+                        (self.subject, 
+                         settings.SYMPA_SOAP['PARAMETER_SEPARATOR'], 
+                         Site.objects.get_current(),
+                         self.name)
+                result = soap.create_list(self.name, subject, self.templateName, self.description) 
+                self.email = soap.info(self.name).listAddress         
+                if not result == 1:
+                    raise ValidationError(_(u"Cannot add the list (sympa cannot create it): %s" % result))
+            else:
+                log.debug(u'list %s already created, to update description, tempalte, pleased delete it' % self.name)
+            super(BaseMailingList, self).save(*args, **kwargs)
 
     def delete(self):
         result = 1
-        if soap.exists(self.slug):
-            result = soap.close_list(self.slug)
+        if soap.exists(self.name):
+            result = soap.close_list(self.name)
 
         if result == 1 or result == 'list allready closed':
             super(BaseMailingList, self).delete()
@@ -155,109 +169,106 @@ class BaseMailingList(models.Model):
         elif self.template == SYMPA_TEMPLATES.PUBLIC_WEB_FORUM:
             return 'pulic_web_forum'
         elif self.template == SYMPA_TEMPLATES.NEWS_REMOTE_SOURCE:
-            return 'news-remote-source'
+            return 'news-letter-remote-source'
         else:
             return ''
 
-    def _organization_to_subcription(self, org):
-        from coop_local.models import Organization, Subscription
 
-        if not 'ct_org' in self._organization_to_subcription.__dict__:
-            self._organization_to_subcription.__dict__['ct_org'] = ContentType.objects.get_for_model(Organization)
 
-        for org in Organization.objects.all():
-            if org.pref_email and org.pref_email.display == DISPLAY.PUBLIC:
-                # check for doublon
-                qs = Subscription.objects.filter(mailing_list=self, email=org.pref_email.content)
-                if qs.exists():
-                    subs = qs[0]
-                    subs.label = org.label()
-                    subs.save()
-                else:
-                    Subscription.objects.get_or_create(email=org.pref_email.content, 
-                                                    object_id=org.id,
-                                                    mailing_list=self,
-                                                    content_type=self._organization_to_subcription.__dict__['ct_org'], 
-                                                    label=org.label())
 
-    def _person_to_subscription(self, person):
-        # cache stuff
-        if not 'ct_person' in self._person_to_subscription.__dict__:
-            from coop_local.models import Person
-            self._person_to_subscription.__dict__['ct_person'] = ContentType.objects.get_for_model(Person)
- 
+    def _instance_to_subscription(self, instance):
         from coop_local.models import Subscription
-        contacts = person.contact.filter(category=COMM_MEANS.MAIL)
-        if contacts.exists():
-            contacts = contacts.filter(display=DISPLAY.PUBLIC)
-            if contacts.exists():
-                contact = contacts[0]
-                # check for doublon
-                qs = Subscription.objects.filter(mailing_list=self, email=contact.content)
-                if qs.exists():
-                    subs = qs[0]
-                    subs.label = person.label()
-                    subs.save()
-                else:
-                    subs, created = Subscription.objects.get_or_create(email=contact.content, 
-                                                                    object_id=person.id, 
-                                                                    mailing_list=self,
-                                                                    label=person.label(),
-                                                                    content_type=self._person_to_subscription.__dict__['ct_person'])
-        else:
-            if person.email and not person.email == '':
-                qs = Subscription.objects.filter(mailing_list=self, email=person.email)
-                if qs.exists():
-                    subs = qs[0]
-                    subs.label = person.label()
-                    subs.save()
-                else:
-                    subs, created = Subscription.objects.get_or_create(email=person.email, 
-                                                object_id=person.id,
-                                                mailing_list=self,
-                                                content_type=self._person_to_subscription.__dict__['ct_person'], 
-                                                label=person.label())
+        if instance.pref_email:
+            ct = ContentType.objects.get_for_model(instance)
+            qs = Subscription.objects.filter(mailing_list=self, 
+                                            content_type__pk=ct.id,
+                                            object_id=instance.id)
+            if not qs.exists():
+                Subscription(mailing_list=self, content_object=instance)
 
 
-    # buils subscriptions accordinf to the subcription_option
+    # def _person_to_subscription(self, person):
+    #     from coop_local.models import Subscription
+    #     # cache stuff
+    #     if not 'ct_person' in self._person_to_subscription.__dict__:
+    #         from coop_local.models import Person
+    #         self._person_to_subscription.__dict__['ct_person'] = ContentType.objects.get_for_model(Person)
+    #     if person.pref_email:
+    #         qs = Subscription.objects.filter(mailing_list=self, email=person.pref_email.content)
+    #         if qs.exists():
+    #             subs = qs[0]
+    #             subs.label = person.label()
+    #             subs.save()
+    #         else:
+    #             subs, created = Subscription.objects.get_or_create(
+    #                     email=person.pref_email.content, 
+    #                     object_id=person.id, 
+    #                     mailing_list=self,
+    #                     label=person.label(),
+    #                     content_type=self._person_to_subscription.__dict__['ct_person'])
+
+
+    # def _organization_to_subcription(self, org):
+    #     from coop_local.models import Subscription
+    #     # cache stuff
+    #     if not 'ct_org' in self._organization_to_subcription.__dict__:
+    #         from coop_local.models import Organization
+    #         self._organization_to_subcription.__dict__['ct_org'] = ContentType.objects.get_for_model(Organization)
+    #     if org.pref_email:
+    #         qs = Subscription.objects.filter(mailing_list=self, email=org.pref_email.content)
+    #         if qs.exists():
+    #             subs = qs[0]
+    #             subs.label = org.label()
+    #             subs.save()
+    #         else:
+    #             subs, created = Subscription.objects.get_or_create(
+    #                     email=org.pref_email.content, 
+    #                     object_id=org.id, 
+    #                     mailing_list=self,
+    #                     label=org.label(),
+    #                     content_type=self._organization_to_subcription.__dict__['ct_org'])
+
+
+
     def auto_subscription(self):
-        from coop_local.models import Contact, Organization, Person, Subscription
-        if not self.subscription_filter_with_tags:
-            if self.subscription_option == SUBSCRIPTION_OPTION.ALL:
-                for contact in Contact.objects.filter(category=COMM_MEANS.MAIL).filter(display=DISPLAY.PUBLIC):
-                    # check for doublon
-                    qs = Subscription.objects.filter(mailing_list=self, email=contact.content)
-                    if not qs.exists():
-                        subs, create = Subscription.objects.get_or_create(email=contact.content, 
-                                                                          mailing_list=self,
-                                                                          label=contact.content_type.get_object_for_this_type(id=contact.object_id).label(),
-                                                                          object_id=contact.object_id, 
-                                                                          content_type=contact.content_type)
-            elif self.subscription_option == SUBSCRIPTION_OPTION.ALL_ORGS:
-                for org in Organization.objects.all():
-                    self._organization_to_subcription(org)
-            elif self.subscription_option == SUBSCRIPTION_OPTION.ALL_PERSONS:
-                for person in Person.objects.all():
-                    self._person_to_subscription(person)
-            # elif self.subscription_option == SUBSCRIPTION_OPTION.ORGS_OPTION:
-            #     for org in self.org_subscriptions.all():
-            #         self._organization_to_subcription(org)
-        else:
-            similar_objects = self.tags.similar_objects()
-            for obj in similar_objects:
-                if isinstance(obj, Organization) and \
-                        self.subscription_option in [SUBSCRIPTION_OPTION.ALL, SUBSCRIPTION_OPTION.ALL_ORGS]:
-                    self._organization_to_subcription(obj)
-                elif isinstance(obj, Person) and \
-                        self.subscription_option in [SUBSCRIPTION_OPTION.ALL, SUBSCRIPTION_OPTION.ALL_PERSONS]:
-                    self._person_to_subscription(obj)
+        for person in self.person_qs():
+            self._instance_to_subscription(person)
+
+        for org in self.org_qs():
+            self._instance_to_subscription(org)
+
 
     def verify_subscriptions(self):
+        from coop_local.models import Subscription
         if not self.subscription_option == SUBSCRIPTION_OPTION.MANUAL:
-            orgs = ContentType.objects.get(app_label='coop_local', model_name='organization')
-            pers = ContentType.objects.get(app_label='coop_local', model_name='person')
-            orgs_ids = set(self.subs.filter(content_type=orgs).values_list('id', flat=True).order_by('id'))
-            pers_ids = setself.subs.filter(content_type=pers).values_list('id', flat=True).order_by('id')
+            orgs = ContentType.objects.get(app_label='coop_local', model='organization')
+            pers = ContentType.objects.get(app_label='coop_local', model='person')
+            orgs_ids = set(self.subs.filter(content_type=orgs).values_list('object_id', flat=True))
+            pers_ids = set(self.subs.filter(content_type=pers).values_list('object_id', flat=True))
+
+            orgs_subscribed = set(map(lambda x: orgs.get_object_for_this_type(pk=x), orgs_ids))
+            pers_subscribed = set(map(lambda x: pers.get_object_for_this_type(pk=x), pers_ids))
+            orgs_to_be_subscribed = set(self.org_qs())
+            pers_to_be_subscribed = set(self.person_qs())
+
+            # The news subscriptions
+            for org in orgs_to_be_subscribed.difference(orgs_subscribed):
+                self._instance_to_subscription(org)
+            for person in pers_to_be_subscribed.difference(pers_subscribed):
+                self._instance_to_subscription(person)
+            # and some have to be deleted
+            for org in orgs_subscribed.difference(orgs_to_be_subscribed):
+                try:
+                    subs = Subscription.objects.get(content_type=orgs, object_id=org.id)
+                    subs.delete()
+                except Subscription.DoesNotExist:
+                    print 'strange ...can not find Orgs %s' % org.id
+            for person in pers_subscribed.difference(pers_to_be_subscribed):
+                try:
+                    subs = Subscription.objects.get(content_type=pers, object_id=person.id)
+                    subs.delete()
+                except Subscription.DoesNotExist:
+                    print 'strange ....can not find %s Person' % person.id
 
 
 
@@ -268,10 +279,12 @@ class BaseMailingList(models.Model):
         from coop_local.models import Subscription
         res = ''
         for s in Subscription.objects.filter(mailing_list=self):
-            if s.label:
-                res += '%s <%s>;\n' % (s.label, s.email)
+            email = s.content_object.pref_email.content
+            label = s.content_object.label()
+            if label:
+                res += '%s %s\n' % (email, label)
             else:
-                res += '<%s>;\n' % s.email
+                res += '%s\n' % email
         return res
 
 
@@ -284,15 +297,6 @@ post_save.connect(on_create_mailing_instance)
 
 
 
-# class Parameter(models.Model):
-#     list = models.ForeignKey('coop_local.MailingList')
-#     value = models.CharField(max_length=200)
-
-#     def __str__(self):
-#         return self.value
-
-#     def __unicode__(self):
-#         return u"%s" % self.value
 
 
 
@@ -304,9 +308,9 @@ class BaseSubscription(models.Model):
                                         related_name='subs')
     created = exfields.CreationDateTimeField(_(u'created'), null=True)
     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
-    label = models.CharField(max_length=250, null=True)
+    # label = models.CharField(max_length=250, null=True)
     # subscription options (HTML, text ...)
-    email = models.EmailField(_('subscribed email'), default='')
+    # email = models.EmailField(_('subscribed email'), default='')
 
     # things which are suscribed
     content_type = models.ForeignKey(ContentType, blank=True, null=True)
@@ -425,20 +429,10 @@ class BaseNewsletterSending(models.Model):
         abstract = True
         app_label = 'coop_local'
 
-# TODO à virer
 
 def instance_to_pref_email(instance):
-    if hasattr(instance, 'pref_email'):
-        if instance.pref_email.display == DISPLAY.PUBLIC:
-            return instance.pref_email.content
-    if hasattr(instance, 'contact'):
-        contacts = instance.contact.filter(category=COMM_MEANS.MAIL)
-        if contacts.exists():
-            contacts = contacts.filter(display=DISPLAY.PUBLIC)
-            if contacts.exists():
-                return contacts[0].content
-    if hasattr(instance, 'email'):
-        return instance.email
+    if hasattr(instance, 'pref_email') and instance.pref_email:
+        return instance.pref_email.content
 
 
 def get_coop_local_newletters_item_class():

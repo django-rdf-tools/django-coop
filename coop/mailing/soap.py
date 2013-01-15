@@ -2,9 +2,12 @@
 from SOAPpy import WSDL, faultType
 from django.conf import settings
 from logging import getLogger
-logger = getLogger('coop')
-
 from django.core.exceptions import ImproperlyConfigured
+
+
+logger = getLogger('coop')
+_UNKNOWN_LIST = 'Unknown list'
+
 
 try:
     sympa_soap = settings.SYMPA_SOAP
@@ -45,20 +48,21 @@ def info(name):
                                                         (name,)
                                                         )
         else:
-            return 'Unknown list'
+            return _UNKNOWN_LIST
     except faultType, e:
         logger.warning(e.faultstring)
-        return 'Unknown list'
+        return _UNKNOWN_LIST
 
 
 def exists(name):
     list_info = info(name)
-    if list_info == 'Unknown list':
+    if list_info == _UNKNOWN_LIST:
         return False
     else:
         return list_info
 
 
+# We do not need of the 'topics' parameter
 def create_list(name, subject, template, description, topics=u'topics'):
     try:
         if _server:

@@ -9,7 +9,7 @@ from django.conf.urls.defaults import *
 urlpatterns = patterns('coop.mailing.views',
 
     # sympa test
-    url(r'^sympa_remote_list/(?P<ml_id>\d+)/$', 'list', name='sympa_remote_list'),
+    url(r'^sympa_remote_list/(?P<name>[-\w]+)/$', 'list', name='sympa_remote_list'),
     url(r'^newsletter/new/$', 'new_newsletter', name='coop_cms_new_newsletter'),
     url(r'^newsletter/settings/(?P<newsletter_id>\d+)/$', 'new_newsletter', name='coop_newsletter_settings'),
     url(r'^newsletter/(?P<newsletter_id>\d+)/$', 'view_newsletter', name='coop_view_newsletter'),

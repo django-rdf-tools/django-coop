@@ -4,13 +4,13 @@ from django.conf import settings
 from django import forms
 from coop.org.admin import create_action, ContactInline, OrgInline
 from django.db.models.loading import get_model
-
+from coop_local.models import Contact
 from chosen import widgets as chosenwidgets
 from coop.utils.autocomplete_admin import FkAutocompleteAdmin
+from django.contrib.contenttypes.models import ContentType
+from django.db.models import Q
 
 
-if 'coop.mailing' in settings.INSTALLED_APPS:
-    from coop.mailing.admin import SubscribtionMailingListInline
 
 
 class PersonAdminForm(forms.ModelForm):
@@ -27,6 +27,11 @@ class PersonAdminForm(forms.ModelForm):
         super(PersonAdminForm, self).__init__(*args, **kwargs)
         self.fields['category'].help_text = None
         self.fields['location'].help_text = None
+        person_contacts = Contact.objects.filter(
+            Q(content_type=ContentType.objects.get(model='person'), object_id=self.instance.id)
+            )
+        self.fields['pref_email'].queryset = person_contacts.filter(contact_medium_id=8)
+
         if 'sites' in self.fields:
             self.fields['sites'].help_text = None
 
@@ -45,9 +50,6 @@ class PersonAdmin(FkAutocompleteAdmin):
     inlines = [ContactInline,
                 OrgInline,
                 ]
-    if "coop.mailing" in settings.INSTALLED_APPS:
-        inlines.append(SubscribtionMailingListInline)
-
 
     def get_actions(self, request):
         myactions = dict(create_action(s) for s in get_model('coop_local', 'PersonCategory').objects.all())
