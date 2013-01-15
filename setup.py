@@ -33,6 +33,7 @@ setup(
                 'coop.agenda.conf',
                 'coop.person',
                 'coop.prefs',
+                'coop.project',
                 'coop.tag',
                 'coop.templatetags',
                 'coop.utils',
