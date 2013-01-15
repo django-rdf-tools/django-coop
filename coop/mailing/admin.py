@@ -64,16 +64,16 @@ from django import forms
 # admin.site.register(Subscription)
 
 
+from genericadmin.admin import GenericAdminModelAdmin, GenericTabularInline
 
 
-class SubscriptionInline(admin.TabularInline):
+class SubscriptionInline(GenericTabularInline):
     model = get_model('coop_local', 'Subscription')
     # fk_name = 'mailing_list'
     verbose_name = _(u'subscription')
     verbose_name_plural = _(u'subscriptions')
-    fields = ('label', 'email')
+    content_type_whitelist = ('coop_local/person', 'coop_local/organization')
     extra = 1
-
 
 
 class MailingListInline(admin.TabularInline):
@@ -116,8 +116,7 @@ class SubscribtionMailingListInline(GenericTabularInline):
 
 
 
-
-class MailingListAdmin(FkAutocompleteAdmin):
+class MailingListAdmin(GenericAdminModelAdmin, FkAutocompleteAdmin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
     # list_display_links = ['email', ]
     search_fields = ['name', 'subject', 'email', 'description']
