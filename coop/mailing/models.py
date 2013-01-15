@@ -130,7 +130,7 @@ class BaseMailingList(models.Model):
                     raise ValidationError(_(u"Cannot add the list (sympa cannot create it): %s" % result))
             else:
                 log.debug(u'list %s already created, to update description, tempalte, pleased delete it' % self.name)
-            super(BaseMailingList, self).save(*args, **kwargs)
+        super(BaseMailingList, self).save(*args, **kwargs)
 
     def delete(self):
         result = 1
