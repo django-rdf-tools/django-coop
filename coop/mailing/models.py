@@ -69,7 +69,10 @@ class BaseMailingList(models.Model):
 
 
     def __unicode__(self):
-        return u"%s: %s" % (self.name, self.subject)
+        if self.email and not self.email == '': 
+            return u"%s" % self.email
+        else:
+            return self.name
 
     #  attention ce code est vraiment lié a notre sysem de mailing list
     def build_email(self):
@@ -128,12 +131,12 @@ class BaseMailingList(models.Model):
                          Site.objects.get_current(),
                          self.name)
                 result = soap.create_list(self.name, subject, self.templateName, self.description) 
-                self.email = soap.info(self.name).listAddress         
                 if not result == 1:
                     raise ValidationError(_(u"Cannot add the list (sympa cannot create it): %s" % result))
             else:
                 log.debug(u'list %s already created, to update description, tempalte, pleased delete it' % self.name)
-            super(BaseMailingList, self).save(*args, **kwargs)
+            self.email = soap.info(self.name).listAddress         
+        super(BaseMailingList, self).save(*args, **kwargs)
 
     def delete(self):
         result = 1
