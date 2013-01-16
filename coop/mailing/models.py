@@ -191,7 +191,8 @@ class BaseMailingList(models.Model):
                                             content_type__pk=ct.id,
                                             object_id=instance.id)
             if not qs.exists():
-                Subscription(mailing_list=self, content_object=instance)
+                subs = Subscription(mailing_list=self, content_object=instance)
+                subs.save()
 
 
     def auto_subscription(self):
