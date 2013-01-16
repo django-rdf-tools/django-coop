@@ -65,7 +65,7 @@ class BaseMailingList(models.Model):
     # avec ce templateon peut gerer les inscripts depuis django-coop. Sinon.... passer par sympa
     template = models.PositiveSmallIntegerField(_(u'template'),
                     choices=SYMPA_TEMPLATES.CHOICES, default=SYMPA_TEMPLATES.NEWS_REMOTE_SOURCE)
-    description = models.TextField(blank=True)  # could contains html balises
+    description = models.TextField(default=_(u'Some words about the mailing list'))  # could contains html balises
 
 
     def __unicode__(self):
@@ -188,49 +188,6 @@ class BaseMailingList(models.Model):
                                             object_id=instance.id)
             if not qs.exists():
                 Subscription(mailing_list=self, content_object=instance)
-
-
-    # def _person_to_subscription(self, person):
-    #     from coop_local.models import Subscription
-    #     # cache stuff
-    #     if not 'ct_person' in self._person_to_subscription.__dict__:
-    #         from coop_local.models import Person
-    #         self._person_to_subscription.__dict__['ct_person'] = ContentType.objects.get_for_model(Person)
-    #     if person.pref_email:
-    #         qs = Subscription.objects.filter(mailing_list=self, email=person.pref_email.content)
-    #         if qs.exists():
-    #             subs = qs[0]
-    #             subs.label = person.label()
-    #             subs.save()
-    #         else:
-    #             subs, created = Subscription.objects.get_or_create(
-    #                     email=person.pref_email.content, 
-    #                     object_id=person.id, 
-    #                     mailing_list=self,
-    #                     label=person.label(),
-    #                     content_type=self._person_to_subscription.__dict__['ct_person'])
-
-
-    # def _organization_to_subcription(self, org):
-    #     from coop_local.models import Subscription
-    #     # cache stuff
-    #     if not 'ct_org' in self._organization_to_subcription.__dict__:
-    #         from coop_local.models import Organization
-    #         self._organization_to_subcription.__dict__['ct_org'] = ContentType.objects.get_for_model(Organization)
-    #     if org.pref_email:
-    #         qs = Subscription.objects.filter(mailing_list=self, email=org.pref_email.content)
-    #         if qs.exists():
-    #             subs = qs[0]
-    #             subs.label = org.label()
-    #             subs.save()
-    #         else:
-    #             subs, created = Subscription.objects.get_or_create(
-    #                     email=org.pref_email.content, 
-    #                     object_id=org.id, 
-    #                     mailing_list=self,
-    #                     label=org.label(),
-    #                     content_type=self._organization_to_subcription.__dict__['ct_org'])
-
 
 
     def auto_subscription(self):
@@ -421,7 +378,8 @@ class BaseNewsletter(models.Model):
 class BaseNewsletterSending(models.Model):
 
     newsletter = models.ForeignKey('coop_local.Newsletter')
-    sending_dt = models.DateTimeField(_(u"sending date"), blank=True, default=None, null=True)
+    scheduling_dt = models.DateTimeField(_(u"scheduling date"), blank=True, default=None, null=True)
+    sending_dt = models.DateTimeField(_(u"sending date"), blank=True, default=None, null=True,editable=False)
 
     def __unicode__(self):
         return self.newsletter.subject
