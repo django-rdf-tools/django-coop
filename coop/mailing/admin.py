@@ -2,7 +2,7 @@
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
-from coop_local.models import NewsletterSending
+from coop_local.models import NewsletterSending, Subscription
 from django.db.models.loading import get_model
 from coop.utils.autocomplete_admin import FkAutocompleteAdmin
 from django.contrib.contenttypes.generic import GenericTabularInline
@@ -12,16 +12,18 @@ from coop.mailing.soap import exists, sympa_available
 from django.contrib.sites.models import Site
 
 
+from genericadmin.admin import GenericAdminModelAdmin, GenericTabularInline
 
 
 class SubscriptionInline(admin.TabularInline):
-    model = get_model('coop_local', 'Subscription')
-    # fk_name = 'mailing_list'
+    #model = get_model('coop_local', 'Subscription')
+    model = Subscription
+    fk_name = 'mailing_list'
     verbose_name = _(u'subscription')
     verbose_name_plural = _(u'subscriptions')
-    # readonly_fields = ('label', 'email')
+    #content_type_whitelist = ('coop_local/person', 'coop_local/organization')
+    #fields = ('modified',)
     extra = 1
-
 
 
 class MailingListInline(admin.TabularInline):
@@ -40,7 +42,6 @@ class MailingListInline(admin.TabularInline):
 #     verbose_name = _(u'subscription')
 #     verbose_name_plural = _(u'subscriptions')
 #     fields = ('mailing_list', 'label', 'email')  
-#     # inlines = [MailingListInline, ]  Ne s'écrit pas comme cela
 #     related_search_fields = {'email': ('last_name', 'first_name',
 #                                         'email', 'structure', 'username'), }
 
@@ -61,7 +62,20 @@ class MailingListInline(admin.TabularInline):
 #         return super(SubscribtionMailingListInline, self).formfield_for_dbfield(db_field, **kwargs)
 
 
+from django.core import urlresolvers
 
+# admin.py
+
+class ReverseRelationshipInlineForm(forms.ModelForm):
+    class Meta:
+        model = Subscription
+
+class ReverseRelationshipInline(admin.TabularInline):
+    model = Subscription
+    form = ReverseRelationshipInlineForm
+    fields = ('link_content_object',)
+    readonly_fields = ('link_content_object',)
+    extra = 1
 
 class MailingListAdminForm(forms.ModelForm):
     # Non : il faut pouvoir modifier la list... comment modifier son template et sa description???
@@ -84,8 +98,7 @@ class MailingListAdminForm(forms.ModelForm):
         model = get_model('coop_local', 'MailingList')
 
 
-
-class MailingListAdmin(FkAutocompleteAdmin):
+class MailingListAdmin(admin.ModelAdmin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
     # list_display_links = ['email', ]
     form = MailingListAdminForm
@@ -96,22 +109,20 @@ class MailingListAdmin(FkAutocompleteAdmin):
     ordering = ('name',)
     readonly_fields = ('email',)
 
-    inlines = [SubscriptionInline]
+    inlines = [ReverseRelationshipInline]
 
     fieldsets = (
         ('Description', {
             'fields': ['name',
-                       'subject', 
-                       'description', 
+                       'subject',
+                       'description',
                        'email',
                         ('subscription_option', 'subscription_filter_with_tags'),
                         'person_category', 'organization_category',
-                       'tags'
+                       #'tags'
                        ]
             }),
     )
-
-
 
 
 class NewsletterSendingInline(admin.StackedInline):
