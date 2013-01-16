@@ -13,6 +13,7 @@ from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save, pre_delete
 from coop.org.models import COMM_MEANS, DISPLAY
 import logging
+from django.core import urlresolvers
 
 log = logging.getLogger('coop')
 
@@ -305,10 +306,6 @@ post_save.connect(on_create_mailing_instance)
 
 
 
-
-
-
-
 class BaseSubscription(models.Model):
     mailing_list = models.ForeignKey('coop_local.MailingList',
                                         related_name='subs')
@@ -332,9 +329,18 @@ class BaseSubscription(models.Model):
     def __unicode__(self):
         return _(u'subscription to ') + unicode(self.mailing_list)
 
-
-
-
+    def link_content_object(self):
+        obj = self.content_object
+        change_url = urlresolvers.reverse(
+            'admin:%s_%s_change' % (
+                obj._meta.app_label,
+                obj._meta.object_name.lower()
+            ),
+            args=(obj.id,)
+        )
+        return u'<a href="%s">%s</a>' % (change_url,  obj.__unicode__())
+    link_content_object.allow_tags = True
+    link_content_object.short_description = 'abonné'
 
 
 
