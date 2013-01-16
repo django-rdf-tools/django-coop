@@ -1,0 +1,12 @@
+{% load i18n %}
+{% for item in newsletter.events.all %}
+    <div class="newsletter-item">
+        <div class="item-content">
+            <h3>{{item.title}}</h3>
+            <div class="summary">
+                {{item.description}}
+                <a class="read-more" href="{{item.get_absolute_url}}">{% trans "Read more"%}</a>
+            </div>
+        </div>
+    </div>
+{% endfor %}

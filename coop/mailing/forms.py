@@ -92,10 +92,10 @@ class NewsletterForm(floppyforms.ModelForm):
 class NewsletterSchedulingForm(floppyforms.ModelForm):
     class Meta:
         model = NewsletterSending
-        fields = ('sending_dt',)
+        fields = ('scheduling_dt',)
 
-    def clean_sending_dt(self):
-        sch_dt = self.cleaned_data['sending_dt']
+    def clean_scheduling_dt(self):
+        sch_dt = self.cleaned_data['scheduling_dt']
 
         if not sch_dt:
             raise ValidationError(_(u"This field is required"))

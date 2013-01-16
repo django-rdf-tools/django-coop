@@ -12,7 +12,7 @@ from coop.mailing.soap import exists, sympa_available
 from django.contrib.sites.models import Site
 
 
-from genericadmin.admin import GenericAdminModelAdmin, GenericTabularInline
+# from genericadmin.admin import GenericAdminModelAdmin, GenericTabularInline
 
 
 class SubscriptionInline(admin.TabularInline):
@@ -66,9 +66,11 @@ from django.core import urlresolvers
 
 # admin.py
 
+
 class ReverseRelationshipInlineForm(forms.ModelForm):
     class Meta:
         model = Subscription
+
 
 class ReverseRelationshipInline(admin.TabularInline):
     model = Subscription
@@ -76,6 +78,7 @@ class ReverseRelationshipInline(admin.TabularInline):
     fields = ('link_content_object',)
     readonly_fields = ('link_content_object',)
     extra = 1
+
 
 class MailingListAdminForm(forms.ModelForm):
     # Non : il faut pouvoir modifier la list... comment modifier son template et sa description???
@@ -130,6 +133,8 @@ class NewsletterSendingInline(admin.StackedInline):
     verbose_name = _(u'Sending Date')
     verbose_name_plural = _(u'Sending Dates')
     model = NewsletterSending
+    readonly_fields = ('sending_dt',)
+
     extra = 1
 
 

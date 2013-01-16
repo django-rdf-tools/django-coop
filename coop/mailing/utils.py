@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from HTMLParser import HTMLParser
 from re import sub
 from sys import stderr
@@ -9,6 +8,11 @@ from coop_cms.html2text import html2text
 from django.conf import settings
 from django.template.loader import get_template
 from django.template import Context
+from django.contrib.sites.models import Site
+
+_SITE_PREFIX = 'http://%s' % Site.objects.get_current().domain
+_FROM_EMAIL = '%s <%s>' % (settings.ADMINS[0][0], settings.ADMINS[0][1])
+
 
 class _DeHTMLParser(HTMLParser):
     def __init__(self):
@@ -61,7 +65,7 @@ def make_links_absolute(html_content):
         while url.startswith('/..'):
             url = url[3:]
         if url.startswith('/'):
-            url = '%s%s' % (settings.COOP_CMS_SITE_PREFIX, url)
+            url = '%s%s' % (_SITE_PREFIX, url)
         end = match.group('end')
         return start + url + end
     
@@ -78,7 +82,7 @@ def send_newsletter(newsletter, dests):
     t = get_template(newsletter.get_template_name())
     context_dict = {
         'title': newsletter.subject, 'newsletter': newsletter, 'by_email': True,
-        'SITE_PREFIX': settings.COOP_CMS_SITE_PREFIX,
+        'SITE_PREFIX': _SITE_PREFIX,
         'MEDIA_URL': settings.MEDIA_URL, 'STATIC_URL': settings.STATIC_URL,
     }
     html_text = t.render(Context(context_dict))
@@ -86,7 +90,7 @@ def send_newsletter(newsletter, dests):
 
     emails = []
     connection = get_connection()
-    from_email = settings.COOP_CMS_FROM_EMAIL
+    from_email = _FROM_EMAIL
     reply_to = getattr(settings, 'COOP_CMS_REPLY_TO', None)
     headers = {'Reply-To': reply_to} if reply_to else None
 

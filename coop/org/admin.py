@@ -27,7 +27,6 @@ if "coop_geo" in settings.INSTALLED_APPS:
     from coop_geo.admin import LocatedInline, AreaInline
 
 
-from django.contrib.contenttypes.generic import GenericTabularInline
 
 
 class URLFieldWidget(AdminURLFieldWidget):
@@ -38,7 +37,7 @@ class URLFieldWidget(AdminURLFieldWidget):
                          u'.value);return false;" class="btn btn-mini"/>Afficher dans une nouvelle fenêtre</a>' % (widget, attrs['id']))
 
 
-class ContactInline(GenericTabularInline):
+class ContactInline(admin.TabularInline):
     model = get_model('coop_local', 'Contact')
     verbose_name = _(u'Contact information')
     verbose_name_plural = _(u'Contact informations')

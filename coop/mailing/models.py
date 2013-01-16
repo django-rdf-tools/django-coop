@@ -388,7 +388,7 @@ class BaseNewsletterSending(models.Model):
 
     newsletter = models.ForeignKey('coop_local.Newsletter')
     scheduling_dt = models.DateTimeField(_(u"scheduling date"), blank=True, default=None, null=True)
-    sending_dt = models.DateTimeField(_(u"sending date"), blank=True, default=None, null=True,editable=False)
+    sending_dt = models.DateTimeField(_(u"sending date"), blank=True, default=None, null=True, editable=False)
 
     def __unicode__(self):
         return self.newsletter.subject

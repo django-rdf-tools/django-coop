@@ -88,7 +88,13 @@
     {% block newsletter %}
         {% cms_edit newsletter %}
             <div id="content">{{ newsletter.content }}</div>
-            {% include "mailing/_newsletter_articles.html" %}
+            {% if newsletter.events %}
+               {% include "mailing/_newsletter_events.html" %}
+            {% endif %}
+
+            {% if newsletter.articles %}
+               {% include "mailing/_newsletter_articles.html" %}
+            {% endif %}
         {% end_cms_edit %}
     {% endblock %}
     </div>
