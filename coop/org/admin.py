@@ -13,7 +13,7 @@ from django.db.models import Q
 from django.contrib.admin.widgets import AdminURLFieldWidget
 from django.db.models import URLField
 from django.utils.safestring import mark_safe
-
+from django.contrib.contenttypes.generic import GenericTabularInline
 from sorl.thumbnail.admin import AdminImageMixin
 from tinymce.widgets import AdminTinyMCE
 from coop.agenda.admin import DatedInline
@@ -37,7 +37,7 @@ class URLFieldWidget(AdminURLFieldWidget):
                          u'.value);return false;" class="btn btn-mini"/>Afficher dans une nouvelle fenêtre</a>' % (widget, attrs['id']))
 
 
-class ContactInline(admin.TabularInline):
+class ContactInline(GenericTabularInline):
     model = get_model('coop_local', 'Contact')
     verbose_name = _(u'Contact information')
     verbose_name_plural = _(u'Contact informations')
