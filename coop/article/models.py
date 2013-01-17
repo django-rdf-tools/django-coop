@@ -52,7 +52,7 @@ if "coop_cms" in settings.INSTALLED_APPS:
             verbose_name_plural = _(u"articles")
             abstract = True
             app_label = 'coop_local'
-
+            ordering = ['-modified']
 
         # RDF stuff
         def isOpenData(self):

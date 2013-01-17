@@ -49,12 +49,13 @@ SUBSCRIPTION_OPTION = Choices(
 )
 
 
+
 class BaseMailingList(models.Model):
     name = models.CharField(_('name'), max_length=50, unique=True)
     email = models.EmailField(_('Mailing list email'), editable=False)
 
     # various subscription option
-    subscription_option = models.PositiveSmallIntegerField(_(u'subscriptions option'),
+    subscription_option = models.PositiveSmallIntegerField(_(u'subscription options'),
                     choices=SUBSCRIPTION_OPTION.CHOICES, default=SUBSCRIPTION_OPTION.MANUAL)
     subscription_filter_with_tags = models.BooleanField(_(u'filter subscriptions with tags'), default=False)
 
@@ -123,7 +124,7 @@ class BaseMailingList(models.Model):
 
 
     def save(self, *args, **kwargs):
-        self.full_clean()
+        # self.full_clean()
         if soap.sympa_available():
             if not soap.exists(self.name):
                 subject = '%s%shttp://%s/sympa_remote_list/%s/' % \
@@ -136,7 +137,8 @@ class BaseMailingList(models.Model):
                     raise ValidationError(_(u"Cannot add the list (sympa cannot create it): %s" % result))
             else:
                 log.debug(u'list %s already created, to update description, tempalte, pleased delete it' % self.name)
-            self.email = soap.info(self.name).listAddress         
+            self.email = soap.info(self.name).listAddress    
+        self.verify_subscriptions(delete=False)     
         super(BaseMailingList, self).save(*args, **kwargs)
 
     def delete(self):
@@ -203,8 +205,16 @@ class BaseMailingList(models.Model):
             self._instance_to_subscription(org)
 
 
-    def verify_subscriptions(self):
-        from coop_local.models import Subscription
+    # The :delete parametre is a workon around for not deleting subscription
+    # as the mailinglist is updated with the admin interface. Django bug, missunderstanding???
+    def verify_subscriptions(self, delete=True):
+        print 'ENTER VErify subscription'
+        from coop_local.models import Subscription, MailingList
+        # Cleaning....
+        if delete:
+            fake = MailingList.objects.get(name='fake')
+            for s in Subscription.objects.filter(mailing_list=fake):
+                s.delete()
         if not self.subscription_option == SUBSCRIPTION_OPTION.MANUAL:
             orgs = ContentType.objects.get(app_label='coop_local', model='organization')
             pers = ContentType.objects.get(app_label='coop_local', model='person')
@@ -224,14 +234,22 @@ class BaseMailingList(models.Model):
             # and some have to be deleted
             for org in orgs_subscribed.difference(orgs_to_be_subscribed):
                 try:
-                    subs = Subscription.objects.get(content_type=orgs, object_id=org.id)
-                    subs.delete()
+                    subs = Subscription.objects.get(mailing_list=self, content_type=orgs, object_id=org.id)
+                    if delete:
+                        subs.delete()    # We can NOT delete... pb with formset and admin!!!!
+                    else:
+                        subs.mailing_list = MailingList.objects.get(name='fake')
+                        subs.save()
                 except Subscription.DoesNotExist:
                     print 'strange ...can not find Orgs %s' % org.id
             for person in pers_subscribed.difference(pers_to_be_subscribed):
                 try:
-                    subs = Subscription.objects.get(content_type=pers, object_id=person.id)
-                    subs.delete()
+                    subs = Subscription.objects.get(mailing_list=self, content_type=pers, object_id=person.id)
+                    if delete:
+                        subs.delete()
+                    else:
+                        subs.mailing_list = MailingList.objects.get(name='fake')
+                        subs.save()
                 except Subscription.DoesNotExist:
                     print 'strange ....can not find %s Person' % person.id
 
@@ -253,12 +271,12 @@ class BaseMailingList(models.Model):
         return res
 
 
-def on_create_mailing_instance(sender, instance, created, raw, **kwargs):
-    from coop_local.models import MailingList
-    if sender == MailingList:
-        if not instance.subscription_option == SUBSCRIPTION_OPTION.MANUAL:
-            instance.auto_subscription()
-post_save.connect(on_create_mailing_instance)
+# def on_create_mailing_instance(sender, instance, created, raw, **kwargs):
+#     from coop_local.models import MailingList
+#     if sender == MailingList:
+#         if not instance.subscription_option == SUBSCRIPTION_OPTION.MANUAL:
+#             instance.verify_subscriptions()
+# post_save.connect(on_create_mailing_instance)
 
 
 
@@ -406,61 +424,68 @@ def instance_to_pref_email(instance):
         return instance.pref_email.content
 
 
-def get_coop_local_newletters_item_class():
-    if hasattr(get_coop_local_newletters_item_class, '_cache_class'):
-        return getattr(get_coop_local_newletters_item_class, '_cache_class')
-    else:
-        klass = models.get_model('coop_local', 'newsletteritem')
-        setattr(get_coop_local_newletters_item_class, '_cache_class', klass)
-    return klass
 
 
-def coop_newletter_items_classes():
-    if hasattr(coop_newletter_items_classes, '_cache_class'):
-        return getattr(coop_newletter_items_classes, '_cache_class')
-    else:
-        classes = []
-        for c in settings.COOP_NEWLETTER_ITEM_CLASSES:
-            classes.append(models.get_model('coop_local', c))
-        setattr(coop_newletter_items_classes, '_cache_class', classes)
-        return classes
+##################################
+## linked to NewsletterItem 
+##################################
+
+
+# def get_coop_local_newletters_item_class():
+#     if hasattr(get_coop_local_newletters_item_class, '_cache_class'):
+#         return getattr(get_coop_local_newletters_item_class, '_cache_class')
+#     else:
+#         klass = models.get_model('coop_local', 'newsletteritem')
+#         setattr(get_coop_local_newletters_item_class, '_cache_class', klass)
+#     return klass
+
+
+# def coop_newletter_items_classes():
+#     if hasattr(coop_newletter_items_classes, '_cache_class'):
+#         return getattr(coop_newletter_items_classes, '_cache_class')
+#     else:
+#         classes = []
+#         for c in settings.COOP_NEWLETTER_ITEM_CLASSES:
+#             classes.append(models.get_model('coop_local', c))
+#         setattr(coop_newletter_items_classes, '_cache_class', classes)
+#         return classes
 
 
 #delete item when content object is deleted
-def on_delete_newsletterable_item(sender, instance, **kwargs):
-    if sender in coop_newletter_items_classes():
-        if hasattr(instance, 'id'):
-            try:
-                ct = ContentType.objects.get_for_model(instance)
-                klass = get_coop_local_newletters_item_class()
-                item = klass.objects.get(content_type=ct, object_id=instance.id)
-                item.delete()
-            except (klass.DoesNotExist, ContentType.DoesNotExist):
-                pass
-pre_delete.connect(on_delete_newsletterable_item)
+# def on_delete_newsletterable_item(sender, instance, **kwargs):
+#     if sender in coop_newletter_items_classes():
+#         if hasattr(instance, 'id'):
+#             try:
+#                 ct = ContentType.objects.get_for_model(instance)
+#                 klass = get_coop_local_newletters_item_class()
+#                 item = klass.objects.get(content_type=ct, object_id=instance.id)
+#                 item.delete()
+#             except (klass.DoesNotExist, ContentType.DoesNotExist):
+#                 pass
+# pre_delete.connect(on_delete_newsletterable_item)
 
 
-def create_newsletter_item(instance):
-    ct = ContentType.objects.get_for_model(instance)
-    klass = get_coop_local_newletters_item_class()
-    if getattr(instance, 'in_newsletter', True):
-        #Create a newsletter item automatically
-        #An optional 'in_newsletter' field can skip the automatic creation if set to False
-        return klass.objects.get_or_create(content_type=ct, object_id=instance.id)
-    elif hasattr(instance, 'in_newsletter'):
-        #If 'in_newsletter' field existe and is False
-        #We delete the Item if exists
-        try:
-            item = klass.objects.get(content_type=ct, object_id=instance.id)
-            item.delete()
-            return None, True
-        except klass.DoesNotExist:
-            return None, False
+# def create_newsletter_item(instance):
+#     ct = ContentType.objects.get_for_model(instance)
+#     klass = get_coop_local_newletters_item_class()
+#     if getattr(instance, 'in_newsletter', True):
+#         #Create a newsletter item automatically
+#         #An optional 'in_newsletter' field can skip the automatic creation if set to False
+#         return klass.objects.get_or_create(content_type=ct, object_id=instance.id)
+#     elif hasattr(instance, 'in_newsletter'):
+#         #If 'in_newsletter' field existe and is False
+#         #We delete the Item if exists
+#         try:
+#             item = klass.objects.get(content_type=ct, object_id=instance.id)
+#             item.delete()
+#             return None, True
+#         except klass.DoesNotExist:
+#             return None, False
 
 
-#create automatically a newsletter item for every objects configured as newsletter_item
-def on_create_newsletterable_instance(sender, instance, created, raw, **kwargs):
-    if sender in coop_newletter_items_classes():
-        create_newsletter_item(instance)
-post_save.connect(on_create_newsletterable_instance)
+# #create automatically a newsletter item for every objects configured as newsletter_item
+# def on_create_newsletterable_instance(sender, instance, created, raw, **kwargs):
+#     if sender in coop_newletter_items_classes():
+#         create_newsletter_item(instance)
+# post_save.connect(on_create_newsletterable_instance)
 
