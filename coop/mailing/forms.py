@@ -26,14 +26,12 @@ from datetime import datetime
 
 
 
-# def get_newsletter_templates(newsletter, user=None):
-#     try:
-#         return getattr(settings, 'COOP_NEWSLETTERS_TEMPLATES')
-#     except AttributeError:
-#         # print "# pas de COOP_NEWSLETTERS_TEMPLATES"
-#         import pdb
-#         pdb.set_trace()
-#         return [Newsletter._meta.get_field_by_name('template')[0].default]
+def get_newsletter_templates(newsletter, user=None):
+    try:
+        return getattr(settings, 'COOP_NEWSLETTERS_TEMPLATES')
+    except AttributeError:
+        # use default value only
+        return [(Newsletter._meta.get_field_by_name('template')[0].default, 'stantard')]
 
 
 def get_newsletter_form():

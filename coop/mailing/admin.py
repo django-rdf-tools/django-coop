@@ -10,7 +10,7 @@ try:
 except ImportError:
     # print "chosen missing"
     pass
-# from coop.mailing.forms import get_newsletter_templates
+from coop.mailing.forms import get_newsletter_templates
 
 
 
@@ -112,6 +112,12 @@ class NewsletterAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(NewsletterAdminForm, self).__init__(*args, **kwargs)
         self.newsletter = kwargs.get('instance', None)
+        choices = get_newsletter_templates(self.newsletter)
+        if choices:
+            self.fields["template"] = forms.ChoiceField(choices=choices)
+        else:
+            self.fields["template"] = forms.CharField()
+
         self.fields['lists'].queryset = MailingList.objects.exclude(name='fake')
         self.fields['articles'].queryset = Article.objects.all().order_by('-modified')
         self.fields['events'].queryset = Event.objects.all().order_by('-modified')
