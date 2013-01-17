@@ -355,8 +355,8 @@ class BaseNewsletter(models.Model):
 
     template = models.CharField(_(u'template'), max_length=200, default='mailing/newsletter.html', blank=True)
 
-    articles = models.ManyToManyField('coop_local.Article')
-    events = models.ManyToManyField('coop_local.Event')
+    articles = models.ManyToManyField('coop_local.Article', null=True, blank=True)
+    events = models.ManyToManyField('coop_local.Event', null=True, blank=True)
 
     lists = models.ManyToManyField('coop_local.MailingList', verbose_name=_(u'destination lists'))
 
