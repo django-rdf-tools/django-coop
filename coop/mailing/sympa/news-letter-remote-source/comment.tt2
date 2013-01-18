@@ -1,4 +1,4 @@
-[%|loc%]Mailing list configuration to be used for a news letter with remote source[%END%]
+[%|loc%]Mailing list configuration to be used for a news letter (remote)[%END%]
 <ul>
 <li>[%|loc%]public and moderated list[%END%]</li>
 <li>[%|loc%]subscribers emails are protected[%END%]</li>

@@ -42,7 +42,7 @@ INSTALLED_APPS = settings.INSTALLED_APPS + [
     'coop.tag',
     'coop.agenda',
     'coop.article',
-    # 'coop.mailing',   # the mailinglist management is HARDLY link to our sympa installation 
+    # 'coop.mailing',   # the mailinglist management, please configure the SYMPA_SOAP below 
     # 'coop.project',  # Only if you need the Project module
     # 'coop.doc'  # Only if you need the Doc module
     'coop.exchange',
@@ -52,14 +52,15 @@ INSTALLED_APPS = settings.INSTALLED_APPS + [
     'coop_geo',  # est obligatoirement APRES coop_local
 ]
 
-# TODO: to be discuss this settings could be in default_project_setings.py
-# file. To be check I knew more on how to configure sympa
 SYMPA_SOAP = {
-    'WSDL': 'http://sympa.{{ root_domain }}/sympa/wsdl',
-    'APPNAME': 'djangoapp',
-    'PASSWORD': 'test',
-    'OWNER': ADMINS[0][1],
-    'PARAMETER_SEPARATOR': '__SEP__',      # used for template
+    'WSDL': 'https://your-sympa-wsdl',
+    'APPNAME': 'your-soap-app-name',
+    'PASSWORD': 'your-soap_app-pw',
+    'OWNER': '',  # email of the lists master
+    # the following parameter are used for templates (see coop/mailing/sympa)
+    'PARAMETER_SEPARATOR': '__SEP__',  # this separator is the one used in the templates s
+    'SYMPA_TMPL_USER': '',  # set your sympa User username
+    'SYMPA_TMPL_PASSWD': ''  # set your sympa User password
 }
 
 

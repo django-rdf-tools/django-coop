@@ -10,10 +10,9 @@ from coop.mailing import soap
 from django.contrib.sites.models import Site
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from django.db.models.signals import post_save, pre_delete
-from coop.org.models import COMM_MEANS, DISPLAY
 import logging
 from django.core import urlresolvers
+from django.contrib.auth.models import User
 
 log = logging.getLogger('coop')
 
@@ -37,7 +36,6 @@ SYMPA_TEMPLATES = Choices(
     ('NEWS_LETTER', 5,  _(u'news letter')),
     ('PRIVATE_WORKING',     6,  _(u'private working')),
     ('PUBLIC_WEB_FORUM',   7,  _(u'public web forum')),
-    ('NEWS_REMOTE_SOURCE', 8, _(u'news letter list with remote source')),
 )
 
 SUBSCRIPTION_OPTION = Choices(
@@ -66,7 +64,7 @@ class BaseMailingList(models.Model):
     subject = models.CharField(max_length=500)
     # avec ce templateon peut gerer les inscripts depuis django-coop. Sinon.... passer par sympa
     template = models.PositiveSmallIntegerField(_(u'template'),
-                    choices=SYMPA_TEMPLATES.CHOICES, default=SYMPA_TEMPLATES.NEWS_REMOTE_SOURCE)
+                    choices=SYMPA_TEMPLATES.CHOICES, default=SYMPA_TEMPLATES.NEWS_LETTER)
     description = models.TextField(default=_(u'Some words about the mailing list'))  # could contains html balises
 
 
@@ -122,21 +120,22 @@ class BaseMailingList(models.Model):
         else:
             return res
 
+    def build_sympa_subjet(self):
+        sep = settings.SYMPA_SOAP['PARAMETER_SEPARATOR']
+        remote_list_addr = 'http://%s/sympa_remote_list/%s/' % (Site.objects.get_current().domain, self.name)
+        user = settings.SYMPA_SOAP['SYMPA_TMPL_USER']
+        passwd = settings.SYMPA_SOAP['SYMPA_TMPL_PASSWD']
+        return sep.join([self.subject, remote_list_addr, user, passwd])
 
     def save(self, *args, **kwargs):
         # self.full_clean()
-        if soap.sympa_available():
+        if self.id == None and soap.sympa_available():
             if not soap.exists(self.name):
-                subject = '%s%shttp://%s/sympa_remote_list/%s/' % \
-                        (self.subject, 
-                         settings.SYMPA_SOAP['PARAMETER_SEPARATOR'], 
-                         Site.objects.get_current(),
-                         self.name)
-                result = soap.create_list(self.name, subject, self.templateName, self.description) 
+                result = soap.create_list(self.name, self.build_sympa_subjet(), self.templateName, self.description) 
                 if not result == 1:
                     raise ValidationError(_(u"Cannot add the list (sympa cannot create it): %s" % result))
             else:
-                log.debug(u'list %s already created, to update description, tempalte, pleased delete it' % self.name)
+                log.debug(u'list %s already created, to update description, template, pleased delete it and contact Sympa administrateur' % self.name)
             self.email = soap.info(self.name).listAddress    
         self.verify_subscriptions(delete=False)     
         super(BaseMailingList, self).save(*args, **kwargs)
@@ -164,23 +163,22 @@ class BaseMailingList(models.Model):
         Please check with sympa server directory /home/sympa/default/create_list_templates
         """
         if self.template == SYMPA_TEMPLATES.DISCUSSION_LIST:
-            return 'discussion_list'
+            return 'discussion_list-remote-source'
         elif self.template == SYMPA_TEMPLATES.HOSTLINE:
-            return 'hotline'
+            return 'hotline-remote-source'
         elif self.template == SYMPA_TEMPLATES.HTML_NEWS_LETTER:
-            return 'html-news-letter'
+            return 'html-news-letter-remote-source'
         elif self.template == SYMPA_TEMPLATES.INTRANET_LIST:
-            return 'intranet_list'
+            return 'intranet_list-remote-source'
         elif self.template == SYMPA_TEMPLATES.NEWS_LETTER:
-            return 'news-letter'
-        elif self.template == SYMPA_TEMPLATES.PRIVATE_WORKING:
-            return 'private_working_group'
-        elif self.template == SYMPA_TEMPLATES.PUBLIC_WEB_FORUM:
-            return 'pulic_web_forum'
-        elif self.template == SYMPA_TEMPLATES.NEWS_REMOTE_SOURCE:
             return 'news-letter-remote-source'
+        elif self.template == SYMPA_TEMPLATES.PRIVATE_WORKING:
+            return 'private_working_group-remote-source'
+        elif self.template == SYMPA_TEMPLATES.PUBLIC_WEB_FORUM:
+            return 'public_web_forum-remote-source'
         else:
-            return ''
+            # let's create the list. This one is moderated...
+            return 'news-letter-remote-source'
 
 
 

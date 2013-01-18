@@ -18,7 +18,7 @@ from datetime import datetime
 from coop_local.models import Newsletter
 from coop.mailing import forms
 from django.core.urlresolvers import reverse
-from soap import info as soap_info, lists
+from django.contrib.sites.models import Site
 
 # TODO ces 2 references doivent sauter
 from djaloha import utils as djaloha_utils
@@ -26,13 +26,22 @@ from coop_cms.views import coop_bar_aloha_js
 
 
 
+def has_sympa_mail(user):
+    dom = Site.objects.get_current().domain
+    dom.split('.')
+    valide_email = 'listmaster@' + '.'.join(dom.split('.')[1:])
+    return user.email == valide_email
+
+
 def list(request, name):
     """
     :ml_id MailingList id 
     """
-    # print request.META
-    if request.META['REMOTE_ADDR'] in settings.INTERNAL_IPS or \
-            (request.user.is_authenticated() and request.user.is_superuser):
+    # Non, il me manque des notion autour de l'authentification
+    # if (request.META['REMOTE_ADDR'] in settings.INTERNAL_IPS and has_sympa_mail(request.user))  \
+    #         or (request.user.is_authenticated() and request.user.is_superuser):
+    if (request.META['REMOTE_ADDR'] in settings.INTERNAL_IPS)  \
+            or (request.user.is_authenticated() and request.user.is_superuser):
         mailinglist = get_object_or_404(MailingList, name=name)  
         mailinglist.verify_subscriptions()
         return HttpResponse(mailinglist.subscription_list())

@@ -1,0 +1,89 @@
+[%# Initialisation des paramètrse de création de la liste
+Ces paramètres sont tous passés dans une unique chaîne de caractère dans la variable "subject".
+Les valeurs des paramètrse sont séparées par la chaînes '__SEP__'.
+Les paramètrse doivents être fournis dans cet ordre :
+1- sujet de la liste
+2- URL du fichier source
+%]
+
+[% params = subject.split('__SEP__') %]
+[% subject = params.0 %]
+[% source_file = params.1 %]
+[% source_file_user = params.2 %]
+[% source_file_password = params.3 %]
+
+subject [% subject %]
+
+include_remote_file 
+url [% source_file %]
+user  [% source_file_user %]
+passwd [% source_file_password %]
+
+status [% status %]
+
+[% IF topics -%]
+topics [% topics %]
+[% END %]
+
+visibility conceal
+
+send privateoreditorkey
+
+reject_mail_from_automates_feature off
+
+web_archive
+  access private
+
+archive
+  period month
+  access owner
+
+clean_delay_queuemod 15
+
+reply_to_header
+value list
+
+subscribe owner
+
+unsubscribe open,notify
+
+review private
+
+invite default
+
+custom_subject [% listname %]
+
+digest 5 20:56
+
+[% FOREACH o = owner -%]
+owner
+  email [% o.email %]
+  profile privileged
+  [% IF o.gecos -%] 
+  gecos [% o.gecos %]
+  [% END %]
+
+[% END %]
+
+[% IF editor -%]
+[% FOREACH e = editor -%]
+editor
+  email [% e.email %]
+
+[% END %]
+[% END %]
+
+shared_doc
+d_edit private
+d_read private
+
+pictures_feature on
+
+creation
+  date [% creation.date %]
+  date_epoch [% creation.date_epoch %]
+[% IF creation_email -%]
+  email [% creation_email %]
+[% END %]
+
+serial 0

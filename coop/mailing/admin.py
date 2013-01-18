@@ -80,6 +80,7 @@ class MailingListAdmin(admin.ModelAdmin):
         ('Description', {
             'fields': ['name',
                        'subject',
+                       'template',
                        'description',
                        'email',
                         ('subscription_option', 'subscription_filter_with_tags'),

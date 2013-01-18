@@ -9,12 +9,15 @@ Les paramètrse doivents être fournis dans cet ordre :
 [% params = subject.split('__SEP__') %]
 [% subject = params.0 %]
 [% source_file = params.1 %]
+[% source_file_user = params.2 %]
+[% source_file_password = params.3 %]
 
 subject [% subject %]
 
 include_remote_file 
-
 url [% source_file %]
+user  [% source_file_user %]
+passwd [% source_file_password %]
 
 status [% status %]
 
@@ -26,24 +29,28 @@ visibility noconceal
 
 send public
 
+reject_mail_from_automates_feature off
+
 web_archive
-  access public
+  access private
 
 archive
-  period year
+  period month
   access owner
 
 clean_delay_queuemod 15
 
-subscribe open
+subscribe owner
 
 unsubscribe open,notify
 
-review owner
+review private
 
 invite default
 
 custom_subject [% listname %]
+
+digest 5 20:56
 
 [% FOREACH o = owner -%]
 owner
@@ -51,16 +58,16 @@ owner
   profile privileged
   [% IF o.gecos -%] 
   gecos [% o.gecos %]
-  [% END %]
+  [% END -%]
 
-[% END %]
+[% END -%]
 
 [% IF editor -%]
 [% FOREACH e = editor -%]
 editor
   email [% e.email %]
 
-[% END %]
+[% END -%]
 [% END %]
 
 shared_doc
@@ -75,5 +82,3 @@ creation
 [% END %]
 
 serial 0
-
-
