@@ -135,7 +135,7 @@ class BaseMailingList(models.Model):
                 if not result == 1:
                     raise ValidationError(_(u"Cannot add the list (sympa cannot create it): %s" % result))
             else:
-                log.debug(u'list %s already created, to update description, template, pleased delete it and contact Sympa administrateur' % self.name)
+                raise ValidationError(_(u'list exits already on symp server, please contact Sympa administrateur'))
             self.email = soap.info(self.name).listAddress    
         self.verify_subscriptions(delete=False)     
         super(BaseMailingList, self).save(*args, **kwargs)

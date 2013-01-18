@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
+from django.forms import ValidationError
 from coop_local.models import NewsletterSending, Subscription, Newsletter, MailingList
 from coop_local.models import Article, Event
 from django.db.models.loading import get_model
@@ -11,7 +12,7 @@ except ImportError:
     # print "chosen missing"
     pass
 from coop.mailing.forms import get_newsletter_templates
-
+from coop.mailing import soap
 
 
 class SubscriptionInline(admin.TabularInline):
@@ -58,6 +59,19 @@ class MailingListAdminForm(forms.ModelForm):
             return self.data['name']
         else:
             return desc
+
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        if soap.exists(name):
+            # Update subscription options
+            if MailingList.objects.filter(name=name).exists():
+                return name
+            # sympa mailing list has been closed
+            else:
+                raise ValidationError(_(u" list exits already on sympa server, please contact Sympa administrateur"))
+        else:
+            return name
+
 
     class Meta:
         model = get_model('coop_local', 'MailingList')
