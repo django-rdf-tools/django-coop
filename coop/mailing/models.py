@@ -206,7 +206,7 @@ class BaseMailingList(models.Model):
     # The :delete parametre is a workon around for not deleting subscription
     # as the mailinglist is updated with the admin interface. Django bug, missunderstanding???
     def verify_subscriptions(self, delete=True):
-        print 'ENTER VErify subscription'
+        # print 'ENTER VErify subscription'
         from coop_local.models import Subscription, MailingList
         # Cleaning....
         if delete:

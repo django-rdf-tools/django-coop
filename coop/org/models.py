@@ -35,7 +35,7 @@ from urlparse import urlsplit
 #         verbose_name = _('Classification')
 #         verbose_name_plural = _('Classifications')
 #         ordering = ['tree_id', 'lft']  # for FeinCMS TreeEditor
-#         app_label = 'coop_local'
+#         app_label = fget'coop_local'
 
 #     def __unicode__(self):
 #         return unicode(self.label)
@@ -254,6 +254,7 @@ class BaseContact(URIModel):
 class BaseOrgRelationType(models.Model):  # this model will be initialized with a fixture
     label = models.CharField(_(u'label'), max_length=250)
     uri = models.CharField(_(u'URI'), blank=True, max_length=250)
+    key_name = models.CharField(_(u'key name'), max_length=250)
     org_to_org = models.BooleanField(_('available for org-to-org relations'), default=True)
     org_to_project = models.BooleanField(_('available for org-to-project relations'), default=True)
 
@@ -560,14 +561,14 @@ class BaseOrganization(URIModel):
 
     def get_relations(self):
         relations = {}
-        relmap = RELATIONS.REVERTED_CHOICES_CONST_DICT
+        # relmap = RELATIONS.REVERTED_CHOICES_CONST_DICT
 
         for rel in self.source.all():
-            reltype = str('OUT_' + relmap[rel.reltype])  # me => others
+            reltype = str('OUT_' + rel.relation_type.key_name)  # me => others
             relations[reltype] = []
             relations[reltype].append(rel.target)
         for rel in self.target.all():
-            reltype = str('IN_' + relmap[rel.reltype])  # others said this
+            reltype = str('IN_' + rel.relation_type.key_name)  # others said this
             if reltype not in relations:
                 relations[reltype] = []
             #if rel.confirmed:  # which one are confirmed by both parts
