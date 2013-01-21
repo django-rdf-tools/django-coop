@@ -254,7 +254,7 @@ class BaseContact(URIModel):
 class BaseOrgRelationType(models.Model):  # this model will be initialized with a fixture
     label = models.CharField(_(u'label'), max_length=250)
     uri = models.CharField(_(u'URI'), blank=True, max_length=250)
-    key_name = models.CharField(_(u'key name'), max_length=250)
+    key_name = models.CharField(_(u'key name'), max_length=250, blank=True)
     org_to_org = models.BooleanField(_('available for org-to-org relations'), default=True)
     org_to_project = models.BooleanField(_('available for org-to-project relations'), default=True)
 
