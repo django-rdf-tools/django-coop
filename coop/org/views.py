@@ -16,6 +16,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpRespons
 import coop_bar
 from coop_cms.views import coop_bar_aloha_js
 import json
+from django.contrib.gis.geoip import GeoIP
 
 
 def org_category_detail(request, slug):
@@ -169,9 +170,16 @@ def global_map(request):
                               context, RequestContext(request))
 
 
-def leaflet(request):
+def leaflet(request, criteria=None):
+    from django.contrib.gis.geos import Point
     context = {}
-    context['org_list'] = Organization.objects.filter(active=True)
+    g = GeoIP(path=settings.PROJECT_PATH + '/config/GEO/')
+    center = g.geos(request.META['REMOTE_ADDR'])
+    if not center:
+        center = Point(5.3697800, 43.2964820)
+    context['center'] = center
+    if criteria:
+        context['criteria'] = criteria + '/'
     return render_to_response('org/org_carto.html', context, RequestContext(request))
 
 

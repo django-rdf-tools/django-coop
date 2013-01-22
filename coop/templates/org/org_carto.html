@@ -20,38 +20,29 @@
     <script src="http://leaflet.cloudmade.com/dist/leaflet.js"></script>
     <script src="https://raw.github.com/ideak/leafclusterer/master/leafclusterer.js"></script>
     <script type="text/javascript">
-        function addmarker(y,x,label,subtitle){
-            var markerLocation = new L.LatLng(y,x),
-                marker = new L.Marker(markerLocation);
-            //map.addLayer(marker);
-            clusterer.addMarker(marker);
-            marker.bindPopup("<b>"+label+"</b><br />"+subtitle).openPopup();
-        }
 
         var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
             cloudmadeAttribution = 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
             cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18, attribution: cloudmadeAttribution});
 
-        // var appleUrl = 'http://gsp2.apple.com/tile?api=1&style=slideshow&layers=default&lang=en_EN&z={z}&x={x}&y={y}&v=9';
-        //     appleAttribution = 'Map data by apple'
-        //     apple = new L.TileLayer(appleUrl, {maxZoom: 18, attribution: appleAttribution});
-
-        var centre = new L.LatLng(45.777222, 3.087025);
-        // =(45.721997, 3.469887); // geographical point (longitude and latitude)
-
+        var centre = new L.LatLng({{ center.y }}, {{ center.x }});
         var map = new L.Map('leaflet_map');
-        map.setView(centre, 10).addLayer(cloudmade);
-        var clusterer = new LeafClusterer(map);
-
+        map.setView(centre, 8).addLayer(cloudmade);
 
         $(function(){
-
-            $.getJSON('/org/geojson/', function(data) {
+            var clusterer = new LeafClusterer(map);
+            $.getJSON('/org/geojson/{{ criteria }}', function(data) {
 
                 var orgJsonLayer = new L.geoJson(data, {
                     // style for all vector layers (color, opacity, etc.), either function or object (optional)
                     style: function (feature) {
                             return feature.properties && feature.properties.style;
+                    },
+
+                    pointToLayer: function (feature, latlng) {
+                        marker = new L.Marker(latlng);
+                        clusterer.addMarker(marker);
+                        return marker;
                     },
                     // function that gets called on every created feature layer (optional)
                     onEachFeature: function (feature, layer) {
@@ -59,8 +50,7 @@
                     if (feature.properties && feature.properties.popupContent) {
                              layer.bindPopup(feature.properties.popupContent);
                          }
-                    clusterer.addMarker(layer);
-                    }
+                   }
 
                 }).addTo(map);
 
