@@ -42,8 +42,8 @@ def list(request, name):
     # Non, il me manque des notion autour de l'authentification
     # if (request.META['REMOTE_ADDR'] in settings.INTERNAL_IPS and has_sympa_mail(request.user))  \
     #         or (request.user.is_authenticated() and request.user.is_superuser):
+    mailinglist = get_object_or_404(MailingList, name=name)  
     if (request.user.is_authenticated() and request.user.is_superuser):
-        mailinglist = get_object_or_404(MailingList, name=name)  
         return HttpResponse(mailinglist.subscription_list())
     elif 'HTTP_AUTHORIZATION' in request.META:
         auth = request.META['HTTP_AUTHORIZATION'].split()
