@@ -584,6 +584,8 @@ class BaseOrganization(URIModel):
         else:
             return None
 
+
+
     def save(self, *args, **kwargs):
         # Set default values for preferred email, phone and postal address
         if self.pref_phone == None:

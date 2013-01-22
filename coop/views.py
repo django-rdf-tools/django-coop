@@ -184,7 +184,7 @@ def geojson(request):
         my_long = coords[1]
         center = fromstr('POINT(' + my_lat + " " + my_long + ')')
     else:
-        g = GeoIP()
+        g = GeoIP(path=settings.PROJECT_PATH + '/config/GEO/')
         center = g.geos(request.META['REMOTE_ADDR'])
 
     try:

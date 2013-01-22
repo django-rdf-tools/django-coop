@@ -44,14 +44,36 @@
         var clusterer = new LeafClusterer(map);
 
 
-        {% for org in org_list %}
+        $(function(){
 
-        addmarker(  ("{{org.main_location.point.y}}").replace(',','.'),
-                    ("{{org.main_location.point.x}}").replace(',','.'),
-                    "{{org.label}}",
-                    "{{org.subtitle}}"
-                    );
-      {% endfor %}
+            $.getJSON('/org/geojson/', function(data) {
+
+                var orgJsonLayer = new L.geoJson(data, {
+                    // style for all vector layers (color, opacity, etc.), either function or object (optional)
+                    style: function (feature) {
+                            return feature.properties && feature.properties.style;
+                    },
+                    // function that gets called on every created feature layer (optional)
+                    onEachFeature: function (feature, layer) {
+
+                    if (feature.properties && feature.properties.popupContent) {
+                             layer.bindPopup(feature.properties.popupContent);
+                         }
+                    clusterer.addMarker(layer);
+                    }
+
+                }).addTo(map);
+
+                map.fitBounds(orgJsonLayer.getBounds());
+
+
+             });
+
+        });
+
+
+
+
     </script>
 
     </div>

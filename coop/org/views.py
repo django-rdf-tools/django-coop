@@ -15,6 +15,7 @@ from django.utils.translation import ugettext as _
 from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseForbidden
 import coop_bar
 from coop_cms.views import coop_bar_aloha_js
+import json
 
 
 def org_category_detail(request, slug):
@@ -167,7 +168,28 @@ def global_map(request):
     return render_to_response('org/org_global_map.html',
                               context, RequestContext(request))
 
+
 def leaflet(request):
     context = {}
     context['org_list'] = Organization.objects.filter(active=True)
     return render_to_response('org/org_carto.html', context, RequestContext(request))
+
+
+
+def geojson(request, criteria=None):
+    qs = Organization.objects.all()
+    if criteria:
+        try:
+            cat = OrganizationCategory.objects.get(slug=criteria)
+            qs = qs.filter(category=cat)
+        except OrganizationCategory.DoesNotExist:
+            pass
+
+    qs = qs.filter(active=True)
+    res = []
+    for obj in qs:
+        if obj.to_geoJson():
+            res.append(obj.to_geoJson())
+
+    result = {"type": "FeatureCollection", "features":  res}
+    return HttpResponse(json.dumps(result), mimetype="application/json")

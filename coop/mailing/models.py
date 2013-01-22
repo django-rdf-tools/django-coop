@@ -258,6 +258,7 @@ class BaseMailingList(models.Model):
 
     def subscription_list(self):
         from coop_local.models import Subscription
+        self.verify_subscriptions()
         res = ''
         for s in Subscription.objects.filter(mailing_list=self):
             email = s.content_object.pref_email.content
