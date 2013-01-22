@@ -25,6 +25,7 @@ urlpatterns = patterns('',
     url(r'^(?P<slug>[\w-]+)/$', 'coop.org.views.org_detail', name="org_detail"),
     url(r'^(?P<slug>[\w-]+)/edition/$', 'coop.org.views.org_edit', name="org_edit"),
     url(r'^(?P<slug>[\w-]+)/edition/annuler/$', 'coop.org.views.org_edit_cancel', name='org_edit_cancel'),
+    url(r'^(?P<slug>[\w-]+)/geojson/$', 'coop.org.views.org_geojson'),
 
     #url(r'^role/(?P<slug>[\w-]+)/$', 'coop.org.views.role_detail', name="role_detail"),
 

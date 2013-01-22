@@ -183,7 +183,7 @@ def leaflet(request, criteria=None):
     return render_to_response('org/org_carto.html', context, RequestContext(request))
 
 
-
+# the geometric object is the 'pref_adress'
 def geojson(request, criteria=None):
     qs = Organization.objects.all()
     if criteria:
@@ -199,5 +199,12 @@ def geojson(request, criteria=None):
         if obj.to_geoJson():
             res.append(obj.to_geoJson())
 
+    result = {"type": "FeatureCollection", "features":  res}
+    return HttpResponse(json.dumps(result), mimetype="application/json")
+
+
+def org_geojson(request, slug):
+    org = get_object_or_404(Organization, slug=slug)
+    res = org.all_loc_to_geoJson()
     result = {"type": "FeatureCollection", "features":  res}
     return HttpResponse(json.dumps(result), mimetype="application/json")

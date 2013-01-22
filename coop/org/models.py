@@ -536,6 +536,30 @@ class BaseOrganization(URIModel):
                             }
                         }
 
+
+        def all_loc_to_geoJson(self):
+            res = [self.to_geoJson()]
+            other_locations = set(self.locations()).difference(set([self.pref_address]))
+            for loc in other_locations:
+                located = self.located.get(location=loc)
+                if located.category:
+                    label = located.category.label
+                else:
+                    label = self.label()
+                json = {
+                   "type": "Feature",
+                    "properties": {
+                            "name": self.label(),
+                            "popupContent": u"<h4>" + label + u"</h4><p></p>"
+                            },
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [loc.point.x, loc.point.y]
+                            }
+                }
+                res.append(json)
+            return res
+
     def has_description(self):
         return self.description != None and len(self.description) > 20
     has_description.boolean = True
