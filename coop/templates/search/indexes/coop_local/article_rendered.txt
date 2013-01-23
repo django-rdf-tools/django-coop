@@ -5,4 +5,9 @@
 	     <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
 	{% endthumbnail %}
 {% endif %}
-<a href="{{ object.get_absolute_url }}">{{ object.title}}</a>
+
+{% if object.sites.all %}
+     <a href="http://{{ object.sites.all.0 }}{{ object.get_absolute_url }}">{{ object.title}}</a>
+{% else %}
+     <a href="{{ object.get_absolute_url }}">{{ object.title}}</a>
+{% endif %}

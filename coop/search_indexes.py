@@ -1,10 +1,11 @@
 # -*- coding:utf-8 -*-
 from django.conf import settings
 if 'haystack' in settings.INSTALLED_APPS:
+    import logging
     from haystack import indexes
     from coop_local.models import Organization, Exchange, Article, Event
 
-
+    log = logging.getLogger('coop')
 
     if getattr(settings, 'HAYSTACK_REALTIME', False):
         Indexes = indexes.RealTimeSearchIndex
@@ -28,7 +29,7 @@ if 'haystack' in settings.INSTALLED_APPS:
             return [u"%s" % tag.name for tag in obj.tags.all()]
 
         def prepare(self, obj):
-            print "prepare id=%s %s" % (obj.id, obj)
+            log.debug("prepare id=%s %s" % (obj.id, obj))
             prepared_data = super(CoopIndex, self).prepare(obj)
 
             prepared_data['text'] = prepared_data['text'] + ' ' + \
@@ -47,7 +48,7 @@ if 'haystack' in settings.INSTALLED_APPS:
             return [u"%s" % tag.name for tag in obj.tags.all()]
 
         def prepare(self, obj):
-            print "prepare id=%s %s" % (obj.id, obj)
+            log.debug("prepare id=%s %s" % (obj.id, obj))
             prepared_data = super(CoopIndexWithoutSite, self).prepare(obj)
 
             prepared_data['text'] = prepared_data['text'] + ' ' + \
