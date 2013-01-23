@@ -17,6 +17,7 @@ from urlparse import urlsplit
 from coop.org.models import DISPLAY
 import rdflib
 
+
 class BaseProjectCategory(models.Model):
     label = models.CharField(blank=True, max_length=100)
     slug = exfields.AutoSlugField(populate_from=('label'), overwrite=True)
@@ -100,7 +101,7 @@ class BaseProjectMember(URIModel):
         ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
         ('single_mapping', (settings.NS.org.member, 'person'), 'single_reverse'),
 
-        ('single_mapping', (settings.NS.org.organization, 'organization'), 'single_reverse'),
+        ('single_mapping', (settings.NS.org.organization, 'project'), 'single_reverse'),
         ('single_mapping', (settings.NS.skos.note, 'role_detail'), 'single_reverse'),
 
         ('label_mapping', (settings.NS.rdfs.label, 'id', 'fr'), 'label_mapping_reverse'),
@@ -145,6 +146,34 @@ class BaseProject(URIModel):
         return reverse('project_detail', args=[self.id])
 
     # TODO mapper sur org:OrganizationalCollaboration (alternative name : org:Project)
+
+    rdf_type = settings.NS.org.OrganizationalCollaboration
+
+    def isOpenData(self):
+        return self.published
+
+    # TODO: some informations are still missing in the graph org:Membership relation between organizations, by example
+    base_mapping = [
+        ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
+        ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
+        ('single_mapping', (settings.NS.legal.legalName, 'title'), 'single_reverse'),
+        ('single_mapping', (settings.NS.dct.description, 'description'), 'single_reverse'),
+        ('single_mapping', (settings.NS.skos.note, 'notes'), 'single_reverse'),
+        ('single_mapping', (settings.NS.ess.organizer, 'organization'), 'single_reverse'),
+        ('single_mapping', (settings.NS.ess.actionArea, 'zone'), 'single_reverse'),
+
+        ('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'), 
+        # FIXME : Project objects need to have a primary key value before you can access their tags.
+        ('multi_mapping', (settings.NS.org.hasMember, 'relations'), 'multi_reverse'), 
+
+    ]
+
+
+
+
+
+
+
 
 
 class BaseProjectSupport(models.Model):
