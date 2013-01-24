@@ -18,7 +18,8 @@ import coop
 from django.contrib.sites.models import Site
 import logging
 from urlparse import urlsplit
-
+import simplejson
+from django.contrib.gis.db import models as geomodels
 
 #from mptt.models import MPTTModel, TreeForeignKey
 # class BaseClassification(MPTTModel, URIModel):
@@ -508,6 +509,8 @@ class BaseOrganization(URIModel):
 
     if "coop_geo" in settings.INSTALLED_APPS:
 
+        geom_manager = geomodels.GeoManager()
+
         def has_location(self):
             return self.located.all().count() > 0
         has_location.boolean = True
@@ -521,43 +524,63 @@ class BaseOrganization(URIModel):
             from coop_local.models import Area
             return Area.objects.filter(id__in=self.framed.all().values_list('location_id', flat=True))
 
-        def to_geoJson(self):
+
+        def pref_addr_geoJson(self):
             if self.pref_address and self.pref_address.point:
-                return {
+
+                return [{
                    "type": "Feature",
                     "properties": {
-                            "name": self.label(),
+                            "label": self.label().encode("utf-8"),
+                            "category": [c.slug.encode('utf-8') for c in self.category.all()],
                             "popupContent": u"<h4>" + self.label() + u"</h4><p><a href='" + \
                             self.get_absolute_url() + u"'>" + self.label() + u"</a></p>"
                             },
-                        "geometry": {
-                            "type": "Point",
-                            "coordinates": [self.pref_address.point.x, self.pref_address.point.y]
-                            }
-                        }
+                        "geometry": simplejson.loads(self.pref_address.point.geojson)
+                        }]
+            else:
+                return []
 
 
-        def all_loc_to_geoJson(self):
-            res = [self.to_geoJson()]
+        def locations_geoJson(self):
+            res = self.pref_addr_geoJson()
             other_locations = set(self.locations()).difference(set([self.pref_address]))
             for loc in other_locations:
                 located = self.located.get(location=loc)
                 if located.category:
-                    label = located.category.label
+                    popup = located.category.label
                 else:
-                    label = self.label()
+                    popup = self.label()
                 json = {
                    "type": "Feature",
                     "properties": {
-                            "name": self.label(),
-                            "popupContent": u"<h4>" + label + u"</h4><p></p>"
+                            "label": self.label().encode("utf-8"),
+                            "category": located.category.label.encode("utf-8"),
+                            "popupContent": u"<h4>" + popup + u"</h4><p></p>"
                             },
-                        "geometry": {
-                            "type": "Point",
-                            "coordinates": [loc.point.x, loc.point.y]
-                            }
+                        "geometry":  simplejson.loads(loc.point.geojson)
                 }
                 res.append(json)
+            return res
+
+        def areas_geoJson(self):
+            res = []
+            for a in self.areas():
+                json = {
+                   "type": "Feature",
+                    "properties": {
+                            "label": a.label.encode("utf-8"),
+                            "area_type": a.area_type.label.encode("utf-8"),
+                            "popupContent": u"<h4>" + a.label + u"</h4><p></p>"
+                            },
+                        "geometry":  simplejson.loads(a.polygon.geojson)
+                }
+                res.append(json)
+            return res
+
+        def all_geoJson(self):
+            res = self.locations_geoJson()
+            res.extend(self.areas_geoJson())
             return res
 
     def has_description(self):

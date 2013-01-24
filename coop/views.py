@@ -19,6 +19,18 @@ if('coop.agenda' in settings.INSTALLED_APPS):
     from coop_local.models import Event, EventCategory
 
 
+
+# Util function for views. The region is used to center views using catograpy
+def default_region():
+    code_region = getattr(settings, 'DEFAULT_REGION_CODE', 83)
+    try:
+        regiontype = AreaType.objects.get(label="Région")
+        region = Area.objects.get(area_type=regiontype, reference=code_region)
+    except:
+        raise ImproperlyConfigured("No default region has been configured")
+    return region
+
+
 def home(request):
     rdict = {}
     rdict['dernieres_initiatives'] = Organization.objects.filter(active=True)[:10]
@@ -164,14 +176,9 @@ def communes(request):
 
 
 def geojson(request):
-
     from django.contrib.gis.measure import Distance
     from django.contrib.gis.geoip import GeoIP
-    from django.contrib.gis.geos import Point
     from django.contrib.gis.geos import fromstr
-
-    #import pdb; pdb.set_trace()
-
     if request.GET.get('distance'):
         dist = request.GET['distance']
     else:
@@ -187,12 +194,7 @@ def geojson(request):
         g = GeoIP(path=settings.PROJECT_PATH + '/config/GEO/')
         center = g.geos(request.META['REMOTE_ADDR'])
 
-    try:
-        regiontype = AreaType.objects.get(label="Région")
-        region = Area.objects.get(area_type=regiontype, reference=settings.DEFAULT_REGION_CODE)
-    except:
-        raise ImproperlyConfigured("No default region has been configured")
-
+    region = default_region()
     if not center or not region.polygon.contains(center):
         center = region.default_location.point
         dist = 1000
@@ -203,9 +205,8 @@ def geojson(request):
         for loc in location.located_set.all():
             obj = loc.content_object
             if obj.__class__ == Organization and "amap" in [x.slug for x in obj.category.all()]:
-                if obj.to_geoJson():
-                    res.append(obj.to_geoJson())
-
+                res.extend(obj.pref_addr_geoJson())
+ 
     result = {"type": "FeatureCollection", "features":  res}
     return HttpResponse(json.dumps(result), mimetype="application/json")
 

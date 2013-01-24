@@ -29,9 +29,19 @@
         var map = new L.Map('leaflet_map');
         map.setView(centre, 8).addLayer(cloudmade);
 
+        var geojsonFeature = {{ region.polygon.geojson|safe }}
+        L.geoJson(geojsonFeature).addTo(map);
+
+
+        var initParameters = window.location.search.substring(1);
+        if (initParameters.length > 0) {
+            console.log(initParameters)
+        }
+
+
         $(function(){
             var clusterer = new LeafClusterer(map);
-            $.getJSON('/org/geojson/{{ criteria }}', function(data) {
+            $.getJSON('/org/geojson/?'+initParameters, function(data) {
 
                 var orgJsonLayer = new L.geoJson(data, {
                     // style for all vector layers (color, opacity, etc.), either function or object (optional)
