@@ -195,28 +195,9 @@
                     var map = new L.Map('map');
                     map.setView(centre, 15).addLayer(cloudmade);
 
-                    geoFeatures = {{ organization.locations_geoJson|safe }}
+                    // geoFeatures = {{ organization.locations_geoJson|safe }}
 
-                    L.geoJson(geoFeatures, {
-                                // style for all vector layers (color, opacity, etc.), either function or object (optional)
-                                style: function (feature) {
-                                        return feature.properties && feature.properties.style;
-                                },
-
-                                // function that gets called on every created feature layer (optional)
-                                onEachFeature: function (feature, layer) {
-
-                                if (feature.properties && feature.properties.popupContent) {
-                                         layer.bindPopup(feature.properties.popupContent);
-                                     }
-                               }
-                        }
-                    }).addTo(map);
-
-                    // $(function(){
-                    //     $.getJSON('/org/{{ organization.slug }}/geojson/', function(data) {
-
-                    //         var orgJsonLayer = new L.geoJson(data, {
+                    // L.geoJson(geoFeatures, {
                     //             // style for all vector layers (color, opacity, etc.), either function or object (optional)
                     //             style: function (feature) {
                     //                     return feature.properties && feature.properties.style;
@@ -229,12 +210,31 @@
                     //                      layer.bindPopup(feature.properties.popupContent);
                     //                  }
                     //            }
+                    //     }
+                    // }).addTo(map);
 
-                    //         }).addTo(map);
+                    $(function(){
+                        $.getJSON('/org/geojson/?id='+ {{ organization.id }} + '&geotype=all', function(data) {
 
-                    //         map.fitBounds(orgJsonLayer.getBounds());
-                    //      });
-                    // });
+                            var orgJsonLayer = new L.geoJson(data, {
+                                // style for all vector layers (color, opacity, etc.), either function or object (optional)
+                                style: function (feature) {
+                                        return feature.properties && feature.properties.style;
+                                },
+
+                                // function that gets called on every created feature layer (optional)
+                                onEachFeature: function (feature, layer) {
+
+                                if (feature.properties && feature.properties.popupContent) {
+                                         layer.bindPopup(feature.properties.popupContent);
+                                     }
+                               }
+
+                            }).addTo(map);
+
+                            map.fitBounds(orgJsonLayer.getBounds());
+                         });
+                    });
 
               </script>
 
