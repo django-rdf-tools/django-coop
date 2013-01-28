@@ -1,0 +1,119 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix d2rq: <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#> .
+@prefix jdbc: <http://d2rq.org/terms/jdbc/> .
+@prefix d2r: <http://sites.wiwiss.fu-berlin.de/suhl/bizer/d2r-server/config.rdf#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ctag: <http://commontag.org/ns#> .
+@prefix ess: <http://ns.economie-solidaire.fr/ess#> .
+@prefix gr: <http://purl.org/goodrelations/v1#> .
+@prefix geofr: <http://rdf.insee.fr/geo/> .
+@prefix skosxl: <http://www.w3.org/2008/05/skos-xl#> .
+@prefix locn: <http://www.w3.org/ns/locn#> .
+@prefix legal: <http://www.w3.org/ns/legal#> .
+@prefix event: <http://purl.org/NET/c4dm/event.owl#> .
+@prefix person: <http://www.w3.org/ns/person#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ov: <http://open.vocab.org/terms/> .
+@prefix sioc: <http://rdfs.org/sioc/ns#> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rss: <http://purl.org/net/rss1.1#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix opens: <http://rdf.opensahara.com/type/geo/> .
+@prefix schema: <http://schema.org/> .
+
+ess:Lending a rdfs:Class;
+    rdfs:isDefinedBy <http://ns.economie-solidaire.fr/ess>;
+    rdfs:label "Lending"@en;
+    rdfs:label "Prêt"@fr;
+    rdfs:comment "When the need expressed in an exchange is not permanent, lending can be a way to create the exchange.";
+    rdfs:subClassOf ess:ExchangeMethod;
+    .
+
+ess:CivicEngagement a rdfs:Class;
+    rdfs:isDefinedBy <http://ns.economie-solidaire.fr/ess>;
+    rdfs:label "Civic Engagement"@en;
+    rdfs:label "Volontariat"@fr;    
+    rdfs:comment "A form of Voluntary Work that happens on a regular basis. Eventually organized by an institution which allows organizations to hire people willing to help on a voluntary basis. This exchange method can imply a Payment.";
+    rdfs:subClassOf
+        ess:VoluntaryWork,
+        ess:ExchangeMethod;
+    .
+
+ess:VoluntaryWork a rdfs:Class;
+    rdfs:isDefinedBy <http://ns.economie-solidaire.fr/ess>;
+    rdfs:label "Voluntary Work"@en;
+    rdfs:label "Bénévolat"@fr;
+    rdfs:comment """An exchange method in which an Agent gives his time and know-how to fulfill the need of another Agent. 
+Related to Gift, but for immaterial services.""";
+    rdfs:subClassOf ess:ExchangeMethod;
+    .
+
+ess:PracticalTraining a rdfs:Class;
+    rdfs:isDefinedBy <http://ns.economie-solidaire.fr/ess>;
+    rdfs:label "Pratical Training"@en;
+    rdfs:label "Stage"@en;
+    rdfs:comment "An exchange can be made through a service made during a practical training for a future job.";
+    rdfs:subClassOf ess:ExchangeMethod;
+    .
+
+ess:Employment a rdfs:Class;
+    rdfs:isDefinedBy <http://ns.economie-solidaire.fr/ess>;
+    rdfs:label "Employment"@en;
+    rdfs:label "Emploi"@fr;
+    rdfs:comment """When an Agent looks for a service permanently, another Agent can be employed to assume this need. 
+This ExchangeMethod involves a payment, in an official or alternative currency.""";
+    rdfs:subClassOf ess:ExchangeMethod;
+    .
+
+ess:AlternativeCurrency a rdfs:Class;
+    rdfs:isDefinedBy <http://ns.economie-solidaire.fr/ess>;
+    rdfs:label "Alternative Currency"@en;
+    rdfs:label "Monaie Alternative"@fr;
+    rdfs:comment "A method in which the Exchange is concluded by using an alternative currency : social currency, complementary currency, time-sharing currency...";
+    rdfs:subClassOf ess:ExchangeMethod;
+    .
+
+ess:SharedCost a rdfs:Class;
+    rdfs:isDefinedBy <http://ns.economie-solidaire.fr/ess>;
+    rdfs:label "Shared Cost"@en;
+    rdfs:label "Mutualisation"@fr;
+    rdfs:comment "A method in which two or more Agents mutualize the cost of a service or material they all need.";
+    rdfs:subClassOf ess:ExchangeMethod;
+    .
+
+ess:Swap a rdfs:Class;
+    rdfs:isDefinedBy <http://ns.economie-solidaire.fr/ess>;
+    rdfs:label "Swap"@en;
+    rdfs:label "Troc"@fr;
+    rdfs:comment "A method to conclude an Exchange by exchanging two objects or services.";
+    rdfs:subClassOf ess:ExchangeMethod;
+    .
+
+ess:OfficialCurrency a rdfs:Class;
+    rdfs:isDefinedBy <http://ns.economie-solidaire.fr/ess>;
+    rdfs:label "Official Currency"@en;
+    rdfs:label "Euro"@fr;
+    rdfs:comment "A national currency, used to make the Exchange happen.";
+    rdfs:subClassOf gr:PaymentMethod;
+    rdfs:subClassOf  ess:ExchangeMethod;
+    .
+
+ess:Gift a rdfs:Class;
+    rdfs:isDefinedBy <http://ns.economie-solidaire.fr/ess>;
+    rdfs:label "Gift"@en;
+    rdfs:label "Don"@fr;
+    rdfs:comment "A method to conclude an exchange where one gives something without getting something in return.";
+    rdfs:subClassOf ess:ExchangeMethod;
+    .
+
+ess:Renting a rdfs:Class;
+    rdfs:isDefinedBy <http://ns.economie-solidaire.fr/ess>;
+    rdfs:label "Renting"@en;
+    rdfs:label "Location"@fr;
+    rdfs:comment "An agreement where one agent pays a fee to use the product or service of the other agent.";
+    rdfs:subClassOf ess:ExchangeMethod;
+    .

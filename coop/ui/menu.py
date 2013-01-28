@@ -47,8 +47,8 @@ class CustomMenu(Menu):
                         items.MenuItem(_(u'Article categories'), '/admin/coop_cms/articlecategory/'),
                         items.MenuItem(_(u'Documents'), '/admin/coop_cms/document/'),
                         items.MenuItem(_(u'Images'), '/admin/coop_cms/image/'),
-                        items.MenuItem(_(u'Newsletters'), '/admin/coop_local/newsletter/'),
-                        items.MenuItem(_(u'MailingLists'), '/admin/coop_local/mailinglist/'),
+                        # items.MenuItem(_(u'Newsletters'), '/admin/coop_local/newsletter/'),
+                        # items.MenuItem(_(u'MailingLists'), '/admin/coop_local/mailinglist/'),
                         items.MenuItem(_(u'Comments'), '/admin/comments/comment/'),
                         items.MenuItem(_(u'Forms'), '/admin/forms/form/'),
                         items.MenuItem(_(u'Preferences'), '/admin/coop_local/siteprefs/'),
@@ -127,6 +127,18 @@ class CustomMenu(Menu):
                         items.MenuItem(_(u'Event categories'), '/admin/coop_local/eventcategory/'),
                     ])
                 )
+
+        if 'coop.mailing' in settings.INSTALLED_APPS:
+            if 'coop.agenda' in settings.INSTALLED_APPS:
+                menu_nb = 3
+            else:
+                menu_nb = 2
+
+            self.children[menu_nb].children[0].children.insert(3, 
+                    items.MenuItem(_(u'Newsletters'), '/admin/coop_local/newsletter/'),)
+            self.children[menu_nb].children[0].children.insert(4, 
+                    items.MenuItem(_(u'MailingLists'), '/admin/coop_local/mailinglist/'),)
+
 
         if 'coop.project' in settings.INSTALLED_APPS:
             if 'coop.agenda' in settings.INSTALLED_APPS:

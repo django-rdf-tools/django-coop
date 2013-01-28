@@ -1,7 +1,13 @@
+
+{% load thumbnail %}
 {% load i18n %}
-{% for item in newsletter.get_items %}
+{% for item in newsletter.articles.all %}
     <div class="newsletter-item">
-        <img src="{{MEDIA_URL}}{{item.logo_thumbnail}}"/>
+        {% if item.logo %}
+            {% thumbnail item.logo "80x80" as im %}
+                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+             {% endthumbnail %}
+        {% endif %}
         <div class="item-content">
             <h3>{{item.title}}</h3>
             <div class="summary">

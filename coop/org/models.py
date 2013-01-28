@@ -18,7 +18,8 @@ import coop
 from django.contrib.sites.models import Site
 import logging
 from urlparse import urlsplit
-
+import simplejson
+from django.contrib.gis.db import models as geomodels
 
 #from mptt.models import MPTTModel, TreeForeignKey
 # class BaseClassification(MPTTModel, URIModel):
@@ -35,7 +36,7 @@ from urlparse import urlsplit
 #         verbose_name = _('Classification')
 #         verbose_name_plural = _('Classifications')
 #         ordering = ['tree_id', 'lft']  # for FeinCMS TreeEditor
-#         app_label = 'coop_local'
+#         app_label = fget'coop_local'
 
 #     def __unicode__(self):
 #         return unicode(self.label)
@@ -254,6 +255,7 @@ class BaseContact(URIModel):
 class BaseOrgRelationType(models.Model):  # this model will be initialized with a fixture
     label = models.CharField(_(u'label'), max_length=250)
     uri = models.CharField(_(u'URI'), blank=True, max_length=250)
+    key_name = models.CharField(_(u'key name'), max_length=250, blank=True)
     org_to_org = models.BooleanField(_('available for org-to-org relations'), default=True)
     org_to_project = models.BooleanField(_('available for org-to-project relations'), default=True)
 
@@ -480,10 +482,9 @@ class BaseOrganization(URIModel):
                 related_name='pref_phone', null=True, blank=True)
     pref_address = models.ForeignKey('coop_local.Location',
                 verbose_name=_(u'preferred postal address'),
-                related_name='pref_adress', null=True, blank=True)
+                related_name='pref_address_org', null=True, blank=True)
 
     slug = exfields.AutoSlugField(populate_from='title', blank=True, overwrite=True)
-    active = models.BooleanField(_(u'show on public site'), default=True,)
     notes = models.TextField(_(u'notes'), blank=True)
 
     if "coop.agenda" in settings.INSTALLED_APPS:
@@ -507,6 +508,8 @@ class BaseOrganization(URIModel):
 
     if "coop_geo" in settings.INSTALLED_APPS:
 
+        geom_manager = geomodels.GeoManager()
+
         def has_location(self):
             return self.located.all().count() > 0
         has_location.boolean = True
@@ -520,20 +523,38 @@ class BaseOrganization(URIModel):
             from coop_local.models import Area
             return Area.objects.filter(id__in=self.framed.all().values_list('location_id', flat=True))
 
-        def to_geoJson(self):
+
+        def pref_geoJson(self):
             if self.pref_address and self.pref_address.point:
-                return {
-                   "type": "Feature",
-                    "properties": {
-                            "name": self.label(),
-                            "popupContent": u"<h4>" + self.label() + u"</h4><p><a href='" + \
+                json = self.pref_address.geoJson()
+                json["properties"]["label"] = self.label().encode("utf-8")
+                json["properties"]["category"] = [c.slug.encode('utf-8') for c in self.category.all()]
+                json["properties"]["popupContent"] = u"<p><a href='" + \
                             self.get_absolute_url() + u"'>" + self.label() + u"</a></p>"
-                            },
-                        "geometry": {
-                            "type": "Point",
-                            "coordinates": [self.pref_address.point.x, self.pref_address.point.y]
-                            }
-                        }
+                return [json]
+            else:
+                return []
+
+        def locations_geoJson(self):
+            res = self.pref_geoJson()
+            other_locations = set(self.locations()).difference(set([self.pref_address]))
+            for loc in other_locations:
+                located = self.located.get(location=loc)
+                json = located.geoJson()
+                json["properties"]["label"] = self.label().encode("utf-8")
+                res.append(json)
+            return res
+
+        def areas_geoJson(self):
+            res = []
+            for al in self.framed.all():
+                res.append(al.geoJson())
+            return res
+
+        def all_geoJson(self):
+            res = self.locations_geoJson()
+            res.extend(self.areas_geoJson())
+            return res
 
     def has_description(self):
         return self.description != None and len(self.description) > 20
@@ -560,14 +581,14 @@ class BaseOrganization(URIModel):
 
     def get_relations(self):
         relations = {}
-        relmap = RELATIONS.REVERTED_CHOICES_CONST_DICT
+        # relmap = RELATIONS.REVERTED_CHOICES_CONST_DICT
 
         for rel in self.source.all():
-            reltype = str('OUT_' + relmap[rel.reltype])  # me => others
+            reltype = str('OUT_' + rel.relation_type.key_name)  # me => others
             relations[reltype] = []
             relations[reltype].append(rel.target)
         for rel in self.target.all():
-            reltype = str('IN_' + relmap[rel.reltype])  # others said this
+            reltype = str('IN_' + rel.relation_type.key_name)  # others said this
             if reltype not in relations:
                 relations[reltype] = []
             #if rel.confirmed:  # which one are confirmed by both parts
@@ -582,6 +603,8 @@ class BaseOrganization(URIModel):
             return self.located.all()[0].location
         else:
             return None
+
+
 
     def save(self, *args, **kwargs):
         # Set default values for preferred email, phone and postal address

@@ -13,7 +13,7 @@ from django.db.models import Q
 from django.contrib.admin.widgets import AdminURLFieldWidget
 from django.db.models import URLField
 from django.utils.safestring import mark_safe
-
+from django.contrib.contenttypes.generic import GenericTabularInline
 from sorl.thumbnail.admin import AdminImageMixin
 from tinymce.widgets import AdminTinyMCE
 from coop.agenda.admin import DatedInline
@@ -27,7 +27,6 @@ if "coop_geo" in settings.INSTALLED_APPS:
     from coop_geo.admin import LocatedInline, AreaInline
 
 
-from django.contrib.contenttypes.generic import GenericTabularInline
 
 
 class URLFieldWidget(AdminURLFieldWidget):

@@ -1,0 +1,17 @@
+[
+    {
+        "pk": 1,
+        "model": "coop_local.mailinglist",
+        "fields": {
+            "name": "fake",
+            "description": "fake",
+            "person_category": null,
+            "subscription_option": 1,
+            "email": "",
+            "template": 8,
+            "subscription_filter_with_tags": false,
+            "organization_category": null,
+            "subject": "fake"
+        }
+    }
+]

@@ -98,6 +98,7 @@ class StaticURIModel(models.Model):
     class Meta:
         abstract = True
 
+    active = models.BooleanField(_(u'show on public site'), default=True,)
     uri_mode = models.PositiveSmallIntegerField(_(u'Mode'), choices=URI_MODE.CHOICES, default=URI_MODE.LOCAL, editable=False)
     uri = models.CharField(_(u'main URI'), blank=True, null=True,
                             max_length=250, editable=False)  # FIXME : null=True incompatible with unique=True

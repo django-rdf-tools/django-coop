@@ -1,1 +1,1 @@
-The folder new-remote-source contains one example of a sympa remote mailing list configaration based on the default news found in sympa default folder 
+This folder contains sympa templates. These templates aim to deal with remote source file.

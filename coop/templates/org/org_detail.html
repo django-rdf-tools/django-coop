@@ -7,7 +7,9 @@
 {% block meta_title %}{{organization.title}}{% endblock %}
 
 {% block extra_head %}
+<link rel="stylesheet" href="http://leaflet.cloudmade.com/dist/leaflet.css" />
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tipsy.js"></script>
+<script src="http://leaflet.cloudmade.com/dist/leaflet.js"></script>
 {% endblock %}
 
 {% block document %}
@@ -172,7 +174,58 @@
             {% endif %}
             </p>
 
+
+
+            {% comment %}
             <img src="http://maps.googleapis.com/maps/api/staticmap?markers=size:small%7Ccolor:0xd1453e|{% for a in adresses %}{{a.location.point.get_coords.1|stringformat:"f"}},{{a.location.point.get_coords.0|stringformat:"f"}}|{% endfor %}&amp;maptype=hybrid&amp;size=280x200&amp;sensor=false&amp;zoom=7">
+            {% endcomment %}
+
+            {% if organization.pref_address %}
+
+                <div id="map_wrapper" style="width:300px; height: 220px">
+                    <div id="map" style="width:300px; height: 220px"></div>
+                </div>
+
+                 <script>    
+                   var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
+                   cloudmadeAttribution = 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
+                    cloudmade = new L.tileLayer(cloudmadeUrl, {maxZoom: 18, attribution: cloudmadeAttribution});
+
+                    var centre = new L.LatLng({{ organization.pref_address.point.y }}, {{ organization.pref_address.point.x }});
+                    var map = new L.Map('map');
+                    map.setView(centre, 15).addLayer(cloudmade);
+
+                    $(function(){
+                        $.getJSON('/geojson/organization/?id={{ organization.id }}&geotype=all', function(data) {
+
+                            var orgJsonLayer = new L.geoJson(data, {
+                                // style for all vector layers (color, opacity, etc.), either function or object (optional)
+                                style: function (feature) {
+                                        return feature.properties && feature.properties.style;
+                                },
+
+                                // function that gets called on every created feature layer (optional)
+                                onEachFeature: function (feature, layer) {
+
+                                if (feature.properties && feature.properties.popupContent) {
+                                         layer.bindPopup(feature.properties.popupContent);
+                                     }
+                               }
+
+                            }).addTo(map);
+
+                            map.fitBounds(orgJsonLayer.getBounds());
+                         });
+                    });
+
+              </script>
+
+            {% endif %}
+
+
+
+
+
 
             <br/><br/>
             {% for a in adresses %}

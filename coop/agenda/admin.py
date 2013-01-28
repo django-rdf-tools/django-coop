@@ -32,11 +32,13 @@ class OccurrenceInline(admin.StackedInline):
 class EventAdminForm(forms.ModelForm):
     class Meta:
         model = get_model('coop_local', 'Event')
-        widgets = {'sites': chosenwidgets.ChosenSelectMultiple()}
+        widgets = {'sites': chosenwidgets.ChosenSelectMultiple(),
+                   'category': chosenwidgets.ChosenSelectMultiple()
+                   }
 
     def __init__(self, *args, **kwargs):
         # initial = {
-        #     'event_type': 1, 
+        #     'category': 1, 
         #     'calendar': 1 
         #     }
         # if not kwargs.has_key('initial'):
@@ -46,7 +48,8 @@ class EventAdminForm(forms.ModelForm):
         # Initializing form only after you have set initial dict
         super(EventAdminForm, self).__init__(*args, **kwargs)
         self.fields['calendar'].initial = Calendar.objects.get(id=1)
-        self.fields['event_type'].initial = EventCategory.objects.get(id=1)
+        self.fields['category'].help_text = None
+        # self.fields['category'].initial = EventCategory.objects.get(id=1)
         if 'sites' in self.fields:
             self.fields['sites'].help_text = None
 
@@ -54,8 +57,8 @@ class EventAdminForm(forms.ModelForm):
 class EventAdmin(NoLookupsFkAutocompleteAdmin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
     form = EventAdminForm
-    list_display = ('title', 'event_type', 'description')
-    list_filter = ('event_type', )
+    list_display = ('title', 'description', 'active')
+    list_filter = ('category', 'active')
     search_fields = ('title', 'description')
     related_search_fields = {'person': ('last_name', 'first_name',
                                         'email', 'structure', 'username'),
@@ -63,7 +66,7 @@ class EventAdmin(NoLookupsFkAutocompleteAdmin):
                             'location': ('label', 'adr1', 'adr2', 'zipcode', 'city'),
     }
     fieldsets = [['Description', {'fields': ['title', 'description',
-        ('event_type', 'calendar'),
+        'category', ('calendar', 'active'),
         'organization', 'remote_organization_label', 'remote_organization_uri',
         'person', 'remote_person_label', 'remote_person_uri',
         'location', 'remote_location_label', 'remote_location_uri',

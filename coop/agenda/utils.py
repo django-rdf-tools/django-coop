@@ -118,7 +118,7 @@ def create_timeslot_table(dt=None, items=None,
       keyed by desired ``EventCategory`` abbreviations with values that iterate over
       progressive CSS class names for the particular abbreviation.
     * ``proxy_class`` - a wrapper class for accessing an ``Occurrence`` object.
-      This class should also expose ``event_type`` and ``event_type`` attrs, and
+      This class should also expose ``category`` and ``category`` attrs, and
       handle the custom output via its __unicode__ method.
     """
     from coop_local.models import Occurrence
@@ -199,7 +199,7 @@ def create_timeslot_table(dt=None, items=None,
             proxy = timeslots[rowkey][colkey]
             cols[colkey] = proxy
             if not proxy.event_class and column_classes:
-                proxy.event_class = column_classes[colkey][proxy.event_type.abbr]()
+                proxy.event_class = column_classes[colkey][proxy.category.abbr]()
 
         table.append((rowkey, cols))
 

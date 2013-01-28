@@ -15,7 +15,7 @@ try:
         _server = WSDL.Proxy(sympa_soap['WSDL'])
     except Exception, e:
         _server = None
-        logger.warning(u"Cannot find find Sympa server - %s" % e)
+        logger.warning(u"Cannot find find Sympa server - %s")
 except ImportError:
     raise ImproperlyConfigured("coop.mailing is installed but we need SYMPA_SOAP settings.")
 

@@ -1,18 +1,18 @@
 # -*- coding:utf-8 -*-
-from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
-from coop_local.models import NewsletterSending, Subscription
+from django.forms import ValidationError
+from coop_local.models import NewsletterSending, Subscription, Newsletter, MailingList
+from coop_local.models import Article, Event
 from django.db.models.loading import get_model
-from coop.utils.autocomplete_admin import FkAutocompleteAdmin
-from django.contrib.contenttypes.generic import GenericTabularInline
-from coop.mailing.models import instance_to_pref_email
 from django import forms
-from coop.mailing.soap import exists, sympa_available
-from django.contrib.sites.models import Site
-
-
-from genericadmin.admin import GenericAdminModelAdmin, GenericTabularInline
+try:
+    from chosen.widgets import ChosenSelectMultiple
+except ImportError:
+    # print "chosen missing"
+    pass
+from coop.mailing.forms import get_newsletter_templates
+from coop.mailing import soap
 
 
 class SubscriptionInline(admin.TabularInline):
@@ -35,40 +35,12 @@ class MailingListInline(admin.TabularInline):
     extra = 1
 
 
-# On ne peut pas heriter de ObjEnabledInline le polymorphisme ne passe pas 
-# Car GenericTabularInline surcharge aussi la method get_formset
-# class SubscribtionMailingListInline(GenericTabularInline):
-#     model = get_model('coop_local', 'Subscription')
-#     verbose_name = _(u'subscription')
-#     verbose_name_plural = _(u'subscriptions')
-#     fields = ('mailing_list', 'label', 'email')  
-#     related_search_fields = {'email': ('last_name', 'first_name',
-#                                         'email', 'structure', 'username'), }
 
-#     extra = 1
-
-#     def get_formset(self, request, obj=None, **kwargs):
-#         # Hack! Hook parent obj just in time to use in formfield_for_manytomany
-#         self.parent_obj = obj
-#         return super(SubscribtionMailingListInline, self).get_formset(
-#             request, obj, **kwargs)
-
-#     def formfield_for_dbfield(self, db_field, **kwargs):
-#         if self.parent_obj != None:
-#             if db_field.name == 'label':
-#                 kwargs['initial'] = self.parent_obj.label()
-#             if db_field.name == 'email':
-#                 kwargs['initial'] = instance_to_pref_email(self.parent_obj)
-#         return super(SubscribtionMailingListInline, self).formfield_for_dbfield(db_field, **kwargs)
-
-
-from django.core import urlresolvers
-
-# admin.py
 
 class ReverseRelationshipInlineForm(forms.ModelForm):
     class Meta:
         model = Subscription
+
 
 class ReverseRelationshipInline(admin.TabularInline):
     model = Subscription
@@ -77,15 +49,9 @@ class ReverseRelationshipInline(admin.TabularInline):
     readonly_fields = ('link_content_object',)
     extra = 1
 
+
+
 class MailingListAdminForm(forms.ModelForm):
-    # Non : il faut pouvoir modifier la list... comment modifier son template et sa description???
-    # def clean_name(self):
-    #     import pdb
-    #     pdb.set_trace()
-    #     name = self.cleaned_data['name']
-    #     if exists(name):
-    #         raise forms.ValidationError(u"La liste %s existe déjà" % name)
-    #     return name
 
     def clean_description(self):
         desc = self.cleaned_data['description']
@@ -93,6 +59,19 @@ class MailingListAdminForm(forms.ModelForm):
             return self.data['name']
         else:
             return desc
+
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        if soap.exists(name):
+            # Update subscription options
+            if MailingList.objects.filter(name=name).exists():
+                return name
+            # sympa mailing list has been closed
+            else:
+                raise ValidationError(_(u" list exits already on sympa server, please contact Sympa administrateur"))
+        else:
+            return name
+
 
     class Meta:
         model = get_model('coop_local', 'MailingList')
@@ -115,14 +94,21 @@ class MailingListAdmin(admin.ModelAdmin):
         ('Description', {
             'fields': ['name',
                        'subject',
+                       'template',
                        'description',
                        'email',
                         ('subscription_option', 'subscription_filter_with_tags'),
                         'person_category', 'organization_category',
-                       #'tags'
+                       'tags'
                        ]
             }),
     )
+
+    # To exlucde de 'fake' MailingList as writen
+    def queryset(self, request):
+        qs = super(MailingListAdmin, self).queryset(request)
+        return qs.exclude(name='fake')
+
 
 
 class NewsletterSendingInline(admin.StackedInline):
@@ -130,10 +116,60 @@ class NewsletterSendingInline(admin.StackedInline):
     verbose_name = _(u'Sending Date')
     verbose_name_plural = _(u'Sending Dates')
     model = NewsletterSending
+    readonly_fields = ('sending_dt',)
+
     extra = 1
+
+
+
+class NewsletterAdminForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(NewsletterAdminForm, self).__init__(*args, **kwargs)
+        self.newsletter = kwargs.get('instance', None)
+        choices = get_newsletter_templates(self.newsletter)
+        if choices:
+            self.fields["template"] = forms.ChoiceField(choices=choices)
+        else:
+            self.fields["template"] = forms.CharField()
+
+        self.fields['lists'].queryset = MailingList.objects.exclude(name='fake')
+        self.fields['articles'].queryset = Article.objects.all().order_by('-modified')
+        self.fields['events'].queryset = Event.objects.all().order_by('-modified')
+        # self.fields['articles'].widget = admin.widgets.FilteredSelectMultiple(
+        #      _(u'Articles'), True,)
+
+    class Meta:
+        model = Newsletter
+        widgets = {}
+        try:
+            widgets.update({
+                'items': ChosenSelectMultiple(),
+            })
+        except NameError:
+            # print 'No ChosenSelectMultiple'
+            pass
+
+    class Media:
+        css = {
+            'all': ('css/admin-tricks.css',),
+        }
+        js = ()
 
 
 class NewsletterAdmin(admin.ModelAdmin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
+    form = NewsletterAdminForm
     inlines = [NewsletterSendingInline]
+    fieldsets = (
+        ('Description', {
+            'fields': ['subject',
+                       'content',
+                       'template',
+                       'articles', 'events',
+                       'lists'
+                       ]
+            }),
+        )
+
 

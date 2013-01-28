@@ -10,6 +10,9 @@ urlpatterns = patterns('',
 
     url(r'^$', 'coop.org.views.org_list', name="org_list"),
     url(r'^cartographie/$', 'coop.org.views.leaflet', name="org_global_map"),
+    url(r'^cartographie/(?P<criteria>[\w-]+)/$', 'coop.org.views.leaflet', name="org_global_map_criteria"),
+    # url(r'^geojson/$', 'coop.org.views.geojson', name="org_geojson"),
+
     #url(r'^global_map$', 'coop.org.views.global_map', name="org_global_map"),
 
     url(r'^categorie/(?P<slug>[\w-]+)/$', 'coop.org.views.org_category_detail', name="org_category_detail"),

@@ -18,7 +18,9 @@ from datetime import datetime
 from coop_local.models import Newsletter
 from coop.mailing import forms
 from django.core.urlresolvers import reverse
-from soap import info as soap_info, lists
+from django.contrib.sites.models import Site
+from django.contrib.auth import authenticate
+import base64
 
 # TODO ces 2 references doivent sauter
 from djaloha import utils as djaloha_utils
@@ -26,18 +28,52 @@ from coop_cms.views import coop_bar_aloha_js
 
 
 
+def has_sympa_mail(user):
+    dom = Site.objects.get_current().domain
+    dom.split('.')
+    valide_email = 'listmaster@' + '.'.join(dom.split('.')[1:])
+    return user.email == valide_email
+
+
 def list(request, name):
     """
     :ml_id MailingList id 
     """
-    # print request.META
-    if request.META['REMOTE_ADDR'] in settings.INTERNAL_IPS or \
-            (request.user.is_authenticated() and request.user.is_superuser):
-        mailinglist = get_object_or_404(MailingList, name=name)  
-        mailinglist.verify_subscriptions()
+    # Non, il me manque des notion autour de l'authentification
+    # if (request.META['REMOTE_ADDR'] in settings.INTERNAL_IPS and has_sympa_mail(request.user))  \
+    #         or (request.user.is_authenticated() and request.user.is_superuser):
+    mailinglist = get_object_or_404(MailingList, name=name)  
+    if (request.user.is_authenticated() and request.user.is_superuser):
         return HttpResponse(mailinglist.subscription_list())
-    else:
-        raise Http404
+    elif 'HTTP_AUTHORIZATION' in request.META:
+        auth = request.META['HTTP_AUTHORIZATION'].split()
+        if len(auth) == 2:
+            if auth[0].lower() == 'basic':
+                # Currently, only basic http auth is used.
+                uname, passwd = base64.b64decode(auth[1]).split(':')
+                user = authenticate(username=uname, password=passwd)
+                if user and user.username == settings.SYMPA_SOAP['SYMPA_TMPL_USER']\
+                        and passwd == settings.SYMPA_SOAP['SYMPA_TMPL_PASSWD']:
+                    # If the user successfully logged in, then add/overwrite
+                    # the user object of this request.
+                    request.user = user
+                    return HttpResponse(mailinglist.subscription_list())
+        return Http404
+
+    # The username/password combo was incorrect, or not provided.
+    # Challenge the user for a username/password.
+    resp = HttpResponse()
+    resp.status_code = 401
+    try:
+        # If we have a realm in our settings, use this for the challenge.
+        realm = settings.HTTP_AUTH_REALM
+    except AttributeError:
+        realm = ""
+
+    resp['WWW-Authenticate'] = 'Basic realm="%s"' % realm
+    return resp
+
+
 
 
 

@@ -5,241 +5,214 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: coop.mailing\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-08 17:56+0100\n"
-"PO-Revision-Date: 2012-04-11 19:24+0100\n"
-"Last-Translator: Dominique Guardiola <dguardiola@quinode.fr>\n"
-"Language-Team: Quinode <contact@quinode.fr>\n"
+"POT-Creation-Date: 2013-01-18 16:11+0100\n"
+"PO-Revision-Date: 2013-01-18 16:05+0100\n"
+"Last-Translator: \n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"X-Poedit-Language: French\n"
-"X-Poedit-Country: FRANCE\n"
 
-#: admin.py:71 admin.py:91
-#, fuzzy
+#: admin.py:22
 msgid "subscription"
 msgstr "inscription à"
 
-#: admin.py:72 admin.py:92
-#, fuzzy
+#: admin.py:23
 msgid "subscriptions"
 msgstr "inscriptions à"
 
-#: admin.py:80 admin.py:81 models.py:134
+#: admin.py:31 admin.py:32 models.py:155
 msgid "mailing list"
 msgstr "liste de diffusion"
 
-#: admin.py:148
-#, fuzzy
+#: admin.py:71
+msgid " list exits already on sympa server, please contact Sympa administrateur"
+msgstr " la liste existe déjà sur le serveur sympa, utilisez l'adminstration de Sympa pour la supprimer, sinon changez de nom"
+
+#: admin.py:116
 msgid "Sending Date"
-msgstr "date d'envoi"
+msgstr "Date d'envoi"
 
-#: admin.py:149
-#, fuzzy
+#: admin.py:117
 msgid "Sending Dates"
-msgstr "dates d'envoi"
+msgstr "Dates d'envoi"
 
-#: forms.py:101
+#: forms.py:96
 msgid "This field is required"
 msgstr ""
 
-#: forms.py:104
+#: forms.py:99
 msgid "The scheduling date must be in future"
 msgstr "La date doit être dans le futur"
 
-#: models.py:33
+#: models.py:32
 msgid "discussion list"
 msgstr "Liste de discussion publique"
 
-#: models.py:34
+#: models.py:33
 msgid "hotline"
 msgstr "Liste de type hotline"
 
-#: models.py:35
+#: models.py:34
 msgid "html news letter"
 msgstr "Paramétrage adapté à une newsletter aux formats Text/plain et HTML"
 
-#: models.py:36
+#: models.py:35
 msgid "intranet list"
 msgstr "Liste pour l'Intranet"
 
-#: models.py:37
-#, fuzzy
+#: models.py:36
 msgid "news letter"
 msgstr "Paramétrage adapté à une newsletter"
 
-#: models.py:38
+#: models.py:37
 msgid "private working"
 msgstr "Paramétrage pour un groupe de travail"
 
-#: models.py:39
+#: models.py:38
 msgid "public web forum"
-msgstr ""
-"Liste de type forum web Les messages peuvent être consultés par mail "
-"(abonnement) ou par l'interface web"
+msgstr "forum public"
 
-#: models.py:40
-#, fuzzy
-msgid "news letter list with remote source"
-msgstr "Lettre d'information avec diffusion controlée"
+#: models.py:42
+msgid "custom email list"
+msgstr "choisir les abonnés-ées"
+
+#: models.py:43
+msgid "all email address"
+msgstr "tous les emails"
 
 #: models.py:44
-#, fuzzy
-msgid "custom email list"
-msgstr "choisir les inscripts"
+msgid "all organizations contact"
+msgstr "emails de toutes les structures"
 
 #: models.py:45
-msgid "all email address"
-msgstr "toutes les email publiques"
-
-#: models.py:46
-msgid "all organizations contact"
-msgstr "toutes les organisations (email publique)"
-
-#: models.py:47
 msgid "all registered persons"
-msgstr "toutes les personnes (email publique)"
+msgstr "emails de toutes les personnes"
 
-#: models.py:53
+#: models.py:52
 msgid "name"
 msgstr "nom"
 
-#: models.py:57
-#, fuzzy
+#: models.py:53
 msgid "Mailing list email"
-msgstr "email de la liste de diffusion"
+msgstr "adresse de diffusion"
 
-#: models.py:63
-#, fuzzy
-msgid "subscriptions option"
-msgstr "inscription à"
+#: models.py:56
+msgid "subscription options"
+msgstr "options d'inscription"
 
-#: models.py:65
-#, fuzzy
+#: models.py:58
 msgid "filter subscriptions with tags"
 msgstr "filter à l'aide des tags"
 
-#: models.py:71 models.py:355
+#: models.py:60
+msgid "person category"
+msgstr "catégorie de personnes"
+
+#: models.py:61
+msgid "organization category"
+msgstr "categorie des structures"
+
+#: models.py:66 models.py:354
 msgid "template"
 msgstr ""
 
-#: models.py:95
-#, python-format
-msgid ""
-"List %s exists. If you want to reopen it, please contact the sympa list "
-"administator"
-msgstr ""
+#: models.py:68
+msgid "Some words about the mailing list"
+msgstr "description"
 
-#: models.py:109
+#: models.py:136
 #, python-format
 msgid "Cannot add the list (sympa cannot create it): %s"
 msgstr ""
 
-#: models.py:130
+#: models.py:138
+#, fuzzy
+msgid "list exits already on symp server, please contact Sympa administrateur"
+msgstr "la liste existe déjà sur le serveur sympa, utilisez l'adminstration de Sympa pour la supprimer ou changez de  nom"
+
+#: models.py:151
 #, python-format
 msgid "Cannot close the list : %s"
-msgstr ""
+msgstr "Impossible de fermer la liste %s"
 
-#: models.py:135
+#: models.py:156
 msgid "mailing lists"
 msgstr "listes de diffusion"
 
-#: models.py:294
+#: models.py:286
 msgid "created"
 msgstr "création"
 
-#: models.py:295
+#: models.py:287
 msgid "modified"
 msgstr "modification"
 
 #: models.py:298
-msgid "subscribed email"
-msgstr "courriel inscrit"
-
-#: models.py:306
 msgid "mailing list subscription"
-msgstr "inscription à une liste"
+msgstr ""
 
-#: models.py:307
+#: models.py:299
 msgid "mailing list subscriptions"
-msgstr "inscriptions à une liste"
+msgstr "abonné-e"
 
-#: models.py:312
+#: models.py:304
 msgid "subscription to "
-msgstr "inscription à "
+msgstr "inscrit à"
 
-#: models.py:331
-msgid "content_type"
-msgstr ""
-
-#: models.py:334
-msgid "object id"
-msgstr ""
-
-#: models.py:341
-#, fuzzy
-msgid "newsletter item"
-msgstr "Courriel de la liste"
-
-#: models.py:342
-#, fuzzy
-msgid "newsletter items"
-msgstr "Courriel de la liste"
+#: models.py:350
+msgid "subject"
+msgstr "sujet"
 
 #: models.py:351
-msgid "subject"
-msgstr ""
-
-#: models.py:353
 msgid "content"
-msgstr ""
+msgstr "contenu"
 
-#: models.py:395
-#, fuzzy
+#: models.py:359
+msgid "destination lists"
+msgstr "listes de diffusion"
+
+#: models.py:399
 msgid "newsletter"
-msgstr "Courriel de la liste"
-
-#: models.py:396
-#, fuzzy
-msgid "newsletters"
-msgstr "Courriels de la liste"
-
-#: models.py:404
-msgid "scheduling date"
 msgstr ""
 
-#: models.py:405
+#: models.py:400
+msgid "newsletters"
+msgstr ""
+
+#: models.py:407
+msgid "scheduling date"
+msgstr "prévue le"
+
+#: models.py:408
 msgid "sending date"
-msgstr "date d'envoi"
+msgstr "envoyée le"
 
-#: models.py:411
-#, fuzzy
+#: models.py:414
 msgid "newsletter sending"
-msgstr "Courriel de la liste"
+msgstr ""
 
-#: models.py:412
-#, fuzzy
+#: models.py:415
 msgid "newsletter sendings"
-msgstr "Courriel de la liste"
+msgstr ""
 
-#: views.py:69
+#: views.py:77
 msgid "The newsletter has been saved properly"
 msgstr ""
 
-#: views.py:183
+#: views.py:191
 msgid "The test email has been sent to {0} addresses: {1}"
 msgstr ""
 
-#: views.py:186
+#: views.py:194
 msgid "An error has occured."
 msgstr ""
 
-#~ msgid "Newsletter email"
-#~ msgstr "Courriel de la liste"
-
-#~ msgid "List URL"
-#~ msgstr "URL de la liste"
+#~ msgid "news letter list with remote source"
+#~ msgstr ""
+#~ "Liste de type forum web Les messages peuvent être consultés par mail "
+#~ "(abonnement) ou par l'interface web"

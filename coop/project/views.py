@@ -7,11 +7,13 @@ from django.template import RequestContext
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404, HttpResponse
 import json
+from coop.views import default_region
 
 
 def projects_list(request):
     context = {}
     context['projects'] = Project.objects.all()
+    context['region'] = default_region()
     return render_to_response('project/projects_list.html', context, RequestContext(request))
 
 
@@ -27,20 +29,11 @@ def projects_map(request):
     for project in qs:
         if project.zone:
             if not project.zone.id in countries:
-                countries[project.zone.id] = {
-                    "type": "Feature",
-                    "properties": {
-                        "name": project.zone.label,
-                        "popupContent": u"<h4>" + project.zone.label + "</h4><p class='map_link_project'>\
-                        <a href='" + project.get_absolute_url() + u"'>" + project.title + "</a></p>"
-                        },
-                    "geometry": {
-                        "type": "MultiPolygon",
-                        "coordinates": project.zone.polygon.coords
-                        }
-                    }
+                countries[project.zone.id] = project.zone_geoJson()[0]
             else:
                 countries[project.zone.id]["properties"]["popupContent"] += u"\n<p class='map_link_project'>\
                 <a href='" + project.get_absolute_url() + u"'>" + project.title + "</a></p>"
     projects = {"type": "FeatureCollection", "features": countries.values()}
     return HttpResponse(json.dumps(projects), mimetype="application/json")
+
+

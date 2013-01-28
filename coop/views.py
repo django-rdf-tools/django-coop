@@ -1,22 +1,41 @@
 # -*- coding:utf-8 -*-
-
-from django.shortcuts import render_to_response, redirect
-from coop_local.models import Organization, OrganizationCategory, Person, Location, Area
-from coop_geo.models import AreaType
 from django.shortcuts import render_to_response
-from coop_local.models import Organization, OrganizationCategory, DeletedURI
+from coop_local.models import Organization, OrganizationCategory,  Location, Area
+from coop_geo.models import AreaType
+from coop_local.models import  DeletedURI
 from django.template import RequestContext
 from django.conf import settings
 from django.http import HttpResponse
+from django.http import Http404
 from django.shortcuts import get_object_or_404
 import json
+import simplejson
 from django.core.exceptions import ImproperlyConfigured
+from django.contrib.gis.geos import fromstr
+import logging
+from django.contrib.sites.models import Site
+
+log = logging.getLogger()
 
 if('coop.exchange' in settings.INSTALLED_APPS):
     from coop_local.models import Exchange
 
 if('coop.agenda' in settings.INSTALLED_APPS):
     from coop_local.models import Event, EventCategory
+
+
+
+# Util function for views. The region is used to center views using catograpy
+def default_region():
+    code_region = getattr(settings, 'DEFAULT_REGION_CODE', 83)
+    try:
+        regiontype = AreaType.objects.get(label="Région")
+        region = Area.objects.get(area_type=regiontype, reference=code_region)
+    except:
+        log.debug("No default region has been configured")
+        region = None
+        # raise ImproperlyConfigured("No default region has been configured")
+    return region
 
 
 def home(request):
@@ -121,7 +140,7 @@ def geojson_objects(request, what, criteria):
                             org.get_absolute_url() + u"'>" + org.label() + u"</a></p>"
     elif what == "event":
         cat = EventCategory.objects.get(slug=criteria)
-        qs = Event.objects.filter(event_type=cat)  # TODO rename category !!
+        qs = Event.objects.filter(category=cat)  
 
         for event in qs:
             loc = event.location
@@ -163,15 +182,105 @@ def communes(request):
     return HttpResponse(json.dumps(data), mimetype="application/json")
 
 
-def geojson(request):
 
+
+# TODO: how to have extra parametre to customise  the geoJson ?
+def geojson(request, model):
+    """
+        The main view to get geoJson features from Organization model
+        get query could be (thre is no dependance between queries)
+        ?id= an Organization id
+        ?category=a category slug (category are available for Organization, Event, Project, ..)
+        ?dist=dist&center=x,y  filter around a point
+        ?zone=ref,type  filter for a 'zone', where 'ref' is the 'reference' fieds value and 'type' is
+        the area_type.txt_idx value
+        ?geotype= 'all' | 'pref' | 'locations'| 'areas' (could 'zone' for project)
+        If no query is specified, it returns all kind of  geoJson features for all active instance 
+        of the model Model and usef the method pref_geoJson to build geoJson features;
+        Take care that 'id' and 'category' requests are combine
+
+    """
+    from django.contrib.gis.measure import Distance
+    from coop_local.models import Area
+    from coop_geo.models import AreaType
+
+    model_type = get_model('coop_local', model)
+    if not model_type:
+        raise Http404
+    else:
+        if not hasattr(model_type, 'geom_manager'):
+            raise Http404
+
+    # default values
+    try:        
+        qs = model_type.geom_manager.filter(active=True)
+    except:
+        qs = model_type.geom_manager.all()
+    geo_type = 'pref'
+
+    get = request.GET
+    if  get:
+        # filter about organizations
+        if get.get('id'):
+            qs = qs.filter(id=get.get('id'))
+        if get.get('category'):
+            slug = get.get('category')
+            if hasattr(model_type, 'category'):
+                try:
+                    cat_type = model_type.category.field.related.parent_model
+                    cat = cat_type.objects.get(slug=slug)
+                    qs = qs.filter(category=cat)
+                except cat_type.DoesNotExist:
+                    pass
+        # geom filter
+        if get.get('dist'):
+            dist = get.get('dist')
+            coords = get.get('center').split(',')
+            my_lat = coords[0]
+            my_long = coords[1]
+            center = fromstr('POINT(' + my_lat + " " + my_long + ')')
+            qs = qs.filter(pref_address__point__distance_lte=(center, Distance(km=dist)))
+        if get.get('zone'):
+            zone = get.get('zone').split(',')
+            ref = zone[0]
+            ztype = zone[1]
+            try:
+                at = AreaType.objects.get(txt_idx=ztype)
+                a = Area.objects.filter(reference=ref, area_type=at)[0]  # should be unique
+                qs = qs.filter(pref_address__point__contained=a.polygon)
+            except (AreaType.DoesNotExist, IndexError):
+                print "cannot filter on zone"
+
+        # filter about geoJson features
+        if get.get('geotype'):
+            geo_type = get.get('geotype')
+
+    res = []
+    for obj in qs:
+        if settings.COOP_USE_SITES:
+            site = Site.objects.get_current()
+            if site in obj.sites.all():
+                res.extend(getattr(obj, geo_type + '_geoJson')())
+        else:
+            res.extend(getattr(obj, geo_type + '_geoJson')())
+
+    # On met au moins une region (c'est mieux qu'une erreur)
+    if res == []:
+        region = default_region()
+        if region:
+            gjson = region.geoJson()
+            gjson["properties"]["label"] = region.label.encode("utf-8")
+            res = [gjson]
+
+    result = {"type": "FeatureCollection", "features":  res}
+    return HttpResponse(json.dumps(result), mimetype="application/json")
+
+
+# TODO: to be removed... only used in AllianceProvence
+def geojson_amap(request):
     from django.contrib.gis.measure import Distance
     from django.contrib.gis.geoip import GeoIP
-    from django.contrib.gis.geos import Point
     from django.contrib.gis.geos import fromstr
-
-    #import pdb; pdb.set_trace()
-
     if request.GET.get('distance'):
         dist = request.GET['distance']
     else:
@@ -184,15 +293,10 @@ def geojson(request):
         my_long = coords[1]
         center = fromstr('POINT(' + my_lat + " " + my_long + ')')
     else:
-        g = GeoIP()
+        g = GeoIP(path=settings.PROJECT_PATH + '/config/GEO/')
         center = g.geos(request.META['REMOTE_ADDR'])
 
-    try:
-        regiontype = AreaType.objects.get(label="Région")
-        region = Area.objects.get(area_type=regiontype, reference=settings.DEFAULT_REGION_CODE)
-    except:
-        raise ImproperlyConfigured("No default region has been configured")
-
+    region = default_region()
     if not center or not region.polygon.contains(center):
         center = region.default_location.point
         dist = 1000
@@ -203,9 +307,8 @@ def geojson(request):
         for loc in location.located_set.all():
             obj = loc.content_object
             if obj.__class__ == Organization and "amap" in [x.slug for x in obj.category.all()]:
-                if obj.to_geoJson():
-                    res.append(obj.to_geoJson())
-
+                res.extend(obj.pref_geoJson())
+ 
     result = {"type": "FeatureCollection", "features":  res}
     return HttpResponse(json.dumps(result), mimetype="application/json")
 

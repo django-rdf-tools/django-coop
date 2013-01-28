@@ -57,12 +57,12 @@ class ProjectAdminForm(forms.ModelForm):
 class ProjectAdmin(FkAutocompleteAdmin):
     form = ProjectAdminForm
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
-    list_display = ('title', 'organization', 'zone')
+    list_display = ('title', 'active', 'organization', 'zone')
     list_filter = ['status']
     fieldsets = (
        ('Description', {
             'fields': ['title', 'status', 'start', 'end', 'description', 
-                        'organization', 'published', 'zone', 'budget', 'notes',
+                        'organization', 'active', 'zone', 'budget', 'notes',
                         'category', 'tags']
         }),
 

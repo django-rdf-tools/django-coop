@@ -122,7 +122,7 @@ class NewEventFormTest(TestCase):
 
         data = dict(
             title='QWERTY',
-            event_type='1',
+            category='1',
             day='2008-12-11',
             start_time_delta='28800',
             end_time_delta='29700',
@@ -157,18 +157,18 @@ def doc_tests():
         >>> evt_types = [EventCategory.objects.create(abbr=l.lower(),label=l) for l in ['Foo', 'Bar', 'Baz']]
         >>> evt_types
         [<EventCategory: Foo>, <EventCategory: Bar>, <EventCategory: Baz>]
-        >>> e = Event.objects.create(title='Hello, world', description='Happy New Year', event_type=evt_types[0])
+        >>> e = Event.objects.create(title='Hello, world', description='Happy New Year', category=evt_types[0])
         >>> e
         <Event: Hello, world>
         >>> e.add_occurrences(datetime(2008,1,1), datetime(2008,1,1,1), freq=rrule.YEARLY, count=7)
         >>> e.occurrence_set.all()
         [<Occurrence: Hello, world: 2008-01-01T00:00:00>, <Occurrence: Hello, world: 2009-01-01T00:00:00>, <Occurrence: Hello, world: 2010-01-01T00:00:00>, <Occurrence: Hello, world: 2011-01-01T00:00:00>, <Occurrence: Hello, world: 2012-01-01T00:00:00>, <Occurrence: Hello, world: 2013-01-01T00:00:00>, <Occurrence: Hello, world: 2014-01-01T00:00:00>]
-        >>> e = create_event('Bicycle repairman', event_type=evt_types[2])
+        >>> e = create_event('Bicycle repairman', category=evt_types[2])
         >>> e.occurrence_set.count()
         1
         >>> e = create_event(
         ...     'Something completely different',
-        ...     event_type=('abbr', 'Abbreviation'),
+        ...     category=('abbr', 'Abbreviation'),
         ...     start_time=datetime(2008,12,1, 12),
         ...     freq=rrule.WEEKLY,
         ...     byweekday=(rrule.TU, rrule.TH),

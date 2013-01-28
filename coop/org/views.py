@@ -3,18 +3,22 @@
 from django.shortcuts import render_to_response
 from coop_local.models import Organization, OrganizationCategory, Engagement, Role
 from django.template import RequestContext
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import  get_object_or_404
 from django.conf import settings
 from coop.org.forms import OrganizationForm, OrganizationCategoryForm
 from django.contrib.auth.decorators import login_required
 from logging import getLogger
-from django.core.exceptions import ValidationError, PermissionDenied
+from django.core.exceptions import PermissionDenied
 from djaloha import utils as djaloha_utils
 from django.contrib import messages
 from django.utils.translation import ugettext as _
-from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseForbidden
-import coop_bar
+from django.http import HttpResponse, HttpResponseRedirect
 from coop_cms.views import coop_bar_aloha_js
+import json
+from django.contrib.gis.geoip import GeoIP
+from django.contrib.gis.geos import fromstr
+import simplejson
+from coop.views import default_region
 
 
 def org_category_detail(request, slug):
@@ -167,7 +171,25 @@ def global_map(request):
     return render_to_response('org/org_global_map.html',
                               context, RequestContext(request))
 
-def leaflet(request):
+
+
+def leaflet(request, criteria=None):
+    region = default_region()
+    if request.GET.get('center'):
+        print request.GET['center']
+        coords = request.GET['center'].split(',')
+        my_lat = coords[0]
+        my_long = coords[1]
+        center = fromstr('POINT(' + my_lat + " " + my_long + ')')
+    else:
+        g = GeoIP(path=settings.PROJECT_PATH + '/config/GEO/')
+        center = g.geos(request.META['REMOTE_ADDR'])
+    if not center:
+            center = region.default_location.point
+
     context = {}
-    context['org_list'] = Organization.objects.filter(active=True)
+    context['region'] = region
+    context['center'] = center
     return render_to_response('org/org_carto.html', context, RequestContext(request))
+
+

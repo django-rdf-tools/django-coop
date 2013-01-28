@@ -16,6 +16,8 @@ import logging
 from urlparse import urlsplit
 from coop.org.models import DISPLAY
 import rdflib
+from django.contrib.gis.db import models as geomodels
+
 
 class BaseProjectCategory(models.Model):
     label = models.CharField(blank=True, max_length=100)
@@ -100,7 +102,7 @@ class BaseProjectMember(URIModel):
         ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
         ('single_mapping', (settings.NS.org.member, 'person'), 'single_reverse'),
 
-        ('single_mapping', (settings.NS.org.organization, 'organization'), 'single_reverse'),
+        ('single_mapping', (settings.NS.org.organization, 'project'), 'single_reverse'),
         ('single_mapping', (settings.NS.skos.note, 'role_detail'), 'single_reverse'),
 
         ('label_mapping', (settings.NS.rdfs.label, 'id', 'fr'), 'label_mapping_reverse'),
@@ -122,7 +124,7 @@ class BaseProject(URIModel):
     end = models.DateField(_(u'end date'), blank=True, null=True)
     description = models.TextField(_(u'Description'))
     notes = models.TextField(_(u'notes'), blank=True, null=True)
-    published = models.BooleanField(_(u'published on the web site'), default=False)
+    # published = models.BooleanField(_(u'published on the web site'), default=False)
 
     zone = models.ForeignKey('coop_local.Area', verbose_name=_(u"zone"), null=True, blank=True)
     budget = models.PositiveIntegerField(_(u'budget'), blank=True, null=True)
@@ -131,6 +133,16 @@ class BaseProject(URIModel):
                 verbose_name=_(u'project partners'), related_name='support')
     category = models.ManyToManyField('coop_local.ProjectCategory',
                 blank=True, null=True, verbose_name=_(u'category'))
+
+    if "coop_geo" in settings.INSTALLED_APPS:
+        located = generic.GenericRelation('coop_geo.Located')  # , related_name='located_org')
+        framed = generic.GenericRelation('coop_geo.AreaLink')  # , related_name='framed_org')
+        geom_manager = geomodels.GeoManager()
+        pref_address = models.ForeignKey('coop_local.Location',
+                verbose_name=_(u'preferred postal address'),
+                related_name='pref_address_project', null=True, blank=True)
+
+
 
     class Meta:
         verbose_name = _(u"Project")
@@ -141,10 +153,88 @@ class BaseProject(URIModel):
     def __unicode__(self):
         return self.title
 
+    def label(self):
+        return self.title
+
+
     def get_absolute_url(self):
         return reverse('project_detail', args=[self.id])
 
+    def save(self, *args, **kwargs):
+        # Set default values for postal address
+        if 'coop_geo' in settings.INSTALLED_APPS:
+            if self.pref_address == None:
+                if self.organization:
+                    self.pref_address = self.organization.pref_address
+        super(BaseProject, self).save(*args, **kwargs)
+
+    def pref_geoJson(self):
+        if self.pref_address:
+            json = self.pref_address.geoJson()
+            if json:
+                json["properties"]["label"] = self.label().encode("utf-8")
+                json["properties"]["organization"] = self.organization.label().encode('utf-8')
+                json["properties"]["category"] = [c.slug.encode('utf-8') for c in self.category.all()]
+                json["properties"]["popupContent"] = u"<p><a href='" + \
+                                self.get_absolute_url() + u"'>" + self.label() + u"</a></p>"
+                return[json]
+            else:
+                return []
+        else:
+            return []
+
+
+
+    def zone_geoJson(self):
+        if self.zone:
+            json = self.zone.geoJson()
+            json["properties"]["label"] = self.zone.label.encode("utf-8")
+            json["properties"]["category"] = [c.slug.encode('utf-8') for c in self.category.all()]
+            json["properties"]["popupContent"] = u"<p><a href='" + \
+                            self.get_absolute_url() + u"'>" + self.label() + u"</a></p>"
+            return [json]
+        else:
+            return []
+
+    def all_geoJson(self):
+        res = self.pref_geoJson()
+        res.extend(self.zone_geoJson())
+        for l in self.framed.all():
+            res.append(l.geoJson())
+        for l in self.located.all():
+            res.append(l.geoJson())
+        return res
+
+
     # TODO mapper sur org:OrganizationalCollaboration (alternative name : org:Project)
+
+    rdf_type = settings.NS.org.OrganizationalCollaboration
+
+    def isOpenData(self):
+        return self.active
+
+    # TODO: some informations are still missing in the graph org:Membership relation between organizations, by example
+    base_mapping = [
+        ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
+        ('single_mapping', (settings.NS.dct.modified, 'modified'), 'single_reverse'),
+        ('single_mapping', (settings.NS.legal.legalName, 'title'), 'single_reverse'),
+        ('single_mapping', (settings.NS.dct.description, 'description'), 'single_reverse'),
+        ('single_mapping', (settings.NS.skos.note, 'notes'), 'single_reverse'),
+        ('single_mapping', (settings.NS.ess.organizer, 'organization'), 'single_reverse'),
+        ('single_mapping', (settings.NS.ess.actionArea, 'zone'), 'single_reverse'),
+
+        ('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'), 
+        # FIXME : Project objects need to have a primary key value before you can access their tags.
+        ('multi_mapping', (settings.NS.org.hasMember, 'relations'), 'multi_reverse'), 
+
+    ]
+
+
+
+
+
+
+
 
 
 class BaseProjectSupport(models.Model):

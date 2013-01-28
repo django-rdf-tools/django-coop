@@ -1,0 +1,8 @@
+{{ object.title }}
+{{ object.description }}
+{{ object.notes }}
+{{ object.organization.title }}
+
+
+
+
