@@ -482,10 +482,9 @@ class BaseOrganization(URIModel):
                 related_name='pref_phone', null=True, blank=True)
     pref_address = models.ForeignKey('coop_local.Location',
                 verbose_name=_(u'preferred postal address'),
-                related_name='pref_adress', null=True, blank=True)
+                related_name='pref_address_org', null=True, blank=True)
 
     slug = exfields.AutoSlugField(populate_from='title', blank=True, overwrite=True)
-    active = models.BooleanField(_(u'show on public site'), default=True,)
     notes = models.TextField(_(u'notes'), blank=True)
 
     if "coop.agenda" in settings.INSTALLED_APPS:
@@ -525,57 +524,31 @@ class BaseOrganization(URIModel):
             return Area.objects.filter(id__in=self.framed.all().values_list('location_id', flat=True))
 
 
-        def pref_addr_geoJson(self):
+        def pref_geoJson(self):
             if self.pref_address and self.pref_address.point:
-
-                return [{
-                   "type": "Feature",
-                    "properties": {
-                            "label": self.label().encode("utf-8"),
-                            "category": [c.slug.encode('utf-8') for c in self.category.all()],
-                            "popupContent": u"<h4>" + self.label() + u"</h4><p><a href='" + \
+                json = self.pref_address.geoJson()
+                json["properties"]["label"] = self.label().encode("utf-8")
+                json["properties"]["category"] = [c.slug.encode('utf-8') for c in self.category.all()]
+                json["properties"]["popupContent"] = u"<p><a href='" + \
                             self.get_absolute_url() + u"'>" + self.label() + u"</a></p>"
-                            },
-                        "geometry": simplejson.loads(self.pref_address.point.geojson)
-                        }]
+                return [json]
             else:
                 return []
 
-
         def locations_geoJson(self):
-            res = self.pref_addr_geoJson()
+            res = self.pref_geoJson()
             other_locations = set(self.locations()).difference(set([self.pref_address]))
             for loc in other_locations:
                 located = self.located.get(location=loc)
-                if located.category:
-                    popup = located.category.label
-                else:
-                    popup = self.label()
-                json = {
-                   "type": "Feature",
-                    "properties": {
-                            "label": self.label().encode("utf-8"),
-                            "category": located.category.label.encode("utf-8"),
-                            "popupContent": u"<h4>" + popup + u"</h4><p></p>"
-                            },
-                        "geometry":  simplejson.loads(loc.point.geojson)
-                }
+                json = located.geoJson()
+                json["properties"]["label"] = self.label().encode("utf-8")
                 res.append(json)
             return res
 
         def areas_geoJson(self):
             res = []
-            for a in self.areas():
-                json = {
-                   "type": "Feature",
-                    "properties": {
-                            "label": a.label.encode("utf-8"),
-                            "area_type": a.area_type.label.encode("utf-8"),
-                            "popupContent": u"<h4>" + a.label + u"</h4><p></p>"
-                            },
-                        "geometry":  simplejson.loads(a.polygon.geojson)
-                }
-                res.append(json)
+            for al in self.framed.all():
+                res.append(al.geoJson())
             return res
 
         def all_geoJson(self):

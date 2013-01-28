@@ -172,12 +172,9 @@ def global_map(request):
                               context, RequestContext(request))
 
 
- 
 
 def leaflet(request, criteria=None):
-
     region = default_region()
-
     if request.GET.get('center'):
         print request.GET['center']
         coords = request.GET['center'].split(',')
@@ -194,82 +191,5 @@ def leaflet(request, criteria=None):
     context['region'] = region
     context['center'] = center
     return render_to_response('org/org_carto.html', context, RequestContext(request))
-
-
-# TODO: how to have extra parametre to customise  the geoJson ?
-def geojson(request):
-    """
-        The main view to get geoJson features from Organization model
-        get query could  be
-        ?id= an Organization id
-        ?category=an OrganizationCategory slug
-        ?dist=dist&center=x,y  filter auour d'un point
-        ?zone=ref,type  filter for a 'zone', where 'ref' is the 'reference' fieds value and 'type' is
-        the area_type.txt_idx value
-        ?geotype= 'all' | 'pref_addr' | 'locations'| 'areas'
-        If no query is specified, it returns all kind of  geoJson features for all active Organization
-        take care that 'id' and 'category' requests are combine
-
-    """
-    from django.contrib.gis.measure import Distance
-    from coop_local.models import Area
-    from coop_geo.models import AreaType
-    # dafault values
-    qs = Organization.geom_manager.filter(active=True)
-    geo_type = 'pref_addr'
-
-    get = request.GET
-    if  get:
-        # filter about organizations
-        if get.get('id'):
-            qs = qs.filter(id=get.get('id'))
-        if get.get('category'):
-            slug = get.get('category')
-            try:
-                cat = OrganizationCategory.objects.get(slug=slug)
-                qs = qs.filter(category=cat)
-            except OrganizationCategory.DoesNotExist:
-                pass
-        # geom filter
-        if get.get('dist'):
-            dist = get.get('dist')
-            coords = get.get('center').split(',')
-            my_lat = coords[0]
-            my_long = coords[1]
-            center = fromstr('POINT(' + my_lat + " " + my_long + ')')
-            qs = qs.filter(pref_address__point__distance_lte=(center, Distance(km=dist)))
-        if get.get('zone'):
-            zone = get.get('zone').split(',')
-            ref = zone[0]
-            ztype = zone[1]
-            try:
-                at = AreaType.objects.get(txt_idx=ztype)
-                a = Area.objects.filter(reference=ref, area_type=at)[0]  # should be unique
-                qs = qs.filter(pref_address__point__contained=a.polygon)
-            except (AreaType.DoesNotExist, IndexError):
-                print "cannot filter on zone"
-
-        # filter about geoJson features
-        if get.get('geotype'):
-            geo_type = get.get('geotype')
-
-    res = []
-    for obj in qs:
-        res.extend(getattr(obj, geo_type + '_geoJson')())
-    # On met au moins une region (c'est mieux qu'une erreur)
-    if res == []:
-        region = default_region()
-        res = [{
-                   "type": "Feature",
-                    "properties": {
-                            "label": region.label.encode("utf-8"),
-                            },
-                        "geometry":  simplejson.loads(region.polygon.geojson)
-                }
-
-        ]
-
-    result = {"type": "FeatureCollection", "features":  res}
-    return HttpResponse(json.dumps(result), mimetype="application/json")
 
 

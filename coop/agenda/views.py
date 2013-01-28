@@ -57,7 +57,7 @@ def event_minimal_view(request, pk, template='agenda/event_minimal_view.html'):
 def event_category_view(request, slug):
     category = get_object_or_404(EventCategory, slug=slug)
     rdict = {'event_category': category}
-    rdict['events'] = Event.objects.filter(event_type__in=[category])
+    rdict['events'] = Event.objects.filter(category__in=[category])
     return render_to_response('agenda/event_category.html', rdict, RequestContext(request))
 
 
@@ -65,7 +65,7 @@ def agenda_by_category(request, slug):
     agenda = get_object_or_404(Calendar, slug=slug, sites__id=settings.SITE_ID)
     categories = {}
     for cat in EventCategory.objects.all():
-        ev = Event.objects.filter(calendar=agenda, event_type=cat)
+        ev = Event.objects.filter(calendar=agenda, category=cat)
         if ev.exists():
             categories[cat] = ev
     rdict = {'agenda': agenda, 'events_by_categories': categories}

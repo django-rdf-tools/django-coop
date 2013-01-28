@@ -27,20 +27,11 @@ def projects_map(request):
     for project in qs:
         if project.zone:
             if not project.zone.id in countries:
-                countries[project.zone.id] = {
-                    "type": "Feature",
-                    "properties": {
-                        "name": project.zone.label,
-                        "popupContent": u"<h4>" + project.zone.label + "</h4><p class='map_link_project'>\
-                        <a href='" + project.get_absolute_url() + u"'>" + project.title + "</a></p>"
-                        },
-                    "geometry": {
-                        "type": "MultiPolygon",
-                        "coordinates": project.zone.polygon.coords
-                        }
-                    }
+                countries[project.zone.id] = project.zone_geoJson()[0]
             else:
                 countries[project.zone.id]["properties"]["popupContent"] += u"\n<p class='map_link_project'>\
                 <a href='" + project.get_absolute_url() + u"'>" + project.title + "</a></p>"
     projects = {"type": "FeatureCollection", "features": countries.values()}
     return HttpResponse(json.dumps(projects), mimetype="application/json")
+
+

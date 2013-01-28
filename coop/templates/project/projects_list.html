@@ -1,4 +1,4 @@
-{% extends "page.html" %}
+{% extends "base.html" %}
 {% load i18n thumbnail remote %}
 
 {% block meta_title %}Liste des projets{% endblock %}
@@ -18,8 +18,7 @@
 {% endblock javascript %}
 
 
-{% block article %}
-
+{% block content %}
         <h2 class="like-h1">Liste des projets</h2>
 
 
@@ -151,4 +150,4 @@
 
 {% endfor%}
 
-{% endblock article %}
+{% endblock %}

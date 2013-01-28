@@ -41,7 +41,7 @@
 
         $(function(){
             var clusterer = new LeafClusterer(map);
-            $.getJSON('/org/geojson/?'+initParameters, function(data) {
+            $.getJSON('/geojson/organization/?'+initParameters, function(data) {
 
                 var orgJsonLayer = new L.geoJson(data, {
                     // style for all vector layers (color, opacity, etc.), either function or object (optional)

@@ -38,7 +38,8 @@ urlpatterns = patterns('',
     # url(r'^d2r/(?P<mode>[\w-]+)/mapping.ttl$', 'coop.views.d2r_mapping'),
 
     url(r'^communes/$', 'coop.views.communes'),
-    url(r'^geojson/', 'coop.views.geojson'),
+    url(r'^geojson/(?P<model>[\w-]+)', 'coop.views.geojson'),
+    url(r'^geojson/', 'coop.views.geojson_amap'),
 
 )
 

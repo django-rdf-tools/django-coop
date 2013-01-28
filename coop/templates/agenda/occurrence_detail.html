@@ -15,7 +15,7 @@
         {% endwith %}
      <dl>
          <dt>{% trans "Event type" %}:</dt>
-         <dd>{{ occurrence.event.event_type }}</dd>
+         <dd>{{ occurrence.event.category }}</dd>
          
          <dt>{% trans "Description" %}:</dt>
          <dd>{{ occurrence.event.description|default:"None" }}</dd>

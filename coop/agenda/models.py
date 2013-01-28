@@ -93,7 +93,9 @@ class BaseEvent(URIModel):
     title = models.CharField(_('title'), max_length=120)
     description = models.TextField(_(u'description'), blank=True)
     slug = exfields.AutoSlugField(populate_from='title')
-    event_type = models.ForeignKey('coop_local.EventCategory', verbose_name=_('event type'))  # TODO rename category !!!
+    category = models.ManyToManyField('coop_local.EventCategory', verbose_name=_('event type'))  
+    # to be deleted one day...use category instead
+    event_type = models.ForeignKey('coop_local.EventCategory', verbose_name=_('event type'), related_name='event_type', editable=False)  
     calendar = models.ForeignKey('coop_local.Calendar', verbose_name=_('calendar'))
 
     # Linking to local objects
@@ -102,6 +104,7 @@ class BaseEvent(URIModel):
 
     person = models.ForeignKey('coop_local.Person', null=True, blank=True, verbose_name=_('author'))
     if "coop_geo" in settings.INSTALLED_APPS:
+        # it a rather redundant with feild pref_address ... 
         location = models.ForeignKey('coop_local.Location', null=True, blank=True, verbose_name=_('location'))
         remote_location_uri = models.URLField(_('remote location URI'), blank=True, max_length=255)
         remote_location_label = models.CharField(_(u'remote location label'),
@@ -134,6 +137,56 @@ class BaseEvent(URIModel):
     @models.permalink
     def get_absolute_url(self):
         return ('agenda-event', [str(self.id)])
+
+
+    if "coop_geo" in settings.INSTALLED_APPS:
+        from django.contrib.gis.db import models as geomodels
+        located = generic.GenericRelation('coop_geo.Located')  # , related_name='located_org')
+        framed = generic.GenericRelation('coop_geo.AreaLink')  # , related_name='framed_org')
+        geom_manager = geomodels.GeoManager()
+        pref_address = models.ForeignKey('coop_local.Location',
+                verbose_name=_(u'preferred postal address'),
+                related_name='pref_address_event', null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if self.event_type:
+            self.category.add(self.event_type)
+        # try hard to set default value for postal address
+        if 'coop_geo' in settings.INSTALLED_APPS:
+            if self.pref_address == None:
+                if self.location:
+                    self.pref_address = self.location
+                elif self.organization and self.organization.pref_address:
+                    self.pref_address = self.organization.pref_address
+        super(BaseEvent, self).save(*args, **kwargs)
+
+    if "coop_geo" in settings.INSTALLED_APPS:
+        def pref_geoJson(self):
+            if self.pref_address:
+                json = self.pref_address.geoJson()
+                if self.organization:
+                    org_label = self.organization.label()
+                else:
+                    org_label = self.remote_organization_label
+
+                json["properties"]["label"] = self.label().encode("utf-8")
+                json["properties"]["organization"] = org_label.encode('utf-8')
+                json["properties"]["category"] = [c.slug.encode('utf-8') for c in self.category.all()]
+                json["properties"]["popupContent"] = u"<p><a href='" + \
+                                self.get_absolute_url() + u"'>" + self.label() + u"</a></p>"
+                return[json]
+            else:
+                return []
+
+        def all_geoJson(self):
+            res = self.pref_geoJson()
+            for l in self.framed.all():
+                res.append(l.geoJson())
+            for l in self.located.all():
+                res.append(l.geoJson())
+            return res
+
+
 
     @property
     def linked_articles(self):
@@ -212,7 +265,7 @@ class BaseEvent(URIModel):
         ('multi_mapping', (settings.NS.vcal.attendee, 'organizations'), 'multi_reverse'),
 
         ('article_mapping', (settings.NS.dct.relation, 'linked_articles'), 'article_mapping_reverse'),
-        ('category_mapping', (settings.NS.vcal.categories, 'event_type'), 'category_mapping_reverse'),
+        ('category_mapping', (settings.NS.vcal.categories, 'category'), 'category_mapping_reverse'),
         ('occurence_mapping', (settings.NS.vcal.dtstart, settings.NS.vcal.dtend), 'occurence_mapping_reverse'),
     ]
 
@@ -398,7 +451,7 @@ class BaseOccurrence(models.Model):
 
     @property
     def event_type(self):
-        return self.event.event_type
+        return self.event.category
 
 
 def create_event(title, event_type, description='', start_time=None,
@@ -439,7 +492,7 @@ def create_event(title, event_type, description='', start_time=None,
     event = get_model('coop_local', 'Event').objects.create(
         title=title,
         description=description,
-        event_type=event_type
+        category=event_type
     )
 
     start_time = start_time or datetime.now().replace(

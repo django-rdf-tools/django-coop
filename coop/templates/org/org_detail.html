@@ -196,7 +196,7 @@
                     map.setView(centre, 15).addLayer(cloudmade);
 
                     $(function(){
-                        $.getJSON('/org/geojson/?id={{ organization.id }}&geotype=all', function(data) {
+                        $.getJSON('/geojson/organization/?id={{ organization.id }}&geotype=all', function(data) {
 
                             var orgJsonLayer = new L.geoJson(data, {
                                 // style for all vector layers (color, opacity, etc.), either function or object (optional)

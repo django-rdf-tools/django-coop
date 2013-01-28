@@ -40,6 +40,10 @@ if "coop_cms" in settings.INSTALLED_APPS:
         def label(self):
             return self.title
 
+        def save(self, *args, **kwargs):
+            self.active = (self.publication == BaseArticle.PUBLISHED)
+            super(CoopArticle, self).save(*args, **kwargs)
+
         # def can_publish_article(self, user):
         #     return (self.author == user)
 

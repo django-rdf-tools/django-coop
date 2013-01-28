@@ -1,4 +1,4 @@
-{% extends "page.html" %}
+{% extends "base.html" %}
 {% load i18n thumbnail remote %}
 
 {% block meta_title %}Fiche Projet : {{ item }}{% endblock %}
@@ -21,8 +21,7 @@
 {% endblock javascript %}
 
 
-{% block article %}
-
+{% block content %}
         <h2 class="like-h1">Fiche Projet : {{ item }}</h2>
         <h3>Porteur du projet</h3>
         <a href="{{ item.organization.get_absolute_url }}">
@@ -30,15 +29,19 @@
 
             <br>
                 <!--  -->
+    {% comment %}
    <div id="map-projects" ></div>
-   <div id="map" class="block" style="width: 300px; height: 300px; float:right;margin-left:20px;margin-bottom:10px"></div>
+    <div id="map" class="block" style="width: 300px; height: 300px; float:right;margin-left:20px;margin-bottom:10px"></div>
+    {% endcomment %}
+
+    <div id="map_wrapper" style="width:300px; height: 220px">
+        <div id="map" style="width:300px; height: 220px"></div>
+    </div>
 
 
     <script>
         var map = new L.Map('map');
         var ailleurs = new L.LatLng(45.654827, 3.430401); // geographical point (longitude and latitude)
-        var noms = new L.StamenTileLayer("toner-labels");
-        var fond = new L.StamenTileLayer("watercolor");
 
 
         var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
@@ -47,12 +50,10 @@
 
         map.addLayer(cloudmade);
 
-        map.addLayer(fond);
-        map.addLayer(noms);
 
         $(function(){
 
-            $.getJSON('/projet/{{ item.id }}/map/', function(data) {
+            $.getJSON('/geojson/project/?id={{ item.id }}&geotype=all', function(data) {
 
                 var eadGeojsonLayer = new L.geoJson(data, {
 
@@ -163,6 +164,6 @@
 
 
 
+{% endblock %}
 
 
-{% endblock article %}
