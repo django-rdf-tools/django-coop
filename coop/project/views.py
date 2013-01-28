@@ -7,11 +7,13 @@ from django.template import RequestContext
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404, HttpResponse
 import json
+from coop.views import default_region
 
 
 def projects_list(request):
     context = {}
     context['projets'] = Project.objects.all()
+    context['region'] = default_region()
     return render_to_response('project/projects_list.html', context, RequestContext(request))
 
 

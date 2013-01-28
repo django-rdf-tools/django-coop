@@ -171,12 +171,15 @@ class BaseProject(URIModel):
     def pref_geoJson(self):
         if self.pref_address:
             json = self.pref_address.geoJson()
-            json["properties"]["label"] = self.label().encode("utf-8")
-            json["properties"]["organization"] = self.organization.label().encode('utf-8')
-            json["properties"]["category"] = [c.slug.encode('utf-8') for c in self.category.all()]
-            json["properties"]["popupContent"] = u"<p><a href='" + \
-                            self.get_absolute_url() + u"'>" + self.label() + u"</a></p>"
-            return[json]
+            if json:
+                json["properties"]["label"] = self.label().encode("utf-8")
+                json["properties"]["organization"] = self.organization.label().encode('utf-8')
+                json["properties"]["category"] = [c.slug.encode('utf-8') for c in self.category.all()]
+                json["properties"]["popupContent"] = u"<p><a href='" + \
+                                self.get_absolute_url() + u"'>" + self.label() + u"</a></p>"
+                return[json]
+            else:
+                return []
         else:
             return []
 
