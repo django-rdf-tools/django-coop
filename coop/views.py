@@ -13,6 +13,7 @@ import simplejson
 from django.core.exceptions import ImproperlyConfigured
 from django.contrib.gis.geos import fromstr
 import logging
+from django.contrib.sites.models import Site
 
 log = logging.getLogger()
 
@@ -256,7 +257,13 @@ def geojson(request, model):
 
     res = []
     for obj in qs:
-        res.extend(getattr(obj, geo_type + '_geoJson')())
+        if settings.COOP_USE_SITES:
+            site = Site.objects.get_current()
+            if site in obj.sites.all():
+                res.extend(getattr(obj, geo_type + '_geoJson')())
+        else:
+            res.extend(getattr(obj, geo_type + '_geoJson')())
+
     # On met au moins une region (c'est mieux qu'une erreur)
     if res == []:
         region = default_region()
