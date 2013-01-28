@@ -22,6 +22,12 @@ if "coop_cms" in settings.INSTALLED_APPS:
 
     class MyNavTreeAdmin(NavTreeAdmin):
         change_form_template = 'admin/navtree_change_form.html'
+        # list_display = ['__unicode__', 'name', 'sites']
+        # list_editable = ['name', 'sites']
+
+        # if settings.COOP_USE_SITES:
+        #     list_display.append('sites')
+        #     list_display.append('sites')
 
     navtree_model = get_navTree_class()
     admin.site.unregister(navtree_model)

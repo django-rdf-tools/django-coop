@@ -81,7 +81,7 @@ class BaseProjectMember(URIModel):
         app_label = 'coop_local'
 
     def __unicode__(self):
-        return '%(person)s, %(role_detail)s for project %(project)s' % {
+        return _(u'%(person)s, %(role_detail)s for project %(project)s') % {
                         'person': self.person.__unicode__(),
                         'role_detail': self.role_detail,
                         'project': self.project.__unicode__()

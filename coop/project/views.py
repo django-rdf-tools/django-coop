@@ -11,7 +11,7 @@ import json
 
 def projects_list(request):
     context = {}
-    context['projets'] = Project.objects.all()
+    context['projects'] = Project.objects.all()
     return render_to_response('project/projects_list.html', context, RequestContext(request))
 
 
