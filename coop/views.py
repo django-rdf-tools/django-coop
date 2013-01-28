@@ -12,6 +12,9 @@ import json
 import simplejson
 from django.core.exceptions import ImproperlyConfigured
 from django.contrib.gis.geos import fromstr
+import logging
+
+log = logging.getLogger()
 
 if('coop.exchange' in settings.INSTALLED_APPS):
     from coop_local.models import Exchange
@@ -28,7 +31,9 @@ def default_region():
         regiontype = AreaType.objects.get(label="Région")
         region = Area.objects.get(area_type=regiontype, reference=code_region)
     except:
-        raise ImproperlyConfigured("No default region has been configured")
+        log.debug("No default region has been configured")
+        region = None
+        # raise ImproperlyConfigured("No default region has been configured")
     return region
 
 
@@ -255,9 +260,10 @@ def geojson(request, model):
     # On met au moins une region (c'est mieux qu'une erreur)
     if res == []:
         region = default_region()
-        gjson = region.geoJson()
-        gjson["properties"]["label"] = region.label.encode("utf-8")
-        res = [gjson]
+        if region:
+            gjson = region.geoJson()
+            gjson["properties"]["label"] = region.label.encode("utf-8")
+            res = [gjson]
 
     result = {"type": "FeatureCollection", "features":  res}
     return HttpResponse(json.dumps(result), mimetype="application/json")
