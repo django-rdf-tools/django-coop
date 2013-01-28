@@ -182,15 +182,16 @@ def communes(request):
 def geojson(request, model):
     """
         The main view to get geoJson features from Organization model
-        get query could  be
+        get query could be (thre is no dependance between queries)
         ?id= an Organization id
-        ?category=an OrganizationCategory slug
-        ?dist=dist&center=x,y  filter auour d'un point
+        ?category=a category slug (category are available for Organization, Event, Project, ..)
+        ?dist=dist&center=x,y  filter around a point
         ?zone=ref,type  filter for a 'zone', where 'ref' is the 'reference' fieds value and 'type' is
         the area_type.txt_idx value
         ?geotype= 'all' | 'pref' | 'locations'| 'areas' (could 'zone' for project)
-        If no query is specified, it returns all kind of  geoJson features for all active Organization
-        take care that 'id' and 'category' requests are combine
+        If no query is specified, it returns all kind of  geoJson features for all active instance 
+        of the model Model and usef the method pref_geoJson to build geoJson features;
+        Take care that 'id' and 'category' requests are combine
 
     """
     from django.contrib.gis.measure import Distance
@@ -254,21 +255,15 @@ def geojson(request, model):
     # On met au moins une region (c'est mieux qu'une erreur)
     if res == []:
         region = default_region()
-        res = [{
-                   "type": "Feature",
-                    "properties": {
-                            "label": region.label.encode("utf-8"),
-                            },
-                        "geometry":  simplejson.loads(region.polygon.geojson)
-                }
-
-        ]
+        gjson = region.geoJson()
+        gjson["properties"]["label"] = region.label.encode("utf-8")
+        res = [gjson]
 
     result = {"type": "FeatureCollection", "features":  res}
     return HttpResponse(json.dumps(result), mimetype="application/json")
 
 
-# TODO: tobe removed... only used for AllainceProvence
+# TODO: to be removed... only used in AllianceProvence
 def geojson_amap(request):
     from django.contrib.gis.measure import Distance
     from django.contrib.gis.geoip import GeoIP
