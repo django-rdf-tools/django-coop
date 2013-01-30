@@ -328,35 +328,55 @@ if 'haystack' in settings.INSTALLED_APPS:
 
             # the call to .__dict__['query'].get_results() is a work around due 
             # the issue #575 (on django-haystack project)
-
+            search = self.form.search()
+            results = self.results
             if 'whoosh' in settings.HAYSTACK_CONNECTIONS['default']['ENGINE']:
-                if self.results == []:
-                    extra['org'] = self.form.search().models(Organization).__dict__['query'].get_results()
-                    if('coop.exchange' in settings.INSTALLED_APPS):
-                        extra['exchange'] = self.form.search().models(Exchange).__dict__['query'].get_results()
-                    extra['article'] = self.form.search().models(Article).__dict__['query'].get_results()
-                    if('coop.agenda' in settings.INSTALLED_APPS):
-                        extra['event'] = self.form.search().models(Event).__dict__['query'].get_results()
+
+
+                if results.models(Organization).count() == 0:
+                    extra['org'] = search.models(Organization).__dict__['query'].get_results()
                 else:
-                    extra['org'] = self.results.models(Organization).__dict__['query'].get_results()
-                    if('coop.exchange' in settings.INSTALLED_APPS):
-                        extra['exchange'] = self.results.models(Exchange).__dict__['query'].get_results()
-                    extra['article'] = self.results.models(Article).__dict__['query'].get_results()
-                    if('coop.agenda' in settings.INSTALLED_APPS):
-                        extra['event'] = self.results.models(Event).__dict__['query'].get_results()
+                    extra['org'] = results.models(Organization).__dict__['query'].get_results()
+
+                if('coop.exchange' in settings.INSTALLED_APPS):
+                    if results.models(Exchange).count() == 0:
+                        extra['exchange'] = search.models(Exchange).__dict__['query'].get_results()
+                    else:
+                        extra['exchange'] = results.models(Exchange).__dict__['query'].get_results()
+
+                if results.models(Article).count() == 0:
+                    extra['article'] = search.models(Article).__dict__['query'].get_results()
+                else:
+                    extra['article'] = results.models(Article).__dict__['query'].get_results()
+
+                if('coop.agenda' in settings.INSTALLED_APPS):
+                    if results.models(Event).count() == 0:
+                        extra['event'] = search.models(Event).__dict__['query'].get_results()
+                    else:
+                        extra['event'] = results.models(Event).__dict__['query'].get_results()
+
             else:
-                if self.results == []:
-                    extra['org'] = self.form.search().models(Organization)
-                    if('coop.exchange' in settings.INSTALLED_APPS):
-                        extra['exchange'] = self.form.search().models(Exchange)
-                    extra['article'] = self.form.search().models(Article)
-                    if('coop.agenda' in settings.INSTALLED_APPS):
-                        extra['event'] = self.form.search().models(Event)
+
+                if results.models(Organization).count() == 0:
+                    extra['org'] = search.models(Organization)
                 else:
-                    extra['org'] = self.results.models(Organization)
-                    if('coop.exchange' in settings.INSTALLED_APPS):
-                        extra['exchange'] = self.results.models(Exchange)
-                    extra['article'] = self.results.models(Article)
-                    if('coop.agenda' in settings.INSTALLED_APPS):
-                        extra['event'] = self.results.models(Event)
+                    extra['org'] = results.models(Organization)
+
+                if('coop.exchange' in settings.INSTALLED_APPS):
+                    if results.models(Exchange).count() == 0:
+                        extra['exchange'] = search.models(Exchange)
+                    else:
+                        extra['exchange'] = results.models(Exchange)
+
+                if results.models(Article).count() == 0:
+                    extra['article'] = search.models(Article)
+                else:
+                    extra['article'] = results.models(Article)
+
+                if('coop.agenda' in settings.INSTALLED_APPS):
+                    if results.models(Event).count() == 0:
+                        extra['event'] = search.models(Event)       
+                    else:
+                        extra['event'] = results.models(Event)
+
             return extra
