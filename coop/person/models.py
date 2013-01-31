@@ -45,7 +45,8 @@ class BasePerson(URIModel):
 
     pref_email = models.ForeignKey('coop_local.Contact',
                 verbose_name=_(u'preferred email'),
-                related_name="preferred_email", null=True, blank=True,
+                related_name="preferred_email", null=True, blank=True, 
+                on_delete=models.SET_NULL,
                 help_text=_(u'will not be displayed on the website'))
 
     structure = models.CharField(blank=True, max_length=100)
