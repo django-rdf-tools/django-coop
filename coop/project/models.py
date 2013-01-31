@@ -140,6 +140,7 @@ class BaseProject(URIModel):
         geom_manager = geomodels.GeoManager()
         pref_address = models.ForeignKey('coop_local.Location',
                 verbose_name=_(u'preferred postal address'),
+                on_delete=models.SET_NULL,
                 related_name='pref_address_project', null=True, blank=True)
 
 

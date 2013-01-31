@@ -146,7 +146,7 @@ class BaseEvent(URIModel):
         geom_manager = geomodels.GeoManager()
         pref_address = models.ForeignKey('coop_local.Location',
                 verbose_name=_(u'preferred postal address'),
-                related_name='pref_address_event', null=True, blank=True)
+                related_name='pref_address_event', null=True, blank=True, on_delete=models.SET_NULL)
 
     def save(self, *args, **kwargs):
         if self.event_type_id:
