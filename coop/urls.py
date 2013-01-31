@@ -4,6 +4,7 @@ from django.conf.urls.defaults import patterns, include, url
 from django.views.generic.base import TemplateView, RedirectView
 from django.conf import settings
 from coop.feeds import UpdateFeed
+from django.contrib.sites.models import Site
 
 
 class TextPlainView(TemplateView):
@@ -59,11 +60,12 @@ if 'haystack' in settings.INSTALLED_APPS:
     from haystack.views import search_view_factory
     from haystack.forms import SearchForm
     from coop.forms import SiteSearchForm
-    from coop.views import ModelSearchView
+    from coop.views import ModelSearchView, SiteModelSearchView
     urlpatterns += patterns('haystack.views',
         url(r'^search/search/$', search_view_factory(
-            view_class=ModelSearchView,
+            view_class=SiteModelSearchView,
             form_class=SiteSearchForm,
+            site=Site.objects.get_current(),
             template='search/search.html',
             load_all=False
         ), name='haystack_search'),

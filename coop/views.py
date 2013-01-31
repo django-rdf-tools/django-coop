@@ -380,3 +380,31 @@ if 'haystack' in settings.INSTALLED_APPS:
                         extra['event'] = results.models(Event)
 
             return extra
+
+
+    class SiteModelSearchView(ModelSearchView):
+        def __name__(self):
+            return "SiteModelSearchView"
+
+        def __init__(self, *args, **kwargs):
+            # Needed to switch out the default form class.
+            if not 'site' in kwargs:
+                self.site = Site.objects.get_current()
+            else:
+                site = kwargs.pop('site')
+                if site:
+                    self.site = site
+                else:
+                    self.site = Site.objects.get_current()
+            super(SiteModelSearchView, self).__init__(*args, **kwargs)
+
+        def build_form(self, form_kwargs=None):
+            form = super(SiteModelSearchView, self).build_form(form_kwargs)
+            if hasattr(form, 'set_site'):
+                form.set_site(self.site)
+            return form
+
+        def extra_context(self):
+            extra = super(ModelSearchView, self).extra_context()
+            extra['site'] = self.site
+            return extra
