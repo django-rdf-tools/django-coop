@@ -30,26 +30,37 @@ if DEBUG or ('runserver' in sys.argv):
     DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
 
 else:
-    INSTALLED_APPS = DEBUG_SETTINGS['apps'] + ['raven.contrib.django']
-    MIDDLEWARE_CLASSES = DEBUG_SETTINGS['middleware'] + [
-        'raven.contrib.django.middleware.Sentry404CatchMiddleware',
-        ]
-    DEBUG_SETTINGS['logging']['root'] = {
-        'level': 'WARNING',
-        'handlers': ['sentry'],
-    }
-    DEBUG_SETTINGS['logging']['handlers']['sentry'] = {
-            'level': 'ERROR',
-            'class': 'raven.contrib.django.handlers.SentryHandler',
-       }
-    DEBUG_SETTINGS['logging']['loggers']['raven'] = {
-            'level': 'DEBUG',
-            'handlers': ['console'],
-            'propagate': False,
+    try:
+
+        from coop_local.settings import SENTRY_DSN
+
+        INSTALLED_APPS = DEBUG_SETTINGS['apps'] + ['raven.contrib.django']
+        MIDDLEWARE_CLASSES = DEBUG_SETTINGS['middleware'] + [
+            'raven.contrib.django.middleware.Sentry404CatchMiddleware',
+            ]
+        DEBUG_SETTINGS['logging']['root'] = {
+            'level': 'WARNING',
+            'handlers': ['sentry'],
         }
-    DEBUG_SETTINGS['logging']['loggers']['sentry.errors'] = {
-            'level': 'DEBUG',
-            'handlers': ['console'],
-            'propagate': False,
-        }
-    LOGGING = DEBUG_SETTINGS['logging']
+        DEBUG_SETTINGS['logging']['handlers']['sentry'] = {
+                'level': 'ERROR',
+                'class': 'raven.contrib.django.handlers.SentryHandler',
+           }
+        DEBUG_SETTINGS['logging']['loggers']['raven'] = {
+                'level': 'DEBUG',
+                'handlers': ['console'],
+                'propagate': False,
+            }
+        DEBUG_SETTINGS['logging']['loggers']['sentry.errors'] = {
+                'level': 'DEBUG',
+                'handlers': ['console'],
+                'propagate': False,
+            }
+        LOGGING = DEBUG_SETTINGS['logging']
+
+    except AttributeError:
+        # this will fail if no SENTRY DNS is present in settings
+
+        pass
+
+
