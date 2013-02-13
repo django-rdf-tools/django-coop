@@ -29,11 +29,11 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "coop_local.settings")
 
 from django.core.wsgi import get_wsgi_application
 
-try:
-    from raven.contrib.django.middleware.wsgi import Sentry
-    application = Sentry(get_wsgi_application())
-except ImportError:
-    application = get_wsgi_application()
+# try:
+#     from raven.contrib.django.middleware.wsgi import Sentry
+#     application = Sentry(get_wsgi_application())
+# except ImportError:
+application = get_wsgi_application()
 
 # Apply WSGI middleware here.
 # from helloworld.wsgi import HelloWorldApplication
