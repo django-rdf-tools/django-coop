@@ -101,6 +101,10 @@ django-multisite
 # for spip translation
 # MySQL-python
 
+# Mediathèque
+git+git://github.com/philomat/django-teambox-icons.git
+git+git://github.com/quinode/django-media-tree.git
+
 {% if haystack %}
 git+git://github.com/rhec/pyelasticsearch.git
 git+git://github.com/quinode/django-haystack.git

@@ -91,9 +91,12 @@ jQuery(document).ready(function($) {
         tabCookie($(this).attr('href'))
     });
 
+    if($(".qq-upload-button").length > 0){
+
       $(".qq-upload-button").addClass("btn-primary").addClass("btn");
-      //$(".qq-upload-button").html("Ajouter directement un fichier");
       $(".qq-upload-drop-area").hide();
+
+    }
 
 
 

@@ -199,7 +199,17 @@ INSTALLED_APPS = [
     'coop_bar',
     'pagination',
 
+    # mediathèque
+    'media_tree',
+    'teambox_icons',
+
 ]
+
+MEDIA_TREE_ICON_DIRS = (
+    'teambox/24x32px',  # the new folder under your static root | valid choices are 16px, 24x32px, and 48px
+    'media_tree/img/icons/mimetypes',  # default icon folder
+)
+
 
 COOP_BAR_MODULES = [
     'coop.coop_bar_cfg',

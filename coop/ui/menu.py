@@ -40,6 +40,8 @@ class CustomMenu(Menu):
 
             items.MenuItem(_(u'Articles'), '/admin/coop_local/article/', icon='icon-pencil icon-white'),
 
+            items.MenuItem(_(u'Media Tree'), '/admin/media_tree/filenode/', icon='icon-file icon-white'),
+
             items.MenuItem(_(u'CMS'), '#', icon='icon-cog icon-white',
                 children=[
 
@@ -69,7 +71,6 @@ class CustomMenu(Menu):
                         ]),
                 ]
             ),
-
 
             # Agenda menu inserted here if coop.agenda installed
 
@@ -106,11 +107,10 @@ class CustomMenu(Menu):
             ),
 
 
-
         ]
 
         if 'coop_cms.apps.rss_sync' in settings.INSTALLED_APPS:
-            self.children[2].children.insert(1,
+            self.children[3].children.insert(1,
 
                     items.MenuItem(_(u'RSS'), '#', icon='icon-coop icon-rss', children=[
                         items.MenuItem(_(u'RSS items'), '/admin/rss_sync/rssitem/'),
@@ -119,7 +119,7 @@ class CustomMenu(Menu):
                     )
 
         if 'coop.agenda' in settings.INSTALLED_APPS:
-            self.children.insert(2,
+            self.children.insert(4,
                 items.MenuItem(_(u'Agenda'), '#', icon='icon-calendar icon-white',
                     children=[
                         items.MenuItem(_(u'Events'), '/admin/coop_local/event/'),
@@ -130,9 +130,9 @@ class CustomMenu(Menu):
 
         if 'coop.mailing' in settings.INSTALLED_APPS:
             if 'coop.agenda' in settings.INSTALLED_APPS:
-                menu_nb = 3
+                menu_nb = 4
             else:
-                menu_nb = 2
+                menu_nb = 3
 
             self.children[menu_nb].children[0].children.insert(3, 
                     items.MenuItem(_(u'Newsletters'), '/admin/coop_local/newsletter/'),)
@@ -142,9 +142,9 @@ class CustomMenu(Menu):
 
         if 'coop.project' in settings.INSTALLED_APPS:
             if 'coop.agenda' in settings.INSTALLED_APPS:
-                menu_nb = 4
+                menu_nb = 5
             else:
-                menu_nb = 3
+                menu_nb = 4
 
             self.children[menu_nb].children.insert(1,
 
