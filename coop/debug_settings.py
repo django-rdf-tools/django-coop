@@ -32,7 +32,7 @@ if DEBUG or ('runserver' in sys.argv):
 else:
     try:
 
-        from coop_local.settings import SENTRY_DSN
+        from coop_local.local_settings import SENTRY_DSN
 
         INSTALLED_APPS = DEBUG_SETTINGS['apps'] + ['raven.contrib.django']
         MIDDLEWARE_CLASSES = DEBUG_SETTINGS['middleware'] + [
