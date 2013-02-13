@@ -95,7 +95,7 @@ class BaseEvent(URIModel):
     slug = exfields.AutoSlugField(populate_from='title')
     category = models.ManyToManyField('coop_local.EventCategory', verbose_name=_('event type'))  
     # to be deleted one day...use category instead
-    event_type = models.ForeignKey('coop_local.EventCategory', verbose_name=_('event type'), related_name='event_type', editable=False)  
+    event_type = models.ForeignKey('coop_local.EventCategory', verbose_name=_('event type'), related_name='event_type', editable=False, null=True)  
     calendar = models.ForeignKey('coop_local.Calendar', verbose_name=_('calendar'))
 
     # Linking to local objects
@@ -146,10 +146,10 @@ class BaseEvent(URIModel):
         geom_manager = geomodels.GeoManager()
         pref_address = models.ForeignKey('coop_local.Location',
                 verbose_name=_(u'preferred postal address'),
-                related_name='pref_address_event', null=True, blank=True)
+                related_name='pref_address_event', null=True, blank=True, on_delete=models.SET_NULL)
 
     def save(self, *args, **kwargs):
-        if self.event_type:
+        if self.event_type_id:
             self.category.add(self.event_type)
         # try hard to set default value for postal address
         if 'coop_geo' in settings.INSTALLED_APPS:

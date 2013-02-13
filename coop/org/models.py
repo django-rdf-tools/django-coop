@@ -476,13 +476,13 @@ class BaseOrganization(URIModel):
 
     pref_email = models.ForeignKey('coop_local.Contact',
                 verbose_name=_(u'preferred email'),
-                related_name="pref_email", null=True, blank=True)
+                related_name="pref_email", null=True, blank=True, on_delete=models.SET_NULL)
     pref_phone = models.ForeignKey('coop_local.Contact',
                 verbose_name=_(u'preferred phone'),
-                related_name='pref_phone', null=True, blank=True)
+                related_name='pref_phone', null=True, blank=True, on_delete=models.SET_NULL)
     pref_address = models.ForeignKey('coop_local.Location',
                 verbose_name=_(u'preferred postal address'),
-                related_name='pref_address_org', null=True, blank=True)
+                related_name='pref_address_org', null=True, blank=True, on_delete=models.SET_NULL)
 
     slug = exfields.AutoSlugField(populate_from='title', blank=True, overwrite=True)
     notes = models.TextField(_(u'notes'), blank=True)
