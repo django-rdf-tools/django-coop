@@ -279,7 +279,8 @@ COOP_GEO_BOUNDING_BOX = []
 COOP_GEO_REGION = LANGUAGE_CODE[:2]
 
 
-
+MEDIA_TREE_LIST_DISPLAY = ('browse_controls', 'size_formatted', 'extension',
+    'get_descendant_count_display', 'modified', 'metadata_check', 'node_tools')
 #
 # WebID Options
 #

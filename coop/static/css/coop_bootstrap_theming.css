@@ -1,4 +1,7 @@
-/* @override http://localhost:8000/static/css/coop_bootstrap_theming.css */
+/* @override 
+	http://localhost:8000/static/css/coop_bootstrap_theming.css
+	http://debian:8000/static/css/coop_bootstrap_theming.css
+*/
 
 .navbar{
 	font: 85% "Lucida Grande", Lucida, Verdana, sans-serif;
@@ -293,7 +296,7 @@ span.small.quiet.search-results{
 input#searchbar.search-query{
 	color: #000;
 	right: 20px;
-	line-height: 1.1px;
+	font-weight: bold;
 }
 
 .control-group > .control-label.required{
@@ -404,6 +407,24 @@ form#person_form a#add_id_category img
 	margin-top: 5px;
 	margin-left: 24px;
 }
+
+/* @group Media_tree */
+
+.qq-uploader{
+	background-color: transparent;
+	padding: 0;
+	margin: 0 5px 0 0;
+}
+
+.thumbnail-size-slider{
+	display: none;
+	
+	
+	
+	
+}
+
+/* @end */
 
 /* @group CharCount */
 
