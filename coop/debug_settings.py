@@ -58,7 +58,7 @@ else:
             }
         LOGGING = DEBUG_SETTINGS['logging']
 
-    except AttributeError:
+    except(ImportError, AttributeError):
         # this will fail if no SENTRY DNS is present in settings
 
         pass
