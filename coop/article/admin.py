@@ -66,10 +66,10 @@ if "coop_cms" in settings.INSTALLED_APPS:
         readonly_fields = []
         fieldsets = (
             #(_('Navigation'), {'fields': ('navigation_parent',)}),
-            ('Edition', {'fields': ['title', 'logo', 'content', 
+            ('Edition', {'fields': ['title', 'logo', 'summary','content', 
                                     'organization', 'remote_organization_label', 'remote_organization_uri',
                                     'person', 'remote_person_label', 'remote_person_uri']}),
-            ('Options', {'fields': ('summary', 'category', 'template', 'is_homepage', 'in_newsletter', 'isSection')}),
+            ('Options', {'fields': ('display_dates','category', 'template', 'is_homepage', 'in_newsletter', 'isSection')}),
         )
         related_search_fields = {'organization': ('title', 'subtitle', 'description'), 
                                  'person': ('first_name', 'last_name',), }

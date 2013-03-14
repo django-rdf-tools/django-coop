@@ -130,9 +130,9 @@ class CustomMenu(Menu):
 
         if 'coop.mailing' in settings.INSTALLED_APPS:
             if 'coop.agenda' in settings.INSTALLED_APPS:
-                menu_nb = 4
+                menu_nb = 5
             else:
-                menu_nb = 3
+                menu_nb = 4
 
             self.children[menu_nb].children[0].children.insert(3, 
                     items.MenuItem(_(u'Newsletters'), '/admin/coop_local/newsletter/'),)

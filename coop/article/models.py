@@ -33,6 +33,9 @@ if "coop_cms" in settings.INSTALLED_APPS:
         isSection = models.BooleanField(_(u'Container article'), default=False, 
                                         help_text=_(u"Will display a list of links for its children articles"))
 
+        display_dates = models.BooleanField(_(u'Display dates'), default=True, 
+                                        help_text=_(u"The creation and modification dates will be displayed as meta-data"))
+
 
         if "coop.agenda" in settings.INSTALLED_APPS:
             dated = generic.GenericRelation('coop_local.Dated')

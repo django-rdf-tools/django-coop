@@ -120,7 +120,7 @@ class BaseMailingList(models.Model):
         else:
             return res
 
-    def build_sympa_subjet(self):
+    def build_sympa_subject(self):
         sep = settings.SYMPA_SOAP['PARAMETER_SEPARATOR']
         remote_list_addr = 'http://%s/sympa_remote_list/%s/' % (Site.objects.get_current().domain, self.name)
         user = settings.SYMPA_SOAP['SYMPA_TMPL_USER']
@@ -131,7 +131,7 @@ class BaseMailingList(models.Model):
         # self.full_clean()
         if self.id == None and soap.sympa_available():
             if not soap.exists(self.name):
-                result = soap.create_list(self.name, self.build_sympa_subjet(), self.templateName, self.description) 
+                result = soap.create_list(self.name, self.build_sympa_subject(), self.templateName, self.description) 
                 if not result == 1:
                     raise ValidationError(_(u"Cannot add the list (sympa cannot create it): %s" % result))
             else:

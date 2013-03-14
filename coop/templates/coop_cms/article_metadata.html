@@ -15,11 +15,15 @@
                     <br>
                 {% endif %}
 
+                {% if article.display_dates %}
+
                 <dt>Date de publication</dt>
                 <dd>{{ article.created|date:"j F Y" }}</dd>
 
                 <dt>Dernière mise à jour</dt>
                 <dd>{{ article.modified|date:"j F Y" }}</dd>
+
+                {% endif %}
 
                 {% if article.person or article.remote_person_label %}
                     <dt>Auteur</dt>
