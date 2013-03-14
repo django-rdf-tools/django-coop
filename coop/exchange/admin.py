@@ -11,6 +11,7 @@ from coop.utils.fields import MultiSelectFormField, MethodsCheckboxSelectMultipl
 from coop.exchange.models import ETYPE
 from django.conf import settings
 from chosen import widgets as chosenwidgets
+from coop.doc.admin import AttachmentsInline
 
 from coop.admin import ObjEnabledInline
 
@@ -102,6 +103,7 @@ if 'coop.exchange' in settings.INSTALLED_APPS:
                                          'organization',
                                         'description',]# 'tags')
                             }),)
+        inlines = [AttachmentsInline,]
 
         if settings.COOP_USE_SITES:
             fieldsets[0][1]['fields'].insert(0, 'sites')

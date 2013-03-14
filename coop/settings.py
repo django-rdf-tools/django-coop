@@ -67,6 +67,9 @@ BASE_COOP_LOCAL_MODELS = [
     ('coop.prefs', [
         u'SitePrefs',
     ]),
+    ('coop.doc', [
+        u'Attachment',
+    ]),
 ]
 
 

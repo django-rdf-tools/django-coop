@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django_extensions.db import fields as exfields
+from django.core.exceptions import ImproperlyConfigured
 
 
 class BaseLinkProperty(models.Model):
@@ -33,7 +34,7 @@ class BaseLink(models.Model):
     content_object = generic.GenericForeignKey('content_type', 'object_id')
 
     predicate = models.ForeignKey('coop_local.LinkProperty')
-    object_uri = models.URLField(blank=True, verbose_name=_(u'object URI'))  # verify_exists=False, 
+    object_uri = models.URLField(blank=True, verbose_name=_(u'object URI'), default='http://')  # verify_exists=False, 
 
     def __unicode__(self):
         return u"%s %s %s" % (unicode(self.content_object), unicode(self.predicate), self.object_uri)
@@ -44,4 +45,14 @@ class BaseLink(models.Model):
         verbose_name_plural = _(u'semantic links')
         app_label = 'coop_local'
 
+
+    def save(self, *args, **kwargs):
+        if not self.predicate:
+            try:
+                see_also = get_model('coop_local','LinkProperty').objects.get(label='seeAlrso')
+            except:
+                raise ImproperlyConfigured("No \"seeAlso\" RDF property available. Please check that LinkProperty fixtures have been loaded during django-coop setup. ")
+            self.predicate = see_also
+
+        super(BaseLink, self).save(*args, **kwargs)
 

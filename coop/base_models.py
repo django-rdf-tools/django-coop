@@ -186,6 +186,14 @@ if 'coop.agenda' in settings.INSTALLED_APPS:
     class Dated(BaseDated):
         pass
 
+# ------ documents
+
+if 'coop.doc' in settings.INSTALLED_APPS:
+    from coop.doc.models import BaseAttachment
+
+    class Attachment(BaseAttachment):
+        pass
+
 
 # ------ global site preferences
 

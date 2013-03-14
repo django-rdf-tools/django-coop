@@ -11,6 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from coop.agenda.forms import SingleOccurrenceForm
 from django.db.models.loading import get_model
 from chosen import widgets as chosenwidgets
+from coop.doc.admin import AttachmentsInline
 
 #from genericadmin.admin import GenericAdminModelAdmin
 # GenericStackedInline or GenericTabularInline
@@ -79,7 +80,7 @@ class EventAdmin(NoLookupsFkAutocompleteAdmin):
     if settings.COOP_USE_SITES:
         fieldsets[0][1]['fields'].insert(0, 'sites')
 
-    inlines = [OccurrenceInline]
+    inlines = [OccurrenceInline, AttachmentsInline]
 
 admin.site.register(Event, EventAdmin)
 admin.site.register(EventCategory, EventCategoryAdmin)

@@ -182,7 +182,6 @@ INSTALLED_APPS = [
     'coop.person',
     'coop.ui',
     'coop.rdf',
-
     'coop_geo',
 
     # PuSH
@@ -200,8 +199,11 @@ INSTALLED_APPS = [
     'pagination',
 
     # mediathèque
+    'coop.doc',
+    'mptt',
     'media_tree',
     'teambox_icons',
+    'easy_thumbnails',
 
 ]
 
@@ -210,6 +212,9 @@ MEDIA_TREE_ICON_DIRS = (
     'media_tree/img/icons/mimetypes',  # default icon folder
 )
 
+MEDIA_TREE_MEDIA_BACKENDS = (
+    'media_tree.contrib.media_backends.easy_thumbnails.EasyThumbnailsBackend',
+)
 
 COOP_BAR_MODULES = [
     'coop.coop_bar_cfg',
