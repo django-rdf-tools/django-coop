@@ -16,6 +16,7 @@ from tinymce.widgets import AdminTinyMCE
 from coop.agenda.admin import DatedInline
 from chosen import widgets as chosenwidgets
 from coop.doc.admin import AttachmentsInline
+from coop.link.admin import LinksInline
 
 if "coop_geo" in settings.INSTALLED_APPS:
     from coop_geo.admin import LocatedInline
@@ -74,6 +75,7 @@ class ProjectAdmin(FkAutocompleteAdmin):
                LocatedInline,
                DatedInline,
                AttachmentsInline,
+               LinksInline,
                ]
 
     if settings.COOP_USE_SITES:

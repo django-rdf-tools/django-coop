@@ -10,6 +10,7 @@ from coop.utils.autocomplete_admin import FkAutocompleteAdmin, NoLookupsFkAutoco
 from django.db.models.loading import get_model
 from chosen import widgets as chosenwidgets
 from coop.doc.admin import AttachmentsInline
+from coop.link.admin import LinksInline
 
 if "coop.agenda" in settings.INSTALLED_APPS:
     from coop.agenda.admin import DatedInline
@@ -76,9 +77,9 @@ if "coop_cms" in settings.INSTALLED_APPS:
                                  'person': ('first_name', 'last_name',), }
 
         if "coop.agenda" in settings.INSTALLED_APPS:
-            inlines = [DatedInline, AttachmentsInline]
+            inlines = [DatedInline, AttachmentsInline, LinksInline]
         else:
-            inlines = [AttachmentsInline]
+            inlines = [AttachmentsInline, LinksInline]
 
         if settings.COOP_USE_SITES:
             fieldsets[0][1]['fields'].insert(0, 'sites')
