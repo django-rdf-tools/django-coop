@@ -21,9 +21,10 @@ from django.utils.translation import ugettext_lazy as _
 if "coop_tag" in settings.INSTALLED_APPS:
     from coop_tag.managers import TaggableManager
     # from coop_local.models import TaggedItem
+    # WATCHOUT : There is no import error here, all coop_local models are imported during load_models execution
     t = TaggableManager(through=TaggedItem,
-            blank=True, verbose_name=_(u'Tags'),
-            help_text="Une liste de tags avec des virgules")
+                        blank=True, verbose_name=_(u'Tags'),
+                        help_text="Une liste de tags avec des virgules")
     t.contribute_to_class(Organization, "tags")
     t.contribute_to_class(Person, "tags")
     if "coop_cms" in settings.INSTALLED_APPS:
@@ -36,6 +37,9 @@ if "coop_tag" in settings.INSTALLED_APPS:
         t.contribute_to_class(MailingList, "tags")
     if "coop.project" in settings.INSTALLED_APPS:
         t.contribute_to_class(Project, "tags")
+    if "coop.doc" in settings.INSTALLED_APPS:
+        t.contribute_to_class(DocResource, "tags")
+
 
 
 

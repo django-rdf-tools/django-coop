@@ -436,27 +436,28 @@ class BaseOrganization(URIModel):
 
     acronym = models.CharField(_(u'acronym'), max_length=100, blank=True, null=True)
     pref_label = models.PositiveSmallIntegerField(_(u'Preferred label'),
-                        choices=PREFLABEL.CHOICES, default=PREFLABEL.TITLE)
+                                                  choices=PREFLABEL.CHOICES,
+                                                  default=PREFLABEL.TITLE)
 
     subtitle = models.CharField(_(u'tagline'), blank=True, null=True,
-                max_length=250,
-                help_text=_(u'tell us what your organization do in one line.'))
+                                max_length=250,
+                                help_text=_(u'tell us what your organization do in one line.'))
 
     description = models.TextField(_(u'description'), blank=True, null=True)
 
     logo = ImageField(upload_to='logos/', null=True, blank=True)
     #temp_logo = models.ImageField(upload_to=get_logo_folder, blank=True, null=True, default='')
 
-
     relations = models.ManyToManyField('coop_local.Organization',
-                symmetrical=False, through='coop_local.Relation',
-                verbose_name=_(u'relations'))
+                                       symmetrical=False, through='coop_local.Relation',
+                                       verbose_name=_(u'relations'))
 
     category = models.ManyToManyField('coop_local.OrganizationCategory',
-                blank=True, null=True, verbose_name=_(u'category'))
+                                      blank=True, null=True, verbose_name=_(u'category'))
 
     members = models.ManyToManyField('coop_local.Person',
-                through='coop_local.Engagement', verbose_name=_(u'members'))
+                                     through='coop_local.Engagement',
+                                     verbose_name=_(u'members'))
 
     contacts = generic.GenericRelation('coop_local.Contact')
 
@@ -471,24 +472,31 @@ class BaseOrganization(URIModel):
     birth = models.DateField(_(u'creation date'), null=True, blank=True)
     email = models.EmailField(_(u'global email'), blank=True, null=True)
     email_sha1 = models.CharField(_(u'email checksum'),
-            max_length=250, blank=True, null=True)  # TODO : do this in Postgre
+                                  max_length=250, blank=True, null=True)  # TODO : do this in Postgre
     web = models.URLField(_(u'web site'), blank=True, null=True)
 
     pref_email = models.ForeignKey('coop_local.Contact',
-                verbose_name=_(u'preferred email'),
-                related_name="pref_email", null=True, blank=True, on_delete=models.SET_NULL)
+                                   verbose_name=_(u'preferred email'),
+                                   related_name="pref_email", null=True, blank=True,
+                                   on_delete=models.SET_NULL)
     pref_phone = models.ForeignKey('coop_local.Contact',
-                verbose_name=_(u'preferred phone'),
-                related_name='pref_phone', null=True, blank=True, on_delete=models.SET_NULL)
+                                   verbose_name=_(u'preferred phone'),
+                                   related_name='pref_phone', null=True, blank=True,
+                                   on_delete=models.SET_NULL)
     pref_address = models.ForeignKey('coop_local.Location',
-                verbose_name=_(u'preferred postal address'),
-                related_name='pref_address_org', null=True, blank=True, on_delete=models.SET_NULL)
+                                     verbose_name=_(u'preferred postal address'),
+                                     related_name='pref_address_org',
+                                     null=True, blank=True,
+                                     on_delete=models.SET_NULL)
 
     slug = exfields.AutoSlugField(populate_from='title', blank=True, overwrite=True)
     notes = models.TextField(_(u'notes'), blank=True)
 
     if "coop.agenda" in settings.INSTALLED_APPS:
         dated = generic.GenericRelation('coop_local.Dated')
+
+    if "coop.doc" in settings.INSTALLED_APPS:
+        attachments = generic.GenericRelation('coop_local.Attachment')
 
     class Meta:
         abstract = True
@@ -523,14 +531,13 @@ class BaseOrganization(URIModel):
             from coop_local.models import Area
             return Area.objects.filter(id__in=self.framed.all().values_list('location_id', flat=True))
 
-
         def pref_geoJson(self):
             if self.pref_address and self.pref_address.point:
                 json = self.pref_address.geoJson()
                 json["properties"]["label"] = self.label().encode("utf-8")
                 json["properties"]["category"] = [c.slug.encode('utf-8') for c in self.category.all()]
                 json["properties"]["popupContent"] = u"<p><a href='" + \
-                            self.get_absolute_url() + u"'>" + self.label() + u"</a></p>"
+                    self.get_absolute_url() + u"'>" + self.label() + u"</a></p>"
                 return [json]
             else:
                 return []
@@ -557,10 +564,9 @@ class BaseOrganization(URIModel):
             return res
 
     def has_description(self):
-        return self.description != None and len(self.description) > 20
+        return self.description and len(self.description) > 20
     has_description.boolean = True
     has_description.short_description = _(u'desc.')
-    
 
     def logo_list_display(self):
         try:

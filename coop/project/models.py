@@ -58,8 +58,6 @@ class BaseProjectCategory(models.Model):
     #     return self._can_modify_organizationcategory(user)
 
 
-
-
 PROJECT_STATUS = (
     (1,  _(u'just thinking about it')),  # u'en réflexion'),
     (2,  _(u'looking for partners')),  # u'en recherche de partenariat'),
@@ -84,10 +82,10 @@ class BaseProjectMember(URIModel):
 
     def __unicode__(self):
         return _(u'%(person)s, %(role_detail)s for project %(project)s') % {
-                        'person': self.person.__unicode__(),
-                        'role_detail': self.role_detail,
-                        'project': self.project.__unicode__()
-                        }
+                'person': self.person.__unicode__(),
+                'role_detail': self.role_detail,
+                'project': self.project.__unicode__()
+                }
 
     def label(self):
         return self.__unicode__()
@@ -129,21 +127,23 @@ class BaseProject(URIModel):
     zone = models.ForeignKey('coop_local.Area', verbose_name=_(u"zone"), null=True, blank=True)
     budget = models.PositiveIntegerField(_(u'budget'), blank=True, null=True)
     relations = models.ManyToManyField('coop_local.Organization',
-                through='coop_local.ProjectSupport',
-                verbose_name=_(u'project partners'), related_name='support')
+                                       through='coop_local.ProjectSupport',
+                                       verbose_name=_(u'project partners'), related_name='support')
     category = models.ManyToManyField('coop_local.ProjectCategory',
-                blank=True, null=True, verbose_name=_(u'category'))
+                                      blank=True, null=True, verbose_name=_(u'category'))
+
+    if "coop.doc" in settings.INSTALLED_APPS:
+        attachments = generic.GenericRelation('coop_local.Attachment')
 
     if "coop_geo" in settings.INSTALLED_APPS:
         located = generic.GenericRelation('coop_geo.Located')  # , related_name='located_org')
         framed = generic.GenericRelation('coop_geo.AreaLink')  # , related_name='framed_org')
         geom_manager = geomodels.GeoManager()
         pref_address = models.ForeignKey('coop_local.Location',
-                verbose_name=_(u'preferred postal address'),
-                on_delete=models.SET_NULL,
-                related_name='pref_address_project', null=True, blank=True)
-
-
+                                         verbose_name=_(u'preferred postal address'),
+                                         on_delete=models.SET_NULL,
+                                         related_name='pref_address_project',
+                                         null=True, blank=True)
 
     class Meta:
         verbose_name = _(u"Project")
