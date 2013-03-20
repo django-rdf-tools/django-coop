@@ -22,6 +22,7 @@ admin.site.register(SitePrefs, SitePrefsAdmin)
 admin.site.register(Location, LocationAdmin)
 admin.site.register(Area, AreaAdmin)
 
+
 if "coop.project" in settings.INSTALLED_APPS:
     from coop.project.admin import ProjectAdmin
     admin.site.register(Project, ProjectAdmin)
@@ -36,6 +37,11 @@ if "coop.exchange" in settings.INSTALLED_APPS:
     from coop.exchange.admin import ExchangeAdmin
     admin.site.register(ExchangeMethod)
     admin.site.register(Exchange, ExchangeAdmin)
+
+if "coop.doc" in settings.INSTALLED_APPS:
+    from coop.doc.admin import ResourceAdmin
+    admin.site.register(ResourceCategory)
+    admin.site.register(DocResource, ResourceAdmin)
 
 if "coop_cms" in settings.INSTALLED_APPS:
     from coop.article.admin import CoopArticleAdmin

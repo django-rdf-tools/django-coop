@@ -41,9 +41,6 @@ class BaseResourceCategory(models.Model):
         return self.label
 
 
-
-
-
 class BaseDocResource(URIModel):
     logo = ImageField(upload_to='logos/', null=True, blank=True)
     #temp_logo = models.ImageField(upload_to=get_logo_folder, blank=True, null=True, default='')

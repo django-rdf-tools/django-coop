@@ -14,8 +14,19 @@ from media_tree.widgets import AdminThumbWidget
 from sorl.thumbnail.admin import AdminImageMixin
 from tinymce.widgets import AdminTinyMCE
 from coop.link.admin import LinksInline
-from coop.org.admin import URLFieldWidget
+#from coop.org.admin import URLFieldWidget
 from django.db.models import URLField
+from django.contrib.admin.widgets import AdminURLFieldWidget
+from django.utils.safestring import mark_safe
+
+
+# obligé de re-déclarer cette classe de coop.org.admin a cause d'une boucle d'import
+class URLFieldWidget(AdminURLFieldWidget):
+    def render(self, name, value, attrs=None):
+        widget = super(URLFieldWidget, self).render(name, value, attrs)
+        return mark_safe(u'%s&nbsp;&nbsp;<a href="#" onclick="window.'
+                         u'open(document.getElementById(\'%s\')'
+                         u'.value);return false;" class="btn btn-mini"/>Afficher dans une nouvelle fenêtre</a>' % (widget, attrs['id']))
 
 
 class MyFileForm(FileForm):
@@ -28,7 +39,7 @@ class AttachmentsInline(GenericTabularInline):
     model = get_model('coop_local', 'Attachment')
     form = MyFileForm
     verbose_name = _(u'Attachment')
-    verbose_name_plural = _(u'Attachements')
+    verbose_name_plural = _(u'Attachments')
     extra = 1
 
 
@@ -44,7 +55,7 @@ class ResourceAdmin(NoLookupsFkAutocompleteAdmin, AdminImageMixin):
     form = ResourceAdminForm
     list_display = ('logo_list_display', 'label', 'organization_display')
     list_display_links = ('logo_list_display', 'label')
-    list_filter = ('category')
+    list_filter = ('category',)
     fieldsets = (
         ('Description', {'fields': ('logo', 'label', 'category', 'description',
                                     'organization', 'remote_organization_label', 'remote_organization_uri',

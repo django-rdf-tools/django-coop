@@ -1,0 +1,118 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: django-coop\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-03-20 16:34+0100\n"
+"PO-Revision-Date: 2013-03-20 16:44+0100\n"
+"Last-Translator: Quinode <contact@quinode.fr>\n"
+"Language-Team: Quinode <contact@quinode.fr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#: admin.py:41
+msgid "Attachment"
+msgstr "Attachement"
+
+#: admin.py:42
+msgid "Attachments"
+msgstr "Attachements"
+
+#: models.py:32 models.py:49
+msgid "description"
+msgstr "description"
+
+#: models.py:36 models.py:57
+msgid "resource category"
+msgstr "catégorie de ressource"
+
+#: models.py:37
+msgid "resource categories"
+msgstr "catégories de ressources"
+
+#: models.py:47
+msgid "label"
+msgstr "libellé"
+
+#: models.py:50
+msgid "practical details"
+msgstr "détails pratiques"
+
+#: models.py:53
+msgid "web page"
+msgstr "page web"
+
+#: models.py:54
+msgid "download link"
+msgstr "lien de téléchargement"
+
+#: models.py:59 models.py:110
+msgid "organization / editor"
+msgstr "organisme / éditeur"
+
+#: models.py:60
+msgid "author"
+msgstr "auteur"
+
+#: models.py:62
+msgid "remote person URI"
+msgstr "URI du contact externe"
+
+#: models.py:63
+msgid "remote person label"
+msgstr "Libellé du contact externe"
+
+#: models.py:65
+msgid "fill this only if the person record is not available locally"
+msgstr ""
+"remplissez ce champ uniquement si la personne n'est pas enregistrée sur ce "
+"site"
+
+#: models.py:66
+msgid "remote organization URI"
+msgstr "URI de l'organisation externe"
+
+#: models.py:67
+msgid "remote organization label"
+msgstr "Libellé de l'organisation externe"
+
+#: models.py:69
+msgid "fill this only if the organization record is not available locally"
+msgstr ""
+"remplissez ce champ uniquement si l'organisation n'est pas enregistrée sur "
+"ce site"
+
+#: models.py:71
+msgid "geographic zone"
+msgstr "zone géographique"
+
+#: models.py:77
+msgid "documentary resource"
+msgstr "ressource documentaire"
+
+#: models.py:78
+msgid "documentary resources"
+msgstr "ressources documentaire"
+
+#: models.py:94 models.py:96
+msgid "No Image"
+msgstr "Pas d'image"
+
+#: models.py:97
+msgid "logo"
+msgstr "logo"
+
+#: models.py:119
+msgid "Attached file"
+msgstr "fichier attaché"
+
+#: models.py:120
+msgid "Attached files"
+msgstr "fichiers attachés"

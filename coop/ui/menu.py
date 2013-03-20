@@ -118,6 +118,16 @@ class CustomMenu(Menu):
                         ])
                     )
 
+        if 'coop.doc' in settings.INSTALLED_APPS:
+            self.children[3].children.insert(1,
+
+                    items.MenuItem(_(u'External resources'), '#', icon='icon-book', children=[
+                                   items.MenuItem(_(u'Resource categories'), '/admin/coop_local/resourcecategory/'),
+                                   items.MenuItem(_(u'Resources'), '/admin/coop_local/docresource')]
+                                   )
+            )
+
+
         if 'coop.agenda' in settings.INSTALLED_APPS:
             self.children.insert(4,
                 items.MenuItem(_(u'Agenda'), '#', icon='icon-calendar icon-white',

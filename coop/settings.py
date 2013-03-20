@@ -69,6 +69,7 @@ BASE_COOP_LOCAL_MODELS = [
     ]),
     ('coop.doc', [
         u'Attachment',
+        u'ResourceCategory',
         u'DocResource',
     ]),
 ]
