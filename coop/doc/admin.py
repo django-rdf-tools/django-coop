@@ -2,6 +2,7 @@
 
 from django.conf import settings
 from django.contrib import admin
+from django.db import models
 from django import forms
 #from coop_local.models import Attached
 from coop.utils.autocomplete_admin import FkAutocompleteAdmin, InlineAutocompleteAdmin, NoLookupsFkAutocompleteAdmin
@@ -18,6 +19,28 @@ from coop.link.admin import LinksInline
 from django.db.models import URLField
 from django.contrib.admin.widgets import AdminURLFieldWidget
 from django.utils.safestring import mark_safe
+import pyisbn
+from coop.doc.models import ISBNField
+from chosen import widgets as chosenwidgets
+
+
+class ISBNWidget(forms.TextInput):
+    def __init__(self, language=None, attrs={}):
+        super(ISBNWidget, self).__init__(attrs=attrs)
+
+    def render(self, name, value, attrs={}):
+        if (not value) or len(str(value)) < 2:
+            return super(ISBNWidget, self).render(name, value, attrs)
+        return super(ISBNWidget, self).render(name, value, attrs) + mark_safe("""
+            <br />
+            <div class="alt">%s-digit: <span class="altisbn">%s <span class="doodad">
+                <a href="http://www.librarything.com/isbn/%s">more &#9901;</a>
+            </span></span></div>
+        """ % (
+            (len(str(value)) == 10) and "13" or "10",
+            pyisbn.convert(value),
+            value
+        ))
 
 
 # obligé de re-déclarer cette classe de coop.org.admin a cause d'une boucle d'import
@@ -46,9 +69,15 @@ class AttachmentsInline(GenericTabularInline):
 class ResourceAdminForm(forms.ModelForm):
     description = forms.CharField(widget=AdminTinyMCE(attrs={'cols': 80, 'rows': 60}), required=False)
 
+    def __init__(self, *args, **kwargs):
+        super(ResourceAdminForm, self).__init__(*args, **kwargs)
+        self.fields['category'].help_text = None
+
     class Meta:
         model = get_model('coop_local', 'DocResource')
-
+        widgets = {'category': chosenwidgets.ChosenSelectMultiple(),
+                    'isbn': ISBNWidget(),
+                   }
 
 class ResourceAdmin(NoLookupsFkAutocompleteAdmin, AdminImageMixin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
@@ -62,7 +91,7 @@ class ResourceAdmin(NoLookupsFkAutocompleteAdmin, AdminImageMixin):
                                     'person', 'remote_person_label', 'remote_person_uri',
                                     'tags',)
                          }),
-        ('Details', {'fields': ('notes', 'page_url', 'file_url', 'zone')
+        ('Details', {'fields': ('notes', 'page_url', 'file_url', 'isbn', 'zone', 'price')
                      }),
     )
     search_fields = ('label', 'description')
@@ -79,3 +108,5 @@ class ResourceAdmin(NoLookupsFkAutocompleteAdmin, AdminImageMixin):
         # just save obj reference for future processing in Inline
         request._obj_ = obj
         return super(ResourceAdmin, self).get_form(request, obj, **kwargs)
+
+

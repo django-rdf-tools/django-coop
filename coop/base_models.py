@@ -59,7 +59,20 @@ if 'coop_tag' in settings.INSTALLED_APPS:
     class TaggedItem(CoopTaggedItem):
         pass
 
+# ------ documents
 
+if 'coop.doc' in settings.INSTALLED_APPS:
+    from coop.doc.models import BaseAttachment, BaseResourceCategory, BaseDocResource
+
+    class Attachment(BaseAttachment):
+        pass
+
+    class ResourceCategory(BaseResourceCategory):
+        pass
+
+    class DocResource(BaseDocResource):
+        pass
+        
 # ---- person
 
 
@@ -186,19 +199,7 @@ if 'coop.agenda' in settings.INSTALLED_APPS:
     class Dated(BaseDated):
         pass
 
-# ------ documents
 
-if 'coop.doc' in settings.INSTALLED_APPS:
-    from coop.doc.models import BaseAttachment, BaseResourceCategory, BaseDocResource
-
-    class Attachment(BaseAttachment):
-        pass
-
-    class ResourceCategory(BaseResourceCategory):
-        pass
-
-    class DocResource(BaseDocResource):
-        pass
 
 # ------ global site preferences
 

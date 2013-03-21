@@ -50,6 +50,13 @@ INSTALLED_APPS = settings.INSTALLED_APPS + [
     'coop_local',
      # coop optional modules
     'coop_geo',  # est obligatoirement APRES coop_local
+
+    # Activate this to get Media_Tree and Ressources app
+    # 'coop.doc',
+    # 'mptt',
+    # 'media_tree',
+    # 'teambox_icons',
+    # 'easy_thumbnails',
 ]
 
 SYMPA_SOAP = {

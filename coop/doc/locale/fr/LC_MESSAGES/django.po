@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-coop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-20 16:34+0100\n"
-"PO-Revision-Date: 2013-03-20 16:44+0100\n"
+"POT-Creation-Date: 2013-03-21 16:29+0100\n"
+"PO-Revision-Date: 2013-03-21 16:29+0100\n"
 "Last-Translator: Quinode <contact@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
 "MIME-Version: 1.0\n"
@@ -17,102 +17,110 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: admin.py:41
+#: admin.py:64
 msgid "Attachment"
 msgstr "Attachement"
 
-#: admin.py:42
+#: admin.py:65
 msgid "Attachments"
 msgstr "Attachements"
 
-#: models.py:32 models.py:49
+#: models.py:19 models.py:46
 msgid "description"
 msgstr "description"
 
-#: models.py:36 models.py:57
+#: models.py:23 models.py:56
 msgid "resource category"
 msgstr "catégorie de ressource"
 
-#: models.py:37
+#: models.py:24
 msgid "resource categories"
 msgstr "catégories de ressources"
 
-#: models.py:47
+#: models.py:44
 msgid "label"
 msgstr "libellé"
 
-#: models.py:50
+#: models.py:47
 msgid "practical details"
 msgstr "détails pratiques"
 
-#: models.py:53
+#: models.py:49
+msgid "price"
+msgstr "prix"
+
+#: models.py:50
 msgid "web page"
 msgstr "page web"
 
-#: models.py:54
+#: models.py:51
 msgid "download link"
 msgstr "lien de téléchargement"
 
-#: models.py:59 models.py:110
+#: models.py:53
+msgid "ISBN code"
+msgstr "code ISBN"
+
+#: models.py:58 models.py:109
 msgid "organization / editor"
 msgstr "organisme / éditeur"
 
-#: models.py:60
+#: models.py:59
 msgid "author"
 msgstr "auteur"
 
-#: models.py:62
+#: models.py:61
 msgid "remote person URI"
 msgstr "URI du contact externe"
 
-#: models.py:63
+#: models.py:62
 msgid "remote person label"
 msgstr "Libellé du contact externe"
 
-#: models.py:65
+#: models.py:64
 msgid "fill this only if the person record is not available locally"
 msgstr ""
 "remplissez ce champ uniquement si la personne n'est pas enregistrée sur ce "
 "site"
 
-#: models.py:66
+#: models.py:65
 msgid "remote organization URI"
 msgstr "URI de l'organisation externe"
 
-#: models.py:67
+#: models.py:66
 msgid "remote organization label"
 msgstr "Libellé de l'organisation externe"
 
-#: models.py:69
+#: models.py:68
 msgid "fill this only if the organization record is not available locally"
 msgstr ""
 "remplissez ce champ uniquement si l'organisation n'est pas enregistrée sur "
 "ce site"
 
-#: models.py:71
+#: models.py:70
 msgid "geographic zone"
 msgstr "zone géographique"
 
-#: models.py:77
+#: models.py:76
 msgid "documentary resource"
 msgstr "ressource documentaire"
 
-#: models.py:78
+#: models.py:77
 msgid "documentary resources"
 msgstr "ressources documentaire"
 
-#: models.py:94 models.py:96
+#: models.py:93 models.py:95
 msgid "No Image"
 msgstr "Pas d'image"
 
-#: models.py:97
+#: models.py:96
 msgid "logo"
 msgstr "logo"
 
-#: models.py:119
+#: models.py:118
 msgid "Attached file"
 msgstr "fichier attaché"
 
-#: models.py:120
+#: models.py:119
 msgid "Attached files"
 msgstr "fichiers attachés"

@@ -27,7 +27,7 @@ class OccurrenceInline(admin.StackedInline):
     #form = SingleOccurrenceForm
     verbose_name = _(u'Date')
     verbose_name_plural = _(u'Dates')
-    model = Occurrence
+    model = get_model('coop_local', 'Occurrence')
     extra = 1
 
 
@@ -83,14 +83,10 @@ class EventAdmin(NoLookupsFkAutocompleteAdmin):
 
     inlines = [OccurrenceInline, AttachmentsInline, LinksInline]
 
-admin.site.register(Event, EventAdmin)
-admin.site.register(EventCategory, EventCategoryAdmin)
-admin.site.register(Calendar)
-
 
 class DatedInline(GenericTabularInline, InlineAutocompleteAdmin):
     verbose_name = _(u'Date')
     verbose_name_plural = _(u'Dates')
-    model = Dated
+    model = get_model('coop_local', 'Dated')
     related_search_fields = {'event': ('title', 'description', 'slug'), }
     extra = 1

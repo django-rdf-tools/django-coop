@@ -198,13 +198,6 @@ INSTALLED_APPS = [
     'coop_bar',
     'pagination',
 
-    # mediathèque
-    'coop.doc',
-    'mptt',
-    'media_tree',
-    'teambox_icons',
-    'easy_thumbnails',
-
 ]
 
 MEDIA_TREE_ICON_DIRS = (

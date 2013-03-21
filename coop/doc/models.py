@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
+from django import forms
 from django.contrib.contenttypes import generic
 from django_extensions.db import fields as exfields
 from coop.models import URIModel
@@ -10,23 +11,9 @@ from sorl.thumbnail import ImageField
 from sorl.thumbnail import default
 from media_tree.models import FileNode
 from django.conf import settings
-
+# from coop.doc.admin import ISBNWidget
 
 class BaseResourceCategory(models.Model):
-    """
-    Site web
-    Flux Internet (RSS, twitter, etc)
-    Livre
-    Livre audio
-    Revue
-    Vidéo en ligne
-    Documentaire vidéo
-    Film
-    Article de presse
-    Guide méthodologique
-    Rapport
-    Autre document
-    """
     label = models.CharField(blank=True, max_length=100)
     slug = exfields.AutoSlugField(populate_from=('label'), overwrite=True)
     description = models.TextField(_(u'description'), blank=True)
@@ -36,22 +23,34 @@ class BaseResourceCategory(models.Model):
         verbose_name = _(u'resource category')
         verbose_name_plural = _(u'resource categories')
         app_label = 'coop_local'
+        ordering = ['id']
 
     def __unicode__(self):
         return self.label
 
 
+class ISBNField(models.CharField):
+    def __init__(self, *args, **kwargs):
+        kwargs['max_length'] = 13
+        super(ISBNField, self).__init__(*args, **kwargs)
+
+    # def formfield(self, **kwargs):
+    #     kwargs['widget'] = ISBNWidget()
+    #     return super(ISBNField, self).formfield(**kwargs)
+
+
 class BaseDocResource(URIModel):
     logo = ImageField(upload_to='logos/', null=True, blank=True)
-    #temp_logo = models.ImageField(upload_to=get_logo_folder, blank=True, null=True, default='')
-    label = models.CharField(_('label'), blank=True, max_length=250)
+    label = models.CharField(_('label'), max_length=250)
     slug = exfields.AutoSlugField(populate_from='label', blank=True, overwrite=True)
     description = models.TextField(_(u'description'), blank=True)
     notes = models.TextField(_(u'practical details'), blank=True)
 
-    price = models.FloatField()
+    price = models.FloatField(_(u'price'), null=True, blank=True)
     page_url = models.URLField(_(u'web page'), blank=True, null=True)
     file_url = models.URLField(_(u'download link'), blank=True, null=True)
+
+    isbn = ISBNField(verbose_name=_(u'ISBN code'), blank=True, null=True)
 
     category = models.ManyToManyField('coop_local.ResourceCategory', blank=True, null=True,
                                       verbose_name=_(u'resource category'))
@@ -80,7 +79,7 @@ class BaseDocResource(URIModel):
         app_label = 'coop_local'
 
     def __unicode__(self):
-        return self.title
+        return self.label
 
     def get_absolute_url(self):
         return reverse('resource-detail', args=[self.slug])
@@ -128,6 +127,8 @@ class BaseAttachment(FileNode):
 
 
 
+from south.modelsinspector import add_introspection_rules
+add_introspection_rules([], ["^coop\.doc\.models\.ISBNField"])
 
 
 
