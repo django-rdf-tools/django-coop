@@ -31,6 +31,11 @@ BASE_COOP_LOCAL_MODELS = [
         u'EventCategory',
         u'Occurrence',
     ]),
+    ('coop.doc', [
+        u'Attachment',
+        u'ResourceCategory',
+        u'DocResource',
+    ]),
     ('coop.person', [
         u'Person',
         u'PersonCategory',
@@ -66,11 +71,6 @@ BASE_COOP_LOCAL_MODELS = [
     ]),
     ('coop.prefs', [
         u'SitePrefs',
-    ]),
-    ('coop.doc', [
-        u'Attachment',
-        u'ResourceCategory',
-        u'DocResource',
     ]),
 ]
 
