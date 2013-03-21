@@ -75,9 +75,8 @@ class ResourceAdminForm(forms.ModelForm):
 
     class Meta:
         model = get_model('coop_local', 'DocResource')
-        widgets = {'category': chosenwidgets.ChosenSelectMultiple(),
-                    'isbn': ISBNWidget(),
-                   }
+        widgets = {'category': chosenwidgets.ChosenSelectMultiple(),}
+        
 
 class ResourceAdmin(NoLookupsFkAutocompleteAdmin, AdminImageMixin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
@@ -102,6 +101,7 @@ class ResourceAdmin(NoLookupsFkAutocompleteAdmin, AdminImageMixin):
     inlines = [AttachmentsInline, LinksInline]
     formfield_overrides = {
         URLField: {'widget': URLFieldWidget},
+        ISBNField: {'widget': ISBNWidget}
     }
 
     def get_form(self, request, obj=None, **kwargs):

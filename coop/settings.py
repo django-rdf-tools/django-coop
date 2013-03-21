@@ -32,9 +32,9 @@ BASE_COOP_LOCAL_MODELS = [
         u'Occurrence',
     ]),
     ('coop.doc', [
-        u'Attachment',
         u'ResourceCategory',
         u'DocResource',
+        u'Attachment',
     ]),
     ('coop.person', [
         u'Person',
