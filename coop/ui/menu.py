@@ -127,7 +127,7 @@ class CustomMenu(Menu):
 
         if 'coop.doc' in settings.INSTALLED_APPS:
             self.children[cms_menu_idx].children.insert(1,
-                    items.MenuItem(_(u'Resources'), '#', icon='icon-book', children=[
+                    items.MenuItem(_(u'Resources'), '#', icon='icon-globe', children=[
                         items.MenuItem(_(u'Resource categories'), '/admin/coop_local/resourcecategory/'),
                         items.MenuItem(_(u'Resources'), '/admin/coop_local/docresource'),
                         ])
@@ -136,7 +136,7 @@ class CustomMenu(Menu):
 
         if 'coop.project' in settings.INSTALLED_APPS:
             self.children[menu_length].children.insert(1,
-                    items.MenuItem(_(u'Projects'), '#', icon='icon-book', children=[
+                    items.MenuItem(_(u'Projects'), '#', icon='icon-hand-right', children=[
                         items.MenuItem(_(u'Projects'), '/admin/coop_local/project/'),
                         items.MenuItem(_(u'Projects categories'), '/admin/coop_local/projectcategory/'),
                         ])
