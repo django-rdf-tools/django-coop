@@ -55,8 +55,12 @@ class BaseDocResource(URIModel):
     category = models.ManyToManyField('coop_local.ResourceCategory', blank=True, null=True,
                                       verbose_name=_(u'resource category'), help_text=None)
 
-    organization = models.ForeignKey('coop_local.Organization', verbose_name=_(u"organization / editor"), related_name="resource_organizer")
-    person = models.ForeignKey('coop_local.Person', verbose_name=_(u'author'), related_name='resource_author')
+    organization = models.ForeignKey('coop_local.Organization', 
+                                      verbose_name=_(u"organization / editor"), 
+                                      related_name="resource_organizer", null=True, blank=True)
+    person = models.ForeignKey('coop_local.Person', 
+                               verbose_name=_(u'author'), 
+                               related_name='resource_author', null=True, blank=True)
     # We could also link to remote objects
     remote_person_uri = models.URLField(_(u'remote person URI'), blank=True, max_length=255)
     remote_person_label = models.CharField(_(u'remote person label'),
