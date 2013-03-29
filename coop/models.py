@@ -116,7 +116,7 @@ class StaticURIModel(models.Model):
     # tres beau, car un plus couteux en runtime... mais bon
     uuid = models.CharField(_(u'uuid'), max_length=50, null=True, editable=False, default=shortuuid.uuid)
 
-    external_links = generic.GenericRelation('coop_local.Link', related_name="%(app_label)s_%(class)s_related")
+    links = generic.GenericRelation('coop_local.Link', related_name="%(app_label)s_%(class)s_related")
 
     # to handle multi site possibility
     sites = models.ManyToManyField(Site)
