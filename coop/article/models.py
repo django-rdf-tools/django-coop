@@ -42,7 +42,7 @@ if "coop_cms" in settings.INSTALLED_APPS:
         if "coop.doc" in settings.INSTALLED_APPS:
             attachments = generic.GenericRelation('coop_local.Attachment')
 
-        links = generic.GenericRelation('coop_local.Link')
+        external_links = generic.GenericRelation('coop_local.Link')
 
 
         def label(self):
