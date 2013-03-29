@@ -135,6 +135,9 @@ class BaseProject(URIModel):
     if "coop.doc" in settings.INSTALLED_APPS:
         attachments = generic.GenericRelation('coop_local.Attachment')
 
+    links = generic.GenericRelation('coop_local.Link')
+
+
     if "coop_geo" in settings.INSTALLED_APPS:
         located = generic.GenericRelation('coop_geo.Located')  # , related_name='located_org')
         framed = generic.GenericRelation('coop_geo.AreaLink')  # , related_name='framed_org')

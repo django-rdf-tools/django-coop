@@ -13,6 +13,20 @@
 
         {% endfor %}
 
+        {% for link in article.external_links.all %}
+
+        <div class="external_link">
+
+            <span>Lien Internet : </span>
+            <a href="{{ link.object_uri }}">
+                {% if not link.object_label %}{{ link.object_uri }}{% else %}{{ link.object_label }}{% endif %}
+            </a>
+        </div>
+
+
+        {% endfor %}
+
+
 
             <dl class="attr_table">
 
