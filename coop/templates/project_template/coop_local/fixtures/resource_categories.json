@@ -1,0 +1,110 @@
+[
+    {
+        "pk": 1,
+        "model": "coop_local.resourcecategory",
+        "fields": {
+            "description": "",
+            "slug": "livre",
+            "label": "Livre"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "coop_local.resourcecategory",
+        "fields": {
+            "description": "",
+            "slug": "livre-audio",
+            "label": "Livre audio"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "coop_local.resourcecategory",
+        "fields": {
+            "description": "",
+            "slug": "revue",
+            "label": "Revue"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "coop_local.resourcecategory",
+        "fields": {
+            "description": "",
+            "slug": "article-de-presse",
+            "label": "Article de presse"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "coop_local.resourcecategory",
+        "fields": {
+            "description": "",
+            "slug": "guide-methodologique",
+            "label": "Guide m\u00e9thodologique"
+        }
+    },
+    {
+        "pk": 6,
+        "model": "coop_local.resourcecategory",
+        "fields": {
+            "description": "",
+            "slug": "rapport",
+            "label": "Rapport"
+        }
+    },
+    {
+        "pk": 7,
+        "model": "coop_local.resourcecategory",
+        "fields": {
+            "description": "",
+            "slug": "film",
+            "label": "Film"
+        }
+    },
+    {
+        "pk": 8,
+        "model": "coop_local.resourcecategory",
+        "fields": {
+            "description": "",
+            "slug": "film-documentaire",
+            "label": "Film documentaire"
+        }
+    },
+    {
+        "pk": 9,
+        "model": "coop_local.resourcecategory",
+        "fields": {
+            "description": "",
+            "slug": "video-en-ligne",
+            "label": "Vid\u00e9o en ligne"
+        }
+    },
+    {
+        "pk": 10,
+        "model": "coop_local.resourcecategory",
+        "fields": {
+            "description": "",
+            "slug": "site-web",
+            "label": "Site web"
+        }
+    },
+    {
+        "pk": 11,
+        "model": "coop_local.resourcecategory",
+        "fields": {
+            "description": "",
+            "slug": "flux-rss-twitter",
+            "label": "Flux (RSS, twitter...)"
+        }
+    },
+    {
+        "pk": 12,
+        "model": "coop_local.resourcecategory",
+        "fields": {
+            "description": "",
+            "slug": "autre-document",
+            "label": "Autre document"
+        }
+    }
+]

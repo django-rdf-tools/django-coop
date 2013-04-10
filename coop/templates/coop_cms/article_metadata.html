@@ -2,8 +2,9 @@
 
         {% for doc in article.attachments.all %}
 
-        <div class="attachment">
+        <div class="detail_block attachment">
 
+            <img src="/static/teambox/24x32px/{{doc.extension}}.png" class="attachement_filetype">
             <span>Document à télécharger : </span>
             <a href="{{ doc.file.url }}">
                 {% if not doc.title %}{{ doc.name }}{% else %}{{ doc.title }}{% endif %}
@@ -15,7 +16,7 @@
 
         {% for link in article.external_links.all %}
 
-        <div class="external_link">
+        <div class="detail_block external_link">
 
             <span>Lien Internet : </span>
             <a href="{{ link.object_uri }}">
