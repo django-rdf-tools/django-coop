@@ -88,8 +88,6 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     'django.contrib.messages.context_processors.messages',
     'coop.context_processors.current_site',
     'preferences.context_processors.preferences_cp',
-    'pagination.middleware.PaginationMiddleware',
-
 ]
 
 ROOT_URLCONF = 'coop_local.urls'

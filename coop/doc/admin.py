@@ -23,7 +23,6 @@ import pyisbn
 from coop.doc.models import ISBNField
 from chosen import widgets as chosenwidgets
 
-
 class ISBNWidget(forms.TextInput):
     def __init__(self, language=None, attrs={}):
         super(ISBNWidget, self).__init__(attrs=attrs)
