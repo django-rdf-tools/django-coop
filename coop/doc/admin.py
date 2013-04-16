@@ -34,7 +34,7 @@ class ISBNWidget(forms.TextInput):
         return super(ISBNWidget, self).render(name, value, attrs) + mark_safe("""
             <br />
             <div class="alt">%s-digit: <span class="altisbn">%s <span class="doodad">
-                <a href="http://www.librarything.com/isbn/%s">more &#9901;</a>
+                <a href="http://www.decitre.fr/livres/%s.html"> Voir sur Decitre &#9901;</a>
             </span></span></div>
         """ % (
             (len(str(value)) == 10) and "13" or "10",

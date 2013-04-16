@@ -84,7 +84,8 @@ django-appconf
 
 # coop_cms deps
 django-floppyforms==0.4.7
-django-pagination
+#django-pagination
+git+git://github.com/mpasternak/django-pagination.git
 feedparser
 git+git://github.com/gabrielgrant/django-html-field.git
 

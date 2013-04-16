@@ -54,6 +54,11 @@ if 'coop.webid' in settings.INSTALLED_APPS:
         (r'^webid/', include('coop.webid.urls')),
 )
 
+if 'coop.doc' in settings.INSTALLED_APPS:
+    urlpatterns = urlpatterns + patterns('',
+        (r'^doc/', include('coop.doc.urls')),
+)
+
 
 if 'haystack' in settings.INSTALLED_APPS:
     # minimal version
