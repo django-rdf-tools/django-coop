@@ -19,8 +19,7 @@ git+git://github.com/credis/coop_cms.git
 git+git://github.com/quinode/django-scanredirect.git
 
 django-autoslug
-unicode-slugify
-
+git+git://github.com/quinode/unicode-slugify.git
 
 git+git://github.com/quinode/django-preferences.git 
 # waiting for a merge
@@ -52,7 +51,7 @@ psycopg2
 Pillow
 south
 
-django-forms-builder
+git+git://github.com/quinode/django-forms-builder.git
 
 # Queues
 rq
