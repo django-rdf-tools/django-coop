@@ -47,8 +47,8 @@ setup(
     author_email = 'contact@quinode.fr',
     license = 'BSD',
     zip_safe = False,
-    install_requires = ['south', 'django',
-                        'sorl-thumbnail==11.09',
+    install_requires = [#'south', 'django',
+                        #'sorl-thumbnail==11.09',
                         #'django-extensions==0.8',  # waiting for new Pypi version with our 12/09/12 commit
                         #'django-admin-tools==0.4.1', # for 1.4 : waiting for merging of https://bitbucket.org/psyton/django-admin-tools
                         #'django-haystack==1.2.6', # github dev version needed
