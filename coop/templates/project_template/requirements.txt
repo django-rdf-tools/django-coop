@@ -102,6 +102,8 @@ django-multisite
 # MySQL-python
 
 # Mediathèque
+django-mptt
+easy-thumbnails
 git+git://github.com/philomat/django-teambox-icons.git
 git+git://github.com/quinode/django-media-tree.git
 pyisbn

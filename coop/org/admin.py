@@ -124,7 +124,7 @@ def create_action(category):
 class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
     form = OrganizationAdminForm
-    list_display = ['logo_list_display', 'label', 'active', 'has_description', 'has_location']
+    list_display = ['logo_list_display', 'label', 'active', 'has_location']#'has_description',
     list_display_links = ['label', ]
     search_fields = ['title', 'acronym', 'subtitle', 'acronym', 'description']
     list_filter = ['active', 'category']
