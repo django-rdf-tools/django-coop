@@ -47,18 +47,22 @@ urlpatterns = patterns('',
 if 'coop.exchange' in settings.INSTALLED_APPS:
     urlpatterns = urlpatterns + patterns('',
         (r'^annonces/', include('coop.exchange.urls')),
-)
+    )
 
 if 'coop.webid' in settings.INSTALLED_APPS:
     urlpatterns = urlpatterns + patterns('',
         (r'^webid/', include('coop.webid.urls')),
-)
+    )
 
 if 'coop.doc' in settings.INSTALLED_APPS:
     urlpatterns = urlpatterns + patterns('',
         (r'^doc/', include('coop.doc.urls')),
-)
+    )
 
+if 'coop.mailing' in settings.INSTALLED_APPS:
+    urlpatterns = urlpatterns + patterns('',
+        (r'^mailing/', include('coop.mailing.urls')),
+    )
 
 if 'haystack' in settings.INSTALLED_APPS:
     # minimal version

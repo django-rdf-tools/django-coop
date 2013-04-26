@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+
 from django.conf import settings
 import floppyforms as forms
 from coop_cms.forms import ArticleForm as CmsArticleForm
@@ -17,13 +18,11 @@ class ArticleForm(CmsArticleForm):
         }
 
 
-
 if 'haystack' in settings.INSTALLED_APPS:
     from haystack.forms import SearchForm
 
 
     class SiteSearchForm(SearchForm):
-
         def set_site(self, site):
             self.site = site
 

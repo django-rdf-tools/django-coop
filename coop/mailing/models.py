@@ -27,7 +27,8 @@ log = logging.getLogger('coop')
 # The sympa templates for list
 # /home/sympa/default/create_list_template
 # they MUST match the repositories name, this is the aim of the
-# templateName property
+# sympa_template_name property
+
 SYMPA_TEMPLATES = Choices(
     ('DISCUSSION_LIST', 1, _(u'discussion list')),
     ('HOSTLINE',   2,  _(u'hotline')),
@@ -43,9 +44,8 @@ SUBSCRIPTION_OPTION = Choices(
     ('ALL', 2, _(u'all email address')),
     ('ALL_ORGS', 3, _(u'all organizations contact')),
     ('ALL_PERSONS', 4, _(u'all registered persons')),
-    # ('ORGS_OPTION', 5, _(u'some organization contacts')),    
+    # ('ORGS_OPTION', 5, _(u'some organization contacts')),
 )
-
 
 
 class BaseMailingList(models.Model):
@@ -67,14 +67,13 @@ class BaseMailingList(models.Model):
                     choices=SYMPA_TEMPLATES.CHOICES, default=SYMPA_TEMPLATES.NEWS_LETTER)
     description = models.TextField(default=_(u'Some words about the mailing list'))  # could contains html balises
 
-
     def __unicode__(self):
-        if self.email and not self.email == '': 
+        if self.email and not self.email == '':
             return u"%s" % self.email
         else:
             return self.name
 
-    #  attention ce code est vraiment lié a notre sysem de mailing list
+    #  attention code lié à l'existence d'un serveur SYMPA avec un FQDN genre listes.truc.com
     def build_email(self):
         domain = '.'.join(Site.objects.get_current().domain.split('.')[1:])
         return "%s@listes.%s" % (self.name, domain)
@@ -87,7 +86,7 @@ class BaseMailingList(models.Model):
             res = Person.objects.all()
         elif self.subscription_option == SUBSCRIPTION_OPTION.ALL_PERSONS:
             if self.person_category:
-                res = Person.objects.filter(category__in=[self.person_category]) 
+                res = Person.objects.filter(category__in=[self.person_category])
             else:
                 res = Person.objects.all()
         res = set(res)
@@ -107,7 +106,7 @@ class BaseMailingList(models.Model):
             res = Organization.objects.all()
         elif self.subscription_option == SUBSCRIPTION_OPTION.ALL_ORGS:
             if self.organization_category:
-                res = Organization.objects.filter(category__in=[self.organization_category]) 
+                res = Organization.objects.filter(category__in=[self.organization_category])
             else:
                 res = Organization.objects.all()
         res = set(res)
@@ -121,6 +120,8 @@ class BaseMailingList(models.Model):
             return res
 
     def build_sympa_subject(self):
+        # We choosed to include meta-information about the list inside the subject when
+        # passing the SOAP command. This is then catched up by the templating system of SYMPA.
         sep = settings.SYMPA_SOAP['PARAMETER_SEPARATOR']
         remote_list_addr = 'http://%s/sympa_remote_list/%s/' % (Site.objects.get_current().domain, self.name)
         user = settings.SYMPA_SOAP['SYMPA_TMPL_USER']
@@ -129,15 +130,19 @@ class BaseMailingList(models.Model):
 
     def save(self, *args, **kwargs):
         # self.full_clean()
-        if self.id == None and soap.sympa_available():
+        if self.id is None and soap.sympa_available():
             if not soap.exists(self.name):
-                result = soap.create_list(self.name, self.build_sympa_subject(), self.templateName, self.description) 
+                result = soap.create_list(self.name,
+                                          self.build_sympa_subject(),
+                                          self.sympa_template_name,
+                                          self.description
+                                          )
                 if not result == 1:
                     raise ValidationError(_(u"Cannot add the list (sympa cannot create it): %s" % result))
             else:
                 raise ValidationError(_(u'list exits already on symp server, please contact Sympa administrateur'))
-            self.email = soap.info(self.name).listAddress    
-        self.verify_subscriptions(delete=False)     
+            self.email = soap.info(self.name).listAddress
+        self.verify_subscriptions(delete=False)
         super(BaseMailingList, self).save(*args, **kwargs)
 
     def delete(self):
@@ -150,7 +155,6 @@ class BaseMailingList(models.Model):
         else:
             raise Exception(_(u"Cannot close the list : %s" % result))
 
-
     class Meta:
         verbose_name = _(u'mailing list')
         verbose_name_plural = _(u'mailing lists')
@@ -158,7 +162,7 @@ class BaseMailingList(models.Model):
         app_label = 'coop_local'
 
     @property
-    def templateName(self):
+    def sympa_template_name(self):
         """ We have to retourn the corresponding repertory name
         Please check with sympa server directory /home/sympa/default/create_list_templates
         """
@@ -180,20 +184,17 @@ class BaseMailingList(models.Model):
             # let's create the list. This one is moderated...
             return 'news-letter-remote-source'
 
-
-
-
     def _instance_to_subscription(self, instance):
         from coop_local.models import Subscription
         if instance.pref_email:
+            # ct will tell us if we're about to subscribe a person or an organization
             ct = ContentType.objects.get_for_model(instance)
-            qs = Subscription.objects.filter(mailing_list=self, 
-                                            content_type__pk=ct.id,
-                                            object_id=instance.id)
+            qs = Subscription.objects.filter(mailing_list=self,
+                                             content_type__pk=ct.id,
+                                             object_id=instance.id)
             if not qs.exists():
                 subs = Subscription(mailing_list=self, content_object=instance)
                 subs.save()
-
 
     def auto_subscription(self):
         for person in self.person_qs():
@@ -202,8 +203,7 @@ class BaseMailingList(models.Model):
         for org in self.org_qs():
             self._instance_to_subscription(org)
 
-
-    # The :delete parametre is a workon around for not deleting subscription
+    # The 'delete' parameter is a workaround to avoid deleting subscription
     # as the mailinglist is updated with the admin interface. Django bug, missunderstanding???
     def verify_subscriptions(self, delete=True):
         # print 'ENTER VErify subscription'
@@ -251,12 +251,7 @@ class BaseMailingList(models.Model):
                 except Subscription.DoesNotExist:
                     print 'strange ....can not find %s Person' % person.id
 
-
-
-
-
-
-    def subscription_list(self):
+    def sympa_export_list(self):
         from coop_local.models import Subscription
         self.verify_subscriptions()
         res = ''
@@ -377,7 +372,7 @@ class BaseNewsletter(models.Model):
 
 
     def can_edit_newsletter(self, user):
-        return user.has_perm('coop_cms.change_newsletter')
+        return user.has_perm('coop.mailing.change_newsletter')
 
     def get_absolute_url(self):
         return reverse('coop_view_newsletter', args=[self.id])

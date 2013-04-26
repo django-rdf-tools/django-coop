@@ -1,0 +1,7 @@
+{% extends "colorbox/popup_form_base.html" %}
+
+{% load url from future %}
+
+{% load i18n %}
+{% block title %}{% trans "Schedule newsletter sending" %}{% endblock %}
+{% block form_url %}{% url 'schedule_newsletter_sending' newsletter.id %}{% endblock %}

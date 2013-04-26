@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from django.utils.translation import ugettext as _
 from django.conf import settings
 from django import forms
@@ -7,6 +8,8 @@ from django.utils.importlib import import_module
 from django.core.exceptions import ValidationError
 import floppyforms
 from datetime import datetime
+from djaloha.widgets import AlohaInput
+
 # from coop.mailing import soap
 
 
@@ -22,16 +25,12 @@ from datetime import datetime
 #         model = MailingList
 
 
-
-
-
-
 def get_newsletter_templates(newsletter, user=None):
     try:
         return getattr(settings, 'COOP_NEWSLETTERS_TEMPLATES')
     except AttributeError:
         # use default value only
-        return [(Newsletter._meta.get_field_by_name('template')[0].default, 'stantard')]
+        return [(Newsletter._meta.get_field_by_name('template')[0].default, 'standard')]
 
 
 def get_newsletter_form():
@@ -50,7 +49,7 @@ def get_newsletter_form():
 class NewNewsletterForm(forms.ModelForm):
     class Meta:
         model = Newsletter
-        fields = ('subject', 'template')#, 'items')
+        fields = ('subject', 'template')  #, 'items')
         #widgets = {}
         #try:
         #    widgets.update({
@@ -62,26 +61,30 @@ class NewNewsletterForm(forms.ModelForm):
 
     def __init__(self, user, *args, **kwargs):
         super(NewNewsletterForm, self).__init__(*args, **kwargs)
-        # tpl_choices = get_newsletter_templates(None, user)
+        tpl_choices = get_newsletter_templates(None, user)
         # if tpl_choices:
-        #     self.fields["template"] = forms.ChoiceField(choices=tpl_choices)
+        self.fields["template"] = forms.ChoiceField(choices=tpl_choices)
         # else:
         #     self.fields["template"] = forms.CharField()
         self.fields["subject"].widget = forms.TextInput(attrs={'size': 30})
-
 
 
 class NewsletterForm(floppyforms.ModelForm):
 
     class Meta:
         model = Newsletter
-        fields = ('content',)
+        fields = ('subject', 'content',)
+        widgets = {
+            'subject': AlohaInput(text_color_plugin=False),
+            'content': AlohaInput(text_color_plugin=False),
+        }
 
     class Media:
         css = {
             'all': ('css/colorbox.css',),
         }
         js = ('js/jquery.form.js', 'js/jquery.pageslide.js', 'js/jquery.colorbox-min.js', 'js/colorbox.coop.js')
+
 
 
 class NewsletterSchedulingForm(floppyforms.ModelForm):
@@ -104,9 +107,9 @@ class NewsletterTemplateForm(forms.Form):
 
     def __init__(self, newsletter, user, *args, **kwargs):
         super(NewsletterTemplateForm, self).__init__(*args, **kwargs)
-        # choices = get_newsletter_templates(newsletter, user)
+        choices = get_newsletter_templates(newsletter, user)
         # if choices:
-        #     self.fields["template"] = forms.ChoiceField(choices=choices)
+        self.fields["template"] = forms.ChoiceField(choices=choices)
         # else:
         #     self.fields["template"] = forms.CharField()
         self.fields["template"].initial = newsletter.template

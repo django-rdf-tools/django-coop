@@ -76,7 +76,7 @@
     <div class="top-header email-only">
         <div class="item">
             {% trans "If you can't view this email, " %}
-            <a href="{{SITE_PREFIX}}{% url 'coop_cms_view_newsletter' newsletter.id %}">
+            <a href="{{SITE_PREFIX}}{% url 'view_newsletter' newsletter.id %}">
                 {% trans "read the online version" %}
             </a>
         </div>
@@ -87,6 +87,7 @@
     <div id="newsletter">
     {% block newsletter %}
         {% cms_edit newsletter %}
+            <h2 id="title">{{ newsletter.subject }}</h2>
             <div id="content">{{ newsletter.content }}</div>
             {% if newsletter.events %}
                {% include "mailing/_newsletter_events.html" %}

@@ -11,11 +11,10 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from colorbox.decorators import popup_redirect
-from coop_local.models import NewsletterSending, MailingList
+from coop_local.models import Newsletter, NewsletterSending, MailingList
 from coop.mailing.utils import send_newsletter
 from django.utils.log import getLogger
 from datetime import datetime
-from coop_local.models import Newsletter
 from coop.mailing import forms
 from django.core.urlresolvers import reverse
 from django.contrib.sites.models import Site
@@ -27,7 +26,6 @@ from djaloha import utils as djaloha_utils
 from coop_cms.views import coop_bar_aloha_js
 
 
-
 def has_sympa_mail(user):
     dom = Site.objects.get_current().domain
     dom.split('.')
@@ -35,16 +33,16 @@ def has_sympa_mail(user):
     return user.email == valide_email
 
 
-def list(request, name):
+def sympa_remote_list(request, name):
     """
     :ml_id MailingList id 
     """
     # Non, il me manque des notion autour de l'authentification
     # if (request.META['REMOTE_ADDR'] in settings.INTERNAL_IPS and has_sympa_mail(request.user))  \
     #         or (request.user.is_authenticated() and request.user.is_superuser):
-    mailinglist = get_object_or_404(MailingList, name=name)  
+    mailinglist = get_object_or_404(MailingList, name=name)
     if (request.user.is_authenticated() and request.user.is_superuser):
-        return HttpResponse(mailinglist.subscription_list())
+        return HttpResponse(mailinglist.sympa_export_list())
     elif 'HTTP_AUTHORIZATION' in request.META:
         auth = request.META['HTTP_AUTHORIZATION'].split()
         if len(auth) == 2:
@@ -57,7 +55,7 @@ def list(request, name):
                     # If the user successfully logged in, then add/overwrite
                     # the user object of this request.
                     request.user = user
-                    return HttpResponse(mailinglist.subscription_list())
+                    return HttpResponse(mailinglist.sympa_export_list())
         return Http404
 
     # The username/password combo was incorrect, or not provided.
@@ -72,10 +70,6 @@ def list(request, name):
 
     resp['WWW-Authenticate'] = 'Basic realm="%s"' % realm
     return resp
-
-
-
-
 
 @login_required
 def edit_newsletter(request, newsletter_id):
@@ -138,6 +132,8 @@ def new_newsletter(request, newsletter_id=None):
     else:
         newsletter = None
 
+    print Newsletter
+
     try:
         if request.method == "POST":
             form = forms.NewNewsletterForm(request.user, request.POST, instance=newsletter)
@@ -149,7 +145,7 @@ def new_newsletter(request, newsletter_id=None):
             form = forms.NewNewsletterForm(request.user, instance=newsletter)
 
         return render_to_response(
-            'coop_cms/popup_new_newsletter.html',
+            'mailing/popup_new_newsletter.html',
             locals(),
             context_instance=RequestContext(request)
         )
@@ -158,12 +154,8 @@ def new_newsletter(request, newsletter_id=None):
         raise
 
 
-
-
 def view_newsletter(request, newsletter_id):
-
     newsletter = get_object_or_404(Newsletter, id=newsletter_id)
-
     context_dict = {
         'title': newsletter.subject, 'newsletter': newsletter,
         'editable': request.user.is_authenticated()
@@ -194,7 +186,7 @@ def change_newsletter_template(request, newsletter_id):
         form = forms.NewsletterTemplateForm(newsletter, request.user)
 
     return render_to_response(
-        'coop_cms/popup_change_newsletter_template.html',
+        'mailing/popup_change_newsletter_template.html',
         {'form': form, 'newsletter': newsletter},
         context_instance=RequestContext(request)
     )
@@ -230,7 +222,7 @@ def test_newsletter(request, newsletter_id):
             return HttpResponseRedirect(newsletter.get_edit_url())
 
     return render_to_response(
-        'coop_cms/popup_test_newsletter.html',
+        'mailing/popup_test_newsletter.html',
         {'newsletter': newsletter, 'dests': dests},
         context_instance=RequestContext(request)
     )
@@ -251,7 +243,7 @@ def schedule_newsletter_sending(request, newsletter_id):
         form = forms.NewsletterSchedulingForm(instance=instance, initial={'scheduling_dt': datetime.now()})
 
     return render_to_response(
-        'coop_cms/popup_schedule_newsletter_sending.html',
+        'mailing/popup_schedule_newsletter_sending.html',
         {'newsletter': newsletter, 'form': form},
         context_instance=RequestContext(request)
     )

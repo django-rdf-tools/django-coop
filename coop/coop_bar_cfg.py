@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.template.loader import get_template
@@ -33,8 +34,9 @@ def coop_perm(perm, object_names):
 #     return make_link(url, _(u'Post new event'), 'fugue/calendar--plus.png.png',classes=['icon'])
 
 
-from coop.org.coop_bar_links import *
 from coop_cms.coop_bar_cfg import *
+from coop.org.coop_bar_links import *
+from coop.mailing.coop_bar_links import *  # this should override the same name functions from coop_cms...
 
 
 def admin_articles(request, context):
@@ -48,25 +50,28 @@ def load_commands(coop_bar):
 
         [django_admin, admin_articles],  # django_admin_navtree
 
-        [   org_edit_link,
-            org_view_link,
-            org_save,
-            org_edit_cancel_link,
-            org_admin_link
-        ],
-        [   org_category_edit_link,
-            org_category_view_link,
-            org_save,
-            org_category_edit_cancel_link
-        ],
+        [org_edit_link,
+         org_view_link,
+         org_save,
+         org_edit_cancel_link,
+         org_admin_link],
+
+        [org_category_edit_link,
+         org_category_view_link,
+         org_save,
+         org_category_edit_cancel_link],
 
         [cms_edit, cms_view, cms_save, cms_cancel, django_admin_edit_article, cms_article_settings],
 
         [cms_new_article, ],
 
-        [cms_new_newsletter, edit_newsletter, cancel_edit_newsletter, save_newsletter,
-            change_newsletter_settings,
-            schedule_newsletter, test_newsletter],
+        [new_newsletter,
+         edit_newsletter,
+         cancel_edit_newsletter,
+         save_newsletter,
+         newsletter_settings,
+         schedule_newsletter,
+         test_newsletter],
 
         [cms_media_library, cms_upload_image, cms_upload_doc],
 

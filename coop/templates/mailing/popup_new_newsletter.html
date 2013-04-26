@@ -1,0 +1,17 @@
+{% extends "colorbox/popup_form_base.html" %}
+
+{% load url from future %}
+
+{% load i18n %}
+
+{% block title %}{% spaceless %}{% if newsletter %}
+        {% trans "Edit newsletter settings" %}
+    {% else %}
+        {% trans "New newsletter" %}
+{% endif %}{% endspaceless %}{% endblock %}
+
+{% block form_url %}{% spaceless %}{% if newsletter %}
+        {% url 'newsletter_settings' newsletter_id=newsletter.id %}
+    {% else %}
+        {% url 'new_newsletter' %}
+{% endif %}{% endspaceless %}{% endblock %}
