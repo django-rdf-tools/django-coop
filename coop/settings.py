@@ -30,6 +30,7 @@ BASE_COOP_LOCAL_MODELS = [
         u'Event',
         u'EventCategory',
         u'Occurrence',
+        u'GenericDate',
     ]),
     ('coop.doc', [
         u'ResourceCategory',

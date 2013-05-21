@@ -6,7 +6,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes import generic
 import rdflib
-
+from datetime import datetime
 
 # ----------- Customizing coop-cms Article for more coop intergration
 
@@ -38,6 +38,29 @@ if "coop_cms" in settings.INSTALLED_APPS:
 
         if "coop.agenda" in settings.INSTALLED_APPS:
             dated = generic.GenericRelation('coop_local.Dated')
+            occurences = generic.GenericRelation('coop_local.GenericDate')
+
+            def upcoming_occurrences(self):
+                """
+                Return all occurrences that are set to start on or after the current
+                time.
+                """
+                return self.occurences.all().filter(start_time__gte=datetime.now())
+
+            def next_occurrence(self):
+                """
+                Return the single occurrence set to start on or after the current time
+                if available, otherwise ``None``.
+                """
+                upcoming = self.upcoming_occurrences()
+                return upcoming and upcoming[0] or None
+
+            def daily_occurrences(self, dt=None):
+                """
+                Convenience method wrapping ``GenericDate.objects.daily_occurrences``.
+                """
+                return get_model('coop_local', 'GenericDate').objects.daily_occurrences(dt=dt, article_id=self.pk)
+
 
         if "coop.doc" in settings.INSTALLED_APPS:
             attachments = generic.GenericRelation('coop_local.Attachment')
@@ -70,6 +93,10 @@ if "coop_cms" in settings.INSTALLED_APPS:
         def isOpenData(self):
             return not self.isSection and self.publication == BaseArticle.PUBLISHED
 
+        @property
+        def description(self):
+            return self.summary
+
         rdf_type = settings.NS.dcmi.Text
         base_mapping = [
             ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
@@ -84,6 +111,7 @@ if "coop_cms" in settings.INSTALLED_APPS:
 
             ('multi_mapping', (settings.NS.dct.subject, 'tags'), 'multi_reverse'),
                         ]
+
 
 
 

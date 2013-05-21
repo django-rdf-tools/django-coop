@@ -10,6 +10,22 @@
 <p>{{ event.description|linebreaks }}</p>
 
 
+{% if is_article == 1 %}
+
+    <span> ... <a href="{{ event.get_absolute_url }}">Lire la suite</a></span>
+
+    {% if event.occurences.count %}
+    <ul>
+        {% for o in event.occurences.all %}
+        <li>
+            {{ o.start_time|date:"j F Y à H\hi" }} → {{ o.end_time|date:"j F Y à H\hi" }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+
+{% else %}
     {% if event.occurrence_set.count %}
     <ul>
         {% for o in event.occurrence_set.all %}
@@ -18,8 +34,9 @@
         </li>
         {% endfor %}
     </ul>
-    {% else %}
     {% endif %}
+
+{% endif %}
 
 
 {% if event.organization %}

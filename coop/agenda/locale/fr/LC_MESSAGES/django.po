@@ -7,26 +7,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop.agenda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-06 19:35+0100\n"
-"PO-Revision-Date: 2012-11-06 19:35+0100\n"
-"Last-Translator: Coopérative Quinode <contact@quinode.fr>\n"
+"POT-Creation-Date: 2013-05-21 09:16+0200\n"
+"PO-Revision-Date: 2013-05-21 09:18+0100\n"
+"Last-Translator: Quinode <contact@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
-"Language: \n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"X-Poedit-Language: French\n"
-"X-Poedit-Country: FRANCE\n"
+"X-Generator: Poedit 1.5.4\n"
 
-#: admin.py:25
-#: admin.py:80
-#: forms.py:193
+#: admin.py:28 admin.py:88 admin.py:96 forms.py:193
 msgid "Date"
 msgstr "Date"
 
-#: admin.py:26
-#: admin.py:81
+#: admin.py:29 admin.py:89 admin.py:97
 msgid "Dates"
 msgstr "Dates"
 
@@ -102,8 +98,7 @@ msgstr "Mars"
 msgid "April"
 msgstr "Avril"
 
-#: forms.py:41
-#: forms.py:56
+#: forms.py:41 forms.py:56
 msgid "May"
 msgstr "Mai"
 
@@ -268,208 +263,261 @@ msgstr "Options annuelles"
 msgid "Unknown interval rule %s"
 msgstr "Régle d'intervalle inconnue %s"
 
-#: models.py:20
-#: models.py:66
+#: models.py:21 models.py:93
 msgid "title"
 msgstr "titre"
 
-#: models.py:21
-#: models.py:67
+#: models.py:22 models.py:94
 msgid "description"
 msgstr "description"
 
-#: models.py:25
-#: models.py:70
+#: models.py:26 models.py:99
 msgid "calendar"
 msgstr "calendrier"
 
-#: models.py:26
+#: models.py:27
 msgid "calendars"
 msgstr "calendriers"
 
-#: models.py:42
+#: models.py:69
 msgid "label"
 msgstr "libellé"
 
-#: models.py:46
+#: models.py:73
 msgid "event category"
 msgstr "catégorie d'événément"
 
-#: models.py:47
+#: models.py:74
 msgid "event categories"
 msgstr "catégories d'événements"
 
-#: models.py:69
+#: models.py:96 models.py:98
 msgid "event type"
 msgstr "catégorie d'événément"
 
-#: models.py:73
+#: models.py:102
 msgid "organization"
 msgstr "organisation"
 
-#: models.py:73
+#: models.py:102
 msgid "publisher organization"
 msgstr "organisateur"
 
-#: models.py:74
+#: models.py:103
 msgid "organizations"
 msgstr "organisations"
 
-#: models.py:74
+#: models.py:103
 msgid "other organizations"
 msgstr "autres organisations"
 
-#: models.py:76
+#: models.py:105
 msgid "author"
 msgstr "auteur"
 
-#: models.py:78
+#: models.py:108
 msgid "location"
 msgstr "localisation"
 
-#: models.py:81
+#: models.py:109
+msgid "remote location URI"
+msgstr "URI externe adresse"
+
+#: models.py:110
+msgid "remote location label"
+msgstr "libellé d'une adresse externe"
+
+#: models.py:112
+msgid "fill this only if the location record is not available locally"
+msgstr "à remplir uniquement si l'adresse n'est pas disponible sur ce site"
+
+#: models.py:115
 msgid "remote person URI"
 msgstr "URI externe personne"
 
-#: models.py:82
+#: models.py:116
 msgid "remote person label"
 msgstr "libellé externe personne"
 
-#: models.py:84
+#: models.py:118
 msgid "fill this only if the person record is not available locally"
-msgstr "à remplir uniquement si l'organisation n'est pas disponible sur ce site"
+msgstr ""
+"à remplir uniquement si l'organisation n'est pas disponible sur ce site"
 
-#: models.py:85
+#: models.py:119
 msgid "remote organization URI"
 msgstr "URI externe organisation"
 
-#: models.py:86
+#: models.py:120
 msgid "remote organization label"
 msgstr "libellé d'une organisation externe"
 
-#: models.py:88
+#: models.py:122
 msgid "fill this only if the organization record is not available locally"
-msgstr "à remplir uniquement si l'organisation n'est pas disponible sur ce site"
+msgstr ""
+"à remplir uniquement si l'organisation n'est pas disponible sur ce site"
 
-#: models.py:91
-#: models.py:263
-#: models.py:322
+#: models.py:131 models.py:374 models.py:469
 msgid "event"
 msgstr "événement"
 
-#: models.py:92
+#: models.py:132
 msgid "events"
 msgstr "événements"
 
-#: models.py:274
+#: models.py:154
+msgid "preferred postal address"
+msgstr "adresse postale préférée"
+
+#: models.py:385
 msgid "Dated item"
 msgstr "objet avec date"
 
-#: models.py:275
+#: models.py:386
 msgid "Dated items"
 msgstr "objets avec date"
 
-#: models.py:320
-msgid "start time"
-msgstr "heure de début"
+#: models.py:430 models.py:467
+msgid "start"
+msgstr "début"
 
-#: models.py:321
-msgid "end time"
-msgstr "heure de fin"
+#: models.py:431 models.py:468
+msgid "end"
+msgstr "fin"
 
-#: models.py:327
+#: models.py:441 models.py:474
 msgid "occurrence"
 msgstr "occurrence"
 
-#: models.py:328
+#: models.py:442 models.py:475
 msgid "occurrences"
 msgstr "occurrences"
 
-#: models.py:334
+#: models.py:448 models.py:481
 msgid "l j F Y"
 msgstr "l j F Y"
+
+#~ msgid "start time"
+#~ msgstr "heure de début"
+
+#~ msgid "end time"
+#~ msgstr "heure de fin"
 
 #, fuzzy
 #~ msgid "prem organization"
 #~ msgstr "organisation"
+
 #~ msgid "author URI"
 #~ msgstr "URI auteur"
+
 #~ msgid "Add Event"
 #~ msgstr "Ajouter un événement"
+
 #~ msgid "Please fix any errors."
 #~ msgstr "Merci de corriger les erreurs."
+
 #~ msgid "Submit"
 #~ msgstr "Valider"
+
 #~ msgid "Daily View"
 #~ msgstr "Vue journalière"
+
 #~ msgid "Time"
 #~ msgstr "Heure"
+
 #~ msgid "Event: %(event)s"
 #~ msgstr "Événement: %(event)s"
+
 #~ msgid "Event"
 #~ msgstr "Événement"
+
 #~ msgid "Event Details"
 #~ msgstr "Détail de l'événement"
+
 #~ msgid "Update"
 #~ msgstr "Mise à jour"
+
 #~ msgid "Notes"
 #~ msgstr "Notes"
+
 #~ msgid "None"
 #~ msgstr "Aucun"
+
 #~ msgid "Add Occurrences"
 #~ msgstr "Ajouter des occurences"
+
 #~ msgid "Add"
 #~ msgstr "Ajouter"
+
 #~ msgid "All Events"
 #~ msgstr "Tous les événements"
+
 #~ msgid "Monthly View"
 #~ msgstr "Vue mensuelle"
+
 #~ msgid "Last Month"
 #~ msgstr "Dernier mois"
+
 #~ msgid "View %(year)s"
 #~ msgstr "Afficher %(year)s"
+
 #~ msgid "Next Month"
 #~ msgstr "Mois prochain"
+
 #~ msgid "Event Occurrence"
 #~ msgstr "Occurrence de l'événement"
+
 #~ msgid "Event type"
 #~ msgstr "Type d'événement"
+
 #~ msgid "Description"
 #~ msgstr "Description"
+
 #~ msgid "Note(s)"
 #~ msgstr "Note(s)"
+
 #~ msgid ""
 #~ "<label for=\"id_repeats_0\"> A total of</label>\n"
 #~ "                        %(times)s time(s)"
 #~ msgstr ""
 #~ "<label for=\"id_repeats_0\"> Un total de</label>\n"
 #~ "                        %(times)s fois"
+
 #~ msgid "Until"
 #~ msgstr "Jusqu'à"
+
 #~ msgid "Every %(interval)s "
 #~ msgstr "Chaque %(interval)s "
+
 #~ msgid "Each"
 #~ msgstr "Chaque"
+
 #~ msgid "Yearly View %(year)s"
 #~ msgstr "Vue annuelle %(year)s"
+
 #~ msgid "Month"
 #~ msgstr "Mois"
+
 #~ msgid "Title"
 #~ msgstr "Titre"
+
 #~ msgid "Day"
 #~ msgstr "Jour"
-#~ msgid "Start"
-#~ msgstr "Début"
+
 #~ msgid "End"
 #~ msgstr "Fin"
+
 #~ msgid "<p>No events occurring in %(year)s</p>"
 #~ msgstr "<p>Aucun événement en %(year)s</p>"
+
 #~ msgid "created"
 #~ msgstr "créé le"
+
 #~ msgid "modified"
 #~ msgstr "modifié le"
+
 #~ msgid "abbreviation"
 #~ msgstr "abbréviation"
+
 #~ msgid "django user"
 #~ msgstr "utilisateur django"
-

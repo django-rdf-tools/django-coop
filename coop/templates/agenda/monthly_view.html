@@ -52,7 +52,8 @@
                     {% for item in items %}
                         <li class="cal_item">
                             <span class="event_times">{{ item.start_time|time:"H:i" }}</span>
-                            <a href="{% url "coop.agenda.views.event_minimal_view" item.event.id %}?ajax=true&amp;width=400&amp;height=240"
+
+                            <a href="{% if articles %}{% url "coop.agenda.views.event_article_minimal_view" item.event.id %}{% else %}{% url "coop.agenda.views.event_minimal_view" item.event.id %}{% endif %}?ajax=true&amp;width=400&amp;height=240"
                                 rel="prettyPhoto" class="cal_popup">{{ item.event.title }}</a>
                         </li>
                     {% endfor %}

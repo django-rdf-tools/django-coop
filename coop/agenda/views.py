@@ -9,7 +9,7 @@ from django.db import models
 from django.template.context import RequestContext
 from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.core.urlresolvers import reverse
-from coop_local.models import Event, EventCategory, Occurrence, Calendar
+from coop_local.models import Event, EventCategory, Occurrence, Calendar, Article
 from coop.agenda import utils, forms
 from coop.agenda.conf import settings as agenda_settings
 
@@ -49,9 +49,15 @@ def event_listing(request, template='agenda/event_list.html', events=None,
 
 
 def event_minimal_view(request, pk, template='agenda/event_minimal_view.html'):
-    event = get_object_or_404(Event, pk=pk, sites__id=settings.SITE_ID)
-    return render_to_response(template, {'event': event},
+    event = get_object_or_404(Event, pk=pk, sites__id=settings.SITE_ID) 
+    return render_to_response(template, {'event': event, 'is_article':False},
         context_instance=RequestContext(request))
+
+def event_article_minimal_view(request, pk, template='agenda/event_minimal_view.html'):
+    event = get_object_or_404(Article, pk=pk, sites__id=settings.SITE_ID)    
+    return render_to_response(template, {'event': event, 'is_article':True},
+        context_instance=RequestContext(request))
+
 
 
 def event_category_view(request, slug):
@@ -291,7 +297,7 @@ def year_view(request, year, template='agenda/yearly_view.html', queryset=None):
 
 
 def month_view(request, year=today.year, month=today.month, template='agenda/monthly_view.html',
-    queryset=None):
+    queryset=None, articles=False):
     """
     Render a traditional calendar grid view with temporal navigation variables.
 
@@ -350,6 +356,7 @@ def month_view(request, year=today.year, month=today.month, template='agenda/mon
         this_month=dtstart,
         next_month=dtstart + timedelta(days=+last_day),
         last_month=dtstart + timedelta(days=-1),
+        articles=articles,
     )
 
     return render_to_response(template, data,

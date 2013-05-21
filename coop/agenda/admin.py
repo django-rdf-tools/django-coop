@@ -90,3 +90,11 @@ class DatedInline(GenericTabularInline, InlineAutocompleteAdmin):
     model = get_model('coop_local', 'Dated')
     related_search_fields = {'event': ('title', 'description', 'slug'), }
     extra = 1
+
+
+class GenericDateInline(GenericTabularInline):
+    verbose_name = _(u'Date')
+    verbose_name_plural = _(u'Dates')
+    model = get_model('coop_local', 'GenericDate')
+    extra = 1
+

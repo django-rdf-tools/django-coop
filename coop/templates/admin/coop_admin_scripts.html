@@ -49,6 +49,7 @@ jQuery(document).ready(function($) {
     dayNamesMin: ['Di','Lu','Ma','Me','Je','Ve','Sa'],
     weekHeader: 'Sm',
     dateFormat: 'dd/mm/yy',
+    constrainInput: false,
     firstDay: 1,
     isRTL: false,
     showMonthAfterYear: false,
@@ -72,16 +73,19 @@ jQuery(document).ready(function($) {
         $(this).parent().fadeOut('slow');
     });
 
+    $('.vDateField').datepicker()
+                    // .siblings('.datetimeshortcuts').hide()
 
-  // call cookie tab
-  selectPreviousTab()
 
-
-    // AdminDate widgets
-
-    $('.vDateField').datepicker({dateFormat: 'yy-mm-dd', constrainInput: false});
     $('.vTimeField').timepicker({ timeFormat: 'hh:mm', separator:' h ',  stepMinute: 15,  hour: 9, minute: 00});
-    $('span.datetimeshortcuts').siblings('br').remove();
+    
+
+// $('a#coop_local-genericdate-content_type-object_id-group').on('shown', function (e) {
+//     // AdminDate widgets
+//     console.log('date/time widget cosmetic change');
+//     $('span.datetimeshortcuts').siblings('br').replaceWith('&nbsp;&nbsp;&nbsp;&nbsp;');
+// });
+
 
     //  $("a[rel=popover].top-icon").twipsy({offset: 20});
 
@@ -97,6 +101,10 @@ jQuery(document).ready(function($) {
       $(".qq-upload-drop-area").hide();
 
     }
+
+
+  // call cookie tab
+  selectPreviousTab()
 
 
 

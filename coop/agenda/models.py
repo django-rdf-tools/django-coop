@@ -390,7 +390,7 @@ class BaseDated(models.Model):
 class OccurrenceManager(models.Manager):
     use_for_related_fields = True
 
-    def daily_occurrences(self, dt=None, event=None):
+    def daily_occurrences(self, dt=None, event=None, article_id=None):
         """
         Returns a queryset of for instances that have any overlap with a
         particular day.
@@ -419,8 +419,54 @@ class OccurrenceManager(models.Manager):
         )
         if event:
             return qs.filter(event=event)
+        elif article_id:
+            ct_article = ContentType.objects.get(app_label="coop_local", model="article")
+            return qs.filter(content_type=ct_article, object_id=article_id)
         else:
             return qs
+
+
+class BaseGenericDate(models.Model):
+    """
+    Start and end time for any coop object.
+    """
+    start_time = models.DateTimeField(_('start'))
+    end_time = models.DateTimeField(_('end'))
+
+    # generic key to other objects
+    content_type = models.ForeignKey(ContentType, blank=True, null=True, default=None)
+    object_id = models.PositiveIntegerField()
+    content_object = generic.GenericForeignKey('content_type', 'object_id')
+
+    objects = OccurrenceManager()
+
+    class Meta:
+        verbose_name = _('occurrence')
+        verbose_name_plural = _('occurrences')
+        ordering = ('start_time', 'end_time')
+        abstract = True
+        app_label = 'coop_local'
+
+
+
+    def __unicode__(self):
+        return _date(self.start_time, _("l j F Y"))
+
+    @models.permalink
+    def get_absolute_url(self):
+        return self.content_object.get_absolute_url()
+
+    def __cmp__(self, other):
+        return cmp(self.start_time, other.start_time)
+
+    @property
+    def title(self):
+        return unicode(self.content_object)
+
+    @property
+    def event(self):
+        return self.content_object
+
 
 
 class BaseOccurrence(models.Model):
@@ -428,8 +474,8 @@ class BaseOccurrence(models.Model):
     Represents the start end time for a specific occurrence of a master ``Event``
     object.
     """
-    start_time = models.DateTimeField(_('start time'))
-    end_time = models.DateTimeField(_('end time'))
+    start_time = models.DateTimeField(_('start'))
+    end_time = models.DateTimeField(_('end'))
     event = models.ForeignKey('coop_local.Event', verbose_name=_('event'), editable=False)
 
     objects = OccurrenceManager()

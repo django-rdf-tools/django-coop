@@ -13,7 +13,7 @@ from coop.doc.admin import AttachmentsInline
 from coop.link.admin import LinksInline
 
 if "coop.agenda" in settings.INSTALLED_APPS:
-    from coop.agenda.admin import DatedInline
+    from coop.agenda.admin import GenericDateInline
 
 if "coop_cms" in settings.INSTALLED_APPS:
     from coop_cms.admin import NavTreeAdmin, ArticleAdmin
@@ -77,7 +77,7 @@ if "coop_cms" in settings.INSTALLED_APPS:
                                  'person': ('first_name', 'last_name',), }
 
         if "coop.agenda" in settings.INSTALLED_APPS:
-            inlines = [DatedInline, AttachmentsInline, LinksInline]
+            inlines = [GenericDateInline, AttachmentsInline, LinksInline]
         else:
             inlines = [AttachmentsInline, LinksInline]
 

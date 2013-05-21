@@ -182,7 +182,7 @@ if 'coop.mailing' in settings.INSTALLED_APPS:
 
 if 'coop.agenda' in settings.INSTALLED_APPS:
     from coop.agenda.models import BaseCalendar, BaseEvent, BaseEventCategory, \
-        BaseOccurrence, BaseDated
+        BaseOccurrence, BaseDated, BaseGenericDate
 
     class Calendar(BaseCalendar):
         pass
@@ -197,6 +197,9 @@ if 'coop.agenda' in settings.INSTALLED_APPS:
         pass
 
     class Dated(BaseDated):
+        pass
+
+    class GenericDate(BaseGenericDate):
         pass
 
 

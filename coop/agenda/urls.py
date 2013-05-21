@@ -45,6 +45,10 @@ urlpatterns = patterns('coop.agenda.views',
         'event_minimal_view',
         name='event-minimal-view'),  # CBV !!!
 
+    url(r'^evenements/articles/mini/(\d+)/$',
+        'event_article_minimal_view',
+        name='event-article-minimal-view'),  # CBV !!!
+
     url(r'^evenements/(\d+)/(\d+)/$',
         'occurrence_view',
         name='agenda-occurrence'),
