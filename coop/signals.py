@@ -79,7 +79,6 @@ def post_save_callback(sender, instance, **kwargs):
     if hasattr(instance, 'sites') and isinstance(instance, coop.tag.models.CoopTag):
         for s in Site.objects.all():
             if not s in instance.sites.all():
-                print u'%s not listed for %s' % (s, instance)
                 instance.sites.add(s)
                 instance.save()
 
