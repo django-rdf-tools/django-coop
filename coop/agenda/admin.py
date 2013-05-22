@@ -97,4 +97,8 @@ class GenericDateInline(GenericTabularInline):
     verbose_name_plural = _(u'Dates')
     model = get_model('coop_local', 'GenericDate')
     extra = 1
+    # related_search_fields = {'commune_fr': ('label',),
+    #                          'pays': ('label',),
+    #                          }
+
 

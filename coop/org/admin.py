@@ -75,9 +75,23 @@ class OrgInline(InlineAutocompleteAdmin):
     extra = 1
 
 
+class RoleAdminForm(forms.ModelForm):
+    class Meta:
+        model = get_model('coop_local', 'Role')
+        widgets = {'sites': chosenwidgets.ChosenSelectMultiple(),}
+
+    def __init__(self, *args, **kwargs):
+        super(RoleAdminForm, self).__init__(*args, **kwargs)
+        if 'sites' in self.fields:
+            self.fields['sites'].help_text = None
+
+
 class RoleAdmin(admin.ModelAdmin):
+    change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
+    form = RoleAdminForm
     list_display = ('label', 'category')
     list_editable = ('category',)
+    fieldsets = (('Définition', {'fields' : ('sites', 'label', 'category',)}),)
 
 
 class OrganizationAdminForm(forms.ModelForm):

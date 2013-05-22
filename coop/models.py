@@ -29,7 +29,6 @@ import urllib
 log = logging.getLogger('coop')
 
 
-
 URI_MODE = Choices(
     ('LOCAL',  1, _(u'Local')),
     ('COMMON',   2, _(u'Common')),
@@ -652,6 +651,12 @@ from django_push.subscriber.signals import updated
 # request_finished.connect(post_save_callback, sender=StaticURIModel)
 # request_finished.connect(post_delete_callback, sender=StaticURIModel)
 updated.connect(listener)
+
+
+
+from django.db.models.loading import get_model
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 

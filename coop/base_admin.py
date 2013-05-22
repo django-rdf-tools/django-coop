@@ -51,8 +51,9 @@ if "coop_cms" in settings.INSTALLED_APPS:
 
 if "coop_tag" in settings.INSTALLED_APPS:
     from coop_tag.settings import get_class
+    from coop.tag.admin import TagAdmin
     admin.site.unregister(get_class('tag'))
-    admin.site.register(get_class('tag'))  # TODO find out why this hack has to be there !!!
+    admin.site.register(get_class('tag'), TagAdmin)  # TODO find out why this hack has to be there !!!
 
 if 'forms_builder.forms' in settings.INSTALLED_APPS:
     from coop.admin import CoopFormAdmin

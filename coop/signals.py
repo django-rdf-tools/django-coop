@@ -16,6 +16,7 @@ import threading
 import time
 import datetime
 import coop_tag
+import coop
 
 if getattr(settings, 'SUBHUB_MAINTENANCE_AUTO', False):
     import django_rq
@@ -70,8 +71,17 @@ def letsCallDistributionTaskProcess(thName):
 @receiver(post_save)
 def post_save_callback(sender, instance, **kwargs):
     # Initialize the 'sites' many2many field with the default site
+
+
     if hasattr(instance, 'sites') and not instance.sites.all().exists():
         instance.sites.add(Site.objects.get_current())
+
+    if hasattr(instance, 'sites') and isinstance(instance, coop.tag.models.CoopTag):
+        for s in Site.objects.all():
+            if not s in instance.sites.all():
+                print u'%s not listed for %s' % (s, instance)
+                instance.sites.add(s)
+                instance.save()
 
     maintenance = getattr(settings, 'SUBHUB_MAINTENANCE_AUTO', False)
     # log.debug(u"Post save callback with sender %s and instance %s and AUTO %s" % (unicode(sender), unicode(instance), maintenance))

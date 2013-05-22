@@ -70,7 +70,7 @@ if "coop_cms" in settings.INSTALLED_APPS:
             #(_('Navigation'), {'fields': ('navigation_parent',)}),
             ('Edition', {'fields': ['title', 'logo', 'summary','content', 
                                     'organization', 'remote_organization_label', 'remote_organization_uri',
-                                    'person', 'remote_person_label', 'remote_person_uri']}),
+                                    'person', 'remote_person_label', 'remote_person_uri', 'tags']}),
             ('Options', {'fields': ('category', 'template', 'headline', 'in_newsletter', 'isSection', 'display_dates',)}),
         )
         related_search_fields = {'organization': ('title', 'subtitle', 'description'), 

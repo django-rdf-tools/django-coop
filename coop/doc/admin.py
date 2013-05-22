@@ -65,17 +65,20 @@ class AttachmentsInline(GenericTabularInline):
     extra = 1
 
 
+
 class ResourceAdminForm(forms.ModelForm):
     description = forms.CharField(widget=AdminTinyMCE(attrs={'cols': 80, 'rows': 60}), required=False)
 
     def __init__(self, *args, **kwargs):
         super(ResourceAdminForm, self).__init__(*args, **kwargs)
         self.fields['category'].help_text = None
+        self.fields['sites'].help_text = None
 
     class Meta:
         model = get_model('coop_local', 'DocResource')
-        widgets = {'category': chosenwidgets.ChosenSelectMultiple(),}
-        
+        widgets = {'sites': chosenwidgets.ChosenSelectMultiple(),
+                   'category': chosenwidgets.ChosenSelectMultiple()
+                   }
 
 class ResourceAdmin(NoLookupsFkAutocompleteAdmin, AdminImageMixin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
@@ -84,7 +87,7 @@ class ResourceAdmin(NoLookupsFkAutocompleteAdmin, AdminImageMixin):
     list_display_links = ('logo_list_display', 'label')
     list_filter = ('category',)
     fieldsets = (
-        ('Description', {'fields': ('logo', 'label', 'category', 'description',
+        ('Description', {'fields': ('sites', 'logo', 'label', 'category', 'description',
                                     'organization', 'remote_organization_label', 'remote_organization_uri',
                                     'person', 'remote_person_label', 'remote_person_uri',
                                     'tags',)

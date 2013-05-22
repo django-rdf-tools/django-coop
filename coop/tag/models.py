@@ -4,6 +4,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.conf import settings
 import rdflib
+from sorl.thumbnail import ImageField
+from django.contrib.sites.models import Site
 
 
 if 'coop_tag' in settings.INSTALLED_APPS:
@@ -22,16 +24,28 @@ if 'coop_tag' in settings.INSTALLED_APPS:
 
     class CoopTag(TagBase, URIModel):
         # Fields name and slug are defined in TagBase
+        logo = ImageField(upload_to='logos/', null=True, blank=True)
 
+        description = models.TextField(_('description'), blank=True, null=True)
         language = models.CharField(_(u'language'), max_length=10, default='fr')
-        person = models.ForeignKey('coop_local.Person', blank=True, null=True, verbose_name=_(u'person'), editable=False)
-        person_uri = models.CharField(_(u'person URI'), blank=True, max_length=250, editable=False)
+
+        person = models.ForeignKey('coop_local.Person', 
+                                       verbose_name=_(u'author'), 
+                                       related_name='tag_author', null=True, blank=True)
+        # We could also link to remote objects
+        remote_person_uri = models.URLField(_(u'remote person URI'), blank=True, max_length=255)
+        remote_person_label = models.CharField(_(u'remote person label'),
+                                               max_length=250, blank=True, null=True,
+                                               help_text=_(u'fill this only if the person record is not available locally'))
+
+
 
         # Thesaurus link
         concept_uri = models.CharField(_(u'Concept URI'), blank=True, max_length=250, editable=False)
 
         # Tags have a common uri domain
         domain_name = 'thess.economie-solidaire.fr'
+
 
         @property
         def uri_id(self):
@@ -49,7 +63,7 @@ if 'coop_tag' in settings.INSTALLED_APPS:
             abstract = True
             app_label = "coop_local"
 
-        # RDDF stuff
+        # RDF stuff
         rdf_type = settings.NS.skosxl.Label
         base_mapping = [
             ('single_mapping', (settings.NS.dct.created, 'created'), 'single_reverse'),
@@ -112,7 +126,6 @@ if 'coop_tag' in settings.INSTALLED_APPS:
 
         def broader_mapping_reverse(self, g, rdfPred, djF, datatype=None, lang=None):
             pass
-
 
 
 
