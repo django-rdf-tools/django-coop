@@ -92,13 +92,28 @@ class DatedInline(GenericTabularInline, InlineAutocompleteAdmin):
     extra = 1
 
 
-class GenericDateInline(GenericTabularInline):
+from coop_geo.models import AreaType
+from coop_local.models import Area
+
+class GenericDateInlineForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(GenericDateInlineForm, self).__init__(*args, **kwargs)
+        commune = AreaType.objects.get(txt_idx="COM")
+        pays = AreaType.objects.get(txt_idx="COUNTRY")
+        self.fields['commune_fr'].queryset = Area.objects.filter(area_type=commune)
+        self.fields['pays'].queryset = Area.objects.filter(area_type=pays)
+
+
+class GenericDateInline(GenericTabularInline, InlineAutocompleteAdmin):
     verbose_name = _(u'Date')
     verbose_name_plural = _(u'Dates')
     model = get_model('coop_local', 'GenericDate')
     extra = 1
-    # related_search_fields = {'commune_fr': ('label',),
-    #                          'pays': ('label',),
-    #                          }
+    related_search_fields = {'commune_fr': ('label',),
+                             'pays': ('label',),
+                             }
 
+    class Meta:
+        form = GenericDateInlineForm
 

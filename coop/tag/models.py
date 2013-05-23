@@ -45,8 +45,7 @@ if 'coop_tag' in settings.INSTALLED_APPS:
 
         # Tags have a common uri domain
         domain_name = 'thess.economie-solidaire.fr'
-
-
+        
         @property
         def uri_id(self):
             return self.slug

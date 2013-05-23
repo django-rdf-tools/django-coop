@@ -134,8 +134,8 @@ class NewsletterAdminForm(forms.ModelForm):
             self.fields["template"] = forms.CharField()
 
         self.fields['lists'].queryset = MailingList.objects.exclude(name='fake')
-        self.fields['articles'].queryset = Article.objects.all().order_by('-modified')
-        self.fields['events'].queryset = Event.objects.all().order_by('-modified')
+        # self.fields['articles'].queryset = Article.objects.all().order_by('-modified')
+        # self.fields['events'].queryset = Event.objects.all().order_by('-modified')
         # self.fields['articles'].widget = admin.widgets.FilteredSelectMultiple(
         #      _(u'Articles'), True,)
 
@@ -166,7 +166,7 @@ class NewsletterAdmin(admin.ModelAdmin):
             'fields': ['subject',
                        'content',
                        'template',
-                       'articles', 'events',
+                       # 'articles', 'events',
                        'lists'
                        ]
             }),

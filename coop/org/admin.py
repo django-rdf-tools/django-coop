@@ -138,7 +138,8 @@ def create_action(category):
 class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
     form = OrganizationAdminForm
-    list_display = ['logo_list_display', 'label', 'active', 'has_location']#'has_description',
+    list_display = ['logo_list_display', 'label', 'active', 'newsletter']#'has_description',
+    list_editable = ['newsletter']
     list_display_links = ['label', ]
     search_fields = ['title', 'acronym', 'subtitle', 'acronym', 'description']
     list_filter = ['active', 'category']
@@ -193,7 +194,7 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
 
         ('Préférences', {
             #'classes': ('collapse',),
-            'fields': ['pref_email', 'pref_phone', 'pref_address', 'notes',]
+            'fields': ['pref_email', 'pref_phone', 'pref_address', 'notes', 'newsletter']
         })
     )
 

@@ -13,6 +13,7 @@ from media_tree.models import FileNode
 from django.conf import settings
 # from coop.doc.admin import ISBNWidget
 
+
 class BaseResourceCategory(models.Model):
     label = models.CharField(blank=True, max_length=100)
     slug = exfields.AutoSlugField(populate_from=('label'), overwrite=True)
@@ -77,6 +78,10 @@ class BaseDocResource(URIModel):
         attachments = generic.GenericRelation('coop_local.Attachment')
 
     external_links = generic.GenericRelation('coop_local.Link')
+
+    if "coop.mailing" in settings.INSTALLED_APPS:
+        newsletter = models.ForeignKey('coop_local.Newsletter', verbose_name=u'newsletter',
+                                blank=True, null=True, related_name='news_docresource')
 
 
     class Meta:

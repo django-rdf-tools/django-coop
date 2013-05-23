@@ -139,7 +139,7 @@ jQuery(document).ready(function($) {
           )
         ){
 
-          $(this).after("&nbsp;<a class='changelink' href='#' title='Modifier cet objet'><img src='/static/admin/img/icon_changelink.gif'></a>");
+          $(this).after("<span class='spacer'>&nbsp;</span><a class='changelink' href='#' title='Modifier cet objet'><img src='/static/admin/img/icon_changelink.gif'></a>");
           $(this).next().click(function(){
               if($(this).prev().prev().attr('value')=='')return false;
               var link = ($(this).prev().attr('href')+'../'+$(this).prev().prev().attr('value'));

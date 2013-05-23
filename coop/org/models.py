@@ -21,6 +21,7 @@ from urlparse import urlsplit
 import simplejson
 from django.contrib.gis.db import models as geomodels
 
+
 #from mptt.models import MPTTModel, TreeForeignKey
 # class BaseClassification(MPTTModel, URIModel):
 #     label = models.CharField(_(u'label'), max_length=60)
@@ -463,6 +464,9 @@ class BaseOrganization(URIModel):
 
     if 'coop.mailing' in settings.INSTALLED_APPS:
         subs = generic.GenericRelation('coop_local.Subscription')
+        newsletter = models.ForeignKey('coop_local.Newsletter', verbose_name=u'newsletter',
+                                blank=True, null=True, related_name='news_organization')
+
 
     # ORDER : coop_geo must be loaded BEFORE coop_local
     if "coop_geo" in settings.INSTALLED_APPS:

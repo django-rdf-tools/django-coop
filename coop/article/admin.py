@@ -61,8 +61,8 @@ if "coop_cms" in settings.INSTALLED_APPS:
         search_fields = ['title', 'summary', 'content']
         ordering = ['-created']
 
-        list_display = ['logo_list_display', 'title', 'publication', 'headline', 'isSection', 'category']
-        list_editable = ['publication', 'isSection', 'headline', 'category']
+        list_display = ['logo_list_display', 'title', 'publication', 'headline', 'newsletter', 'category']
+        list_editable = ['publication', 'headline', 'newsletter', 'category']
         list_display_links = ['title']
 
         readonly_fields = []
@@ -71,7 +71,7 @@ if "coop_cms" in settings.INSTALLED_APPS:
             ('Edition', {'fields': ['title', 'logo', 'summary','content', 
                                     'organization', 'remote_organization_label', 'remote_organization_uri',
                                     'person', 'remote_person_label', 'remote_person_uri', 'tags']}),
-            ('Options', {'fields': ('category', 'template', 'headline', 'in_newsletter', 'isSection', 'display_dates',)}),
+            ('Options', {'fields': ('category', 'template', 'headline', 'newsletter', 'display_dates',)}),
         )
         related_search_fields = {'organization': ('title', 'subtitle', 'description'), 
                                  'person': ('first_name', 'last_name',), }

@@ -349,10 +349,10 @@ class BaseNewsletter(models.Model):
 
     template = models.CharField(_(u'template'), max_length=200, default='mailing/newsletter.html', blank=True)
 
-    articles = models.ManyToManyField('coop_local.Article', null=True, blank=True)
-    events = models.ManyToManyField('coop_local.Event', null=True, blank=True)
+    # articles = models.ManyToManyField('coop_local.Article', null=True, blank=True)
+    # events = models.ManyToManyField('coop_local.Event', null=True, blank=True)
 
-    lists = models.ManyToManyField('coop_local.MailingList', verbose_name=_(u'destination lists'))
+    lists = models.ManyToManyField('coop_local.MailingList', verbose_name=_(u'destination lists'), blank=True, null=True)
 
     def get_items(self):
         return None
@@ -417,6 +417,15 @@ def instance_to_pref_email(instance):
     if hasattr(instance, 'pref_email') and instance.pref_email:
         return instance.pref_email.content
 
+
+# class NewsletterMixin(models.Model):
+#     # tags = generic.GenericRelation(TaggedItem)
+#     newsletter = models.ForeignKey('coop_local.Newsletter', verbose_name=u'newsletter',
+#                                 blank=True, null=True, related_name='newsletter_objects')
+
+#     class Meta:
+#         abstract = True
+#         app_label = 'coop_local'
 
 
 

@@ -12,6 +12,7 @@ from django.contrib.contenttypes import generic
 import datetime
 import rdflib
 
+
 # if "coop_geo" in settings.INSTALLED_APPS:
 #     from coop_local.models import Area, Location
 
@@ -110,6 +111,10 @@ class BaseExchange(URIModel):
                                                 help_text=_(u'fill this only if the organization record is not available locally'))
 
     methods = models.ManyToManyField('coop_local.ExchangeMethod', verbose_name=_(u'exchange methods'))
+
+    if "coop.mailing" in settings.INSTALLED_APPS:
+        newsletter = models.ForeignKey('coop_local.Newsletter', verbose_name=u'newsletter',
+                                blank=True, null=True, related_name='news_exchange')
 
     if "coop.agenda" in settings.INSTALLED_APPS:
         dated = generic.GenericRelation('coop_local.Dated')

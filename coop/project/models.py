@@ -131,6 +131,10 @@ class BaseProject(URIModel):
                                        verbose_name=_(u'project partners'), related_name='support')
     category = models.ManyToManyField('coop_local.ProjectCategory',
                                       blank=True, null=True, verbose_name=_(u'category'))
+    
+    if "coop.mailing" in settings.INSTALLED_APPS:
+        newsletter = models.ForeignKey('coop_local.Newsletter', verbose_name=u'newsletter',
+                                blank=True, null=True, related_name='news_project')
 
     if "coop.doc" in settings.INSTALLED_APPS:
         attachments = generic.GenericRelation('coop_local.Attachment')
