@@ -24,8 +24,11 @@ class BaseProduct(URIModel):
     organization = models.ForeignKey('coop_local.Organization', blank=True, null=True,
                                         verbose_name='publisher', related_name='products')
 
-    remote_organization_uri = models.URLField(_(u'publisher URI'), blank=True, max_length=200, editable=False)
-    remote_organization_label = models.CharField(_('organization'), blank=True, max_length=250)
+    remote_organization_uri = models.URLField(_(u'remote organization URI'), blank=True, max_length=255)
+    remote_organization_label = models.CharField(_(u'remote organization label'),
+                                                 max_length=250, blank=True, null=True,
+                                                 help_text=_(u'fill this only if the organization record is not available locally'))
+
 
     def __unicode__(self):
         return self.title + u' (' + self.organization.__unicode__() + u')'
@@ -101,11 +104,11 @@ class BaseExchange(URIModel):
     products = models.ManyToManyField('coop_local.Product', verbose_name=_(u'linked products'))
 
     # Linking to remote objects
-    remote_person_uri = models.URLField(_(u'remote person URI'), blank=True, max_length=255, editable=False)
+    remote_person_uri = models.URLField(_(u'remote person URI'), blank=True, max_length=255)
     remote_person_label = models.CharField(_(u'remote person label'),
                                                 max_length=250, blank=True, null=True,
                                                 help_text=_(u'fill this only if the person record is not available locally'))
-    remote_organization_uri = models.URLField(_(u'remote organization URI'), blank=True, max_length=255, editable=False)
+    remote_organization_uri = models.URLField(_(u'remote organization URI'), blank=True, max_length=255)
     remote_organization_label = models.CharField(_(u'remote organization label'),
                                                 max_length=250, blank=True, null=True,
                                                 help_text=_(u'fill this only if the organization record is not available locally'))

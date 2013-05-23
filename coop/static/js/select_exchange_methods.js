@@ -27,16 +27,16 @@ function show_target_methods(select, reset) {
 
 (function($) {
 
-    //console.log($.fn.jquery) // which jquery are we using ?
+    console.log($.fn.jquery) // which jquery are we using ?
     $(function() {
-        $("select[name$='-etype']").each(function() {
+        $("select[name$='etype']").each(function() {
             show_target_methods($(this));
 
         });
 
 
-        $("select[name$='-etype']").bind("change", function(e) {
-            //console.log($(this));
+        $("select[name$='etype']").live("change", function(e) {
+            console.log($(this));
             show_target_methods($(this), true);
         });
 
