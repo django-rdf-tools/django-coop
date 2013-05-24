@@ -36,7 +36,7 @@ class CustomMenu(Menu):
             #items.MenuItem(_(u'Dashboard'), reverse('admin:index')),
             #items.Bookmarks(u'Favoris'),
 
-            items.MenuItem(_(u'Navigation tree'), '/admin/coop_local/navtree/1/', icon='icon-list-alt icon-white'),
+            items.MenuItem(_(u'Navigation tree'), '/admin/coop_local/navtree/', icon='icon-list-alt icon-white'),
 
             items.MenuItem(_(u'Articles'), '/admin/coop_local/article/', icon='icon-pencil icon-white'),
 

@@ -137,7 +137,7 @@ def post_delete_callback(sender, instance, **kwargs):
             #peut etre à completer
             model_name = sender.__name__.lower()
             deleted = DeletedURI(uri=instance.uri, modified=datetime.datetime.now(),\
-                rdf_type=instance.rdf_type, uuid=instance.uuid, model_name=model_name)
+                rdf_type=unicode(instance.rdf_type), uuid=instance.uuid, model_name=model_name)
             deleted.save()
             domain = Site.objects.get_current().domain
             if domain.startswith('http'):

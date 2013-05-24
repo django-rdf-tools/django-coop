@@ -8,17 +8,18 @@ from django.core.exceptions import ImproperlyConfigured
 logger = getLogger('coop')
 _UNKNOWN_LIST = 'Unknown list'
 
-
-try:
-    sympa_soap = settings.SYMPA_SOAP
+if settings.MAILING_BACKEND == 'sympa':
     try:
-        _server = WSDL.Proxy(sympa_soap['WSDL'])
-    except Exception, e:
-        _server = None
-        logger.warning(u"Cannot find find Sympa server - %s")
-except ImportError:
-    raise ImproperlyConfigured("coop.mailing is installed but we need SYMPA_SOAP settings.")
-
+        sympa_soap = settings.SYMPA_SOAP
+        try:
+            _server = WSDL.Proxy(sympa_soap['WSDL'])
+        except Exception, e:
+            _server = None
+            logger.warning(u"Cannot find find Sympa server - %s")
+    except ImportError:
+        raise ImproperlyConfigured("coop.mailing is installed but we need SYMPA_SOAP settings.")
+else:
+    _server = None
 
 
 def sympa_available():
