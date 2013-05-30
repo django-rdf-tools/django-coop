@@ -52,7 +52,7 @@ class TagAdminForm(forms.ModelForm):
         sites = list(self.cleaned_data['sites'])
         for s in Site.objects.all():
             if not s in sites:
-                print u'%s not listed' % s
+                # print u'%s not listed' % s
                 sites.append(s)
         self.cleaned_data['sites'] = sites
         return self.cleaned_data

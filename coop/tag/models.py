@@ -10,11 +10,10 @@ from django.contrib.sites.models import Site
 
 if 'coop_tag' in settings.INSTALLED_APPS:
     from coop_tag.models import TagBase, GenericTaggedItemBase, TaggedItemBase
-    from coop.models import URIModel
+    from coop.models import URIModel, StaticURIModel
     # in coop_settings, TAGGER_TAG_MODEL = 'coop_local.Tag'
 
     class CoopTaggedItem(GenericTaggedItemBase, TaggedItemBase):
-        #tag = models.ForeignKey('coop_local.Tag', related_name="%(app_label)s_%(class)s_taggeditem_items")
 
         class Meta:
             verbose_name = _(u'tagged item')
@@ -22,7 +21,7 @@ if 'coop_tag' in settings.INSTALLED_APPS:
             abstract = True
             app_label = "coop_local"
 
-    class CoopTag(TagBase, URIModel):
+    class CoopTag(URIModel, TagBase):
         # Fields name and slug are defined in TagBase
         logo = ImageField(upload_to='logos/', null=True, blank=True)
 

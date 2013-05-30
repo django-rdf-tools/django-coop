@@ -76,7 +76,10 @@ def post_save_callback(sender, instance, **kwargs):
     if hasattr(instance, 'sites') and not instance.sites.all().exists():
         instance.sites.add(Site.objects.get_current())
 
-    if hasattr(instance, 'sites') and isinstance(instance, coop.tag.models.CoopTag):
+    if hasattr(instance, 'sites') and (
+            isinstance(instance, coop.tag.models.CoopTag) or
+            # isinstance(instance, coop.tag.models.CoopTaggedItem) or
+            isinstance(instance, coop.org.models.BaseRole)):
         for s in Site.objects.all():
             if not s in instance.sites.all():
                 instance.sites.add(s)

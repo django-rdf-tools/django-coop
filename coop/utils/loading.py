@@ -53,7 +53,7 @@ def load_models(base_models, local_models, main_module):
                     except Exception, msg:
                         raise ImproperlyConfigured('Unable to load "%s" from local or base models : %s' % (model_name, msg))
 
-    # Looking for non-coop models also declared in coop_local
+    # Looking for non-coop models declared in coop_local.local_models
     custmodel_list = [(name, obj) for (name, obj) in inspect.getmembers(local_models, inspect.isclass) if (
                         hasattr(obj, '__class__')
                         and DjangoModel in obj.__mro__

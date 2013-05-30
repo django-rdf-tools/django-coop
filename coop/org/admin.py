@@ -17,6 +17,7 @@ from django.contrib.contenttypes.generic import GenericTabularInline
 from sorl.thumbnail.admin import AdminImageMixin
 from tinymce.widgets import AdminTinyMCE
 from coop.agenda.admin import DatedInline
+from django.contrib.sites.models import Site
 
 from chosen import widgets as chosenwidgets
 
@@ -85,6 +86,16 @@ class RoleAdminForm(forms.ModelForm):
         if 'sites' in self.fields:
             self.fields['sites'].help_text = None
 
+    def clean(self):
+        """Make sure tag is available for all sites."""
+        sites = list(self.cleaned_data['sites'])
+        for s in Site.objects.all():
+            if not s in sites:
+                # print u'%s not listed' % s
+                sites.append(s)
+        self.cleaned_data['sites'] = sites
+        return self.cleaned_data
+        
 
 class RoleAdmin(admin.ModelAdmin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'

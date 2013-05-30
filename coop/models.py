@@ -51,12 +51,12 @@ plugin.register('trix', plugin.Serializer,
 
 
 
-class TimestampedModel(models.Model):
-    created = exfields.CreationDateTimeField(_(u'created'), null=True)
-    modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
+# class TimestampedModel(models.Model):
+#     created = exfields.CreationDateTimeField(_(u'created'), null=True)
+#     modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
 
-    class Meta:
-        abstract = True
+#     class Meta:
+#         abstract = True
 
 
 def select_with_lang(literals, lang=None):
@@ -121,6 +121,10 @@ class StaticURIModel(models.Model):
     sites = models.ManyToManyField(Site)
     objects_manager = models.Manager()  # take care of the order, the admin uses the first manager found
     objects = CurrentSiteManager()
+
+    # objects = models.Manager()  # take care of the order, the admin uses the first manager found
+    # on_site = CurrentSiteManager()
+
 
     # the default value, this attribut should be overloaded
     domain_name = None
@@ -598,7 +602,11 @@ class StaticURIModel(models.Model):
             log.debug(u" Impossible to unsubscribe to %s : %s" % (feed_url, e))
 
 
-class URIModel(StaticURIModel, TimestampedModel):
+class URIModel(StaticURIModel):
+
+    created = exfields.CreationDateTimeField(_(u'created'), null=True)
+    modified = exfields.ModificationDateTimeField(_(u'modified'), null=True)
+
     class Meta:
         abstract = True
 
