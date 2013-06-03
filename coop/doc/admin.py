@@ -103,7 +103,7 @@ class ResourceAdmin(NoLookupsFkAutocompleteAdmin, AdminImageMixin):
     inlines = [AttachmentsInline, LinksInline]
     formfield_overrides = {
         URLField: {'widget': URLFieldWidget},
-        ISBNField: {'widget': ISBNWidget}
+        # ISBNField: {'widget': ISBNWidget}
     }
 
     def get_form(self, request, obj=None, **kwargs):
