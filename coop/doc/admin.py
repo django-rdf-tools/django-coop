@@ -83,9 +83,10 @@ class ResourceAdminForm(forms.ModelForm):
 class ResourceAdmin(NoLookupsFkAutocompleteAdmin, AdminImageMixin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
     form = ResourceAdminForm
-    list_display = ('logo_list_display', 'label', 'organization_display')
+    list_display = ('logo_list_display', 'label', 'organization_display', 'newsletter')
     list_display_links = ('logo_list_display', 'label')
     list_filter = ('category',)
+    list_editable = ('newsletter',)
     fieldsets = (
         ('Description', {'fields': ('sites', 'logo', 'label', 'category', 'description',
                                     'organization', 'remote_organization_label', 'remote_organization_uri',
