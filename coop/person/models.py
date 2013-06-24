@@ -66,7 +66,10 @@ class BasePerson(URIModel):
         app_label = 'coop_local'
 
     def __unicode__(self):
-        return unicode('%s %s' % (self.first_name, self.last_name))
+        if self.first_name:
+            return unicode('%s %s' % (self.first_name, self.last_name))
+        else:
+            return unicode(self.last_name)
 
     #@models.permalink
     def get_absolute_url(self):
@@ -118,7 +121,7 @@ class BasePerson(URIModel):
             if(chg):
                 self.user.save()
 
-        if self.pref_email == None:
+        if not self.pref_email:
             emails = self.contacts.filter(contact_medium_id=8)
             if emails.count() > 0:
                 self.pref_email = emails[0]

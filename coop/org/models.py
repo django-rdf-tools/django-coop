@@ -170,9 +170,9 @@ class BaseContactMedium(models.Model):  # this model will be initialized with a 
 
 class BaseContact(URIModel):
     """ A model which represents any communication medium (a phone number, an email) """
-    category = models.PositiveSmallIntegerField(_(u'Category'),
-                    choices=COMM_MEANS.CHOICES, editable=False, blank=True, null=True)  # TODO erase when data migrated
-    contact_medium = models.ForeignKey('coop_local.ContactMedium', blank=True, null=True, verbose_name=u'medium')
+    # category = models.PositiveSmallIntegerField(_(u'Category'),
+    #                 choices=COMM_MEANS.CHOICES, editable=False, blank=True, null=True)  # TODO erase when data migrated
+    contact_medium = models.ForeignKey('coop_local.ContactMedium', verbose_name=u'medium')
 
     content = models.CharField(_(u'content'), max_length=250)
     details = models.CharField(_(u'details'), blank=True, max_length=100)
@@ -185,13 +185,13 @@ class BaseContact(URIModel):
 
     class Meta:
         abstract = True
-        ordering = ['category']
+        ordering = ['contact_medium']
         verbose_name = _(u'Contact')
         verbose_name_plural = _(u'Contacts')
         app_label = 'coop_local'
 
     def __unicode__(self):
-        if self.content_object != None:
+        if self.content_object != None and self.contact_medium_id != 8:
             return self.content + u' (' + self.content_object.__unicode__() + u')'
         else:
             return self.content
@@ -593,6 +593,9 @@ class BaseOrganization(URIModel):
     def get_absolute_url(self):
         return reverse('org_detail', args=[self.slug])
 
+    def get_admin_url(self):
+        return reverse('admin:coop_local_organization_change', args=[self.id])
+
     def get_relations(self):
         relations = {}
         # relmap = RELATIONS.REVERTED_CHOICES_CONST_DICT
@@ -628,7 +631,7 @@ class BaseOrganization(URIModel):
             if fixes.count() == 1:
                 self.pref_phone = fixes[0]
         if self.pref_email == None:
-            orgmails = self.contacts.filter(category=8)
+            orgmails = self.contacts.filter(contact_medium_id=8)
             if orgmails.count() > 0:
                 self.pref_email = orgmails[0]
         if 'coop_geo' in settings.INSTALLED_APPS:

@@ -27,7 +27,7 @@ function show_target_methods(select, reset) {
 
 (function($) {
 
-    console.log($.fn.jquery) // which jquery are we using ?
+    //console.log($.fn.jquery) // which jquery are we using ?
     $(function() {
         $("select[name$='etype']").each(function() {
             show_target_methods($(this));

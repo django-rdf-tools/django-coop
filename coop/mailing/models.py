@@ -13,6 +13,7 @@ from django.core.urlresolvers import reverse
 import logging
 from django.core import urlresolvers
 from django.contrib.auth.models import User
+from django.db.models.loading import get_model
 
 log = logging.getLogger('coop')
 
@@ -40,32 +41,35 @@ SYMPA_TEMPLATES = Choices(
 )
 
 SUBSCRIPTION_OPTION = Choices(
-    ('MANUAL', 1, _(u'custom email list')),
-    ('ALL', 2, _(u'all email address')),
-    ('ALL_ORGS', 3, _(u'all organizations contact')),
-    ('ALL_PERSONS', 4, _(u'all registered persons')),
+    ('MANUAL', 1, _(u'custom list')),
+    ('ALL', 2, _(u'persons and organizations')),
+    ('ALL_ORGS', 3, _(u'organizations only')),
+    ('ALL_PERSONS', 4, _(u'persons only')),
     # ('ORGS_OPTION', 5, _(u'some organization contacts')),
 )
 
 
 class BaseMailingList(models.Model):
     name = models.CharField(_('name'), max_length=50, unique=True)
-    email = models.EmailField(_('Mailing list email'), editable=False)
-
     # various subscription option
-    subscription_option = models.PositiveSmallIntegerField(_(u'subscription options'),
-                    choices=SUBSCRIPTION_OPTION.CHOICES, default=SUBSCRIPTION_OPTION.MANUAL)
+    subscription_option = models.PositiveSmallIntegerField(_(u'email choice'),
+                    choices=SUBSCRIPTION_OPTION.CHOICES, default=SUBSCRIPTION_OPTION.ALL)
     subscription_filter_with_tags = models.BooleanField(_(u'filter subscriptions with tags'), default=False)
+    person_category = models.ForeignKey('coop_local.PersonCategory',
+                                         verbose_name=_('person category'), 
+                                         blank=True, null=True)
+    organization_category = models.ForeignKey('coop_local.OrganizationCategory', 
+                                                verbose_name=_('organization category'), 
+                                                blank=True, null=True)
+    description = models.TextField(_(u'description'), blank=True, null=True)  # can contain html markup
 
-    person_category = models.ForeignKey('coop_local.PersonCategory', verbose_name=_('person category'), blank=True, null=True)
-    organization_category = models.ForeignKey('coop_local.OrganizationCategory', verbose_name=_('organization category'), blank=True, null=True)
 
-    # Specific field to run sympa
-    subject = models.CharField(max_length=500)
+    # Specific fields for sympa
+    email = models.EmailField(_('Mailing list email'), editable=False)
+    subject = exfields.AutoSlugField(populate_from=('name'), overwrite=True)
     # avec ce templateon peut gerer les inscripts depuis django-coop. Sinon.... passer par sympa
     template = models.PositiveSmallIntegerField(_(u'template'),
                     choices=SYMPA_TEMPLATES.CHOICES, default=SYMPA_TEMPLATES.NEWS_LETTER)
-    description = models.TextField(default=_(u'Some words about the mailing list'))  # could contains html balises
 
     def __unicode__(self):
         if self.email and not self.email == '':
@@ -82,13 +86,16 @@ class BaseMailingList(models.Model):
     def person_qs(self):
         from coop_local.models import Person
         res = Person.objects.none()
-        if self.subscription_option == SUBSCRIPTION_OPTION.ALL:
-            res = Person.objects.all()
-        elif self.subscription_option == SUBSCRIPTION_OPTION.ALL_PERSONS:
+        if self.subscription_option in [SUBSCRIPTION_OPTION.ALL, SUBSCRIPTION_OPTION.ALL_PERSONS]:
             if self.person_category:
                 res = Person.objects.filter(category__in=[self.person_category])
             else:
                 res = Person.objects.all()
+
+            if self.organization_category:
+                orgs_in_cat = get_model('coop_local', 'Organization').objects.filter(category=self.organization_category)
+                res = res.filter(organization__in=orgs_in_cat)
+
         res = set(res)
         if not self.subscription_filter_with_tags:
             return res
@@ -102,9 +109,7 @@ class BaseMailingList(models.Model):
     def org_qs(self):
         from coop_local.models import Organization
         res = Organization.objects.none()
-        if self.subscription_option == SUBSCRIPTION_OPTION.ALL:
-            res = Organization.objects.all()
-        elif self.subscription_option == SUBSCRIPTION_OPTION.ALL_ORGS:
+        if self.subscription_option in [SUBSCRIPTION_OPTION.ALL, SUBSCRIPTION_OPTION.ALL_ORGS]:
             if self.organization_category:
                 res = Organization.objects.filter(category__in=[self.organization_category])
             else:
@@ -140,17 +145,17 @@ class BaseMailingList(models.Model):
                 if not result == 1:
                     raise ValidationError(_(u"Cannot add the list (sympa cannot create it): %s" % result))
             else:
-                raise ValidationError(_(u'list exits already on symp server, please contact Sympa administrateur'))
+                raise ValidationError(_(u'list already exists on sympa server, please contact Sympa administrator'))
             self.email = soap.info(self.name).listAddress
-        self.verify_subscriptions(delete=False)
         super(BaseMailingList, self).save(*args, **kwargs)
+        self.verify_subscriptions(delete=False)
 
     def delete(self):
         result = 1
         if soap.exists(self.name):
             result = soap.close_list(self.name)
 
-        if result == 1 or result == 'list allready closed':
+        if result == 1 or result == 'list already closed':
             super(BaseMailingList, self).delete()
         else:
             raise Exception(_(u"Cannot close the list : %s" % result))
@@ -209,10 +214,11 @@ class BaseMailingList(models.Model):
         # print 'ENTER VErify subscription'
         from coop_local.models import Subscription, MailingList
         # Cleaning....
-        if delete:
-            fake = MailingList.objects.get(name='fake')
-            for s in Subscription.objects.filter(mailing_list=fake):
-                s.delete()
+        # if delete:
+        #     fake = MailingList.objects.get(name='fake')
+        #     for s in Subscription.objects.filter(mailing_list=fake):
+        #         s.delete()
+        
         if not self.subscription_option == SUBSCRIPTION_OPTION.MANUAL:
             orgs = ContentType.objects.get(app_label='coop_local', model='organization')
             pers = ContentType.objects.get(app_label='coop_local', model='person')
@@ -224,6 +230,13 @@ class BaseMailingList(models.Model):
             orgs_to_be_subscribed = set(self.org_qs())
             pers_to_be_subscribed = set(self.person_qs())
 
+            print '%d organizations subscribed' % len(orgs_subscribed)
+            print '%d organizations to be subscribed' % len(orgs_to_be_subscribed)
+            print '%d persons subscribed' % len(pers_subscribed)
+            print '%d persons to be subscribed' % len(pers_to_be_subscribed)
+
+            # import ipdb; ipdb.set_trace()
+
             # The news subscriptions
             for org in orgs_to_be_subscribed.difference(orgs_subscribed):
                 self._instance_to_subscription(org)
@@ -232,22 +245,22 @@ class BaseMailingList(models.Model):
             # and some have to be deleted
             for org in orgs_subscribed.difference(orgs_to_be_subscribed):
                 try:
-                    subs = Subscription.objects.get(mailing_list=self, content_type=orgs, object_id=org.id)
-                    if delete:
-                        subs.delete()    # We can NOT delete... pb with formset and admin!!!!
-                    else:
-                        subs.mailing_list = MailingList.objects.get(name='fake')
-                        subs.save()
+                    sub = Subscription.objects.get(mailing_list=self, content_type=orgs, object_id=org.id)
+                    # if delete:
+                    sub.delete()    # We can NOT delete... pb with formset and admin!!!!
+                    # else:
+                    #     subs.mailing_list = MailingList.objects.get(name='fake')
+                    #     subs.save()
                 except Subscription.DoesNotExist:
                     print 'strange ...can not find Orgs %s' % org.id
             for person in pers_subscribed.difference(pers_to_be_subscribed):
                 try:
                     subs = Subscription.objects.get(mailing_list=self, content_type=pers, object_id=person.id)
-                    if delete:
-                        subs.delete()
-                    else:
-                        subs.mailing_list = MailingList.objects.get(name='fake')
-                        subs.save()
+                    # if delete:
+                    subs.delete()
+                    # else:
+                    #     subs.mailing_list = MailingList.objects.get(name='fake')
+                    #     subs.save()
                 except Subscription.DoesNotExist:
                     print 'strange ....can not find %s Person' % person.id
 
@@ -274,8 +287,6 @@ class BaseMailingList(models.Model):
 
 
 
-
-
 class BaseSubscription(models.Model):
     mailing_list = models.ForeignKey('coop_local.MailingList',
                                         related_name='subs')
@@ -295,9 +306,10 @@ class BaseSubscription(models.Model):
         verbose_name_plural = _('mailing list subscriptions')
         abstract = True
         app_label = 'coop_local'
+        # ordering = ['pref_email']
 
     def __unicode__(self):
-        return _(u'subscription to ') + unicode(self.mailing_list)
+        return '%s (%s)' % (unicode(self.content_object.pref_email), self.content_object.label())
 
     def link_content_object(self):
         obj = self.content_object
@@ -344,7 +356,7 @@ class BaseSubscription(models.Model):
 
 class BaseNewsletter(models.Model):
     subject = models.CharField(max_length=200, verbose_name=_(u'subject'), blank=True, default="")
-    content = models.TextField(_(u"content"), default="<br>", blank=True)
+    content = models.TextField(_(u"summary"), default="<br>", blank=True)
     # items = models.ManyToManyField('coop_local.NewsletterItem', blank=True)
 
     template = models.CharField(_(u'template'), max_length=200, default='mailing/newsletter.html', blank=True)

@@ -6,6 +6,9 @@ from coop_local.models import NewsletterSending, Subscription, Newsletter, Maili
 from coop_local.models import Article, Event
 from django.db.models.loading import get_model
 from django import forms
+from tinymce.widgets import AdminTinyMCE
+from chosen import widgets as chosenwidgets
+
 try:
     from chosen.widgets import ChosenSelectMultiple
 except ImportError:
@@ -22,7 +25,6 @@ class SubscriptionInline(admin.TabularInline):
     verbose_name = _(u'subscription')
     verbose_name_plural = _(u'subscriptions')
     #content_type_whitelist = ('coop_local/person', 'coop_local/organization')
-    #fields = ('modified',)
     extra = 1
 
 
@@ -68,17 +70,19 @@ class MailingListAdminForm(forms.ModelForm):
                 return name
             # sympa mailing list has been closed
             else:
-                raise ValidationError(_(u" list exits already on sympa server, please contact Sympa administrateur"))
+                raise ValidationError(_(u" list already exists on sympa server, please contact Sympa administrator"))
         else:
             return name
 
+    class Media:
+        js = ('js/mailing.js',)
 
     class Meta:
         model = get_model('coop_local', 'MailingList')
 
 
 class MailingListAdmin(admin.ModelAdmin):
-    change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
+    change_form_template = 'mailing/admin/tabbed_change_form.html'
     # list_display_links = ['email', ]
     form = MailingListAdminForm
     search_fields = ['name', 'subject', 'email', 'description']
@@ -88,21 +92,26 @@ class MailingListAdmin(admin.ModelAdmin):
     ordering = ('name',)
     readonly_fields = ('email',)
 
-    inlines = [ReverseRelationshipInline]
+    # inlines = [ReverseRelationshipInline]
 
-    fieldsets = (
+    fieldsets = [
         ('Description', {
             'fields': ['name',
-                       'subject',
-                       'template',
                        'description',
-                       'email',
-                        ('subscription_option', 'subscription_filter_with_tags'),
+                        'subscription_option',
                         'person_category', 'organization_category',
+                        'subscription_filter_with_tags',
                        'tags'
                        ]
             }),
-    )
+        ('Sympa', {
+
+            'fields': ['template', 'email']
+
+            })
+    ]
+
+
 
     # To exlucde de 'fake' MailingList as writen
     def queryset(self, request):
@@ -124,16 +133,21 @@ class NewsletterSendingInline(admin.StackedInline):
 
 class NewsletterAdminForm(forms.ModelForm):
 
+    content = forms.CharField(widget=AdminTinyMCE(attrs={'cols': 80, 'rows': 60}), required=False)
+
     def __init__(self, *args, **kwargs):
         super(NewsletterAdminForm, self).__init__(*args, **kwargs)
         self.newsletter = kwargs.get('instance', None)
         choices = get_newsletter_templates(self.newsletter)
+
         if choices:
             self.fields["template"] = forms.ChoiceField(choices=choices)
         else:
             self.fields["template"] = forms.CharField()
 
-        self.fields['lists'].queryset = MailingList.objects.exclude(name='fake')
+        # self.fields['lists'].queryset = MailingList.objects.exclude(name='fake')
+        self.fields['lists'].help_text = None
+
         # self.fields['articles'].queryset = Article.objects.all().order_by('-modified')
         # self.fields['events'].queryset = Event.objects.all().order_by('-modified')
         # self.fields['articles'].widget = admin.widgets.FilteredSelectMultiple(
@@ -141,7 +155,7 @@ class NewsletterAdminForm(forms.ModelForm):
 
     class Meta:
         model = Newsletter
-        widgets = {}
+        widgets = {'lists': chosenwidgets.ChosenSelectMultiple(),}
         try:
             widgets.update({
                 'items': ChosenSelectMultiple(),
@@ -163,9 +177,8 @@ class NewsletterAdmin(admin.ModelAdmin):
     inlines = [NewsletterSendingInline]
     fieldsets = (
         ('Description', {
-            'fields': ['subject',
+            'fields': ['subject', 'template',
                        'content',
-                       'template',
                        # 'articles', 'events',
                        'lists'
                        ]
