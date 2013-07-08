@@ -5,7 +5,7 @@
         <div class="detail_block attachment">
 
             <img src="/static/teambox/24x32px/{{doc.extension}}.png" class="attachement_filetype">
-            <span>Document à télécharger : </span>
+            <span>Document : </span>
             <a href="{{ doc.file.url }}">
                 {% if not doc.title %}{{ doc.name }}{% else %}{{ doc.title }}{% endif %}
             </a>

@@ -1,0 +1,149 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_modify adminmedia %}
+{% load url from future %}
+
+{% block extrahead %}
+{% url 'admin:jsi18n' as jsi18nurl %}
+<script type="text/javascript" src="{{ jsi18nurl|default:"../../../jsi18n/" }}"></script>
+{{ media }}
+{{ block.super }}
+<script type="text/javascript" src="{{ STATIC_URL }}admintools_bootstrap/bootstrap/js/bootstrap-tab.js"></script>
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}{#<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}admin/css/forms.css" />#}{% endblock %}
+
+{% block coltype %}{% if ordered_objects %}colMS{% else %}colM{% endif %}{% endblock %}
+
+{% block bodyclass %}{{ opts.app_label }}-{{ opts.object_name.lower }} change-form{% endblock %}
+
+{% block breadcrumbs %}
+{% if not is_popup %}
+../../../|{% trans "Home" %}
+../../|{{ app_label|capfirst|escape }}
+*{% if has_change_permission %}../|{{ opts.verbose_name_plural|capfirst }}{% else %}{{ opts.verbose_name_plural|capfirst }}{% endif %}
+*{% if add %}{% trans "Add" %} {{ opts.verbose_name }}{% else %}{{ original|truncatewords:"18" }}{% endif %}
+{% endif %}
+{% endblock %}
+
+{% block object-tools %}
+{% if change %}{% if not is_popup %}
+  <div class="pull-right">
+    {% block object-tools-items %}
+    <a href="history/" class="btn btn-info">{% trans "History" %}</a>
+    {% if has_absolute_url %}<a href="../../../r/{{ content_type_id }}/{{ object_id }}/" class="btn primary">{% trans "View on site" %}</a>{% endif%}
+    {% endblock %}
+  </div>
+{% endif %}{% endif %}
+{% endblock %}
+
+{% block messages %}
+  {{ block.super }}
+  {% if errors %}
+    <div class="alert alert-error{% if adminform.form.non_form_errors %} alert-block{% endif %}" data-alert="alert">
+      {% blocktrans count errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
+
+{#{% repl pdb %}#}
+      {% for field in adminform.form.visible_fields %}
+        {% if field.errors %}
+          <br/>
+          <div class="field-error"><b>{{field.label}}</b><ul>
+            {% for err in field.errors %}
+            <li>{{ err }}</li>
+            {% endfor %}
+          </ul></div>
+        {% endif %}
+      {% endfor %}
+
+      {{ adminform.form.non_field_errors }}
+
+      <br/>
+      <div class="field-error"><ul>
+      {% for field in adminform.form.non_field_errors %}
+            <li>{{ err }}</li>
+      {% endfor %}
+      </ul></div>
+
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block content %}<div id="content-main">
+<form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form" class="form-horizontal">{% csrf_token %}{% block form_top %}{% endblock %}
+<div>
+{% if is_popup %}<input type="hidden" name="_popup" value="1" />{% endif %}
+{% if save_on_top %}{% submit_row %}{% endif %}
+
+<div class="tabbable">
+<ul class="nav nav-tabs">
+  {% for fieldset in adminform %}
+    <li{% if forloop.first %} class="active"{% endif %}><a href="#{{ fieldset.name|slugify }}" data-toggle="tab">{{ fieldset.name|default:"Fieldset name is required for this template!" }}</a></li>
+  {% endfor %}
+  {% for inline_admin_formset in inline_admin_formsets %}
+    <li><a href="#{{ inline_admin_formset.formset.prefix }}-group" data-toggle="tab">{{ inline_admin_formset.opts.verbose_name_plural|title }}</a></li>
+  {% endfor %}
+</ul>
+
+<div class="tab-content">
+
+{% for fieldset in adminform %}
+    {% include "mailing/admin/fieldset.html" %}
+{% endfor %}
+
+{% block after_field_sets %}{% endblock %}
+
+{% for inline_admin_formset in inline_admin_formsets %}
+    {% include inline_admin_formset.opts.template %}
+{% endfor %}
+</div>
+
+</div>
+
+<script type="text/javascript">
+  $(function(){
+
+    $('.tabbable fieldset,.tabbable .inline-group').addClass('tab-pane');
+    $('.tabbable fieldset:first').addClass('active');
+    $('.tabbable fieldset h2, .tabbable inline-group h2').hide();
+
+    function hide_person_filter(value){
+        console.log('function...');
+        console.log(value == 3);
+            if(value === "3"){
+                console.log('org only');
+                $("#id_person_category").val("");
+                $("#id_person_category").parent().parent().hide();
+            }else{
+                $("#id_person_category").parent().parent().show();
+            }
+    }
+
+    hide_person_filter($("#id_subscription_option").val());
+
+    if(!$("#id_subscription_filter_with_tags").is(":checked")){
+      $("#id_tags").parent().parent().hide();
+    } 
+
+    $("#id_subscription_option").change(function() {
+        hide_person_filter($(this).val());
+    });
+
+  $("#id_subscription_filter_with_tags").click(function(){if($(this).is(':checked')){$("#id_tags").parent().parent().show();}else{$("#id_tags").parent().parent().hide();}});
+
+
+  });
+</script>
+
+{% block after_related_objects %}{% endblock %}
+
+{% submit_row %}
+
+{% if adminform and add %}
+   <script type="text/javascript">document.getElementById("{{ adminform.first_field.id_for_label }}").focus();</script>
+{% endif %}
+
+{# JavaScript for prepopulated fields #}
+{% prepopulated_fields_js %}
+
+</div>
+</form></div>
+{% endblock %}

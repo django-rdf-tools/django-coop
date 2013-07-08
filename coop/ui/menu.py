@@ -10,7 +10,7 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from admin_tools.menu import items, Menu
-
+from django.db.models.loading import get_model
 
 class CustomMenu(Menu):
     """
@@ -32,11 +32,14 @@ class CustomMenu(Menu):
     """
     def __init__(self, **kwargs):
         Menu.__init__(self, **kwargs)
+
+        nav_link = '/admin/coop_local/navtree/1/' if get_model('coop_local','Navtree').objects.all().count() == 1 else '/admin/coop_local/navtree/'
+
         self.children = [
             #items.MenuItem(_(u'Dashboard'), reverse('admin:index')),
             #items.Bookmarks(u'Favoris'),
 
-            items.MenuItem(_(u'Navigation tree'), '/admin/coop_local/navtree/', icon='icon-list-alt icon-white'),
+            items.MenuItem(_(u'Navigation tree'), nav_link, icon='icon-list-alt icon-white'),
 
             items.MenuItem(_(u'Articles'), '/admin/coop_local/article/', icon='icon-pencil icon-white'),
 

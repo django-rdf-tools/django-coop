@@ -1,0 +1,175 @@
+{% extends "admin/mptt_change_list.html" %}
+{% load adminmedia admin_list i18n mptt_tags media_tree_admin %}
+
+{% block extrahead %}
+<script type="text/javascript">
+    var upload_button_txt = '{% trans "Upload files" %}';
+</script>
+{{ block.super }}
+{% comment %}
+Since the FileNodeAdmin's Media class can't use reverse to determine the jsi18n URL, 
+it is embedded here.
+{% endcomment %} 
+<script type="text/javascript" src="{% url admin:media_tree_jsi18n %}"></script>
+{% endblock %}
+
+{% block breadcrumbs %}
+
+{% endblock %}
+
+{% block object-tools %}
+    <div class="pull-right">
+    {% block object-tools-items %}
+
+    {% if has_add_permission %}
+        <span class="target-folder"></span>
+        <span class="changelist-file-uploader">
+            <a href="javascript:void(0)" class="addlink btn">
+            {% trans "Upload files" %}
+            </a>
+        </span>
+
+            <a href="{% url admin:media_tree_filenode_add %}?parent=&{% if is_popup %}_popup=1{% endif %}" class="addlink btn">
+            {% trans "Add file" %}
+            </a>
+
+            <a id="object-tool-add-folder" href="{% url admin:media_tree_filenode_add_folder %}{% if is_popup %}?_popup=1{% endif %}" class="addlink folder btn">
+            {% trans "Add folder" %}
+            </a>
+
+    {% endif %}
+    </div>
+
+    <script type="text/javascript">// <![CDATA[
+        jQuery(function($) {
+            /*
+            {% if swfupload_upload_url %}
+            var uploadManager = $.SWFUploadManager({
+                upload_url: '{{ swfupload_upload_url }}'
+                ,flash_url: '{{ swfupload_flash_url }}'
+                ,button_placeholder_id: "swfupload-button"
+                ,file_post_name : "file"
+                ,file_types : "{% for ext in file_types %}*.{{ ext }};{% endfor %}"
+                ,file_size_limit : "{{ file_size_limit }}B"
+                ,button_width: "200"
+                ,button_height: "30"
+            });
+            {% endif %}
+            */
+
+
+            var initialFolder, targetFolder;
+            {% if node and not node.is_top_node %} 
+            initialFolder = {name: '{{ node.name }}', id: '{{ node.pk }}'};
+            {% endif %}
+
+            var uploader = new DjangoAdminFileUploader({
+                element: $('.changelist-file-uploader')[0],
+                action: '{% url admin:media_tree_filenode_upload %}',
+                debug: true,
+                listElement: $('#changelist tbody')[0],
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            });
+
+            var setTargetFolder = function(targetFolder) {
+                $('#changelist').data('targetFolder', targetFolder);
+                var targetId = '';
+                if (!targetFolder) {
+                    targetFolder = initialFolder;
+                }
+                if (targetFolder) {
+                    $('.target-folder').html('{% trans "To %(folder)s:" %} '.replace('%(folder)s', targetFolder.name));
+                    targetId= targetFolder.id;
+                } else {
+                    $('.target-folder').html('');
+                }
+                
+                var addlink = $('.addlink')[0];
+                addlink.href = addlink.href.replace(/parent=[0-9]*/, 'parent='+targetId);
+                uploaderParams = {parent: targetId};                
+                uploader.setParams(uploaderParams);
+
+
+                /*    
+                {% if swfupload_upload_url %}
+                uploadManager.targetFolder = targetFolder;
+                {% endif %}
+                */
+            };
+
+            setTargetFolder(initialFolder);
+            
+            $('#changelist').delegate('input[name=_selected_action]', 'change', function() {
+                var targetFolder = $('#changelist').getFirstSelectedFolder();
+                setTargetFolder(targetFolder);
+            });
+        });
+    // ]]></script>
+
+
+            <div class="thumbnail-size-slider ui-slider ui-slider-horizontal no-js">{% spaceless %}
+                {% for key, size in thumbnail_sizes.items %}
+                    <a class="ui-slider-handle{% if key == thumbnail_size_key %} ui-state-active{% endif %}" href="?thumbnail_size={{ key }}"><span>{{ size }}</span></a>
+                {% endfor %}
+            {% endspaceless %}</div>
+
+            <script type="text/javascript">// <![CDATA[
+                    jQuery(function($) {
+                        var thumbnailSizeKeys = ['{{ thumbnail_sizes.keys|join:"', '" }}'];
+                        var thumbnailSizes = {
+                            {% for key, size in thumbnail_sizes.items %}
+                            {{ key }}: [{{ size.0 }}, {{ size.1 }}]{% if not forloop.last %},{% endif %}
+                            {% endfor %}
+                        };
+                        $('.thumbnail-size-slider').html('');
+                        $('.thumbnail-size-slider').removeClass('no-js');
+                        $('.thumbnail-size-slider').slider({
+                            value: thumbnailSizeKeys.indexOf('{{ thumbnail_size_key }}'),
+                            min: 0,
+                            max: thumbnailSizeKeys.length - 1,  
+                            change: function(event, ui) {
+                                var sizeKey = thumbnailSizeKeys[ui.value];
+                                var nodes = $('#changelist .node');
+                                nodes.each(function() {
+                                    var img = $('.thumbnail img', this);
+                                    var newSize = thumbnailSizes[sizeKey];
+                                    var curSize = [img.width(), img.height()];
+                                    var ratio;
+                                    if (curSize[0] > curSize[1]) {
+                                        ratio = newSize[0] / curSize[0];
+                                    } else {
+                                        ratio = newSize[1] / curSize[1];
+                                    }
+
+                                    img.width(Math.round(curSize[0] * ratio)); 
+                                    img.height(Math.round(curSize[1] * ratio)); 
+                                });
+
+                                $('#changelist').setUpdateReq($.get('?thumbnail_size=' + sizeKey, function(data) {
+                                        var newChangeList = $('#changelist', data);
+                                        nodes.each(function() {
+                                            var img = $('.thumbnail img', this);
+                                            var newImg = $('#' + this.id + ' .thumbnail img', newChangeList);
+                                            if (newImg.length) {
+                                                img[0].src = newImg[0].src;
+                                            }
+                                        });
+                                }));
+                            }
+                        });
+                    });
+            // ]]></script>
+            
+    {% endblock %}
+{% endblock %}
+
+
+{% block result_list %}
+    {{ block.super }}
+    {% if select_button %} 
+    <div class="popup-buttons submit-row">
+        <input class="default popup-select-button" type="submit" value="Select" disabled="disabled" />
+    </div>
+    {% endif %}
+
+{% endblock %}

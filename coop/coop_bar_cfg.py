@@ -73,7 +73,7 @@ def load_commands(coop_bar):
          schedule_newsletter,
          test_newsletter],
 
-        [cms_media_library, cms_upload_image, cms_upload_doc],
+        #[cms_media_library, cms_upload_image, cms_upload_doc],
 
         [log_out]
     ])
