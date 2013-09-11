@@ -75,7 +75,7 @@
                 {% if article.tags.all %}
                     <div class="metadata"><div class="key">Mots-clés</div>
                     <div class="value">{% for tag in article.tags.all %}
-                        <a href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %}, {% endif %}
+                        <a class="metadata_tag" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %}, {% endif %}
                         {% endfor %}</div></div>
                 {% endif %}
 

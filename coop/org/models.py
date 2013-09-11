@@ -645,7 +645,7 @@ class BaseOrganization(URIModel):
         # Set default values for preferred email, phone and postal address
         if self.pref_phone == None:
             phone_categories = [1, 2]
-            fixes = self.contacts.filter(category__in=phone_categories)
+            fixes = self.contacts.filter(contact_medium_id__in=phone_categories)
             if fixes.count() == 1:
                 self.pref_phone = fixes[0]
         if self.pref_email == None:

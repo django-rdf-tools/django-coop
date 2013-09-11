@@ -13,7 +13,9 @@
     {% block article %}
 
         <ul class="breadcrumb">
+            {% if not article.is_homepage %}
        <li><a href="/">Accueil</a> <span class="divider">/</span></li>
+            {% endif %}
         {% navigation_breadcrumb article li_template="coop_cms/breadcrumb_li_template.html" %}
         </ul>
 
