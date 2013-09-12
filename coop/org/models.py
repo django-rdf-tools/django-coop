@@ -212,7 +212,7 @@ class BaseContact(URIModel):
             raise ValidationError(_(u'Phone numbers must have 10 digits'))
 
     def save(self, *args, **kwargs):
-        if self.category in [1, 2, 3]:
+        if self.contact_medium_id in [1, 2, 3]:
             self.content = self.clean_phone(self.content)
         #logging.error(u'A contact has been created or modified', exc_info=True, extra={'request': request})
         super(BaseContact, self).save(*args, **kwargs)
