@@ -28,7 +28,8 @@ git+git://github.com/quinode/django-preferences.git
 #fabtools
 
 # forks we depend on
-hg+https://bitbucket.org/psyton/django-admin-tools
+git+git://github.com/domguard/django-admin-tools.git 
+#hg+https://bitbucket.org/psyton/django-admin-tools
 git+git://github.com/quinode/django-templatetag-sugar.git
 
 # our forks

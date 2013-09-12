@@ -1,4 +1,5 @@
-# TODO remove this when ready...
+User-agent: *
+Allow: /
 
 User-agent: *
-Disallow: /
+Disallow: /admin/

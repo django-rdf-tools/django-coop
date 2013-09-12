@@ -32,6 +32,11 @@ urlpatterns = patterns('',
 
     url(r'^robots\.txt$', TextPlainView.as_view(template_name='robots.txt')),
     url(r'^favicon\.ico$', RedirectView.as_view(url='/static/img/favicon.ico')),
+    url(r'^apple-touch-icon\.png$', RedirectView.as_view(url='/static/img/apple-touch-icon.png')),
+    url(r'^apple-touch-icon-72x72\.ico$', RedirectView.as_view(url='/static/img/apple-touch-icon-72x72.png')),
+    url(r'^apple-touch-icon-114x114\.png$', RedirectView.as_view(url='/static/img/apple-touch-icon-114x114.png')),
+
+
 
     # TODO:move in rdf application, and don't forget to update the EntrySite value
     url(r'^rdfdump/(?P<model>[\w-]+).(?P<format>[\w-]+)$', 'coop.rdf.views.rdfdump'),
