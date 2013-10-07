@@ -74,8 +74,8 @@ class MailingListAdminForm(forms.ModelForm):
         else:
             return name
 
-    class Media:
-        js = ('js/mailing.js',)
+    # class Media:
+    #     js = ('js/mailing.js',)
 
     class Meta:
         model = get_model('coop_local', 'MailingList')

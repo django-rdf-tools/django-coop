@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-coop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-24 11:19+0200\n"
-"PO-Revision-Date: 2013-06-24 11:35+0100\n"
+"POT-Creation-Date: 2013-10-07 12:50+0200\n"
+"PO-Revision-Date: 2013-10-07 12:51+0100\n"
 "Last-Translator: Quinode <contact@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
 "MIME-Version: 1.0\n"
@@ -17,30 +17,30 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: admin.py:24
+#: admin.py:25
 msgid "subscription"
 msgstr "inscription à"
 
-#: admin.py:25
+#: admin.py:26
 msgid "subscriptions"
 msgstr "inscriptions à"
 
-#: admin.py:32 admin.py:33 models.py:164
+#: admin.py:33 admin.py:34 models.py:163
 msgid "mailing list"
 msgstr "liste de diffusion"
 
-#: admin.py:72
+#: admin.py:73
 msgid ""
 " list already exists on sympa server, please contact Sympa administrator"
 msgstr ""
 " la liste existe déjà sur le serveur sympa, utilisez l'adminstration de "
 "Sympa pour la supprimer, sinon changez de nom"
 
-#: admin.py:124
+#: admin.py:126
 msgid "Sending Date"
 msgstr "Date d'envoi"
 
-#: admin.py:125
+#: admin.py:127
 msgid "Sending Dates"
 msgstr "Dates d'envoi"
 
@@ -113,7 +113,7 @@ msgid "public web forum"
 msgstr "forum public"
 
 #: models.py:44
-msgid "custom list"
+msgid "manual choice"
 msgstr "choix manuel"
 
 #: models.py:45
@@ -137,98 +137,102 @@ msgid "email choice"
 msgstr "Choix des emails"
 
 #: models.py:57
+msgid "Manual > other option = losing selection!"
+msgstr "Manuel > autre option = perte de la sélection !"
+
+#: models.py:58
 msgid "filter subscriptions with tags"
 msgstr "filter à l'aide des tags"
 
-#: models.py:59
+#: models.py:60
 msgid "person category"
 msgstr "catégorie de personnes"
 
-#: models.py:62
+#: models.py:63
 msgid "organization category"
 msgstr "categorie des structures"
 
-#: models.py:64
+#: models.py:65
 msgid "description"
 msgstr "description"
 
-#: models.py:68
+#: models.py:69
 msgid "Mailing list email"
 msgstr "adresse de diffusion"
 
-#: models.py:71 models.py:362
+#: models.py:72 models.py:361
 msgid "template"
 msgstr "modèle"
 
-#: models.py:146
+#: models.py:144
 #, python-format
 msgid "Cannot add the list (sympa cannot create it): %s"
 msgstr ""
 
-#: models.py:148
+#: models.py:146
 msgid "list already exists on sympa server, please contact Sympa administrator"
 msgstr ""
 " la liste existe déjà sur le serveur sympa, utilisez l'adminstration de "
 "Sympa pour la supprimer, sinon changez de nom"
 
-#: models.py:161
+#: models.py:160
 #, python-format
 msgid "Cannot close the list : %s"
 msgstr "Impossible de fermer la liste %s"
 
-#: models.py:165
+#: models.py:164
 msgid "mailing lists"
 msgstr "listes"
 
-#: models.py:293
+#: models.py:292
 msgid "created"
 msgstr "création"
 
-#: models.py:294
+#: models.py:293
 msgid "modified"
 msgstr "modification"
 
-#: models.py:305
+#: models.py:304
 msgid "mailing list subscription"
 msgstr "inscription à une liste"
 
-#: models.py:306
+#: models.py:305
 msgid "mailing list subscriptions"
 msgstr "inscriptions"
 
-#: models.py:358
+#: models.py:357
 msgid "subject"
 msgstr "sujet"
 
-#: models.py:359
+#: models.py:358
 msgid "summary"
 msgstr "Editorial"
 
-#: models.py:367
+#: models.py:366
 msgid "destination lists"
 msgstr "listes"
 
-#: models.py:407
+#: models.py:406
 msgid "newsletter"
 msgstr "lettre d'information"
 
-#: models.py:408
+#: models.py:407
 msgid "newsletters"
 msgstr "lettres d'information"
 
-#: models.py:415
+#: models.py:414
 msgid "scheduling date"
 msgstr "prévue le"
 
-#: models.py:416
+#: models.py:415
 msgid "sending date"
 msgstr "envoyée le"
 
-#: models.py:422
+#: models.py:421
 msgid "newsletter sending"
 msgstr "envoi de lettre d'information"
 
-#: models.py:423
+#: models.py:422
 msgid "newsletter sendings"
 msgstr "envois de lettre d'information"
 
@@ -243,6 +247,16 @@ msgstr ""
 #: views.py:213
 msgid "An error has occured."
 msgstr ""
+
+#~ msgid ""
+#~ "Warning: if you change \"manual choice\" to another option you will lose "
+#~ "your manual selection ! "
+#~ msgstr ""
+#~ "Attention: si vous passez de \"choix manuel\" à une autre option, vous "
+#~ "perdez votre sélection manuelle !"
+
+#~ msgid "custom list"
+#~ msgstr "choix manuel"
 
 #~ msgid ""
 #~ "list exits already on symp server, please contact Sympa administrateur"

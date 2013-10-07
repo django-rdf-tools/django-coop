@@ -123,7 +123,7 @@ class BasePerson(URIModel):
 
         if not self.pref_email:
             emails = self.contacts.filter(contact_medium_id=8)
-            if emails.count() > 0:
+            if emails.exists():
                 self.pref_email = emails[0]
 
         super(BasePerson, self).save(*args, **kwargs)

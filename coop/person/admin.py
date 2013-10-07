@@ -4,11 +4,12 @@ from django.conf import settings
 from django import forms
 from coop.org.admin import create_action, ContactInline, OrgInline
 from django.db.models.loading import get_model
-from coop_local.models import Contact
+from coop_local.models import Contact, Subscription
 from chosen import widgets as chosenwidgets
 from coop.utils.autocomplete_admin import FkAutocompleteAdmin
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
+from django.utils.translation import ugettext_lazy as _
 
 
 
@@ -36,13 +37,56 @@ class PersonAdminForm(forms.ModelForm):
             self.fields['sites'].help_text = None
 
 
+def person_mobile_phone(obj):
+    mob = obj.contacts.filter(contact_medium_id=2)
+    if mob.exists():
+        return mob[0].content
+    else:
+        return ""
+person_mobile_phone.short_description = 'Mobile'
+
+def person_phone(obj):
+    mob = obj.contacts.filter(contact_medium_id=1)
+    if mob.exists():
+        return mob[0].content
+    else:
+        return ""
+person_phone.short_description = 'Fixe'
+
+def person_email(obj):
+    mob = obj.contacts.filter(contact_medium_id=8)
+    if mob.exists():
+        return mob[0].content
+    else:
+        return ""
+person_email.short_description = 'E-mail'
+
+def person_subs(obj):
+    mls = []
+    for sub in Subscription.objects.filter(content_type=ContentType.objects.get(model='person'), object_id=obj.id):
+        mls.append(sub.mailing_list.name)
+    return ", ".join(mls)
+person_subs.short_description = 'Mailing'
+
+
+def ml_action(ml):
+    def add_sub(modeladmin, request, queryset):
+        # ct = ContentType.objects.get(model='person')
+        for obj in queryset:
+            ml._instance_to_subscription(obj)
+            # if not Subscription.objects.filter(mailing_list=ml, content_type=ct, object_id=obj.id).exists():
+            #     Subscription.create(mailing_list=ml, content_object=obj)
+    name = "sub_ml_%s" % (ml.id,)
+    return (name, (add_sub, name, _(u'Subscribe to mailing list : %s') % (ml.name,)))
+
+
 class PersonAdmin(FkAutocompleteAdmin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
     related_search_fields = {'location': ('label', 'adr1', 'adr2', 'zipcode', 'city'), }
 
     form = PersonAdminForm
     search_fields = ['last_name', 'first_name']
-    list_display = ('last_name', 'first_name', 'structure', 'has_user_account', 'has_role')
+    list_display = ('last_name', 'first_name', person_mobile_phone, person_phone, person_email, person_subs)
     list_filter = ('category',)
     list_display_links = ('last_name', 'first_name')
     search_fields = ('last_name', 'first_name', 'structure')
@@ -52,8 +96,10 @@ class PersonAdmin(FkAutocompleteAdmin):
                 ]
 
     def get_actions(self, request):
-        myactions = dict(create_action(s) for s in get_model('coop_local', 'PersonCategory').objects.all())
-        return dict(myactions, **super(PersonAdmin, self).get_actions(request))  # merging two dicts
+        category_actions = dict(create_action(s) for s in get_model('coop_local', 'PersonCategory').objects.all())
+        mailing_actions = dict(ml_action(s) for s in get_model('coop_local', 'MailingList').objects.all())
+        my_actions = dict(category_actions, **mailing_actions)
+        return dict(my_actions, **super(PersonAdmin, self).get_actions(request))  # merging two dicts
 
     fieldsets = (
         ('Identification', {

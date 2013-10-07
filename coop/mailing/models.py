@@ -41,7 +41,7 @@ SYMPA_TEMPLATES = Choices(
 )
 
 SUBSCRIPTION_OPTION = Choices(
-    ('MANUAL', 1, _(u'custom list')),
+    ('MANUAL', 1, _(u'manual choice')),
     ('ALL', 2, _(u'persons and organizations')),
     ('ALL_ORGS', 3, _(u'organizations only')),
     ('ALL_PERSONS', 4, _(u'persons only')),
@@ -53,7 +53,8 @@ class BaseMailingList(models.Model):
     name = models.CharField(_('name'), max_length=50, unique=True)
     # various subscription option
     subscription_option = models.PositiveSmallIntegerField(_(u'email choice'),
-                    choices=SUBSCRIPTION_OPTION.CHOICES, default=SUBSCRIPTION_OPTION.ALL)
+                    choices=SUBSCRIPTION_OPTION.CHOICES, default=SUBSCRIPTION_OPTION.ALL,
+                    help_text=_(u'Manual > other option = losing selection!'))
     subscription_filter_with_tags = models.BooleanField(_(u'filter subscriptions with tags'), default=False)
     person_category = models.ForeignKey('coop_local.PersonCategory',
                                          verbose_name=_('person category'), 
@@ -72,10 +73,7 @@ class BaseMailingList(models.Model):
                     choices=SYMPA_TEMPLATES.CHOICES, default=SYMPA_TEMPLATES.NEWS_LETTER)
 
     def __unicode__(self):
-        if self.email and not self.email == '':
-            return u"%s" % self.email
-        else:
-            return self.name
+        return self.name
 
     #  attention code lié à l'existence d'un serveur SYMPA avec un FQDN genre listes.truc.com
     def build_email(self):
@@ -147,6 +145,7 @@ class BaseMailingList(models.Model):
             else:
                 raise ValidationError(_(u'list already exists on sympa server, please contact Sympa administrator'))
             self.email = soap.info(self.name).listAddress
+
         super(BaseMailingList, self).save(*args, **kwargs)
         self.verify_subscriptions(delete=False)
 
