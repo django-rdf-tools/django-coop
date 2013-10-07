@@ -177,7 +177,7 @@ class BaseContact(URIModel):
     content = models.CharField(_(u'content'), max_length=250)
     details = models.CharField(_(u'details'), blank=True, max_length=100)
     display = models.PositiveSmallIntegerField(_(u'Display'),
-                    choices=DISPLAY.CHOICES, default=DISPLAY.PUBLIC)
+                    choices=DISPLAY.CHOICES, default=DISPLAY.ADMIN)
 
     content_type = models.ForeignKey(ContentType, blank=True, null=True)
     object_id = models.PositiveIntegerField()
