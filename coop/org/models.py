@@ -645,7 +645,6 @@ class BaseOrganization(URIModel):
         # Set default values for preferred email, phone and postal address
         if self.pref_phone == None: # bizarre ici il FAUT faire == None et pour pref_mail c'est if not...
             phone_categories = [1, 2]
-            import pdb; pdb.set_trace()
             fixes = self.contacts.filter(contact_medium_id__in=phone_categories)
             if fixes.exists():
                 self.pref_phone = fixes[0]
