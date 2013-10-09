@@ -38,7 +38,8 @@ if "coop_cms" in settings.INSTALLED_APPS:
 
         if "coop.mailing" in settings.INSTALLED_APPS:
             newsletter = models.ForeignKey('coop_local.Newsletter', verbose_name=u'newsletter',
-                                blank=True, null=True, related_name='news_article')
+                                blank=True, null=True, related_name='news_article',
+                                on_delete=models.SET_NULL)
 
 
 

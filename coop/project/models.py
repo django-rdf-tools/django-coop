@@ -134,7 +134,8 @@ class BaseProject(URIModel):
     
     if "coop.mailing" in settings.INSTALLED_APPS:
         newsletter = models.ForeignKey('coop_local.Newsletter', verbose_name=u'newsletter',
-                                blank=True, null=True, related_name='news_project')
+                                blank=True, null=True, related_name='news_project',
+                                on_delete=models.SET_NULL)
 
     if "coop.doc" in settings.INSTALLED_APPS:
         attachments = generic.GenericRelation('coop_local.Attachment')
