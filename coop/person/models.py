@@ -121,12 +121,13 @@ class BasePerson(URIModel):
             if(chg):
                 self.user.save()
 
+        super(BasePerson, self).save(*args, **kwargs)
+        
         if not self.pref_email:
             emails = self.contacts.filter(contact_medium_id=8)
             if emails.exists():
                 self.pref_email = emails[0]
-
-        super(BasePerson, self).save(*args, **kwargs)
+            super(BasePerson, self).save(*args, **kwargs)
 
 
     # RDF stuf

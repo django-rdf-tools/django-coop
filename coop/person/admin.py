@@ -85,7 +85,7 @@ class PersonAdmin(FkAutocompleteAdmin):
     related_search_fields = {'location': ('label', 'adr1', 'adr2', 'zipcode', 'city'), }
 
     form = PersonAdminForm
-    search_fields = ['last_name', 'first_name']
+    search_fields = ['last_name', 'first_name', 'pref_email']
     list_display = ('last_name', 'first_name', person_mobile_phone, person_phone, person_email, person_subs)
     list_filter = ('category',)
     list_display_links = ('last_name', 'first_name')
