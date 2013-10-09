@@ -45,7 +45,8 @@ class BasePerson(URIModel):
 
     pref_email = models.ForeignKey('coop_local.Contact',
                 verbose_name=_(u'preferred email'),
-                related_name="preferred_email", null=True, blank=True, 
+                related_name="preferred_email", 
+                null=True, blank=True, 
                 on_delete=models.SET_NULL,
                 help_text=_(u'will not be displayed on the website'))
 
@@ -122,7 +123,7 @@ class BasePerson(URIModel):
                 self.user.save()
 
         super(BasePerson, self).save(*args, **kwargs)
-        
+
         if not self.pref_email:
             emails = self.contacts.filter(contact_medium_id=8)
             if emails.exists():
