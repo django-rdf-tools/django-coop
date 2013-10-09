@@ -109,6 +109,14 @@ def post_save_callback(sender, instance, **kwargs):
                 #log.debug('publish done; Number of Dist task %s' % len(subhub.models.DistributionTask.objects.all()))
             except Exception, e:
                 log.warning(u'Unable to publish %s for feed %s : %s' % (instance, feed_url, e))
+
+        if isinstance(instance, coop.org.models.BaseContact):
+            obj = instance.content_object
+            if not obj.pref_email and instance.contact_medium_id == 8:
+                obj.pref_email = instance
+                obj.save()         
+
+
     elif isinstance(instance, subhub.models.DistributionTask) and maintenance:
         try:
             nb = len(subhub.models.DistributionTask.objects.all())
@@ -120,11 +128,11 @@ def post_save_callback(sender, instance, **kwargs):
             log.warning(u"%s" % e)
     elif isinstance(instance, subhub.models.SubscriptionTask) and maintenance:
         # call the maintenance
-            try:
-                log.info(u'Processing verification queue...')
-                subhub.models.SubscriptionTask.objects.process(log=log)
-            except subhub.utils.LockError, e:
-                log.warning(u"%s" % e)
+        try:
+            log.info(u'Processing verification queue...')
+            subhub.models.SubscriptionTask.objects.process(log=log)
+        except subhub.utils.LockError, e:
+            log.warning(u"%s" % e)
     else:
         pass
 
