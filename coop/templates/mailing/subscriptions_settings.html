@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Modification de vos abonnements{% endblock %}
+
+
+
+
+{% block document %}
+    <div class="span8">
+
+    {% block title %}<h3>Modification de vos abonnements</h3>{% endblock %}
+
+    {% block article %}
+
+    {% if found %}
+
+        <b>Nom : </b>{{person.label}}<br/>
+        <b>Email : </b>{{person.pref_email.content}}<br/>
+        <br>
+        <b>Abonnements sur ce site : </b>
+
+        <form method="post">
+            {% csrf_token %}
+                <table border=2>
+                    <thead><tr>
+                        <th width="40%">Liste</th>
+                        <th width="20%">Abonné</th>
+                        <th width="20%">Non-abonné</th>
+                    </tr></thead>
+                    <tbody>
+                    {% for ml in mls %}
+                    <tr><td>Liste {{ ml.name }}</td>
+                        <td align="middle"><input type="radio" name="ml_{{ml.id}}" value="1" checked="checked"></td>
+                        <td align="middle"><input type="radio" name="ml_{{ml.id}}" value="0"></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <input type="checkbox" value="delete" name="delete_data"> Supprimer mon compte (<em>Vous ne recevrez plus aucune nouvelle de ce site</em>)
+            <br/>
+
+            <br>
+            <input type="submit" value="Valider" class="btn btn-success">
+        </form>
+    
+    {% else %}
+
+        <H4>{{msg}}</H4>
+
+    {% endif%}
+
+    </div>    
+    {% endblock %}
+
+{% endblock %}
+
+
+
+
+
+
+
+

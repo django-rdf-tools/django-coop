@@ -86,9 +86,9 @@ class BaseMailingList(models.Model):
         res = Person.objects.none()
         if self.subscription_option in [SUBSCRIPTION_OPTION.ALL, SUBSCRIPTION_OPTION.ALL_PERSONS]:
             if self.person_category:
-                res = Person.objects.filter(category__in=[self.person_category])
+                res = Person.objects.filter(category__in=[self.person_category], active=True)
             else:
-                res = Person.objects.all()
+                res = Person.objects.filter(active=True)
 
             if self.organization_category:
                 orgs_in_cat = get_model('coop_local', 'Organization').objects.filter(category=self.organization_category)
@@ -190,7 +190,7 @@ class BaseMailingList(models.Model):
 
     def _instance_to_subscription(self, instance):
         from coop_local.models import Subscription
-        if instance.pref_email:
+        if instance.pref_email and instance.active:
             # ct will tell us if we're about to subscribe a person or an organization
             ct = ContentType.objects.get_for_model(instance)
             qs = Subscription.objects.filter(mailing_list=self,
@@ -276,6 +276,16 @@ class BaseMailingList(models.Model):
                 res += '%s\n' % email
         return res
 
+    def dest_dicts(self):
+        from coop_local.models import Subscription
+        self.verify_subscriptions()
+        res = []
+        for s in Subscription.objects.filter(mailing_list=self):
+            res.append({'email': s.content_object.pref_email.content,
+                        'name': s.content_object.label(),
+                        'uuid': s.content_object.uuid
+                        })
+        return res
 
 # def on_create_mailing_instance(sender, instance, created, raw, **kwargs):
 #     from coop_local.models import MailingList

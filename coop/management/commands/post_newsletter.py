@@ -14,19 +14,27 @@ class Command(BaseCommand):
         # if len(args)>0:
         #     dests = args[0].split(";")
         # else:
-        #     print 'usage: python manage.py send_newsletter toto@toto.fr;titi@titi.fr'
+        #     print 'usage: python manage.py post_newsletter toto@toto.fr;titi@titi.fr'
 
         sendings = NewsletterSending.objects.filter(scheduling_dt__lte=datetime.now(), sending_dt=None)
         for sending in sendings:
-            dests = map(lambda x: x.email, sending.newsletter.lists.all())
-            if self.verbosity >= 2:
+            print sending
+            # dests = map(lambda x: x.email, sending.newsletter.lists.all())
+            
+            dests = []
+
+            for ml in sending.newsletter.lists.all():
+                for dest in ml.dest_dicts():
+                    dests.append(dest)
+
+            if self.verbosity >= 1:
                 print 'send_newsletter {1} to {0} addresses'.format(len(dests), sending.newsletter)
-            if self.verbosity >= 3:
+            if self.verbosity >= 2:
                 for d in dests:
-                    print 'address %s' % d
+                    print 'email : %s' % d['email']
 
             nb_sent = send_newsletter(sending.newsletter, dests)
-            if self.verbosity >= 2:
+            if self.verbosity >= 1:
                 print nb_sent, "emails sent"
 
             sending.sending_dt = datetime.now()
