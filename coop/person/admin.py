@@ -12,8 +12,6 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 
-
-
 class PersonAdminForm(forms.ModelForm):
     # category = chosenforms.ChosenModelMultipleChoiceField(
     #         required=False,
@@ -87,7 +85,7 @@ class PersonAdmin(FkAutocompleteAdmin):
     form = PersonAdminForm
     search_fields = ['last_name', 'first_name', 'pref_email__content', 'structure']
     list_display = ('last_name', 'first_name', person_mobile_phone, person_phone, person_email, person_subs)
-    list_filter = ('category',)
+    list_filter = ('category', 'active')
     list_display_links = ('last_name', 'first_name')
     ordering = ('last_name',)
     inlines = [ContactInline,
