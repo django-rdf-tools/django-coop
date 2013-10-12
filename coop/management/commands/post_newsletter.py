@@ -22,8 +22,10 @@ class Command(BaseCommand):
             # dests = map(lambda x: x.email, sending.newsletter.lists.all())
             
             dests = []
+            tags = []
 
             for ml in sending.newsletter.lists.all():
+                tags.append(ml.name)
                 for dest in ml.dest_dicts():
                     dests.append(dest)
 
@@ -33,7 +35,7 @@ class Command(BaseCommand):
                 for d in dests:
                     print 'email : %s' % d['email']
 
-            nb_sent = send_newsletter(sending.newsletter, dests)
+            nb_sent = send_newsletter(sending.newsletter, dests, tags)
             if self.verbosity >= 1:
                 print nb_sent, "emails sent"
 

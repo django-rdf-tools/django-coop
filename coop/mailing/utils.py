@@ -77,13 +77,15 @@ def make_links_absolute(html_content):
 
     return html_content
     
-def send_newsletter(newsletter, dests):
+def send_newsletter(newsletter, dests, tags=None):
 
     emails = []
     connection = get_connection()
     from_email = _FROM_EMAIL
+    headers = {'X-MC-Tags' : ','.join(tags)}
     reply_to = getattr(settings, 'COOP_CMS_REPLY_TO', None)
-    headers = {'Reply-To': reply_to} if reply_to else None
+    if reply_to:
+        headers['Reply-To'] = reply_to
 
     for dest in dests:
 
