@@ -152,7 +152,7 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
     list_display = ['logo_list_display', 'label', 'active', 'newsletter']#'has_description',
     list_editable = ['newsletter']
     list_display_links = ['label', ]
-    search_fields = ['title', 'acronym', 'subtitle', 'acronym', 'description']
+    search_fields = ['title', 'acronym','subtitle','acronym','description','notes']
     list_filter = ['active', 'category']
     #actions_on_top = True
     #actions_on_bottom = True
