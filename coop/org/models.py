@@ -644,15 +644,20 @@ class BaseOrganization(URIModel):
 
     def save(self, *args, **kwargs):
         # Set default values for preferred email, phone and postal address
-        if self.pref_phone == None: # bizarre ici il FAUT faire == None et pour pref_mail c'est if not...
-            phone_categories = [1, 2]
-            fixes = self.contacts.filter(contact_medium_id__in=phone_categories)
-            if fixes.exists():
-                self.pref_phone = fixes[0]
-        if not self.pref_email:
-            orgmails = self.contacts.filter(contact_medium_id=8)
-            if orgmails.exists():
-                self.pref_email = orgmails[0]
+        # if not self.pref_phone : # bizarre ici il FAUT faire == None et pour pref_mail c'est if not...
+        #     phone_categories = [1, 2]
+        #     fixes = self.contacts.filter(contact_medium_id__in=phone_categories)
+        #     if fixes.exists():
+        #         self.pref_phone = fixes[0]
+
+        # if not self.pref_email:
+        #     orgmails = self.contacts.filter(contact_medium_id=8)
+        #     if orgmails.exists():
+        #         self.pref_email = orgmails[0]
+        #     else:
+        #         self.pref_email = self.members.all()[0].pref_email
+                
+
         if 'coop_geo' in settings.INSTALLED_APPS:
             if self.pref_address == None:
                 locations = self.located.all()  # should we have a "main venue" ?

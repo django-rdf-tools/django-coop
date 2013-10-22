@@ -11,6 +11,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         #look for emailing to be sent
         self.verbosity = int(options.get('verbosity', 1))
+        # self.emails = 
         # if len(args)>0:
         #     dests = args[0].split(";")
         # else:
