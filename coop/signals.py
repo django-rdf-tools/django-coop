@@ -117,21 +117,21 @@ def post_save_callback(sender, instance, **kwargs):
                 obj.save()     
 
         if isinstance(instance, coop.org.models.BaseOrganization):
-            if not instance.pref_phone : # bizarre ici il FAUT faire == None et pour pref_mail c'est if not...
+            if instance.pref_phone == None: # bizarre ici il FAUT faire == None et pour pref_mail c'est if not...
                 phone_categories = [1, 2]
                 fixes = instance.contacts.filter(contact_medium_id__in=phone_categories)
                 if fixes.exists():
                     instance.pref_phone = fixes[0]
                     instance.save()
-            if not instance.pref_email:
-                # import pdb; pdb.set_trace()
+            if instance.pref_email == None:
                 orgmails = instance.contacts.filter(contact_medium_id=8)
                 if orgmails.exists():
                     instance.pref_email = orgmails[0]
+                    instance.save()
                 elif instance.members.exists():
                     instance.pref_email = instance.members.all()[0].pref_email
                     instance.save()
-                    
+
                     
 
 
