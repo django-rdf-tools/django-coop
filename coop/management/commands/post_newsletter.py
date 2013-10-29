@@ -3,7 +3,7 @@ from django.core.management.base import BaseCommand
 from django.core.management import CommandError
 from datetime import datetime
 from coop.mailing.utils import send_newsletter
-from coop_local.models import NewsletterSending
+from coop_local.models import NewsletterSending, Newsletter
 import sys
 import os
 from optparse import make_option
