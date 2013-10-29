@@ -51,7 +51,7 @@ class Command(BaseCommand):
                 in_file = open(options['filename'], 'r')
                 tags.append(options['filename'])
                 for mail in in_file.readlines():
-                    dests.append({'email': mail,
+                    dests.append({'email': mail.rstrip('\n'),
                                 'name': None,
                                 'uuid': None
                                 })
