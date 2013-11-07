@@ -220,7 +220,7 @@ class NewsletterAdmin(admin.ModelAdmin):
          
         # content = StringIO()
 
-        call_command('post_newsletter', newsletter=id)#, stdout=content)
+        call_command('post_newsletter',[], {'newsletter':id})#, stdout=content)
 
         # content.seek(0)
         # msg = content.read()
