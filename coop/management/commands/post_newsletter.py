@@ -73,7 +73,7 @@ class Command(BaseCommand):
                     dests.append(dest)
 
             if self.verbosity >= 1:
-                print 'send_newsletter "{1}"" to {0} addresses'.format(len(dests), news.subject)
+                print u'send_newsletter "{1}" to {0} addresses'.format(len(dests), news.subject)
                 if self.verbosity >= 2:
                     for d in dests:
                         print 'email : %s' % d['email']
@@ -93,7 +93,7 @@ class Command(BaseCommand):
                         dests.append(dest)
 
                 if self.verbosity >= 1:
-                    print 'send_newsletter "{1}"" to {0} addresses'.format(len(dests), sending.newsletter)
+                    print u'send_newsletter "{1}" to {0} addresses'.format(len(dests), sending.newsletter)
                 if self.verbosity >= 2:
                     for d in dests:
                         print 'email : %s' % d['email']
