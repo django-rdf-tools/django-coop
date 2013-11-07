@@ -199,7 +199,7 @@ class NewsletterAdmin(admin.ModelAdmin):
     display_lists.allow_tags = True
 
     def sendbutton(self,obj):
-        return mark_safe('<input type="button" class="sendnews btn btn-success" rel="%s" value="Envoyer la lettre">' % obj.pk)
+        return mark_safe('<div><input type="button" class="sendnews btn btn-success" rel="%s" value="Envoyer la lettre"></div>' % obj.pk)
     sendbutton.short_description = 'Envoi'
     sendbutton.allow_tags = True
 
@@ -220,7 +220,7 @@ class NewsletterAdmin(admin.ModelAdmin):
          
         # content = StringIO()
 
-        call_command('post_newsletter',[], {'newsletter':id})#, stdout=content)
+        call_command('post_newsletter', newsletter=id)#, stdout=content)
 
         # content.seek(0)
         # msg = content.read()
