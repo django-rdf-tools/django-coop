@@ -8,6 +8,12 @@ from django.db.models.loading import get_model
 from django import forms
 from tinymce.widgets import AdminTinyMCE
 from chosen import widgets as chosenwidgets
+from django.utils.safestring import mark_safe
+from django.conf.urls.defaults import patterns, include, url
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+
 
 try:
     from chosen.widgets import ChosenSelectMultiple
@@ -174,7 +180,8 @@ class NewsletterAdminForm(forms.ModelForm):
 class NewsletterAdmin(admin.ModelAdmin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
     form = NewsletterAdminForm
-    inlines = [NewsletterSendingInline]
+    # inlines = [NewsletterSendingInline]
+    list_display = ('subject','display_lists','sendbutton')
     fieldsets = (
         ('Description', {
             'fields': ['subject', 'template',
@@ -184,5 +191,41 @@ class NewsletterAdmin(admin.ModelAdmin):
                        ]
             }),
         )
+    def display_lists(self,obj):
+        listes = []
+        for l in obj.lists.all(): listes.append(l.name)
+        return mark_safe(', '.join(listes))
+    display_lists.short_description = 'Destinataires'
+    display_lists.allow_tags = True
+
+    def sendbutton(self,obj):
+        return mark_safe('<input type="button" class="sendnews btn btn-success" rel="%s" value="Envoyer la lettre">' % obj.pk)
+    sendbutton.short_description = 'Envoi'
+    sendbutton.allow_tags = True
 
 
+    def get_urls(self):
+        urls = super(NewsletterAdmin, self).get_urls()
+        my_urls = patterns('',
+            (r'sendnews/(?P<id>\d+)/$', self.admin_site.admin_view(self.sendnews)),
+        )
+        return my_urls + urls
+
+ 
+    def sendnews(self, request, id):
+        # news = Newsletter.objects.get(pk=id)
+
+        from django.core.management import call_command
+        # from StringIO import StringIO 
+         
+        # content = StringIO()
+
+        call_command('post_newsletter', newsletter=id)#, stdout=content)
+
+        # content.seek(0)
+        # msg = content.read()
+
+
+        return render_to_response('mailing/admin/sendnews.html', {
+            'msg' : u'lettre envoyée'
+        }, context_instance=RequestContext(request))

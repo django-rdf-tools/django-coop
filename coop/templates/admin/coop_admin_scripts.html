@@ -107,6 +107,20 @@ jQuery(document).ready(function($) {
   selectPreviousTab()
 
 
+  $("input.sendnews").click(function(){
+        // je récupère les valeurs
+        var news_id = $(this).attr('rel');
+            // appel Ajax
+            $.ajax({
+                url: 'sendnews/' + news_id + '/',
+                type: 'GET', // la méthode indiquée dans le formulaire (get ou post)
+                success: function(html) { // je récupère la réponse du fichier PHP
+                    alert(html); // j'affiche cette réponse
+                }
+            });
+    });
+
+
 
     // resize TinyMCE Editor
     $("table#id_description_tbl.mceLayout").width('617px');
