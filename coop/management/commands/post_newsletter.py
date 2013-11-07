@@ -60,9 +60,26 @@ class Command(BaseCommand):
                 if self.verbosity >= 1:
                     print nb_sent, "emails sent"
 
-
             finally:
                 in_file.close()
+
+        elif options['newsletter']:
+
+            news = Newsletter.objects.get(id=options['newsletter'])
+
+            for ml in news.lists.all():
+                tags.append(ml.name)
+                for dest in ml.dest_dicts():
+                    dests.append(dest)
+
+            if self.verbosity >= 1:
+                print 'send_newsletter "{1}"" to {0} addresses'.format(len(dests), news.subject)
+                if self.verbosity >= 2:
+                    for d in dests:
+                        print 'email : %s' % d['email']
+                nb_sent = send_newsletter(news, dests, tags)
+                if self.verbosity >= 1:
+                    print nb_sent, "emails sent"
 
         else:
             sendings = NewsletterSending.objects.filter(scheduling_dt__lte=datetime.now(), sending_dt=None)
@@ -76,7 +93,7 @@ class Command(BaseCommand):
                         dests.append(dest)
 
                 if self.verbosity >= 1:
-                    print 'send_newsletter {1} to {0} addresses'.format(len(dests), sending.newsletter)
+                    print 'send_newsletter "{1}"" to {0} addresses'.format(len(dests), sending.newsletter)
                 if self.verbosity >= 2:
                     for d in dests:
                         print 'email : %s' % d['email']
