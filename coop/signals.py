@@ -79,6 +79,7 @@ def post_save_callback(sender, instance, **kwargs):
     if hasattr(instance, 'sites') and (
             isinstance(instance, coop.tag.models.CoopTag) or
             # isinstance(instance, coop.tag.models.CoopTaggedItem) or
+            isinstance(instance, coop.org.models.BaseContact) or
             isinstance(instance, coop.org.models.BaseRole)):
         for s in Site.objects.all():
             if not s in instance.sites.all():
@@ -89,26 +90,26 @@ def post_save_callback(sender, instance, **kwargs):
     # log.debug(u"Post save callback with sender %s and instance %s and AUTO %s" % (unicode(sender), unicode(instance), maintenance))
 
     if isinstance(instance, StaticURIModel):
-        if instance.uri_mode == URI_MODE.IMPORTED:
-            # log.debug(u"%s is imported. Nothing to publish, but subscription renew" % instance)
-            instance.subscribeToUpdades()
-            # TODO check if a subscription is done, either lets do it
-        elif isinstance(instance, coop_tag.models.TagBase):
-            # Subscription done if it does not exists, in other it is simply renew
-            if hasattr(settings, 'THESAURUS_HOST') and \
-                    not settings.THESAURUS_HOST == 'http://thess.domain.com':
-                instance.subscribeToUpdades(host=settings.THESAURUS_HOST)
-        else:
-            domain = Site.objects.get_current().domain
-            if domain.startswith('http'):
-                feed_url = '%s/feed/%s/' % (domain, sender.__name__.lower())
-            else:
-                feed_url = 'http://%s/feed/%s/' % (domain, sender.__name__.lower())
-            try:
-                subhub.publish([feed_url], instance.uri, False)
-                #log.debug('publish done; Number of Dist task %s' % len(subhub.models.DistributionTask.objects.all()))
-            except Exception, e:
-                log.warning(u'Unable to publish %s for feed %s : %s' % (instance, feed_url, e))
+        # if instance.uri_mode == URI_MODE.IMPORTED:
+        #     # log.debug(u"%s is imported. Nothing to publish, but subscription renew" % instance)
+        #     instance.subscribeToUpdates()
+        #     # TODO check if a subscription is done, either lets do it
+        # elif isinstance(instance, coop_tag.models.TagBase):
+        #     # Subscription done if it does not exists, in other it is simply renew
+        #     if hasattr(settings, 'THESAURUS_HOST') and \
+        #             not settings.THESAURUS_HOST == 'http://thess.domain.com':
+        #         instance.subscribeToUpdates(host=settings.THESAURUS_HOST)
+        # else:
+        #     domain = Site.objects.get_current().domain
+        #     if domain.startswith('http'):
+        #         feed_url = '%s/feed/%s/' % (domain, sender.__name__.lower())
+        #     else:
+        #         feed_url = 'http://%s/feed/%s/' % (domain, sender.__name__.lower())
+        #     try:
+        #         subhub.publish([feed_url], instance.uri, False)
+        #         #log.debug('publish done; Number of Dist task %s' % len(subhub.models.DistributionTask.objects.all()))
+        #     except Exception, e:
+        #         log.warning(u'Unable to publish %s for feed %s : %s' % (instance, feed_url, e))
 
         if isinstance(instance, coop.org.models.BaseContact):
             obj = instance.content_object
@@ -131,9 +132,6 @@ def post_save_callback(sender, instance, **kwargs):
                 elif instance.members.exists():
                     instance.pref_email = instance.members.all()[0].pref_email
                     instance.save()
-
-                    
-
 
 
     elif isinstance(instance, subhub.models.DistributionTask) and maintenance:
@@ -161,7 +159,7 @@ def post_save_callback(sender, instance, **kwargs):
 def post_delete_callback(sender, instance, **kwargs):
     if isinstance(instance, StaticURIModel):
         if instance.uri_mode == URI_MODE.IMPORTED:
-            instance.unsubscribeToUpdades()
+            instance.unsubscribeToUpdates()
         if instance.uri_mode == URI_MODE.LOCAL:
             from coop_local.models import DeletedURI
             #peut etre à completer

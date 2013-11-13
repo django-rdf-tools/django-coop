@@ -185,7 +185,7 @@ class BaseContact(URIModel):
 
     class Meta:
         abstract = True
-        ordering = ['contact_medium']
+        # ordering = ['contact_medium']
         verbose_name = _(u'Contact')
         verbose_name_plural = _(u'Contacts')
         app_label = 'coop_local'

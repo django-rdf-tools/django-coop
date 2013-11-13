@@ -77,9 +77,6 @@ def get_urimode_from_uri(uri):
         return URI_MODE.IMPORTED
 
 
-
-
-
 class StaticURIModel(models.Model):
     """
     To use this model as a basis for your own abstract model, you need to have
@@ -576,7 +573,7 @@ class StaticURIModel(models.Model):
 
 
     # This a very simple case, where feed and ub share the same host
-    def subscribeToUpdades(self, host=settings.PES_HOST):
+    def subscribeToUpdates(self, host=settings.PES_HOST):
         feed_url = "%s/feed/%s/%s/" % (host, self.__class__.__name__.lower(), self.uri_id)
         validate = URLValidator(verify_exists=True)
         try:
@@ -592,7 +589,7 @@ class StaticURIModel(models.Model):
                 log.debug(u" Impossible to subscribe to %s : %s" % (feed_url, e))
 
 
-    def unsubscribeToUpdades(self, host=settings.PES_HOST):
+    def unsubscribeToUpdates(self, host=settings.PES_HOST):
         feed_url = "%s/feed/%s/%s/" % (host, self.__class__.__name__.lower(), self.uri_id)
         validate = URLValidator(verify_exists=True)
         try:
