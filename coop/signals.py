@@ -80,7 +80,7 @@ def post_save_callback(sender, instance, **kwargs):
             isinstance(instance, coop.tag.models.CoopTag) or
             # isinstance(instance, coop.tag.models.CoopTaggedItem) or
             isinstance(instance, coop.org.models.BaseContact) or
-            isinstance(instance, coop.mailing.models.BaseSubscription) or
+            isinstance(instance, coop.person.models.BasePerson) or
             isinstance(instance, coop.org.models.BaseRole)):
         for s in Site.objects.all():
             if not s in instance.sites.all():
