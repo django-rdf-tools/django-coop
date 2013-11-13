@@ -13,7 +13,7 @@ from django.conf.urls.defaults import patterns, include, url
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-
+from django.conf import settings
 
 try:
     from chosen.widgets import ChosenSelectMultiple
@@ -138,8 +138,8 @@ class NewsletterSendingInline(admin.StackedInline):
 
 
 class NewsletterAdminForm(forms.ModelForm):
-
     content = forms.CharField(widget=AdminTinyMCE(attrs={'cols': 80, 'rows': 60}), required=False)
+
 
     def __init__(self, *args, **kwargs):
         super(NewsletterAdminForm, self).__init__(*args, **kwargs)
@@ -150,7 +150,8 @@ class NewsletterAdminForm(forms.ModelForm):
             self.fields["template"] = forms.ChoiceField(choices=choices)
         else:
             self.fields["template"] = forms.CharField()
-
+        # if 'sites' in self.fields:
+        #     self.fields['sites'].help_text = None
         # self.fields['lists'].queryset = MailingList.objects.exclude(name='fake')
         self.fields['lists'].help_text = None
 
@@ -161,7 +162,9 @@ class NewsletterAdminForm(forms.ModelForm):
 
     class Meta:
         model = Newsletter
-        widgets = {'lists': chosenwidgets.ChosenSelectMultiple(),}
+        widgets = {
+                    # 'sites': chosenwidgets.ChosenSelectMultiple(),
+                    'lists': chosenwidgets.ChosenSelectMultiple(),}
         try:
             widgets.update({
                 'items': ChosenSelectMultiple(),
@@ -191,6 +194,11 @@ class NewsletterAdmin(admin.ModelAdmin):
                        ]
             }),
         )
+
+    # if settings.COOP_USE_SITES:
+    #     fieldsets[0][1]['fields'].insert(0, 'sites')
+
+
     def display_lists(self,obj):
         listes = []
         for l in obj.lists.all(): listes.append(l.name)

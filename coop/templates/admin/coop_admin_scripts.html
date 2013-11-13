@@ -116,6 +116,7 @@ jQuery(document).ready(function($) {
                 type: 'GET', // la méthode indiquée dans le formulaire (get ou post)
                 success: function(html) { // je récupère la réponse du fichier PHP
                     alert(html); // j'affiche cette réponse
+                    $(this).fadeOut();
                 }
             });
     });

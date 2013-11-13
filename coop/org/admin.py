@@ -146,6 +146,17 @@ def create_action(category):
     return (name, (add_cat, name, _(u'Add to the "%s" category') % (category,)))
 
 
+def ml_action(ml):
+    def add_sub(modeladmin, request, queryset):
+        # ct = ContentType.objects.get(model='person')
+        for obj in queryset:
+            ml._instance_to_subscription(obj)
+            # if not Subscription.objects.filter(mailing_list=ml, content_type=ct, object_id=obj.id).exists():
+            #     Subscription.create(mailing_list=ml, content_object=obj)
+    name = "sub_ml_%s" % (ml.id,)
+    return (name, (add_sub, name, _(u'Subscribe to mailing list : %s') % (ml.name,)))
+
+
 class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
     form = OrganizationAdminForm
@@ -214,9 +225,10 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
         list_filter.append('sites')
 
     def get_actions(self, request):
-        myactions = dict(create_action(s) for s in get_model('coop_local', 'OrganizationCategory').objects.all())
-        return dict(myactions, **super(OrganizationAdmin, self).get_actions(request))  # merging two dicts
-        #list_display = ['my_image_thumb', 'my_other_field1', 'my_other_field2', ] ???
+        category_actions = dict(create_action(s) for s in get_model('coop_local', 'OrganizationCategory').objects.all())
+        mailing_actions = dict(ml_action(s) for s in get_model('coop_local', 'MailingList').objects.all())
+        my_actions = dict(category_actions, **mailing_actions)
+        return dict(my_actions, **super(OrganizationAdmin, self).get_actions(request))  # merging two dicts
 
     def get_form(self, request, obj=None, **kwargs):
         # just save obj reference for future processing in Inline
