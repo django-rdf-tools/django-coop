@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
 from django.forms import ValidationError
 from coop_local.models import NewsletterSending, Subscription, Newsletter, MailingList
-from coop_local.models import Article, Event
+# from coop_local.models import Article, Event
 from django.db.models.loading import get_model
 from django import forms
 from tinymce.widgets import AdminTinyMCE

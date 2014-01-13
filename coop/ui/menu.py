@@ -158,16 +158,16 @@ class CustomMenu(Menu):
 
         # Optional menus
 
-        if 'coop.agenda' in settings.INSTALLED_APPS:
-            menu_length += 1
-            self.children.insert(menu_length,
-                items.MenuItem(_(u'Agenda'), '#', icon='icon-calendar icon-white',
-                    children=[
-                        items.MenuItem(_(u'Events'), '/admin/coop_local/event/'),
-                        items.MenuItem(_(u'Calendar'), '/admin/coop_local/calendar/'),
-                        items.MenuItem(_(u'Event categories'), '/admin/coop_local/eventcategory/'),
-                    ])
-                )
+        # if 'coop.agenda' in settings.INSTALLED_APPS:
+        #     menu_length += 1
+        #     self.children.insert(menu_length,
+        #         items.MenuItem(_(u'Agenda'), '#', icon='icon-calendar icon-white',
+        #             children=[
+        #                 items.MenuItem(_(u'Events'), '/admin/coop_local/event/'),
+        #                 items.MenuItem(_(u'Calendar'), '/admin/coop_local/calendar/'),
+        #                 items.MenuItem(_(u'Event categories'), '/admin/coop_local/eventcategory/'),
+        #             ])
+        #         )
 
         if 'coop.mailing' in settings.INSTALLED_APPS:
             menu_length += 1

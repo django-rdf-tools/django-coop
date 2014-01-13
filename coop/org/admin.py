@@ -16,7 +16,6 @@ from django.utils.safestring import mark_safe
 from django.contrib.contenttypes.generic import GenericTabularInline
 from sorl.thumbnail.admin import AdminImageMixin
 from tinymce.widgets import AdminTinyMCE
-from coop.agenda.admin import DatedInline
 from django.contrib.sites.models import Site
 
 from chosen import widgets as chosenwidgets
@@ -26,6 +25,9 @@ if "coop.exchange" in settings.INSTALLED_APPS:
 
 if "coop_geo" in settings.INSTALLED_APPS:
     from coop_geo.admin import LocatedInline, AreaInline
+
+# if "coop_agenda" in settings.INSTALLED_APPS:
+#     from coop.agenda.admin import DatedInline
 
 
 
