@@ -196,6 +196,7 @@ INSTALLED_APPS = [
     'coop_bar',
     'pagination',
 
+    # doit etre là sinon retour du bug #1796
     'django.contrib.sites',
 
 
