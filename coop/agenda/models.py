@@ -448,7 +448,6 @@ class BaseGenericDate(models.Model):
         app_label = 'coop_local'
 
 
-
     def __unicode__(self):
         return _date(self.start_time, _("l j F Y"))
 
