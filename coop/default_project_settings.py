@@ -145,6 +145,10 @@ INSTALLED_APPS = [
     'django.contrib.comments',
     # 'djgeojson',
 
+        # doit etre là sinon retour du bug #1796
+    'django.contrib.sites',
+
+
     # other 3rd parties
     'south',
     'django_extensions',
@@ -196,8 +200,6 @@ INSTALLED_APPS = [
     'coop_bar',
     'pagination',
 
-    # doit etre là sinon retour du bug #1796
-    'django.contrib.sites',
 
 
 ]

@@ -23,14 +23,18 @@ if 'coop_tag' in settings.INSTALLED_APPS:
 
     class CoopTag(URIModel, TagBase):
         # Fields name and slug are defined in TagBase
-        logo = ImageField(upload_to='logos/', null=True, blank=True)
-
-        description = models.TextField(_('description'), blank=True, null=True)
         language = models.CharField(_(u'language'), max_length=10, default='fr')
 
         person = models.ForeignKey('coop_local.Person', 
                                        verbose_name=_(u'author'), 
                                        related_name='tag_author', null=True, blank=True)
+
+        concept_uri = models.CharField(_(u'Concept URI'), blank=True, max_length=250, editable=False)
+
+        logo = ImageField(upload_to='logos/', null=True, blank=True)
+
+        description = models.TextField(_('description'), blank=True, null=True)
+
         # We could also link to remote objects
         remote_person_uri = models.URLField(_(u'remote person URI'), blank=True, max_length=255)
         remote_person_label = models.CharField(_(u'remote person label'),
@@ -40,7 +44,6 @@ if 'coop_tag' in settings.INSTALLED_APPS:
 
 
         # Thesaurus link
-        concept_uri = models.CharField(_(u'Concept URI'), blank=True, max_length=250, editable=False)
 
         # Tags have a common uri domain
         domain_name = 'thess.economie-solidaire.fr'

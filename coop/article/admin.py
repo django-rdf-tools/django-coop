@@ -53,7 +53,7 @@ if "coop_cms" in settings.INSTALLED_APPS:
         #     self.fields['remote_person_uri'].widget = HiddenInput()
 
 
-    class CoopArticleAdmin(ArticleAdmin, NoLookupsFkAutocompleteAdmin, AdminImageMixin):
+    class CoopArticleAdmin(ArticleAdmin, NoLookupsFkAutocompleteAdmin):
         form = CoopArticleForm
         change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
         change_list_template = 'admin/article_change_list.html'

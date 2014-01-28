@@ -121,6 +121,8 @@ class BaseDocResource(URIModel):
 
     organization_display.short_description = _(u"organization / editor")
 
+    rdf_type = settings.NS.dct.Text
+
 
 class BaseAttachment(FileNode):
     content_type = models.ForeignKey('contenttypes.ContentType', blank=True, null=True, default=None)
