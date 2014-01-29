@@ -533,7 +533,7 @@ class NoLookupsFkAutocompleteAdmin(admin.ModelAdmin):
         help_vars = {'field': field_name}
         return _(u"""<select class="input_method_select" id="%(field)s_input_method" style="margin-right:20px;">
                      <option value="key">Rechercher sur ce site</option>
-                     <option value="pes">Rechercher sur la PES</option>
+                    <!-- <option value="pes">Rechercher sur la PES</option> -->
                      <option value="txt">Indiquer juste le nom</option>
                      </select>&nbsp;&nbsp;&nbsp;
                         """) % help_vars

@@ -1,5 +1,6 @@
 {% load i18n %}
-<input type="text" id="lookup_{{ name }}" value="{{ label }}" style="display:none;" />
+<input type="text" id="lookup_{{ name }}" value="{{ label }}" style="display:none;" /> 
+<img class="ac_delete" src="/static/autocomplete/img/delete.png" title="Effacer la sélection">
 <input type="text" id="remote_lookup_{{ name }}" style="display:none;"/>
 
 {# <a href="{{ related_url }}{{ url }}" class="related-lookup" id="lookup_id_{{ name }}" onclick="return showRelatedObjectLookupPopup(this);"> #}
@@ -27,6 +28,11 @@
             {{ name }}_value = query;
         });
     };
+
+    $('img.ac_delete').click(function(){
+        $(this).siblings(".vForeignKeyRawIdAdminField").val("")
+        $(this).siblings("input.ac_input").val("")
+    })
 
 
     $('#id_{{ name }}').bind(($.browser.opera ? "keypress" : "keyup"), function(event) {

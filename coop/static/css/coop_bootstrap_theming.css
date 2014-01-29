@@ -1,6 +1,7 @@
 /* @override 
 	http://localhost:8000/static/css/coop_bootstrap_theming.css
 	http://debian:8000/static/css/coop_bootstrap_theming.css
+	http://debian2:8000/static/css/coop_bootstrap_theming.css
 */
 
 .navbar{
@@ -241,7 +242,7 @@ div.controls > input[type=checkbox]{
 }
 
 div.controls > a.related-lookup,
-div.controls > a.add-another,
+/*div.controls > a.add-another,*/
 div.controls > a.changelink{
 	display: inline-block;
 	position: absolute;
@@ -251,7 +252,7 @@ div.controls > a.changelink{
 
 
 div.controls > a.related-lookup,
-div.controls > a.add-another,
+/*div.controls > a.add-another,*/
 div.controls > a.changelink{
 	float: left;
 }
@@ -343,7 +344,17 @@ button#add-object{
 
 /* special widgets */
 
+img.ac_delete{
+	margin-left: 5px;
+	margin-top: 7px;
+	opacity: 0.5;
+}
 
+
+img.ac_delete:hover{
+	opacity: 1;
+	cursor: pointer;
+}
 
 input#id_tags.ac_input{
     width: 600px;
@@ -598,6 +609,10 @@ ul.methods li label input {
 }
 
 a[id$='-methods'].add-another{
+	display: none;
+}
+
+a.add-another{
 	display: none;
 }
 

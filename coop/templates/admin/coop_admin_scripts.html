@@ -131,11 +131,12 @@ jQuery(document).ready(function($) {
     //$("select[id^='id_exchanges'][id$='-eway']").css("margin-right","20px").parents("div.control-group").chil"label")css("display","none")
 
 
+
     // adding edit link for FKeys
     // adapted from http://djangosnippets.org/snippets/431/
 
     empty_values = ['','---------']
-    not_editable_fkeys = ["category", "calendar", "agenda_cible"]
+    not_editable_fkeys = ["category", "calendar", "agenda_cible", "zone", "agenda_commune",]
     not_editable_ac = ["lookup_coop_geo-located"]
     $("a.add-another").each(function(){
 
@@ -165,7 +166,7 @@ jQuery(document).ready(function($) {
               win.focus();
               return false;
             });
-          }
+          } 
     });
 
 
