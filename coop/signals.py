@@ -72,7 +72,6 @@ def letsCallDistributionTaskProcess(thName):
 def post_save_callback(sender, instance, **kwargs):
     # Initialize the 'sites' many2many field with the default site
 
-
     if hasattr(instance, 'sites') and not instance.sites.all().exists():
         instance.sites.add(Site.objects.get_current())
 
@@ -116,7 +115,7 @@ def post_save_callback(sender, instance, **kwargs):
             obj = instance.content_object
             if not obj.pref_email and instance.contact_medium_id == 8:
                 obj.pref_email = instance
-                obj.save()     
+                obj.save()
 
         if isinstance(instance, coop.org.models.BaseOrganization):
             if instance.pref_phone == None: # bizarre ici il FAUT faire == None et pour pref_mail c'est if not...
@@ -125,19 +124,23 @@ def post_save_callback(sender, instance, **kwargs):
                 if fixes.exists():
                     instance.pref_phone = fixes[0]
                     instance.save()
-            if instance.pref_email == None:
+            if not instance.pref_email :
                 orgmails = instance.contacts.filter(contact_medium_id=8)
                 if orgmails.exists():
                     instance.pref_email = orgmails[0]
                     instance.save()
                 elif instance.members.exists():
-                    instance.pref_email = instance.members.all()[0].pref_email
-                    instance.save()
+                    for member in instance.members.all():
+                        if member.pref_email:
+                            instance.pref_email = member.pref_email
+                            instance.save()
+                            break
+                    
 
 
     elif isinstance(instance, subhub.models.DistributionTask) and maintenance:
         try:
-            nb = len(subhub.models.DistributionTask.objects.all())
+            # nb = len(subhub.models.DistributionTask.objects.all())
             #log.debug("before call ENQUEUE, tasks %s" % nb)
             LastDTProcess.update()
             django_rq.enqueue(letsCallDistributionTaskProcess, threading.currentThread().name)

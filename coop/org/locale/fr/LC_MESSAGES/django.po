@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop.organization\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-07 12:16+0200\n"
-"PO-Revision-Date: 2013-10-07 12:16+0100\n"
+"POT-Creation-Date: 2014-02-05 12:29+0100\n"
+"PO-Revision-Date: 2014-02-05 12:29+0100\n"
 "Last-Translator: Quinode <contact@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
 "Language: fr_FR\n"
@@ -18,34 +18,39 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: admin.py:43
+#: admin.py:45
 msgid "Contact information"
 msgstr "Contact"
 
-#: admin.py:44
+#: admin.py:46
 msgid "Contact informations"
 msgstr "Contacts"
 
-#: admin.py:51
+#: admin.py:53
 msgid "Member"
 msgstr "Membre"
 
-#: admin.py:52
+#: admin.py:54
 msgid "Members"
 msgstr "Membres"
 
-#: admin.py:71 models.py:335
+#: admin.py:73 models.py:335
 msgid "Engagement"
 msgstr "Engagement"
 
-#: admin.py:72 models.py:336
+#: admin.py:74 models.py:336
 msgid "Engagements"
 msgstr "Engagements"
 
-#: admin.py:146
+#: admin.py:148
 #, python-format
-msgid "Add to the \"%s\" category"
-msgstr "Classer dans \"%s\""
+msgid "◊ Add to the \"%s\" category"
+msgstr "◊ Classer dans \"%s\""
+
+#: admin.py:159
+#, python-format
+msgid "Subscribe to mailing list : %s"
+msgstr ""
 
 #: coop_bar_links.py:19
 msgid "Edit organization"
@@ -360,59 +365,59 @@ msgstr "relations"
 msgid "members"
 msgstr "membres"
 
-#: models.py:476
+#: models.py:477
 msgid "creation date"
 msgstr "date de création"
 
-#: models.py:477
+#: models.py:478
 msgid "global email"
 msgstr "email général"
 
-#: models.py:478
+#: models.py:479
 msgid "email checksum"
 msgstr "checksum e-mail"
 
-#: models.py:480
+#: models.py:481
 msgid "web site"
 msgstr "site web"
 
-#: models.py:483
+#: models.py:484
 msgid "preferred email"
 msgstr "courriel préféré"
 
-#: models.py:487
+#: models.py:488
 msgid "preferred phone"
 msgstr "téléphone préféré"
 
-#: models.py:491
+#: models.py:492
 msgid "preferred postal address"
 msgstr "adresse postale préférée"
 
-#: models.py:497
+#: models.py:498
 msgid "notes"
 msgstr "notes"
 
-#: models.py:511
+#: models.py:512
 msgid "Organization"
 msgstr "Organisation"
 
-#: models.py:512
+#: models.py:513
 msgid "Organizations"
 msgstr "Organisations"
 
-#: models.py:531
+#: models.py:532
 msgid "geo"
 msgstr "geo"
 
-#: models.py:595
+#: models.py:596
 msgid "desc."
 msgstr "desc."
 
-#: models.py:603 models.py:605
+#: models.py:604 models.py:606
 msgid "No Image"
 msgstr "Pas d'image"
 
-#: models.py:607
+#: models.py:608
 msgid "logo"
 msgstr "logo"
 

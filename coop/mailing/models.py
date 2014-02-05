@@ -190,7 +190,7 @@ class BaseMailingList(models.Model):
 
     def _instance_to_subscription(self, instance):
         from coop_local.models import Subscription
-        if instance.pref_email and instance.active:
+        if instance.pref_email: # and instance.active: # TODO another field is needed for unsubscribing all lists
             # ct will tell us if we're about to subscribe a person or an organization
             ct = ContentType.objects.get_for_model(instance)
             qs = Subscription.objects.filter(mailing_list=self,
@@ -331,36 +331,15 @@ class BaseSubscription(models.Model):
         )
         return u'<a href="%s">%s</a>' % (change_url,  obj.__unicode__())
     link_content_object.allow_tags = True
-    link_content_object.short_description = 'abonné'
-
+    link_content_object.short_description = u'abonné'
 
 
 
 #####################################################
 #
-#  News Letter
+#  Newsletter
 #
 #####################################################
-
-
-# class BaseNewsletterItem(models.Model):
-#     content_type = models.ForeignKey(
-#         ContentType, 
-#         verbose_name=_("content_type"),        
-#         related_name="%(app_label)s_%(class)s_newsletter_items"
-#     )
-#     object_id = models.PositiveIntegerField(verbose_name=_("object id"))
-#     content_object = generic.GenericForeignKey('content_type', 'object_id')
-
-#     class Meta:
-#         abstract = True
-#         app_label = 'coop_local'
-#         unique_together = (("content_type", "object_id"),)
-#         verbose_name = _(u'newsletter item')
-#         verbose_name_plural = _(u'newsletter items')
-
-#     def __unicode__(self):
-#         return u'{0}: {1}'.format(self.content_type, self.content_object)
 
 
 class BaseNewsletter(models.Model):
@@ -450,66 +429,5 @@ def instance_to_pref_email(instance):
 
 
 
-##################################
-## linked to NewsletterItem 
-##################################
 
-
-# def get_coop_local_newletters_item_class():
-#     if hasattr(get_coop_local_newletters_item_class, '_cache_class'):
-#         return getattr(get_coop_local_newletters_item_class, '_cache_class')
-#     else:
-#         klass = models.get_model('coop_local', 'newsletteritem')
-#         setattr(get_coop_local_newletters_item_class, '_cache_class', klass)
-#     return klass
-
-
-# def coop_newletter_items_classes():
-#     if hasattr(coop_newletter_items_classes, '_cache_class'):
-#         return getattr(coop_newletter_items_classes, '_cache_class')
-#     else:
-#         classes = []
-#         for c in settings.COOP_NEWLETTER_ITEM_CLASSES:
-#             classes.append(models.get_model('coop_local', c))
-#         setattr(coop_newletter_items_classes, '_cache_class', classes)
-#         return classes
-
-
-#delete item when content object is deleted
-# def on_delete_newsletterable_item(sender, instance, **kwargs):
-#     if sender in coop_newletter_items_classes():
-#         if hasattr(instance, 'id'):
-#             try:
-#                 ct = ContentType.objects.get_for_model(instance)
-#                 klass = get_coop_local_newletters_item_class()
-#                 item = klass.objects.get(content_type=ct, object_id=instance.id)
-#                 item.delete()
-#             except (klass.DoesNotExist, ContentType.DoesNotExist):
-#                 pass
-# pre_delete.connect(on_delete_newsletterable_item)
-
-
-# def create_newsletter_item(instance):
-#     ct = ContentType.objects.get_for_model(instance)
-#     klass = get_coop_local_newletters_item_class()
-#     if getattr(instance, 'in_newsletter', True):
-#         #Create a newsletter item automatically
-#         #An optional 'in_newsletter' field can skip the automatic creation if set to False
-#         return klass.objects.get_or_create(content_type=ct, object_id=instance.id)
-#     elif hasattr(instance, 'in_newsletter'):
-#         #If 'in_newsletter' field existe and is False
-#         #We delete the Item if exists
-#         try:
-#             item = klass.objects.get(content_type=ct, object_id=instance.id)
-#             item.delete()
-#             return None, True
-#         except klass.DoesNotExist:
-#             return None, False
-
-
-# #create automatically a newsletter item for every objects configured as newsletter_item
-# def on_create_newsletterable_instance(sender, instance, created, raw, **kwargs):
-#     if sender in coop_newletter_items_classes():
-#         create_newsletter_item(instance)
-# post_save.connect(on_create_newsletterable_instance)
 

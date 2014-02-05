@@ -31,7 +31,7 @@ def org_category_detail(request, slug):
 
 def org_detail(request, slug):
     context = {'editable': True}
-    org = get_object_or_404(Organization, slug=slug, sites__id=settings.SITE_ID)
+    org = get_object_or_404(Organization, slug=slug, sites__id=settings.SITE_ID, active=True)
     context['organization'] = org
     context['adresses'] = org.located.all()
     context['engagements'] = Engagement.objects.filter(organization=org)

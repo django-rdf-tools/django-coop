@@ -6,7 +6,7 @@ from django.conf import settings
 from django.db.models.loading import get_model
 from django.utils.translation import ugettext_lazy as _
 from coop.utils.autocomplete_admin import FkAutocompleteAdmin, InlineAutocompleteAdmin
-from coop_local.models import Contact, Person, Location
+from coop_local.models import Contact, Person, Location, Subscription
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
 
@@ -17,6 +17,7 @@ from django.contrib.contenttypes.generic import GenericTabularInline
 from sorl.thumbnail.admin import AdminImageMixin
 from tinymce.widgets import AdminTinyMCE
 from django.contrib.sites.models import Site
+from django.contrib.admin import SimpleListFilter
 
 from chosen import widgets as chosenwidgets
 
@@ -139,34 +140,56 @@ class OrganizationAdminForm(forms.ModelForm):
           | Q(id__in=member_locations_id)
             )
 
+class hasPrefMail(SimpleListFilter):
+    title = 'E-mail ?'
+    parameter_name = 'email'
+    def lookups(self, request, model_admin):
+        return (
+            ('yes', 'Avec e-mail'),
+            ('no', 'Sans e-mail'),
+        )
+    def queryset(self, request, queryset):
+        if self.value() == 'yes':
+            return queryset.filter(pref_email__isnull=False)
+        if self.value() == 'no':
+            return queryset.filter(pref_email__isnull=True)
+
 
 def create_action(category):
     def add_cat(modeladmin, request, queryset):
         for obj in queryset:
             obj.category.add(category)
     name = "cat_%s" % (category.slug,)
-    return (name, (add_cat, name, _(u'Add to the "%s" category') % (category,)))
+    return (name, (add_cat, name, _(u'◊ Add to the "%s" category') % (category,)))
 
 
 def ml_action(ml):
     def add_sub(modeladmin, request, queryset):
-        # ct = ContentType.objects.get(model='person')
         for obj in queryset:
             ml._instance_to_subscription(obj)
             # if not Subscription.objects.filter(mailing_list=ml, content_type=ct, object_id=obj.id).exists():
             #     Subscription.create(mailing_list=ml, content_object=obj)
     name = "sub_ml_%s" % (ml.id,)
-    return (name, (add_sub, name, _(u'Subscribe to mailing list : %s') % (ml.name,)))
+    return (name, (add_sub, name, _(u'• Subscribe to mailing list : %s') % (ml.name,)))
+
+# soit on fait une unsubscribe action, soit on gere ça dans l'admin de la liste
+
+def org_subs(obj):
+    mls = []
+    for sub in Subscription.objects.filter(content_type=ContentType.objects.get(model='organization'), object_id=obj.id):
+        mls.append(sub.mailing_list.name)
+    return ", ".join(mls)
+org_subs.short_description = 'Mailing'
 
 
 class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
     form = OrganizationAdminForm
-    list_display = ['logo_list_display', 'label', 'active', 'newsletter']#'has_description',
+    list_display = ['logo_list_display', 'label', org_subs, 'active', 'newsletter']#'has_description',
     list_editable = ['newsletter']
     list_display_links = ['label', ]
     search_fields = ['title', 'acronym','subtitle','acronym','description','notes']
-    list_filter = ['active', 'category']
+    list_filter = ['category', hasPrefMail, 'active']
     #actions_on_top = True
     #actions_on_bottom = True
     #save_on_top = True
@@ -228,7 +251,7 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
 
     def get_actions(self, request):
         category_actions = dict(create_action(s) for s in get_model('coop_local', 'OrganizationCategory').objects.all())
-        mailing_actions = dict(ml_action(s) for s in get_model('coop_local', 'MailingList').objects.all())
+        mailing_actions = dict(ml_action(s) for s in get_model('coop_local', 'MailingList').objects.filter(subscription_option=1))
         my_actions = dict(category_actions, **mailing_actions)
         return dict(my_actions, **super(OrganizationAdmin, self).get_actions(request))  # merging two dicts
 

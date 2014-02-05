@@ -7,40 +7,41 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-coop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-07 12:50+0200\n"
+"POT-Creation-Date: 2014-02-04 18:31+0100\n"
 "PO-Revision-Date: 2013-10-07 12:51+0100\n"
 "Last-Translator: Quinode <contact@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: admin.py:25
+#: admin.py:31
 msgid "subscription"
 msgstr "inscription à"
 
-#: admin.py:26
+#: admin.py:32
 msgid "subscriptions"
 msgstr "inscriptions à"
 
-#: admin.py:33 admin.py:34 models.py:163
+#: admin.py:39 admin.py:40 models.py:163
 msgid "mailing list"
 msgstr "liste de diffusion"
 
-#: admin.py:73
+#: admin.py:79
 msgid ""
 " list already exists on sympa server, please contact Sympa administrator"
 msgstr ""
 " la liste existe déjà sur le serveur sympa, utilisez l'adminstration de "
 "Sympa pour la supprimer, sinon changez de nom"
 
-#: admin.py:126
+#: admin.py:131
 msgid "Sending Date"
 msgstr "Date d'envoi"
 
-#: admin.py:127
+#: admin.py:132
 msgid "Sending Dates"
 msgstr "Dates d'envoi"
 
@@ -160,7 +161,7 @@ msgstr "description"
 msgid "Mailing list email"
 msgstr "adresse de diffusion"
 
-#: models.py:72 models.py:361
+#: models.py:72 models.py:371
 msgid "template"
 msgstr "modèle"
 
@@ -184,67 +185,67 @@ msgstr "Impossible de fermer la liste %s"
 msgid "mailing lists"
 msgstr "listes"
 
-#: models.py:292
+#: models.py:302
 msgid "created"
 msgstr "création"
 
-#: models.py:293
+#: models.py:303
 msgid "modified"
 msgstr "modification"
 
-#: models.py:304
+#: models.py:314
 msgid "mailing list subscription"
 msgstr "inscription à une liste"
 
-#: models.py:305
+#: models.py:315
 msgid "mailing list subscriptions"
 msgstr "inscriptions"
 
-#: models.py:357
+#: models.py:367
 msgid "subject"
 msgstr "sujet"
 
-#: models.py:358
+#: models.py:368
 msgid "summary"
 msgstr "Editorial"
 
-#: models.py:366
+#: models.py:376
 msgid "destination lists"
 msgstr "listes"
 
-#: models.py:406
+#: models.py:416
 msgid "newsletter"
 msgstr "lettre d'information"
 
-#: models.py:407
+#: models.py:417
 msgid "newsletters"
 msgstr "lettres d'information"
 
-#: models.py:414
+#: models.py:424
 msgid "scheduling date"
 msgstr "prévue le"
 
-#: models.py:415
+#: models.py:425
 msgid "sending date"
 msgstr "envoyée le"
 
-#: models.py:421
+#: models.py:431
 msgid "newsletter sending"
 msgstr "envoi de lettre d'information"
 
-#: models.py:422
+#: models.py:432
 msgid "newsletter sendings"
 msgstr "envois de lettre d'information"
 
-#: views.py:98
+#: views.py:99
 msgid "The newsletter has been saved properly"
 msgstr "la lettre d'info a été sauvegardée"
 
-#: views.py:210
+#: views.py:211
 msgid "The test email has been sent to {0} addresses: {1}"
 msgstr ""
 
-#: views.py:213
+#: views.py:214
 msgid "An error has occured."
 msgstr ""
 

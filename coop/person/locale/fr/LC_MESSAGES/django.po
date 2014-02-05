@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop.Contact\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-07 12:17+0200\n"
-"PO-Revision-Date: 2013-10-07 12:17+0100\n"
+"POT-Creation-Date: 2014-02-05 12:26+0100\n"
+"PO-Revision-Date: 2014-02-05 12:27+0100\n"
 "Last-Translator: Quinode <contact@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
 "Language: fr_FR\n"
@@ -18,10 +18,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: admin.py:73
+#: admin.py:76
 #, python-format
-msgid "Subscribe to mailing list : %s"
-msgstr "Inscription à la liste de mailing : %s"
+msgid "• Subscribe to mailing list : %s"
+msgstr "• Inscription à la liste de diffusion : %s"
 
 #: forms.py:15
 msgid "name"
@@ -79,31 +79,31 @@ msgstr "notes"
 msgid "preferred email"
 msgstr "email préféré"
 
-#: models.py:50
+#: models.py:51
 msgid "will not be displayed on the website"
 msgstr "ne sera pas affiché sur le site web"
 
-#: models.py:59
+#: models.py:60
 msgid "location"
 msgstr "lieu"
 
-#: models.py:60
+#: models.py:61
 msgid "Display"
 msgstr "Affichage"
 
-#: models.py:64
+#: models.py:65
 msgid "Person"
 msgstr "Personne"
 
-#: models.py:65
+#: models.py:66
 msgid "Persons"
 msgstr "Personnes"
 
-#: models.py:81
+#: models.py:82
 msgid "django account"
 msgstr "compte django"
 
-#: models.py:86
+#: models.py:87
 msgid "has organization"
 msgstr "membre collectif"
 

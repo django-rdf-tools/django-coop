@@ -184,7 +184,7 @@ INSTALLED_APPS = [
     'coop.person',
     'coop.ui',
     'coop.rdf',
-    'coop_geo',
+    # 'coop_geo',
 
     # PuSH
     'django_rq',
