@@ -33,18 +33,28 @@
   </div>
 </div>
 {% else %}
-<fieldset class="module aligned {{ fieldset.classes }} well control-group"{% if fieldset.name %} id="{{ fieldset.name|slugify }}"{% endif %}>
+<fieldset class="adminmailing module aligned {{ fieldset.classes }} well control-group"{% if fieldset.name %} id="{{ fieldset.name|slugify }}"{% endif %}>
 
 {% if fieldset.name == 'Description' %}
 <div class="subs_list">
-  <span>{{ original.subs.all.count }} courriels dans cette liste</span>
+  <span><span id="nbsub">{{ original.subs.all.count }}</span> courriels dans cette liste</span>
+  <div id="submesg"></div>
 <ul>
   {% for sub in original.subs.all %}
 
-    <li class="{% cycle 'odd' 'even' %}"><a href="{{ sub.content_object.get_admin_url }}">{{ sub }}</a></li>
+    <li class="{% cycle 'odd' 'even' %}">{{ sub.content_object }} <em class="email">{{ sub.content_object.pref_email }}</em>
+
+      <a class="delsub" title="Supprimer l'inscription" id="sub_{{ sub.id }}" rel="{{ sub.content_object.label }}"><img src="/static/autocomplete/img/delete.png" border="0"></a>
+
+    </li>
 
   {% endfor %}
 </ul>
+
+
+
+
+
 </div>
 {% endif %}
 

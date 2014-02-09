@@ -2,6 +2,7 @@
 	http://localhost:8000/static/css/coop_bootstrap_theming.css
 	http://debian:8000/static/css/coop_bootstrap_theming.css
 	http://debian2:8000/static/css/coop_bootstrap_theming.css
+	http://debian/static/css/coop_bootstrap_theming.css
 */
 
 .navbar{
@@ -837,6 +838,26 @@ ul.as-list li{
 
 /* @group Mailing admin */
 
+#nbsub{
+	display: inline;
+	padding: 0;
+}
+
+#submesg{
+	font-weight: bold;
+	color: #009f00;
+	font-size: 14px;
+	margin-bottom: 10px;
+}
+
+#submesg .error{
+	color: #ff2610;
+}
+
+fieldset.adminmailing{
+	margin-right: 450px;
+}
+
 .subs_list span{
 	font-weight: bold;
 	text-align: center;
@@ -852,10 +873,22 @@ ul.as-list li{
 
 .subs_list ul li{
 	padding: 3px;
+	z-index: 1000;
+}
+
+.subs_list ul li em{
+	font-size: 11px;
+	color: #929292;
+	font-style: normal;
+	vertical-align: 1px;
+}
+
+.subs_list ul li:hover em{
+	color: #023eff;
 }
 
 .subs_list ul li.odd{
-	background-color: #f5f5f5;
+	background-color: #e3e2e4;
 }
 
 .subs_list{
@@ -868,6 +901,21 @@ ul.as-list li{
 	height: 242px;
 }
 
+.delsub{
+	display: inline-block;
+	float: right;
+	cursor: pointer;
+	z-index: 10000;
+	margin-right: 17px;
+}
+
+.delsub img{
+	opacity: 0.4;
+}
+
+.delsub:hover img{
+	opacity: 1;
+}
 
 
 textarea#id_description.vLargeTextField{

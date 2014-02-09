@@ -2,7 +2,7 @@
 # Create your views here.
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.template import RequestContext
 from django.core.exceptions import PermissionDenied
 import sys
@@ -25,6 +25,34 @@ import base64
 # TODO ces 2 references doivent sauter
 from djaloha import utils as djaloha_utils
 from coop_cms.views import coop_bar_aloha_js
+
+
+import json
+from django.db.models.loading import get_model
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import user_passes_test
+
+
+@csrf_exempt
+@user_passes_test(lambda u: u.is_superuser)
+def delete_subscription(request):
+    results = {}
+    if request.method == 'POST':
+        # data = json.loads(request.raw_post_data)
+
+        delid = request.POST['subid']
+        model = get_model('coop_local', 'Subscription')
+
+        try:
+            sub = model.objects.get(id=delid)
+            sub.delete()
+            results = {"result": "deleted", "message": u"Inscription supprimée"}
+        except Exception, e:
+             results = {"result": "error", "message": u"Erreur : %s" % e}
+    else:
+        return Http404
+    return HttpResponse(json.dumps(results), mimetype="application/json")
+
 
 
 def has_sympa_mail(user):

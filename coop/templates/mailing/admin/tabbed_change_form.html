@@ -130,6 +130,42 @@
   $("#id_subscription_filter_with_tags").click(function(){if($(this).is(':checked')){$("#id_tags").parent().parent().show();}else{$("#id_tags").parent().parent().hide();}});
 
 
+   function ConfirmDelSub(subid, name) {
+       if (confirm("Désincrire " + name + " de la liste ?")) { // Clic sur OK
+
+          jQuery.ajax({
+              url: '/mailing/delsub/',
+              type: "POST",
+              data: "subid="+subid,
+              contentType: 'application/json; charset=utf-8',
+              dataType: 'json',
+              async: false,
+              success: function(response) {
+                if(response.result == "deleted"){
+
+                    old_total = parseInt($("#nbsub").html())
+                    $("#nbsub").html(old_total-1)
+                    $("a.delsub#sub_"+subid).parent("li").fadeOut();
+                    $("div#submesg").html(name + " : inscription supprimée.").delay( 3000 ).fadeOut();
+
+                }else if(response.result == "error"){
+                    $("div.submesg").html('<span class="error">'+response.message+"</span>").delay( 3000 ).fadeOut();
+                }
+              }
+          });
+       }else{
+          return false;
+       }
+   }
+
+
+  $("a.delsub").click(function(){
+    subid = $(this).attr("id").split('_')[1];
+    name = $(this).attr("rel")
+    ConfirmDelSub(subid,name);
+  })
+
+
   });
 </script>
 
