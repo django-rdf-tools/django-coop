@@ -14,8 +14,8 @@
 
     {% if found %}
 
-        <b>Nom : </b>{{person.label}}<br/>
-        <b>Email : </b>{{person.pref_email.content}}<br/>
+        <b>Nom : </b>{{subscriber.label}}<br/>
+        <b>Email : </b>{{subscriber.pref_email.content}}<br/>
         <br>
         <b>Abonnements sur ce site : </b>
 
@@ -37,7 +37,7 @@
                 </tbody>
             </table>
             <br>
-            <input type="checkbox" value="delete" name="delete_data"> Supprimer mon compte (<em>Vous ne recevrez plus aucune nouvelle de ce site</em>)
+            <input type="checkbox" value="delete" name="delete_data"> Me désabonner définitivement (<em>Vous ne recevrez plus aucune nouvelle de ce site</em>)
             <br/>
 
             <br>

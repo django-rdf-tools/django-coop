@@ -330,6 +330,7 @@ class BaseEngagement(URIModel):
                                                 help_text=_(u'fill this only if the organization record is not available locally'))
 
 
+
     class Meta:
         abstract = True
         verbose_name = _('Engagement')
@@ -504,6 +505,7 @@ class BaseOrganization(URIModel):
         attachments = generic.GenericRelation('coop_local.Attachment')
 
     external_links = generic.GenericRelation('coop_local.Link')
+    mailing = models.BooleanField(_(u'receives mailing'), default=True)
 
 
     class Meta:

@@ -42,6 +42,7 @@ class BasePerson(URIModel):
     contacts = generic.GenericRelation('coop_local.Contact')
     email = models.EmailField(_(u'personal email'), blank=True)
     notes = models.TextField(_(u'notes'), blank=True, null=True)
+    mailing = models.BooleanField(_(u'receives mailing'), default=True)
 
     pref_email = models.ForeignKey('coop_local.Contact',
                 verbose_name=_(u'preferred email'),

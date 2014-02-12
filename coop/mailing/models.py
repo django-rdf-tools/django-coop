@@ -86,9 +86,9 @@ class BaseMailingList(models.Model):
         res = Person.objects.none()
         if self.subscription_option in [SUBSCRIPTION_OPTION.ALL, SUBSCRIPTION_OPTION.ALL_PERSONS]:
             if self.person_category:
-                res = Person.objects.filter(category__in=[self.person_category], active=True)
+                res = Person.objects.filter(category__in=[self.person_category], mailing=True)
             else:
-                res = Person.objects.filter(active=True)
+                res = Person.objects.filter(mailing=True)
 
             if self.organization_category:
                 orgs_in_cat = get_model('coop_local', 'Organization').objects.filter(category=self.organization_category)
@@ -190,7 +190,7 @@ class BaseMailingList(models.Model):
 
     def _instance_to_subscription(self, instance):
         from coop_local.models import Subscription
-        if instance.pref_email: # and instance.active: # TODO another field is needed for unsubscribing all lists
+        if instance.pref_email and instance.mailing: 
             # ct will tell us if we're about to subscribe a person or an organization
             ct = ContentType.objects.get_for_model(instance)
             qs = Subscription.objects.filter(mailing_list=self,

@@ -11,7 +11,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from colorbox.decorators import popup_redirect
-from coop_local.models import Newsletter, NewsletterSending, MailingList, Person, Subscription
+from coop_local.models import Newsletter, NewsletterSending, MailingList, Person, Subscription, Organization
 from django.contrib.contenttypes.models import ContentType
 from coop.mailing.utils import send_newsletter
 from django.utils.log import getLogger
@@ -258,31 +258,39 @@ def test_newsletter(request, newsletter_id):
 
 
 def modif_abonnement(request, uuid):
-    context = {'found':False}        
-    p = Person.objects.filter(uuid=uuid)
-    if p.exists():
+    context = {'found':False}
+    subscriber = None
+
+    if Person.objects_manager.filter(uuid=uuid).exists():
+        subscriber = Person.objects_manager.get(uuid=uuid)
+        model_name = 'person'
+    elif Organization.objects_manager.filter(uuid=uuid).exists():
+        subscriber = Organization.objects_manager.get(uuid=uuid)
+        model_name = 'organization'
+
+    if subscriber:
         context['found'] = True
-        context['person'] = p[0]
+        context['subscriber'] = subscriber
         mls = []
-        ct = ContentType.objects.get(model='person')
-        for s in Subscription.objects.filter(content_type=ct, object_id=p[0].id):
+        ct = ContentType.objects.get(model=model_name)
+        for s in Subscription.objects.filter(content_type=ct, object_id=subscriber.id):
             mls.append(s.mailing_list)
         context['mls'] = mls    
     else:
-        context['msg'] = u'Aucun abonnement correspondant sur ce site'
+        context['error'] = u'Aucun abonnement correspondant sur ce site'
 
     if request.method == "POST" and context['found']:
-        context['found'] = False
         if request.POST.get('delete_data') and request.POST.get('delete_data') == "delete":
-            context['person'].active = False
-            context['person'].save()
+            context['found'] = False
+            context['subscriber'].mailing = False
+            context['subscriber'].save()
             for ml in mls:
-                Subscription.objects.get(content_type=ct, object_id=p[0].id, mailing_list=ml).delete()
+                Subscription.objects.get(content_type=ct, object_id=subscriber.id, mailing_list=ml).delete()
         else:
             for ml in mls:
                 code = 'ml_%s' % ml.id
                 if request.POST.get(code) == '0':
-                    Subscription.objects.get(content_type=ct, object_id=p[0].id, mailing_list=ml).delete()
+                    Subscription.objects.get(content_type=ct, object_id=subscriber.id, mailing_list=ml).delete()
         context['msg'] = u'Vos modifications ont bien été enregistrées.'
 
     return render_to_response(
