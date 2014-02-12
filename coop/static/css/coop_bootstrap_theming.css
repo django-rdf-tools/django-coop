@@ -839,6 +839,10 @@ ul.as-list li{
 
 /* @group Mailing admin */
 
+#id_subject.vTextField{
+	width: 604px;
+}
+
 #nbsub{
 	display: inline;
 	padding: 0;
