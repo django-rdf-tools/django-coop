@@ -43,8 +43,6 @@ class MailingListInline(admin.TabularInline):
     extra = 1
 
 
-
-
 class ReverseRelationshipInlineForm(forms.ModelForm):
     class Meta:
         model = Subscription
@@ -56,7 +54,6 @@ class ReverseRelationshipInline(admin.TabularInline):
     fields = ('link_content_object',)
     readonly_fields = ('link_content_object',)
     extra = 1
-
 
 
 class MailingListAdminForm(forms.ModelForm):
@@ -89,8 +86,8 @@ class MailingListAdminForm(forms.ModelForm):
 
 class MailingListAdmin(admin.ModelAdmin):
     change_form_template = 'mailing/admin/tabbed_change_form.html'
-    list_display = ('mode_display', 'subject' )
-    # list_display_links = ['email', ]
+    list_display = ( 'subject', 'mode_display', 'count_display')
+    list_display_links = ['subject', ]
     form = MailingListAdminForm
     search_fields = ['name', 'subject', 'email', 'description']
     list_per_page = 10
@@ -98,9 +95,7 @@ class MailingListAdmin(admin.ModelAdmin):
     read_only_fields = ['created', 'modified']
     ordering = ('name',)
     readonly_fields = ('email',)
-
     # inlines = [ReverseRelationshipInline]
-
     fieldsets = [
         ('Description', {
             'fields': ['name',
@@ -118,13 +113,10 @@ class MailingListAdmin(admin.ModelAdmin):
             })
     ]
 
-
-
     # To exlucde de 'fake' MailingList as writen
     def queryset(self, request):
         qs = super(MailingListAdmin, self).queryset(request)
         return qs.exclude(name='fake')
-
 
 
 class NewsletterSendingInline(admin.StackedInline):
@@ -133,15 +125,11 @@ class NewsletterSendingInline(admin.StackedInline):
     verbose_name_plural = _(u'Sending Dates')
     model = NewsletterSending
     readonly_fields = ('sending_dt',)
-
     extra = 1
-
 
 
 class NewsletterAdminForm(forms.ModelForm):
     content = forms.CharField(widget=AdminTinyMCE(attrs={'cols': 80, 'rows': 60}), required=False)
-
-
     def __init__(self, *args, **kwargs):
         super(NewsletterAdminForm, self).__init__(*args, **kwargs)
         self.newsletter = kwargs.get('instance', None)
@@ -198,8 +186,6 @@ class NewsletterAdmin(admin.ModelAdmin):
 
     # if settings.COOP_USE_SITES:
     #     fieldsets[0][1]['fields'].insert(0, 'sites')
-
-
     def display_lists(self,obj):
         listes = []
         for l in obj.lists.all(): listes.append(l.name)
@@ -208,10 +194,12 @@ class NewsletterAdmin(admin.ModelAdmin):
     display_lists.allow_tags = True
 
     def sendbutton(self,obj):
-        return mark_safe('<div><input type="button" class="sendnews btn btn-success" rel="%s" value="Envoyer la lettre"></div>' % obj.pk)
+        if obj.lists.count() > 0:
+            return mark_safe('<div><input type="button" class="sendnews btn btn-success" rel="%s" value="Envoyer la lettre"></div>' % obj.pk)
+        else:
+            return mark_safe(u"Aucun destinataire pour l'instant")
     sendbutton.short_description = 'Envoi'
     sendbutton.allow_tags = True
-
 
     def get_urls(self):
         urls = super(NewsletterAdmin, self).get_urls()
@@ -219,22 +207,27 @@ class NewsletterAdmin(admin.ModelAdmin):
             (r'sendnews/(?P<id>\d+)/$', self.admin_site.admin_view(self.sendnews)),
         )
         return my_urls + urls
-
  
     def sendnews(self, request, id):
-        # news = Newsletter.objects.get(pk=id)
+        context = {}
+        if Newsletter.objects.filter(pk=id).exists():
+            news = Newsletter.objects.get(pk=id)
+            if news.lists.count() == 0:
+                context['msg'] = u'Aucune liste de diffusion destinataire'
+            else:
+                try:
+                    from django.core.management import call_command
+                    # from StringIO import StringIO
+                    # content = StringIO()
+                    call_command('post_newsletter', newsletter=id)#, stdout=content)
+                    # content.seek(0)
+                    # msg = content.read()
+                    context['msg'] = u'lettre envoyée'
+                except:
+                    context['msg'] = u"Erreur d'envoi : contactez l'administrateur"
+        else:
+            context['msg'] = u'Erreur : Lettre non trouvée'
 
-        from django.core.management import call_command
-        # from StringIO import StringIO 
-         
-        # content = StringIO()
-
-        call_command('post_newsletter', newsletter=id)#, stdout=content)
-
-        # content.seek(0)
-        # msg = content.read()
+        return render_to_response('mailing/admin/sendnews.html', context , context_instance=RequestContext(request))
 
 
-        return render_to_response('mailing/admin/sendnews.html', {
-            'msg' : u'lettre envoyée'
-        }, context_instance=RequestContext(request))

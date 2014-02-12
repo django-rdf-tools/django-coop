@@ -108,15 +108,19 @@ jQuery(document).ready(function($) {
 
 
   $("input.sendnews").click(function(){
+        bouton = $(this)
+        parent = bouton.parent("div")
+        bouton.attr('disabled','disabled')
         // je récupère les valeurs
         var news_id = $(this).attr('rel');
             // appel Ajax
             $.ajax({
                 url: 'sendnews/' + news_id + '/',
-                type: 'GET', // la méthode indiquée dans le formulaire (get ou post)
-                success: function(html) { // je récupère la réponse du fichier PHP
-                    alert(html); // j'affiche cette réponse
-                    $(this).fadeOut();
+                type: 'GET',
+                success: function(reponse) {
+                    //alert(html);
+                    bouton.fadeOut();
+                    parent.html(reponse).fadeIn();
                 }
             });
     });

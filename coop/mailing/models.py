@@ -67,13 +67,19 @@ class BaseMailingList(models.Model):
 
     # Specific fields for sympa
     email = models.EmailField(_('Mailing list email'), editable=False)
-    subject = exfields.AutoSlugField(populate_from=('name'), overwrite=True)
+    subject = exfields.AutoSlugField(_(u'intitulé'), populate_from=('name'), overwrite=True)
     # avec ce templateon peut gerer les inscripts depuis django-coop. Sinon.... passer par sympa
     template = models.PositiveSmallIntegerField(_(u'template'),
                     choices=SYMPA_TEMPLATES.CHOICES, default=SYMPA_TEMPLATES.NEWS_LETTER)
 
     def __unicode__(self):
         return self.name
+
+    def count_display(self):
+        nb = self.subs.count()
+        return str(nb) + ' destinataires'
+    count_display.allow_tags = True
+    count_display.short_description = u'Taille'
 
     def mode_display(self):
         return SUBSCRIPTION_OPTION.CHOICES_DICT[self.subscription_option]
@@ -216,7 +222,6 @@ class BaseMailingList(models.Model):
     # The 'delete' parameter is a workaround to avoid deleting subscription
     # as the mailinglist is updated with the admin interface. Django bug, missunderstanding???
     def verify_subscriptions(self, delete=True):
-        # print 'ENTER VErify subscription'
         from coop_local.models import Subscription, MailingList
         # Cleaning....
         # if delete:
