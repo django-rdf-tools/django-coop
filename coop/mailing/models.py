@@ -75,6 +75,12 @@ class BaseMailingList(models.Model):
     def __unicode__(self):
         return self.name
 
+    def mode_display(self):
+        return SUBSCRIPTION_OPTION.CHOICES_DICT[self.subscription_option]
+    mode_display.allow_tags = True
+    mode_display.short_description = u'mode'
+
+
     #  attention code lié à l'existence d'un serveur SYMPA avec un FQDN genre listes.truc.com
     def build_email(self):
         domain = '.'.join(Site.objects.get_current().domain.split('.')[1:])

@@ -525,10 +525,10 @@ p.countmonitor.warning{
 /* @end */
 
 /* @group TagTree */
-
+/*
 #result_list > thead > tr > th:nth-child(2){
     width: 16px;
-}
+}*/
 
 #result_list > thead > tr > th:nth-child(2) > .text > span{
     display: none;
@@ -900,6 +900,7 @@ fieldset.adminmailing{
 	padding: 10px;
 	border: 1px solid #ddd;
 	height: 242px;
+	margin-top: -17px;
 }
 
 .delsub{

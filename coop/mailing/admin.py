@@ -89,6 +89,7 @@ class MailingListAdminForm(forms.ModelForm):
 
 class MailingListAdmin(admin.ModelAdmin):
     change_form_template = 'mailing/admin/tabbed_change_form.html'
+    list_display = ('mode_display', 'subject' )
     # list_display_links = ['email', ]
     form = MailingListAdminForm
     search_fields = ['name', 'subject', 'email', 'description']
