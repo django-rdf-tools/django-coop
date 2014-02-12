@@ -42,7 +42,7 @@
 <ul>
   {% for sub in original.subs.all %}
 
-    <li class="{% cycle 'odd' 'even' %}">{{ sub.content_object }} <em class="email">{{ sub.content_object.pref_email }}</em>
+    <li class="{% cycle 'odd' 'even' %}">{{ sub.content_object.label }} <em class="email">{{ sub.content_object.pref_email }}</em>
 
       <a class="delsub" title="Supprimer l'inscription" id="sub_{{ sub.id }}" rel="{{ sub.content_object.label }}"><img src="/static/autocomplete/img/delete.png" border="0"></a>
 

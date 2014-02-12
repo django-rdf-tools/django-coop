@@ -3,6 +3,7 @@
 	http://debian:8000/static/css/coop_bootstrap_theming.css
 	http://debian2:8000/static/css/coop_bootstrap_theming.css
 	http://debian/static/css/coop_bootstrap_theming.css
+	http://coop.cerapcoop.org/static/css/coop_bootstrap_theming.css
 */
 
 .navbar{
@@ -877,7 +878,7 @@ fieldset.adminmailing{
 }
 
 .subs_list ul li em{
-	font-size: 11px;
+	font-size: 10px;
 	color: #929292;
 	font-style: normal;
 	vertical-align: 1px;
@@ -903,10 +904,10 @@ fieldset.adminmailing{
 
 .delsub{
 	display: inline-block;
-	float: right;
 	cursor: pointer;
 	z-index: 10000;
 	margin-right: 17px;
+	float: right;
 }
 
 .delsub img{
