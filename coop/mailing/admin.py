@@ -222,9 +222,9 @@ class NewsletterAdmin(admin.ModelAdmin):
                     call_command('post_newsletter', newsletter=id)#, stdout=content)
                     # content.seek(0)
                     # msg = content.read()
-                    context['msg'] = u'lettre envoyée'
+                    context['msg'] = u'Lettre envoyée'
                 except Exception, e:
-                    context['msg'] = u"Erreur d'envoi : %s" % e
+                    context['msg'] = "Erreur: %s" % e
         else:
             context['msg'] = u'Erreur : Lettre non trouvée'
 
