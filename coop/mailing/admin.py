@@ -223,8 +223,8 @@ class NewsletterAdmin(admin.ModelAdmin):
                     # content.seek(0)
                     # msg = content.read()
                     context['msg'] = u'lettre envoyée'
-                except:
-                    context['msg'] = u"Erreur d'envoi : contactez l'administrateur"
+                except, e:
+                    context['msg'] = u"Erreur d'envoi : %s" % e
         else:
             context['msg'] = u'Erreur : Lettre non trouvée'
 
