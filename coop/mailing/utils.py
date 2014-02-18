@@ -82,7 +82,7 @@ def send_newsletter(newsletter, dests, tags=None):
     emails = []
     connection = get_connection()
     from_email = _FROM_EMAIL
-    headers = {'X-MC-Tags' : ','.join(tags)}
+    headers = {'X-MC-Tags' : 'news_%d'% newsletter.id + '_'.join(tags)}
     reply_to = getattr(settings, 'COOP_CMS_REPLY_TO', None)
     if reply_to:
         headers['Reply-To'] = reply_to

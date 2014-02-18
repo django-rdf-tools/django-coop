@@ -224,7 +224,7 @@ class NewsletterAdmin(admin.ModelAdmin):
                     # msg = content.read()
                     context['msg'] = u'Lettre envoyée'
                 except Exception, e:
-                    context['msg'] = "Erreur: %s" % e
+                    context['msg'] = u"Erreur: %s" % unicode(e)
         else:
             context['msg'] = u'Erreur : Lettre non trouvée'
 
