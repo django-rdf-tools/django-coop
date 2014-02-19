@@ -28,7 +28,6 @@ class PersonAdminForm(forms.ModelForm):
         person_contacts = Contact.objects.filter(content_type=ContentType.objects.get(model='person'), 
                                                     object_id=self.instance.id)
         self.fields['pref_email'].queryset = person_contacts.filter(contact_medium_id=8)
-        self.fields['pref_email'].help_text = str(self.instance.id)
         if 'sites' in self.fields:
             self.fields['sites'].help_text = None
 
