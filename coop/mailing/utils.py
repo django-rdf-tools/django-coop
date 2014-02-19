@@ -3,7 +3,7 @@ from HTMLParser import HTMLParser
 from re import sub
 from sys import stderr
 from traceback import print_exc
-from django.core.mail import get_connection, EmailMultiAlternatives
+from django.core.mail import get_connection, EmailMultiAlternatives, EmailMessage
 from coop_cms.html2text import html2text
 from django.conf import settings
 from django.template.loader import get_template
@@ -99,8 +99,10 @@ def send_newsletter(newsletter, dests, tags=None):
         html_text = t.render(Context(context_dict))
         html_text = make_links_absolute(html_text)
 
-        text = html2text(html_text)
-        email = EmailMultiAlternatives(newsletter.subject, text, from_email, [dest['email']], headers=headers)
-        email.attach_alternative(html_text, "text/html")
+        # text = html2text(html_text)
+        # email = EmailMultiAlternatives(newsletter.subject, text, from_email, [dest['email']], headers=headers)
+        # email.attach_alternative(html_text, "text/html")
+        email = EmailMessage(newsletter.subject, html_text, from_email, [dest['email']], headers=headers)
+        email.content_subtype = "html"  # Main content is now text/html
         emails.append(email)
     return connection.send_messages(emails)

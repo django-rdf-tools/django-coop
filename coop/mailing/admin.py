@@ -215,16 +215,16 @@ class NewsletterAdmin(admin.ModelAdmin):
             if news.lists.count() == 0:
                 context['msg'] = u'Aucune liste de diffusion destinataire'
             else:
-                try:
-                    from django.core.management import call_command
-                    # from StringIO import StringIO
-                    # content = StringIO()
-                    call_command('post_newsletter', newsletter=id)#, stdout=content)
-                    # content.seek(0)
-                    # msg = content.read()
-                    context['msg'] = u'Lettre envoyée'
-                except Exception, e:
-                    context['msg'] = u"Erreur: %s" % unicode(e)
+                # try:
+                from django.core.management import call_command
+                # from StringIO import StringIO
+                # content = StringIO()
+                call_command('post_newsletter', newsletter=id)#, stdout=content)
+                # content.seek(0)
+                # msg = content.read()
+                context['msg'] = u'Lettre envoyée'
+                # except Exception, e:
+                    # context['msg'] = u"Erreur: %s" % e
         else:
             context['msg'] = u'Erreur : Lettre non trouvée'
 
