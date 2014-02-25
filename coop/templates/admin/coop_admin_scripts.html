@@ -106,25 +106,29 @@ jQuery(document).ready(function($) {
   // call cookie tab
   selectPreviousTab()
 
+if($('input.sendnews').length > 0){
 
   $("input.sendnews").click(function(){
         bouton = $(this)
-        parent = bouton.parent("div")
-        bouton.attr('disabled','disabled')
-        // je récupère les valeurs
         var news_id = $(this).attr('rel');
+        parent = bouton.parent("div")
+        attente = parent.children("span.sending")
+        bouton.fadeOut()
+        attente.fadeIn()
+        //bouton.attr('disabled','disabled')
+        
             // appel Ajax
             $.ajax({
                 url: 'sendnews/' + news_id + '/',
                 type: 'GET',
                 success: function(reponse) {
                     //alert(html);
-                    bouton.fadeOut();
+                    attente.fadeOut();
                     parent.html(reponse).fadeIn();
                 }
             });
     });
-
+}
 
 
     // resize TinyMCE Editor

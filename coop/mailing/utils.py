@@ -76,7 +76,9 @@ def make_links_absolute(html_content):
     html_content = img_pattern.sub(make_abs, html_content)
 
     return html_content
-    
+ 
+from django.contrib.sites.models import get_current_site
+
 def send_newsletter(newsletter, dests, tags=None):
 
     emails = []
@@ -97,8 +99,7 @@ def send_newsletter(newsletter, dests, tags=None):
             'dest': dest
         }
         html_text = t.render(Context(context_dict))
-        html_text = make_links_absolute(html_text)
-
+        # html_text = make_links_absolute(html_text) #WTF ???
         # text = html2text(html_text)
         # email = EmailMultiAlternatives(newsletter.subject, text, from_email, [dest['email']], headers=headers)
         # email.attach_alternative(html_text, "text/html")

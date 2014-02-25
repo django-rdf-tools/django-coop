@@ -928,5 +928,26 @@ textarea#id_description.vLargeTextField{
 	width: 407px;
 }
 
+span.sending{
+	font-weight: bold;
+	color: #4189c6;
+	font-size: 14px;
+}
+
+span.sendnews_result{
+	font-weight: bold;
+	font-size: 14px;
+	color: #008240;
+}
+
+span.sending img{
+	float: left;
+	margin-right: 10px;
+	width: 25px;
+	height: 25px;
+	margin-left: 6px;
+	margin-top: 3px;
+}
+
 /* @end */
 

@@ -195,7 +195,11 @@ class NewsletterAdmin(admin.ModelAdmin):
 
     def sendbutton(self,obj):
         if obj.lists.count() > 0:
-            return mark_safe('<div><input type="button" class="sendnews btn btn-success" rel="%s" value="Envoyer la lettre"></div>' % obj.pk)
+            return mark_safe('<div><span class="sending" style="display:none">\
+                <img src="/static/img/loading2.gif">\
+                Envoi en cours, ne quittez pas cette page...</span>\
+                <input type="button" class="sendnews btn btn-success" \
+                rel="%s" value="Envoyer la lettre"></div>' % obj.pk)
         else:
             return mark_safe(u"Aucun destinataire pour l'instant")
     sendbutton.short_description = 'Envoi'
