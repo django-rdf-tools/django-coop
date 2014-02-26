@@ -58,7 +58,7 @@ class BaseDocResource(URIModel):
 
     organization = models.ForeignKey('coop_local.Organization', 
                                       verbose_name=_(u"organization / editor"), 
-                                      related_name="resource_organizer", null=True, blank=True)
+                                      related_name="resources", null=True, blank=True)
     person = models.ForeignKey('coop_local.Person', 
                                verbose_name=_(u'author'), 
                                related_name='resource_author', null=True, blank=True)
