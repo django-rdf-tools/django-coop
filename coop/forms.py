@@ -34,3 +34,7 @@ if 'haystack' in settings.INSTALLED_APPS:
             return sqs
 
 
+class PersonContact(forms.Form):
+    sender = forms.EmailField(label='Votre e-mail')
+    message = forms.CharField(widget=forms.Textarea, label='Votre message')
+

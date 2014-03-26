@@ -120,8 +120,6 @@ if "coop_cms" in settings.INSTALLED_APPS:
                         ]
 
 
-
-
 # ----------- Idem for coop-cms NavTree            
 
     class CoopNavTree(BaseNavTree, URIModel):
