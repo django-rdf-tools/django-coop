@@ -101,7 +101,7 @@ class StaticURIModel(models.Model):
 
     # Le code suivante ne marche pas avec south et pourtant il correxpond exactement à ce que je voudrais
     # faire. Si on supprime unique=True, alors la migration se passe bien, mais toutes les
-    # du model ont la meme valeur.... Et bien sur, si on met uniaue=True, south rale car
+    # du model ont la meme valeur.... Et bien sur, si on met unique=True, south rale car
     # le champs n'est pas unique.
     # South n'a pas l'air capable de traiter ce cas.
     # D'apres la doc, il est possible de le faire en 3 fois, sans utiliser le default, avec
@@ -109,7 +109,7 @@ class StaticURIModel(models.Model):
     #uuid = models.CharField(_(u'uuid'), max_length=50, default=shortuuid.uuid, unique=True)
 
     # La version simple c'est de passer par le save() et de supprimer le default.... c'est pas
-    # tres beau, car un plus couteux en runtime... mais bon
+    # tres beau, car plus couteux en runtime... mais bon
     uuid = models.CharField(_(u'uuid'), max_length=50, null=True, editable=False, default=shortuuid.uuid)
 
     links = generic.GenericRelation('coop_local.Link', related_name="%(app_label)s_%(class)s_related")
@@ -172,8 +172,6 @@ class StaticURIModel(models.Model):
                     self.links.add(Link(predicate=LinkProperty.objects.get(label='replaces'), object_uri=self.uri))
                 self.uri = self.init_uri()   # uri_id est pas pareil
         super(StaticURIModel, self).save(*args, **kwargs)
-
-
 
 
     # try to translate an rdflib object in a django object
@@ -357,7 +355,7 @@ class StaticURIModel(models.Model):
                     labels = list(g_value.objects(value, settings.NS.rdfs.label))
                     labels = set(select_with_lang(labels, lang))
                     if len(labels) > 0:
-                        label = labels.pop()  # On suppose tres fort qu'il y en qu'un
+                        label = labels.pop()  # On suppose tres fort qu'il y en a qu'un
                     else:
                         # lets try skos:prefLabel
                         labels = list(g_value.objects(value, settings.NS.skos.prefLabel))

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-coop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-14 15:50+0100\n"
-"PO-Revision-Date: 2013-03-14 15:51+0100\n"
+"POT-Creation-Date: 2014-04-08 18:46+0200\n"
+"PO-Revision-Date: 2014-04-08 18:47+0100\n"
 "Last-Translator: Quinode <contact@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
 "Language: fr_FR\n"
@@ -18,6 +18,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Generator: Poedit 1.5.4\n"
+
+#: admin.py:67
+#, python-format
+msgid "▹ Add to newsletter : %s"
+msgstr "▹ Inclure dans la lettre d'info : %s"
 
 #: models.py:20
 msgid "publisher"
@@ -71,19 +76,19 @@ msgstr ""
 "Les dates de création et de modification de l'article seront affichées en "
 "bas de page"
 
-#: models.py:58
+#: models.py:92
 msgid "article"
 msgstr "article"
 
-#: models.py:59
+#: models.py:93
 msgid "articles"
 msgstr "articles"
 
-#: models.py:94
+#: models.py:127
 msgid "Navigation tree"
 msgstr "Arborescence"
 
-#: models.py:95
+#: models.py:128
 msgid "Navigation trees"
 msgstr "Arborescences"
 

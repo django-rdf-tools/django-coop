@@ -8,7 +8,6 @@ from sorl.thumbnail.admin import AdminImageMixin
 from django.utils.translation import ugettext_lazy as _
 from coop.utils.autocomplete_admin import FkAutocompleteAdmin
 
-
 class ObjEnabledInline(InlineModelAdmin):
     # def __init__(self, *args, **kwargs):
     #     self.parent_object = kwargs['obj']

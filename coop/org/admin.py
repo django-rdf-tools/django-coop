@@ -163,38 +163,27 @@ def create_action(category):
     return (name, (add_cat, name, _(u'◊ Add to the "%s" category') % (category,)))
 
 
-def ml_action(ml):
-    def add_sub(modeladmin, request, queryset):
-        for obj in queryset:
-            ml._instance_to_subscription(obj)
-            # if not Subscription.objects.filter(mailing_list=ml, content_type=ct, object_id=obj.id).exists():
-            #     Subscription.create(mailing_list=ml, content_object=obj)
-    name = "sub_ml_%s" % (ml.id,)
-    return (name, (add_sub, name, _(u'• Subscribe to mailing list : %s') % (ml.name,)))
 
-# soit on fait une unsubscribe action, soit on gere ça dans l'admin de la liste
+if "coop.mailing" in settings.INSTALLED_APPS:
 
-def org_subs(obj):
-    mls = []
-    for sub in Subscription.objects.filter(content_type=ContentType.objects.get(model='organization'), object_id=obj.id):
-        mls.append(sub.mailing_list.name)
-    return ", ".join(mls)
-org_subs.short_description = 'Mailing'
+    def org_subs(obj):
+        mls = []
+        for sub in Subscription.objects.filter(content_type=ContentType.objects.get(model='organization'), object_id=obj.id):
+            mls.append(sub.mailing_list.name)
+        return ", ".join(mls)
+    org_subs.short_description = 'Mailing'
 
 
 class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
     form = OrganizationAdminForm
-    list_display = ['logo_list_display', 'label', org_subs, 'active', 'newsletter']#'has_description',
-    list_editable = ['newsletter']
+    list_display = ['logo_list_display', 'label']
+    if "coop.mailing" in settings.INSTALLED_APPS:
+        list_display.append(org_subs)
     list_display_links = ['label', ]
     search_fields = ['title', 'acronym','subtitle','acronym','description','notes']
     list_filter = ['category', hasPrefMail, 'active']
-    #actions_on_top = True
-    #actions_on_bottom = True
-    #save_on_top = True
-    #filter_horizontal = ('category',)
-    list_per_page = 10
+    list_per_page = 20
     list_select_related = True
     #read_only_fields = ['created','modified']
     ordering = ('title',)
@@ -251,8 +240,10 @@ class OrganizationAdmin(AdminImageMixin, FkAutocompleteAdmin):
 
     def get_actions(self, request):
         category_actions = dict(create_action(s) for s in get_model('coop_local', 'OrganizationCategory').objects.all())
-        mailing_actions = dict(ml_action(s) for s in get_model('coop_local', 'MailingList').objects.filter(subscription_option=1))
-        my_actions = dict(category_actions, **mailing_actions)
+        my_actions = category_actions
+        if "coop.mailing" in settings.INSTALLED_APPS:
+            from coop.mailing.admin import newsletter_actions, mailing_actions
+            my_actions = dict(my_actions, **dict(mailing_actions, **newsletter_actions))
         return dict(my_actions, **super(OrganizationAdmin, self).get_actions(request))  # merging two dicts
 
     def get_form(self, request, obj=None, **kwargs):

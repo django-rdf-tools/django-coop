@@ -64,8 +64,6 @@ class AttachmentsInline(GenericTabularInline):
     verbose_name_plural = _(u'Attachments')
     extra = 1
 
-
-
 class ResourceAdminForm(forms.ModelForm):
     description = forms.CharField(widget=AdminTinyMCE(attrs={'cols': 80, 'rows': 60}), required=False)
 
@@ -83,10 +81,9 @@ class ResourceAdminForm(forms.ModelForm):
 class ResourceAdmin(NoLookupsFkAutocompleteAdmin, AdminImageMixin):
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
     form = ResourceAdminForm
-    list_display = ('logo_list_display', 'label', 'organization_display', 'newsletter')
+    list_display = ('logo_list_display', 'label', 'organization_display')
     list_display_links = ('logo_list_display', 'label')
     list_filter = ('category',)
-    list_editable = ('newsletter',)
     fieldsets = (
         ('Description', {'fields': ('sites', 'logo', 'label', 'category', 'description',
                                     'organization', 'remote_organization_label', 'remote_organization_uri',
@@ -111,5 +108,12 @@ class ResourceAdmin(NoLookupsFkAutocompleteAdmin, AdminImageMixin):
         # just save obj reference for future processing in Inline
         request._obj_ = obj
         return super(ResourceAdmin, self).get_form(request, obj, **kwargs)
+
+
+    if "coop.mailing" in settings.INSTALLED_APPS:
+        def get_actions(self, request):
+            from coop.mailing.admin import newsletter_actions
+            my_actions = newsletter_actions
+            return dict(my_actions, **super(ResourceAdmin, self).get_actions(request))
 
 

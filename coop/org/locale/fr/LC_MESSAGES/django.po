@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: coop.organization\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-05 12:29+0100\n"
-"PO-Revision-Date: 2014-02-05 12:29+0100\n"
+"POT-Creation-Date: 2014-04-08 18:28+0200\n"
+"PO-Revision-Date: 2014-04-08 18:32+0100\n"
 "Last-Translator: Quinode <contact@quinode.fr>\n"
 "Language-Team: Quinode <contact@quinode.fr>\n"
 "Language: fr_FR\n"
@@ -18,39 +18,44 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: admin.py:45
+#: admin.py:46
 msgid "Contact information"
 msgstr "Contact"
 
-#: admin.py:46
+#: admin.py:47
 msgid "Contact informations"
 msgstr "Contacts"
 
-#: admin.py:53
+#: admin.py:54
 msgid "Member"
 msgstr "Membre"
 
-#: admin.py:54
+#: admin.py:55
 msgid "Members"
 msgstr "Membres"
 
-#: admin.py:73 models.py:335
+#: admin.py:74 models.py:336
 msgid "Engagement"
 msgstr "Engagement"
 
-#: admin.py:74 models.py:336
+#: admin.py:75 models.py:337
 msgid "Engagements"
 msgstr "Engagements"
 
-#: admin.py:148
+#: admin.py:163
 #, python-format
 msgid "◊ Add to the \"%s\" category"
 msgstr "◊ Classer dans \"%s\""
 
-#: admin.py:159
+#: admin.py:173
 #, python-format
-msgid "Subscribe to mailing list : %s"
-msgstr ""
+msgid "• Subscribe to mailing list : %s"
+msgstr "• Inscrire à la liste de diffusion : %s"
+
+#: admin.py:181
+#, python-format
+msgid "▹ Add to newsletter : %s"
+msgstr "▹ Inclure dans la lettre d'info : %s"
 
 #: coop_bar_links.py:19
 msgid "Edit organization"
@@ -108,7 +113,7 @@ msgstr "Catégorie de rôle"
 msgid "Role categories"
 msgstr "Catégories de rôles"
 
-#: models.py:81 models.py:457
+#: models.py:81 models.py:458
 msgid "category"
 msgstr "catégorie"
 
@@ -325,99 +330,103 @@ msgstr ""
 "remplissez ce champ uniquement si l'organisation n'est pas enregistrée sur "
 "ce site"
 
-#: models.py:383 models.py:447
+#: models.py:384 models.py:448
 msgid "description"
 msgstr "description"
 
-#: models.py:387
+#: models.py:388
 msgid "organization category"
 msgstr "catégorie d'organisation"
 
-#: models.py:388
+#: models.py:389
 msgid "organization categories"
 msgstr "catégories d'organisations"
 
-#: models.py:425 models.py:436
+#: models.py:426 models.py:437
 msgid "title"
 msgstr "titre"
 
-#: models.py:426 models.py:438
+#: models.py:427 models.py:439
 msgid "acronym"
 msgstr "sigle"
 
-#: models.py:439
+#: models.py:440
 msgid "Preferred label"
 msgstr "nom préféré"
 
-#: models.py:443
+#: models.py:444
 msgid "tagline"
 msgstr "slogan"
 
-#: models.py:445
+#: models.py:446
 msgid "tell us what your organization do in one line."
 msgstr "indiquez en une ligne ce que fait votre organisation (ou un slogan)"
 
-#: models.py:454
+#: models.py:455
 msgid "relations"
 msgstr "relations"
 
-#: models.py:461
+#: models.py:462
 msgid "members"
 msgstr "membres"
 
-#: models.py:477
+#: models.py:478
 msgid "creation date"
 msgstr "date de création"
 
-#: models.py:478
+#: models.py:479
 msgid "global email"
 msgstr "email général"
 
-#: models.py:479
+#: models.py:480
 msgid "email checksum"
 msgstr "checksum e-mail"
 
-#: models.py:481
+#: models.py:482
 msgid "web site"
 msgstr "site web"
 
-#: models.py:484
+#: models.py:485
 msgid "preferred email"
 msgstr "courriel préféré"
 
-#: models.py:488
+#: models.py:489
 msgid "preferred phone"
 msgstr "téléphone préféré"
 
-#: models.py:492
+#: models.py:493
 msgid "preferred postal address"
 msgstr "adresse postale préférée"
 
-#: models.py:498
+#: models.py:499
 msgid "notes"
 msgstr "notes"
 
-#: models.py:512
+#: models.py:508
+msgid "receives mailing"
+msgstr "reçoit les lettres d'information"
+
+#: models.py:514
 msgid "Organization"
 msgstr "Organisation"
 
-#: models.py:513
+#: models.py:515
 msgid "Organizations"
 msgstr "Organisations"
 
-#: models.py:532
+#: models.py:534
 msgid "geo"
 msgstr "geo"
 
-#: models.py:596
+#: models.py:598
 msgid "desc."
 msgstr "desc."
 
-#: models.py:604 models.py:606
+#: models.py:606 models.py:608
 msgid "No Image"
 msgstr "Pas d'image"
 
-#: models.py:608
+#: models.py:610
 msgid "logo"
 msgstr "logo"
 

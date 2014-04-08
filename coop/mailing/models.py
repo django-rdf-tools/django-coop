@@ -446,6 +446,7 @@ class BaseNewsElement(models.Model):
     class Meta:
         abstract = True
         app_label = 'coop_local'
+        unique_together = ("newsletter", "content_type", "object_id")
 
     def __unicode__(self):
         return u'%s -> %s' % (self.content_object.__unicode__(), self.newsletter.subject)

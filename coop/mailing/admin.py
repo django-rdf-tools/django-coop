@@ -2,7 +2,7 @@
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
 from django.forms import ValidationError
-from coop_local.models import NewsletterSending, Subscription, Newsletter, MailingList
+from coop_local.models import NewsletterSending, Subscription, Newsletter, MailingList, NewsElement
 # from coop_local.models import Article, Event
 from django.db.models.loading import get_model
 from django import forms
@@ -22,6 +22,28 @@ except ImportError:
     pass
 from coop.mailing.forms import get_newsletter_templates
 from coop.mailing import soap
+
+
+def news_publish(news):
+    def in_newsletter(modeladmin, request, queryset):
+        for obj in queryset:
+            rel = NewsElement(newsletter=news,content_object=obj)
+            # FIXME : unique_together ne marche pas, mais bon le queryset final n'a pas de doublons...
+            rel.save()
+    name = "publish_news_%d" % news.id
+    return (name, (in_newsletter, name, _(u"▹ Inclure dans la lettre d'info : %s") % news.subject))
+
+newsletter_actions = dict(news_publish(s) for s in Newsletter.objects.all())
+
+
+def ml_action(ml):
+    def add_sub(modeladmin, request, queryset):
+        for obj in queryset:
+            ml._instance_to_subscription(obj)
+    name = "sub_ml_%d" % ml.id
+    return (name, (add_sub, name, _(u'• Subscribe to mailing list : %s') % ml.name))
+
+mailing_actions = dict(ml_action(s) for s in MailingList.objects.filter(subscription_option=1))        
 
 
 class SubscriptionInline(admin.TabularInline):

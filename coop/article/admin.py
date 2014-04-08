@@ -11,6 +11,7 @@ from django.db.models.loading import get_model
 from chosen import widgets as chosenwidgets
 from coop.doc.admin import AttachmentsInline
 from coop.link.admin import LinksInline
+from django.utils.translation import ugettext_lazy as _
 
 if "coop.agenda" in settings.INSTALLED_APPS:
     from coop.agenda.admin import GenericDateInline
@@ -61,8 +62,8 @@ if "coop_cms" in settings.INSTALLED_APPS:
         search_fields = ['title', 'summary', 'content']
         ordering = ['-created']
 
-        list_display = ['logo_list_display', 'title', 'publication', 'headline', 'newsletter', 'category']
-        list_editable = ['publication', 'headline', 'newsletter', 'category']
+        list_display = ['logo_list_display', 'title', 'publication', 'headline', 'category']
+        list_editable = ['publication', 'headline', 'category']
         list_display_links = ['title']
 
         readonly_fields = []
@@ -75,6 +76,13 @@ if "coop_cms" in settings.INSTALLED_APPS:
         )
         related_search_fields = {'organization': ('title', 'subtitle', 'description'), 
                                  'person': ('first_name', 'last_name',), }
+
+        if "coop.mailing" in settings.INSTALLED_APPS:
+            def get_actions(self, request):
+                from coop.mailing.admin import newsletter_actions
+                my_actions = newsletter_actions
+                return dict(my_actions, **super(CoopArticleAdmin, self).get_actions(request))
+
 
         if "coop.agenda" in settings.INSTALLED_APPS:
             inlines = [GenericDateInline, AttachmentsInline, LinksInline]

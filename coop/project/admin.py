@@ -23,8 +23,6 @@ if "coop_geo" in settings.INSTALLED_APPS:
 if "coop_agenda" in settings.INSTALLED_APPS:
     from coop.agenda.admin import DatedInline
 
-
-
 class ProjectMemberInline(InlineAutocompleteAdmin):
     model = get_model('coop_local', 'ProjectMember')
     verbose_name = _(u'Member')
@@ -61,8 +59,7 @@ class ProjectAdminForm(forms.ModelForm):
 class ProjectAdmin(FkAutocompleteAdmin):
     form = ProjectAdminForm
     change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
-    list_display = ('title', 'active', 'organization', 'newsletter')
-    list_editable = ['newsletter']
+    list_display = ('title', 'active', 'organization')
     list_filter = ['status']
     fieldsets = (
        ('Description', {
@@ -85,5 +82,13 @@ class ProjectAdmin(FkAutocompleteAdmin):
     if settings.COOP_USE_SITES:
         fieldsets[0][1]['fields'].insert(0, 'sites')
         list_filter.append('sites')
+
+
+    if "coop.mailing" in settings.INSTALLED_APPS:
+        def get_actions(self, request):
+            from coop.mailing.admin import newsletter_actions
+            my_actions = newsletter_actions
+            return dict(my_actions, **super(ProjectAdmin, self).get_actions(request))
+
 
 

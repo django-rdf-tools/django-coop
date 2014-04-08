@@ -60,8 +60,7 @@ if 'coop.exchange' in settings.INSTALLED_APPS:
     class ExchangeAdmin(NoLookupsFkAutocompleteAdmin):  # AdminImageMixin,
         form = ExchangeAdminForm
         change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
-        list_display = ('title', 'organization', 'newsletter')
-        list_editable = ['newsletter']
+        list_display = ('title', 'organization')
         fieldsets = (('Description', {'fields': [('eway', 'etype'),
                                          'methods',
                                          'title',
