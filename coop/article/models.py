@@ -42,7 +42,6 @@ if "coop_cms" in settings.INSTALLED_APPS:
                                 on_delete=models.SET_NULL)
 
 
-
         if "coop.agenda" in settings.INSTALLED_APPS:
             dated = generic.GenericRelation('coop_local.Dated')
             occurences = generic.GenericRelation('coop_local.GenericDate')

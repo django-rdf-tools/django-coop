@@ -18,7 +18,7 @@ def public_profile(request, uuid):
                 recipient_list=[person.pref_email.content],
                 from_email=request.POST['sender'],
                 message=request.POST['message'])
-            context['msg'] = u"Votre message a été envoyé à %s" % person.label()
+            context['msg_perso'] = u"Votre message a été envoyé à %s" % person.label()
         else:
             context['form'] = PersonContact(request.POST)
             context['error'] = u'Merci de corriger le formulaire'

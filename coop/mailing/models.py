@@ -381,6 +381,36 @@ class BaseNewsletter(models.Model):
         # items.sort(key=sort_by_category)
         # return items
 
+    @property
+    def articles(self):
+        ct = ContentType.objects.get(app_label='coop_local', model='article')
+        return ct.model_class().objects.filter(id__in=
+            self.elements.filter(content_type=ct).values_list('object_id', flat=True))
+
+    @property
+    def resources(self):
+        ct = ContentType.objects.get(app_label='coop_local', model='docresource')
+        return ct.model_class().objects.filter(id__in=
+            self.elements.filter(content_type=ct).values_list('object_id', flat=True))
+
+    @property
+    def organizations(self):
+        ct = ContentType.objects.get(app_label='coop_local', model='organization')
+        return ct.model_class().objects.filter(id__in=
+            self.elements.filter(content_type=ct).values_list('object_id', flat=True))
+
+    @property
+    def projects(self):
+        ct = ContentType.objects.get(app_label='coop_local', model='project')
+        return ct.model_class().objects.filter(id__in=
+            self.elements.filter(content_type=ct).values_list('object_id', flat=True))
+
+    @property
+    def exchanges(self):
+        ct = ContentType.objects.get(app_label='coop_local', model='exchange')
+        return ct.model_class().objects.filter(id__in=
+            self.elements.filter(content_type=ct).values_list('object_id', flat=True))
+
 
     def can_edit_newsletter(self, user):
         return user.has_perm('coop.mailing.change_newsletter')
@@ -405,6 +435,20 @@ class BaseNewsletter(models.Model):
         app_label = 'coop_local'
         verbose_name = _(u'newsletter')
         verbose_name_plural = _(u'newsletters')
+
+
+class BaseNewsElement(models.Model):
+    newsletter = models.ForeignKey('coop_local.Newsletter', related_name='elements')
+    content_type = models.ForeignKey(ContentType, blank=True, null=True)
+    object_id = models.PositiveIntegerField()
+    content_object = generic.GenericForeignKey('content_type', 'object_id')
+
+    class Meta:
+        abstract = True
+        app_label = 'coop_local'
+
+    def __unicode__(self):
+        return u'%s -> %s' % (self.content_object.__unicode__(), self.newsletter.subject)
 
 
 
