@@ -38,13 +38,13 @@
 {% if fieldset.name == 'Description' %}
 <div class="subs_list">
   <span><span id="nbsub">{{ original.subs.all.count }}</span> courriels dans cette liste</span>
-  <div id="submesg"></div>
+  <div id="jsmsg"></div>
 <ul>
   {% for sub in original.subs.all %}
 
     <li class="{% cycle 'odd' 'even' %}">{{ sub.content_object.label }} <em class="email">{{ sub.content_object.pref_email }}</em>
       {% if original.subscription_option == 1 %}
-        <a class="delsub" title="Supprimer l'inscription" id="sub_{{ sub.id }}" rel="{{ sub.content_object.label }}"><img src="/static/autocomplete/img/delete.png" border="0"></a>
+        <a class="deljs" title="Supprimer l'inscription" id="sub_{{ sub.id }}" rel="{{ sub.content_object.label }}"><img src="/static/autocomplete/img/delete.png" border="0"></a>
       {% endif %}
     </li>
 

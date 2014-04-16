@@ -19,4 +19,6 @@ urlpatterns = patterns('coop.mailing.views',
     url(r'^newsletter/schedule/(?P<newsletter_id>\d+)/$', 'schedule_newsletter_sending', name="schedule_newsletter_sending"),
     url(r'^newsletter/abonnement/(?P<uuid>\w+)/$', 'modif_abonnement', name="modif_abonnement"),
     url(r'^mailing/delsub/', 'delete_subscription', name='delete_subscription'),
+    url(r'^mailing/delnewselement/', 'delete_newselement', name='delete_newselement'),
+
 )

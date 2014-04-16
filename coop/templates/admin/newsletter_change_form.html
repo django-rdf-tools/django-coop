@@ -1,5 +1,5 @@
 {% extends "admin/base_site.html" %}
-{% load i18n admin_modify %}
+{% load i18n admin_modify static %}
 {% load url from future %}
 
 {% block extrahead %}
@@ -78,75 +78,87 @@
   {% for fieldset in adminform %}
     <li{% if forloop.first %} class="active"{% endif %}><a href="#{{ fieldset.name|slugify }}" data-toggle="tab">{{ fieldset.name|default:"Fieldset name is required for this template!" }}</a></li>
   {% endfor %}
+
+  <li><a href="#newsletter-elements" data-toggle="tab">Elements</a></li>
+
+
   {% for inline_admin_formset in inline_admin_formsets %}
     <li><a href="#{{ inline_admin_formset.formset.prefix }}-group" data-toggle="tab">{{ inline_admin_formset.opts.verbose_name_plural|title }}</a></li>
   {% endfor %}
+
+
 </ul>
 
 <div class="tab-content">
-
 {% for fieldset in adminform %}
-    {% include "mailing/admin/fieldset.html" %}
+    {% include "admin/includes/fieldset.html" %}
 {% endfor %}
 
 {% block after_field_sets %}{% endblock %}
 
+
+<div class="tab-pane" id="newsletter-elements">
+
+
+<fieldset class="module well tab-pane">
+
+
+<h3><span id="nbnews">{{ original.elements.all.count }}</span> éléments dans cette lettre d'information</h3>
+  <div id="jsmsg"></div>
+  <br>
+
+    <table class="table table-striped tabular-inline table-condensed table-bordered">
+      <tbody>
+
+
+{% for elem in original.elements.all %}
+        <tr class="{% cycle 'odd' 'even' %}">
+
+
+          <td><a class="deljs" title="Supprimer cet élément" id="news_{{ elem.id }}" rel="{{ elem }}"><img src="/static/autocomplete/img/delete.png" title="Supprimer" border="0"></a></td>
+          <td>{{ elem.content_type }}</td>
+          <td>{{ elem }}</td>
+        
+        </tr>
+
+{% endfor %}
+      </tbody>
+   </table>
+   
+
+</fieldset>
+
+</div>
+
+
 {% for inline_admin_formset in inline_admin_formsets %}
     {% include inline_admin_formset.opts.template %}
 {% endfor %}
+
+
 </div>
 
 </div>
 
 <script type="text/javascript">
-  $(function(){
 
-    $('.tabbable fieldset,.tabbable .inline-group').addClass('tab-pane');
-    $('.tabbable fieldset:first').addClass('active');
-    $('.tabbable fieldset h2, .tabbable inline-group h2').hide();
-
-    function hide_person_filter(value){
-        // console.log('function...');
-        // console.log(value == 3);
-            if(value === "3"){
-                console.log('org only');
-                $("#id_person_category").val("");
-                $("#id_person_category").parent().parent().hide();
-            }else{
-                $("#id_person_category").parent().parent().show();
-            }
-    }
-
-    hide_person_filter($("#id_subscription_option").val());
-
-    if(!$("#id_subscription_filter_with_tags").is(":checked")){
-      $("#id_tags").parent().parent().hide();
-    } 
-
-    $("#id_subscription_option").change(function() {
-        hide_person_filter($(this).val());
-    });
-
-  $("#id_subscription_filter_with_tags").click(function(){if($(this).is(':checked')){$("#id_tags").parent().parent().show();}else{$("#id_tags").parent().parent().hide();}});
-
-
-   function Confirmdeljs(subid, name) {
-       if (confirm("Désincrire " + name + " de la liste ?")) { // Clic sur OK
+   function ConfirmDelElement(elementid, name) {
+       if (confirm("Supprimer " + name + " de la liste ?")) { // Clic sur OK
 
           jQuery.ajax({
-              url: '/mailing/deljs/',
+              url: '/mailing/delnewselement/',
               type: "POST",
-              data: "subid="+subid,
+              data: "elementid="+elementid,
               contentType: 'application/json; charset=utf-8',
               dataType: 'json',
               async: false,
               success: function(response) {
                 if(response.result == "deleted"){
 
-                    old_total = parseInt($("#nbsub").html())
-                    $("#nbsub").html(old_total-1)
-                    $("a.deljs#sub_"+subid).parent("li").fadeOut();
-                    $("div#jsmsg").html(name + " : inscription supprimée.").delay( 3000 ).fadeOut();
+                    old_total = parseInt($("#nbnews").html())
+                    $("#nbnews").html(old_total-1)
+                    $("a.deljs#news_"+elementid).parent("td").parent("tr").fadeOut();
+                    $("div#jsmsg").html(name + " : élément supprimé.").delay( 3000 ).fadeOut();
 
                 }else if(response.result == "error"){
                     $("div#jsmsg").html('<span class="error">'+response.message+"</span>").delay( 3000 ).fadeOut();
@@ -159,14 +171,23 @@
    }
 
 
-  $("a.deljs").click(function(){
-    subid = $(this).attr("id").split('_')[1];
-    name = $(this).attr("rel")
-    Confirmdeljs(subid,name);
-  })
+  $(function(){
+    $('.tabbable fieldset,.tabbable .inline-group').addClass('tab-pane');
+    $('.tabbable fieldset:first').addClass('active');
+    $('.tabbable fieldset h2, .tabbable inline-group h2').hide();
+
+    $("a.deljs").click(function(){
+      elementid = $(this).attr("id").split('_')[1];
+      name = $(this).attr("rel")
+      ConfirmDelElement(elementid,name);
+    })
 
 
   });
+</script>
+
+
+
 </script>
 
 {% block after_related_objects %}{% endblock %}

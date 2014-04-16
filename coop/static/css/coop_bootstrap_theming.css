@@ -848,14 +848,14 @@ ul.as-list li{
 	padding: 0;
 }
 
-#submesg{
+#jsmsg{
 	font-weight: bold;
 	color: #009f00;
 	font-size: 14px;
 	margin-bottom: 10px;
 }
 
-#submesg .error{
+#jsmsg .error{
 	color: #ff2610;
 }
 
@@ -907,7 +907,7 @@ fieldset.adminmailing{
 	margin-top: -17px;
 }
 
-.delsub{
+.deljs{
 	display: inline-block;
 	cursor: pointer;
 	z-index: 10000;
@@ -915,11 +915,11 @@ fieldset.adminmailing{
 	float: right;
 }
 
-.delsub img{
+.deljs img{
 	opacity: 0.4;
 }
 
-.delsub:hover img{
+.deljs:hover img{
 	opacity: 1;
 }
 

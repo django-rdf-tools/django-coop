@@ -192,7 +192,7 @@ class NewsletterAdminForm(forms.ModelForm):
 
 
 class NewsletterAdmin(admin.ModelAdmin):
-    change_form_template = 'admintools_bootstrap/tabbed_change_form.html'
+    change_form_template = 'admin/newsletter_change_form.html'
     form = NewsletterAdminForm
     # inlines = [NewsletterSendingInline]
     list_display = ('subject','display_lists','sendbutton')
@@ -205,6 +205,13 @@ class NewsletterAdmin(admin.ModelAdmin):
                        ]
             }),
         )
+
+    # def change_view(self, request, object_id, form_url='', extra_context=None):
+    #     extra_context = extra_context or {}
+    #     extra_context['test'] = object_id.
+    #     return super(NewsletterAdmin, self).change_view(request, object_id,
+    #         form_url, extra_context=extra_context)
+
 
     # if settings.COOP_USE_SITES:
     #     fieldsets[0][1]['fields'].insert(0, 'sites')

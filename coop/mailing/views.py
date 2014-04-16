@@ -54,6 +54,23 @@ def delete_subscription(request):
     return HttpResponse(json.dumps(results), mimetype="application/json")
 
 
+@csrf_exempt
+@user_passes_test(lambda u: u.is_superuser)
+def delete_newselement(request):
+    results = {}
+    if request.method == 'POST':
+        delid = request.POST['elementid']
+        model = get_model('coop_local', 'NewsElement')
+        try:
+            elem = model.objects.get(id=delid)
+            elem.delete()
+            results = {"result": "deleted", "message": u"Element supprimé"}
+        except Exception, e:
+             results = {"result": "error", "message": u"Erreur : %s" % e}
+    else:
+        return Http404
+    return HttpResponse(json.dumps(results), mimetype="application/json")
+
 
 def has_sympa_mail(user):
     dom = Site.objects.get_current().domain
