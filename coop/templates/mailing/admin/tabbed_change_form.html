@@ -134,7 +134,7 @@
        if (confirm("Désincrire " + name + " de la liste ?")) { // Clic sur OK
 
           jQuery.ajax({
-              url: '/mailing/deljs/',
+              url: '/mailing/delsub/',
               type: "POST",
               data: "subid="+subid,
               contentType: 'application/json; charset=utf-8',
