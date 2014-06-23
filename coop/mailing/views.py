@@ -40,7 +40,7 @@ def delete_subscription(request):
     if request.method == 'POST':
         # data = json.loads(request.raw_post_data)
 
-        delid = request.POST['subid']
+        delid = request.POST['subid'].split('_')[1]
         model = get_model('coop_local', 'Subscription')
 
         try:
