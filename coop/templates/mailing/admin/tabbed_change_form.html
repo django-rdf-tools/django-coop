@@ -136,8 +136,9 @@
           jQuery.ajax({
               url: '/mailing/delsub/',
               type: "POST",
-              data: "subid="+subid,
-              contentType: 'application/json; charset=utf-8',
+              data: {"subid" : subid},
+              //contentType: 'application/json; charset=utf-8',
+              // voir http://stackoverflow.com/a/23008197/462954
               dataType: 'json',
               async: false,
               success: function(response) {

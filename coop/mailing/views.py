@@ -40,7 +40,7 @@ def delete_subscription(request):
     if request.method == 'POST':
         # data = json.loads(request.raw_post_data)
 
-        delid = request.POST['subid']
+        delid = request.POST.get('subid', None)
         model = get_model('coop_local', 'Subscription')
 
         try:
@@ -48,7 +48,7 @@ def delete_subscription(request):
             sub.delete()
             results = {"result": "deleted", "message": u"Inscription supprimée"}
         except Exception, e:
-             results = {"result": "error", "message": u"Erreur : %s" % e}
+            results = {"result": "error", "message": u"Erreur : %s" % e}
     else:
         return Http404
     return HttpResponse(json.dumps(results), mimetype="application/json")
