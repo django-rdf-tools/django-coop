@@ -77,20 +77,19 @@ def make_links_absolute(html_content):
 
     return html_content
  
-from django.contrib.sites.models import get_current_site
+# from django.contrib.sites.models import get_current_site
 
-def send_newsletter(newsletter, dests, tags=None):
+def send_newsletter(newsletter, dests, tags=None, verbosity=1):
 
     emails = []
     connection = get_connection()
     from_email = _FROM_EMAIL
-    headers = {'X-MC-Tags' : 'news_%d'% newsletter.id + '_'.join(tags)}
+    headers = {'X-MC-Tags' : 'news_%d' % newsletter.id + '_' + '_'.join(tags)}
     reply_to = getattr(settings, 'COOP_CMS_REPLY_TO', None)
     if reply_to:
         headers['Reply-To'] = reply_to
 
     for dest in dests:
-
         t = get_template(newsletter.get_template_name())
         context_dict = {
             'title': newsletter.subject, 'newsletter': newsletter, 'by_email': True,
@@ -105,5 +104,18 @@ def send_newsletter(newsletter, dests, tags=None):
         # email.attach_alternative(html_text, "text/html")
         email = EmailMessage(newsletter.subject, html_text, from_email, [dest['email']], headers=headers)
         email.content_subtype = "html"  # Main content is now text/html
-        emails.append(email)
-    return connection.send_messages(emails)
+        
+        if verbosity >= 2:
+            emails.append(email)
+        else:
+            try:
+                connection.open() 
+                email.send()
+                connection.close()
+            except Exception, msg:
+                print "ERR : ", msg
+
+    if verbosity >= 2:
+        return connection.send_messages(emails)
+    else:
+        return True

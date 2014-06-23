@@ -40,6 +40,8 @@ class Command(BaseCommand):
         dests = []
         tags = []
 
+        # METHODE LIGNE DE COMMANDE AVEC FICHIER TEXTE
+
         if options['filename'] and options['newsletter'] :
             if not os.path.isfile(options['filename']) :
                 raise CommandError("File does not exist at the specified path.")
@@ -63,6 +65,8 @@ class Command(BaseCommand):
             finally:
                 in_file.close()
 
+        # METHODE NORMALE (DEPUIS ADMIN MAILING)
+
         elif options['newsletter']:
 
             news = Newsletter.objects.get(id=options['newsletter'])
@@ -74,34 +78,37 @@ class Command(BaseCommand):
 
             if self.verbosity >= 1:
                 print u'send_newsletter %d to %d addresses'% (news.id, len(dests))
-                if self.verbosity >= 2:
+                if self.verbosity >= 3:
                     for d in dests:
                         print 'email : %s' % d['email']
-                nb_sent = send_newsletter(news, dests, tags)
+                nb_sent = send_newsletter(news, dests, tags, self.verbosity)
                 if self.verbosity >= 1:
                     print nb_sent, "emails sent"
 
         else:
-            sendings = NewsletterSending.objects.filter(scheduling_dt__lte=datetime.now(), sending_dt=None)
+
+            print 'usage: python manage.py post_newsletter --newsletter=15 --filename=adresses.txt'
+
+            # sendings = NewsletterSending.objects.filter(scheduling_dt__lte=datetime.now(), sending_dt=None)
             
-            for sending in sendings:
-                print sending                
+            # for sending in sendings:
+            #     print sending                
 
-                for ml in sending.newsletter.lists.all():
-                    tags.append(ml.name)
-                    for dest in ml.dest_dicts():
-                        dests.append(dest)
+            #     for ml in sending.newsletter.lists.all():
+            #         tags.append(ml.name)
+            #         for dest in ml.dest_dicts():
+            #             dests.append(dest)
 
-                if self.verbosity >= 1:
-                    print u'send_newsletter %d to %d addresses'% (news.id, len(dests))
-                if self.verbosity >= 2:
-                    for d in dests:
-                        print 'email : %s' % d['email']
-                nb_sent = send_newsletter(sending.newsletter, dests, tags)
-                if self.verbosity >= 1:
-                    print nb_sent, "emails sent"
-                sending.sending_dt = datetime.now()
-                sending.save()
+            #     if self.verbosity >= 1:
+            #         print u'send_newsletter %d to %d addresses'% (news.id, len(dests))
+            #     if self.verbosity >= 2:
+            #         for d in dests:
+            #             print 'email : %s' % d['email']
+            #     nb_sent = send_newsletter(sending.newsletter, dests, tags)
+            #     if self.verbosity >= 1:
+            #         print nb_sent, "emails sent"
+            #     sending.sending_dt = datetime.now()
+            #     sending.save()
 
 
 
