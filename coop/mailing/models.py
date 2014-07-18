@@ -274,6 +274,14 @@ class BaseMailingList(models.Model):
                 except Subscription.DoesNotExist:
                     print 'strange ....can not find %s Person' % person.id
 
+            # TO TEST
+            else :
+                subs = Subscription.objects.get(mailing_list=self)
+                for s in subs:
+                    if not s.content_object.pref_email or not s.content_object.pref_email.content:
+                        s.delete()
+
+
     def sympa_export_list(self):
         from coop_local.models import Subscription
         self.verify_subscriptions()

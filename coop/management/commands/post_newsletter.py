@@ -7,6 +7,8 @@ from coop_local.models import NewsletterSending, Newsletter
 import sys
 import os
 from optparse import make_option
+from django.utils import translation
+from django.conf import settings
 
 class Command(BaseCommand):
     help = u"send newsletter"
@@ -39,6 +41,8 @@ class Command(BaseCommand):
 
         dests = []
         tags = []
+
+        translation.activate(settings.LANGUAGE_CODE)
 
         # METHODE LIGNE DE COMMANDE AVEC FICHIER TEXTE
 
@@ -87,7 +91,7 @@ class Command(BaseCommand):
 
         else:
 
-            print 'usage: python manage.py post_newsletter --newsletter=15 --filename=adresses.txt'
+            print 'usage: python manage.py post_newsletter --news=15 --file=adresses.txt'
 
             # sendings = NewsletterSending.objects.filter(scheduling_dt__lte=datetime.now(), sending_dt=None)
             
