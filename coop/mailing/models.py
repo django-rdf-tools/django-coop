@@ -276,7 +276,7 @@ class BaseMailingList(models.Model):
 
             # TO TEST
         else :
-            subs = Subscription.objects.get(mailing_list=self)
+            subs = Subscription.objects.filter(mailing_list=self)
             for s in subs:
                 if not s.content_object.pref_email or not s.content_object.pref_email.content:
                     s.delete()
