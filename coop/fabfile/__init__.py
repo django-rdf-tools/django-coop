@@ -14,7 +14,7 @@ env.vm_path = "/Users/dom/VM/devcoop"
 env.locale = 'fr_FR.UTF-8'
 
 #Paramétres par défaut
-domain = "coop.cerapcoop.org"
+domain = "www.cerapcoop.org"
 projet = "cerapcoop"
 alias = "cerapcoop"
 

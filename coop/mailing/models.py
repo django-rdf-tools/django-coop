@@ -275,11 +275,11 @@ class BaseMailingList(models.Model):
                     print 'strange ....can not find %s Person' % person.id
 
             # TO TEST
-            else :
-                subs = Subscription.objects.get(mailing_list=self)
-                for s in subs:
-                    if not s.content_object.pref_email or not s.content_object.pref_email.content:
-                        s.delete()
+        else :
+            subs = Subscription.objects.get(mailing_list=self)
+            for s in subs:
+                if not s.content_object.pref_email or not s.content_object.pref_email.content:
+                    s.delete()
 
 
     def sympa_export_list(self):
