@@ -119,3 +119,13 @@ def send_newsletter(newsletter, dests, tags=None, verbosity=1):
         return connection.send_messages(emails)
     else:
         return True
+
+# for e in n.elements.all():
+#     if (e.content_type, e.object_id) not in done:
+#         done.append((e.content_type, e.object_id))
+#     else:
+#         doublons = NewsElement.objects.filter(newsletter=n, content_type=e.content_type, object_id=e.object_id)[1:]
+#         for d in doublons :
+#             d.delete()
+
+
